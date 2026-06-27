@@ -3,6 +3,26 @@
 How the backend is run locally today. (The repo also ships `docker-compose.yml` for Postgres; this
 machine uses a Homebrew Postgres instead — either works, the DSN is the same.)
 
+## Quick start: full stack via Docker Compose
+
+`docker compose up` now brings up the whole stack — the **db**, **api**, and **web** services — so you
+can run everything without installing uv/Node locally:
+
+```bash
+docker compose up            # db + api + web
+docker compose up -d db      # just Postgres (run api/web with uv/npm as below)
+```
+
+The compose services use the same defaults documented here: DB DSN
+`postgresql+psycopg://neta:neta@localhost:5432/neta`, api on `:8000`, web on `:3000` with
+`NETA_API_BASE` pointed at the api service. Apply migrations + seeds (next section) once the db is up.
+
+> **Prod env-override:** the same images run against a hosted DB and origins by overriding env —
+> `NETA_DATABASE_URL` (read-only role for api, write role for ingestion), `NETA_API_BASE` (web → api),
+> and `NETA_ALLOWED_ORIGINS` (api CORS). See [`DEPLOYMENT.md`](./DEPLOYMENT.md) for the AWS mapping.
+
+The native setup below is the historical local workflow and remains fully supported.
+
 ## 1. Postgres
 
 ```bash

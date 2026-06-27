@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import urllib.request
 from pathlib import Path
+from urllib.parse import urlparse
 
 from fastapi import APIRouter, Depends, HTTPException, Response
 from sqlalchemy import text
@@ -24,19 +25,45 @@ router = APIRouter(prefix="/persons", tags=["persons"])
 # browser policy, not enforced here) and disk-cache so each photo hits the source at most once.
 _PHOTO_CACHE = Path(__file__).resolve().parents[2] / ".photo_cache"
 
+# SSRF guard: the proxy fetches a URL read from the DB, so restrict it to https on the only host
+# photos are ever sourced from (sansad.in). This blocks file://, internal hosts, and other schemes
+# even if a bad URL ever reached the person table. Size is capped to avoid memory-exhaustion fetches.
+_ALLOWED_PHOTO_HOSTS = ("sansad.in",)
+_MAX_PHOTO_BYTES = 5 * 1024 * 1024  # 5 MB
+
+
+def _is_allowed_photo_url(url: str) -> bool:
+    try:
+        parsed = urlparse(url)
+    except ValueError:
+        return False
+    host = (parsed.hostname or "").lower()
+    return parsed.scheme == "https" and any(
+        host == h or host.endswith("." + h) for h in _ALLOWED_PHOTO_HOSTS
+    )
+
 
 @router.get("/{person_id}/photo")
 def person_photo(person_id: int, db: Session = Depends(get_db)) -> Response:
     url = db.execute(text("SELECT photo_url FROM person WHERE id = :id"), {"id": person_id}).scalar()
     if not url:
         raise HTTPException(status_code=404, detail="no photo")
+    if not _is_allowed_photo_url(url):
+        raise HTTPException(status_code=400, detail="unsupported photo source")
     _PHOTO_CACHE.mkdir(exist_ok=True)
     cached = _PHOTO_CACHE / f"{person_id}.jpg"
     if not cached.exists():
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "neta-resume/0.1"})
-            with urllib.request.urlopen(req, timeout=20) as r:
-                cached.write_bytes(r.read())
+            with urllib.request.urlopen(req, timeout=20) as r:  # noqa: S310 (scheme validated above)
+                if (clen := r.headers.get("Content-Length")) and int(clen) > _MAX_PHOTO_BYTES:
+                    raise HTTPException(status_code=502, detail="photo too large")
+                data = r.read(_MAX_PHOTO_BYTES + 1)
+            if len(data) > _MAX_PHOTO_BYTES:
+                raise HTTPException(status_code=502, detail="photo too large")
+            cached.write_bytes(data)
+        except HTTPException:
+            raise
         except Exception as exc:  # noqa: BLE001
             raise HTTPException(status_code=502, detail="photo fetch failed") from exc
     return Response(

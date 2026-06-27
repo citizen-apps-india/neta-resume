@@ -1,100 +1,21 @@
 // Typed client for the FastAPI read layer. Called from server components (no DB creds in browser).
-// Run `npm run codegen` (with the API up) to regenerate src/types/api.ts from OpenAPI.
+// The types below are ALIASES over the OpenAPI-generated contract in src/types/api.ts — the single
+// source of truth is api/neta_api/schemas.py. After changing the API schema, run `npm run codegen`
+// (with the API running) to refresh src/types/api.ts; these aliases then pick the changes up.
+
+import type { components } from "@/types/api";
 
 const API_BASE = process.env.NETA_API_BASE ?? "http://localhost:8000";
 
-export interface Source {
-  code: string;
-  name: string;
-  url: string | null;
-  trust_tier: number;
-}
-
-export interface OfficeTerm {
-  house: string;
-  cycle_number: number;
-  constituency: string | null;
-  state: string | null;
-  party: string | null;
-  membership_type: string;
-  start_date: string | null;
-  end_date: string | null;
-  status: string;
-  source: Source;
-  attendance_pct: number | null;
-  attendance_source: Source | null;
-}
-
-export interface PartyStint {
-  party: string;
-  joined_date: string | null;
-  left_date: string | null;
-  is_current: boolean;
-  join_reason: string | null;
-  leave_reason: string | null;
-  reason_source: Source | null;
-  source: Source;
-}
-
-export interface AffidavitWealth {
-  election_cycle: string;
-  filed_year: number;
-  total_assets: number;
-  total_liabilities: number;
-  movable_assets: number | null;
-  immovable_assets: number | null;
-  self_income: number | null;
-  source: Source;
-}
-
-export interface CriminalCase {
-  case_number: string | null;
-  court: string | null;
-  filed_year: number | null;
-  status: string;
-  is_convicted: boolean;
-  severity: "heinous" | "serious" | "minor" | null;
-  sections: string[];
-  description: string | null;
-  source: Source;
-}
-
-export interface PartySwitch {
-  from_party: string | null;
-  to_party: string;
-  event_date: string | null;
-  narrative: string | null;
-  source: Source | null;
-}
-
-export interface PersonResume {
-  id: number;
-  display_name: string;
-  native_name: string | null;
-  photo_url: string | null;
-  age: number | null;
-  education: string | null;
-  office_terms: OfficeTerm[];
-  party_history: PartyStint[];
-  party_switches: PartySwitch[];
-  wealth: AffidavitWealth[];
-  criminal_cases: CriminalCase[];
-}
-
-export interface PersonSummary {
-  id: number;
-  display_name: string;
-  native_name: string | null;
-  photo_url: string | null;
-  current_party: string | null;
-  current_house: string | null;
-  constituency: string | null;
-  net_assets: number | null;
-  pending_cases: number;
-  total_cases: number;
-  top_severity: "heinous" | "serious" | "minor" | null;
-  current_attendance_pct: number | null;
-}
+type Schemas = components["schemas"];
+export type Source = Schemas["Source"];
+export type OfficeTerm = Schemas["OfficeTerm"];
+export type PartyStint = Schemas["PartyStint"];
+export type AffidavitWealth = Schemas["AffidavitWealth"];
+export type CriminalCase = Schemas["CriminalCase"];
+export type PartySwitch = Schemas["PartySwitch"];
+export type PersonResume = Schemas["PersonResume"];
+export type PersonSummary = Schemas["PersonSummary"];
 
 async function getJSON<T>(path: string, revalidate = 3600): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, { next: { revalidate } });

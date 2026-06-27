@@ -6,8 +6,11 @@ Every fact-bearing model carries a `source` (provenance) so the UI can render a 
 from __future__ import annotations
 
 from datetime import date
+from typing import Literal
 
 from pydantic import BaseModel
+
+Severity = Literal["heinous", "serious", "minor"]
 
 
 class Source(BaseModel):
@@ -60,7 +63,7 @@ class CriminalCase(BaseModel):
     filed_year: int | None
     status: str                  # pending | convicted | acquitted | framed_charges
     is_convicted: bool
-    severity: str | None         # heinous | serious | minor (derived)
+    severity: Severity | None    # heinous | serious | minor (derived)
     sections: list[str]          # ['IPC 302', 'BNS 103']
     description: str | None
     source: Source
@@ -99,5 +102,5 @@ class PersonSummary(BaseModel):
     net_assets: int | None = None          # latest declared total assets (rupees)
     pending_cases: int = 0                  # count of non-convicted cases
     total_cases: int = 0
-    top_severity: str | None = None         # worst severity across cases (heinous>serious>minor)
+    top_severity: Severity | None = None    # worst severity across cases (heinous>serious>minor)
     current_attendance_pct: float | None = None  # current-term parliamentary attendance %, PRS

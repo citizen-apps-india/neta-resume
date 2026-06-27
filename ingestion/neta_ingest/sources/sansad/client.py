@@ -57,7 +57,6 @@ def _clean_name(raw: str) -> str:
 def _years(term: str | None) -> tuple[int | None, int | None]:
     if not term:
         return None, None
-    m = re.findall(r"(19|20)\d{2}", term)
     yrs = re.findall(r"((?:19|20)\d{2})", term)
     return (int(yrs[0]) if yrs else None, int(yrs[1]) if len(yrs) > 1 else None)
 

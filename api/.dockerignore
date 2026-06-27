@@ -1,0 +1,23 @@
+# Python virtualenv & caches
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# App-local caches / artifacts
+.photo_cache/
+
+# Tests are not needed in the runtime image
+tests/
+
+# VCS / editor / OS noise
+.git/
+.gitignore
+.DS_Store
+
+# Docker artifacts
+Dockerfile
+.dockerignore

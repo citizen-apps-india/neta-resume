@@ -35,22 +35,43 @@ method, fields, licensing, reuse libraries). Spine: `sansad.in` roster · MyNeta
 
 ## Status / build phases
 
-- **Phase 0** — scaffold (this commit): repo skeleton, schema migrations, docs.
-- **Phase 1** — end-to-end vertical slice for **one MP** (roster + affidavit + 1 case + party history rendered on a page, all with provenance).
-- **Phase 2** — breadth on Lok Sabha (18th) with entity resolution at scale.
-- **Phase 3** — add Rajya Sabha + historical backfill (YoY wealth).
-- **Phase 4** — court live-status enrichment, party-switch narrative, search.
-- **Phase 5** — validate state-assembly extension (zero schema change).
+- **Phase 0** — scaffold: repo skeleton, schema migrations (`0001..0009`), docs. **Done.**
+- **Phase 1** — end-to-end vertical slice for one MP (roster + affidavit + case + party history + provenance). **Done.**
+- **Phase 2** — breadth on the 18th Lok Sabha: full roster + official photos from sansad.in, MyNeta affidavits/criminal at scale, cross-cycle merge. **Done.**
+- **Phase 3** — Rajya Sabha roster (sansad.in), Devanagari native names, **PRS attendance %** (LS + RS). **Done.**
+- **Phase 4** — court live-status enrichment + structured party-switch narrative + search. *In progress.*
+- **Phase 5** — validate state-assembly extension (zero schema change). *Planned.*
+
+**Now shipping:** a teal-themed Next.js directory + per-legislator resume page (office history, party
+history, YoY wealth, criminal cases with derived severity, attendance %), every fact carrying a
+provenance link. **Deploy-ready** for the AWS path in [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md)
+(Amplify + App Runner/Lambda + RDS + GitHub Actions cron); CORS is moving to env-driven before launch.
+
+## Documentation
+
+- [`CLAUDE.md`](./CLAUDE.md) — agent onboarding: architecture, local run, CLI + pipeline order, gotchas.
+- [`docs/architecture.md`](./docs/architecture.md) — why the four layers; data-flow invariant.
+- [`docs/DATA_DICTIONARY.md`](./docs/DATA_DICTIONARY.md) — per-table/column reference + enums.
+- [`docs/schema.md`](./docs/schema.md) — schema overview, constraints, provenance model.
+- [`docs/OPERATIONS.md`](./docs/OPERATIONS.md) — pipeline runbook, backfills, recovery, tracing a fact.
+- [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) — AWS path, env vars, DB roles, photo-cache caveat.
+- [`docs/local-dev.md`](./docs/local-dev.md) · [`docs/data-sources.md`](./docs/data-sources.md) ·
+  [`docs/entity-resolution.md`](./docs/entity-resolution.md) ·
+  [`docs/severity-rubric.md`](./docs/severity-rubric.md) · [`docs/data-license.md`](./docs/data-license.md)
 
 ## Quickstart (dev)
 
 ```bash
-# 1. Postgres
+# 1. Postgres (Docker, or Homebrew — same DSN; see docs/local-dev.md)
 docker compose up -d db
+export NETA_DATABASE_URL="postgresql+psycopg://neta:neta@localhost:5432/neta"
 
-# 2. Apply migrations + seeds
-psql "$DATABASE_URL" -f db/migrations/0001_core_person.sql   # ... through 0007
-psql "$DATABASE_URL" -f db/seeds/houses.sql                  # ... etc
+# 2. Apply migrations (0001..0009) then seeds
+export PGPASSWORD=neta
+for f in db/migrations/0*.sql; do psql -h localhost -U neta -d neta -v ON_ERROR_STOP=1 -f "$f"; done
+for f in db/seeds/houses.sql db/seeds/sources.sql db/seeds/parties.sql \
+         db/seeds/ipc_bns_sections.sql db/seeds/severity_rules.sql; do
+  psql -h localhost -U neta -d neta -v ON_ERROR_STOP=1 -f "$f"; done
 
 # 3. Ingestion (Python)
 cd ingestion && uv sync && uv run neta --help
@@ -62,4 +83,4 @@ cd api && uv sync && uv run uvicorn neta_api.main:app --reload
 cd web && npm install && npm run dev
 ```
 
-See [`docs/architecture.md`](./docs/architecture.md) for the full picture.
+See [`docs/architecture.md`](./docs/architecture.md) and [`CLAUDE.md`](./CLAUDE.md) for the full picture.

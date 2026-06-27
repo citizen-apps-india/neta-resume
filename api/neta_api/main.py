@@ -10,6 +10,7 @@ from __future__ import annotations
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from neta_api.deps import settings
 from neta_api.routers import persons, search
 
 app = FastAPI(
@@ -18,10 +19,11 @@ app = FastAPI(
     description="Read-only resume aggregate for Indian legislators. Every fact carries provenance.",
 )
 
-# Dev: allow the Next.js dev server. Tighten for any real deployment.
+# Allowed origins are env-driven (NETA_ALLOWED_ORIGINS); the default is the local Next.js dev server.
+# Read-only API, so GET only and no credentials.
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=settings.cors_origins,
     allow_methods=["GET"],
     allow_headers=["*"],
 )

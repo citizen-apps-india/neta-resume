@@ -26,6 +26,24 @@ carries a `source_ref_id` and date-of-observation, so any datapoint links back t
 | `case_charge` | IPC/BNS sections on a case (many per case) | via case |
 | `legal_section` | IPC/BNS section catalog + crosswalk + `base_severity` | seed |
 
+## Valid values / enums
+
+Literal `CHECK`-constraint values (kept in sync with [`DATA_DICTIONARY.md`](./DATA_DICTIONARY.md)):
+
+| Column | Values |
+|---|---|
+| `house.jurisdiction` | `union`, `state` |
+| `office_term.membership_type` | `elected`, `nominated`, `byelection` |
+| `office_term.status` | `sitting`, `former`, `disqualified`, `resigned` |
+| `party_affiliation.detection` | `structured_term_diff`, `manual`, `news_derived` |
+| `criminal_case.status` | `pending`, `convicted`, `acquitted`, `framed_charges` |
+| `criminal_case.severity` / `legal_section.base_severity` | `heinous`, `serious`, `minor` (derived; nullable) |
+| `legal_section.code_system` | `IPC`, `BNS`, `PCA`, `RPA` |
+| `source.trust_tier` | `1` official · `2` ADR/TCPD/PRS · `3` reported/news |
+
+`office_term.attendance_pct` (`numeric(5,2)`, PRS): **`NULL` is meaningful** — rule-exempt members
+(ministers, PM, Speaker/Dep. Speaker, LoP) have no register entry, so NULL renders `—`, never 0.
+
 ## Money
 
 Store all amounts as **integer rupees** (`bigint`). The `₹ lakh/crore` text is parsed upstream in

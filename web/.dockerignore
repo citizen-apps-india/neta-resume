@@ -1,0 +1,13 @@
+node_modules/
+.next/
+.env*
+
+# VCS / editor / OS noise
+.git/
+.gitignore
+.DS_Store
+npm-debug.log*
+
+# Docker artifacts
+Dockerfile
+.dockerignore
