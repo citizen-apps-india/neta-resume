@@ -14,6 +14,7 @@ export interface OfficeTerm {
   house: string;
   cycle_number: number;
   constituency: string | null;
+  state: string | null;
   party: string | null;
   membership_type: string;
   start_date: string | null;
@@ -68,6 +69,7 @@ export interface PersonResume {
   id: number;
   display_name: string;
   native_name: string | null;
+  photo_url: string | null;
   age: number | null;
   education: string | null;
   office_terms: OfficeTerm[];
@@ -81,6 +83,7 @@ export interface PersonSummary {
   id: number;
   display_name: string;
   native_name: string | null;
+  photo_url: string | null;
   current_party: string | null;
   current_house: string | null;
   constituency: string | null;
@@ -103,10 +106,16 @@ export async function getPersonResume(id: number): Promise<PersonResume | null> 
   return res.json();
 }
 
-export function listPersons(limit = 60, offset = 0): Promise<PersonSummary[]> {
-  return getJSON<PersonSummary[]>(`/persons?limit=${limit}&offset=${offset}`);
+export function listPersons(limit = 60, offset = 0, house?: string): Promise<PersonSummary[]> {
+  const h = house ? `&house=${encodeURIComponent(house)}` : "";
+  return getJSON<PersonSummary[]>(`/persons?limit=${limit}&offset=${offset}${h}`);
 }
 
 export function searchPersons(q: string): Promise<PersonSummary[]> {
   return getJSON<PersonSummary[]>(`/search?q=${encodeURIComponent(q)}`, 0);
+}
+
+/** Photos are served via the API proxy (upstream blocks cross-origin embedding). */
+export function photoSrc(id: number, hasPhoto: string | null | undefined): string | null {
+  return hasPhoto ? `${API_BASE}/persons/${id}/photo` : null;
 }

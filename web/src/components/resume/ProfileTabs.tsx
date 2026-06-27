@@ -94,11 +94,13 @@ function Overview({ resume }: { resume: PersonResume }) {
           <div style={{ ...headStyle, marginBottom: 14 }}>Cases by severity</div>
           {resume.criminal_cases.length ? (
             <Donut segments={donut} centerNum={pending} centerLabel="pending" size={104} />
-          ) : (
+          ) : resume.wealth.length ? (
             <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
               <SeverityBadge severity={null} total={0} />
               <Muted>No criminal cases declared.</Muted>
             </div>
+          ) : (
+            <Muted>No affidavit on record (Rajya Sabha).</Muted>
           )}
         </div>
       </div>
@@ -158,11 +160,18 @@ function Wealth({ resume }: { resume: PersonResume }) {
 
 function Cases({ resume }: { resume: PersonResume }) {
   const cases = resume.criminal_cases;
+  const hasAffidavit = resume.wealth.length > 0;
   if (!cases.length) {
     return (
       <div className="fadeUp" style={{ display: "flex", alignItems: "center", gap: 12, padding: "28px 24px", border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)" }}>
-        <SeverityBadge severity={null} total={0} />
-        <Muted>No criminal cases declared in this affidavit.</Muted>
+        {hasAffidavit ? (
+          <>
+            <SeverityBadge severity={null} total={0} />
+            <Muted>No criminal cases declared in this affidavit.</Muted>
+          </>
+        ) : (
+          <Muted>No ECI candidate affidavit is on record. Sitting Rajya Sabha members are indirectly elected and file no candidate affidavit, so declared cases are not available here.</Muted>
+        )}
       </div>
     );
   }
@@ -255,11 +264,11 @@ function Career({ resume }: { resume: PersonResume }) {
             </div>
             <div style={{ flex: 1, minWidth: 0, paddingBottom: 26 }}>
               <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
-                <span style={{ fontSize: 16, fontWeight: 600 }}>{o.house}{o.cycle_number ? ` · ${o.cycle_number}th` : ""}</span>
+                <span style={{ fontSize: 16, fontWeight: 600 }}>{o.house}{o.house.includes("Lok Sabha") && o.cycle_number ? ` · ${o.cycle_number}th` : ""}</span>
                 <span className="mono" style={{ fontSize: 9.5, fontWeight: 600, letterSpacing: "0.06em", padding: "3px 9px", borderRadius: 5, background: "var(--accent-soft)", color: "var(--accent-soft-fg)", textTransform: "uppercase" }}>{o.status}</span>
                 <SourceLink source={o.source} />
               </div>
-              {o.constituency && <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 5 }}>{o.constituency} · {o.membership_type}</div>}
+              {(o.constituency ?? o.state) && <div style={{ fontSize: 13, color: "var(--muted)", marginTop: 5 }}>{o.constituency ?? o.state} · {o.membership_type}</div>}
               <div style={{ marginTop: 10 }}><PartyPill party={o.party} /></div>
             </div>
           </div>

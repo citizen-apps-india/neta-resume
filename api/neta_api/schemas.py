@@ -21,6 +21,7 @@ class OfficeTerm(BaseModel):
     house: str              # 'Lok Sabha'
     cycle_number: int       # 18
     constituency: str | None
+    state: str | None       # Rajya Sabha members represent a state
     party: str | None
     membership_type: str
     start_date: date | None
@@ -75,6 +76,7 @@ class PersonResume(BaseModel):
     id: int
     display_name: str
     native_name: str | None = None     # Devanagari (Hindi) name, where available
+    photo_url: str | None = None
     age: int | None = None
     education: str | None = None
     office_terms: list[OfficeTerm]
@@ -88,9 +90,10 @@ class PersonSummary(BaseModel):
     id: int
     display_name: str
     native_name: str | None = None
+    photo_url: str | None = None
     current_party: str | None
     current_house: str | None
-    constituency: str | None
+    constituency: str | None           # for RS this carries the represented state
     net_assets: int | None = None          # latest declared total assets (rupees)
     pending_cases: int = 0                  # count of non-convicted cases
     total_cases: int = 0

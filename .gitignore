@@ -33,3 +33,6 @@ web/.turbo/
 .idea/
 .vscode/
 *.log
+
+# API photo proxy cache
+api/.photo_cache/

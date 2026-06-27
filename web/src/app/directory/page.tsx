@@ -14,11 +14,15 @@ export default async function Directory({
   let people: PersonSummary[] = [];
   let error = false;
   try {
-    people = q && q.trim().length >= 2 ? await searchPersons(q.trim()) : await listPersons(120);
+    if (q && q.trim().length >= 2) {
+      people = await searchPersons(q.trim());
+      if (house) people = people.filter((p) => p.current_house === house);
+    } else {
+      people = await listPersons(house ? 300 : 120, 0, house);
+    }
   } catch {
     error = true;
   }
-  if (house) people = people.filter((p) => p.current_house === house);
 
   return (
     <>

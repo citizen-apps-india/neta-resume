@@ -34,7 +34,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
     person = db.execute(
         text(
             """
-            SELECT p.id, p.display_name,
+            SELECT p.id, p.display_name, p.photo_url,
                    (SELECT variant FROM person_name_variant
                     WHERE person_id = p.id AND script = 'devanagari' LIMIT 1) AS native_name
             FROM person p WHERE p.id = :pid
@@ -50,6 +50,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
             house=r.house,
             cycle_number=r.cycle_number,
             constituency=r.constituency,
+            state=r.state,
             party=r.party,
             membership_type=r.membership_type,
             start_date=r.start_date,
@@ -61,6 +62,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
             text(
                 """
                 SELECT h.name AS house, tc.number AS cycle_number, ot.constituency,
+                       ot.rs_state_code AS state,
                        pt.canonical_name AS party, ot.membership_type, ot.start_date, ot.end_date,
                        ot.status, s.code AS source_code, s.name AS source_name, s.trust_tier,
                        sr.native_url
@@ -204,6 +206,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
         id=person.id,
         display_name=person.display_name,
         native_name=person.native_name,
+        photo_url=person.photo_url,
         age=latest.age if latest else None,
         education=latest.education if latest else None,
         office_terms=office_terms,
@@ -217,7 +220,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
 # Shared summary projection: per person, current party + house/constituency, latest assets,
 # case counts, and worst severity. `{where}` and `{order}` are filled by list/search.
 _SUMMARY_SQL = """
-    SELECT p.id, p.display_name,
+    SELECT p.id, p.display_name, p.photo_url,
            (SELECT variant FROM person_name_variant
             WHERE person_id = p.id AND script = 'devanagari' LIMIT 1) AS native_name,
            cur.party       AS current_party,
@@ -234,7 +237,7 @@ _SUMMARY_SQL = """
         WHERE pa.person_id = p.id AND pa.is_current LIMIT 1
     ) cur ON true
     LEFT JOIN LATERAL (
-        SELECT h.name AS house, ot.constituency
+        SELECT h.name AS house, COALESCE(ot.constituency, ot.rs_state_code) AS constituency
         FROM office_term ot JOIN house h ON h.id = ot.house_id
         WHERE ot.person_id = p.id ORDER BY ot.term_cycle_id DESC LIMIT 1
     ) oh ON true
@@ -263,6 +266,7 @@ def _to_summary(r) -> PersonSummary:
         id=r.id,
         display_name=r.display_name,
         native_name=r.native_name,
+        photo_url=r.photo_url,
         current_party=r.current_party,
         current_house=r.current_house,
         constituency=r.constituency,
@@ -273,9 +277,13 @@ def _to_summary(r) -> PersonSummary:
     )
 
 
-def list_persons(db: Session, limit: int = 60, offset: int = 0) -> list[PersonSummary]:
-    sql = _SUMMARY_SQL.format(where="", order="ORDER BY w.total_assets DESC NULLS LAST, p.display_name")
-    rows = db.execute(text(sql), {"limit": limit, "offset": offset})
+def list_persons(db: Session, limit: int = 60, offset: int = 0, house: str | None = None) -> list[PersonSummary]:
+    where = "WHERE oh.house = :house" if house else ""
+    sql = _SUMMARY_SQL.format(where=where, order="ORDER BY w.total_assets DESC NULLS LAST, p.display_name")
+    params: dict = {"limit": limit, "offset": offset}
+    if house:
+        params["house"] = house
+    rows = db.execute(text(sql), params)
     return [_to_summary(r) for r in rows]
 
 

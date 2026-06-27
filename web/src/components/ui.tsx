@@ -92,8 +92,21 @@ export function Dot({ color, sq = false }: { color: string; sq?: boolean }) {
   return <span style={{ width: 7, height: 7, borderRadius: sq ? 2 : "50%", background: color, flexShrink: 0 }} />;
 }
 
-/** Hatched photo placeholder used until official photos are wired. */
-export function PhotoBox({ w = 60, h = 72, label }: { w?: number; h?: number; label?: string }) {
+/** Official photo when available (sansad.in), else a hatched placeholder. */
+export function PhotoBox({ w = 60, h = 72, label, src }: { w?: number; h?: number; label?: string; src?: string | null }) {
+  if (src) {
+    return (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        src={src}
+        alt=""
+        width={w}
+        height={h}
+        loading="lazy"
+        style={{ width: w, height: h, borderRadius: 8, flexShrink: 0, objectFit: "cover", border: "1px solid var(--rule)", background: "var(--photo-b)" }}
+      />
+    );
+  }
   return (
     <div
       style={{

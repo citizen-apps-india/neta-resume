@@ -59,6 +59,14 @@ def resolve() -> None:
     p.run()
 
 
+@app.command(name="rajya-sabha")
+def rajya_sabha() -> None:
+    """Ingest the sitting Rajya Sabha roster from sansad.in (roster + photo; no affidavit data)."""
+    from neta_ingest.pipelines import rajya_sabha as p
+
+    p.run()
+
+
 @app.command(name="native-names")
 def native_names() -> None:
     """Backfill Devanagari (Hindi) names from Wikidata for the 18th Lok Sabha."""

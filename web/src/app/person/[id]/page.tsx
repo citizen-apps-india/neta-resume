@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { getPersonResume, type PersonResume } from "@/lib/api";
+import { getPersonResume, photoSrc, type PersonResume } from "@/lib/api";
 import { rupees } from "@/lib/format";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Frame, PhotoBox, PartyPill } from "@/components/ui";
@@ -23,11 +23,14 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
   ]);
   const currentParty =
     resume.party_history.find((p) => p.is_current)?.party ?? lead?.party ?? null;
+  // RS members file no ECI candidate affidavit, so we have no wealth/criminal data for them.
+  // Show "—" rather than "0", which would falsely imply a clean record.
+  const hasAffidavit = resume.wealth.length > 0;
 
   const metrics = [
-    { label: "Declared net assets", src: latestAssets ? `ECI · ${latestAssets.election_cycle}` : "—", value: rupees(latestAssets?.total_assets ?? null), color: "var(--ink)", dot: "" },
-    { label: "Pending criminal cases", src: "ECI AFFIDAVIT", value: String(pending), color: pending ? "var(--sev2)" : "var(--ok)", dot: pending ? "var(--sev2)" : "var(--ok)" },
-    { label: "Convictions on record", src: "COURT / AFFIDAVIT", value: String(convictions), color: convictions ? "var(--sev1)" : "var(--ink)", dot: "" },
+    { label: "Declared net assets", src: latestAssets ? `ECI · ${latestAssets.election_cycle}` : "NO AFFIDAVIT", value: rupees(latestAssets?.total_assets ?? null), color: "var(--ink)", dot: "" },
+    { label: "Pending criminal cases", src: hasAffidavit ? "ECI AFFIDAVIT" : "NO AFFIDAVIT", value: hasAffidavit ? String(pending) : "—", color: !hasAffidavit ? "var(--muted)" : pending ? "var(--sev2)" : "var(--ok)", dot: hasAffidavit && pending ? "var(--sev2)" : hasAffidavit ? "var(--ok)" : "" },
+    { label: "Convictions on record", src: hasAffidavit ? "COURT / AFFIDAVIT" : "NO AFFIDAVIT", value: hasAffidavit ? String(convictions) : "—", color: convictions ? "var(--sev1)" : "var(--ink)", dot: "" },
     { label: "Party labels held", src: "PUBLIC RECORD", value: String(parties.size), color: "var(--ink)", dot: "" },
   ];
 
@@ -46,7 +49,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
           <div style={{ display: "grid", gridTemplateColumns: "1.55fr 1fr", borderBottom: "1px solid var(--rule)" }}>
             <div style={{ minWidth: 0, padding: "38px 40px", borderRight: "1px solid var(--rule)" }}>
               <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
-                <PhotoBox w={108} h={128} label="OFFICIAL PHOTO" />
+                <PhotoBox w={108} h={128} label="OFFICIAL PHOTO" src={photoSrc(resume.id, resume.photo_url)} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", color: "var(--accent)", marginBottom: 10 }}>
                     FILE · {lead ? `${lead.house.replace(/[^A-Z]/g, "") || "LS"}-${lead.cycle_number}` : "—"} · #{resume.id}
@@ -60,7 +63,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
                   <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 9, marginTop: 16 }}>
                     <PartyPill party={currentParty} />
                     {lead && <Meta>{lead.membership_type === "nominated" ? "Nominated" : "MP"} · {lead.house}</Meta>}
-                    {lead?.constituency && <><Sep /><Meta>{lead.constituency}</Meta></>}
+                    {(lead?.constituency ?? lead?.state) && <><Sep /><Meta>{lead?.constituency ?? lead?.state}</Meta></>}
                     {resume.age != null && <><Sep /><Meta>Age {resume.age}</Meta></>}
                     <Sep />
                     <Meta>{resume.office_terms.length} term{resume.office_terms.length === 1 ? "" : "s"} on file</Meta>
@@ -110,12 +113,17 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
 }
 
 function summary(r: PersonResume, assets: number | null, pending: number, convictions: number, nParties: number): string {
-  const seat = r.office_terms[0]?.constituency;
+  const lead0 = r.office_terms[0];
+  const seat = lead0?.constituency ?? lead0?.state;
   const bits: string[] = [];
-  bits.push(`${r.display_name} ${seat ? `represents ${seat}` : "is on the public record"}.`);
-  if (assets != null) bits.push(`Declared assets stand at ${rupees(assets)}.`);
-  if (r.criminal_cases.length === 0) bits.push("No criminal cases are declared.");
-  else bits.push(`${r.criminal_cases.length} criminal case${r.criminal_cases.length === 1 ? "" : "s"} ${pending ? `(${pending} pending` : ""}${convictions ? `, ${convictions} convicted)` : pending ? ")" : ""} appear on the affidavit.`);
+  bits.push(`${r.display_name} ${seat ? `represents ${seat}${lead0?.state && !lead0?.constituency ? " in the Rajya Sabha" : ""}` : "is on the public record"}.`);
+  if (r.wealth.length === 0) {
+    bits.push("No ECI candidate affidavit is on record, so declared wealth and cases are not available.");
+  } else {
+    if (assets != null) bits.push(`Declared assets stand at ${rupees(assets)}.`);
+    if (r.criminal_cases.length === 0) bits.push("No criminal cases are declared.");
+    else bits.push(`${r.criminal_cases.length} criminal case${r.criminal_cases.length === 1 ? "" : "s"} ${pending ? `(${pending} pending` : ""}${convictions ? `, ${convictions} convicted)` : pending ? ")" : ""} appear on the affidavit.`);
+  }
   bits.push(`${nParties} party label${nParties === 1 ? "" : "s"} on file.`);
   return bits.join(" ");
 }
