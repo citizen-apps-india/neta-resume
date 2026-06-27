@@ -36,7 +36,7 @@ export function SiteHeader() {
           href="/directory"
           className="btnDark"
           style={{
-            fontFamily: "'Archivo',sans-serif", fontSize: 12.5, fontWeight: 600, padding: "8px 16px",
+            fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 12.5, fontWeight: 600, padding: "8px 16px",
             borderRadius: 8, border: "none", background: "var(--btn-bg)", color: "var(--btn-fg)",
             cursor: "pointer", textDecoration: "none",
           }}

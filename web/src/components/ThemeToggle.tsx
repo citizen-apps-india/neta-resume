@@ -33,7 +33,7 @@ export function ThemeToggle() {
             aria-pressed={active}
             style={{
               display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
-              fontFamily: "'Archivo',sans-serif", fontSize: 12, fontWeight: 600, padding: "6px 12px",
+              fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 12, fontWeight: 600, padding: "6px 12px",
               border: "none", borderRadius: 6, cursor: "pointer",
               background: active ? "var(--btn-bg)" : "transparent",
               color: active ? "var(--btn-fg)" : "var(--ink2)",

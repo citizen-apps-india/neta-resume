@@ -1,29 +1,35 @@
 /* Neta-Resume design system — tokens + base + utilities.
-   Ported from the Claude Design "Neta-Resume Design System" (light + dark themes). */
+   Ported from the Claude Design "Neta-Resume Teal Theme" (Brand & System + Teal Theme).
+   Signature: deep teal (#12A594) accent on a cool-neutral foundation — teal reads as neutral
+   infrastructure (no major Indian party owns it). Dark is the design's default; light is first-class.
+   Type: Bricolage Grotesque (display/UI), IBM Plex Mono (labels/data), IBM Plex Sans Devanagari (native). */
 
 :root,
 [data-theme="light"] {
-  --bg:#F7F6F3;--panel:#F4F2ED;--card:#FCFBF9;--card2:#FFFFFF;--sunken:#F1EFE9;
-  --rule:#E2DDD3;--rule2:#EEEBE3;--border:#D8D2C6;--border2:#C9C2B5;
-  --faint:#ABA399;--muted:#837C73;--ink2:#4A4540;--ink:#1A1714;
-  --accent:#34507A;--accent-2:#5C7299;--accent-3:#9AB0D4;--accent-soft:#EDF1F7;--accent-soft-bd:#C7D2E4;--accent-soft-fg:#34507A;
-  --btn-bg:#1A1714;--btn-fg:#F7F6F3;
-  --sev1:#9E2B25;--sev1-bg:#F4E4E2;--sev1-bd:#E3C4C0;--sev2:#B0631E;--sev2-bg:#F5E7D8;--sev2-bd:#E8D3B6;
-  --sev3:#7C7430;--sev3-bg:#EFEDDB;--ok:#3F7A52;--ok-bg:#E4EEE7;
-  --warn-bg:#F1EFE9;--shadow:rgba(26,23,20,0.34);--photo-a:#EEEBE3;--photo-b:#F4F2ED;--gridline:#EAE7DF;
-  --glow1:rgba(52,80,122,0.13);--glow2:rgba(52,80,122,0.07);
+  /* cool paper */
+  --bg:#F5F6F7;--panel:#EEF0F2;--card:#FFFFFF;--card2:#FFFFFF;--sunken:#EAECEF;
+  --rule:#E2E4E8;--rule2:#ECEEF1;--border:#DADDE2;--border2:#C7CBD2;
+  --faint:#A0A4AD;--muted:#80858F;--ink2:#4B4F59;--ink:#121317;
+  --accent:#12A594;--accent-2:#0E8D7E;--accent-3:#5FC9BC;--accent-soft:#E3F4F1;--accent-soft-bd:#B5E2DB;--accent-soft-fg:#0E7C6F;
+  --btn-bg:#121317;--btn-fg:#F5F6F7;
+  /* severity (charge type): danger reserved for real severity, minor = neutral */
+  --sev1:#C0353A;--sev1-bg:#FBEBEB;--sev1-bd:#F1CDCD;--sev2:#C05A23;--sev2-bg:#FBEEE4;--sev2-bd:#F1D7C5;
+  --sev3:#6B7280;--sev3-bg:#EEF0F2;--ok:#2EA76A;--ok-bg:#E4F3EB;
+  --warn-bg:#EEF0F2;--shadow:rgba(18,20,24,0.28);--photo-a:#EAECEF;--photo-b:#F5F6F7;--gridline:#E8EAED;
+  --glow1:rgba(18,165,148,0.10);--glow2:rgba(18,165,148,0.05);
 }
 
 [data-theme="dark"] {
-  --bg:#070B13;--panel:#0C111C;--card:#141C2C;--card2:#1A2435;--sunken:#0A0F1A;
-  --rule:#2A3547;--rule2:#222B3A;--border:#313D52;--border2:#3C4A62;
-  --faint:#5F6C82;--muted:#8A97AB;--ink2:#B9C2D0;--ink:#E9EDF4;
-  --accent:#86A8DC;--accent-2:#6E8FC4;--accent-3:#4F668F;--accent-soft:#1B2840;--accent-soft-bd:#33476A;--accent-soft-fg:#A6C2EA;
-  --btn-bg:#E9EDF4;--btn-fg:#0F141E;
-  --sev1:#E08379;--sev1-bg:#37211F;--sev1-bd:#4E2F2B;--sev2:#D9954F;--sev2-bg:#352818;--sev2-bd:#4D3A20;
-  --sev3:#C2B45E;--sev3-bg:#2E2B19;--ok:#74B68A;--ok-bg:#16261D;
-  --warn-bg:#141C2C;--shadow:rgba(0,0,0,0.66);--photo-a:#22304A;--photo-b:#18223A;--gridline:#161F30;
-  --glow1:rgba(96,140,215,0.20);--glow2:rgba(72,108,178,0.12);
+  /* cool-neutral foundation (signature) */
+  --bg:#0C0D10;--panel:#141519;--card:#1C1E24;--card2:#24262E;--sunken:#0A0B0E;
+  --rule:#2C2F37;--rule2:#21232A;--border:#2C2F37;--border2:#3A3E48;
+  --faint:#71757F;--muted:#8A8F9A;--ink2:#A9ADB8;--ink:#F3F4F6;
+  --accent:#2FB6A5;--accent-2:#12A594;--accent-3:#5FDED0;--accent-soft:#0E2A27;--accent-soft-bd:#1E4F49;--accent-soft-fg:#5FDED0;
+  --btn-bg:#F3F4F6;--btn-fg:#0C0D10;
+  --sev1:#E5736E;--sev1-bg:#2A1A1B;--sev1-bd:#4A2C2D;--sev2:#EF9670;--sev2-bg:#2A1F17;--sev2-bd:#48331F;
+  --sev3:#A9ADB8;--sev3-bg:#23262E;--ok:#4FC68A;--ok-bg:#14271D;
+  --warn-bg:#1C1E24;--shadow:rgba(0,0,0,0.55);--photo-a:#24262E;--photo-b:#141519;--gridline:#1C2027;
+  --glow1:rgba(18,165,148,0.18);--glow2:rgba(18,165,148,0.10);
 }
 
 * { box-sizing: border-box; }
@@ -31,7 +37,7 @@ html { scroll-behavior: smooth; }
 body {
   margin: 0;
   color: var(--ink);
-  font-family: 'Archivo', sans-serif;
+  font-family: 'Bricolage Grotesque', sans-serif;
   -webkit-font-smoothing: antialiased;
   background:
     radial-gradient(1100px 760px at 86% -12%, var(--glow1), transparent 62%),
@@ -41,16 +47,16 @@ body {
   background-attachment: fixed;
   min-height: 100vh;
 }
-::selection { background: #34507A; color: #F7F6F3; }
+::selection { background: #12A594; color: #FFFFFF; }
 a { color: inherit; }
 
 [data-theme] *,
 [data-theme] { transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease, color .3s ease; }
 
-/* serif display / mono labels helpers */
-.serif { font-family: 'Newsreader', serif; }
+/* display / mono labels / Devanagari helpers */
+.serif { font-family: 'Bricolage Grotesque', sans-serif; letter-spacing: -0.01em; }
 .mono  { font-family: 'IBM Plex Mono', monospace; }
-.deva  { font-family: 'Mukta', sans-serif; }
+.deva  { font-family: 'IBM Plex Sans Devanagari', sans-serif; }
 
 /* hover/interaction utilities (React inline styles can't do :hover) */
 .lift { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }

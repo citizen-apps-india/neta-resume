@@ -38,7 +38,7 @@ export function SearchBox({
         onChange={(e) => setQ(e.target.value)}
         placeholder={placeholder}
         style={{
-          border: "none", outline: "none", background: "transparent", fontFamily: "'Archivo',sans-serif",
+          border: "none", outline: "none", background: "transparent", fontFamily: "'Bricolage Grotesque',sans-serif",
           fontSize: big ? 14.5 : 13.5, color: "var(--ink)", width: "100%",
         }}
       />

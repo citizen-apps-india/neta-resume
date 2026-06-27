@@ -53,7 +53,7 @@ export default async function Home() {
             <div style={{ minWidth: 320, maxWidth: 440, flex: 1, display: "flex" }}>
               <SearchBox big placeholder="Search by name, constituency or party…" />
             </div>
-            <Link href="/directory" className="btnDark" style={{ display: "inline-flex", alignItems: "center", fontFamily: "'Archivo',sans-serif", fontSize: 14.5, fontWeight: 600, padding: "13px 24px", borderRadius: 10, border: "none", background: "var(--btn-bg)", color: "var(--btn-fg)", cursor: "pointer", textDecoration: "none" }}>
+            <Link href="/directory" className="btnDark" style={{ display: "inline-flex", alignItems: "center", fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 14.5, fontWeight: 600, padding: "13px 24px", borderRadius: 10, border: "none", background: "var(--btn-bg)", color: "var(--btn-fg)", cursor: "pointer", textDecoration: "none" }}>
               View all{total ? ` ${total}` : ""} →
             </Link>
           </div>
