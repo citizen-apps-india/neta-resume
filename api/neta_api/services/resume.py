@@ -30,6 +30,13 @@ def _source(row) -> Source:
     )
 
 
+def _attendance_source(row) -> Source | None:
+    """Provenance for the attendance figure (PRS), from att_*-prefixed columns; None if no record."""
+    if not row.att_code:
+        return None
+    return Source(code=row.att_code, name=row.att_name, url=row.att_url, trust_tier=row.att_trust)
+
+
 def build_resume(db: Session, person_id: int) -> PersonResume | None:
     person = db.execute(
         text(
@@ -57,6 +64,8 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
             end_date=r.end_date,
             status=r.status,
             source=_source(r),
+            attendance_pct=float(r.attendance_pct) if r.attendance_pct is not None else None,
+            attendance_source=_attendance_source(r),
         )
         for r in db.execute(
             text(
@@ -65,13 +74,17 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
                        ot.rs_state_code AS state,
                        pt.canonical_name AS party, ot.membership_type, ot.start_date, ot.end_date,
                        ot.status, s.code AS source_code, s.name AS source_name, s.trust_tier,
-                       sr.native_url
+                       sr.native_url, ot.attendance_pct,
+                       att_s.code AS att_code, att_s.name AS att_name, att_s.trust_tier AS att_trust,
+                       att_sr.native_url AS att_url
                 FROM office_term ot
                 JOIN house h ON h.id = ot.house_id
                 JOIN term_cycle tc ON tc.id = ot.term_cycle_id
                 LEFT JOIN party pt ON pt.id = ot.party_id
                 JOIN source_ref sr ON sr.id = ot.source_ref_id
                 JOIN source s ON s.id = sr.source_id
+                LEFT JOIN source_ref att_sr ON att_sr.id = ot.attendance_source_ref_id
+                LEFT JOIN source att_s ON att_s.id = att_sr.source_id
                 WHERE ot.person_id = :pid
                 ORDER BY tc.number DESC
                 """
@@ -229,7 +242,8 @@ _SUMMARY_SQL = """
            w.total_assets  AS net_assets,
            COALESCE(cc.total, 0)   AS total_cases,
            COALESCE(cc.pending, 0) AS pending_cases,
-           sev.severity    AS top_severity
+           sev.severity    AS top_severity,
+           oh.attendance_pct AS current_attendance_pct
     FROM person p
     LEFT JOIN LATERAL (
         SELECT pt.canonical_name AS party
@@ -237,7 +251,8 @@ _SUMMARY_SQL = """
         WHERE pa.person_id = p.id AND pa.is_current LIMIT 1
     ) cur ON true
     LEFT JOIN LATERAL (
-        SELECT h.name AS house, COALESCE(ot.constituency, ot.rs_state_code) AS constituency
+        SELECT h.name AS house, COALESCE(ot.constituency, ot.rs_state_code) AS constituency,
+               ot.attendance_pct
         FROM office_term ot JOIN house h ON h.id = ot.house_id
         WHERE ot.person_id = p.id ORDER BY ot.term_cycle_id DESC LIMIT 1
     ) oh ON true
@@ -274,6 +289,7 @@ def _to_summary(r) -> PersonSummary:
         pending_cases=r.pending_cases,
         total_cases=r.total_cases,
         top_severity=r.top_severity,
+        current_attendance_pct=float(r.current_attendance_pct) if r.current_attendance_pct is not None else None,
     )
 
 

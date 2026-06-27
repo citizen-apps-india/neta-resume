@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { photoSrc, type PersonSummary } from "@/lib/api";
-import { rupees, caseSignalColor } from "@/lib/format";
+import { rupees, caseSignalColor, attendancePct, attendanceColor } from "@/lib/format";
 import { PartyPill, PhotoBox, Dot } from "@/components/ui";
 
 /** The comparable directory card — the same four signals for every legislator. */
@@ -26,7 +26,7 @@ export function DirectoryCard({ p }: { p: PersonSummary }) {
           <div className="mono" style={{ fontSize: 13.5, fontWeight: 500 }}>{rupees(p.net_assets)}</div>
           <div style={{ fontSize: 9.5, color: "var(--muted)", marginTop: 2 }}>ASSETS</div>
         </div>
-        <div style={{ flex: 1, padding: "10px 14px" }}>
+        <div style={{ flex: 1, padding: "10px 14px", borderRight: "1px solid var(--rule)" }}>
           {noAffidavit ? (
             <div className="mono" style={{ fontSize: 13.5, fontWeight: 500, color: "var(--faint)" }}>—</div>
           ) : (
@@ -36,6 +36,12 @@ export function DirectoryCard({ p }: { p: PersonSummary }) {
             </div>
           )}
           <div style={{ fontSize: 9.5, color: "var(--muted)", marginTop: 2 }}>{noAffidavit ? "NO AFFIDAVIT" : "CASES"}</div>
+        </div>
+        <div style={{ flex: 1, padding: "10px 14px" }}>
+          <div className="mono" style={{ fontSize: 13.5, fontWeight: 500, color: attendanceColor(p.current_attendance_pct) }}>
+            {attendancePct(p.current_attendance_pct)}
+          </div>
+          <div style={{ fontSize: 9.5, color: "var(--muted)", marginTop: 2 }}>{p.current_attendance_pct == null ? "NO RECORD" : "ATTENDANCE"}</div>
         </div>
       </div>
       {seat && (

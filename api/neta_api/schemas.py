@@ -28,6 +28,8 @@ class OfficeTerm(BaseModel):
     end_date: date | None
     status: str
     source: Source
+    attendance_pct: float | None = None         # cumulative parliamentary attendance %, PRS
+    attendance_source: Source | None = None     # provenance for the attendance figure
 
 
 class PartyStint(BaseModel):
@@ -98,3 +100,4 @@ class PersonSummary(BaseModel):
     pending_cases: int = 0                  # count of non-convicted cases
     total_cases: int = 0
     top_severity: str | None = None         # worst severity across cases (heinous>serious>minor)
+    current_attendance_pct: float | None = None  # current-term parliamentary attendance %, PRS

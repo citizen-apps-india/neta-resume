@@ -6,6 +6,7 @@ INSERT INTO source (code, name, base_url, license, trust_tier) VALUES
     ('tcpd_surf',     'TCPD SURF / LokDhaba (Ashoka)',      'https://tcpd.ashoka.edu.in/',        'academic',        2),
     ('bharat_courts', 'bharat-courts / eCourts',            'https://services.ecourts.gov.in/',   'public-official', 1),
     ('datagovin',     'data.gov.in (OGD)',                  'https://www.data.gov.in/',           'GODL-India',      1),
+    ('prs',           'PRS Legislative Research',           'https://prsindia.org/',              'non-commercial',  2),
     ('wikidata',      'Wikidata',                           'https://www.wikidata.org/',          'CC0',             3),
     ('news',          'News / reported',                    NULL,                                  'reported',        3)
 ON CONFLICT (code) DO NOTHING;

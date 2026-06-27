@@ -83,6 +83,14 @@ def rajya_sabha() -> None:
     p.run()
 
 
+@app.command()
+def attendance(house: str = "ls") -> None:
+    """Attach cumulative parliamentary attendance % (PRS) to current-term office_terms. house: ls|rs."""
+    from neta_ingest.pipelines import attendance as p
+
+    p.run(house=house)
+
+
 @app.command(name="native-names")
 def native_names() -> None:
     """Backfill Devanagari (Hindi) names from Wikidata for the 18th Lok Sabha."""

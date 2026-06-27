@@ -21,6 +21,8 @@ export interface OfficeTerm {
   end_date: string | null;
   status: string;
   source: Source;
+  attendance_pct: number | null;
+  attendance_source: Source | null;
 }
 
 export interface PartyStint {
@@ -91,6 +93,7 @@ export interface PersonSummary {
   pending_cases: number;
   total_cases: number;
   top_severity: "heinous" | "serious" | "minor" | null;
+  current_attendance_pct: number | null;
 }
 
 async function getJSON<T>(path: string, revalidate = 3600): Promise<T> {

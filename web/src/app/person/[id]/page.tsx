@@ -1,7 +1,7 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPersonResume, photoSrc, type PersonResume } from "@/lib/api";
-import { rupees } from "@/lib/format";
+import { rupees, attendancePct, attendanceColor } from "@/lib/format";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Frame, PhotoBox, PartyPill } from "@/components/ui";
 import { ProfileTabs } from "@/components/resume/ProfileTabs";
@@ -26,11 +26,16 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
   // RS members file no ECI candidate affidavit, so we have no wealth/criminal data for them.
   // Show "—" rather than "0", which would falsely imply a clean record.
   const hasAffidavit = resume.wealth.length > 0;
+  // Cumulative attendance % for the current term (PRS). Null = rule-exempt (minister/Speaker/LoP) or
+  // not on record — shown as "—", never 0.
+  const attendance = lead?.attendance_pct ?? null;
+  const houseTag = lead ? `${lead.house.replace(/[^A-Z]/g, "") || "LS"}-${lead.cycle_number}` : "";
 
   const metrics = [
     { label: "Declared net assets", src: latestAssets ? `ECI · ${latestAssets.election_cycle}` : "NO AFFIDAVIT", value: rupees(latestAssets?.total_assets ?? null), color: "var(--ink)", dot: "" },
     { label: "Pending criminal cases", src: hasAffidavit ? "ECI AFFIDAVIT" : "NO AFFIDAVIT", value: hasAffidavit ? String(pending) : "—", color: !hasAffidavit ? "var(--muted)" : pending ? "var(--sev2)" : "var(--ok)", dot: hasAffidavit && pending ? "var(--sev2)" : hasAffidavit ? "var(--ok)" : "" },
     { label: "Convictions on record", src: hasAffidavit ? "COURT / AFFIDAVIT" : "NO AFFIDAVIT", value: hasAffidavit ? String(convictions) : "—", color: convictions ? "var(--sev1)" : "var(--ink)", dot: "" },
+    { label: "House attendance", src: attendance != null ? `PRS · ${houseTag}` : "NO RECORD", value: attendancePct(attendance), color: attendanceColor(attendance), dot: "" },
     { label: "Party labels held", src: "PUBLIC RECORD", value: String(parties.size), color: "var(--ink)", dot: "" },
   ];
 

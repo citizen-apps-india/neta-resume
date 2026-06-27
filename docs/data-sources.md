@@ -37,6 +37,12 @@
 - **URL:** https://lokdhaba.ashoka.edu.in · https://tcpd.ashoka.edu.in
 - Every candidate/winner in every LS & State Assembly election since 1962, entity-resolved with stable IDs.
 
+### PRS Legislative Research (mptrack) — ✓ attendance % (LS + RS)
+- **URL:** https://prsindia.org/mptrack/18th-lok-sabha · https://prsindia.org/mptrack/rajya-sabha
+- **Fields:** cumulative **attendance %** per member per term (the metric journalists cite), plus debates / questions / private-member bills. License non-commercial; every value source-cited.
+- **Pipeline:** `neta attendance --house ls|rs` — paginate the listing (1-indexed `?page=N`) to enumerate members, match to our current-term person by normalized name, fetch each profile and write `office_term.attendance_pct` + a PRS `source_ref`. Idempotent; per-profile fetch is fault-tolerant.
+- **Coverage is partial by design:** ministers, PM, Speaker/Dep. Speaker and the LoP don't sign the attendance register, so PRS shows no % → we leave it `NULL` (renders "—", never 0). State assemblies: not yet (no unified source).
+
 ---
 
 ## B. Affidavit data — wealth + criminal (the core)

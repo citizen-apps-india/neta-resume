@@ -37,6 +37,19 @@ export function caseSignalColor(topSeverity: Severity, total: number): string {
   return severityMeta(topSeverity).fg;
 }
 
+/** Attendance % -> display string ("82%" / "—" when not on record). */
+export function attendancePct(pct: number | null | undefined): string {
+  return pct == null ? "—" : `${Math.round(pct)}%`;
+}
+
+/** Signal colour for an attendance %: good >=75, fair 50-75, poor <50, muted when absent. */
+export function attendanceColor(pct: number | null | undefined): string {
+  if (pct == null) return "var(--faint)";
+  if (pct >= 75) return "var(--ok)";
+  if (pct >= 50) return "var(--ink)";
+  return "var(--sev2)";
+}
+
 export function year(dateStr: string | null | undefined): string {
   if (!dateStr) return "—";
   return dateStr.slice(0, 4);

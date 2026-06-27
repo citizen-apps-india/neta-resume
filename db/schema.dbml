@@ -80,6 +80,8 @@ Table office_term {
   party_id bigint [ref: > party.id]
   status text
   source_ref_id bigint [ref: > source_ref.id]
+  attendance_pct numeric              // cumulative parliamentary attendance %, PRS (NULL = rule-exempt / unknown)
+  attendance_source_ref_id bigint [ref: > source_ref.id]
 }
 
 Table cabinet_post {
