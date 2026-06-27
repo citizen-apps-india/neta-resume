@@ -1,44 +1,54 @@
 """MyNeta (ADR) client — wealth + criminal affidavit data.
 
 LICENSE: non-commercial only; no bulk CSV. Scrape politely (neta_ingest.http.client throttles).
-Reuse: study nini1294/myneta_api + datameet/india-election-data (affidavits/myneta.ipynb) for the
-URL structure (election-partitioned) and parsing recipe before re-implementing.
+URL scheme is election-partitioned, e.g. base = https://www.myneta.info/LokSabha2024
+  winners list : {base}/index.php?action=show_winners&sort=default
+  candidate    : {base}/candidate.php?candidate_id={id}
 
-Backfill historical cycles from datameet/Vonter corpora instead of live-scraping.
+Raw HTML is cached via provenance.cache_raw so every fact has a snapshot it was derived from.
 """
 
 from __future__ import annotations
 
-from dataclasses import dataclass, field
+from neta_ingest.http import client as http
+from neta_ingest.provenance import cache_raw
+from neta_ingest.sources.myneta.parser import (
+    ParsedCandidate,
+    WinnerRow,
+    parse_candidate,
+    parse_winners,
+)
+
+# Election-cycle code -> MyNeta site path.
+ELECTION_BASE = {
+    "LS2024": "https://www.myneta.info/LokSabha2024",
+    "LS2019": "https://www.myneta.info/loksabha2019",
+}
 
 
-@dataclass(slots=True)
-class MynetaAffidavit:
-    candidate_id: str       # native myneta id -> source_ref.native_id
-    page_url: str
-    name: str
-    election_cycle: str     # e.g. 'LS2024'
-    constituency: str | None
-    party: str | None
-    total_assets_raw: str | None       # pass through transform.money.parse_rupees
-    total_liabilities_raw: str | None
-    self_income_raw: str | None
-    age: int | None = None
-    education: str | None = None
+def base_url(cycle: str) -> str:
+    try:
+        return ELECTION_BASE[cycle]
+    except KeyError as e:
+        raise ValueError(f"unknown MyNeta election cycle {cycle!r}; add it to ELECTION_BASE") from e
 
 
-@dataclass(slots=True)
-class MynetaCase:
-    candidate_id: str
-    page_url: str
-    raw_section_text: str   # pass through transform.sections.parse_sections
-    status_raw: str | None
-    description: str | None = None
+def fetch_winners(cycle: str = "LS2024") -> list[WinnerRow]:
+    base = base_url(cycle)
+    resp = http.get(f"{base}/index.php?action=show_winners&sort=default")
+    cache_raw(resp.content, suffix=f"_{cycle}_winners.html")
+    return parse_winners(resp.text, base_url=base)
 
 
-def fetch_affidavits(house: str = "ls", cycle: str = "LS2024") -> list[MynetaAffidavit]:
-    raise NotImplementedError("myneta.fetch_affidavits — implement using the election-partitioned URL scheme.")
+def fetch_candidate(candidate_id: str, cycle: str = "LS2024") -> tuple[ParsedCandidate, str]:
+    """Fetch + parse one candidate page. Returns (parsed, raw_cache_relpath)."""
+    base = base_url(cycle)
+    url = f"{base}/candidate.php?candidate_id={candidate_id}"
+    resp = http.get(url)
+    rel = cache_raw(resp.content, suffix=f"_{cycle}_cand_{candidate_id}.html")
+    parsed = parse_candidate(resp.text, candidate_id=candidate_id)
+    return parsed, rel
 
 
-def fetch_criminal_cases(house: str = "ls", cycle: str = "LS2024") -> list[MynetaCase]:
-    raise NotImplementedError("myneta.fetch_criminal_cases — parse the candidate 'criminal cases' table.")
+def candidate_url(candidate_id: str, cycle: str = "LS2024") -> str:
+    return f"{base_url(cycle)}/candidate.php?candidate_id={candidate_id}"

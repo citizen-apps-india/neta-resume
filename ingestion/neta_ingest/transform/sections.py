@@ -19,22 +19,35 @@ import re
 SEVERITY_ORDER = {"minor": 0, "serious": 1, "heinous": 2}
 _RANK_TO_SEVERITY = {v: k for k, v in SEVERITY_ORDER.items()}
 
-_CODE_WORDS = {
-    "ipc": "IPC",
-    "bns": "BNS",
-    "pca": "PCA",            # Prevention of Corruption Act
-    "rpa": "RPA",            # Representation of the People Act (electoral offences)
-}
 _SECTION = re.compile(r"\b([0-9]{1,4}[A-Za-z]?)\b")
 _CODE = re.compile(r"\b(ipc|bns|pca|rpa)\b", re.IGNORECASE)
+# Statute phrases MyNeta writes in the "Other Acts" column, mapped to our code_system.
+_STATUTE_PHRASES = [
+    (re.compile(r"R\.?\s*P\.?\s*Act|representation of the people", re.I), "RPA"),
+    (re.compile(r"P\.?\s*C\.?\s*Act|prevention of corruption", re.I), "PCA"),
+]
+_CODE_WORDS = {"ipc": "IPC", "bns": "BNS", "pca": "PCA", "rpa": "RPA"}
+
+
+def _detect_code(raw: str, default_code: str) -> str:
+    code_match = _CODE.search(raw)
+    if code_match:
+        return _CODE_WORDS[code_match.group(1).lower()]
+    for pat, code in _STATUTE_PHRASES:
+        if pat.search(raw):
+            return code
+    return default_code
 
 
 def parse_sections(raw: str, default_code: str = "IPC") -> list[tuple[str, str]]:
-    """Return [(code_system, section_number), ...] parsed from a raw charge string."""
+    """Return [(code_system, section_number), ...] parsed from a raw charge string.
+
+    Recognizes inline code words (IPC/BNS/PCA/RPA) and statute phrases ("R.P. Act",
+    "Prevention of Corruption Act"). Numbers in parentheses like "126(2)" yield "126".
+    """
     if not raw:
         return []
-    code_match = _CODE.search(raw)
-    code = _CODE_WORDS[code_match.group(1).lower()] if code_match else default_code
+    code = _detect_code(raw, default_code)
     # Strip the code word so it isn't mistaken for a section number.
     cleaned = _CODE.sub(" ", raw)
     sections = [m.group(1).upper() for m in _SECTION.finditer(cleaned)]

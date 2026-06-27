@@ -26,19 +26,29 @@ def roster(house: str = "ls", cycle: str = "18") -> None:
 
 
 @app.command()
-def affidavits(house: str = "ls", cycle: str = "LS2024") -> None:
-    """Fetch ECI affidavit wealth via MyNeta -> affidavit + line items."""
-    from neta_ingest.pipelines import affidavits as p
+def myneta(house: str = "ls", cycle: str = "LS2024", limit: int = 10,
+           candidate: list[str] = typer.Option(None, help="specific candidate_id(s) to ingest")) -> None:
+    """Ingest full MyNeta candidates (wealth + criminal in one pass) -> person + affidavit + cases."""
+    from neta_ingest.pipelines import myneta as p
 
-    p.run(house=house, cycle=cycle)
+    p.run(house=house, cycle=cycle, limit=limit, candidate_ids=candidate or None)
+
+
+# MyNeta serves wealth + criminal on one page, so both commands run the same unified (idempotent) ingest.
+@app.command()
+def affidavits(house: str = "ls", cycle: str = "LS2024", limit: int = 10) -> None:
+    """Fetch ECI affidavit wealth via MyNeta -> affidavit (+ criminal, same page)."""
+    from neta_ingest.pipelines import myneta as p
+
+    p.run(house=house, cycle=cycle, limit=limit)
 
 
 @app.command()
-def criminal(house: str = "ls", cycle: str = "LS2024") -> None:
+def criminal(house: str = "ls", cycle: str = "LS2024", limit: int = 10) -> None:
     """Fetch declared criminal cases via MyNeta -> criminal_case + charges (+ severity)."""
-    from neta_ingest.pipelines import criminal as p
+    from neta_ingest.pipelines import myneta as p
 
-    p.run(house=house, cycle=cycle)
+    p.run(house=house, cycle=cycle, limit=limit)
 
 
 @app.command()

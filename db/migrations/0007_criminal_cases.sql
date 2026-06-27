@@ -3,7 +3,7 @@
 -- Catalog of legal sections + IPC↔BNS crosswalk. base_severity is the rule input (see docs/severity-rubric.md).
 CREATE TABLE legal_section (
     id                    bigserial PRIMARY KEY,
-    code_system           text NOT NULL CHECK (code_system IN ('IPC','BNS')),
+    code_system           text NOT NULL CHECK (code_system IN ('IPC','BNS','PCA','RPA')),
     section_number        text NOT NULL,             -- '302'
     title                 text,                      -- 'Murder'
     ipc_equivalent        text,                      -- BNS→IPC crosswalk

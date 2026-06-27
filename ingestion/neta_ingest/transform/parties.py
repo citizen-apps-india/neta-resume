@@ -29,3 +29,28 @@ def resolve_party_id(session: Session, raw: str) -> int | None:
         {"raw": raw.strip()},
     ).first()
     return row[0] if row else None
+
+
+def resolve_or_create_party_id(session: Session, raw: str) -> int | None:
+    """Resolve a party, auto-creating it if unknown so party data is never silently dropped.
+
+    Newly created parties use the raw source string as canonical_name and register it as an alias.
+    These should be reviewed/merged later (many are spelling variants of an existing party).
+    """
+    if not raw or not raw.strip():
+        return None
+    existing = resolve_party_id(session, raw)
+    if existing is not None:
+        return existing
+    party_id = session.execute(
+        text("INSERT INTO party (canonical_name, is_active) VALUES (:n, true) RETURNING id"),
+        {"n": raw.strip()},
+    ).scalar_one()
+    session.execute(
+        text(
+            "INSERT INTO party_alias (party_id, alias, source) VALUES (:pid, :a, 'auto-ingest') "
+            "ON CONFLICT (party_id, alias) DO NOTHING"
+        ),
+        {"pid": party_id, "a": raw.strip()},
+    )
+    return party_id

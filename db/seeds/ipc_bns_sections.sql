@@ -33,3 +33,25 @@ VALUES
     ('IPC', '499',  'Defamation',                          NULL,  '356', 'minor', false, 2),
     ('IPC', '506',  'Criminal intimidation',               NULL,  '351', 'minor', true, 2)
 ON CONFLICT (code_system, section_number) DO NOTHING;
+
+-- Common low-grade IPC sections that show up constantly in affidavits + electoral (RPA) offences.
+INSERT INTO legal_section
+    (code_system, section_number, title, ipc_equivalent, bns_equivalent, base_severity, is_cognizable, max_punishment_years)
+VALUES
+    ('IPC', '143',  'Member of unlawful assembly',          NULL, '189', 'minor', true, 1),
+    ('IPC', '149',  'Unlawful assembly common object',      NULL, '190', 'minor', true, 2),
+    ('IPC', '186',  'Obstructing public servant',           NULL, '221', 'minor', false, 1),
+    ('IPC', '188',  'Disobedience to order of public servant', NULL, '223', 'minor', true, 1),
+    ('IPC', '283',  'Danger/obstruction in public way',     NULL, '285', 'minor', false, 1),
+    ('IPC', '294',  'Obscene acts in public',               NULL, '296', 'minor', true, 1),
+    ('IPC', '323',  'Voluntarily causing hurt',             NULL, '115', 'minor', false, 1),
+    ('IPC', '324',  'Hurt by dangerous weapon',             NULL, '118', 'serious', true, 3),
+    ('IPC', '427',  'Mischief causing damage',              NULL, '324', 'minor', true, 2),
+    ('IPC', '447',  'Criminal trespass',                    NULL, '329', 'minor', false, 1),
+    ('IPC', '448',  'House trespass',                       NULL, '329', 'minor', false, 1),
+    ('IPC', '504',  'Intentional insult/breach of peace',   NULL, '352', 'minor', false, 2),
+    ('RPA', '125',  'Promoting enmity in connection with election', NULL, NULL, 'serious', true, 3),
+    ('RPA', '126',  'Canvassing/disturbance near polling',  NULL, NULL, 'minor', false, 1),
+    ('RPA', '127',  'Disturbances at election meetings',    NULL, NULL, 'minor', false, 1),
+    ('RPA', '171',  'Corrupt practice (bribery/undue influence)', NULL, NULL, 'serious', true, 1)
+ON CONFLICT (code_system, section_number) DO NOTHING;
