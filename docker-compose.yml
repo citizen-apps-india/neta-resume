@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:16
+    container_name: neta_db
+    environment:
+      POSTGRES_USER: neta
+      POSTGRES_PASSWORD: neta
+      POSTGRES_DB: neta
+    ports:
+      - "5432:5432"
+    volumes:
+      - neta_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U neta"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  # api / web are added once their Dockerfiles land; run them locally with uv/npm for now.
+
+volumes:
+  neta_pgdata:

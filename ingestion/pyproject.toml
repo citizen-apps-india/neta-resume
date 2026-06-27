@@ -1,0 +1,39 @@
+[project]
+name = "neta-ingest"
+version = "0.1.0"
+description = "Neta-Resume ingestion pipelines: fetch, normalize, entity-resolve, upsert."
+requires-python = ">=3.12"
+dependencies = [
+    "httpx>=0.27",          # polite HTTP client w/ retries
+    "tenacity>=8.2",        # backoff/retry
+    "selectolax>=0.3",      # fast HTML parsing
+    "beautifulsoup4>=4.12", # fallback HTML parsing
+    "lxml>=5.0",
+    "sqlalchemy>=2.0",      # ORM + upsert
+    "psycopg[binary]>=3.2", # postgres driver
+    "pydantic>=2.7",        # typed records
+    "pydantic-settings>=2.3",
+    "typer>=0.12",          # CLI (`neta <pipeline>`)
+    "playwright>=1.60",     # JS/heavy pages (already in user's toolbelt)
+    "python-dateutil>=2.9",
+]
+
+[project.scripts]
+neta = "neta_ingest.cli:app"
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.5",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["neta_ingest"]

@@ -1,0 +1,43 @@
+Neta-Resume — data source attributions & usage notice
+======================================================
+
+This is a NON-COMMERCIAL / hobby project. It aggregates and re-presents data from
+public sources about elected representatives in India. Attribution and usage terms
+for each upstream source:
+
+1. MyNeta / Association for Democratic Reforms (ADR) / National Election Watch
+   https://www.myneta.info/  ·  https://adrindia.org/
+   - Data derived from ECI self-sworn candidate affidavits (assets, liabilities,
+     income, criminal cases, education).
+   - Licensed for NON-COMMERCIAL use only. No bulk CSV is provided; data is
+     scraped politely from per-candidate pages with caching and rate limiting.
+   - ADR transcribes affidavits (OCR + manual entry); MyNeta is NOT a byte-for-byte
+     mirror of ECI. Treat ECI affidavit PDFs as the canonical legal source.
+
+2. Election Commission of India (ECI)
+   https://affidavit.eci.gov.in/  ·  https://www.eci.gov.in/
+   - Canonical affidavit PDFs. Used for verification.
+
+3. Digital Sansad (Lok Sabha & Rajya Sabha Secretariats)
+   https://sansad.in/
+   - Official member roster and profiles.
+
+4. Trivedi Centre for Political Data (TCPD), Ashoka University
+   - SURF entity-resolution system; LokDhaba / Political Career Tracker datasets.
+   https://tcpd.ashoka.edu.in/  ·  https://lokdhaba.ashoka.edu.in/
+   - Academic use; cite TCPD-IPD where their IDs/data are used.
+
+5. eCourts / bharat-courts / openjustice-in
+   https://services.ecourts.gov.in/  ·  https://github.com/iamshouvikmitra/bharat-courts
+   - Court case status enrichment.
+
+6. data.gov.in (Open Government Data Platform India)
+   https://www.data.gov.in/  ·  Government Open Data License – India (GODL).
+
+7. DataMeet / Vonter parsed affidavit corpora (community), OpenSanctions in_sansad.
+
+USAGE PRINCIPLES
+- Every datapoint shown carries a link to its source.
+- Criminal cases are mostly PENDING/ALLEGED. The site always shows pending-vs-convicted
+  status and never asserts guilt. See docs/data-license.md and docs/severity-rubric.md.
+- This project does not represent the views of any source above.

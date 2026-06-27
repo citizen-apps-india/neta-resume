@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.uv/
+*.egg-info/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+
+# uv
+# (uv.lock IS committed; this is only caches)
+
+# Ingestion raw cache & secrets (provenance snapshots are large + may carry PII)
+ingestion/data/raw_cache/
+*.sqlite
+*.db
+
+# Node / Next.js
+node_modules/
+web/.next/
+web/out/
+web/.turbo/
+*.tsbuildinfo
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# OS / editor
+.DS_Store
+.idea/
+.vscode/
+*.log

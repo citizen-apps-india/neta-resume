@@ -1,0 +1,177 @@
+// Neta-Resume ERD — paste into https://dbdiagram.io to visualize.
+// Source of truth is db/migrations/*.sql; keep this in sync.
+
+Table house {
+  id smallint [pk]
+  code text [unique]
+  name text
+  jurisdiction text   // union | state
+  state_code text
+}
+
+Table term_cycle {
+  id bigint [pk]
+  house_id smallint [ref: > house.id]
+  number int
+  start_date date
+  end_date date
+  eci_election_id text
+}
+
+Table party { id bigint [pk]  canonical_name text  abbr text  eci_party_id text  is_active boolean }
+Table party_alias { id bigint [pk]  party_id bigint [ref: > party.id]  alias text  source text }
+
+Table source {
+  id smallint [pk]
+  code text [unique]
+  name text
+  base_url text
+  license text
+  trust_tier smallint
+}
+
+Table source_ref {
+  id bigint [pk]
+  source_id smallint [ref: > source.id]
+  native_id text
+  native_url text
+  person_id bigint [ref: > person.id]   // NULL until resolved
+  raw_name text
+  raw_payload_ref text
+  fetched_at timestamptz
+  indexes { (source_id, native_id) [unique] }
+}
+
+Table fact_source {
+  id bigint [pk]
+  source_ref_id bigint [ref: > source_ref.id]
+  observed_at date
+  retrieved_at timestamptz
+}
+
+Table person {
+  id bigint [pk]
+  display_name text
+  normalized_name text
+  gender text
+  birth_year int
+  tcpd_surf_id text [unique]
+  wikidata_qid text
+}
+
+Table person_name_variant {
+  id bigint [pk]
+  person_id bigint [ref: > person.id]
+  variant text
+  source_id smallint [ref: > source.id]
+  script text
+}
+
+Table office_term {
+  id bigint [pk]
+  person_id bigint [ref: > person.id]
+  house_id smallint [ref: > house.id]
+  term_cycle_id bigint [ref: > term_cycle.id]
+  constituency text
+  rs_state_code text
+  membership_type text
+  start_date date
+  end_date date
+  party_id bigint [ref: > party.id]
+  status text
+  source_ref_id bigint [ref: > source_ref.id]
+}
+
+Table cabinet_post {
+  id bigint [pk]
+  person_id bigint [ref: > person.id]
+  title text
+  body text
+  start_date date
+  end_date date
+  source_ref_id bigint [ref: > source_ref.id]
+}
+
+Table party_affiliation {
+  id bigint [pk]
+  person_id bigint [ref: > person.id]
+  party_id bigint [ref: > party.id]
+  joined_date date
+  left_date date
+  is_current boolean
+  join_reason text
+  leave_reason text
+  detection text
+  confidence smallint
+  source_ref_id bigint [ref: > source_ref.id]
+}
+
+Table party_switch_event {
+  id bigint [pk]
+  person_id bigint [ref: > person.id]
+  from_party_id bigint [ref: > party.id]
+  to_party_id bigint [ref: > party.id]
+  event_date date
+  narrative text
+  narrative_source_ref_id bigint [ref: > source_ref.id]
+  detected_from text
+}
+
+Table affidavit {
+  id bigint [pk]
+  person_id bigint [ref: > person.id]
+  source_ref_id bigint [ref: > source_ref.id]
+  election_cycle text
+  house_id smallint [ref: > house.id]
+  filed_year int
+  total_assets bigint
+  total_liabilities bigint
+  self_income bigint
+  raw_url text
+  indexes { (person_id, election_cycle, source_ref_id) [unique] }
+}
+
+Table affidavit_line_item {
+  id bigint [pk]
+  affidavit_id bigint [ref: > affidavit.id]
+  category text
+  label text
+  amount bigint
+  owner text
+}
+
+Table legal_section {
+  id bigint [pk]
+  code_system text
+  section_number text
+  title text
+  ipc_equivalent text
+  bns_equivalent text
+  base_severity text
+  is_cognizable boolean
+  max_punishment_years int
+  indexes { (code_system, section_number) [unique] }
+}
+
+Table criminal_case {
+  id bigint [pk]
+  person_id bigint [ref: > person.id]
+  affidavit_id bigint [ref: > affidavit.id]
+  source_ref_id bigint [ref: > source_ref.id]
+  case_number text
+  court text
+  filed_year int
+  status text
+  is_convicted boolean
+  severity text
+  severity_rule_version text
+  cnr_number text
+  court_source_ref_id bigint [ref: > source_ref.id]
+}
+
+Table case_charge {
+  id bigint [pk]
+  criminal_case_id bigint [ref: > criminal_case.id]
+  section_id bigint [ref: > legal_section.id]
+  raw_section_text text
+}
