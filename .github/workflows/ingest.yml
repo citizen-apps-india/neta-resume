@@ -1,0 +1,42 @@
+name: ingest
+
+# Scheduled, idempotent ingestion. Pipelines upsert on natural keys, so re-runs never duplicate.
+# DATABASE_URL is provided via the NETA_DATABASE_URL secret (points at the hosted Postgres).
+
+on:
+  workflow_dispatch:
+    inputs:
+      pipeline:
+        description: "roster | affidavits | criminal | resolve | party-switch"
+        required: true
+        default: roster
+      house:
+        description: "ls | rs"
+        required: false
+        default: ls
+      cycle:
+        description: "e.g. 18 (roster) or LS2024 (affidavits/criminal)"
+        required: false
+        default: "18"
+  schedule:
+    # Weekly roster refresh (Mon 02:00 UTC). Affidavit/criminal are heavier — trigger manually per cycle.
+    - cron: "0 2 * * 1"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ingestion
+    env:
+      NETA_DATABASE_URL: ${{ secrets.NETA_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync
+      - name: Run pipeline
+        run: |
+          PIPELINE="${{ github.event.inputs.pipeline || 'roster' }}"
+          HOUSE="${{ github.event.inputs.house || 'ls' }}"
+          CYCLE="${{ github.event.inputs.cycle || '18' }}"
+          uv run neta "$PIPELINE" --house "$HOUSE" --cycle "$CYCLE"
