@@ -310,3 +310,32 @@ def search_persons(db: Session, q: str, limit: int = 25) -> list[PersonSummary]:
     )
     rows = db.execute(text(sql), {"q": q, "limit": limit, "offset": 0})
     return [_to_summary(r) for r in rows]
+
+
+_STATS_SQL = """
+SELECT
+  (SELECT count(*) FROM person) AS total_legislators,
+  (SELECT count(DISTINCT ot.person_id) FROM office_term ot
+     JOIN term_cycle tc ON tc.id = ot.term_cycle_id JOIN house h ON h.id = tc.house_id
+     WHERE h.code = 'LS') AS lok_sabha,
+  (SELECT count(DISTINCT ot.person_id) FROM office_term ot
+     JOIN term_cycle tc ON tc.id = ot.term_cycle_id JOIN house h ON h.id = tc.house_id
+     WHERE h.code = 'RS') AS rajya_sabha,
+  (SELECT count(DISTINCT person_id) FROM criminal_case) AS with_cases,
+  (SELECT count(*) FROM (
+     SELECT DISTINCT ON (person_id) person_id, total_assets
+     FROM affidavit ORDER BY person_id, filed_year DESC NULLS LAST
+   ) latest WHERE total_assets >= 10000000) AS crorepatis
+"""
+
+
+def stats(db: Session) -> dict:
+    """Headline counts for the homepage: total legislators, per house, with cases, crorepatis (>= ₹1cr)."""
+    r = db.execute(text(_STATS_SQL)).one()
+    return {
+        "total_legislators": r.total_legislators,
+        "lok_sabha": r.lok_sabha,
+        "rajya_sabha": r.rajya_sabha,
+        "with_cases": r.with_cases,
+        "crorepatis": r.crorepatis,
+    }

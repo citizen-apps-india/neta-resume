@@ -1,7 +1,8 @@
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SearchBox } from "@/components/SearchBox";
-import { listPersons } from "@/lib/api";
+import { HomePreview } from "@/components/HomePreview";
+import { getStats, type Stats } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
 
@@ -13,20 +14,19 @@ const FEATURES = [
 ];
 
 export default async function Home() {
-  let people: Awaited<ReturnType<typeof listPersons>> = [];
+  let s: Stats | null = null;
   try {
-    people = await listPersons(500);
+    s = await getStats();
   } catch {
     /* API not up yet — render the page without live stats */
   }
-  const total = people.length;
-  const withCases = people.filter((p) => p.total_cases > 0).length;
-  const crorepatis = people.filter((p) => (p.net_assets ?? 0) >= 1_00_00_000).length;
+  const fmt = (n: number | undefined) => (n ? n.toLocaleString("en-IN") : "—");
+  const total = s?.total_legislators ?? 0;
 
   const stats = [
-    { num: total ? total.toLocaleString("en-IN") : "—", label: "Legislators on file (growing)" },
-    { num: withCases ? withCases.toLocaleString("en-IN") : "—", label: "With declared criminal cases" },
-    { num: crorepatis ? crorepatis.toLocaleString("en-IN") : "—", label: "Declaring assets over ₹1 crore" },
+    { num: fmt(s?.total_legislators), label: "Legislators on file (growing)" },
+    { num: fmt(s?.with_cases), label: "With declared criminal cases" },
+    { num: fmt(s?.crorepatis), label: "Declaring assets over ₹1 crore" },
     { num: "100%", label: "Sourced to public records" },
   ];
 
@@ -69,6 +69,9 @@ export default async function Home() {
           </div>
         ))}
       </section>
+
+      {/* live preview of the real resume UI */}
+      <HomePreview />
 
       {/* features */}
       <section style={{ padding: "44px 48px 72px", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
