@@ -140,7 +140,7 @@ export function LegislatorBrowser({
           </div>
         ) : (
           <>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 270px), 1fr))", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 270px), 1fr))", gap: 16, alignItems: "stretch" }}>
               {shown.map((p) => (
                 <DirectoryCard key={p.id} p={p} />
               ))}

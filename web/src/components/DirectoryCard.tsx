@@ -10,18 +10,18 @@ export function DirectoryCard({ p }: { p: PersonSummary }) {
   const seat = [p.constituency, p.current_house].filter(Boolean).join(" · ").toUpperCase();
 
   return (
-    <Link href={`/person/${p.id}`} className="lift" style={{ textDecoration: "none", color: "var(--ink)", border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", overflow: "hidden", display: "block" }}>
+    <Link href={`/person/${p.id}`} title={p.display_name} className="lift" style={{ textDecoration: "none", color: "var(--ink)", border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", overflow: "hidden", display: "flex", flexDirection: "column", height: "100%" }}>
       <div style={{ display: "flex", gap: 13, padding: 16 }}>
         <PhotoBox w={50} h={60} src={photoSrc(p.id, p.photo_url)} />
-        <div style={{ minWidth: 0 }}>
-          <div className="serif" style={{ fontSize: 17, fontWeight: 600, lineHeight: 1.1 }}>{p.display_name}</div>
-          {p.native_name && <div className="deva" style={{ fontSize: 12, color: "var(--muted)", marginTop: 1 }}>{p.native_name}</div>}
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div className="serif" style={{ fontSize: 17, fontWeight: 600, lineHeight: 1.1, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden", minHeight: "2.2em" }}>{p.display_name}</div>
+          {p.native_name && <div className="deva" style={{ fontSize: 12, color: "var(--muted)", marginTop: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{p.native_name}</div>}
           <div style={{ marginTop: 8 }}>
             <PartyPill party={p.current_party} />
           </div>
         </div>
       </div>
-      <div style={{ display: "flex", borderTop: "1px solid var(--rule)" }}>
+      <div style={{ display: "flex", borderTop: "1px solid var(--rule)", marginTop: "auto" }}>
         <div style={{ flex: 1, padding: "10px 14px", borderRight: "1px solid var(--rule)" }}>
           <div className="mono" style={{ fontSize: 13.5, fontWeight: 500 }}>{rupees(p.net_assets)}</div>
           <div style={{ fontSize: 9.5, color: "var(--muted)", marginTop: 2 }}>ASSETS</div>
