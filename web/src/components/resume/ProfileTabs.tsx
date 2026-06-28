@@ -6,7 +6,7 @@ import { rupees, severityMeta, year, pretty } from "@/lib/format";
 import { Donut, WealthLine } from "@/components/resume/charts";
 import { SourceLink, SourceChip, PendingFlag, SeverityBadge, PartyPill } from "@/components/ui";
 
-const TABS = ["Overview", "Wealth", "Cases", "Career & Party", "In The News"] as const;
+const TABS = ["Overview", "Wealth", "Cases", "Career & Roles", "In The News"] as const;
 type Tab = (typeof TABS)[number];
 
 function isRajyaSabha(resume: PersonResume): boolean {
@@ -44,7 +44,7 @@ export function ProfileTabs({ resume }: { resume: PersonResume }) {
         {tab === "Overview" && <Overview resume={resume} />}
         {tab === "Wealth" && <Wealth resume={resume} />}
         {tab === "Cases" && <Cases resume={resume} />}
-        {tab === "Career & Party" && <Career resume={resume} />}
+        {tab === "Career & Roles" && <Career resume={resume} />}
         {tab === "In The News" && <News resume={resume} />}
       </div>
     </>
@@ -274,10 +274,52 @@ function PartySwitches({ resume }: { resume: PersonResume }) {
   );
 }
 
+const ROLE_LABEL: Record<string, string> = {
+  prime_minister: "Prime Minister", chief_minister: "Chief Minister", deputy_cm: "Deputy Chief Minister",
+  minister: "Minister", minister_state: "Minister of State", deputy_minister: "Deputy Minister",
+  speaker: "Speaker", deputy_speaker: "Deputy Speaker", lop: "Leader of Opposition",
+  leader_of_house: "Leader of the House", whip: "Whip", chief_whip: "Chief Whip",
+  committee_chair: "Committee Chair", committee_member: "Committee Member",
+  mayor: "Mayor", deputy_mayor: "Deputy Mayor", corporator: "Corporator",
+};
+
+function Positions({ resume }: { resume: PersonResume }) {
+  const roles = resume.roles ?? [];
+  if (!roles.length) return null;
+  return (
+    <div className="fadeUp" style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "clamp(18px,4vw,26px) clamp(16px,4vw,28px)", marginBottom: 18 }}>
+      <div className="mono" style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--faint)", marginBottom: 14 }}>Positions held</div>
+      <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+        {roles.map((r, i) => {
+          const span = [r.start_date, r.end_date].filter(Boolean).map(year).join(" – ") || null;
+          return (
+            <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 12, flexWrap: "wrap" }}>
+              <span className="mono" style={{ fontSize: 9.5, fontWeight: 600, letterSpacing: "0.05em", padding: "4px 9px", borderRadius: 5, background: "var(--accent-soft)", color: "var(--accent-soft-fg)", textTransform: "uppercase", flexShrink: 0 }}>
+                {ROLE_LABEL[r.role_type] ?? r.role_type}
+              </span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 9, flexWrap: "wrap" }}>
+                  <span style={{ fontSize: 15, fontWeight: 600 }}>{r.title ?? r.portfolio ?? ROLE_LABEL[r.role_type] ?? r.role_type}</span>
+                  {r.status === "current" && <span className="mono" style={{ fontSize: 9, fontWeight: 600, color: "var(--ok)" }}>● CURRENT</span>}
+                  <SourceLink source={r.source} />
+                </div>
+                <div style={{ fontSize: 12.5, color: "var(--muted)", marginTop: 4 }}>
+                  {[r.body, span].filter(Boolean).join(" · ")}
+                </div>
+              </div>
+            </div>
+          );
+        })}
+      </div>
+    </div>
+  );
+}
+
 function Career({ resume }: { resume: PersonResume }) {
   const terms = resume.office_terms;
   return (
     <>
+    <Positions resume={resume} />
     <PartySwitches resume={resume} />
     <div className="fadeUp" style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "clamp(22px,4vw,32px) clamp(16px,4vw,30px)" }}>
       {terms.map((o, i) => {

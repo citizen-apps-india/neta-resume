@@ -75,6 +75,18 @@ class CriminalCase(BaseModel):
     source: Source
 
 
+class RoleEntry(BaseModel):
+    role_type: str               # prime_minister | minister | speaker | lop | committee_chair | ...
+    title: str | None            # 'Minister of Finance', 'Speaker, Lok Sabha'
+    body: str | None             # 'Union Council of Ministers', 'Lok Sabha'
+    house: str | None            # house name, when the role is tied to one
+    portfolio: str | None        # ministry/portfolio, when applicable
+    start_date: date | None
+    end_date: date | None
+    status: str                  # current | former
+    source: Source
+
+
 class PartySwitch(BaseModel):
     from_party: str | None
     to_party: str
@@ -100,6 +112,7 @@ class PersonResume(BaseModel):
     age: int | None = None
     education: str | None = None
     office_terms: list[OfficeTerm]
+    roles: list[RoleEntry] = []
     party_history: list[PartyStint]
     party_switches: list[PartySwitch] = []
     wealth: list[AffidavitWealth]      # ordered by filed_year for YoY

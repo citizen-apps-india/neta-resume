@@ -19,6 +19,7 @@ from neta_api.schemas import (
     PartySwitch,
     PersonResume,
     PersonSummary,
+    RoleEntry,
     Source,
 )
 
@@ -89,6 +90,36 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
                 LEFT JOIN source att_s ON att_s.id = att_sr.source_id
                 WHERE ot.person_id = :pid
                 ORDER BY tc.number DESC
+                """
+            ),
+            {"pid": person_id},
+        )
+    ]
+
+    roles = [
+        RoleEntry(
+            role_type=r.role_type,
+            title=r.title,
+            body=r.body,
+            house=r.house,
+            portfolio=r.portfolio,
+            start_date=r.start_date,
+            end_date=r.end_date,
+            status=r.status,
+            source=_source(r),
+        )
+        for r in db.execute(
+            text(
+                """
+                SELECT rl.role_type, rl.title, rl.body, h.name AS house, rl.portfolio,
+                       rl.start_date, rl.end_date, rl.status,
+                       s.code AS source_code, s.name AS source_name, s.trust_tier, sr.native_url
+                FROM role rl
+                LEFT JOIN house h ON h.id = rl.house_id
+                JOIN source_ref sr ON sr.id = rl.source_ref_id
+                JOIN source s ON s.id = sr.source_id
+                WHERE rl.person_id = :pid
+                ORDER BY (rl.status = 'current') DESC, rl.start_date DESC NULLS LAST
                 """
             ),
             {"pid": person_id},
@@ -266,6 +297,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
         age=latest.age if latest else None,
         education=latest.education if latest else None,
         office_terms=office_terms,
+        roles=roles,
         party_history=party_history,
         party_switches=party_switches,
         wealth=wealth,
