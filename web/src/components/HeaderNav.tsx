@@ -9,6 +9,7 @@ const LINKS: [string, string][] = [
   ["/lok-sabha", "Lok Sabha"],
   ["/rajya-sabha", "Rajya Sabha"],
   ["/state-level", "State Level"],
+  ["/municipal", "Municipal"],
   ["/directory", "Directory"],
 ];
 

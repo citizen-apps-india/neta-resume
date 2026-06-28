@@ -160,12 +160,12 @@ def _persist_candidate(s, c: ParsedCandidate, *, cycle: str, house: str, raw_rel
         s.execute(text(f"DELETE FROM {tbl} WHERE source_ref_id = :sr"), {"sr": source_ref_id})
 
     # 4) office_term (winner == sitting). ls_state_code = the seat's STATE. National (union) pages carry the
-    # state inline; state-assembly pages put the DISTRICT in that slot instead (the election is one state),
-    # so for a state house we stamp the house's own state rather than trust the parsed value.
+    # state inline; state-assembly and municipal pages put the district/ward in that slot instead (the
+    # election is one state/city), so for those we stamp the house's own state rather than the parsed value.
     house_meta = s.execute(
         text("SELECT jurisdiction, state_code FROM house WHERE id = :hid"), {"hid": house_id}
     ).one()
-    if house_meta.jurisdiction == "state":
+    if house_meta.jurisdiction in ("state", "municipal"):
         seat_state = _STATE_CODE_TO_NAME.get(house_meta.state_code) or c.state
     else:
         seat_state = c.state
