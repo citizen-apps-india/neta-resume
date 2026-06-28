@@ -3,11 +3,9 @@ import type { ReactNode } from "react";
 import { Footer } from "@/components/Footer";
 import "./globals.css";
 
-const siteUrl =
-  process.env.NEXT_PUBLIC_SITE_URL ||
-  (process.env.VERCEL_PROJECT_PRODUCTION_URL
-    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
-    : "http://localhost:3000");
+// Canonical site URL for metadata / OG / canonical links. Defaults to the custom domain (NOT Vercel's
+// *.vercel.app alias, which VERCEL_PROJECT_PRODUCTION_URL would give); override per-env if needed.
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://neta-resume.app";
 
 const DESCRIPTION =
   "Offices held, parties switched, wealth declared, and cases pending — every fact sourced to the " +
