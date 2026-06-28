@@ -98,3 +98,17 @@ def test_ls2009_old_layout_candidate_281():
     assert c.total_liabilities == 815241
     assert len(c.criminal_cases) == 2
     assert ("IPC", "353") in c.criminal_cases[0].sections
+
+
+def test_mh2024_bns_layout_candidate_1148():
+    """Maharashtra 2024 (state assembly) layout: the sections column is 'IPC/BNS Sections Applicable'
+    and a 'LAW / Section Type' column names IPC vs BNS per row (BNS replaced the IPC on 2024-07-01).
+    Regression for the bug where this header didn't match 'IPC Sections' and every case was dropped."""
+    html = (FIXTURES / "myneta_candidate_mh2024_1148.html").read_text(encoding="utf-8", errors="ignore")
+    c = parse_candidate(html, candidate_id="1148")
+    assert c.name == "NITESH NARAYAN RANE"
+    assert len(c.criminal_cases) == 38                     # cases ARE extracted (was 0 before the fix)
+    # Both statutes are coded from the per-row LAW column, not hard-defaulted to IPC.
+    all_codes = {code for case in c.criminal_cases for (code, _num) in case.sections}
+    assert "BNS" in all_codes
+    assert "IPC" in all_codes

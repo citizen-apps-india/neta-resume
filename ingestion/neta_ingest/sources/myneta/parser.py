@@ -214,19 +214,24 @@ def _parse_cases(html: str) -> list[ParsedCase]:
     """
     cases: list[ParsedCase] = []
     tree = HTMLParser(html)
+    # The sections column is "IPC Sections Applicable" on older pages and "IPC/BNS Sections Applicable"
+    # post-2024 (BNS replaced the IPC on 2024-07-01). Match on the shared "Sections Applicable" phrase;
+    # "IPC" is listed first so the IPC/BNS column wins over the trailing "Other ... Sections Applicable".
+    sections_needles = ("IPC", "BNS Sections", "Sections Applicable")
     for table in tree.css("table"):
         rows = table.css("tr")
         if not rows:
             continue
         headers = [_cell_text(c) for c in rows[0].css("td, th")]
-        if _col_index(headers, "IPC Sections") is None:
+        if _col_index(headers, *sections_needles) is None:
             continue
         convicted = _col_index(headers, "Punishment Imposed") is not None
         i_serial = _col_index(headers, "Serial")
         i_fir = _col_index(headers, "FIR")
         i_case = _col_index(headers, "Case No")
         i_court = _col_index(headers, "Court")
-        i_ipc = _col_index(headers, "IPC Sections")
+        i_ipc = _col_index(headers, *sections_needles)
+        i_lawtype = _col_index(headers, "Section Type", "LAW /")  # post-2024: per-row "IPC" or "BNS"
         i_other = _col_index(headers, "Other Details", "Other Acts")
         i_framed = _col_index(headers, "Charges Framed")
 
@@ -240,7 +245,10 @@ def _parse_cases(html: str) -> list[ParsedCase]:
                 continue  # skip non-data rows (sub-headers, "No Cases", etc.)
             ipc_raw = cell(cells, i_ipc)
             other_raw = cell(cells, i_other)
-            sections = parse_sections(ipc_raw, default_code="IPC")
+            # Post-2024 pages name the statute per row ("IPC" or "BNS") in a dedicated column; bare section
+            # numbers in the sections cell take that code. Older pages have no such column -> default IPC.
+            default_code = "BNS" if "BNS" in cell(cells, i_lawtype).upper() else "IPC"
+            sections = parse_sections(ipc_raw, default_code=default_code)
             # The "Other Acts" column carries real statute sections only when it names a statute
             # (e.g. "Section-126(2) R.P. Act"). Older layouts (LS2014/LS2009) reuse this column for
             # free-text case metadata ("Case No-294/10, FIR No-191/2009, Thana ..., Court ..."), whose

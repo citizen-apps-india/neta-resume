@@ -23,12 +23,14 @@ from neta_ingest.sources.myneta.parser import (
 
 # Election-cycle code -> MyNeta site path. Path casing/scheme varies per cycle (verified live):
 # 2024 uses "LokSabha2024"; older cycles use the short "ls{year}" form ("loksabha{year}" is a dead path
-# for 2009/2014 — its show_winners action returns an empty list).
+# for 2009/2014 — its show_winners action returns an empty list). State assemblies use their own paths,
+# e.g. Maharashtra 2024 = "Maharashtra2024" (same show_winners / candidate.php structure as LS).
 ELECTION_BASE = {
     "LS2024": "https://www.myneta.info/LokSabha2024",
     "LS2019": "https://www.myneta.info/loksabha2019",
     "LS2014": "https://www.myneta.info/ls2014",
     "LS2009": "https://www.myneta.info/ls2009",
+    "MH_VS2024": "https://www.myneta.info/Maharashtra2024",
 }
 
 

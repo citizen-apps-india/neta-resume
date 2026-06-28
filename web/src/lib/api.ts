@@ -31,7 +31,10 @@ export async function getPersonResume(id: number): Promise<PersonResume | null> 
 }
 
 export function listPersons(
-  opts: { limit?: number; offset?: number; house?: string; state?: string; constituency?: string } = {},
+  opts: {
+    limit?: number; offset?: number; house?: string; state?: string;
+    constituency?: string; jurisdiction?: string;
+  } = {},
 ): Promise<PersonSummary[]> {
   const q = new URLSearchParams();
   q.set("limit", String(opts.limit ?? 60));
@@ -39,6 +42,7 @@ export function listPersons(
   if (opts.house) q.set("house", opts.house);
   if (opts.state) q.set("state", opts.state);
   if (opts.constituency) q.set("constituency", opts.constituency);
+  if (opts.jurisdiction) q.set("jurisdiction", opts.jurisdiction);
   return getJSON<PersonSummary[]>(`/persons?${q.toString()}`);
 }
 

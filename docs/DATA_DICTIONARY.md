@@ -115,8 +115,9 @@ when one fact is corroborated by several sources.
 | `person_id` | bigint FK→person | |
 | `house_id` | smallint FK→house | |
 | `term_cycle_id` | bigint FK→term_cycle | |
-| `constituency` | text | LS seat; NULL for RS |
+| `constituency` | text | LS/assembly seat; NULL for RS |
 | `rs_state_code` | text | state an RS member represents |
+| `ls_state_code` | text | the seat's state — the LS constituency's state, or a state-assembly member's state (e.g. `Maharashtra` for MH_VS). Surfaced as `PersonSummary.state`. |
 | `membership_type` | text CHECK | `elected`\|`nominated`\|`byelection` (default `elected`) |
 | `start_date` / `end_date` | date | |
 | `party_id` | bigint FK→party | party **at time of this term** (drives switch detection) |

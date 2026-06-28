@@ -4,11 +4,14 @@ import { useMemo, useState } from "react";
 import { type PersonSummary } from "@/lib/api";
 import { DirectoryCard } from "@/components/DirectoryCard";
 
-type Scope = "all" | "ls" | "rs";
+type Scope = "all" | "ls" | "rs" | "state";
 type Sort = "assets" | "cases" | "attendance" | "name";
 type CaseFilter = "any" | "with" | "clean" | "heinous" | "serious" | "minor";
 
 const PAGE = 60;
+
+/** "MAHARASHTRA" / "tamil nadu" → "Maharashtra" / "Tamil Nadu" for the state dropdown labels. */
+const titleCase = (s: string) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 
 const selectStyle: React.CSSProperties = {
   fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 13, color: "var(--ink)",
@@ -33,6 +36,7 @@ export function LegislatorBrowser({
   const [q, setQ] = useState(initialQuery);
   const [party, setParty] = useState("");
   const [house, setHouse] = useState(""); // only used when scope === "all"
+  const [state, setState] = useState(""); // only used when scope === "state"
   const [caseFilter, setCaseFilter] = useState<CaseFilter>("any");
   const [sort, setSort] = useState<Sort>("assets");
   const [visible, setVisible] = useState(PAGE);
@@ -44,10 +48,18 @@ export function LegislatorBrowser({
     return [...counts.entries()].sort((a, b) => b[1] - a[1]);
   }, [people]);
 
+  // State options present in this dataset (for the State Level page), alphabetical.
+  const states = useMemo(() => {
+    const set = new Set<string>();
+    for (const p of people) if (p.state) set.add(p.state);
+    return [...set].sort();
+  }, [people]);
+
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     let out = people.filter((p) => {
       if (scope === "all" && house && p.current_house !== house) return false;
+      if (scope === "state" && state && p.state !== state) return false;
       if (party && p.current_party !== party) return false;
       if (caseFilter === "with" && p.total_cases <= 0) return false;
       if (caseFilter === "clean" && p.total_cases > 0) return false;
@@ -68,7 +80,7 @@ export function LegislatorBrowser({
       }
     });
     return out;
-  }, [people, scope, q, party, house, caseFilter, sort]);
+  }, [people, scope, q, party, house, state, caseFilter, sort]);
 
   // Reset the visible window whenever the result set changes.
   const shown = filtered.slice(0, visible);
@@ -94,6 +106,15 @@ export function LegislatorBrowser({
             <option value="">All houses</option>
             <option value="Lok Sabha">Lok Sabha</option>
             <option value="Rajya Sabha">Rajya Sabha</option>
+          </select>
+        )}
+
+        {scope === "state" && (
+          <select aria-label="State" value={state} onChange={(e) => resetAnd(() => setState(e.target.value))} style={selectStyle}>
+            <option value="">All states</option>
+            {states.map((s) => (
+              <option key={s} value={s}>{titleCase(s)}</option>
+            ))}
           </select>
         )}
 

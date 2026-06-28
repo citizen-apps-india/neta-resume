@@ -8,6 +8,7 @@ import { ReportDiscrepancyButton } from "@/components/ReportDiscrepancy";
 const LINKS: [string, string][] = [
   ["/lok-sabha", "Lok Sabha"],
   ["/rajya-sabha", "Rajya Sabha"],
+  ["/state-level", "State Level"],
   ["/directory", "Directory"],
 ];
 

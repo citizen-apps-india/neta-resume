@@ -74,6 +74,7 @@ Table office_term {
   term_cycle_id bigint [ref: > term_cycle.id]
   constituency text
   rs_state_code text
+  ls_state_code text  // seat's state: LS constituency's state, or a state-assembly member's state (MH_VS)
   membership_type text
   start_date date
   end_date date

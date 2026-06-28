@@ -280,7 +280,8 @@ _SUMMARY_SQL = """
         WHERE pa.person_id = p.id AND pa.is_current LIMIT 1
     ) cur ON true
     LEFT JOIN LATERAL (
-        SELECT h.name AS house, COALESCE(ot.constituency, ot.rs_state_code) AS constituency,
+        SELECT h.name AS house, h.jurisdiction AS jurisdiction,
+               COALESCE(ot.constituency, ot.rs_state_code) AS constituency,
                COALESCE(ot.ls_state_code, ot.rs_state_code) AS state,
                ot.attendance_pct
         FROM office_term ot
@@ -335,12 +336,16 @@ _NORM = "upper(regexp_replace({col}, '[^a-zA-Z0-9]', '', 'g')) = upper(regexp_re
 
 
 def list_persons(db: Session, limit: int = 60, offset: int = 0, house: str | None = None,
-                 state: str | None = None, constituency: str | None = None) -> list[PersonSummary]:
+                 state: str | None = None, constituency: str | None = None,
+                 jurisdiction: str | None = None) -> list[PersonSummary]:
     conds: list[str] = []
     params: dict = {"limit": limit, "offset": offset}
     if house:
         conds.append("oh.house = :house")
         params["house"] = house
+    if jurisdiction:
+        conds.append("oh.jurisdiction = :jurisdiction")
+        params["jurisdiction"] = jurisdiction
     if state:
         conds.append(_NORM.format(col="oh.state", p="state"))
         params["state"] = state

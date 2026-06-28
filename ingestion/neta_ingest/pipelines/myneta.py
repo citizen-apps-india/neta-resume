@@ -23,6 +23,18 @@ from neta_ingest.transform.names import normalize_name
 from neta_ingest.transform.parties import resolve_or_create_party_id
 from neta_ingest.transform.sections import rollup_severity
 
+# State-assembly candidate pages don't repeat the state (the whole election is one state), so we stamp it
+# from the house's state_code. ISO 3166-2:IN codes -> canonical state name (extend as states are added).
+_STATE_CODE_TO_NAME = {
+    "AP": "Andhra Pradesh", "AR": "Arunachal Pradesh", "AS": "Assam", "BR": "Bihar",
+    "CT": "Chhattisgarh", "GA": "Goa", "GJ": "Gujarat", "HR": "Haryana", "HP": "Himachal Pradesh",
+    "JH": "Jharkhand", "KA": "Karnataka", "KL": "Kerala", "MP": "Madhya Pradesh", "MH": "Maharashtra",
+    "MN": "Manipur", "ML": "Meghalaya", "MZ": "Mizoram", "NL": "Nagaland", "OR": "Odisha",
+    "PB": "Punjab", "RJ": "Rajasthan", "SK": "Sikkim", "TN": "Tamil Nadu", "TG": "Telangana",
+    "TR": "Tripura", "UP": "Uttar Pradesh", "UT": "Uttarakhand", "WB": "West Bengal",
+    "DL": "Delhi", "JK": "Jammu and Kashmir", "PY": "Puducherry",
+}
+
 
 def run(cycle: str = "LS2024", house: str = "ls", limit: int = 10,
         candidate_ids: list[str] | None = None) -> None:
@@ -140,7 +152,16 @@ def _persist_candidate(s, c: ParsedCandidate, *, cycle: str, house: str, raw_rel
     for tbl in ("criminal_case", "affidavit", "office_term", "party_affiliation"):
         s.execute(text(f"DELETE FROM {tbl} WHERE source_ref_id = :sr"), {"sr": source_ref_id})
 
-    # 4) office_term (winner == sitting). ls_state_code = the constituency's state (parsed from MyNeta).
+    # 4) office_term (winner == sitting). ls_state_code = the seat's STATE. National (union) pages carry the
+    # state inline; state-assembly pages put the DISTRICT in that slot instead (the election is one state),
+    # so for a state house we stamp the house's own state rather than trust the parsed value.
+    house_meta = s.execute(
+        text("SELECT jurisdiction, state_code FROM house WHERE id = :hid"), {"hid": house_id}
+    ).one()
+    if house_meta.jurisdiction == "state":
+        seat_state = _STATE_CODE_TO_NAME.get(house_meta.state_code) or c.state
+    else:
+        seat_state = c.state
     s.execute(
         text(
             """
@@ -151,7 +172,7 @@ def _persist_candidate(s, c: ParsedCandidate, *, cycle: str, house: str, raw_rel
             """
         ),
         {"pid": person_id, "hid": house_id, "tcid": term_cycle_id, "con": c.constituency,
-         "state": c.state, "party": party_id, "status": term_status, "sr": source_ref_id},
+         "state": seat_state, "party": party_id, "status": term_status, "sr": source_ref_id},
     )
 
     # 5) party affiliation for this cycle (current only when this is the latest cycle)

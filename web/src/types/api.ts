@@ -30,7 +30,7 @@ export interface paths {
         };
         /**
          * List Persons
-         * @description Browse legislators (directory). Optionally filter by house/state/constituency. Assets desc.
+         * @description Browse legislators (directory). Optionally filter by house/state/constituency/jurisdiction. Assets desc.
          */
         get: operations["list_persons_persons_get"];
         put?: never;
@@ -431,6 +431,7 @@ export interface operations {
                 house?: string | null;
                 state?: string | null;
                 constituency?: string | null;
+                jurisdiction?: string | null;
             };
             header?: never;
             path?: never;

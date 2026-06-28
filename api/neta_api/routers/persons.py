@@ -80,11 +80,13 @@ def list_persons(
     house: str | None = None,
     state: str | None = None,
     constituency: str | None = None,
+    jurisdiction: str | None = None,
     db: Session = Depends(get_db),
 ) -> list[PersonSummary]:
-    """Browse legislators (directory). Optionally filter by house/state/constituency. Assets desc."""
+    """Browse legislators (directory). Optionally filter by house/state/constituency/jurisdiction. Assets desc."""
     return resume_service.list_persons(
-        db, limit=limit, offset=offset, house=house, state=state, constituency=constituency
+        db, limit=limit, offset=offset, house=house, state=state, constituency=constituency,
+        jurisdiction=jurisdiction,
     )
 
 
