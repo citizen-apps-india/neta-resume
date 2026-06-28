@@ -57,6 +57,12 @@ class AffidavitWealth(BaseModel):
     source: Source
 
 
+class ChargeSection(BaseModel):
+    raw: str                     # the section as filed, e.g. 'IPC 302' or 'BNS 103'
+    title: str | None = None     # offence name from the catalog, when the section is known
+    equivalent: str | None = None  # the counterpart code+number, e.g. 'IPC 302' for BNS 103 (IPC↔BNS)
+
+
 class CriminalCase(BaseModel):
     case_number: str | None
     court: str | None
@@ -64,7 +70,7 @@ class CriminalCase(BaseModel):
     status: str                  # pending | convicted | acquitted | framed_charges
     is_convicted: bool
     severity: Severity | None    # heinous | serious | minor (derived)
-    sections: list[str]          # ['IPC 302', 'BNS 103']
+    sections: list[ChargeSection]
     description: str | None
     source: Source
 

@@ -11,6 +11,7 @@ from sqlalchemy.orm import Session
 
 from neta_api.schemas import (
     AffidavitWealth,
+    ChargeSection,
     CriminalCase,
     NewsItem,
     OfficeTerm,
@@ -192,7 +193,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
             status=r.status,
             is_convicted=r.is_convicted,
             severity=r.severity,
-            sections=list(r.sections) if r.sections else [],
+            sections=[ChargeSection(**sec) for sec in (r.sections or [])],
             description=r.description,
             source=_source(r),
         )
@@ -202,11 +203,26 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
                 SELECT c.case_number, c.court, c.filed_year, c.status, c.is_convicted, c.severity,
                        c.description, s.code AS source_code, s.name AS source_name, s.trust_tier,
                        sr.native_url,
-                       ARRAY_REMOVE(ARRAY_AGG(cc.raw_section_text ORDER BY cc.id), NULL) AS sections
+                       COALESCE(
+                         json_agg(
+                           json_build_object(
+                             'raw', cc.raw_section_text,
+                             'title', ls.title,
+                             'equivalent', CASE
+                               WHEN ls.code_system = 'BNS' AND ls.ipc_equivalent IS NOT NULL
+                                 THEN 'IPC ' || ls.ipc_equivalent
+                               WHEN ls.code_system = 'IPC' AND ls.bns_equivalent IS NOT NULL
+                                 THEN 'BNS ' || ls.bns_equivalent
+                               ELSE NULL END
+                           ) ORDER BY cc.id
+                         ) FILTER (WHERE cc.id IS NOT NULL),
+                         '[]'
+                       ) AS sections
                 FROM criminal_case c
                 JOIN source_ref sr ON sr.id = c.source_ref_id
                 JOIN source s ON s.id = sr.source_id
                 LEFT JOIN case_charge cc ON cc.criminal_case_id = c.id
+                LEFT JOIN legal_section ls ON ls.id = cc.section_id
                 WHERE c.person_id = :pid
                 GROUP BY c.id, s.code, s.name, s.trust_tier, sr.native_url
                 ORDER BY c.filed_year DESC NULLS LAST

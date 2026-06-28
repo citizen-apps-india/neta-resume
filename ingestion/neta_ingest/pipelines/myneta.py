@@ -124,6 +124,13 @@ def _persist_candidate(s, c: ParsedCandidate, *, cycle: str, house: str, raw_rel
         {"pid": person_id, "v": c.name, "sid": source_id},
     )
 
+    # MyNeta candidate photo — fills the slot for MLAs (no sansad photo) without clobbering an official one.
+    if c.photo_url:
+        s.execute(
+            text("UPDATE person SET photo_url = COALESCE(photo_url, :p) WHERE id = :id"),
+            {"p": c.photo_url, "id": person_id},
+        )
+
     party_id = resolve_or_create_party_id(s, c.party) if c.party else None
 
     # Is this the latest cycle for the house? Past-cycle ingest must NOT claim the person's "current"

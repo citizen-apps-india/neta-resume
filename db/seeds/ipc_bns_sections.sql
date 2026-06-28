@@ -55,3 +55,34 @@ VALUES
     ('RPA', '127',  'Disturbances at election meetings',    NULL, NULL, 'minor', false, 1),
     ('RPA', '171',  'Corrupt practice (bribery/undue influence)', NULL, NULL, 'serious', true, 1)
 ON CONFLICT (code_system, section_number) DO NOTHING;
+
+-- BNS counterparts of every seeded IPC section above. The Bharatiya Nyaya Sanhita replaced the IPC on
+-- 2024-07-01 (a renumbering), so post-2024 affidavits (e.g. the Nov-2024 Maharashtra assembly) cite BNS
+-- sections. Each inherits its IPC equivalent's severity so a BNS charge is assessed exactly like its IPC
+-- counterpart. Deduped where two IPC sections map to one BNS section (118 ← IPC 326+324; 329 ← 447+448).
+INSERT INTO legal_section
+    (code_system, section_number, title, ipc_equivalent, bns_equivalent, base_severity, is_cognizable, max_punishment_years)
+VALUES
+    ('BNS', '310', 'Dacoity',                              '395',  NULL, 'heinous', true, 10),
+    ('BNS', '105', 'Culpable homicide not amounting to murder', '304', NULL, 'serious', true, 10),
+    ('BNS', '110', 'Attempt to commit culpable homicide',  '308',  NULL, 'serious', true, 7),
+    ('BNS', '118', 'Grievous hurt by dangerous weapons',   '326',  NULL, 'serious', true, 7),
+    ('BNS', '318', 'Cheating',                             '420',  NULL, 'serious', true, 7),
+    ('BNS', '337', 'Forgery of valuable security',         '467',  NULL, 'serious', true, 99),
+    ('BNS', '61',  'Criminal conspiracy',                  '120B', NULL, 'serious', true, 7),
+    ('BNS', '191', 'Rioting',                              '147',  NULL, 'minor', true, 2),
+    ('BNS', '126', 'Wrongful restraint',                   '341',  NULL, 'minor', false, 1),
+    ('BNS', '132', 'Assault to deter public servant',      '353',  NULL, 'minor', true, 2),
+    ('BNS', '356', 'Defamation',                           '499',  NULL, 'minor', false, 2),
+    ('BNS', '351', 'Criminal intimidation',                '506',  NULL, 'minor', true, 2),
+    ('BNS', '189', 'Member of unlawful assembly',          '143',  NULL, 'minor', true, 1),
+    ('BNS', '190', 'Unlawful assembly common object',      '149',  NULL, 'minor', true, 2),
+    ('BNS', '221', 'Obstructing public servant',           '186',  NULL, 'minor', false, 1),
+    ('BNS', '223', 'Disobedience to order of public servant', '188', NULL, 'minor', true, 1),
+    ('BNS', '285', 'Danger/obstruction in public way',     '283',  NULL, 'minor', false, 1),
+    ('BNS', '296', 'Obscene acts in public',               '294',  NULL, 'minor', true, 1),
+    ('BNS', '115', 'Voluntarily causing hurt',             '323',  NULL, 'minor', false, 1),
+    ('BNS', '324', 'Mischief causing damage',              '427',  NULL, 'minor', true, 2),
+    ('BNS', '329', 'Criminal/house trespass',              '447',  NULL, 'minor', false, 1),
+    ('BNS', '352', 'Intentional insult/breach of peace',   '504',  NULL, 'minor', false, 2)
+ON CONFLICT (code_system, section_number) DO NOTHING;

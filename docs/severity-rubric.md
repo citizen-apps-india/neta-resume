@@ -20,8 +20,11 @@ life/death). Neta-Resume extends this to three tiers:
    IPC/BNS section. Seeded from `db/seeds/ipc_bns_sections.sql` + `db/seeds/severity_rules.sql`.
 2. **Section parsing** — `ingestion/neta_ingest/transform/sections.py` parses `raw_section_text`
    ("u/s 302/34 IPC", "BNS 103") into `(code_system, section_number)` and resolves to `legal_section.id`.
-3. **IPC → BNS transition** (the legal code changed mid-2024; cases span both) is handled via the crosswalk
-   columns `ipc_equivalent` / `bns_equivalent`, so a case under either code maps to the same severity.
+3. **IPC → BNS transition** (the legal code changed 2024-07-01; cases span both) is handled by seeding each
+   curated IPC section's **BNS counterpart** with the same severity, so a charge under either code maps to
+   the same severity. The crosswalk columns `ipc_equivalent` / `bns_equivalent` also drive the profile's
+   per-charge "BNS 103 ≈ IPC 302" indication. Sub-section refs ("351(1)") are normalised to the main
+   section before lookup.
 4. **Case-level rollup** — a case's `severity` = the **max** severity across its charges (one heinous charge
    → heinous case). Stamped with `severity_rule_version` for auditable re-classification.
 

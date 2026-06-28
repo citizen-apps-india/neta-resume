@@ -180,6 +180,15 @@ export interface components {
             self_income?: number | null;
             source: components["schemas"]["Source"];
         };
+        /** ChargeSection */
+        ChargeSection: {
+            /** Raw */
+            raw: string;
+            /** Title */
+            title?: string | null;
+            /** Equivalent */
+            equivalent?: string | null;
+        };
         /** CriminalCase */
         CriminalCase: {
             /** Case Number */
@@ -195,7 +204,7 @@ export interface components {
             /** Severity */
             severity: ("heinous" | "serious" | "minor") | null;
             /** Sections */
-            sections: string[];
+            sections: components["schemas"]["ChargeSection"][];
             /** Description */
             description: string | null;
             source: components["schemas"]["Source"];
