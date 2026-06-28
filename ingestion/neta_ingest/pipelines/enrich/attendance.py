@@ -13,14 +13,13 @@ sign the register, so PRS shows no % and we leave attendance NULL (renders as "â
 
 from __future__ import annotations
 
-import difflib
-
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
 from neta_core.provenance import record_source_ref
-from neta_sources.prs import client as prs
 from neta_core.transform.names import normalize_name
+from neta_ingest.pipelines.identity.affidavit_attach import best_match
+from neta_sources.prs import client as prs
 
 # house code -> (DB house code, current term_cycle WHERE clause)
 _CYCLE = {
@@ -29,12 +28,12 @@ _CYCLE = {
 }
 
 
-def _load_current_terms(s, house_code: str, cycle_where: str) -> dict[str, list[tuple[int, int]]]:
-    """normalized_name -> [(office_term_id, person_id)] for the house's current term."""
+def _load_current_terms(s, house_code: str, cycle_where: str) -> list[tuple[int, int, str]]:
+    """[(office_term_id, person_id, display_name)] for the house's current term."""
     rows = s.execute(
         text(
             f"""
-            SELECT ot.id AS ot_id, ot.person_id, p.normalized_name AS norm
+            SELECT ot.id AS ot_id, ot.person_id, p.display_name AS name
             FROM office_term ot
             JOIN term_cycle tc ON tc.id = ot.term_cycle_id
             JOIN house h ON h.id = tc.house_id
@@ -44,20 +43,22 @@ def _load_current_terms(s, house_code: str, cycle_where: str) -> dict[str, list[
         ),
         {"hc": house_code},
     ).all()
-    by_norm: dict[str, list[tuple[int, int]]] = {}
-    for r in rows:
-        by_norm.setdefault(r.norm, []).append((r.ot_id, r.person_id))
-    return by_norm
+    return [(r.ot_id, r.person_id, r.name) for r in rows]
 
 
-def _resolve(name: str, by_norm: dict[str, list[tuple[int, int]]], keys: list[str]) -> tuple[int, int] | None:
-    """Match a PRS name to a single (office_term_id, person_id); None if absent or ambiguous."""
-    key = normalize_name(name)
-    hits = by_norm.get(key)
-    if hits is None:
-        close = difflib.get_close_matches(key, keys, n=1, cutoff=0.90)
-        hits = by_norm.get(close[0]) if close else None
-    return hits[0] if hits and len(hits) == 1 else None
+def _resolve(name: str, persons: list[tuple[int, int, str]]) -> tuple[int, int] | None:
+    """Match a PRS member name to a single (office_term_id, person_id).
+
+    Reuses the token-aware matcher (exact normalized name, else a >=2-shared-token subset, else fuzzy),
+    which recovers cases like PRS "Jaya Bachchan" -> our "Jaya Amitabh Bachchan" that a token-sorted exact
+    match misses. best_match flags ambiguity (two persons tie) so we never attach to the wrong member.
+    """
+    cands = [(f"{ot_id}:{pid}", dn) for ot_id, pid, dn in persons]
+    cid, _score, ambiguous = best_match(cands, name, normalize_name(name), threshold=0.88)
+    if not cid or ambiguous:
+        return None
+    ot_id, pid = cid.split(":")
+    return int(ot_id), int(pid)
 
 
 def run(house: str = "ls") -> None:
@@ -70,9 +71,8 @@ def run(house: str = "ls") -> None:
     print(f"[attendance] PRS {house_code} roster: {len(roster)} members")
 
     with session_scope() as s:
-        by_norm = _load_current_terms(s, house_code, cycle_where)
-        keys = list(by_norm)
-        matched = [(m, *hit) for m in roster if (hit := _resolve(m.name, by_norm, keys))]
+        persons = _load_current_terms(s, house_code, cycle_where)
+        matched = [(m, *hit) for m in roster if (hit := _resolve(m.name, persons))]
         print(f"[attendance] matched {len(matched)}/{len(roster)} to current-term persons; "
               f"fetching profilesâ€¦")
 
