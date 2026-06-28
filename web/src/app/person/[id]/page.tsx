@@ -45,7 +45,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
   return (
     <>
       <SiteHeader />
-      <main style={{ maxWidth: 1080, margin: "0 auto", padding: "28px 28px 72px", width: "100%" }}>
+      <main style={{ maxWidth: 1080, margin: "0 auto", padding: "24px clamp(14px,4vw,28px) 72px", width: "100%" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 16 }}>
           <Link href="/directory" className="navlink mono" style={{ fontSize: 11, color: "var(--muted)", textDecoration: "none" }}>
             ← Directory
@@ -59,19 +59,19 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
 
         <Frame url={url}>
           {/* editorial hero */}
-          <div style={{ display: "grid", gridTemplateColumns: "1.55fr 1fr", borderBottom: "1px solid var(--rule)" }}>
-            <div style={{ minWidth: 0, padding: "38px 40px", borderRight: "1px solid var(--rule)" }}>
+          <div className="nr-split" style={{ borderBottom: "1px solid var(--rule)" }}>
+            <div style={{ minWidth: 0, padding: "clamp(24px,5vw,38px) clamp(18px,5vw,40px)", borderRight: "1px solid var(--rule)" }}>
               <div style={{ display: "flex", gap: 24, alignItems: "flex-start" }}>
                 <PhotoBox w={108} h={128} label="OFFICIAL PHOTO" src={photoSrc(resume.id, resume.photo_url)} />
                 <div style={{ flex: 1, minWidth: 0 }}>
                   <div className="mono" style={{ fontSize: 10, letterSpacing: "0.12em", color: "var(--accent)", marginBottom: 10 }}>
                     FILE · {lead ? `${lead.house.replace(/[^A-Z]/g, "") || "LS"}-${lead.cycle_number}` : "—"} · #{resume.id}
                   </div>
-                  <h1 className="serif" style={{ fontSize: 42, fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1, margin: 0 }}>
+                  <h1 className="serif" style={{ fontSize: "clamp(28px,6vw,42px)", fontWeight: 600, letterSpacing: "-0.02em", lineHeight: 1.02, margin: 0 }}>
                     {resume.display_name}
                   </h1>
                   {resume.native_name && (
-                    <div className="deva" style={{ fontSize: 18, color: "var(--muted)", marginTop: 4 }}>{resume.native_name}</div>
+                    <div className="deva" style={{ fontSize: "clamp(15px,4vw,18px)", color: "var(--muted)", marginTop: 4 }}>{resume.native_name}</div>
                   )}
                   <div style={{ display: "flex", flexWrap: "wrap", alignItems: "center", gap: 9, marginTop: 16 }}>
                     <PartyPill party={currentParty} />
@@ -88,7 +88,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
                   )}
                 </div>
               </div>
-              <p className="serif" style={{ fontSize: 18, lineHeight: 1.55, color: "var(--ink2)", margin: "24px 0 0", maxWidth: "62ch" }}>
+              <p className="serif" style={{ fontSize: "clamp(15px,4vw,18px)", lineHeight: 1.55, color: "var(--ink2)", margin: "24px 0 0", maxWidth: "62ch" }}>
                 {summary(resume, latestAssets?.total_assets ?? null, pending, convictions, parties.size)}
               </p>
             </div>
@@ -96,12 +96,12 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
             {/* hero metrics */}
             <div style={{ display: "flex", flexDirection: "column" }}>
               {metrics.map((m, i) => (
-                <div key={i} style={{ flex: 1, padding: "18px 26px", borderBottom: i < metrics.length - 1 ? "1px solid var(--rule)" : "none", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
+                <div key={i} style={{ flex: 1, padding: "clamp(14px,3.5vw,18px) clamp(16px,4vw,26px)", borderBottom: i < metrics.length - 1 ? "1px solid var(--rule)" : "none", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12 }}>
                   <div>
                     <div style={{ fontSize: 11.5, color: "var(--muted)" }}>{m.label}</div>
                     <div className="mono" style={{ fontSize: 9, color: "var(--faint)", letterSpacing: "0.06em", marginTop: 4 }}>{m.src}</div>
                   </div>
-                  <div className="mono" style={{ fontSize: 24, fontWeight: 500, letterSpacing: "-0.02em", color: m.color, display: "flex", alignItems: "center", gap: 8 }}>
+                  <div className="mono" style={{ fontSize: "clamp(19px,5vw,24px)", fontWeight: 500, letterSpacing: "-0.02em", color: m.color, display: "flex", alignItems: "center", gap: 8 }}>
                     {m.dot && <span style={{ width: 9, height: 9, borderRadius: 3, background: m.dot }} />}
                     {m.value}
                   </div>

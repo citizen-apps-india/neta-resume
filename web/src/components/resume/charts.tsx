@@ -54,7 +54,7 @@ export function Donut({
   const unitSize = Math.max(9, mainSize * 0.55);
 
   return (
-    <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
+    <div className="nr-donut">
       <div style={{ position: "relative", width: size, height: size, flexShrink: 0 }}>
         <PieChart width={size} height={size}>
           <Pie
@@ -113,7 +113,7 @@ export function WealthLine({ points }: { points: { label: string; value: number 
   const gid = "wealthFill";
 
   return (
-    <div style={{ width: "100%", height: 168 }}>
+    <div style={{ width: "100%", height: "clamp(140px,42vw,168px)" }}>
       <ResponsiveContainer width="100%" height="100%">
         <AreaChart data={points} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
           <defs>

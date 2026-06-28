@@ -9,7 +9,7 @@ export function Footer() {
       style={{
         borderTop: "1px solid var(--rule)",
         background: "var(--panel)",
-        padding: "40px 28px 48px",
+        padding: "40px clamp(16px,5vw,28px) 48px",
       }}
     >
       <div style={{ maxWidth: 1080, margin: "0 auto", display: "grid", gap: 28 }}>

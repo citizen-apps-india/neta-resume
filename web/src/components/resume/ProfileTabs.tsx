@@ -18,7 +18,7 @@ export function ProfileTabs({ resume }: { resume: PersonResume }) {
 
   return (
     <>
-      <div style={{ padding: "0 40px", borderBottom: "1px solid var(--rule)", background: "var(--card)" }}>
+      <div style={{ padding: "0 clamp(14px,4vw,40px)", borderBottom: "1px solid var(--rule)", background: "var(--card)" }}>
         <div style={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
           {TABS.map((t) => {
             const active = t === tab;
@@ -27,7 +27,7 @@ export function ProfileTabs({ resume }: { resume: PersonResume }) {
                 key={t}
                 onClick={() => setTab(t)}
                 style={{
-                  fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 13.5, fontWeight: 600, padding: "15px 18px",
+                  fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 13.5, fontWeight: 600, padding: "14px clamp(11px,3vw,18px)",
                   border: "none", background: "transparent", cursor: "pointer", marginBottom: -1,
                   color: active ? "var(--ink)" : "var(--muted)",
                   borderBottom: `2px solid ${active ? "var(--accent)" : "transparent"}`,
@@ -40,7 +40,7 @@ export function ProfileTabs({ resume }: { resume: PersonResume }) {
         </div>
       </div>
 
-      <div style={{ padding: "30px 40px 40px", background: "var(--bg)" }}>
+      <div style={{ padding: "clamp(20px,4vw,30px) clamp(16px,4vw,40px) 40px", background: "var(--bg)" }}>
         {tab === "Overview" && <Overview resume={resume} />}
         {tab === "Wealth" && <Wealth resume={resume} />}
         {tab === "Cases" && <Cases resume={resume} />}
@@ -77,7 +77,7 @@ function wealthPoints(resume: PersonResume) {
     .map((w) => ({ label: w.election_cycle, value: w.total_assets }));
 }
 
-const cardStyle: React.CSSProperties = { minWidth: 0, border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: 24 };
+const cardStyle: React.CSSProperties = { minWidth: 0, border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "clamp(16px,4vw,24px)" };
 const headStyle: React.CSSProperties = { fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 16, fontWeight: 600 };
 
 function Overview({ resume }: { resume: PersonResume }) {
@@ -86,7 +86,7 @@ function Overview({ resume }: { resume: PersonResume }) {
   const donut = severityDonut(resume);
   return (
     <div className="fadeUp">
-      <div style={{ display: "grid", gridTemplateColumns: "1.4fr 1fr", gap: 18, marginBottom: 18 }}>
+      <div className="nr-2col" style={{ ["--cols" as string]: "1.4fr 1fr", marginBottom: 18 }}>
         <div style={cardStyle}>
           <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 14 }}>
             <span style={headStyle}>Net assets, by cycle</span>
@@ -130,7 +130,7 @@ function Wealth({ resume }: { resume: PersonResume }) {
         { label: "Liabilities", value: latest.total_liabilities, color: "var(--sev2)" },
       ];
   return (
-    <div className="fadeUp" style={{ display: "grid", gridTemplateColumns: "1fr 1.3fr", gap: 18 }}>
+    <div className="fadeUp nr-2col" style={{ ["--cols" as string]: "1fr 1.3fr" }}>
       <div style={cardStyle}>
         <div style={{ ...headStyle, marginBottom: 18 }}>Latest composition</div>
         {latest ? (
@@ -140,6 +140,7 @@ function Wealth({ resume }: { resume: PersonResume }) {
         )}
       </div>
       <div style={{ minWidth: 0, border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", overflow: "hidden" }}>
+        <div className="nr-xscroll">
         <div className="mono" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr 1fr", padding: "13px 20px", background: "var(--sunken)", borderBottom: "1px solid var(--rule)", fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>
           <span>Cycle</span><span style={{ textAlign: "right" }}>Assets</span><span style={{ textAlign: "right" }}>Liabilities</span><span style={{ textAlign: "right" }}>Income</span>
         </div>
@@ -154,6 +155,7 @@ function Wealth({ resume }: { resume: PersonResume }) {
             <span className="mono" style={{ fontSize: 12.5, textAlign: "right", color: "var(--ink2)" }}>{r.self_income != null ? rupees(r.self_income) : "—"}</span>
           </div>
         ))}
+        </div>
         <div className="mono" style={{ padding: "13px 20px", background: "var(--sunken)", fontSize: 10, color: "var(--accent)", letterSpacing: "0.06em" }}>
           ↗ EACH ROW LINKS TO THE SIGNED ECI AFFIDAVIT
         </div>
@@ -222,7 +224,7 @@ function PartySwitches({ resume }: { resume: PersonResume }) {
   const switches = resume.party_switches ?? [];
   if (!switches.length) return null;
   return (
-    <div className="fadeUp" style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "24px 26px", marginBottom: 18 }}>
+    <div className="fadeUp" style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "clamp(18px,4vw,24px) clamp(16px,4vw,26px)", marginBottom: 18 }}>
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 4 }}>
         <span style={{ ...headStyle, fontSize: 16 }}>Party changes — when &amp; why</span>
         <span className="mono" style={{ fontSize: 10, color: "var(--faint)", letterSpacing: "0.06em" }}>REPORTED · SOURCED</span>
@@ -260,12 +262,12 @@ function Career({ resume }: { resume: PersonResume }) {
   return (
     <>
     <PartySwitches resume={resume} />
-    <div className="fadeUp" style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "32px 30px" }}>
+    <div className="fadeUp" style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "clamp(22px,4vw,32px) clamp(16px,4vw,30px)" }}>
       {terms.map((o, i) => {
         const span = [o.start_date, o.end_date].filter(Boolean).map(year).join("–") || `${o.house} ${o.cycle_number}`;
         return (
           <div key={i} style={{ display: "flex", gap: 20 }}>
-            <div className="mono" style={{ fontSize: 11.5, color: "var(--muted)", width: 104, flexShrink: 0, paddingTop: 2, textAlign: "right" }}>{span}</div>
+            <div className="mono" style={{ fontSize: 11.5, color: "var(--muted)", width: "clamp(54px,14vw,104px)", flexShrink: 0, paddingTop: 2, textAlign: "right" }}>{span}</div>
             <div style={{ display: "flex", flexDirection: "column", alignItems: "center", flexShrink: 0, width: 14 }}>
               <span style={{ width: 14, height: 14, borderRadius: "50%", background: "var(--accent-2)", border: "3px solid var(--card2)", boxShadow: "0 0 0 1px var(--border)", zIndex: 1, flexShrink: 0 }} />
               {i < terms.length - 1 && <span style={{ flex: 1, width: 2, background: "var(--rule)", minHeight: 18 }} />}
