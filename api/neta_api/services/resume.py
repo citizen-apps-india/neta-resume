@@ -12,6 +12,7 @@ from sqlalchemy.orm import Session
 from neta_api.schemas import (
     AffidavitWealth,
     ChargeSection,
+    Contact,
     CriminalCase,
     NewsItem,
     OfficeTerm,
@@ -120,6 +121,30 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
                 JOIN source s ON s.id = sr.source_id
                 WHERE rl.person_id = :pid
                 ORDER BY (rl.status = 'current') DESC, rl.start_date DESC NULLS LAST
+                """
+            ),
+            {"pid": person_id},
+        )
+    ]
+
+    contacts = [
+        Contact(
+            channel_type=r.channel_type,
+            value=r.value,
+            label=r.label,
+            source=_source(r),
+        )
+        for r in db.execute(
+            text(
+                """
+                SELECT c.channel_type, c.value, c.label,
+                       s.code AS source_code, s.name AS source_name, s.trust_tier, sr.native_url
+                FROM contact c
+                JOIN source_ref sr ON sr.id = c.source_ref_id
+                JOIN source s ON s.id = sr.source_id
+                WHERE c.person_id = :pid
+                ORDER BY CASE c.channel_type WHEN 'email' THEN 1 WHEN 'phone' THEN 2
+                         WHEN 'office_address' THEN 3 WHEN 'website' THEN 4 ELSE 5 END
                 """
             ),
             {"pid": person_id},
@@ -298,6 +323,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
         education=latest.education if latest else None,
         office_terms=office_terms,
         roles=roles,
+        contacts=contacts,
         party_history=party_history,
         party_switches=party_switches,
         wealth=wealth,

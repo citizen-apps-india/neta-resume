@@ -75,6 +75,13 @@ class CriminalCase(BaseModel):
     source: Source
 
 
+class Contact(BaseModel):
+    channel_type: str            # email | phone | office_address | website | social | party_office
+    value: str
+    label: str | None
+    source: Source
+
+
 class RoleEntry(BaseModel):
     role_type: str               # prime_minister | minister | speaker | lop | committee_chair | ...
     title: str | None            # 'Minister of Finance', 'Speaker, Lok Sabha'
@@ -113,6 +120,7 @@ class PersonResume(BaseModel):
     education: str | None = None
     office_terms: list[OfficeTerm]
     roles: list[RoleEntry] = []
+    contacts: list[Contact] = []
     party_history: list[PartyStint]
     party_switches: list[PartySwitch] = []
     wealth: list[AffidavitWealth]      # ordered by filed_year for YoY

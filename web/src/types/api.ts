@@ -189,6 +189,16 @@ export interface components {
             /** Equivalent */
             equivalent?: string | null;
         };
+        /** Contact */
+        Contact: {
+            /** Channel Type */
+            channel_type: string;
+            /** Value */
+            value: string;
+            /** Label */
+            label: string | null;
+            source: components["schemas"]["Source"];
+        };
         /** CriminalCase */
         CriminalCase: {
             /** Case Number */
@@ -303,6 +313,11 @@ export interface components {
              * @default []
              */
             roles: components["schemas"]["RoleEntry"][];
+            /**
+             * Contacts
+             * @default []
+             */
+            contacts: components["schemas"]["Contact"][];
             /** Party History */
             party_history: components["schemas"]["PartyStint"][];
             /**

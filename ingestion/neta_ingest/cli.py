@@ -145,6 +145,14 @@ def news(house: str = typer.Option(None, help="ls|rs (default: both)"),
     p.run(house=house, limit=limit)
 
 
+@app.command(name="contacts")
+def contacts(house: str = typer.Option(None, help="ls|rs (default: both)")) -> None:
+    """Attach official contact channels (email/office phone/profile) to sitting MPs from sansad.in."""
+    from neta_ingest.pipelines import contacts as p
+
+    p.run(house=house)
+
+
 @app.command(name="leadership")
 def leadership() -> None:
     """Seed marquee 18th-LS leadership roles (PM, Speaker, LoP, senior ministers) -> role."""

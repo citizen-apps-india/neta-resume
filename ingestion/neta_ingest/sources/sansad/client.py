@@ -39,6 +39,8 @@ class RsMember:
     gender: str | None
     age: int | None
     profile_url: str
+    official_email: str | None = None   # @*.sansad.in
+    office_phone: str | None = None      # local office line
 
 
 def _clean_name(raw: str) -> str:
@@ -61,6 +63,21 @@ def _years(term: str | None) -> tuple[int | None, int | None]:
     return (int(yrs[0]) if yrs else None, int(yrs[1]) if len(yrs) > 1 else None)
 
 
+def _official_email(raw) -> str | None:
+    """Return the OFFICIAL (@*.sansad.in) email from sansad's obfuscated value(s), de-obfuscated.
+
+    sansad writes 'name[at]mpls[dot]sansad[dot]in' and may list a personal address too; we keep only the
+    official sansad.in channel (Decision: official channels only — no personal contacts)."""
+    vals = raw if isinstance(raw, list) else [raw]
+    for v in vals:
+        if not v:
+            continue
+        e = str(v).replace("[at]", "@").replace("[dot]", ".").replace(" ", "").strip().lower()
+        if e.endswith("sansad.in") and "@" in e:
+            return e
+    return None
+
+
 @dataclass(slots=True)
 class LsMember:
     member_id: str          # mpsno -> source_ref.native_id
@@ -73,6 +90,8 @@ class LsMember:
     gender: str | None
     terms: int | None
     profile_url: str
+    official_email: str | None = None   # @*.sansad.in
+    office_phone: str | None = None      # Delhi/Parliament office line
 
 
 def fetch_ls_sitting_members(page_size: int = 100) -> list[LsMember]:
@@ -104,6 +123,8 @@ def fetch_ls_sitting_members(page_size: int = 100) -> list[LsMember]:
                     gender=(r.get("gender") or "").strip().title() or None,
                     terms=r.get("noOfTerms"),
                     profile_url=f"https://sansad.in/ls/members?mpsno={r['mpsno']}",
+                    official_email=_official_email(r.get("email")),
+                    office_phone=(r.get("delhiPhone") or "").strip() or None,
                 )
             )
         meta = data.get("metaDatasDto", {})
@@ -145,6 +166,8 @@ def fetch_rs_sitting_members(page_size: int = 100) -> list[RsMember]:
                     gender=(r.get("gender") or "").strip() or None,
                     age=r.get("age"),
                     profile_url=f"https://sansad.in/rs/members?mpsno={r['mpsno']}",
+                    official_email=_official_email(r.get("emailID")),
+                    office_phone=(r.get("localTele") or "").strip() or None,
                 )
             )
         meta = data.get("_metadata", {})

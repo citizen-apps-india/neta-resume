@@ -6,7 +6,7 @@ import { rupees, severityMeta, year, pretty } from "@/lib/format";
 import { Donut, WealthLine } from "@/components/resume/charts";
 import { SourceLink, SourceChip, PendingFlag, SeverityBadge, PartyPill } from "@/components/ui";
 
-const TABS = ["Overview", "Wealth", "Cases", "Career & Roles", "In The News"] as const;
+const TABS = ["Overview", "Wealth", "Cases", "Career & Roles", "Contact", "In The News"] as const;
 type Tab = (typeof TABS)[number];
 
 function isRajyaSabha(resume: PersonResume): boolean {
@@ -45,6 +45,7 @@ export function ProfileTabs({ resume }: { resume: PersonResume }) {
         {tab === "Wealth" && <Wealth resume={resume} />}
         {tab === "Cases" && <Cases resume={resume} />}
         {tab === "Career & Roles" && <Career resume={resume} />}
+        {tab === "Contact" && <ContactTab resume={resume} />}
         {tab === "In The News" && <News resume={resume} />}
       </div>
     </>
@@ -311,6 +312,50 @@ function Positions({ resume }: { resume: PersonResume }) {
           );
         })}
       </div>
+    </div>
+  );
+}
+
+function ContactTab({ resume }: { resume: PersonResume }) {
+  const contacts = resume.contacts ?? [];
+  if (!contacts.length) {
+    return (
+      <div className="fadeUp" style={{ padding: "28px 24px", border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)" }}>
+        <Muted>No official contact channels are on record for this legislator yet.</Muted>
+      </div>
+    );
+  }
+  const href = (c: { channel_type: string; value: string }) =>
+    c.channel_type === "email" ? `mailto:${c.value}`
+      : c.channel_type === "phone" ? `tel:${c.value.replace(/\s+/g, "")}`
+      : c.channel_type === "website" || c.channel_type === "social" ? c.value
+      : null;
+  const ICON: Record<string, string> = { email: "✉", phone: "☎", website: "↗", social: "↗", office_address: "⌂", party_office: "⌂" };
+  return (
+    <div className="fadeUp">
+      <div style={{ border: "1px solid var(--rule)", borderRadius: 12, overflow: "hidden", background: "var(--card2)" }}>
+        {contacts.map((c, i) => {
+          const link = href(c);
+          const label = c.label ?? c.channel_type;
+          return (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 14, padding: "16px 20px", borderBottom: i < contacts.length - 1 ? "1px solid var(--rule2)" : "none" }}>
+              <span style={{ fontSize: 16, color: "var(--accent)", width: 20, textAlign: "center", flexShrink: 0 }}>{ICON[c.channel_type] ?? "•"}</span>
+              <div style={{ flex: 1, minWidth: 0 }}>
+                <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--faint)", marginBottom: 3 }}>{label}</div>
+                {link ? (
+                  <a href={link} target={c.channel_type === "website" || c.channel_type === "social" ? "_blank" : undefined} rel="noopener noreferrer" style={{ fontSize: 14.5, color: "var(--accent)", textDecoration: "none", wordBreak: "break-all" }}>{c.value}</a>
+                ) : (
+                  <span style={{ fontSize: 14.5, color: "var(--ink)" }}>{c.value}</span>
+                )}
+              </div>
+              <div style={{ flexShrink: 0 }}><SourceLink source={c.source} /></div>
+            </div>
+          );
+        })}
+      </div>
+      <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 12, lineHeight: 1.6 }}>
+        ℹ Official channels only — the member&rsquo;s parliamentary office, official <span className="mono">@sansad.in</span> email and official profile, sourced from the Digital Sansad directory. Personal numbers and residential addresses are deliberately not listed.
+      </p>
     </div>
   );
 }
