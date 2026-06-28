@@ -21,10 +21,14 @@ from neta_ingest.sources.myneta.parser import (
     parse_winners,
 )
 
-# Election-cycle code -> MyNeta site path.
+# Election-cycle code -> MyNeta site path. Path casing/scheme varies per cycle (verified live):
+# 2024 uses "LokSabha2024"; older cycles use the short "ls{year}" form ("loksabha{year}" is a dead path
+# for 2009/2014 — its show_winners action returns an empty list).
 ELECTION_BASE = {
     "LS2024": "https://www.myneta.info/LokSabha2024",
     "LS2019": "https://www.myneta.info/loksabha2019",
+    "LS2014": "https://www.myneta.info/ls2014",
+    "LS2009": "https://www.myneta.info/ls2009",
 }
 
 
@@ -33,6 +37,16 @@ def base_url(cycle: str) -> str:
         return ELECTION_BASE[cycle]
     except KeyError as e:
         raise ValueError(f"unknown MyNeta election cycle {cycle!r}; add it to ELECTION_BASE") from e
+
+
+def native_id(cycle: str, candidate_id: str) -> str:
+    """The source_ref native_id for a MyNeta candidate, namespaced by cycle.
+
+    MyNeta candidate_ids are NOT globally unique — the same integer is reused across elections
+    (e.g. id 5069 is a different person in LS2024 vs LS2019). Namespacing by cycle keeps each cycle's
+    candidate a distinct source_ref so a historical ingest can never overwrite another cycle's person.
+    """
+    return f"{cycle}:{candidate_id}"
 
 
 def fetch_winners(cycle: str = "LS2024") -> list[WinnerRow]:

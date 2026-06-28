@@ -21,13 +21,19 @@ from dataclasses import dataclass, field
 from selectolax.parser import HTMLParser
 
 from neta_ingest.transform.money import parse_rupees
-from neta_ingest.transform.sections import parse_sections
+from neta_ingest.transform.sections import has_statute_marker, parse_sections
 
 
 def _strip_tags(s: str) -> str:
     s = s.replace("&nbsp;", " ").replace("&amp;", "&")
     s = re.sub(r"<[^>]+>", " ", s)
     return re.sub(r"\s+", " ", s).strip()
+
+
+def _extract(text: str, pattern: str) -> str | None:
+    """First capture group of a case-insensitive search, or None."""
+    m = re.search(pattern, text, re.IGNORECASE)
+    return m.group(1).strip() if m and m.group(1).strip() else None
 
 
 @dataclass(slots=True)
@@ -235,15 +241,31 @@ def _parse_cases(html: str) -> list[ParsedCase]:
             ipc_raw = cell(cells, i_ipc)
             other_raw = cell(cells, i_other)
             sections = parse_sections(ipc_raw, default_code="IPC")
-            if other_raw:
+            # The "Other Acts" column carries real statute sections only when it names a statute
+            # (e.g. "Section-126(2) R.P. Act"). Older layouts (LS2014/LS2009) reuse this column for
+            # free-text case metadata ("Case No-294/10, FIR No-191/2009, Thana ..., Court ..."), whose
+            # bare numbers are case/FIR numbers and years — never read those as sections.
+            other_is_statute = has_statute_marker(other_raw)
+            if other_is_statute:
                 sections += parse_sections(other_raw, default_code="IPC")
-            raw_display = " | ".join(x for x in (ipc_raw, other_raw) if x)
+            raw_display = " | ".join(x for x in (ipc_raw, other_raw if other_is_statute else "") if x)
+
+            fir_number = cell(cells, i_fir) or None
+            case_number = cell(cells, i_case) or None
+            court = cell(cells, i_court)[:120] or None
+            # When FIR/Case/Court have no dedicated columns (older layouts), recover them from the
+            # bundled free-text "other" cell.
+            if other_raw and not other_is_statute:
+                if fir_number is None:
+                    fir_number = _extract(other_raw, r"fir\s*no[.\-:\s]*([^\s,;]+)")
+                if case_number is None:
+                    case_number = _extract(other_raw, r"case\s*no[.\-:\s]*([^\s,;]+)")
             cases.append(
                 ParsedCase(
                     serial=serial,
-                    fir_number=cell(cells, i_fir) or None,
-                    case_number=cell(cells, i_case) or None,
-                    court=cell(cells, i_court)[:120] or None,
+                    fir_number=fir_number,
+                    case_number=case_number,
+                    court=court,
                     raw_sections=raw_display,
                     sections=sections,
                     charges_framed=cell(cells, i_framed).strip().lower() == "yes",

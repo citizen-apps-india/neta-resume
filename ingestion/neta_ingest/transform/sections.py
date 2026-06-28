@@ -39,6 +39,21 @@ def _detect_code(raw: str, default_code: str) -> str:
     return default_code
 
 
+def has_statute_marker(raw: str) -> bool:
+    """True if the text explicitly names a statute (IPC/BNS/PCA/RPA or a phrase like "R.P. Act").
+
+    Used to decide whether bare numbers in a free-text column are safe to read as section numbers.
+    Older MyNeta layouts (LS2014/LS2009) bundle case metadata ("Case No-294/10, FIR No-191/2009,
+    Thana ..., Court ...") into the same "Other Acts" column that newer pages use for real statute
+    refs — so without a marker those numbers are case/FIR numbers and years, not charges.
+    """
+    if not raw:
+        return False
+    if _CODE.search(raw):
+        return True
+    return any(pat.search(raw) for pat, _ in _STATUTE_PHRASES)
+
+
 def parse_sections(raw: str, default_code: str = "IPC") -> list[tuple[str, str]]:
     """Return [(code_system, section_number), ...] parsed from a raw charge string.
 

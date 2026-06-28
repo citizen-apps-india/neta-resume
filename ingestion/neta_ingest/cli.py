@@ -60,11 +60,24 @@ def resolve() -> None:
 
 
 @app.command(name="enrich-missing")
-def enrich_missing() -> None:
+def enrich_missing(cycle: str = "LS2024") -> None:
     """Backfill affidavit data for LS members MyNeta omitted from its winners list (per-constituency)."""
     from neta_ingest.pipelines import enrich_missing_affidavits as p
 
-    p.run()
+    p.run(cycle=cycle)
+
+
+@app.command(name="historical-lookup")
+def historical_lookup(cycle: str, limit: int = typer.Option(None, help="cap MPs processed (testing)"),
+                      refresh_index: bool = typer.Option(False, help="re-crawl the cycle candidate index")) -> None:
+    """Tier-2: find sitting MPs' PAST-cycle candidacies (even losses/seat changes) and attach affidavits.
+
+    cycle is a PAST cycle (LS2019|LS2014|LS2009). Confident matches are written; ambiguous ones are
+    queued to data/hist_index/review_<cycle>.json. Run after `myneta`+`merge-cycles` for that cycle.
+    """
+    from neta_ingest.pipelines import historical_lookup as p
+
+    p.run(cycle=cycle, limit=limit, refresh_index=refresh_index)
 
 
 @app.command(name="ls-roster")

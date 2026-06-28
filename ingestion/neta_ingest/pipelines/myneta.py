@@ -33,14 +33,24 @@ def run(cycle: str = "LS2024", house: str = "ls", limit: int = 10,
     print(f"[myneta] ingesting {len(ids)} candidates for {cycle} ...")
 
     ok = 0
-    for cid in ids:
-        parsed, raw_rel = myneta.fetch_candidate(cid, cycle)
-        with session_scope() as s:
-            _persist_candidate(s, parsed, cycle=cycle, house=house, raw_rel=raw_rel)
-        ok += 1
-        print(f"  [{ok}/{len(ids)}] {parsed.name} ({parsed.party}) "
-              f"assets={parsed.total_assets:,} cases={len(parsed.criminal_cases)}")
-    print(f"[myneta] done: {ok} candidates ingested.")
+    failed: list[str] = []
+    for i, cid in enumerate(ids, 1):
+        # Resilient per-candidate: at backfill scale (~500 pages/cycle) the odd malformed page
+        # must not abort the whole run. Each candidate is its own transaction (idempotent on
+        # source_ref), so skipping a bad one and re-running later is safe.
+        try:
+            parsed, raw_rel = myneta.fetch_candidate(cid, cycle)
+            with session_scope() as s:
+                _persist_candidate(s, parsed, cycle=cycle, house=house, raw_rel=raw_rel)
+            ok += 1
+            print(f"  [{i}/{len(ids)}] {parsed.name} ({parsed.party}) "
+                  f"assets={parsed.total_assets:,} cases={len(parsed.criminal_cases)}")
+        except Exception as e:  # noqa: BLE001 - log, keep going, report at the end
+            failed.append(cid)
+            print(f"  [{i}/{len(ids)}] candidate {cid}: FAILED {type(e).__name__}: {e}")
+    print(f"[myneta] done: {ok} ingested, {len(failed)} failed for {cycle}.")
+    if failed:
+        print(f"[myneta] failed candidate_ids ({cycle}): {','.join(failed)}")
 
 
 def _scalar(s, sql: str, **params):
@@ -72,7 +82,8 @@ def _persist_candidate(s, c: ParsedCandidate, *, cycle: str, house: str, raw_rel
             RETURNING id, person_id
             """
         ),
-        {"sid": source_id, "nid": c.candidate_id, "url": source_url, "name": c.name, "raw": raw_rel},
+        {"sid": source_id, "nid": myneta.native_id(cycle, c.candidate_id), "url": source_url,
+         "name": c.name, "raw": raw_rel},
     ).one()
     source_ref_id, person_id = row.id, row.person_id
 
@@ -103,6 +114,23 @@ def _persist_candidate(s, c: ParsedCandidate, *, cycle: str, house: str, raw_rel
 
     party_id = resolve_or_create_party_id(s, c.party) if c.party else None
 
+    # Is this the latest cycle for the house? Past-cycle ingest must NOT claim the person's "current"
+    # party (the partial unique party_affiliation_current_idx allows only one current row per person)
+    # nor a "sitting" office term. This keeps re-runs idempotent even after merge_cycles has folded a
+    # past-cycle candidate's source_ref onto the current (LS2024) person.
+    is_latest_cycle = _scalar(
+        s,
+        """
+        SELECT NOT EXISTS (
+            SELECT 1 FROM term_cycle t2
+            WHERE t2.house_id = :hid
+              AND t2.number > (SELECT number FROM term_cycle WHERE id = :tcid)
+        )
+        """,
+        hid=house_id, tcid=term_cycle_id,
+    )
+    term_status = "sitting" if is_latest_cycle else "former"
+
     # 3) wipe this source_ref's derived facts, then re-insert (idempotent re-run)
     for tbl in ("case_charge",):
         s.execute(text(
@@ -119,24 +147,24 @@ def _persist_candidate(s, c: ParsedCandidate, *, cycle: str, house: str, raw_rel
             INSERT INTO office_term
               (person_id, house_id, term_cycle_id, constituency, membership_type,
                party_id, status, source_ref_id)
-            VALUES (:pid, :hid, :tcid, :con, 'elected', :party, 'sitting', :sr)
+            VALUES (:pid, :hid, :tcid, :con, 'elected', :party, :status, :sr)
             """
         ),
         {"pid": person_id, "hid": house_id, "tcid": term_cycle_id,
-         "con": c.constituency, "party": party_id, "sr": source_ref_id},
+         "con": c.constituency, "party": party_id, "status": term_status, "sr": source_ref_id},
     )
 
-    # 5) current party affiliation
+    # 5) party affiliation for this cycle (current only when this is the latest cycle)
     if party_id is not None:
         s.execute(
             text(
                 """
                 INSERT INTO party_affiliation
                   (person_id, party_id, is_current, detection, confidence, source_ref_id)
-                VALUES (:pid, :party, true, 'structured_term_diff', 70, :sr)
+                VALUES (:pid, :party, :cur, 'structured_term_diff', 70, :sr)
                 """
             ),
-            {"pid": person_id, "party": party_id, "sr": source_ref_id},
+            {"pid": person_id, "party": party_id, "cur": is_latest_cycle, "sr": source_ref_id},
         )
 
     # 6) affidavit (assets/liabilities/income)

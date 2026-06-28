@@ -59,3 +59,42 @@ def test_multi_case_candidate_5083():
     # Most cases carry structured sections (a few affidavit rows legitimately omit section numbers).
     assert sum(1 for case in c.criminal_cases if case.sections) >= 11
     assert any(("IPC", "120B") in case.sections for case in c.criminal_cases)
+
+
+def test_ls2014_old_layout_candidate_4916():
+    """LS2014 layout: only Serial/IPC/Other columns; the "Other" cell is free-text case metadata.
+
+    Regression for the bug where bare numbers in that cell (case/FIR numbers, years) were mined as
+    IPC sections (e.g. a spurious ('IPC', '2009')).
+    """
+    html = (FIXTURES / "myneta_candidate_ls2014_4916.html").read_text(encoding="utf-8", errors="ignore")
+    c = parse_candidate(html, candidate_id="4916")
+    assert c.name == "DR. RAMSHANKAR KATHERIA"
+    assert c.party == "BJP"
+    assert c.constituency == "AGRA"
+    assert c.state == "UTTAR PRADESH"
+    assert c.total_assets == 14634885
+    assert c.total_liabilities == 4035000
+    assert len(c.criminal_cases) == 21
+
+    first = c.criminal_cases[0]
+    assert ("IPC", "147") in first.sections
+    assert ("IPC", "341") in first.sections
+    # FIR/Case recovered from the bundled free-text cell.
+    assert first.fir_number == "191/2009"
+    assert first.case_number == "294/10"
+
+    # No year/serial leaked in as a section anywhere (the core regression).
+    all_secs = {num for case in c.criminal_cases for (_code, num) in case.sections}
+    assert not (all_secs & {"2009", "2010", "2011", "2012", "2013", "2014"})
+
+
+def test_ls2009_old_layout_candidate_281():
+    """LS2009 layout parses assets + cases; income is legitimately absent (older affidavits)."""
+    html = (FIXTURES / "myneta_candidate_ls2009_281.html").read_text(encoding="utf-8", errors="ignore")
+    c = parse_candidate(html, candidate_id="281")
+    assert c.name == "Ramesh Rathod"
+    assert c.total_assets == 3410000
+    assert c.total_liabilities == 815241
+    assert len(c.criminal_cases) == 2
+    assert ("IPC", "353") in c.criminal_cases[0].sections

@@ -13,6 +13,8 @@ __pycache__/
 
 # Ingestion raw cache & secrets (provenance snapshots are large + may carry PII)
 ingestion/data/raw_cache/
+# Generated per-cycle candidate indexes + Tier-2 review queues (regenerable, large)
+ingestion/data/hist_index/
 *.sqlite
 *.db
 
