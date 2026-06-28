@@ -58,6 +58,17 @@ export function getStats(): Promise<Stats> {
   return getJSON<Stats>("/stats", 600);
 }
 
+/** Lifetime unique-visitor counter (homepage). */
+export type Visits = { count: number };
+export function getVisits(): Promise<Visits> {
+  return getJSON<Visits>("/visits", 0);
+}
+export async function bumpVisits(): Promise<Visits> {
+  const res = await fetch(`${API_BASE}/visits/hit`, { method: "POST", cache: "no-store" });
+  if (!res.ok) throw new Error(`API ${res.status} for /visits/hit`);
+  return res.json();
+}
+
 /** Photos are served via the API proxy (upstream blocks cross-origin embedding). */
 export function photoSrc(id: number, hasPhoto: string | null | undefined): string | null {
   return hasPhoto ? `${API_BASE}/persons/${id}/photo` : null;

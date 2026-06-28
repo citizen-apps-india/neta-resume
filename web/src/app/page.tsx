@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SearchBox } from "@/components/SearchBox";
 import { HomePreview } from "@/components/HomePreview";
+import { VisitorCount } from "@/components/VisitorCount";
 import { getStats, type Stats } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
@@ -69,6 +70,9 @@ export default async function Home() {
           </div>
         ))}
       </section>
+
+      {/* lifetime unique-visitor counter */}
+      <VisitorCount />
 
       {/* live preview of the real resume UI */}
       <HomePreview />

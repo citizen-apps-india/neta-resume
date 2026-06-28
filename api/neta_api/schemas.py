@@ -91,6 +91,10 @@ class PersonResume(BaseModel):
     criminal_cases: list[CriminalCase]
 
 
+class VisitCount(BaseModel):
+    count: int                         # lifetime unique-visitor tally
+
+
 class Stats(BaseModel):
     total_legislators: int
     lok_sabha: int
