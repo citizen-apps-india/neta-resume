@@ -59,14 +59,14 @@ export async function HomePreview() {
   const term = resume.office_terms.find((t) => t.status === "sitting") ?? resume.office_terms[0];
   const attendance = term?.attendance_pct ?? null;
   const tile = (label: string, value: string, accent = false) => (
-    <div style={{ flex: 1, padding: "12px 14px", borderRight: "1px solid var(--rule)" }}>
+    <div style={{ padding: "12px 14px" }}>
       <div className="mono" style={{ fontSize: 15, fontWeight: 600, color: accent ? "var(--accent)" : "var(--ink)" }}>{value}</div>
       <div style={{ fontSize: 9.5, color: "var(--muted)", marginTop: 3, letterSpacing: "0.04em" }}>{label}</div>
     </div>
   );
 
   return (
-    <section style={{ padding: "8px 48px 64px", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
+    <section style={{ padding: "8px clamp(16px,5vw,48px) 64px", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 16 }}>
         <div className="mono" style={{ fontSize: 11, letterSpacing: "0.14em", textTransform: "uppercase", color: "var(--faint)" }}>
           {context}
@@ -82,7 +82,7 @@ export async function HomePreview() {
           <div style={{ display: "flex", gap: 16, alignItems: "flex-start" }}>
             <PhotoBox w={64} h={78} src={photoSrc(resume.id, resume.photo_url)} />
             <div style={{ minWidth: 0, flex: 1 }}>
-              <div className="serif" style={{ fontSize: 24, fontWeight: 600, lineHeight: 1.05 }}>{resume.display_name}</div>
+              <div className="serif" style={{ fontSize: "clamp(20px,5vw,24px)", fontWeight: 600, lineHeight: 1.05 }}>{resume.display_name}</div>
               {resume.native_name && <div className="deva" style={{ fontSize: 13, color: "var(--muted)", marginTop: 2 }}>{resume.native_name}</div>}
               <div style={{ marginTop: 8, display: "flex", gap: 8, alignItems: "center", flexWrap: "wrap" }}>
                 {term?.party && <PartyPill party={term.party} />}
@@ -95,11 +95,11 @@ export async function HomePreview() {
             </div>
           </div>
 
-          <div style={{ display: "flex", marginTop: 18, border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden", background: "var(--card2)" }}>
+          <div className="nr-cells" style={{ gridTemplateColumns: "repeat(4,1fr)", marginTop: 18, border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden", background: "var(--card2)" }}>
             {tile("DECLARED ASSETS", rupees(latestAssets), true)}
             {tile("CRIMINAL CASES", String(resume.criminal_cases.length))}
             {tile("PARTY LABELS", String(resume.party_history.length))}
-            <div style={{ flex: 1, padding: "12px 14px" }}>
+            <div style={{ padding: "12px 14px" }}>
               <div className="mono" style={{ fontSize: 15, fontWeight: 600 }}>{attendancePct(attendance)}</div>
               <div style={{ fontSize: 9.5, color: "var(--muted)", marginTop: 3, letterSpacing: "0.04em" }}>ATTENDANCE</div>
             </div>

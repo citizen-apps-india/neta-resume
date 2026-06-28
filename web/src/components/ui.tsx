@@ -128,7 +128,7 @@ export function Frame({ url, children }: { url: string; children: ReactNode }) {
         {[0, 1, 2].map((i) => (
           <span key={i} style={{ width: 11, height: 11, borderRadius: "50%", background: "var(--border)" }} />
         ))}
-        <div className="mono" style={{ marginLeft: 14, flex: 1, maxWidth: 420, background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 6, padding: "5px 12px", fontSize: 10.5, color: "var(--muted)" }}>
+        <div className="mono" style={{ marginLeft: 14, flex: 1, maxWidth: 420, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap", background: "var(--bg)", border: "1px solid var(--border)", borderRadius: 6, padding: "5px 12px", fontSize: 10.5, color: "var(--muted)" }}>
           {url}
         </div>
       </div>
@@ -139,7 +139,7 @@ export function Frame({ url, children }: { url: string; children: ReactNode }) {
 
 export function Card({ children, style }: { children: ReactNode; style?: React.CSSProperties }) {
   return (
-    <div style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: 24, ...style }}>
+    <div style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "clamp(16px,4vw,24px)", ...style }}>
       {children}
     </div>
   );

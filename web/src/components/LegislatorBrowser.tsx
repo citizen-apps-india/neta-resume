@@ -77,8 +77,8 @@ export function LegislatorBrowser({
   return (
     <div style={{ border: "1px solid var(--border)", borderRadius: 14, overflow: "hidden", background: "var(--bg)", boxShadow: "0 24px 60px -32px var(--shadow)" }}>
       {/* controls */}
-      <div style={{ padding: "18px 22px", borderBottom: "1px solid var(--rule)", background: "var(--card)", display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
-        <div className="focusring" style={{ display: "flex", alignItems: "center", gap: 8, flex: "1 1 240px", minWidth: 200, border: "1px solid var(--border)", borderRadius: 8, background: "var(--card2)", padding: "8px 12px" }}>
+      <div style={{ padding: "16px clamp(14px,4vw,22px)", borderBottom: "1px solid var(--rule)", background: "var(--card)", display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
+        <div className="focusring" style={{ display: "flex", alignItems: "center", gap: 8, flex: "1 1 240px", minWidth: 160, border: "1px solid var(--border)", borderRadius: 8, background: "var(--card2)", padding: "9px 12px" }}>
           <span style={{ color: "var(--faint)", fontSize: 14 }}>⌕</span>
           <input
             value={q}
@@ -133,14 +133,14 @@ export function LegislatorBrowser({
       </div>
 
       {/* grid */}
-      <div style={{ padding: 22, background: "var(--bg)" }}>
+      <div style={{ padding: "clamp(14px,4vw,22px)", background: "var(--bg)" }}>
         {filtered.length === 0 ? (
           <div style={{ padding: "48px 24px", textAlign: "center", color: "var(--muted)", fontSize: 14 }}>
             No legislators match these filters.
           </div>
         ) : (
           <>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(280px, 1fr))", gap: 16 }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 270px), 1fr))", gap: 16 }}>
               {shown.map((p) => (
                 <DirectoryCard key={p.id} p={p} />
               ))}

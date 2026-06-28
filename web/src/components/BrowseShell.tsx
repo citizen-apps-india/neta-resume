@@ -21,8 +21,8 @@ export function BrowseShell({
   return (
     <>
       <SiteHeader />
-      <main style={{ maxWidth: 1120, margin: "0 auto", padding: "32px 28px 72px", width: "100%" }}>
-        <h1 className="serif" style={{ fontSize: 34, fontWeight: 500, letterSpacing: "-0.02em", margin: "0 0 6px" }}>
+      <main style={{ maxWidth: 1120, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 64px", width: "100%" }}>
+        <h1 className="serif" style={{ fontSize: "clamp(26px,5.5vw,34px)", fontWeight: 500, letterSpacing: "-0.02em", margin: "0 0 6px" }}>
           {title}
         </h1>
         <p style={{ fontSize: 15, color: "var(--ink2)", margin: "0 0 24px", maxWidth: "64ch" }}>{intro}</p>
