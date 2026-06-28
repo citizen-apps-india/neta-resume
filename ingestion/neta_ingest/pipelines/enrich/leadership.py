@@ -92,6 +92,41 @@ _ROLES: list[tuple[str, str, str, str, str, str | None, str]] = [
      "Jal Shakti", "https://jalshakti-dowr.gov.in/"),
 ]
 
+# Past Cabinet tenures of CURRENTLY-SITTING MPs — seeded as status='former'. High-confidence, term-level
+# dates only (full-term portfolios). (match_name, role_type, title, body, house_code, portfolio, start, end, url)
+_PAST_ROLES: list[tuple[str, str, str, str, str, str | None, str, str, str]] = [
+    # Modi 2.0 (2019-05-31 to 2024-06-09)
+    ("Raj Nath Singh", "minister", "Minister of Defence", "Union Council of Ministers", "LS",
+     "Defence", "2019-05-31", "2024-06-09", "https://www.mod.gov.in/"),
+    ("Amit Shah", "minister", "Minister of Home Affairs", "Union Council of Ministers", "LS",
+     "Home Affairs", "2019-05-31", "2024-06-09", "https://www.mha.gov.in/"),
+    ("Nirmala Sitharaman", "minister", "Minister of Finance", "Union Council of Ministers", "RS",
+     "Finance", "2019-05-31", "2024-06-09", "https://finmin.nic.in/"),
+    ("Jaishankar", "minister", "Minister of External Affairs", "Union Council of Ministers", "RS",
+     "External Affairs", "2019-05-31", "2024-06-09", "https://www.mea.gov.in/"),
+    ("Nitin Gadkari", "minister", "Minister of Road Transport and Highways", "Union Council of Ministers", "LS",
+     "Road Transport and Highways", "2019-05-31", "2024-06-09", "https://morth.nic.in/"),
+    ("Piyush Goyal", "minister", "Minister of Commerce and Industry", "Union Council of Ministers", "RS",
+     "Commerce and Industry", "2019-05-31", "2024-06-09", "https://commerce.gov.in/"),
+    ("Pralhad Joshi", "minister", "Minister of Parliamentary Affairs", "Union Council of Ministers", "LS",
+     "Parliamentary Affairs", "2019-05-31", "2024-06-09", "https://mpa.gov.in/"),
+    # Modi 1.0 (2014-05-26 to 2019-05-30)
+    ("Raj Nath Singh", "minister", "Minister of Home Affairs", "Union Council of Ministers", "LS",
+     "Home Affairs", "2014-05-26", "2019-05-30", "https://www.mha.gov.in/"),
+    ("Nitin Gadkari", "minister", "Minister of Road Transport and Highways", "Union Council of Ministers", "LS",
+     "Road Transport and Highways", "2014-05-26", "2019-05-30", "https://morth.nic.in/"),
+    ("Dharmendra Pradhan", "minister", "Minister of Petroleum and Natural Gas", "Union Council of Ministers", "RS",
+     "Petroleum and Natural Gas", "2014-05-26", "2019-05-30", "https://mopng.gov.in/"),
+    ("Jual Oram", "minister", "Minister of Tribal Affairs", "Union Council of Ministers", "LS",
+     "Tribal Affairs", "2014-05-26", "2019-05-30", "https://tribal.nic.in/"),
+    ("Nirmala Sitharaman", "minister", "Minister of Defence", "Union Council of Ministers", "RS",
+     "Defence", "2017-09-03", "2019-05-30", "https://www.mod.gov.in/"),
+    # UPA 2.0 (2009-2014)
+    ("Shashi Tharoor", "minister_state", "Minister of State, Human Resource Development",
+     "Union Council of Ministers", "LS", "Human Resource Development", "2012-10-28", "2014-05-26",
+     "https://www.education.gov.in/"),
+]
+
 
 def _match_person(persons: list, name: str) -> int | None:
     """Unique person for a name: token-superset (handles middle names), then exact normalized-name
@@ -139,6 +174,37 @@ def run() -> None:
             )
             seeded += 1
             print(f"  [{role_type}] {name} -> person {pid}: {title}")
+
+        # Past ministerial tenures (status='former'), for sitting MPs who held office in earlier terms.
+        for name, role_type, title, body, house_code, portfolio, start, end, url in _PAST_ROLES:
+            pid = _match_person(persons, name)
+            if pid is None:
+                skipped.append(f"{name} ({title} {start[:4]}) — no unique person match")
+                continue
+            house_id = s.execute(text("SELECT id FROM house WHERE code = :c"), {"c": house_code}).scalar()
+            sref = record_source_ref(
+                s, source_code="govt",
+                native_id=f"past:{role_type}:{normalize_name(name).replace(' ', '-')}:{start}",
+                native_url=url, raw_name=name,
+            )
+            s.execute(
+                text(
+                    """
+                    INSERT INTO role
+                      (person_id, role_type, title, body, house_id, portfolio, start_date, end_date,
+                       status, source_ref_id)
+                    VALUES (:pid, :rt, :title, :body, :hid, :port, :start, :end, 'former', :sr)
+                    ON CONFLICT (person_id, role_type, body, start_date) DO UPDATE
+                      SET title = EXCLUDED.title, portfolio = EXCLUDED.portfolio, end_date = EXCLUDED.end_date,
+                          house_id = EXCLUDED.house_id, source_ref_id = EXCLUDED.source_ref_id
+                    """
+                ),
+                {"pid": pid, "rt": role_type, "title": title, "body": body, "hid": house_id,
+                 "port": portfolio, "start": start, "end": end, "sr": sref},
+            )
+            seeded += 1
+            print(f"  [former {role_type}] {name} -> person {pid}: {title} ({start[:4]}–{end[:4]})")
+
     print(f"[leadership] seeded {seeded} role(s); {len(skipped)} skipped.")
     for sk in skipped:
         print("   · " + sk)
