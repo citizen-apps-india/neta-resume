@@ -1,11 +1,44 @@
 import type { Metadata } from "next";
 import type { ReactNode } from "react";
+import { Footer } from "@/components/Footer";
 import "./globals.css";
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
+const DESCRIPTION =
+  "Offices held, parties switched, wealth declared, and cases pending — every fact sourced to the " +
+  "Election Commission and shown without spin. A free, open public record of every Indian legislator.";
+
 export const metadata: Metadata = {
-  title: "Neta·Resume — the public record of every Indian legislator",
-  description:
-    "Offices held, parties switched, wealth declared, and cases pending — sourced to the Election Commission and shown without spin.",
+  metadataBase: new URL(siteUrl),
+  title: {
+    default: "Neta·Resume — the public record of every Indian legislator",
+    template: "%s · Neta·Resume",
+  },
+  description: DESCRIPTION,
+  applicationName: "Neta·Resume",
+  keywords: [
+    "Indian legislators", "Lok Sabha", "Rajya Sabha", "Member of Parliament", "ECI affidavit",
+    "criminal cases", "declared assets", "party switches", "public record",
+  ],
+  openGraph: {
+    type: "website",
+    siteName: "Neta·Resume",
+    url: siteUrl,
+    title: "Neta·Resume — the public record of every Indian legislator",
+    description:
+      "Wealth declared, cases pending, parties switched, offices held — sourced to the Election " +
+      "Commission, for every MP.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Neta·Resume — the public record of every Indian legislator",
+    description: "The sourced public record of every Indian legislator — wealth, cases, parties, offices.",
+  },
 };
 
 // Apply the saved theme before paint to avoid a flash of the wrong theme.
@@ -23,7 +56,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         />
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
-      <body className="scroll">{children}</body>
+      <body className="scroll">
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }

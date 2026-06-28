@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { ThemeToggle } from "@/components/ThemeToggle";
+import { ReportDiscrepancyButton } from "@/components/ReportDiscrepancy";
 
 function Logo({ size = 26 }: { size?: number }) {
   return (
@@ -28,21 +29,11 @@ export function SiteHeader() {
         <span className="serif" style={{ fontWeight: 600, fontSize: 18 }}>Neta·Resume</span>
       </Link>
       <nav style={{ display: "flex", alignItems: "center", gap: 22 }}>
-        <Link className="navlink" href="/directory?house=Lok Sabha" style={{ fontSize: 13, color: "var(--ink2)" }}>Lok Sabha</Link>
-        <Link className="navlink" href="/directory?house=Rajya Sabha" style={{ fontSize: 13, color: "var(--ink2)" }}>Rajya Sabha</Link>
+        <Link className="navlink" href="/lok-sabha" style={{ fontSize: 13, color: "var(--ink2)" }}>Lok Sabha</Link>
+        <Link className="navlink" href="/rajya-sabha" style={{ fontSize: 13, color: "var(--ink2)" }}>Rajya Sabha</Link>
         <Link className="navlink" href="/directory" style={{ fontSize: 13, color: "var(--ink2)" }}>Directory</Link>
         <ThemeToggle />
-        <Link
-          href="/directory"
-          className="btnDark"
-          style={{
-            fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 12.5, fontWeight: 600, padding: "8px 16px",
-            borderRadius: 8, border: "none", background: "var(--btn-bg)", color: "var(--btn-fg)",
-            cursor: "pointer", textDecoration: "none",
-          }}
-        >
-          Find my MP
-        </Link>
+        <ReportDiscrepancyButton />
       </nav>
     </header>
   );

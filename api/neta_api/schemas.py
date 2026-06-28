@@ -91,6 +91,14 @@ class PersonResume(BaseModel):
     criminal_cases: list[CriminalCase]
 
 
+class Stats(BaseModel):
+    total_legislators: int
+    lok_sabha: int
+    rajya_sabha: int
+    with_cases: int                    # legislators with >= 1 declared criminal case
+    crorepatis: int                    # legislators whose latest affidavit declares assets >= ₹1 crore
+
+
 class PersonSummary(BaseModel):
     id: int
     display_name: str

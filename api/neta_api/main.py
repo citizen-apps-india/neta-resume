@@ -11,7 +11,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from neta_api.deps import settings
-from neta_api.routers import persons, search
+from neta_api.routers import persons, search, stats
 
 app = FastAPI(
     title="Neta-Resume API",
@@ -30,6 +30,7 @@ app.add_middleware(
 
 app.include_router(persons.router)
 app.include_router(search.router)
+app.include_router(stats.router)
 
 
 @app.get("/health")

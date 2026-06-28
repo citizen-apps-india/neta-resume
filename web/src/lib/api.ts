@@ -39,6 +39,18 @@ export function searchPersons(q: string): Promise<PersonSummary[]> {
   return getJSON<PersonSummary[]>(`/search?q=${encodeURIComponent(q)}`, 0);
 }
 
+/** Headline counts for the homepage (real totals, not capped by a list limit). */
+export type Stats = {
+  total_legislators: number;
+  lok_sabha: number;
+  rajya_sabha: number;
+  with_cases: number;
+  crorepatis: number;
+};
+export function getStats(): Promise<Stats> {
+  return getJSON<Stats>("/stats", 600);
+}
+
 /** Photos are served via the API proxy (upstream blocks cross-origin embedding). */
 export function photoSrc(id: number, hasPhoto: string | null | undefined): string | null {
   return hasPhoto ? `${API_BASE}/persons/${id}/photo` : null;

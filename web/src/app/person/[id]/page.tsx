@@ -5,6 +5,7 @@ import { rupees, attendancePct, attendanceColor } from "@/lib/format";
 import { SiteHeader } from "@/components/SiteHeader";
 import { Frame, PhotoBox, PartyPill } from "@/components/ui";
 import { ProfileTabs } from "@/components/resume/ProfileTabs";
+import { ReportDiscrepancyButton } from "@/components/ReportDiscrepancy";
 
 export const dynamic = "force-dynamic";
 
@@ -45,9 +46,16 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
     <>
       <SiteHeader />
       <main style={{ maxWidth: 1080, margin: "0 auto", padding: "28px 28px 72px", width: "100%" }}>
-        <Link href="/directory" className="navlink mono" style={{ fontSize: 11, color: "var(--muted)", textDecoration: "none", display: "inline-block", marginBottom: 16 }}>
-          ← Directory
-        </Link>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 16 }}>
+          <Link href="/directory" className="navlink mono" style={{ fontSize: 11, color: "var(--muted)", textDecoration: "none" }}>
+            ← Directory
+          </Link>
+          <ReportDiscrepancyButton
+            variant="ghost"
+            label="Report a discrepancy"
+            prefill={`${resume.display_name} (#${resume.id})`}
+          />
+        </div>
 
         <Frame url={url}>
           {/* editorial hero */}
