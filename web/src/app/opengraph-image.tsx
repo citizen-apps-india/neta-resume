@@ -25,12 +25,13 @@ export default function OpengraphImage() {
         <div style={{ display: "flex", alignItems: "center" }}>
           <div
             style={{
-              width: 56, height: 56, borderRadius: 12, background: "#12A594",
-              display: "flex", alignItems: "center", justifyContent: "center", color: "#fff",
-              fontSize: 26, fontWeight: 700,
+              width: 64, height: 64, borderRadius: 14, background: "#fff",
+              display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #E2E5E8",
             }}
           >
-            NR
+            <svg width="46" height="46" viewBox="0 0 282 282" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M92 92H190.28V109.472H175.928V189.032H154.088V148.316H131V151.748C131 160.952 127.1 165.164 120.08 165.164C109.784 165.164 96.836 151.28 96.836 140.984C96.836 134.9 99.488 130.844 109.004 130.844H154.088V109.472H92V92Z" fill="#121317" />
+            </svg>
           </div>
           <div style={{ display: "flex", fontSize: 30, fontWeight: 700, color: "#121317", marginLeft: 18 }}>
             Neta-Resume
