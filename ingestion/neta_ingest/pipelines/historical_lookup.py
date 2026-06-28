@@ -127,15 +127,17 @@ def run(cycle: str, limit: int | None = None, refresh_index: bool = False) -> No
     const_map = myneta.fetch_constituency_map(cycle)
     stripped = {aa.strip_const(k): v for k, v in const_map.items()}
     token_index = _build_token_index(index)
+    winners = {w.candidate_id for w in myneta.fetch_winners(cycle)}
     if limit:
         rows = rows[:limit]
     print(f"[hist:{cycle}] {len(rows)} sitting MPs missing a {cycle} affidavit to search for")
 
     written = 0
+    terms = 0
     review: list[dict] = []
     for person in rows:
         cand_id, score, source, evidence = _resolve_person(
-            person, cycle, index, token_index, const_map, stripped
+            person, cycle, index, token_index, const_map, stripped, winners
         )
         if cand_id is None:
             if evidence:  # ambiguous / near-miss worth a human look
@@ -145,35 +147,43 @@ def run(cycle: str, limit: int | None = None, refresh_index: bool = False) -> No
             continue
 
         parsed, raw_rel = myneta.fetch_candidate(cand_id, cycle)
-        # Age corroboration for blind global matches (same-constituency matches are trusted on the seat).
-        if source == "global" and person.birth_year and parsed.age:
+        # Age corroboration for matches not anchored on the MP's own seat (global / multi-seat).
+        if source in ("global", "multiseat-win") and person.birth_year and parsed.age:
             implied = aa.cycle_year(cycle) - parsed.age
             if abs(implied - person.birth_year) > AGE_TOLERANCE_YEARS:
                 review.append({"person_id": person.id, "name": person.display_name,
                                "constituency": person.constituency,
-                               "reason": f"global match {cand_id} age mismatch "
+                               "reason": f"{source} match {cand_id} age mismatch "
                                          f"(implied {implied} vs birth_year {person.birth_year})",
                                "candidates": evidence})
                 continue
+        won = cand_id in winners
         with session_scope() as s:
             aa.write_affidavit(s, parsed, person.id, cand_id, raw_rel,
                                house_id=house_id, term_cycle_id=term_cycle_id, cycle=cycle)
+            # If this candidacy was a WIN, also record the historical office term (status 'former'),
+            # so a seat-changing MP shows the full career, not just their current seat.
+            if won:
+                aa.write_office_term(s, parsed, person.id, cand_id,
+                                     house_id=house_id, term_cycle_id=term_cycle_id, cycle=cycle)
+                terms += 1
         written += 1
-        print(f"  [{written}] {person.display_name} -> {cand_id} ({source} {score:.2f}) "
+        print(f"  [{written}] {person.display_name} -> {cand_id} ({source} {score:.2f}{' WON' if won else ''}) "
               f"assets={parsed.total_assets:,} cases={len(parsed.criminal_cases)}")
 
     os.makedirs(_INDEX_DIR, exist_ok=True)
     review_path = os.path.join(_INDEX_DIR, f"review_{cycle}.json")
     with open(review_path, "w", encoding="utf-8") as f:
         json.dump(review, f, indent=2)
-    print(f"[hist:{cycle}] done: {written} affidavits attached; {len(review)} queued for review -> {review_path}")
+    print(f"[hist:{cycle}] done: {written} affidavits attached ({terms} as won terms); "
+          f"{len(review)} queued for review -> {review_path}")
 
 
-def _resolve_person(person, cycle, index, token_index, const_map, stripped):
+def _resolve_person(person, cycle, index, token_index, const_map, stripped, winners):
     """Return (candidate_id|None, score, source, evidence).
 
-    source ∈ {'same-const','global'} when matched; otherwise a reason string and `evidence` holds the
-    top near-miss candidates (so an unmatched-but-plausible MP can be reviewed, not silently dropped).
+    source ∈ {'same-const','global','multiseat-win'} when matched; otherwise a reason string and
+    `evidence` holds the top near-miss candidates (so an unmatched-but-plausible MP can be reviewed).
     """
     # 1) Same constituency as the MP's current seat — strongest prior.
     cons_id = aa.resolve_constituency(const_map, stripped, person.constituency or "")
@@ -194,6 +204,18 @@ def _resolve_person(person, cycle, index, token_index, const_map, stripped):
     )
     if cid and not ambiguous:
         return cid, score, "global", None
+
+    # Multi-seat: a high-profile candidate often contests >1 seat, so several candidacies tie on name
+    # (-> ambiguous). Those are the same person; if the WINNING seat is among them, resolve to it
+    # (win-both -> take the first winner). Age corroboration in run() guards against a same-name winner.
+    if cid and ambiguous:
+        winner_hits = [
+            c for c, name, _const in shortlist
+            if c in winners
+            and aa.name_score(person.display_name, name, person.normalized_name) >= GLOBAL_THRESHOLD
+        ]
+        if winner_hits:
+            return winner_hits[0], 1.0, "multiseat-win", None
 
     # No confident pick. Surface the strongest near-misses for review if any are interesting.
     evidence = sorted(

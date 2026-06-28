@@ -21,6 +21,7 @@ from neta_ingest.config import settings
 from neta_ingest.sources.myneta import client as myneta
 from neta_ingest.sources.myneta.parser import ParsedCandidate
 from neta_ingest.transform.names import normalize_name
+from neta_ingest.transform.parties import resolve_or_create_party_id
 from neta_ingest.transform.sections import rollup_severity
 
 _TITLES = {"dr", "shri", "smt", "kumari", "km", "adv", "prof", "mr", "mrs", "ms", "com", "chh",
@@ -171,3 +172,38 @@ def write_affidavit(s, c: ParsedCandidate, person_id: int, candidate_id: str, ra
                 {"cid": case_id, "sid": section_id, "raw": f"{code} {num}"},
             )
     return affidavit_id
+
+
+def write_office_term(s, c: ParsedCandidate, person_id: int, candidate_id: str,
+                      *, house_id: int, term_cycle_id: int, cycle: str, status: str = "former") -> None:
+    """Record that an attached candidacy was a WIN: a historical office_term + non-current party stint.
+
+    Reuses the candidate's existing MyNeta source_ref (write_affidavit must have run first). Idempotent on
+    (person, cycle) so a current MP gets one term per cycle even if they won two seats and resigned one.
+    Without this, a seat-changing MP (e.g. Rahul Gandhi: Amethi -> Wayanad -> Rae Bareli) would show only
+    their current term, since merge_cycles links a past win only at the SAME constituency.
+    """
+    source_id = _scalar(s, "SELECT id FROM source WHERE code='myneta'")
+    source_ref_id = _scalar(s, "SELECT id FROM source_ref WHERE source_id=:sid AND native_id=:nid",
+                            sid=source_id, nid=myneta.native_id(cycle, candidate_id))
+    if source_ref_id is None:
+        return
+    if _scalar(s, "SELECT 1 FROM office_term WHERE person_id=:p AND term_cycle_id=:t LIMIT 1",
+               p=person_id, t=term_cycle_id):
+        return
+    party_id = resolve_or_create_party_id(s, c.party) if c.party else None
+    s.execute(
+        text(
+            """
+            INSERT INTO office_term
+              (person_id, house_id, term_cycle_id, constituency, membership_type, party_id, status, source_ref_id)
+            VALUES (:p, :h, :t, :con, 'elected', :party, :st, :sr) ON CONFLICT DO NOTHING
+            """),
+        {"p": person_id, "h": house_id, "t": term_cycle_id, "con": c.constituency,
+         "party": party_id, "st": status, "sr": source_ref_id})
+    if party_id is not None:
+        s.execute(
+            text(
+                "INSERT INTO party_affiliation (person_id, party_id, is_current, detection, confidence, source_ref_id) "
+                "VALUES (:p, :party, false, 'structured_term_diff', 70, :sr) ON CONFLICT DO NOTHING"),
+            {"p": person_id, "party": party_id, "sr": source_ref_id})
