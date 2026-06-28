@@ -1,10 +1,11 @@
-"""Seed marquee 18th-Lok-Sabha leadership roles (PM, Speaker, LoP, senior Union ministers).
+"""Seed 18th-Lok-Sabha leadership roles — PM, Speaker, LoP, and the full Cabinet-rank Union Council of
+Ministers (Modi 3.0, sworn in 2024-06-09) with portfolios.
 
-Each role is a public-record fact attributed to an official government portal (source 'govt', trust_tier 1)
-and attached to the EXISTING person (matched by name tokens — no new persons created). Idempotent: the role
-row upserts on (person_id, role_type, body, start_date) and the source_ref on (source, native_id).
-
-This is a curated starter set; a scalable scraper of sansad.in committee/ministry pages comes later.
+Each role is a public-record fact attributed to the relevant official government portal (source 'govt',
+trust_tier 1) and attached to the EXISTING person (matched by name tokens, then exact normalized name — no
+new persons created). Idempotent: the role upserts on (person_id, role_type, body, start_date) and the
+source_ref on (source, native_id). Sansad/PMO don't expose this as a clean API (SPA/WAF), so it is curated;
+Ministers of State and committee memberships can follow as sources allow.
 """
 
 from __future__ import annotations
@@ -38,14 +39,70 @@ _ROLES: list[tuple[str, str, str, str, str, str | None, str]] = [
      "Finance", "https://finmin.nic.in/"),
     ("Jaishankar", "minister", "Minister of External Affairs", "Union Council of Ministers",
      "RS", "External Affairs", "https://www.mea.gov.in/"),
+    # Remaining Cabinet-rank ministers (Union Council of Ministers, sworn in 2024-06-09).
+    ("Nadda", "minister", "Minister of Health and Family Welfare", "Union Council of Ministers", "RS",
+     "Health and Family Welfare", "https://mohfw.gov.in/"),
+    ("Shivraj Singh Chouhan", "minister", "Minister of Agriculture and Farmers' Welfare", "Union Council of Ministers", "LS",
+     "Agriculture and Farmers' Welfare", "https://agriwelfare.gov.in/"),
+    ("Manohar Lal", "minister", "Minister of Housing and Urban Affairs", "Union Council of Ministers", "LS",
+     "Housing and Urban Affairs; Power", "https://mohua.gov.in/"),
+    ("Kumaraswamy", "minister", "Minister of Heavy Industries and Steel", "Union Council of Ministers", "LS",
+     "Heavy Industries; Steel", "https://heavyindustries.gov.in/"),
+    ("Piyush Goyal", "minister", "Minister of Commerce and Industry", "Union Council of Ministers", "RS",
+     "Commerce and Industry", "https://commerce.gov.in/"),
+    ("Dharmendra Pradhan", "minister", "Minister of Education", "Union Council of Ministers", "LS",
+     "Education", "https://www.education.gov.in/"),
+    ("Jitan Ram Manjhi", "minister", "Minister of Micro, Small and Medium Enterprises", "Union Council of Ministers", "LS",
+     "Micro, Small and Medium Enterprises", "https://msme.gov.in/"),
+    ("Rajiv Ranjan Singh", "minister", "Minister of Panchayati Raj; Fisheries, Animal Husbandry and Dairying", "Union Council of Ministers", "LS",
+     "Panchayati Raj; Fisheries, Animal Husbandry and Dairying", "https://panchayat.gov.in/"),
+    ("Sarbananda Sonowal", "minister", "Minister of Ports, Shipping and Waterways", "Union Council of Ministers", "RS",
+     "Ports, Shipping and Waterways", "https://shipmin.gov.in/"),
+    ("Virendra Kumar", "minister", "Minister of Social Justice and Empowerment", "Union Council of Ministers", "LS",
+     "Social Justice and Empowerment", "https://socialjustice.gov.in/"),
+    ("Rammohan Naidu", "minister", "Minister of Civil Aviation", "Union Council of Ministers", "LS",
+     "Civil Aviation", "https://www.civilaviation.gov.in/"),
+    ("Pralhad Joshi", "minister", "Minister of Consumer Affairs, Food and Public Distribution", "Union Council of Ministers", "LS",
+     "Consumer Affairs, Food and Public Distribution; New and Renewable Energy", "https://consumeraffairs.nic.in/"),
+    ("Jual Oram", "minister", "Minister of Tribal Affairs", "Union Council of Ministers", "LS",
+     "Tribal Affairs", "https://tribal.nic.in/"),
+    ("Giriraj Singh", "minister", "Minister of Textiles", "Union Council of Ministers", "LS",
+     "Textiles", "https://texmin.gov.in/"),
+    ("Ashwini Vaishnaw", "minister", "Minister of Railways; Information and Broadcasting; Electronics and IT", "Union Council of Ministers", "RS",
+     "Railways; Information and Broadcasting; Electronics and Information Technology", "https://www.indianrailways.gov.in/"),
+    ("Jyotiraditya Scindia", "minister", "Minister of Communications; DoNER", "Union Council of Ministers", "RS",
+     "Communications; Development of North Eastern Region", "https://dot.gov.in/"),
+    ("Bhupender Yadav", "minister", "Minister of Environment, Forest and Climate Change", "Union Council of Ministers", "RS",
+     "Environment, Forest and Climate Change", "https://moef.gov.in/"),
+    ("Gajendra Singh Shekhawat", "minister", "Minister of Culture and Tourism", "Union Council of Ministers", "LS",
+     "Culture; Tourism", "https://www.indiaculture.gov.in/"),
+    ("Annpurna Devi", "minister", "Minister of Women and Child Development", "Union Council of Ministers", "LS",
+     "Women and Child Development", "https://wcd.gov.in/"),
+    ("Kiren Rijiju", "minister", "Minister of Parliamentary Affairs and Minority Affairs", "Union Council of Ministers", "LS",
+     "Parliamentary Affairs; Minority Affairs", "https://mpa.gov.in/"),
+    ("Hardeep Singh Puri", "minister", "Minister of Petroleum and Natural Gas", "Union Council of Ministers", "RS",
+     "Petroleum and Natural Gas", "https://mopng.gov.in/"),
+    ("Mansukh Mandaviya", "minister", "Minister of Labour and Employment; Youth Affairs and Sports", "Union Council of Ministers", "RS",
+     "Labour and Employment; Youth Affairs and Sports", "https://labour.gov.in/"),
+    ("Kishan Reddy", "minister", "Minister of Coal and Mines", "Union Council of Ministers", "LS",
+     "Coal; Mines", "https://coal.nic.in/"),
+    ("Chirag Paswan", "minister", "Minister of Food Processing Industries", "Union Council of Ministers", "LS",
+     "Food Processing Industries", "https://mofpi.gov.in/"),
+    ("C R Patil", "minister", "Minister of Jal Shakti", "Union Council of Ministers", "LS",
+     "Jal Shakti", "https://jalshakti-dowr.gov.in/"),
 ]
 
 
 def _match_person(persons: list, name: str) -> int | None:
-    """Unique person whose name tokens are a superset of the query tokens (handles middle names)."""
+    """Unique person for a name: token-superset (handles middle names), then exact normalized-name
+    equality as a fallback (handles initials like 'C R Patil' whose single-char tokens are dropped)."""
     want = name_tokens(name)
     hits = [p.id for p in persons if want and want <= name_tokens(p.display_name)]
-    return hits[0] if len(hits) == 1 else None
+    if len(hits) == 1:
+        return hits[0]
+    key = normalize_name(name)
+    exact = [p.id for p in persons if normalize_name(p.display_name) == key]
+    return exact[0] if len(exact) == 1 else None
 
 
 def run() -> None:
