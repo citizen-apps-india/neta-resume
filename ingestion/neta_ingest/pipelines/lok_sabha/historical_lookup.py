@@ -94,13 +94,14 @@ def _token_shortlist(token_index: dict[str, list[tuple[str, str, str]]],
     return [rec[cid] for cid, n in counts.items() if n >= 2]
 
 
-def run(cycle: str, limit: int | None = None, refresh_index: bool = False) -> None:
-    if cycle == "LS2024":
-        raise ValueError("historical-lookup is for PAST cycles; LS2024 is the current roster")
+def run(cycle: str, current_cycle: str = "LS2024", house: str = "ls",
+        limit: int | None = None, refresh_index: bool = False) -> None:
+    if cycle == current_cycle:
+        raise ValueError(f"historical-lookup is for PAST cycles; {current_cycle} is the current roster")
     index = build_index(cycle, refresh=refresh_index)
 
     with session_scope() as s:
-        house_id = s.execute(text("SELECT id FROM house WHERE code='LS'")).scalar()
+        house_id = s.execute(text("SELECT id FROM house WHERE code=:c"), {"c": house.upper()}).scalar()
         term_cycle_id = s.execute(
             text("SELECT id FROM term_cycle WHERE eci_election_id=:c"), {"c": cycle}
         ).scalar()
@@ -114,14 +115,14 @@ def run(cycle: str, limit: int | None = None, refresh_index: bool = False) -> No
                 FROM office_term ot
                 JOIN term_cycle tc ON tc.id = ot.term_cycle_id
                 JOIN person p ON p.id = ot.person_id
-                WHERE tc.eci_election_id = 'LS2024'
+                WHERE tc.eci_election_id = :cur
                   AND NOT EXISTS (
                     SELECT 1 FROM affidavit a WHERE a.person_id = p.id AND a.election_cycle = :c
                   )
                 ORDER BY p.display_name
                 """
             ),
-            {"c": cycle},
+            {"c": cycle, "cur": current_cycle},
         ).all()
 
     const_map = myneta.fetch_constituency_map(cycle)

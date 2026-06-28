@@ -31,6 +31,9 @@ ELECTION_BASE = {
     "LS2014": "https://www.myneta.info/ls2014",
     "LS2009": "https://www.myneta.info/ls2009",
     "MH_VS2024": "https://www.myneta.info/Maharashtra2024",
+    "MH_VS2019": "https://www.myneta.info/Maharashtra2019",
+    "MH_VS2014": "https://www.myneta.info/Maharashtra2014",
+    # MH_VS2009 deferred: MyNeta's 2009 MH assembly isn't at the per-election path scheme (legacy URL).
     "DL_MCD2022": "https://www.myneta.info/Delhi2022",
 }
 

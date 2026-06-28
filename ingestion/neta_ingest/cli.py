@@ -68,16 +68,20 @@ def enrich_missing(cycle: str = "LS2024") -> None:
 
 
 @app.command(name="historical-lookup")
-def historical_lookup(cycle: str, limit: int = typer.Option(None, help="cap MPs processed (testing)"),
+def historical_lookup(cycle: str,
+                      house: str = typer.Option("ls", help="house code: ls|mh_vs|… (current roster's house)"),
+                      current_cycle: str = typer.Option("LS2024", help="the current cycle to backfill from"),
+                      limit: int = typer.Option(None, help="cap members processed (testing)"),
                       refresh_index: bool = typer.Option(False, help="re-crawl the cycle candidate index")) -> None:
-    """Tier-2: find sitting MPs' PAST-cycle candidacies (even losses/seat changes) and attach affidavits.
+    """Tier-2: find sitting members' PAST-cycle candidacies (even losses/seat changes) and attach affidavits.
 
-    cycle is a PAST cycle (LS2019|LS2014|LS2009). Confident matches are written; ambiguous ones are
-    queued to data/hist_index/review_<cycle>.json. Run after `myneta`+`merge-cycles` for that cycle.
+    cycle is a PAST cycle (e.g. LS2019|LS2014|LS2009, or MH_VS2019|MH_VS2014|MH_VS2009 with
+    --house mh_vs --current-cycle MH_VS2024). Confident matches are written; ambiguous ones are
+    queued to data/hist_index/review_<cycle>.json.
     """
     from neta_ingest.pipelines.lok_sabha import historical_lookup as p
 
-    p.run(cycle=cycle, limit=limit, refresh_index=refresh_index)
+    p.run(cycle=cycle, current_cycle=current_cycle, house=house, limit=limit, refresh_index=refresh_index)
 
 
 @app.command(name="ls-roster")

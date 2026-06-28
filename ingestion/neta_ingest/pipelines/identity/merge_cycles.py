@@ -122,18 +122,16 @@ def _set_cycle_status(s) -> None:
 
 
 def _prune_non_current(s) -> int:
-    """Delete persons who are not currently sitting in EITHER house — prior-cycle-only LS winners
-    ingested solely to backfill incumbents' history.
+    """Delete persons who are not currently sitting in ANY house — prior-cycle-only winners ingested
+    solely to backfill current members' history.
 
-    A person is KEPT if they hold an office term in a currently-sitting cycle: the latest Lok Sabha
-    cycle, OR any Rajya Sabha cycle (RS is a continuous house whose sitting cohort is modelled as one
-    cycle). Critically, we must NOT prune on a cross-house cycle-NUMBER comparison: RS cycles are
-    numbered independently of LS (RS-CURRENT is number 1), so a plain `max(number) < latest_LS` wrongly
-    deletes every Rajya Sabha member. Persons with no office term at all are left untouched.
+    A person is KEPT if they hold an office term in a currently-sitting cycle: the LATEST cycle of that
+    term's OWN house (per-house max number), OR any Rajya Sabha cycle (RS is a continuous house whose
+    sitting cohort is modelled as one cycle). Per-house max is essential: cycle numbers are independent
+    across houses (RS-CURRENT is number 1; Maharashtra VS is 15), so a cross-house `max(number)` compare
+    would wrongly delete every RS member and every state/municipal member. Persons with no office term at
+    all are left untouched.
     """
-    latest_ls = s.execute(
-        text("SELECT max(tc.number) FROM term_cycle tc JOIN house h ON h.id = tc.house_id WHERE h.code = 'LS'")
-    ).scalar()
     ids = [
         r.id
         for r in s.execute(
@@ -147,11 +145,12 @@ def _prune_non_current(s) -> int:
                     JOIN term_cycle tc ON tc.id = ot.term_cycle_id
                     JOIN house h ON h.id = tc.house_id
                     WHERE ot.person_id = p.id
-                      AND ((h.code = 'LS' AND tc.number = :latest_ls) OR h.code = 'RS')
+                      AND (h.code = 'RS'
+                           OR tc.number = (SELECT max(tc2.number) FROM term_cycle tc2
+                                           WHERE tc2.house_id = h.id))
                   )
                 """
             ),
-            {"latest_ls": latest_ls},
         ).all()
     ]
     for pid in ids:

@@ -19,6 +19,10 @@ FROM (VALUES
     ('RS',  1, NULL,             NULL,                'RS-CURRENT'),
     -- 15th Maharashtra Vidhan Sabha — elected Nov 2024.
     ('MH_VS', 15, DATE '2024-11-23', NULL,            'MH_VS2024'),
+    -- Prior Maharashtra Vidhan Sabhas (for backfilling current MLAs' career history; ECI result dates).
+    -- (MH_VS2009 deferred — not at MyNeta's per-election URL scheme.)
+    ('MH_VS', 14, DATE '2019-10-24', DATE '2024-11-22', 'MH_VS2019'),
+    ('MH_VS', 13, DATE '2014-10-19', DATE '2019-10-23', 'MH_VS2014'),
     -- Municipal Corporation of Delhi — elected Dec 2022.
     ('DL_MCD', 1, DATE '2022-12-07', NULL,            'DL_MCD2022')
 ) AS v(house_code, number, start_date, end_date, eci_election_id)
