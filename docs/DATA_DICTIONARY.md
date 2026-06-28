@@ -98,7 +98,7 @@ when one fact is corroborated by several sources.
 | `birth_year` | int | |
 | `tcpd_surf_id` | text UNIQUE | seeded from TCPD where available |
 | `wikidata_qid` | text | |
-| `photo_url` | text | official photo (sansad.in); added in 0008 |
+| `photo_url` | text | official photo — sansad.in for MPs, MyNeta candidate image for state MLAs; proxied + disk-cached by the API. Added in 0008 |
 | `created_at` / `updated_at` | timestamptz | |
 
 `person_name_variant(person_id, variant, source_id, script)` — every observed spelling; `script` is
@@ -192,7 +192,12 @@ UNIQUE `(person_id, election_cycle, source_ref_id)`.
 | `max_punishment_years` | int | `99` encodes life/death |
 
 UNIQUE `(code_system, section_number)`. Seeded from `db/seeds/ipc_bns_sections.sql`; `severity_rules.sql`
-can re-derive `base_severity` numerically.
+can re-derive `base_severity` numerically. The seed mirrors each curated IPC section as its **BNS
+counterpart** (BNS replaced the IPC on 2024-07-01) with the same severity, so post-2024 affidavits
+(e.g. state-assembly cases) are assessed identically. The API surfaces each charge as `{raw, title,
+equivalent}` (the `equivalent` from the `ipc_equivalent`/`bns_equivalent` crosswalk) so the profile can
+show e.g. "BNS 103 ≈ IPC 302 · Murder". Sections outside the curated catalog stay unclassified (by design,
+IPC and BNS alike).
 
 ### `criminal_case` — a declared/tracked case — *provenance: `source_ref_id` (+ `court_source_ref_id`)*
 | Column | Type | Notes |

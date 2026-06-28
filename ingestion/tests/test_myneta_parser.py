@@ -107,6 +107,7 @@ def test_mh2024_bns_layout_candidate_1148():
     html = (FIXTURES / "myneta_candidate_mh2024_1148.html").read_text(encoding="utf-8", errors="ignore")
     c = parse_candidate(html, candidate_id="1148")
     assert c.name == "NITESH NARAYAN RANE"
+    assert c.photo_url == "https://myneta.info/images_candidate/Maharashtra2024/1be6fcc03c58186f80b0733e2ac60591d7187535.jpg"
     assert len(c.criminal_cases) == 38                     # cases ARE extracted (was 0 before the fix)
     # Both statutes are coded from the per-row LAW column, not hard-defaulted to IPC.
     all_codes = {code for case in c.criminal_cases for (code, _num) in case.sections}

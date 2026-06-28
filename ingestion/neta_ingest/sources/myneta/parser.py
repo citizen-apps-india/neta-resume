@@ -70,6 +70,7 @@ class ParsedCandidate:
     immovable_assets: int | None = None
     self_income: int | None = None       # latest declared ITR income (rupees)
     income_year: int | None = None
+    photo_url: str | None = None          # MyNeta candidate profile image
     criminal_cases: list[ParsedCase] = field(default_factory=list)
 
 
@@ -163,6 +164,13 @@ def parse_candidate(html: str, candidate_id: str | None = None) -> ParsedCandida
         income_year = int(inc.group(1))
         self_income = parse_rupees(inc.group(2))
 
+    # Profile photo: <img src=https://myneta.info/images_candidate/<cycle>/<hash>.jpg alt='profile image'>
+    # (src is unquoted on these pages). Absent/placeholder for some candidates -> None.
+    photo_url = None
+    mph = re.search(r"<img\s+src=(https://myneta\.info/images_candidate/[^\s\">]+)\s+alt=['\"]profile", html, re.I)
+    if mph:
+        photo_url = mph.group(1).strip()
+
     cases = _parse_cases(html)
 
     return ParsedCandidate(
@@ -179,6 +187,7 @@ def parse_candidate(html: str, candidate_id: str | None = None) -> ParsedCandida
         immovable_assets=immovable_assets,
         self_income=self_income,
         income_year=income_year,
+        photo_url=photo_url,
         criminal_cases=cases,
     )
 

@@ -63,8 +63,10 @@ def parse_sections(raw: str, default_code: str = "IPC") -> list[tuple[str, str]]
     if not raw:
         return []
     code = _detect_code(raw, default_code)
-    # Strip the code word so it isn't mistaken for a section number.
+    # Strip the code word so it isn't mistaken for a section number, and drop parenthetical sub-section
+    # refs ("351(1)", "196(1)(A)" -> "351", "196") so they aren't read as separate sections (1, A).
     cleaned = _CODE.sub(" ", raw)
+    cleaned = re.sub(r"\([^)]*\)", " ", cleaned)
     sections = [m.group(1).upper() for m in _SECTION.finditer(cleaned)]
     # Dedup, preserve order.
     seen: set[str] = set()

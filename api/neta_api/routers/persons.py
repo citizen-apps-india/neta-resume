@@ -28,7 +28,7 @@ _PHOTO_CACHE = Path(__file__).resolve().parents[2] / ".photo_cache"
 # SSRF guard: the proxy fetches a URL read from the DB, so restrict it to https on the only host
 # photos are ever sourced from (sansad.in). This blocks file://, internal hosts, and other schemes
 # even if a bad URL ever reached the person table. Size is capped to avoid memory-exhaustion fetches.
-_ALLOWED_PHOTO_HOSTS = ("sansad.in",)
+_ALLOWED_PHOTO_HOSTS = ("sansad.in", "myneta.info")
 _MAX_PHOTO_BYTES = 5 * 1024 * 1024  # 5 MB
 
 

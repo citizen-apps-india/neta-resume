@@ -195,7 +195,9 @@ function Cases({ resume }: { resume: PersonResume }) {
       <div style={{ border: "1px solid var(--rule)", borderRadius: 12, overflow: "hidden", background: "var(--card2)" }}>
         {cases.map((c, i) => {
           const m = severityMeta(c.severity);
-          const charge = c.description || c.sections.join(", ") || "Case";
+          // Prefer the named offence(s) from the catalog; fall back to the raw filing, then a generic label.
+          const titles = [...new Set(c.sections.map((s) => s.title).filter(Boolean))];
+          const charge = titles.length ? titles.join(", ") : (c.description || "Case");
           return (
             <div key={i} style={{ display: "flex", alignItems: "flex-start", gap: 14, padding: "18px 20px", borderBottom: i < cases.length - 1 ? "1px solid var(--rule2)" : "none" }}>
               <span style={{ width: 4, alignSelf: "stretch", borderRadius: 4, background: m.fg, flexShrink: 0 }} />
@@ -205,9 +207,17 @@ function Cases({ resume }: { resume: PersonResume }) {
                   <span className="mono" style={{ fontSize: 10, fontWeight: 500, padding: "3px 8px", borderRadius: 5, background: m.bg, color: m.fg }}>{m.label}</span>
                 </div>
                 {c.sections.length > 0 && (
-                  <div className="mono" style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 7 }}>{c.sections.join(" · ")}</div>
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: 6, marginTop: 8 }}>
+                    {c.sections.map((s, j) => (
+                      <span key={j} className="mono" style={{ fontSize: 11, color: "var(--ink2)", background: "var(--sunken)", border: "1px solid var(--rule2)", borderRadius: 5, padding: "3px 8px" }}>
+                        {s.raw}
+                        {s.equivalent && <span style={{ color: "var(--faint)" }}> ≈ {s.equivalent}</span>}
+                        {s.title && <span style={{ color: "var(--muted)" }}> · {s.title}</span>}
+                      </span>
+                    ))}
+                  </div>
                 )}
-                {c.court && <div style={{ fontSize: 12, color: "var(--faint)", marginTop: 5 }}>{c.court}</div>}
+                {c.court && <div style={{ fontSize: 12, color: "var(--faint)", marginTop: 7 }}>{c.court}</div>}
               </div>
               <div style={{ textAlign: "right", flexShrink: 0 }}>
                 <div className="mono" style={{ fontSize: 12, color: c.is_convicted ? "var(--sev1)" : "var(--ink2)", textTransform: "capitalize" }}>{c.status.replace("_", " ")}{c.filed_year ? ` · ${c.filed_year}` : ""}</div>
@@ -217,6 +227,12 @@ function Cases({ resume }: { resume: PersonResume }) {
           );
         })}
       </div>
+      <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 12, lineHeight: 1.6 }}>
+        ℹ The Indian Penal Code (IPC) was replaced by the Bharatiya Nyaya Sanhita (BNS) on 1 July 2024 — a
+        renumbering of the law, not a change in what is alleged. Charges are shown with the section as filed;
+        the equivalent section in the other code is shown where known (e.g. BNS 103 ≈ IPC 302), and severity
+        is assessed the same way for both. Severity is derived from the offence, never adjudicated.
+      </p>
     </div>
   );
 }
