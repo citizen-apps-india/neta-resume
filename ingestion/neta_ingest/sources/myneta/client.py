@@ -31,6 +31,7 @@ ELECTION_BASE = {
     "LS2014": "https://www.myneta.info/ls2014",
     "LS2009": "https://www.myneta.info/ls2009",
     "MH_VS2024": "https://www.myneta.info/Maharashtra2024",
+    "DL_MCD2022": "https://www.myneta.info/Delhi2022",
 }
 
 

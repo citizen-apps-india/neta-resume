@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { type PersonSummary } from "@/lib/api";
 import { DirectoryCard } from "@/components/DirectoryCard";
 
-type Scope = "all" | "ls" | "rs" | "state";
+type Scope = "all" | "ls" | "rs" | "state" | "municipal";
 type Sort = "assets" | "cases" | "attendance" | "name";
 type CaseFilter = "any" | "with" | "clean" | "heinous" | "serious" | "minor";
 
@@ -29,17 +29,21 @@ export function LegislatorBrowser({
   scope,
   initialQuery = "",
   defaultState,
+  defaultCorporation,
 }: {
   people: PersonSummary[];
   scope: Scope;
   initialQuery?: string;
   defaultState?: string;
+  defaultCorporation?: string;
 }) {
   const [q, setQ] = useState(initialQuery);
   const [party, setParty] = useState("");
   const [house, setHouse] = useState(""); // only used when scope === "all"
   // State Level opens pre-filtered to one state (e.g. Maharashtra); other scopes ignore this.
   const [state, setState] = useState(scope === "state" ? (defaultState ?? "") : "");
+  // Municipal opens pre-filtered to one corporation (keyed on current_house, e.g. "Delhi MCD").
+  const [corporation, setCorporation] = useState(scope === "municipal" ? (defaultCorporation ?? "") : "");
   const [caseFilter, setCaseFilter] = useState<CaseFilter>("any");
   const [sort, setSort] = useState<Sort>("assets");
   const [visible, setVisible] = useState(PAGE);
@@ -58,11 +62,19 @@ export function LegislatorBrowser({
     return [...set].sort();
   }, [people]);
 
+  // Corporation options present in this dataset (for the Municipal page), keyed on current_house.
+  const corporations = useMemo(() => {
+    const set = new Set<string>();
+    for (const p of people) if (p.current_house) set.add(p.current_house);
+    return [...set].sort();
+  }, [people]);
+
   const filtered = useMemo(() => {
     const needle = q.trim().toLowerCase();
     let out = people.filter((p) => {
       if (scope === "all" && house && p.current_house !== house) return false;
       if (scope === "state" && state && p.state !== state) return false;
+      if (scope === "municipal" && corporation && p.current_house !== corporation) return false;
       if (party && p.current_party !== party) return false;
       if (caseFilter === "with" && p.total_cases <= 0) return false;
       if (caseFilter === "clean" && p.total_cases > 0) return false;
@@ -83,7 +95,7 @@ export function LegislatorBrowser({
       }
     });
     return out;
-  }, [people, scope, q, party, house, state, caseFilter, sort]);
+  }, [people, scope, q, party, house, state, corporation, caseFilter, sort]);
 
   // Reset the visible window whenever the result set changes.
   const shown = filtered.slice(0, visible);
@@ -111,6 +123,30 @@ export function LegislatorBrowser({
           </select>
           <span style={{ fontSize: 12.5, color: "var(--accent-soft-fg)" }}>
             {states.length === 1 ? "More states coming soon" : `${states.length} states available`}
+          </span>
+        </div>
+      )}
+
+      {/* prominent corporation selector — the primary control on the Municipal page */}
+      {scope === "municipal" && (
+        <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, padding: "18px clamp(14px,4vw,22px)", borderBottom: "1px solid var(--rule)", background: "var(--accent-soft)" }}>
+          <label htmlFor="corp-select" className="mono" style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent-soft-fg)", fontWeight: 600 }}>
+            Corporation
+          </label>
+          <select
+            id="corp-select"
+            aria-label="Corporation"
+            value={corporation}
+            onChange={(e) => resetAnd(() => setCorporation(e.target.value))}
+            style={{ ...selectStyle, fontSize: 16, fontWeight: 600, padding: "11px 16px", minWidth: 220, flex: "0 1 320px" }}
+          >
+            <option value="">All corporations</option>
+            {corporations.map((c) => (
+              <option key={c} value={c}>{c}</option>
+            ))}
+          </select>
+          <span style={{ fontSize: 12.5, color: "var(--accent-soft-fg)" }}>
+            {corporations.length === 1 ? "More corporations coming soon" : `${corporations.length} corporations available`}
           </span>
         </div>
       )}
