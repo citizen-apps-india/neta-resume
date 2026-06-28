@@ -80,10 +80,11 @@ export function PartyPill({ party, current = true }: { party: string | null; cur
         display: "inline-flex", alignItems: "center", gap: 7, fontSize: 12, fontWeight: current ? 600 : 500,
         padding: "5px 11px", borderRadius: 20, border: "1px solid var(--border)",
         background: current ? "var(--card2)" : "var(--sunken)", color: current ? "var(--ink)" : "var(--muted)",
+        maxWidth: "100%", whiteSpace: "nowrap",
       }}
     >
-      <span style={{ width: 9, height: 9, borderRadius: "50%", background: current ? "var(--accent-2)" : "var(--faint)" }} />
-      {party}
+      <span style={{ width: 9, height: 9, borderRadius: "50%", background: current ? "var(--accent-2)" : "var(--faint)", flexShrink: 0 }} />
+      <span style={{ overflow: "hidden", textOverflow: "ellipsis" }}>{party}</span>
     </span>
   );
 }
