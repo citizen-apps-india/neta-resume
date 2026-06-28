@@ -136,6 +136,15 @@ def merge_cycles() -> None:
     p.run()
 
 
+@app.command(name="news")
+def news(house: str = typer.Option(None, help="ls|rs (default: both)"),
+         limit: int = typer.Option(None, help="cap legislators processed (testing)")) -> None:
+    """Scrape recent Google News coverage for sitting legislators -> news_item."""
+    from neta_ingest.pipelines import news as p
+
+    p.run(house=house, limit=limit)
+
+
 @app.command(name="party-switch")
 def party_switch() -> None:
     """Diff office_term party across cycles -> party_affiliation + party_switch_event."""

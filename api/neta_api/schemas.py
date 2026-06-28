@@ -77,6 +77,15 @@ class PartySwitch(BaseModel):
     source: Source | None
 
 
+class NewsItem(BaseModel):
+    title: str
+    snippet: str | None = None
+    url: str
+    publisher: str | None = None
+    published_at: date | None = None
+    source: Source                     # trust_tier 3 (reported); links to the publisher
+
+
 class PersonResume(BaseModel):
     id: int
     display_name: str
@@ -89,6 +98,7 @@ class PersonResume(BaseModel):
     party_switches: list[PartySwitch] = []
     wealth: list[AffidavitWealth]      # ordered by filed_year for YoY
     criminal_cases: list[CriminalCase]
+    news: list[NewsItem] = []          # recent press coverage (Google News), newest first
 
 
 class VisitCount(BaseModel):

@@ -1,0 +1,38 @@
+name: news
+
+# Weekly press-coverage refresh for sitting legislators (free Google News RSS).
+# Idempotent: each person's news_item rows are replaced per run. DB via the NETA_DATABASE_URL secret.
+
+on:
+  workflow_dispatch:
+    inputs:
+      house:
+        description: "ls | rs (blank = both)"
+        required: false
+        default: ""
+      limit:
+        description: "cap legislators (testing; blank = all)"
+        required: false
+        default: ""
+  schedule:
+    # Monday 03:00 UTC, after the roster refresh.
+    - cron: "0 3 * * 1"
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ingestion
+    env:
+      NETA_DATABASE_URL: ${{ secrets.NETA_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync
+      - name: Scrape news
+        run: |
+          ARGS=""
+          [ -n "${{ github.event.inputs.house }}" ] && ARGS="$ARGS --house ${{ github.event.inputs.house }}"
+          [ -n "${{ github.event.inputs.limit }}" ] && ARGS="$ARGS --limit ${{ github.event.inputs.limit }}"
+          uv run neta news $ARGS

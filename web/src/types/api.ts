@@ -101,6 +101,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/visits": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Get Visits
+         * @description Current lifetime unique-visitor count (no increment).
+         */
+        get: operations["get_visits_visits_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/visits/hit": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * Hit
+         * @description Atomically increment the unique-visitor count and return the new total.
+         */
+        post: operations["hit_visits_hit_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -164,6 +204,20 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /** NewsItem */
+        NewsItem: {
+            /** Title */
+            title: string;
+            /** Snippet */
+            snippet?: string | null;
+            /** Url */
+            url: string;
+            /** Publisher */
+            publisher?: string | null;
+            /** Published At */
+            published_at?: string | null;
+            source: components["schemas"]["Source"];
         };
         /** OfficeTerm */
         OfficeTerm: {
@@ -246,6 +300,11 @@ export interface components {
             wealth: components["schemas"]["AffidavitWealth"][];
             /** Criminal Cases */
             criminal_cases: components["schemas"]["CriminalCase"][];
+            /**
+             * News
+             * @default []
+             */
+            news: components["schemas"]["NewsItem"][];
         };
         /** PersonSummary */
         PersonSummary: {
@@ -318,6 +377,11 @@ export interface components {
             input?: unknown;
             /** Context */
             ctx?: Record<string, never>;
+        };
+        /** VisitCount */
+        VisitCount: {
+            /** Count */
+            count: number;
         };
     };
     responses: never;
@@ -472,6 +536,46 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Stats"];
+                };
+            };
+        };
+    };
+    get_visits_visits_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VisitCount"];
+                };
+            };
+        };
+    };
+    hit_visits_hit_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["VisitCount"];
                 };
             };
         };

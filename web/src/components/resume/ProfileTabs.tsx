@@ -6,7 +6,7 @@ import { rupees, severityMeta, year, pretty } from "@/lib/format";
 import { Donut, WealthLine } from "@/components/resume/charts";
 import { SourceLink, SourceChip, PendingFlag, SeverityBadge, PartyPill } from "@/components/ui";
 
-const TABS = ["Overview", "Wealth", "Cases", "Career & Party"] as const;
+const TABS = ["Overview", "Wealth", "Cases", "Career & Party", "In The News"] as const;
 type Tab = (typeof TABS)[number];
 
 function isRajyaSabha(resume: PersonResume): boolean {
@@ -45,6 +45,7 @@ export function ProfileTabs({ resume }: { resume: PersonResume }) {
         {tab === "Wealth" && <Wealth resume={resume} />}
         {tab === "Cases" && <Cases resume={resume} />}
         {tab === "Career & Party" && <Career resume={resume} />}
+        {tab === "In The News" && <News resume={resume} />}
       </div>
     </>
   );
@@ -301,6 +302,48 @@ function PartyNote({ resume }: { resume: PersonResume }) {
           ? "Where a switch is on record, the reason is quoted from the public record — never inferred."
           : "Where no reason for a switch is on public record, the field reads “no public reason on record.”"}
       </span>
+    </div>
+  );
+}
+
+function News({ resume }: { resume: PersonResume }) {
+  const items = resume.news ?? [];
+  if (!items.length) {
+    return (
+      <div className="fadeUp" style={{ display: "flex", alignItems: "center", gap: 12, padding: "28px 24px", border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)" }}>
+        <Muted>No recent news found for this legislator.</Muted>
+      </div>
+    );
+  }
+  return (
+    <div className="fadeUp">
+      <div style={{ border: "1px solid var(--rule)", borderRadius: 12, overflow: "hidden", background: "var(--card2)" }}>
+        {items.map((a, i) => (
+          <a
+            key={i}
+            href={a.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="liftsm"
+            style={{ display: "block", textDecoration: "none", color: "var(--ink)", padding: "16px 20px", borderBottom: i < items.length - 1 ? "1px solid var(--rule2)" : "none" }}
+          >
+            <div style={{ fontSize: 15, fontWeight: 600, lineHeight: 1.35 }}>{a.title}</div>
+            {a.snippet && (
+              <div style={{ fontSize: 13, color: "var(--ink2)", marginTop: 6, lineHeight: 1.5 }}>{a.snippet}</div>
+            )}
+            <div style={{ display: "flex", alignItems: "center", gap: 8, marginTop: 8, flexWrap: "wrap" }}>
+              {a.publisher && <span className="mono" style={{ fontSize: 11, fontWeight: 600, color: "var(--accent)" }}>{a.publisher}</span>}
+              {a.published_at && <span style={{ fontSize: 11, color: "var(--muted)" }}>· {pretty(a.published_at)}</span>}
+              <span className="mono" style={{ fontSize: 10, color: "var(--faint)", marginLeft: "auto" }}>↗ read</span>
+            </div>
+          </a>
+        ))}
+      </div>
+      <div className="mono" style={{ fontSize: 10.5, color: "var(--faint)", marginTop: 12, lineHeight: 1.55, maxWidth: "80ch" }}>
+        Auto-gathered from a public news search (Google News). Headlines link out to the publisher — this
+        site doesn&rsquo;t host the articles, and an automated name search may occasionally surface an
+        unrelated mention.
+      </div>
     </div>
   );
 }
