@@ -20,7 +20,7 @@ app = typer.Typer(help="Neta-Resume ingestion pipelines", no_args_is_help=True)
 @app.command()
 def roster(house: str = "ls", cycle: str = "18") -> None:
     """Fetch the legislature roster (sansad.in) -> office_term + source_ref."""
-    from neta_ingest.pipelines import roster as p
+    from neta_ingest.pipelines.lok_sabha import roster as p
 
     p.run(house=house, cycle=cycle)
 
@@ -29,7 +29,7 @@ def roster(house: str = "ls", cycle: str = "18") -> None:
 def myneta(house: str = "ls", cycle: str = "LS2024", limit: int = 10,
            candidate: list[str] = typer.Option(None, help="specific candidate_id(s) to ingest")) -> None:
     """Ingest full MyNeta candidates (wealth + criminal in one pass) -> person + affidavit + cases."""
-    from neta_ingest.pipelines import myneta as p
+    from neta_ingest.pipelines.identity import myneta as p
 
     p.run(house=house, cycle=cycle, limit=limit, candidate_ids=candidate or None)
 
@@ -38,7 +38,7 @@ def myneta(house: str = "ls", cycle: str = "LS2024", limit: int = 10,
 @app.command()
 def affidavits(house: str = "ls", cycle: str = "LS2024", limit: int = 10) -> None:
     """Fetch ECI affidavit wealth via MyNeta -> affidavit (+ criminal, same page)."""
-    from neta_ingest.pipelines import myneta as p
+    from neta_ingest.pipelines.identity import myneta as p
 
     p.run(house=house, cycle=cycle, limit=limit)
 
@@ -46,7 +46,7 @@ def affidavits(house: str = "ls", cycle: str = "LS2024", limit: int = 10) -> Non
 @app.command()
 def criminal(house: str = "ls", cycle: str = "LS2024", limit: int = 10) -> None:
     """Fetch declared criminal cases via MyNeta -> criminal_case + charges (+ severity)."""
-    from neta_ingest.pipelines import myneta as p
+    from neta_ingest.pipelines.identity import myneta as p
 
     p.run(house=house, cycle=cycle, limit=limit)
 
@@ -54,7 +54,7 @@ def criminal(house: str = "ls", cycle: str = "LS2024", limit: int = 10) -> None:
 @app.command()
 def resolve() -> None:
     """Entity-resolve unresolved source_refs to canonical persons."""
-    from neta_ingest.pipelines import resolve_persons as p
+    from neta_ingest.pipelines.identity import resolve_persons as p
 
     p.run()
 
@@ -62,7 +62,7 @@ def resolve() -> None:
 @app.command(name="enrich-missing")
 def enrich_missing(cycle: str = "LS2024") -> None:
     """Backfill affidavit data for LS members MyNeta omitted from its winners list (per-constituency)."""
-    from neta_ingest.pipelines import enrich_missing_affidavits as p
+    from neta_ingest.pipelines.lok_sabha import enrich_missing_affidavits as p
 
     p.run(cycle=cycle)
 
@@ -75,7 +75,7 @@ def historical_lookup(cycle: str, limit: int = typer.Option(None, help="cap MPs 
     cycle is a PAST cycle (LS2019|LS2014|LS2009). Confident matches are written; ambiguous ones are
     queued to data/hist_index/review_<cycle>.json. Run after `myneta`+`merge-cycles` for that cycle.
     """
-    from neta_ingest.pipelines import historical_lookup as p
+    from neta_ingest.pipelines.lok_sabha import historical_lookup as p
 
     p.run(cycle=cycle, limit=limit, refresh_index=refresh_index)
 
@@ -83,7 +83,7 @@ def historical_lookup(cycle: str, limit: int = typer.Option(None, help="cap MPs 
 @app.command(name="ls-roster")
 def ls_roster() -> None:
     """Complete the Lok Sabha roster + official photos from sansad.in (fill + add missing members)."""
-    from neta_ingest.pipelines import ls_roster as p
+    from neta_ingest.pipelines.lok_sabha import ls_roster as p
 
     p.run()
 
@@ -91,7 +91,7 @@ def ls_roster() -> None:
 @app.command(name="rajya-sabha")
 def rajya_sabha() -> None:
     """Ingest the sitting Rajya Sabha roster from sansad.in (roster + photo; no affidavit data)."""
-    from neta_ingest.pipelines import rajya_sabha as p
+    from neta_ingest.pipelines.rajya_sabha import rajya_sabha as p
 
     p.run()
 
@@ -99,7 +99,7 @@ def rajya_sabha() -> None:
 @app.command()
 def attendance(house: str = "ls") -> None:
     """Attach cumulative parliamentary attendance % (PRS) to current-term office_terms. house: ls|rs."""
-    from neta_ingest.pipelines import attendance as p
+    from neta_ingest.pipelines.enrich import attendance as p
 
     p.run(house=house)
 
@@ -107,7 +107,7 @@ def attendance(house: str = "ls") -> None:
 @app.command(name="native-names")
 def native_names() -> None:
     """Backfill Devanagari (Hindi) names from Wikidata for the 18th Lok Sabha."""
-    from neta_ingest.pipelines import native_names as p
+    from neta_ingest.pipelines.enrich import native_names as p
 
     p.run()
 
@@ -115,7 +115,7 @@ def native_names() -> None:
 @app.command(name="enrich-switches")
 def enrich_switches() -> None:
     """Attach sourced 'why' narratives to detected party-switch events."""
-    from neta_ingest.pipelines import enrich_switches as p
+    from neta_ingest.pipelines.enrich import enrich_switches as p
 
     p.run()
 
@@ -123,7 +123,7 @@ def enrich_switches() -> None:
 @app.command(name="canon-parties")
 def canon_parties() -> None:
     """Merge abbreviation/full-name duplicate party records and clear resulting false switches."""
-    from neta_ingest.pipelines import canon_parties as p
+    from neta_ingest.pipelines.identity import canon_parties as p
 
     p.run()
 
@@ -131,7 +131,7 @@ def canon_parties() -> None:
 @app.command(name="merge-cycles")
 def merge_cycles() -> None:
     """Merge the same person across election cycles (incumbents) and detect party switches."""
-    from neta_ingest.pipelines import merge_cycles as p
+    from neta_ingest.pipelines.identity import merge_cycles as p
 
     p.run()
 
@@ -140,7 +140,7 @@ def merge_cycles() -> None:
 def news(house: str = typer.Option(None, help="ls|rs (default: both)"),
          limit: int = typer.Option(None, help="cap legislators processed (testing)")) -> None:
     """Scrape recent Google News coverage for sitting legislators -> news_item."""
-    from neta_ingest.pipelines import news as p
+    from neta_ingest.pipelines.enrich import news as p
 
     p.run(house=house, limit=limit)
 
@@ -148,7 +148,7 @@ def news(house: str = typer.Option(None, help="ls|rs (default: both)"),
 @app.command(name="contacts")
 def contacts(house: str = typer.Option(None, help="ls|rs (default: both)")) -> None:
     """Attach official contact channels (email/office phone/profile) to sitting MPs from sansad.in."""
-    from neta_ingest.pipelines import contacts as p
+    from neta_ingest.pipelines.enrich import contacts as p
 
     p.run(house=house)
 
@@ -156,7 +156,7 @@ def contacts(house: str = typer.Option(None, help="ls|rs (default: both)")) -> N
 @app.command(name="leadership")
 def leadership() -> None:
     """Seed marquee 18th-LS leadership roles (PM, Speaker, LoP, senior ministers) -> role."""
-    from neta_ingest.pipelines import leadership as p
+    from neta_ingest.pipelines.enrich import leadership as p
 
     p.run()
 
@@ -164,7 +164,7 @@ def leadership() -> None:
 @app.command(name="fill-assembly")
 def fill_assembly(house: str = "mh_vs", cycle: str = "MH_VS2024") -> None:
     """Backfill state-assembly winners MyNeta omits from its show_winners list (per-constituency)."""
-    from neta_ingest.pipelines import assembly_backfill as p
+    from neta_ingest.pipelines.state import assembly_backfill as p
 
     p.run(house=house, cycle=cycle)
 
@@ -172,7 +172,7 @@ def fill_assembly(house: str = "mh_vs", cycle: str = "MH_VS2024") -> None:
 @app.command(name="party-switch")
 def party_switch() -> None:
     """Diff office_term party across cycles -> party_affiliation + party_switch_event."""
-    from neta_ingest.pipelines import party_switch as p
+    from neta_ingest.pipelines.identity import party_switch as p
 
     p.run()
 

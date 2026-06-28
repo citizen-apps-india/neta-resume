@@ -1,6 +1,6 @@
 """Tests for the shared person<->candidate matching used by enrich-missing and historical-lookup."""
 
-from neta_ingest.pipelines.affidavit_attach import best_match, cycle_year, name_score, name_tokens
+from neta_ingest.pipelines.identity.affidavit_attach import best_match, cycle_year, name_score, name_tokens
 
 
 def test_cycle_year():

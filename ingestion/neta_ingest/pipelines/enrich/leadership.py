@@ -12,7 +12,7 @@ from __future__ import annotations
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
-from neta_ingest.pipelines.affidavit_attach import name_tokens
+from neta_ingest.pipelines.identity.affidavit_attach import name_tokens
 from neta_core.provenance import record_source_ref
 from neta_core.transform.names import normalize_name
 

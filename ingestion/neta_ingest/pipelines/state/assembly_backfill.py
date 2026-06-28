@@ -12,7 +12,7 @@ from __future__ import annotations
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
-from neta_ingest.pipelines import myneta as myneta_pipeline
+from neta_ingest.pipelines.identity import myneta as myneta_pipeline
 from neta_sources.myneta import client as myneta
 
 

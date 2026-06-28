@@ -20,7 +20,7 @@ import os
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
-from neta_ingest.pipelines import affidavit_attach as aa
+from neta_ingest.pipelines.identity import affidavit_attach as aa
 from neta_sources.myneta import client as myneta
 
 _INDEX_DIR = "data/hist_index"
