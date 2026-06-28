@@ -145,6 +145,14 @@ def news(house: str = typer.Option(None, help="ls|rs (default: both)"),
     p.run(house=house, limit=limit)
 
 
+@app.command(name="fill-assembly")
+def fill_assembly(house: str = "mh_vs", cycle: str = "MH_VS2024") -> None:
+    """Backfill state-assembly winners MyNeta omits from its show_winners list (per-constituency)."""
+    from neta_ingest.pipelines import assembly_backfill as p
+
+    p.run(house=house, cycle=cycle)
+
+
 @app.command(name="party-switch")
 def party_switch() -> None:
     """Diff office_term party across cycles -> party_affiliation + party_switch_event."""

@@ -28,15 +28,18 @@ export function LegislatorBrowser({
   people,
   scope,
   initialQuery = "",
+  defaultState,
 }: {
   people: PersonSummary[];
   scope: Scope;
   initialQuery?: string;
+  defaultState?: string;
 }) {
   const [q, setQ] = useState(initialQuery);
   const [party, setParty] = useState("");
   const [house, setHouse] = useState(""); // only used when scope === "all"
-  const [state, setState] = useState(""); // only used when scope === "state"
+  // State Level opens pre-filtered to one state (e.g. Maharashtra); other scopes ignore this.
+  const [state, setState] = useState(scope === "state" ? (defaultState ?? "") : "");
   const [caseFilter, setCaseFilter] = useState<CaseFilter>("any");
   const [sort, setSort] = useState<Sort>("assets");
   const [visible, setVisible] = useState(PAGE);
@@ -88,6 +91,30 @@ export function LegislatorBrowser({
 
   return (
     <div style={{ border: "1px solid var(--border)", borderRadius: 14, overflow: "hidden", background: "var(--bg)", boxShadow: "0 24px 60px -32px var(--shadow)" }}>
+      {/* prominent state selector — the primary control on the State Level page */}
+      {scope === "state" && (
+        <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, padding: "18px clamp(14px,4vw,22px)", borderBottom: "1px solid var(--rule)", background: "var(--accent-soft)" }}>
+          <label htmlFor="state-select" className="mono" style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent-soft-fg)", fontWeight: 600 }}>
+            State
+          </label>
+          <select
+            id="state-select"
+            aria-label="State"
+            value={state}
+            onChange={(e) => resetAnd(() => setState(e.target.value))}
+            style={{ ...selectStyle, fontSize: 16, fontWeight: 600, padding: "11px 16px", minWidth: 220, flex: "0 1 320px" }}
+          >
+            <option value="">All states</option>
+            {states.map((s) => (
+              <option key={s} value={s}>{titleCase(s)}</option>
+            ))}
+          </select>
+          <span style={{ fontSize: 12.5, color: "var(--accent-soft-fg)" }}>
+            {states.length === 1 ? "More states coming soon" : `${states.length} states available`}
+          </span>
+        </div>
+      )}
+
       {/* controls */}
       <div style={{ padding: "16px clamp(14px,4vw,22px)", borderBottom: "1px solid var(--rule)", background: "var(--card)", display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
         <div className="focusring" style={{ display: "flex", alignItems: "center", gap: 8, flex: "1 1 240px", minWidth: 160, border: "1px solid var(--border)", borderRadius: 8, background: "var(--card2)", padding: "9px 12px" }}>
@@ -106,15 +133,6 @@ export function LegislatorBrowser({
             <option value="">All houses</option>
             <option value="Lok Sabha">Lok Sabha</option>
             <option value="Rajya Sabha">Rajya Sabha</option>
-          </select>
-        )}
-
-        {scope === "state" && (
-          <select aria-label="State" value={state} onChange={(e) => resetAnd(() => setState(e.target.value))} style={selectStyle}>
-            <option value="">All states</option>
-            {states.map((s) => (
-              <option key={s} value={s}>{titleCase(s)}</option>
-            ))}
           </select>
         )}
 

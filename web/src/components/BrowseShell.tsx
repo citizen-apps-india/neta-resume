@@ -10,6 +10,7 @@ export function BrowseShell({
   scope,
   error,
   initialQuery = "",
+  defaultState,
 }: {
   title: string;
   intro: string;
@@ -17,6 +18,7 @@ export function BrowseShell({
   scope: "all" | "ls" | "rs" | "state";
   error: boolean;
   initialQuery?: string;
+  defaultState?: string;
 }) {
   return (
     <>
@@ -31,7 +33,7 @@ export function BrowseShell({
             The API isn&rsquo;t reachable right now. Please try again shortly.
           </div>
         ) : (
-          <LegislatorBrowser people={people} scope={scope} initialQuery={initialQuery} />
+          <LegislatorBrowser people={people} scope={scope} initialQuery={initialQuery} defaultState={defaultState} />
         )}
       </main>
     </>

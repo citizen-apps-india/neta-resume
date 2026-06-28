@@ -102,3 +102,18 @@ def fetch_constituency_candidates(constituency_id: str, cycle: str = "LS2024") -
         if name and not name.isdigit():
             seen[cid] = name
     return list(seen.items())
+
+
+def fetch_constituency_winner(constituency_id: str, cycle: str = "LS2024") -> str | None:
+    """Return the winning candidate_id for a constituency, read from its show_candidates page.
+
+    The winner's row carries a "Winner" marker right after the candidate link, e.g.
+    `candidate.php?candidate_id=931>Gaikwad Sanjay Rambhau &nbsp&nbsp Winner`. Used to recover winners
+    MyNeta omits from its aggregate show_winners list (esp. state-assembly elections).
+    """
+    resp = http.get(f"{base_url(cycle)}/index.php?action=show_candidates&constituency_id={constituency_id}")
+    cache_raw(resp.content, suffix=f"_{cycle}_const_{constituency_id}.html")
+    # The candidate link nearest before the "Winner" marker (allow markup/whitespace between them).
+    m = re.search(r'candidate\.php\?candidate_id=(\d+)[^>]*>(?:(?!candidate\.php).){0,200}?Winner',
+                  resp.text, re.S | re.I)
+    return m.group(1) if m else None
