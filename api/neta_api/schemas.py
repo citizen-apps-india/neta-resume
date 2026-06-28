@@ -75,6 +75,18 @@ class CriminalCase(BaseModel):
     source: Source
 
 
+class Election(BaseModel):
+    eci_election_id: str | None       # ties a past election to its term_cycle; None for upcoming
+    name: str
+    level: str                        # national | state | municipal
+    status: str                       # past | upcoming
+    election_date: date | None
+    seats: int | None
+    house: str | None                 # house whose winners are this election's results
+    winner_count: int                 # winners we hold (0 for upcoming)
+    note: str | None = None           # e.g. "Expected — not yet notified by ECI"
+
+
 class Contact(BaseModel):
     channel_type: str            # email | phone | office_address | website | social | party_office
     value: str

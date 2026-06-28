@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ReportDiscrepancyButton } from "@/components/ReportDiscrepancy";
+import { ElectionsNav } from "@/components/ElectionsNav";
 
 const LINKS: [string, string][] = [
   ["/lok-sabha", "Lok Sabha"],
@@ -23,6 +24,7 @@ export function HeaderNav() {
         {LINKS.map(([href, label]) => (
           <Link key={href} className="navlink" href={href} style={{ fontSize: 13, color: "var(--ink2)" }}>{label}</Link>
         ))}
+        <ElectionsNav style={{ fontSize: 13, color: "var(--ink2)" }} />
         <ThemeToggle />
         <ReportDiscrepancyButton />
       </nav>
@@ -54,6 +56,7 @@ export function HeaderNav() {
             {label}
           </Link>
         ))}
+        <ElectionsNav onClick={() => setOpen(false)} style={{ fontSize: 16, color: "var(--ink)" }} />
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginTop: 4, flexWrap: "wrap" }}>
           <ThemeToggle />
           <ReportDiscrepancyButton />

@@ -141,6 +141,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/elections": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * List Elections
+         * @description All registered elections. Past entries carry a winner_count + house (results reuse /persons?house=…).
+         */
+        get: operations["list_elections_elections_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -218,6 +238,27 @@ export interface components {
             /** Description */
             description: string | null;
             source: components["schemas"]["Source"];
+        };
+        /** Election */
+        Election: {
+            /** Eci Election Id */
+            eci_election_id: string | null;
+            /** Name */
+            name: string;
+            /** Level */
+            level: string;
+            /** Status */
+            status: string;
+            /** Election Date */
+            election_date: string | null;
+            /** Seats */
+            seats: number | null;
+            /** House */
+            house: string | null;
+            /** Winner Count */
+            winner_count: number;
+            /** Note */
+            note?: string | null;
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -626,6 +667,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["VisitCount"];
+                };
+            };
+        };
+    };
+    list_elections_elections_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Election"][];
                 };
             };
         };

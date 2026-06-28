@@ -16,7 +16,7 @@ export function BrowseShell({
   title: string;
   intro: string;
   people: PersonSummary[];
-  scope: "all" | "ls" | "rs" | "state" | "municipal";
+  scope: "all" | "ls" | "rs" | "state" | "municipal" | "election";
   error: boolean;
   initialQuery?: string;
   defaultState?: string;

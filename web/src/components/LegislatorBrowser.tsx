@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { type PersonSummary } from "@/lib/api";
 import { DirectoryCard } from "@/components/DirectoryCard";
 
-type Scope = "all" | "ls" | "rs" | "state" | "municipal";
+type Scope = "all" | "ls" | "rs" | "state" | "municipal" | "election";
 type Sort = "assets" | "cases" | "attendance" | "name";
 type CaseFilter = "any" | "with" | "clean" | "heinous" | "serious" | "minor";
 

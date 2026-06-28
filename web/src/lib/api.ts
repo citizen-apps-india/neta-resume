@@ -73,6 +73,12 @@ export async function bumpVisits(): Promise<Visits> {
   return res.json();
 }
 
+/** The election registry (past with results + upcoming) for the Elections module. */
+export type Election = Schemas["Election"];
+export function getElections(): Promise<Election[]> {
+  return getJSON<Election[]>("/elections", 600);
+}
+
 /** Photos are served via the API proxy (upstream blocks cross-origin embedding). */
 export function photoSrc(id: number, hasPhoto: string | null | undefined): string | null {
   return hasPhoto ? `${API_BASE}/persons/${id}/photo` : null;

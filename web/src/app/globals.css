@@ -64,6 +64,12 @@ a { color: inherit; }
 .liftsm:hover { transform: translateY(-2px); border-color: var(--accent-soft-bd); }
 .navlink { text-decoration: none; transition: color .15s ease; }
 .navlink:hover { color: var(--accent); }
+
+/* Elections nav confetti burst (see ElectionsNav.tsx) */
+@keyframes nrConfetti {
+  0%   { transform: translate(0, 0) rotate(0deg); opacity: 1; }
+  100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
+}
 .btnDark { transition: transform .15s ease, background-color .15s ease, color .15s ease; }
 .btnDark:hover { background: var(--accent) !important; color: #fff !important; transform: translateY(-1px); }
 .btnGhost { transition: transform .15s ease, border-color .15s ease; }
