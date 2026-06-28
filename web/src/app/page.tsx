@@ -58,6 +58,9 @@ export default async function Home() {
               View all{total ? ` ${total}` : ""} →
             </Link>
           </div>
+          <div className="fadeUp" style={{ marginTop: 16 }}>
+            <VisitorCount />
+          </div>
         </div>
       </section>
 
@@ -70,9 +73,6 @@ export default async function Home() {
           </div>
         ))}
       </section>
-
-      {/* lifetime unique-visitor counter */}
-      <VisitorCount />
 
       {/* live preview of the real resume UI */}
       <HomePreview />

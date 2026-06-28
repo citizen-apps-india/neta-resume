@@ -15,12 +15,17 @@ export async function VisitorCount() {
 
   return (
     <div
-      className="mono"
-      style={{ textAlign: "center", fontSize: 12, color: "var(--muted)", padding: "18px 16px 0", letterSpacing: "0.02em" }}
+      className="fadeUp"
+      style={{
+        display: "inline-flex", alignItems: "center", gap: 9, padding: "7px 14px", borderRadius: 999,
+        border: "1px solid var(--border)", background: "var(--card2)", fontSize: 12.5, color: "var(--muted)",
+      }}
     >
-      <span style={{ color: "var(--accent)" }}>●</span>{" "}
-      <strong style={{ color: "var(--ink2)", fontWeight: 600 }}>{count.toLocaleString("en-IN")}</strong>{" "}
-      citizens have looked up their representatives
+      <span style={{ width: 6, height: 6, borderRadius: "50%", background: "var(--ok)", animation: "nrPulse 2s infinite", flexShrink: 0 }} />
+      <span>
+        <strong className="mono" style={{ color: "var(--ink)", fontWeight: 600 }}>{count.toLocaleString("en-IN")}</strong>{" "}
+        citizens have looked up their leaders
+      </span>
     </div>
   );
 }
