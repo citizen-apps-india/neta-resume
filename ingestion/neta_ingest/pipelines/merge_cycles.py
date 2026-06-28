@@ -18,7 +18,7 @@ from neta_ingest.db.engine import session_scope
 
 # Person-scoped tables whose rows must move from the merged-away person to the survivor.
 _PERSON_TABLES = (
-    "person_name_variant", "source_ref", "office_term", "cabinet_post",
+    "person_name_variant", "source_ref", "office_term", "cabinet_post", "role",
     "party_affiliation", "party_switch_event", "affidavit", "criminal_case",
 )
 
@@ -156,7 +156,7 @@ def _prune_non_current(s) -> int:
     ]
     for pid in ids:
         # criminal_case -> case_charge and affidavit -> line_item cascade on delete.
-        for tbl in ("criminal_case", "affidavit", "office_term", "cabinet_post",
+        for tbl in ("criminal_case", "affidavit", "office_term", "cabinet_post", "role",
                     "party_affiliation", "party_switch_event", "person_name_variant", "source_ref"):
             s.execute(text(f"DELETE FROM {tbl} WHERE person_id = :p"), {"p": pid})
         s.execute(text("DELETE FROM person WHERE id = :p"), {"p": pid})

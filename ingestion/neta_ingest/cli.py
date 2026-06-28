@@ -145,6 +145,14 @@ def news(house: str = typer.Option(None, help="ls|rs (default: both)"),
     p.run(house=house, limit=limit)
 
 
+@app.command(name="leadership")
+def leadership() -> None:
+    """Seed marquee 18th-LS leadership roles (PM, Speaker, LoP, senior ministers) -> role."""
+    from neta_ingest.pipelines import leadership as p
+
+    p.run()
+
+
 @app.command(name="fill-assembly")
 def fill_assembly(house: str = "mh_vs", cycle: str = "MH_VS2024") -> None:
     """Backfill state-assembly winners MyNeta omits from its show_winners list (per-constituency)."""

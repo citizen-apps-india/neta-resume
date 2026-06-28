@@ -298,6 +298,11 @@ export interface components {
             education?: string | null;
             /** Office Terms */
             office_terms: components["schemas"]["OfficeTerm"][];
+            /**
+             * Roles
+             * @default []
+             */
+            roles: components["schemas"]["RoleEntry"][];
             /** Party History */
             party_history: components["schemas"]["PartyStint"][];
             /**
@@ -349,6 +354,26 @@ export interface components {
             top_severity?: ("heinous" | "serious" | "minor") | null;
             /** Current Attendance Pct */
             current_attendance_pct?: number | null;
+        };
+        /** RoleEntry */
+        RoleEntry: {
+            /** Role Type */
+            role_type: string;
+            /** Title */
+            title: string | null;
+            /** Body */
+            body: string | null;
+            /** House */
+            house: string | null;
+            /** Portfolio */
+            portfolio: string | null;
+            /** Start Date */
+            start_date: string | null;
+            /** End Date */
+            end_date: string | null;
+            /** Status */
+            status: string;
+            source: components["schemas"]["Source"];
         };
         /** Source */
         Source: {
