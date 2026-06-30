@@ -1,0 +1,33 @@
+name: migrate
+
+# Schema + reference seeds reach Neon HERE (version-tracked), not via the laptop full-replace.
+# Runs on merge to main when db/ changes (or manually). `neta migrate` applies only pending migrations
+# (tracked in schema_migrations); `neta seed` re-applies the idempotent reference seeds.
+#
+# ONE-TIME ADOPTION on the already-populated Neon: dispatch this once after setting the secret, but first
+# run `neta migrate --baseline` against it (the early ALTER migrations are not re-runnable). See OPERATIONS.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "db/migrations/**"
+      - "db/seeds/**"
+  workflow_dispatch:
+
+concurrency:
+  group: migrate
+
+jobs:
+  migrate:
+    runs-on: ubuntu-latest
+    env:
+      NETA_MIGRATE_DATABASE_URL: ${{ secrets.NETA_MIGRATE_DATABASE_URL }}   # Neon owner DSN (DDL)
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync
+      - name: Apply pending migrations
+        run: uv run neta migrate
+      - name: Apply reference seeds
+        run: uv run neta seed

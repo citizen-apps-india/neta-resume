@@ -13,6 +13,8 @@ class Settings(BaseSettings):
 
     # Postgres
     database_url: str = "postgresql+psycopg://neta:neta@localhost:5432/neta"
+    # DSN for schema migrations (needs DDL/owner privileges). Falls back to database_url when unset.
+    migrate_database_url: str | None = None
 
     # Polite scraping defaults (be a good citizen — MyNeta is non-commercial & unmetered).
     http_user_agent: str = "neta-resume/0.1 (non-commercial research; contact: sahil@magicweave.xyz)"

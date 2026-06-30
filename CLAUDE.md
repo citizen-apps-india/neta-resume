@@ -27,12 +27,11 @@ Local dev DB is **Homebrew Postgres** historically (the repo also ships `docker-
 Default DSN: `postgresql+psycopg://neta:neta@localhost:5432/neta`. See `docs/local-dev.md`.
 
 ```bash
-# DB — apply migrations then seeds (order matters: 0001→0009, then seeds)
-export PGPASSWORD=neta
-for f in db/migrations/0*.sql; do psql -h localhost -U neta -d neta -v ON_ERROR_STOP=1 -f "$f"; done
-for f in db/seeds/houses.sql db/seeds/sources.sql db/seeds/parties.sql \
-         db/seeds/ipc_bns_sections.sql db/seeds/severity_rules.sql; do
-  psql -h localhost -U neta -d neta -v ON_ERROR_STOP=1 -f "$f"; done
+# DB — schema + seeds, version-tracked (schema_migrations). Same commands CI runs against Neon.
+cd ingestion && uv sync && cd ..
+export NETA_DATABASE_URL="postgresql+psycopg://neta:neta@localhost:5432/neta"
+uv run neta migrate      # applies pending db/migrations/*.sql
+uv run neta seed         # idempotent reference seeds (houses, sources, parties, …)
 
 # ingestion
 cd ingestion && uv sync
@@ -55,6 +54,8 @@ Every command is a thin wrapper over a pipeline in `ingestion/neta_ingest/pipeli
 
 | Command | Does |
 |---|---|
+| `neta migrate [--baseline]` | apply pending `db/migrations/*.sql` (tracked in `schema_migrations`); `--baseline` records-as-applied without running (one-time adoption). Uses owner DSN `NETA_MIGRATE_DATABASE_URL`. |
+| `neta seed` | (re-)apply idempotent reference seeds |
 | `neta myneta --cycle LS2024 --limit N` | MyNeta candidate page → person + affidavit + criminal_case (one pass). `--candidate ID` for one. |
 | `neta affidavits` / `neta criminal` | aliases of `myneta` (MyNeta serves wealth + criminal on one page) |
 | `neta roster --house ls --cycle 18` | sansad.in roster scaffold → office_term + source_ref |

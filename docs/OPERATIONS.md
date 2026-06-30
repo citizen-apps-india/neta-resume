@@ -7,8 +7,10 @@ Running, backfilling, and debugging the ingestion pipelines. Everything here ass
 ## Full pipeline execution order
 
 ```bash
-# 0. schema + seeds (once per DB) — see docs/local-dev.md
-#    migrations 0001→0009, then seeds: houses, sources, parties, ipc_bns_sections, severity_rules
+# 0. schema + seeds (once per DB):
+#    uv run neta migrate     # applies pending db/migrations/*.sql, version-tracked in schema_migrations
+#    uv run neta seed        # (re-)applies the idempotent reference seeds
+#    In production this runs automatically in CI (.github/workflows/migrate.yml on merge to main).
 
 # 1. roster
 uv run neta ls-roster                       # LS roster + official photos (sansad.in)
@@ -88,16 +90,27 @@ Same shape for any fact: `office_term.source_ref_id` (+ `attendance_source_ref_i
 `party_switch_event.narrative_source_ref_id`. Join `source_ref → source` for the system, `native_url` for
 the live page, `raw_payload_ref` for the archived snapshot.
 
-## GitHub Actions (cron + manual dispatch)
+## Independence: the hosted DB is the source of truth
 
-`.github/workflows/ingest.yml` runs ingestion with `NETA_DATABASE_URL` from a repo secret.
+Schema and data reach the hosted Postgres **without a laptop**:
 
-- **Scheduled:** weekly roster refresh (Mon 02:00 UTC). Affidavit/criminal are heavier — trigger manually.
-- **Manual:** Actions tab → **ingest** → **Run workflow**, with inputs:
-  - `pipeline` — `roster | affidavits | criminal | resolve | party-switch`
-  - `house` — `ls | rs`
-  - `cycle` — `18` (roster) or `LS2024` (affidavits/criminal)
+- **Schema/seeds** — `.github/workflows/migrate.yml` runs `neta migrate` + `neta seed` on every merge to
+  `main` that touches `db/` (or via manual dispatch), using the **owner** DSN `NETA_MIGRATE_DATABASE_URL`.
+  Migrations are version-tracked in `schema_migrations`; only pending ones apply.
+- **Data** — `.github/workflows/ingest.yml` runs any pipeline directly against Neon (ingest write-role
+  `NETA_DATABASE_URL`):
+  - **Manual:** Actions → **ingest** → **Run workflow** → `args` = the full command, e.g.
+    `attendance --house rs`, `leadership`,
+    `historical-lookup DL_MCD2012 --house dl_mcd --current-cycle DL_MCD2022`,
+    `myneta --cycle LS2024 --limit 600`. (Any `neta` command — not a fixed wrapper.)
+  - **Scheduled:** weekly roster refresh (`ls-roster` + `rajya-sabha`, Mon 02:00 UTC); monthly attendance
+    (1st, 04:00 UTC). News has its own `news.yml`. Heavy/one-off backfills: dispatch manually.
+  - A `concurrency: ingest` group prevents overlapping writes.
 
-  It runs `uv run neta "$PIPELINE" --house "$HOUSE" --cycle "$CYCLE"`. For pipelines that don't take those
-  flags (e.g. `ls-roster`, `merge-cycles`, `attendance`), run them locally against the hosted DSN or
-  extend the workflow.
+`scripts/load_remote_db.sh` (full-replace from a local copy) is now **disaster-restore / one-time
+bootstrap only** — not the routine path. Local Postgres is a dev environment; production no longer depends
+on it.
+
+> **One-time adoption** on the already-populated Neon: set both secrets, then run `neta migrate --baseline`
+> against it ONCE (records 0001–0016 as applied without re-executing the non-re-runnable early ALTERs).
+> After that, `migrate.yml` applies only genuinely new migrations.

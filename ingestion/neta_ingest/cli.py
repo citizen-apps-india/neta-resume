@@ -18,6 +18,24 @@ app = typer.Typer(help="Neta-Resume ingestion pipelines", no_args_is_help=True)
 
 
 @app.command()
+def migrate(dir: str = "db/migrations",
+            baseline: bool = typer.Option(False, help="record existing files as applied WITHOUT running "
+                                          "them (one-time adoption on an already-populated DB)")) -> None:
+    """Apply pending schema migrations (version-tracked in schema_migrations). Uses the owner DSN."""
+    from neta_ingest import admin
+
+    admin.run_migrate(dir=dir, baseline=baseline)
+
+
+@app.command()
+def seed(dir: str = "db/seeds") -> None:
+    """(Re-)apply the idempotent reference seeds (houses, sources, parties, …)."""
+    from neta_ingest import admin
+
+    admin.run_seed(dir=dir)
+
+
+@app.command()
 def roster(house: str = "ls", cycle: str = "18") -> None:
     """Fetch the legislature roster (sansad.in) -> office_term + source_ref."""
     from neta_ingest.pipelines.lok_sabha import roster as p

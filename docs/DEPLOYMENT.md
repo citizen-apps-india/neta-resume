@@ -1,39 +1,52 @@
-# Deployment (AWS, economical shape)
+# Deployment (current stack)
 
-Target: a near-$0/month year-one footprint on AWS managed services. Four layers map to four services.
+Near-$0/month footprint. Four layers, four services — the data layer is **independent of any laptop**:
+schema + data reach the DB through GitHub Actions, not a local sync.
 
 | Layer | Service | Notes |
 |---|---|---|
-| `web/` | **AWS Amplify Hosting** | Next.js 15 SSR. Builds from the repo; env-driven API base. |
-| `api/` | **App Runner** (or **Lambda** behind API Gateway / Lambda Web Adapter) | FastAPI. Small, read-only. |
-| `db/`  | **RDS Postgres `db.t4g.micro`** | Free tier 12 months, then ~$12–15/mo. |
-| `ingestion/` | **GitHub Actions cron** (`.github/workflows/ingest.yml`) | No extra AWS compute. |
+| `web/` | **Vercel** | Next.js 15 SSR. Builds from the repo; `NETA_API_BASE` → the api. |
+| `api/` | **Render** | FastAPI, read-only. `NETA_DATABASE_URL` = read role. |
+| `db/`  | **Neon Postgres** (free tier) | Serverless; supports branches (use one as backfill staging). |
+| `ingestion/` | **GitHub Actions** — `migrate.yml` (schema/seeds) + `ingest.yml` (pipelines) + `news.yml` | No extra compute; free runner minutes. |
 
-Read-only DB role for `api`; write role for `ingestion`. Estimated **~$0/mo for year 1** (RDS free tier;
-Amplify/App Runner low-traffic free allowances; ingestion runs on GitHub-hosted runners).
+> Historical note: this doc previously described an AWS shape (Amplify/App Runner/RDS). The live stack is
+> Vercel + Render + Neon; the AWS notes are not used.
 
-## Environment variables per service
+## How data reaches the DB (independent of a laptop)
 
-| Var | ingestion (GH Actions) | api (App Runner/Lambda) | web (Amplify) |
-|---|---|---|---|
-| `NETA_DATABASE_URL` | **write** role DSN (secret) | **read-only** role DSN (secret) | — |
-| `NETA_API_BASE` | — | — | public/internal URL of the api service |
-| `NETA_ALLOWED_ORIGINS` | — | the web origin(s), comma-separated | — |
+- **Schema/seeds** → `.github/workflows/migrate.yml` on merge to `main` (paths `db/**`) or manual dispatch:
+  runs `neta migrate` (version-tracked in `schema_migrations`) + `neta seed`. Uses the **owner** DSN.
+- **Data** → `.github/workflows/ingest.yml`: `workflow_dispatch` with free-form `args` runs any `neta`
+  pipeline directly on Neon (idempotent), plus scheduled roster/attendance refreshes. Uses the **ingest**
+  write-role DSN.
+- `scripts/load_remote_db.sh` (full-replace) is **disaster-restore / first-bootstrap only**, not routine.
 
-DSN format (SQLAlchemy + psycopg): `postgresql+psycopg://USER:PASSWORD@HOST:5432/neta`. RDS gives the host;
-require TLS in production (append `?sslmode=require`).
+### One-time adoption on the existing Neon DB
 
-> **CORS will become env-driven.** Today `api/neta_api/main.py` hard-codes `allow_origins=["http://localhost:3000"]`.
-> Before deploying, the api should read `NETA_ALLOWED_ORIGINS` (comma-separated) and pass it to the CORS
-> middleware. Set it to the Amplify web origin (e.g. `https://main.xxxx.amplifyapp.com` and any custom domain).
-> *(api code is owned by another worker; this doc only specifies the contract.)*
+The live DB already has the schema. Before the first `migrate.yml` run, baseline it once so the early
+non-re-runnable ALTERs aren't replayed:
 
-## Secrets
+```bash
+NETA_MIGRATE_DATABASE_URL="postgresql+psycopg://OWNER:PASS@HOST/neondb?sslmode=require" \
+  uv run neta migrate --baseline    # records 0001–0016 as applied, executes nothing
+```
 
-- Store both DSNs as secrets, never in the repo.
-  - **ingestion:** GitHub Actions secret `NETA_DATABASE_URL` (already referenced by `ingest.yml`).
-  - **api:** App Runner secret / Lambda env (back it with AWS Secrets Manager or SSM Parameter Store).
-- RDS master password → Secrets Manager. The app roles below are *not* the master user.
+(Ideally run against a Neon **branch** first to confirm, then the main DB.) After this, `migrate.yml`
+applies only genuinely new migrations.
+
+## Environment variables / secrets
+
+| Var | Where | Value |
+|---|---|---|
+| `NETA_MIGRATE_DATABASE_URL` | GitHub secret (migrate.yml) | Neon **owner** DSN (DDL) |
+| `NETA_DATABASE_URL` | GitHub secret (ingest.yml/news.yml) | **ingest write-role** DSN |
+| `NETA_DATABASE_URL` | Render (api) | **read-only** role DSN |
+| `NETA_API_BASE` | Vercel (web) | the api's public URL |
+| `NETA_ALLOWED_ORIGINS` | Render (api) | the web origin(s), comma-separated |
+
+DSN format (SQLAlchemy + psycopg): `postgresql+psycopg://USER:PASSWORD@HOST/neta?sslmode=require`. Store all
+DSNs as secrets, never in the repo. **Rotate any credential that has ever been pasted into a chat/log.**
 
 ## Read-only / write DB roles
 

@@ -1,33 +1,31 @@
 name: ingest
 
-# Scheduled, idempotent ingestion. Pipelines upsert on natural keys, so re-runs never duplicate.
-# DATABASE_URL is provided via the NETA_DATABASE_URL secret (points at the hosted Postgres).
+# Independent, idempotent ingestion against the hosted Postgres (NETA_DATABASE_URL = ingest write-role).
+# Pipelines upsert on natural keys, so re-runs never duplicate. This is the path that replaces the old
+# laptop "run locally → load_remote_db.sh full-replace": any pipeline now runs here, directly on Neon.
 
 on:
   workflow_dispatch:
     inputs:
-      pipeline:
-        description: "roster | affidavits | criminal | resolve | party-switch"
+      args:
+        description: >-
+          Full `neta` command, e.g. "attendance --house rs", "leadership",
+          "historical-lookup DL_MCD2012 --house dl_mcd --current-cycle DL_MCD2022",
+          "myneta --cycle LS2024 --limit 600"
         required: true
-        default: roster
-      house:
-        description: "ls | rs"
-        required: false
-        default: ls
-      cycle:
-        description: "e.g. 18 (roster) or LS2024 (affidavits/criminal)"
-        required: false
-        default: "18"
+        default: ls-roster
   schedule:
-    # Weekly roster refresh (Mon 02:00 UTC). Affidavit/criminal are heavier — trigger manually per cycle.
-    - cron: "0 2 * * 1"
+    - cron: "0 2 * * 1"   # weekly: roster refresh (Mon 02:00 UTC)
+    - cron: "0 4 1 * *"   # monthly: attendance refresh (1st, 04:00 UTC)
+
+concurrency:
+  group: ingest          # never let two ingest runs write Neon at once
+  cancel-in-progress: false
 
 jobs:
-  run:
+  dispatch:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ingestion
     env:
       NETA_DATABASE_URL: ${{ secrets.NETA_DATABASE_URL }}
     steps:
@@ -35,8 +33,26 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - run: uv sync
       - name: Run pipeline
+        env:
+          ARGS: ${{ inputs.args }}   # via env (not inline ${{ }}): no script injection; $ARGS only word-splits
+        run: uv run neta $ARGS
+
+  scheduled:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    env:
+      NETA_DATABASE_URL: ${{ secrets.NETA_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync
+      - name: Weekly roster refresh
+        if: github.event.schedule == '0 2 * * 1'
         run: |
-          PIPELINE="${{ github.event.inputs.pipeline || 'roster' }}"
-          HOUSE="${{ github.event.inputs.house || 'ls' }}"
-          CYCLE="${{ github.event.inputs.cycle || '18' }}"
-          uv run neta "$PIPELINE" --house "$HOUSE" --cycle "$CYCLE"
+          uv run neta ls-roster
+          uv run neta rajya-sabha
+      - name: Monthly attendance refresh
+        if: github.event.schedule == '0 4 1 * *'
+        run: |
+          uv run neta attendance --house ls
+          uv run neta attendance --house rs

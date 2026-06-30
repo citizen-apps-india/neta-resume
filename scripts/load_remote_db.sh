@@ -1,7 +1,13 @@
 #!/usr/bin/env bash
-# Copy the local Neta-Resume database (schema + all data) into a hosted Postgres (Neon, RDS, …).
-# FULL REPLACE: resets the target's public schema and reloads it. The lifetime visitor counter
-# (site_counter) is captured first and restored afterwards so a rebuild never zeroes it.
+# DISASTER-RESTORE / ONE-TIME BOOTSTRAP ONLY — *not* the routine sync.
+#
+# Routine schema + data now reach the hosted DB independently of any laptop: schema via the `migrate`
+# GitHub Action (`neta migrate`/`neta seed`), data via the `ingest` Action (`neta <pipeline>` direct on
+# Neon). The hosted DB is the source of truth. Use this script only to seed a brand-new empty DB from a
+# local copy, or to restore after a catastrophe.
+#
+# FULL REPLACE: resets the target's public schema and reloads it from LOCAL_DSN. The lifetime visitor
+# counter (site_counter) is captured first and restored afterwards so a rebuild never zeroes it.
 #
 # Usage:
 #   TARGET_DSN="postgresql://USER:PASS@HOST/neta?sslmode=require" ./scripts/load_remote_db.sh
