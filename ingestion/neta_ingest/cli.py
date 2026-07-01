@@ -29,10 +29,18 @@ def migrate(dir: str = "db/migrations",
 
 @app.command()
 def seed(dir: str = "db/seeds") -> None:
-    """(Re-)apply the idempotent reference seeds (houses, sources, parties, …)."""
+    """(Re-)apply the idempotent reference seeds (houses, sources, parties, …) + the state registry."""
     from neta_ingest import admin
 
     admin.run_seed(dir=dir)
+
+
+@app.command(name="seed-states")
+def seed_states() -> None:
+    """Upsert state/UT assembly house + term_cycle rows from the elections registry (idempotent)."""
+    from neta_ingest import admin
+
+    admin.run_seed_states()
 
 
 @app.command()
@@ -189,6 +197,18 @@ def fill_assembly(house: str = "mh_vs", cycle: str = "MH_VS2024") -> None:
     from neta_ingest.pipelines.state import assembly_backfill as p
 
     p.run(house=house, cycle=cycle)
+
+
+@app.command(name="onboard-state")
+def onboard_state(house: str,
+                  cycle: str = typer.Option(None, help="ingest ONLY this cycle (to chunk a large state)"),
+                  backfill: bool = typer.Option(False, help="also run historical-lookup (extra recall; "
+                                                "expensive extra crawl)")) -> None:
+    """Onboard a registered state assembly: ingest its cycles (myneta+fill), link across cycles + detect
+    party switches. `--house up_vs`; the state's cycles come from the elections registry."""
+    from neta_ingest.pipelines.state import onboard as p
+
+    p.run(house=house, cycle=cycle, backfill=backfill)
 
 
 @app.command(name="party-switch")
