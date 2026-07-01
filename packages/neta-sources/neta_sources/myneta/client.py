@@ -40,6 +40,12 @@ ELECTION_BASE = {
     # DL_MCD2007 deferred: not on MyNeta (no per-election site).
 }
 
+# State/UT assemblies live in a data-driven registry (elections.py) so onboarding a state is one entry,
+# not scattered edits here. Merge their cycle->URL map in.
+from neta_sources.myneta import elections as _elections  # noqa: E402  (no import cycle: elections has no client dep)
+
+ELECTION_BASE.update(_elections.election_base())
+
 
 def base_url(cycle: str) -> str:
     try:

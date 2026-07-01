@@ -111,3 +111,24 @@ def run_seed(dir: str = "db/seeds") -> None:
         _psql(dsn, "-1", "-f", str(seed_dir / name))  # seeds are idempotent (ON CONFLICT / IF NOT EXISTS)
         print(f"   ~ seeded {name}")
     print(f"[seed] applied {len(ordered)} seed file(s)")
+    run_seed_states()
+
+
+def run_seed_states() -> None:
+    """Upsert state/UT assembly house + term_cycle rows from the elections registry (idempotent)."""
+    from neta_sources.myneta import elections
+
+    dsn = _libpq_dsn(owner=True)
+    for a in elections.ASSEMBLIES:
+        name = a.name.replace("'", "''")
+        _psql(dsn, "-c",
+              f"INSERT INTO house (code, name, jurisdiction, state_code) "
+              f"VALUES ('{a.house_code}', '{name}', 'state', '{a.state_code}') ON CONFLICT (code) DO NOTHING")
+        for c in a.cycles:
+            end = f"DATE '{c.term_end}'" if c.term_end else "NULL"
+            _psql(dsn, "-c",
+                  f"INSERT INTO term_cycle (house_id, number, start_date, end_date, eci_election_id) "
+                  f"SELECT h.id, {c.number}, DATE '{c.poll_date}', {end}, '{c.eci_id}' "
+                  f"FROM house h WHERE h.code = '{a.house_code}' ON CONFLICT (house_id, number) DO NOTHING")
+        print(f"   ~ seeded assembly {a.house_code} ({len(a.cycles)} cycle(s))")
+    print(f"[seed-states] {len(elections.ASSEMBLIES)} assembly(ies) from the registry")

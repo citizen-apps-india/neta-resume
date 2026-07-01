@@ -41,7 +41,8 @@ def run(cycle: str = "LS2024", house: str = "ls", limit: int = 10,
     ids = candidate_ids
     if ids is None:
         winners = myneta.fetch_winners(cycle)
-        ids = [w.candidate_id for w in winners][:limit]
+        all_ids = [w.candidate_id for w in winners]
+        ids = all_ids if limit <= 0 else all_ids[:limit]  # limit<=0 => ingest all winners
     print(f"[myneta] ingesting {len(ids)} candidates for {cycle} ...")
 
     ok = 0
