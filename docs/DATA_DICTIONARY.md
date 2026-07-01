@@ -1,6 +1,6 @@
 # Data dictionary
 
-Per-table, per-column reference for the core tables. **Source of truth is `db/migrations/0001..0009*.sql`**
+Per-table, per-column reference for the core tables. **Source of truth is `db/migrations/*.sql`**
 (this doc tracks them; `db/schema.dbml` is the ERD). Enums below are the literal `CHECK`-constraint values.
 
 > **Provenance:** every *fact* table carries a `source_ref_id` (FK → `source_ref`) — the pointer back to

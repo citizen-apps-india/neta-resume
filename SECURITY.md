@@ -45,7 +45,7 @@ legally-defensible scraper. This document records the posture and the hardening 
 - Set `NETA_DATABASE_URL` and `NETA_ALLOWED_ORIGINS` via environment/secrets — never rely on the dev
   defaults in production.
 - Give the API a **read-only** Postgres role; reserve a write role for ingestion.
-- Terminate TLS at the edge (Amplify/App Runner handle this).
+- Terminate TLS at the edge (Vercel/Render handle this).
 
 ## Known follow-ups (out of scope for this pass)
 

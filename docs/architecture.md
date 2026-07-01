@@ -22,14 +22,16 @@
                                 ┌───────────▼──────────────────────────────────▼─┐
                                 │  api/  (FastAPI, Python 3.12)                    │
                                 │  read-only aggregate: /persons/{id} = full resume│
-                                │  reuses ingestion transform/ models              │
+                                │  standalone (excluded from the uv workspace)     │
                                 └─────────────────────────────────────────────────┘
 ```
 
 ## Why a separate FastAPI service (not Next.js API routes → Postgres)
 
-- **Language colocation with ingestion.** Money parsing, section→severity, name normalization, and the
-  Pydantic "resume" models already live in Python. The API reuses them instead of reimplementing in TS.
+- **Transforms run at ingest, not in the API.** Money parsing, section→severity and name normalization
+  happen in the ingestion pipelines and are **stored** in Postgres; the API is a standalone read layer that
+  serves those pre-computed values (it doesn't share ingestion code). Keeping it Python lets its Pydantic
+  "resume" models drive the OpenAPI contract below.
 - **One contract.** FastAPI emits OpenAPI; `web/` codegens TypeScript types from it. The frontend never
   hand-rolls DB shapes.
 - **Resume = heavy aggregate read.** A person page joins person + terms + party history + N affidavit cycles

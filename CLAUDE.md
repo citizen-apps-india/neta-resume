@@ -11,9 +11,9 @@ ingestion (Python 3.12 + uv)  ──writes──▶  Postgres 16  ──reads─
   + severity + provenance                  fact's source_ref      aggregate + OpenAPI        provenance badge per fact
 ```
 
-- **`db/`** — SQL migrations (`db/migrations/0001..0009*.sql`) + reference seeds (`db/seeds/*.sql`). Source of truth for the schema; `db/schema.dbml` is a hand-kept ERD.
-- **`ingestion/`** — Typer CLI (`neta`) of idempotent pipelines. **Writes** Postgres. Holds a write DB role.
-- **`api/`** — FastAPI **read** layer. Assembles the resume aggregate, emits OpenAPI. Holds a read DB role. Reuses `ingestion` transform models (severity, money, names).
+- **`db/`** — SQL migrations (`db/migrations/*.sql`, version-tracked via `neta migrate`) + reference seeds (`db/seeds/*.sql`). Source of truth for the schema; `db/schema.dbml` is a hand-kept ERD.
+- **`ingestion/`** — Typer CLI (`neta`) of idempotent pipelines + the migration runner. **Writes** Postgres. Holds a write DB role. A uv workspace: `packages/neta-core` + `packages/neta-sources` + the `neta_ingest` runner.
+- **`api/`** — FastAPI **read** layer. Assembles the resume aggregate, emits OpenAPI. Holds a read DB role. **Standalone** project (excluded from the workspace); reads pre-computed facts.
 - **`web/`** — Next.js. Server components call `api` **over HTTP only** (no DB creds in the browser).
 
 **Layering rules:** `web → api` over HTTP; `ingestion` writes, `api` reads; neither web nor api opens a
@@ -89,8 +89,8 @@ lives in `merge-cycles` today; `party-switch` is a stub. See `docs/OPERATIONS.md
 ## Testing / lint
 
 ```bash
-cd ingestion && uv run pytest      # 18 tests (parsers + transforms, no network)
-cd ingestion && uv run ruff check .
+uv run pytest                      # 30 tests (parsers + transforms + migrate runner, no network)
+uv run ruff check packages ingestion
 cd api       && uv run ruff check .
 cd web       && npm run typecheck  # tsc --noEmit
 ```

@@ -10,8 +10,8 @@ schema + data reach the DB through GitHub Actions, not a local sync.
 | `db/`  | **Neon Postgres** (free tier) | Serverless; supports branches (use one as backfill staging). |
 | `ingestion/` | **GitHub Actions** — `migrate.yml` (schema/seeds) + `ingest.yml` (pipelines) + `news.yml` | No extra compute; free runner minutes. |
 
-> Historical note: this doc previously described an AWS shape (Amplify/App Runner/RDS). The live stack is
-> Vercel + Render + Neon; the AWS notes are not used.
+> Note: earlier revisions of this doc described an AWS-hosted shape. The live stack is Vercel + Render +
+> Neon + GitHub Actions, documented below.
 
 ## How data reaches the DB (independent of a laptop)
 
@@ -53,7 +53,7 @@ DSNs as secrets, never in the repo. **Rotate any credential that has ever been p
 Create two least-privilege roles after the schema is loaded. `ingestion` writes; `api` only reads.
 
 ```sql
--- run as the RDS master user, connected to the neta database
+-- run as the Neon owner role, connected to the neta database
 
 -- WRITE role (ingestion)
 CREATE ROLE neta_ingest LOGIN PASSWORD '<strong-secret>';
@@ -76,38 +76,34 @@ ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO neta_read;
 
 Point each service's `NETA_DATABASE_URL` at the matching role.
 
-## One-time data load (local → RDS)
+## One-time bootstrap (local → Neon)
 
-Ingestion can also run directly against RDS, but the fastest bootstrap is to dump the local DB and restore it:
+Routine schema flows via `migrate.yml` and data via the `ingest` workflow (above). To seed a **brand-new
+empty** Neon DB in one shot from a local copy, use `scripts/load_remote_db.sh` — **disaster-restore /
+bootstrap only, not the routine path**:
 
 ```bash
-# dump local (Homebrew/Docker) Postgres
-pg_dump "postgresql://neta:neta@localhost:5432/neta" -Fc -f neta.dump
-
-# restore into RDS (use the master user; create roles first if not present)
-pg_restore --no-owner --role=neta_ingest \
-  -d "postgresql://MASTER:PASS@<rds-host>:5432/neta?sslmode=require" neta.dump
+TARGET_DSN="postgresql://neondb_owner:PASS@<neon-host>/neondb?sslmode=require" \
+  ./scripts/load_remote_db.sh
 ```
 
-Alternatively load schema first (`db/migrations/0*.sql` then `db/seeds/*.sql`) and run the pipelines
-against RDS via the `ingest.yml` `workflow_dispatch`. See `docs/OPERATIONS.md`.
+Or bring the schema up with `neta migrate` + `neta seed`, then run the pipelines against Neon via the
+`ingest` workflow's `workflow_dispatch`. See `docs/OPERATIONS.md`.
 
 ## Health checks
 
-- **api:** `GET /health` → `{"status":"ok"}`. Use it as the App Runner / Lambda / load-balancer health
-  probe. OpenAPI lives at `/openapi.json`, docs at `/docs`.
-- **db:** RDS instance status + a `SELECT 1`.
+- **api:** `GET /health` → `{"status":"ok"}` — Render uses it as the health probe. OpenAPI at
+  `/openapi.json`, docs at `/docs`.
+- **db:** Neon dashboard status + a `SELECT 1`.
 - **web:** the home page (`/`) renders once the api is reachable.
 
-## Photo-cache caveat (serverless)
+## Photo-cache caveat
 
 The api proxies sansad.in member photos at `GET /persons/{id}/photo` and **disk-caches** them to
 `api/.photo_cache/` (sansad sets `Cross-Origin-Resource-Policy: same-site`, so browsers can't embed them
 directly; the api re-serves them with `Cross-Origin-Resource-Policy: cross-origin` and a 7-day
 `Cache-Control`).
 
-- On **App Runner** the container filesystem persists per running instance, so the cache warms naturally.
-- On **Lambda** the disk is **ephemeral** (`/tmp`, lost between cold starts and not shared across
-  instances) → each cold start re-fetches photos. Options: (a) accept a per-instance cache (cheap, fine at
-  this scale, relies on the 7-day browser `Cache-Control`); or (b) front photos with **S3** (cache the
-  bytes in a bucket / serve via CloudFront) for a durable shared cache. Prefer (a) for year one.
+On **Render**, the container filesystem persists per running instance, so the cache warms naturally; the
+7-day browser `Cache-Control` covers users across deploys/cold-starts. (If you ever move to a fully
+ephemeral serverless host, front the photos with object storage for a durable shared cache.)
