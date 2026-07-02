@@ -15,6 +15,7 @@ from __future__ import annotations
 import difflib
 import re
 
+import jellyfish
 from sqlalchemy import text
 
 from neta_core.config import settings
@@ -60,7 +61,9 @@ def name_score(display_name: str, cand_name: str, normalized_name: str | None = 
     """Similarity in [0,1] between a person and a candidate name.
 
     1.00 exact normalized match · 0.90 token-subset with >=2 shared meaningful tokens ·
-    else the de-titled fuzzy ratio. Honorifics/initials/word-order are absorbed by tokenization.
+    else the de-titled Jaro-Winkler similarity (record-linkage-grade: prefix-weighted, transposition-
+    aware — better on romanized-name spelling variants than a plain LCS ratio). Honorifics/initials/
+    word-order are absorbed by tokenization.
     """
     if normalized_name and normalize_name(cand_name) == normalized_name:
         return 1.0
@@ -70,7 +73,7 @@ def name_score(display_name: str, cand_name: str, normalized_name: str | None = 
         return 0.0
     if (want <= have or have <= want) and len(want & have) >= 2:
         return 0.90
-    return difflib.SequenceMatcher(None, " ".join(sorted(want)), " ".join(sorted(have))).ratio()
+    return jellyfish.jaro_winkler_similarity(" ".join(sorted(want)), " ".join(sorted(have)))
 
 
 def best_match(cands: list[tuple[str, str]], display_name: str, normalized_name: str | None,

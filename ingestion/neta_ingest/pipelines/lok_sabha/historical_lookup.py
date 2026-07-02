@@ -148,8 +148,11 @@ def run(cycle: str, current_cycle: str = "LS2024", house: str = "ls",
             continue
 
         parsed, raw_rel = myneta.fetch_candidate(cand_id, cycle)
-        # Age corroboration for matches not anchored on the MP's own seat (global / multi-seat).
-        if source in ("global", "multiseat-win") and person.birth_year and parsed.age:
+        # Age corroboration for every sourced match (when both ages are known). Guards same-name-
+        # different-person attaches — including dynastic relatives who share a surname AND a seat, which
+        # Jaro-Winkler's prefix weighting can now lift over the same-const gate. A genuine age mismatch
+        # routes to review rather than a false attach.
+        if source in ("same-const", "global", "multiseat-win") and person.birth_year and parsed.age:
             implied = aa.cycle_year(cycle) - parsed.age
             if abs(implied - person.birth_year) > AGE_TOLERANCE_YEARS:
                 review.append({"person_id": person.id, "name": person.display_name,
