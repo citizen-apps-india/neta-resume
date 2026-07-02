@@ -8,9 +8,14 @@ Match rule (deliberately conservative — entity resolution is the highest-risk 
     same normalized_name AND a shared constituency across two different cycles.
 Same name + same seat in both elections is an extremely high-confidence match; people who changed
 seats simply won't merge (acceptable — we favour precision over recall here). See docs/entity-resolution.md.
+
+Implemented SET-BASED: instead of thousands of per-row round-trips (slow over a hosted DB), each step is a
+handful of bulk statements over a temp remap table — ~constant statement count regardless of row volume.
 """
 
 from __future__ import annotations
+
+from collections import defaultdict
 
 from sqlalchemy import text
 
@@ -28,29 +33,17 @@ _PERSON_TABLES = (
 def run(prune: bool = True) -> None:
     with session_scope() as s:
         pairs = _merge_pairs(s)
-        print(f"[merge] {len(pairs)} cross-cycle match(es) to merge")
-        merged = 0
-        for old_id, new_id in pairs:
-            # old/new may already have been merged in a chain; skip if either is gone.
-            if not _exists(s, old_id) or not _exists(s, new_id) or old_id == new_id:
-                continue
-            _merge(s, old_id, new_id)
-            merged += 1
-        switches = 0
-        for pid in _multi_cycle_persons(s):
-            switches += _detect_switches(s, pid)
+        remap = _resolve_survivors(pairs)
+        merged = _merge(s, remap)
+        switches = _detect_switches(s)
         _set_cycle_status(s)
         pruned = _prune_non_current(s) if prune else 0
-        print(f"[merge] merged {merged} person(s); {switches} switch event(s); "
+        print(f"[merge] {len(pairs)} pair(s); merged {merged} person(s); {switches} switch event(s); "
               f"pruned {pruned} non-current (prior-cycle-only) person(s)")
 
 
-def _exists(s, pid: int) -> bool:
-    return s.execute(text("SELECT 1 FROM person WHERE id = :id"), {"id": pid}).first() is not None
-
-
 def _merge_pairs(s) -> list[tuple[int, int]]:
-    """Return (old_person_id, new_person_id) pairs: same name+constituency, older cycle -> newer."""
+    """(old_person_id, new_person_id): same name+constituency, older cycle -> newer (by DATE)."""
     rows = s.execute(
         text(
             """
@@ -74,50 +67,132 @@ def _merge_pairs(s) -> list[tuple[int, int]]:
     return [(r.old_id, r.new_id) for r in rows]
 
 
-def _merge(s, old_id: int, new_id: int) -> None:
-    # The older person's affiliations become historical (avoids two "current" parties).
-    s.execute(text("UPDATE party_affiliation SET is_current = false WHERE person_id = :old"), {"old": old_id})
-    # Drop name variants that would collide with the survivor's (UNIQUE person_id,variant,source_id).
+def _resolve_survivors(pairs: list[tuple[int, int]]) -> dict[int, int]:
+    """Map each merged-away person -> its FINAL survivor.
+
+    Pairs are old->new with strictly-increasing dates, so the graph is a DAG. The survivor of a component
+    is a terminal node (one that is never on an "old" side). Walking forward from each loser to the reachable
+    terminal(s) deterministically collapses chains — including name-bridged ones the old sequential loop
+    could skip. A rare multi-terminal branch (one person continuing into two later persons) picks max() —
+    deterministic and precision-preserving (survivors are never remapped, so two survivors never fuse).
+    """
+    adj: dict[int, set[int]] = defaultdict(set)
+    olds: set[int] = set()
+    news: set[int] = set()
+    for old, new in pairs:
+        adj[old].add(new)
+        olds.add(old)
+        news.add(new)
+    terminals = news - olds  # survivors: appear as "new" but never as "old"
+
+    remap: dict[int, int] = {}
+    for loser in olds:
+        seen: set[int] = set()
+        stack = [loser]
+        reached: list[int] = []
+        while stack:
+            node = stack.pop()
+            if node in seen:
+                continue
+            seen.add(node)
+            if node in terminals:
+                reached.append(node)
+            else:
+                stack.extend(adj[node])
+        remap[loser] = max(reached)
+    return remap
+
+
+def _dedup(s, tbl: str, match: str) -> None:
+    """Delete loser-side rows that would violate {tbl}'s UNIQUE key once repointed onto the survivor.
+
+    Resolves each candidate row through the remap so it covers BOTH loser-vs-survivor and loser-vs-loser
+    collisions: keep the survivor's own row if any, else the lowest-id loser row.
+    """
     s.execute(
         text(
-            """
-            DELETE FROM person_name_variant o
-            WHERE o.person_id = :old
+            f"""
+            DELETE FROM {tbl} o
+            USING _merge_remap rm
+            WHERE o.person_id = rm.loser_id            -- only ever delete loser rows
               AND EXISTS (
-                SELECT 1 FROM person_name_variant n
-                WHERE n.person_id = :new AND n.variant = o.variant
-                  AND n.source_id IS NOT DISTINCT FROM o.source_id)
-            """
-        ),
-        {"old": old_id, "new": new_id},
-    )
-    # Drop old-side rows that would collide with the survivor's UNIQUE keys before repointing:
-    #   contact   UNIQUE(person_id, channel_type, value)   ·   news_item UNIQUE(person_id, url)
-    s.execute(
-        text("DELETE FROM contact o WHERE o.person_id = :old AND EXISTS (SELECT 1 FROM contact n "
-             "WHERE n.person_id = :new AND n.channel_type = o.channel_type AND n.value = o.value)"),
-        {"old": old_id, "new": new_id},
-    )
-    s.execute(
-        text("DELETE FROM news_item o WHERE o.person_id = :old AND EXISTS (SELECT 1 FROM news_item n "
-             "WHERE n.person_id = :new AND n.url = o.url)"),
-        {"old": old_id, "new": new_id},
-    )
-    for tbl in _PERSON_TABLES:
-        s.execute(text(f"UPDATE {tbl} SET person_id = :new WHERE person_id = :old"), {"new": new_id, "old": old_id})
-    s.execute(text("DELETE FROM person WHERE id = :old"), {"old": old_id})
-
-
-def _multi_cycle_persons(s) -> list[int]:
-    rows = s.execute(
-        text(
-            """
-            SELECT person_id FROM office_term
-            GROUP BY person_id HAVING count(DISTINCT term_cycle_id) > 1
+                SELECT 1 FROM {tbl} k
+                LEFT JOIN _merge_remap rk ON rk.loser_id = k.person_id
+                WHERE COALESCE(rk.survivor_id, k.person_id) = rm.survivor_id  -- k resolves to same survivor
+                  AND {match}
+                  AND k.id <> o.id
+                  AND (rk.loser_id IS NULL   -- k is survivor-owned -> it always wins (loser-vs-survivor)
+                       OR k.id < o.id)        -- else the lowest-id loser wins (loser-vs-loser)
+              )
             """
         )
-    ).all()
-    return [r.person_id for r in rows]
+    )
+
+
+def _merge(s, remap: dict[int, int]) -> int:
+    if not remap:
+        return 0
+    s.execute(text("CREATE TEMP TABLE _merge_remap (loser_id bigint PRIMARY KEY, survivor_id bigint NOT NULL) "
+                   "ON COMMIT DROP"))
+    s.execute(text("INSERT INTO _merge_remap (loser_id, survivor_id) VALUES (:l, :s)"),
+              [{"l": loser, "s": surv} for loser, surv in remap.items()])
+    s.execute(text("CREATE INDEX ON _merge_remap (survivor_id)"))
+
+    # Losers' affiliations become historical BEFORE repoint (party_affiliation has a partial-unique
+    # index on person_id WHERE is_current — two 'current' rows on the survivor would collide).
+    s.execute(text("UPDATE party_affiliation pa SET is_current = false "
+                   "FROM _merge_remap rm WHERE pa.person_id = rm.loser_id AND pa.is_current"))
+
+    # Drop rows that would collide on a UNIQUE key after repoint.
+    _dedup(s, "person_name_variant", "k.variant = o.variant AND k.source_id IS NOT DISTINCT FROM o.source_id")
+    _dedup(s, "contact", "k.channel_type = o.channel_type AND k.value = o.value")
+    _dedup(s, "news_item", "k.url = o.url")
+
+    for tbl in _PERSON_TABLES:
+        s.execute(text(f"UPDATE {tbl} t SET person_id = rm.survivor_id "
+                       f"FROM _merge_remap rm WHERE t.person_id = rm.loser_id"))
+    s.execute(text("DELETE FROM person p USING _merge_remap rm WHERE p.id = rm.loser_id"))
+    return len(remap)
+
+
+def _detect_switches(s) -> int:
+    """Record a party_switch_event for each change of party across a person's terms (oldest->newest by DATE).
+
+    Single windowed INSERT (LAG over each person's date-ordered terms). Skips party-NULL terms; keeps the
+    first occurrence of an A->B transition; idempotent (NOT EXISTS the existing event). The 'to' term's
+    source_ref is the narrative source; detected_from='term_diff'.
+    """
+    res = s.execute(
+        text(
+            """
+            INSERT INTO party_switch_event
+                (person_id, from_party_id, to_party_id, detected_from, narrative_source_ref_id)
+            SELECT DISTINCT ON (person_id, from_party_id, to_party_id)
+                   person_id, from_party_id, to_party_id, 'term_diff', to_source_ref_id
+            FROM (
+                SELECT ot.person_id,
+                       lag(ot.party_id) OVER w AS from_party_id,
+                       ot.party_id             AS to_party_id,
+                       ot.source_ref_id        AS to_source_ref_id,
+                       ot.id                   AS ot_id
+                FROM office_term ot
+                JOIN term_cycle tc ON tc.id = ot.term_cycle_id
+                WHERE ot.party_id IS NOT NULL
+                WINDOW w AS (PARTITION BY ot.person_id
+                             ORDER BY COALESCE(tc.start_date, DATE '2099-12-31'), tc.id, ot.id)
+            ) seq
+            WHERE from_party_id IS NOT NULL
+              AND from_party_id <> to_party_id
+              AND NOT EXISTS (
+                    SELECT 1 FROM party_switch_event e
+                    WHERE e.person_id = seq.person_id
+                      AND e.from_party_id = seq.from_party_id
+                      AND e.to_party_id = seq.to_party_id)
+            ORDER BY person_id, from_party_id, to_party_id, ot_id
+            """
+        )
+    )
+    return res.rowcount or 0
 
 
 def _set_cycle_status(s) -> None:
@@ -145,15 +220,10 @@ def _set_cycle_status(s) -> None:
 
 
 def _prune_non_current(s) -> int:
-    """Delete persons who are not currently sitting in ANY house — prior-cycle-only winners ingested
-    solely to backfill current members' history.
-
-    A person is KEPT if they hold an office term in a currently-sitting cycle: the LATEST cycle of that
-    term's OWN house (per-house max number), OR any Rajya Sabha cycle (RS is a continuous house whose
-    sitting cohort is modelled as one cycle). Per-house max is essential: cycle numbers are independent
-    across houses (RS-CURRENT is number 1; Maharashtra VS is 15), so a cross-house `max(number)` compare
-    would wrongly delete every RS member and every state/municipal member. Persons with no office term at
-    all are left untouched.
+    """Delete persons not currently sitting in ANY house — prior-cycle-only winners ingested solely to
+    backfill current members' history. KEPT if they hold a term in the LATEST cycle of that term's OWN house
+    (per-house max number — monotonic within a house) OR any Rajya Sabha cycle. Persons with no office term
+    at all are left untouched.
     """
     ids = [
         r.id
@@ -176,49 +246,12 @@ def _prune_non_current(s) -> int:
             ),
         ).all()
     ]
-    for pid in ids:
-        # criminal_case -> case_charge and affidavit -> line_item cascade on delete.
-        for tbl in ("criminal_case", "affidavit", "office_term", "cabinet_post", "role",
-                    "party_affiliation", "party_switch_event", "news_item", "contact",
-                    "person_name_variant", "source_ref"):
-            s.execute(text(f"DELETE FROM {tbl} WHERE person_id = :p"), {"p": pid})
-        s.execute(text("DELETE FROM person WHERE id = :p"), {"p": pid})
+    if not ids:
+        return 0
+    # criminal_case -> case_charge and affidavit -> line_item cascade on delete.
+    for tbl in ("criminal_case", "affidavit", "office_term", "cabinet_post", "role",
+                "party_affiliation", "party_switch_event", "news_item", "contact",
+                "person_name_variant", "source_ref"):
+        s.execute(text(f"DELETE FROM {tbl} WHERE person_id = ANY(:ids)"), {"ids": ids})
+    s.execute(text("DELETE FROM person WHERE id = ANY(:ids)"), {"ids": ids})
     return len(ids)
-
-
-def _detect_switches(s, person_id: int) -> int:
-    """Compare party across this person's office terms (oldest->newest); record switch events."""
-    terms = s.execute(
-        text(
-            """
-            SELECT tc.number AS cyc, ot.party_id, ot.source_ref_id
-            FROM office_term ot JOIN term_cycle tc ON tc.id = ot.term_cycle_id
-            WHERE ot.person_id = :pid AND ot.party_id IS NOT NULL
-            ORDER BY COALESCE(tc.start_date, DATE '2099-12-31')  -- chronological across houses, not by number
-            """
-        ),
-        {"pid": person_id},
-    ).all()
-    count = 0
-    for prev, curr in zip(terms, terms[1:]):
-        if prev.party_id != curr.party_id:
-            # idempotent: don't duplicate an already-recorded switch
-            exists = s.execute(
-                text(
-                    "SELECT 1 FROM party_switch_event WHERE person_id=:p AND from_party_id=:f AND to_party_id=:t"
-                ),
-                {"p": person_id, "f": prev.party_id, "t": curr.party_id},
-            ).first()
-            if not exists:
-                s.execute(
-                    text(
-                        """
-                        INSERT INTO party_switch_event
-                          (person_id, from_party_id, to_party_id, detected_from, narrative_source_ref_id)
-                        VALUES (:p, :f, :t, 'term_diff', :sr)
-                        """
-                    ),
-                    {"p": person_id, "f": prev.party_id, "t": curr.party_id, "sr": curr.source_ref_id},
-                )
-                count += 1
-    return count

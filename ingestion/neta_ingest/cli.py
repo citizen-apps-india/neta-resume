@@ -200,12 +200,12 @@ def fill_assembly(house: str = "mh_vs", cycle: str = "MH_VS2024") -> None:
 
 
 @app.command(name="onboard-state")
-def onboard_state(house: str,
+def onboard_state(house: str = typer.Option(..., "--house", help="registered state house code, e.g. up_vs"),
                   cycle: str = typer.Option(None, help="ingest ONLY this cycle (to chunk a large state)"),
                   backfill: bool = typer.Option(False, help="also run historical-lookup (extra recall; "
                                                 "expensive extra crawl)")) -> None:
     """Onboard a registered state assembly: ingest its cycles (myneta+fill), link across cycles + detect
-    party switches. `--house up_vs`; the state's cycles come from the elections registry."""
+    party switches. e.g. `onboard-state --house up_vs`; cycles come from the elections registry."""
     from neta_ingest.pipelines.state import onboard as p
 
     p.run(house=house, cycle=cycle, backfill=backfill)
