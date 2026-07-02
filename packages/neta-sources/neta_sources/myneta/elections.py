@@ -50,14 +50,18 @@ ASSEMBLIES: tuple[Assembly, ...] = (
     Assembly("MP_VS", "Madhya Pradesh Vidhan Sabha", "MP", (
         Cycle("MP_VS2023", 2023, "2023-12-03", None,         "https://www.myneta.info/MadhyaPradesh2023"),
         Cycle("MP_VS2018", 2018, "2018-12-11", "2023-12-02", "https://www.myneta.info/MadhyaPradesh2018"),
+        Cycle("MP_VS2013", 2013, "2013-12-08", "2018-12-10", "https://www.myneta.info/MP2013"),  # legacy slug
     )),
     Assembly("WB_VS", "West Bengal Legislative Assembly", "WB", (
-        Cycle("WB_VS2021", 2021, "2021-05-02", None,         "https://www.myneta.info/WestBengal2021"),
+        Cycle("WB_VS2026", 2026, "2026-05-02", None,         "https://www.myneta.info/WestBengal2026"),  # est. date
+        Cycle("WB_VS2021", 2021, "2021-05-02", "2026-05-01", "https://www.myneta.info/WestBengal2021"),
         Cycle("WB_VS2016", 2016, "2016-05-19", "2021-05-01", "https://www.myneta.info/WestBengal2016"),
         Cycle("WB_VS2011", 2011, "2011-05-13", "2016-05-18", "https://www.myneta.info/WestBengal2011"),
+        Cycle("WB_VS2006", 2006, "2006-05-11", "2011-05-12", "https://www.myneta.info/WB2006"),  # legacy slug
     )),
     Assembly("BR_VS", "Bihar Vidhan Sabha", "BR", (
-        Cycle("BR_VS2020", 2020, "2020-11-10", None,         "https://www.myneta.info/Bihar2020"),
+        Cycle("BR_VS2025", 2025, "2025-11-14", None,         "https://www.myneta.info/Bihar2025"),  # est. date
+        Cycle("BR_VS2020", 2020, "2020-11-10", "2025-11-13", "https://www.myneta.info/Bihar2020"),
         Cycle("BR_VS2015", 2015, "2015-11-08", "2020-11-09", "https://www.myneta.info/Bihar2015"),
     )),
     Assembly("KA_VS", "Karnataka Legislative Assembly", "KA", (
@@ -69,6 +73,7 @@ ASSEMBLIES: tuple[Assembly, ...] = (
         Cycle("RJ_VS2023", 2023, "2023-12-03", None,         "https://www.myneta.info/Rajasthan2023"),
         Cycle("RJ_VS2018", 2018, "2018-12-11", "2023-12-02", "https://www.myneta.info/Rajasthan2018"),
         Cycle("RJ_VS2013", 2013, "2013-12-08", "2018-12-10", "https://www.myneta.info/Rajasthan2013"),
+        Cycle("RJ_VS2008", 2008, "2008-12-08", "2013-12-07", "https://www.myneta.info/RJ2008"),  # legacy slug
     )),
     Assembly("GJ_VS", "Gujarat Vidhan Sabha", "GJ", (
         Cycle("GJ_VS2022", 2022, "2022-12-08", None,         "https://www.myneta.info/Gujarat2022"),
