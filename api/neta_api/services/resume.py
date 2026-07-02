@@ -90,7 +90,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
                 LEFT JOIN source_ref att_sr ON att_sr.id = ot.attendance_source_ref_id
                 LEFT JOIN source att_s ON att_s.id = att_sr.source_id
                 WHERE ot.person_id = :pid
-                ORDER BY tc.number DESC
+                ORDER BY COALESCE(tc.start_date, DATE '2099-12-31') DESC
                 """
             ),
             {"pid": person_id},
@@ -361,10 +361,10 @@ _SUMMARY_SQL = """
         FROM office_term ot
         JOIN house h ON h.id = ot.house_id
         JOIN term_cycle tc ON tc.id = ot.term_cycle_id
-        -- current term = the sitting one; fall back to the highest cycle NUMBER (NOT term_cycle_id,
-        -- which is insertion order: the LS2014/2009 cycle rows were added after LS2024).
+        -- current term = the sitting one; tie-break by most-recent DATE (cycle number isn't comparable
+        -- across houses — LS is 15–18, state assemblies use year-numbers; RS-CURRENT has no date).
         WHERE ot.person_id = p.id
-        ORDER BY (ot.status = 'sitting') DESC, tc.number DESC LIMIT 1
+        ORDER BY (ot.status = 'sitting') DESC, COALESCE(tc.start_date, DATE '2099-12-31') DESC LIMIT 1
     ) oh ON true
     LEFT JOIN LATERAL (
         SELECT total_assets FROM affidavit

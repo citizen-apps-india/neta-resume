@@ -65,7 +65,9 @@ def _merge_pairs(s) -> list[tuple[int, int]]:
             WHERE po.normalized_name = pn.normalized_name
               AND po.normalized_name <> ''
               AND o.constituency IS NOT NULL
-              AND tco.number < tcn.number
+              -- chronological by DATE, not cycle number (number isn't comparable across houses:
+              -- LS is 15–18, state assemblies use year-numbers). RS-CURRENT has no date -> treat as latest.
+              AND COALESCE(tco.start_date, DATE '2099-12-31') < COALESCE(tcn.start_date, DATE '2099-12-31')
             """
         )
     ).all()
@@ -119,14 +121,21 @@ def _multi_cycle_persons(s) -> list[int]:
 
 
 def _set_cycle_status(s) -> None:
-    """Each person's most recent term is 'sitting'; earlier terms become 'former'."""
+    """Each person's most recent term (by DATE) is 'sitting'; earlier terms become 'former'.
+
+    Ranks by start_date, NOT cycle number — number isn't comparable across houses (LS is 15–18, state
+    assemblies use year-numbers), so a person spanning houses (e.g. an MLA who became an MP) would otherwise
+    get the wrong term marked sitting. RS-CURRENT has no date -> COALESCE to a far-future sentinel so the
+    continuous current RS cohort ranks as latest.
+    """
     s.execute(
         text(
             """
             UPDATE office_term ot
-            SET status = CASE WHEN tc.number = mx.maxnum THEN 'sitting' ELSE 'former' END
+            SET status = CASE WHEN COALESCE(tc.start_date, DATE '2099-12-31') = mx.maxd
+                              THEN 'sitting' ELSE 'former' END
             FROM term_cycle tc,
-                 (SELECT ot2.person_id, max(tc2.number) AS maxnum
+                 (SELECT ot2.person_id, max(COALESCE(tc2.start_date, DATE '2099-12-31')) AS maxd
                   FROM office_term ot2 JOIN term_cycle tc2 ON tc2.id = ot2.term_cycle_id
                   GROUP BY ot2.person_id) mx
             WHERE ot.term_cycle_id = tc.id AND mx.person_id = ot.person_id
@@ -185,7 +194,7 @@ def _detect_switches(s, person_id: int) -> int:
             SELECT tc.number AS cyc, ot.party_id, ot.source_ref_id
             FROM office_term ot JOIN term_cycle tc ON tc.id = ot.term_cycle_id
             WHERE ot.person_id = :pid AND ot.party_id IS NOT NULL
-            ORDER BY tc.number
+            ORDER BY COALESCE(tc.start_date, DATE '2099-12-31')  -- chronological across houses, not by number
             """
         ),
         {"pid": person_id},
