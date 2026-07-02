@@ -44,6 +44,7 @@ ASSEMBLIES: tuple[Assembly, ...] = (
         Cycle("TN_VS2021", 2021, "2021-05-02", None,         "https://www.myneta.info/TamilNadu2021"),
         Cycle("TN_VS2016", 2016, "2016-05-19", "2021-05-01", "https://www.myneta.info/TamilNadu2016"),
         Cycle("TN_VS2011", 2011, "2011-05-13", "2016-05-18", "https://www.myneta.info/TamilNadu2011"),
+        Cycle("TN_VS2006", 2006, "2006-05-13", "2011-05-12", "https://www.myneta.info/TN2006"),  # legacy slug
     )),
     # Batch 1 — the largest remaining states (URLs verified live; 2013-era gaps omitted, not faked).
     Assembly("MP_VS", "Madhya Pradesh Vidhan Sabha", "MP", (
