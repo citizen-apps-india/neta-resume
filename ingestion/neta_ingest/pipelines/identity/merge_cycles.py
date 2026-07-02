@@ -143,10 +143,18 @@ def _merge(s, remap: dict[int, int]) -> int:
     s.execute(text("UPDATE party_affiliation pa SET is_current = false "
                    "FROM _merge_remap rm WHERE pa.person_id = rm.loser_id AND pa.is_current"))
 
-    # Drop rows that would collide on a UNIQUE key after repoint.
+    # Drop rows that would collide on a UNIQUE key after repoint. Each match mirrors that table's UNIQUE
+    # (person_id, …) natural key, so we keep exactly one row (survivor's, else lowest-id loser's). The
+    # office_term case is real: within a cycle, myneta + fill-assembly can each mint a person for the same
+    # (cycle, constituency) winner, and merging both onto the survivor would duplicate (cycle, constituency).
     _dedup(s, "person_name_variant", "k.variant = o.variant AND k.source_id IS NOT DISTINCT FROM o.source_id")
     _dedup(s, "contact", "k.channel_type = o.channel_type AND k.value = o.value")
     _dedup(s, "news_item", "k.url = o.url")
+    _dedup(s, "office_term",
+           "k.term_cycle_id = o.term_cycle_id AND k.constituency IS NOT DISTINCT FROM o.constituency")
+    _dedup(s, "affidavit", "k.election_cycle = o.election_cycle AND k.source_ref_id = o.source_ref_id")
+    _dedup(s, "role", "k.role_type = o.role_type AND k.body IS NOT DISTINCT FROM o.body "
+                      "AND k.start_date IS NOT DISTINCT FROM o.start_date")
 
     for tbl in _PERSON_TABLES:
         s.execute(text(f"UPDATE {tbl} t SET person_id = rm.survivor_id "
