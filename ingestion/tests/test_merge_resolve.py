@@ -37,3 +37,14 @@ def test_disjoint_components():
 
 def test_empty():
     assert _resolve_survivors([]) == {}
+
+
+def test_pure_cycle_is_skipped_not_crash():
+    # Two same-named different people with crossed seats form a 2-cycle reaching no terminal —
+    # ambiguous, so neither is merged (and max([]) must not crash).
+    assert _resolve_survivors([(1, 2), (2, 1)]) == {}
+
+
+def test_cycle_with_an_exit_resolves_to_the_terminal():
+    # A cycle 1<->2 that also reaches a real terminal 3 still collapses onto 3.
+    assert _resolve_survivors([(1, 2), (2, 1), (2, 3)]) == {1: 3, 2: 3}
