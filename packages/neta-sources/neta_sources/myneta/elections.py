@@ -80,6 +80,112 @@ ASSEMBLIES: tuple[Assembly, ...] = (
         Cycle("GJ_VS2017", 2017, "2017-12-18", "2022-12-07", "https://www.myneta.info/Gujarat2017"),
         Cycle("GJ_VS2012", 2012, "2012-12-20", "2017-12-17", "https://www.myneta.info/Gujarat2012"),
     )),
+    # Batch 2 — all remaining states/UTs (recent cycles; every MyNeta URL verified live).
+    Assembly("AP_VS", "Andhra Pradesh Legislative Assembly", "AP", (
+        Cycle("AP_VS2024", 2024, "2024-06-04", None, "https://www.myneta.info/AndhraPradesh2024"),
+        Cycle("AP_VS2019", 2019, "2019-05-23", "2024-06-04", "https://www.myneta.info/AndhraPradesh2019"),
+    )),
+    Assembly("TG_VS", "Telangana Legislative Assembly", "TG", (
+        Cycle("TG_VS2023", 2023, "2023-12-03", None, "https://www.myneta.info/Telangana2023"),
+        Cycle("TG_VS2018", 2018, "2018-12-11", "2023-12-03", "https://www.myneta.info/Telangana2018"),
+        Cycle("TG_VS2014", 2014, "2014-05-16", "2018-12-11", "https://www.myneta.info/Telangana2014"),
+    )),
+    Assembly("KL_VS", "Kerala Legislative Assembly", "KL", (
+        Cycle("KL_VS2021", 2021, "2021-05-02", None, "https://www.myneta.info/Kerala2021"),
+        Cycle("KL_VS2016", 2016, "2016-05-19", "2021-05-02", "https://www.myneta.info/Kerala2016"),
+        Cycle("KL_VS2011", 2011, "2011-05-13", "2016-05-19", "https://www.myneta.info/Kerala2011"),
+    )),
+    Assembly("OD_VS", "Odisha Legislative Assembly", "OD", (
+        Cycle("OD_VS2024", 2024, "2024-06-04", None, "https://www.myneta.info/Odisha2024"),
+        Cycle("OD_VS2019", 2019, "2019-05-23", "2024-06-04", "https://www.myneta.info/Odisha2019"),
+        Cycle("OD_VS2014", 2014, "2014-05-16", "2019-05-23", "https://www.myneta.info/Odisha2014"),
+    )),
+    Assembly("AS_VS", "Assam Legislative Assembly", "AS", (
+        Cycle("AS_VS2021", 2021, "2021-05-02", None, "https://www.myneta.info/Assam2021"),
+        Cycle("AS_VS2016", 2016, "2016-05-19", "2021-05-02", "https://www.myneta.info/Assam2016"),
+        Cycle("AS_VS2011", 2011, "2011-05-13", "2016-05-19", "https://www.myneta.info/Assam2011"),
+    )),
+    Assembly("PB_VS", "Punjab Legislative Assembly", "PB", (
+        Cycle("PB_VS2022", 2022, "2022-03-10", None, "https://www.myneta.info/Punjab2022"),
+        Cycle("PB_VS2017", 2017, "2017-03-11", "2022-03-10", "https://www.myneta.info/Punjab2017"),
+        Cycle("PB_VS2012", 2012, "2012-03-06", "2017-03-11", "https://www.myneta.info/PB2012"),
+    )),
+    Assembly("HR_VS", "Haryana Legislative Assembly", "HR", (
+        Cycle("HR_VS2024", 2024, "2024-10-08", None, "https://www.myneta.info/Haryana2024"),
+        Cycle("HR_VS2019", 2019, "2019-10-24", "2024-10-08", "https://www.myneta.info/Haryana2019"),
+        Cycle("HR_VS2014", 2014, "2014-10-19", "2019-10-24", "https://www.myneta.info/Haryana2014"),
+    )),
+    Assembly("JH_VS", "Jharkhand Legislative Assembly", "JH", (
+        Cycle("JH_VS2024", 2024, "2024-11-23", None, "https://www.myneta.info/Jharkhand2024"),
+        Cycle("JH_VS2019", 2019, "2019-12-23", "2024-11-23", "https://www.myneta.info/Jharkhand2019"),
+        Cycle("JH_VS2014", 2014, "2014-12-23", "2019-12-23", "https://www.myneta.info/Jharkhand2014"),
+    )),
+    Assembly("CG_VS", "Chhattisgarh Legislative Assembly", "CG", (
+        Cycle("CG_VS2023", 2023, "2023-12-03", None, "https://www.myneta.info/Chhattisgarh2023"),
+        Cycle("CG_VS2018", 2018, "2018-12-11", "2023-12-03", "https://www.myneta.info/Chhattisgarh2018"),
+        Cycle("CG_VS2013", 2013, "2013-12-08", "2018-12-11", "https://www.myneta.info/Chhattisgarh2013"),
+    )),
+    Assembly("DL_VS", "Delhi Legislative Assembly", "DL", (
+        Cycle("DL_VS2025", 2025, "2025-02-08", None, "https://www.myneta.info/Delhi2025"),
+        Cycle("DL_VS2020", 2020, "2020-02-11", "2025-02-08", "https://www.myneta.info/Delhi2020"),
+        Cycle("DL_VS2015", 2015, "2015-02-10", "2020-02-11", "https://www.myneta.info/Delhi2015"),
+    )),
+    Assembly("HP_VS", "Himachal Pradesh Legislative Assembly", "HP", (
+        Cycle("HP_VS2022", 2022, "2022-12-08", None, "https://www.myneta.info/HimachalPradesh2022"),
+        Cycle("HP_VS2017", 2017, "2017-12-18", "2022-12-08", "https://www.myneta.info/HimachalPradesh2017"),
+        Cycle("HP_VS2012", 2012, "2012-12-20", "2017-12-18", "https://www.myneta.info/HP2012"),
+    )),
+    Assembly("UK_VS", "Uttarakhand Legislative Assembly", "UK", (
+        Cycle("UK_VS2022", 2022, "2022-03-10", None, "https://www.myneta.info/Uttarakhand2022"),
+        Cycle("UK_VS2017", 2017, "2017-03-11", "2022-03-10", "https://www.myneta.info/Uttarakhand2017"),
+    )),
+    Assembly("TR_VS", "Tripura Legislative Assembly", "TR", (
+        Cycle("TR_VS2023", 2023, "2023-03-02", None, "https://www.myneta.info/Tripura2023"),
+        Cycle("TR_VS2018", 2018, "2018-03-03", "2023-03-02", "https://www.myneta.info/Tripura2018"),
+        Cycle("TR_VS2013", 2013, "2013-02-28", "2018-03-03", "https://www.myneta.info/Tripura2013"),
+    )),
+    Assembly("ML_VS", "Meghalaya Legislative Assembly", "ML", (
+        Cycle("ML_VS2023", 2023, "2023-03-02", None, "https://www.myneta.info/Meghalaya2023"),
+        Cycle("ML_VS2018", 2018, "2018-03-03", "2023-03-02", "https://www.myneta.info/Meghalaya2018"),
+        Cycle("ML_VS2013", 2013, "2013-02-28", "2018-03-03", "https://www.myneta.info/Meghalaya2013"),
+    )),
+    Assembly("MN_VS", "Manipur Legislative Assembly", "MN", (
+        Cycle("MN_VS2022", 2022, "2022-03-10", None, "https://www.myneta.info/Manipur2022"),
+        Cycle("MN_VS2017", 2017, "2017-03-11", "2022-03-10", "https://www.myneta.info/Manipur2017"),
+        Cycle("MN_VS2012", 2012, "2012-03-06", "2017-03-11", "https://www.myneta.info/Manipur2012"),
+    )),
+    Assembly("GA_VS", "Goa Legislative Assembly", "GA", (
+        Cycle("GA_VS2022", 2022, "2022-03-10", None, "https://www.myneta.info/Goa2022"),
+        Cycle("GA_VS2017", 2017, "2017-03-11", "2022-03-10", "https://www.myneta.info/Goa2017"),
+        Cycle("GA_VS2012", 2012, "2012-03-06", "2017-03-11", "https://www.myneta.info/Goa2012"),
+    )),
+    Assembly("NL_VS", "Nagaland Legislative Assembly", "NL", (
+        Cycle("NL_VS2023", 2023, "2023-03-02", None, "https://www.myneta.info/Nagaland2023"),
+        Cycle("NL_VS2018", 2018, "2018-03-03", "2023-03-02", "https://www.myneta.info/Nagaland2018"),
+        Cycle("NL_VS2013", 2013, "2013-02-28", "2018-03-03", "https://www.myneta.info/Nagaland2013"),
+    )),
+    Assembly("AR_VS", "Arunachal Pradesh Legislative Assembly", "AR", (
+        Cycle("AR_VS2024", 2024, "2024-06-02", None, "https://www.myneta.info/ArunachalPradesh2024"),
+        Cycle("AR_VS2019", 2019, "2019-05-23", "2024-06-02", "https://www.myneta.info/ArunachalPradesh2019"),
+    )),
+    Assembly("MZ_VS", "Mizoram Legislative Assembly", "MZ", (
+        Cycle("MZ_VS2023", 2023, "2023-12-04", None, "https://www.myneta.info/Mizoram2023"),
+        Cycle("MZ_VS2018", 2018, "2018-12-11", "2023-12-04", "https://www.myneta.info/Mizoram2018"),
+        Cycle("MZ_VS2013", 2013, "2013-12-09", "2018-12-11", "https://www.myneta.info/Mizoram2013"),
+    )),
+    Assembly("SK_VS", "Sikkim Legislative Assembly", "SK", (
+        Cycle("SK_VS2024", 2024, "2024-06-02", None, "https://www.myneta.info/Sikkim2024"),
+        Cycle("SK_VS2019", 2019, "2019-05-23", "2024-06-02", "https://www.myneta.info/Sikkim2019"),
+        Cycle("SK_VS2014", 2014, "2014-05-16", "2019-05-23", "https://www.myneta.info/Sikkim2014"),
+    )),
+    Assembly("PY_VS", "Puducherry Legislative Assembly", "PY", (
+        Cycle("PY_VS2021", 2021, "2021-05-02", None, "https://www.myneta.info/Puducherry2021"),
+        Cycle("PY_VS2016", 2016, "2016-05-19", "2021-05-02", "https://www.myneta.info/Puducherry2016"),
+        Cycle("PY_VS2011", 2011, "2011-05-13", "2016-05-19", "https://www.myneta.info/Puducherry2011"),
+    )),
+    Assembly("JK_VS", "Jammu and Kashmir Legislative Assembly", "JK", (
+        Cycle("JK_VS2024", 2024, "2024-10-08", None, "https://www.myneta.info/JammuKashmir2024"),
+    )),
 )
 
 
