@@ -223,6 +223,17 @@ def onboard_pending(minutes: int = typer.Option(300, help="time budget: onboard 
     p.run_pending(minutes=minutes, backfill=backfill)
 
 
+@app.command(name="rollout")
+def rollout(minutes: int = typer.Option(270, help="time budget per invocation (fits under the 6h job cap "
+                                        "with headroom); the onboard-driver cron re-invokes to continue")
+            ) -> None:
+    """Self-driving rollout: base-onboard every state with no data yet (breadth), then backfill each older
+    cycle (depth, tracked in pipeline_progress). Idempotent + resumable — the onboard-driver workflow calls
+    this to complete the whole national rollout entirely in GitHub Actions (no laptop needed)."""
+    from neta_ingest.pipelines.state import onboard as p
+    p.run_rollout(minutes=minutes)
+
+
 @app.command(name="party-switch")
 def party_switch() -> None:
     """Diff office_term party across cycles -> party_affiliation + party_switch_event."""

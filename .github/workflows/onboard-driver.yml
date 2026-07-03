@@ -27,5 +27,5 @@ jobs:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v3
       - run: uv sync
-      - name: Onboard pending state assemblies (base, breadth pass)
-        run: uv run neta onboard-pending --minutes 300
+      - name: Rollout — breadth (base onboard) then depth (backfill), resumable
+        run: uv run neta rollout --minutes 270

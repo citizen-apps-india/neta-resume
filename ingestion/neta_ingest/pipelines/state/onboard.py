@@ -88,3 +88,64 @@ def run_pending(minutes: int = 300, backfill: bool = False) -> None:
         except Exception as e:  # noqa: BLE001 — never let one bad state stall the rollout
             print(f"[onboard-pending] WARN {a.house_code} failed: {e!r} — continuing.")
     print(f"[onboard-pending] no pending state houses left ({done} onboarded this run).")
+
+
+def _pp_done(task: str) -> bool:
+    from sqlalchemy import text
+
+    from neta_core.db.engine import session_scope
+    with session_scope() as s:
+        return s.execute(text("SELECT 1 FROM pipeline_progress WHERE task = :t"), {"t": task}).first() is not None
+
+
+def _pp_mark(task: str) -> None:
+    from sqlalchemy import text
+
+    from neta_core.db.engine import session_scope
+    with session_scope() as s:
+        s.execute(text("INSERT INTO pipeline_progress (task) VALUES (:t) ON CONFLICT DO NOTHING"), {"t": task})
+
+
+def run_rollout(minutes: int = 270) -> None:
+    """Self-driving, two-phase rollout for the `onboard-driver` cron — no laptop in the loop.
+
+    Phase 1 (breadth): base-onboard every registered state house that has no data yet — fast current
+    rosters + multi-cycle wealth trends for all states first. Phase 2 (depth), reached only once every
+    house has base data: run historical-lookup for each older cycle, recording a 'backfill:<cycle>' marker
+    in pipeline_progress so it's skipped on re-run. Deadline-guarded before every unit and resumable across
+    the cron's time-boxed jobs; a failing unit is logged and skipped, never stalling the rollout."""
+    import time
+
+    deadline = time.monotonic() + minutes * 60
+
+    # Phase 1 — breadth (base onboard).
+    for a in elections.ASSEMBLIES:
+        if time.monotonic() >= deadline:
+            print("[rollout] budget hit during breadth phase; the driver will continue.")
+            return
+        if _house_has_terms(a.house_code):
+            continue
+        print(f"[rollout] breadth: base-onboard {a.house_code}…")
+        try:
+            run(house=a.house_code, backfill=False)
+        except Exception as e:  # noqa: BLE001
+            print(f"[rollout] WARN base {a.house_code} failed: {e!r} — continuing.")
+
+    # Phase 2 — depth (historical backfill per older cycle). Only meaningful once every house has base data.
+    for a in elections.ASSEMBLIES:
+        cycles = sorted(a.cycles, key=lambda c: c.number)   # oldest -> newest
+        latest = cycles[-1].eci_id
+        for older in cycles[:-1]:
+            if time.monotonic() >= deadline:
+                print("[rollout] budget hit during backfill phase; the driver will continue.")
+                return
+            task = f"backfill:{older.eci_id}"
+            if _pp_done(task):
+                continue
+            print(f"[rollout] depth: historical-lookup {older.eci_id} (house {a.house_code})…")
+            try:
+                historical_lookup.run(cycle=older.eci_id, current_cycle=latest, house=a.house_code)
+                _pp_mark(task)
+            except Exception as e:  # noqa: BLE001
+                print(f"[rollout] WARN backfill {older.eci_id} failed: {e!r} — continuing.")
+    print("[rollout] nothing pending — breadth + backfill complete.")
