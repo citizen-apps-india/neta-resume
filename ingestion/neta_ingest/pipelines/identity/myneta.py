@@ -164,9 +164,14 @@ def _persist_candidate(s, c: ParsedCandidate, *, cycle: str, house: str, raw_rel
     # state inline; state-assembly and municipal pages put the district/ward in that slot instead (the
     # election is one state/city), so for those we stamp the house's own state rather than the parsed value.
     house_meta = s.execute(
-        text("SELECT jurisdiction, state_code FROM house WHERE id = :hid"), {"hid": house_id}
+        text("SELECT jurisdiction, state_code, name FROM house WHERE id = :hid"), {"hid": house_id}
     ).one()
-    if house_meta.jurisdiction in ("state", "municipal"):
+    if house_meta.jurisdiction == "state":
+        # The whole election is one state; MyNeta puts the DISTRICT in the state slot. Derive the state
+        # from the house name ("Odisha Legislative Assembly" -> "Odisha") — robust for every state, vs. a
+        # code map that silently fell back to the district whenever a state_code wasn't listed.
+        seat_state = re.sub(r"\s+(Vidhan Sabha|Legislative Assembly)$", "", house_meta.name).strip()
+    elif house_meta.jurisdiction == "municipal":
         seat_state = _STATE_CODE_TO_NAME.get(house_meta.state_code) or c.state
     else:
         seat_state = c.state
