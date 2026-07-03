@@ -70,11 +70,14 @@ def _merge_pairs(s) -> list[tuple[int, int]]:
 def _resolve_survivors(pairs: list[tuple[int, int]]) -> dict[int, int]:
     """Map each merged-away person -> its FINAL survivor.
 
-    Pairs are old->new with strictly-increasing dates, so the graph is a DAG. The survivor of a component
-    is a terminal node (one that is never on an "old" side). Walking forward from each loser to the reachable
-    terminal(s) deterministically collapses chains — including name-bridged ones the old sequential loop
-    could skip. A rare multi-terminal branch (one person continuing into two later persons) picks max() —
-    deterministic and precision-preserving (survivors are never remapped, so two survivors never fuse).
+    Pairs are old->new by strictly-increasing DATE, so a single edge never inverts time. The survivor of a
+    component is a terminal node (never on an "old" side); walking forward from each loser to the reachable
+    terminal(s) collapses chains — including name-bridged ones — and picks max() among them.
+
+    The graph is *mostly* a DAG but not guaranteed: two different people who share a common normalized name
+    and each contested TWO seats across cycles can form a cycle (A->B via one seat, B->A via the other, each
+    edge time-valid). A node inside such a cycle reaches NO terminal — that's a mutually-ambiguous match, so
+    we leave it un-merged (precision over recall) rather than max() over an empty set.
     """
     adj: dict[int, set[int]] = defaultdict(set)
     olds: set[int] = set()
@@ -99,7 +102,8 @@ def _resolve_survivors(pairs: list[tuple[int, int]]) -> dict[int, int]:
                 reached.append(node)
             else:
                 stack.extend(adj[node])
-        remap[loser] = max(reached)
+        if reached:                 # empty => loser is in an ambiguous cycle; skip (do not merge)
+            remap[loser] = max(reached)
     return remap
 
 
