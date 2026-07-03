@@ -29,6 +29,7 @@ export function ThemeToggle() {
         return (
           <button
             key={t}
+            className="seg"
             onClick={() => apply(t)}
             aria-pressed={active}
             style={{

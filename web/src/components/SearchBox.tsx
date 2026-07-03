@@ -19,6 +19,7 @@ export function SearchBox({
   function submit(e: React.FormEvent) {
     e.preventDefault();
     const v = q.trim();
+    window.dispatchEvent(new Event("nr:nav")); // show the top progress bar for this programmatic push
     router.push(v.length >= 2 ? `/directory?q=${encodeURIComponent(v)}` : "/directory");
   }
 

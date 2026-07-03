@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import type { ReactNode } from "react";
+import { Suspense, type ReactNode } from "react";
 import { Footer } from "@/components/Footer";
+import { RouteProgress } from "@/components/RouteProgress";
 import "./globals.css";
 
 // Canonical site URL for metadata / OG / canonical links. Defaults to the custom domain (NOT Vercel's
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <script dangerouslySetInnerHTML={{ __html: themeInit }} />
       </head>
       <body className="scroll">
+        <Suspense fallback={null}><RouteProgress /></Suspense>
         {children}
         <Footer />
       </body>

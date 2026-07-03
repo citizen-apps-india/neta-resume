@@ -25,6 +25,7 @@ export function ProfileTabs({ resume }: { resume: PersonResume }) {
             return (
               <button
                 key={t}
+                className="seg"
                 onClick={() => setTab(t)}
                 style={{
                   fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 13.5, fontWeight: 600, padding: "14px clamp(11px,3vw,18px)",
