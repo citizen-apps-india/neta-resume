@@ -30,7 +30,7 @@ export function HeaderNav() {
       </nav>
 
       <button
-        className="nr-nav-burger"
+        className="nr-nav-burger tap"
         aria-label="Menu"
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}

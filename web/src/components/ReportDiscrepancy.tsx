@@ -28,9 +28,11 @@ export function ReportDiscrepancyButton({
   label?: string;
 }) {
   const [open, setOpen] = useState(false);
+  const [formLoaded, setFormLoaded] = useState(false);
 
   useEffect(() => {
     if (!open) return;
+    setFormLoaded(false); // show the spinner until the embedded form finishes loading
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -96,22 +98,30 @@ export function ReportDiscrepancyButton({
               <button
                 type="button"
                 aria-label="Close"
+                className="tap"
                 onClick={() => setOpen(false)}
                 style={{
                   border: "none", background: "transparent", color: "var(--ink2)", fontSize: 22,
-                  lineHeight: 1, cursor: "pointer", padding: 4,
+                  lineHeight: 1, cursor: "pointer", padding: 4, borderRadius: 6,
                 }}
               >
                 ×
               </button>
             </div>
-            <iframe
-              title="Report a discrepancy"
-              src={embedUrl(prefill)}
-              style={{ width: "100%", height: "70vh", border: "none", background: "var(--card)" }}
-            >
-              Loading…
-            </iframe>
+            <div style={{ position: "relative", height: "70vh" }}>
+              {!formLoaded && (
+                <div style={{ position: "absolute", inset: 0, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: 12, background: "var(--card)" }}>
+                  <span className="spinner" aria-hidden />
+                  <span className="mono" style={{ fontSize: 11, color: "var(--muted)", letterSpacing: "0.05em" }}>LOADING FORM…</span>
+                </div>
+              )}
+              <iframe
+                title="Report a discrepancy"
+                src={embedUrl(prefill)}
+                onLoad={() => setFormLoaded(true)}
+                style={{ width: "100%", height: "100%", border: "none", background: "var(--card)" }}
+              />
+            </div>
           </div>
         </div>
       )}
