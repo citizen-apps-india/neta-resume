@@ -1,12 +1,15 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { type PersonSummary } from "@/lib/api";
 import { DirectoryCard } from "@/components/DirectoryCard";
+import { LegislatorTable } from "@/components/LegislatorTable";
+import { Hemicycle } from "@/components/Hemicycle";
 
 type Scope = "all" | "ls" | "rs" | "state" | "municipal" | "election";
 type Sort = "assets" | "cases" | "attendance" | "name";
 type CaseFilter = "any" | "with" | "clean" | "heinous" | "serious" | "minor";
+type ViewMode = "cards" | "table" | "hemicycle";
 
 const PAGE = 60;
 
@@ -47,6 +50,23 @@ export function LegislatorBrowser({
   const [caseFilter, setCaseFilter] = useState<CaseFilter>("any");
   const [sort, setSort] = useState<Sort>("assets");
   const [visible, setVisible] = useState(PAGE);
+
+  // View mode (cards | table | hemicycle) — only offered on the Lok Sabha / Rajya Sabha pages, where the
+  // seat total is fixed. Remembered across visits via localStorage (mirrors ThemeToggle).
+  const [view, setView] = useState<ViewMode>("cards");
+  const isHouse = scope === "ls" || scope === "rs";
+  const effView: ViewMode = isHouse ? view : "cards";
+  useEffect(() => {
+    if (!isHouse) return;
+    try {
+      const saved = localStorage.getItem("nr-view");
+      if (saved === "cards" || saved === "table" || saved === "hemicycle") setView(saved);
+    } catch { /* ignore */ }
+  }, [isHouse]);
+  function chooseView(v: ViewMode) {
+    setView(v);
+    try { localStorage.setItem("nr-view", v); } catch { /* ignore */ }
+  }
 
   // Party options present in this dataset, with counts, most-common first.
   const parties = useMemo(() => {
@@ -188,12 +208,38 @@ export function LegislatorBrowser({
           <option value="minor">Minor</option>
         </select>
 
-        <select aria-label="Sort by" value={sort} onChange={(e) => setSort(e.target.value as Sort)} style={selectStyle}>
-          <option value="assets">Sort: Assets ↓</option>
-          <option value="cases">Sort: Cases ↓</option>
-          <option value="attendance">Sort: Attendance ↓</option>
-          <option value="name">Sort: Name A–Z</option>
-        </select>
+        {effView !== "hemicycle" && (
+          <select aria-label="Sort by" value={sort} onChange={(e) => setSort(e.target.value as Sort)} style={selectStyle}>
+            <option value="assets">Sort: Assets ↓</option>
+            <option value="cases">Sort: Cases ↓</option>
+            <option value="attendance">Sort: Attendance ↓</option>
+            <option value="name">Sort: Name A–Z</option>
+          </select>
+        )}
+
+        {isHouse && (
+          <div role="group" aria-label="View mode" style={{ display: "flex", marginLeft: "auto", border: "1px solid var(--border)", borderRadius: 9, overflow: "hidden", padding: 3, gap: 3, background: "var(--card)" }}>
+            {(([["cards", "Cards"], ["table", "Table"], ["hemicycle", "Seats"]]) as [ViewMode, string][]).map(([v, label]) => {
+              const active = effView === v;
+              return (
+                <button
+                  key={v}
+                  type="button"
+                  onClick={() => chooseView(v)}
+                  aria-pressed={active}
+                  style={{
+                    fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 12, fontWeight: 600, padding: "6px 13px",
+                    border: "none", borderRadius: 6, cursor: "pointer",
+                    background: active ? "var(--btn-bg)" : "transparent",
+                    color: active ? "var(--btn-fg)" : "var(--ink2)",
+                  }}
+                >
+                  {label}
+                </button>
+              );
+            })}
+          </div>
+        )}
       </div>
 
       {/* count */}
@@ -202,24 +248,30 @@ export function LegislatorBrowser({
           <strong className="mono" style={{ color: "var(--ink)" }}>{filtered.length.toLocaleString("en-IN")}</strong>{" "}
           {filtered.length === 1 ? "legislator" : "legislators"}
         </span>
-        {shown.length < filtered.length && (
+        {effView !== "hemicycle" && shown.length < filtered.length && (
           <span className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>SHOWING {shown.length}</span>
         )}
       </div>
 
-      {/* grid */}
+      {/* results */}
       <div style={{ padding: "clamp(14px,4vw,22px)", background: "var(--bg)" }}>
-        {filtered.length === 0 ? (
+        {effView === "hemicycle" ? (
+          <Hemicycle members={people} activeIds={new Set(filtered.map((p) => p.id))} scope={scope as "ls" | "rs"} />
+        ) : filtered.length === 0 ? (
           <div style={{ padding: "48px 24px", textAlign: "center", color: "var(--muted)", fontSize: 14 }}>
             No legislators match these filters.
           </div>
         ) : (
           <>
-            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 270px), 1fr))", gap: 16, alignItems: "stretch" }}>
-              {shown.map((p) => (
-                <DirectoryCard key={p.id} p={p} />
-              ))}
-            </div>
+            {effView === "table" ? (
+              <LegislatorTable rows={shown} scope={scope as "ls" | "rs"} sort={sort} onSort={setSort} />
+            ) : (
+              <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 270px), 1fr))", gap: 16, alignItems: "stretch" }}>
+                {shown.map((p) => (
+                  <DirectoryCard key={p.id} p={p} />
+                ))}
+              </div>
+            )}
             {shown.length < filtered.length && (
               <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
                 <button
