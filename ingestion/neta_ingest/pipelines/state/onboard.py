@@ -52,3 +52,39 @@ def run(house: str, cycle: str | None = None, backfill: bool = False) -> None:
             historical_lookup.run(cycle=c.eci_id, current_cycle=latest, house=house)
     print(f"[onboard:{house}] done — {a.name}: {len(cycles)} cycle(s)"
           f"{' + historical backfill' if backfill else ''}.")
+
+
+def _house_has_terms(house: str) -> bool:
+    from sqlalchemy import text
+
+    from neta_core.db.engine import session_scope
+    with session_scope() as s:
+        return s.execute(
+            text("SELECT 1 FROM office_term ot JOIN term_cycle tc ON tc.id = ot.term_cycle_id "
+                 "JOIN house h ON h.id = tc.house_id WHERE h.code = :c LIMIT 1"),
+            {"c": house},
+        ).first() is not None
+
+
+def run_pending(minutes: int = 300, backfill: bool = False) -> None:
+    """Onboard every registered state house that has no office_term yet, one at a time, until `minutes`
+    elapses or none remain. Idempotent + resumable: the scheduled `onboard-driver` workflow re-invokes this
+    to continue after each time-boxed run, so the whole rollout finishes with NO laptop in the loop. One
+    failing state is logged and skipped, never stalling the queue."""
+    import time
+
+    deadline = time.monotonic() + minutes * 60
+    done = 0
+    for a in elections.ASSEMBLIES:
+        if time.monotonic() >= deadline:
+            print(f"[onboard-pending] time budget hit after {done} state(s); the driver will continue.")
+            return
+        if _house_has_terms(a.house_code):
+            continue
+        print(f"[onboard-pending] {a.house_code} has no data yet — onboarding (base)…")
+        try:
+            run(house=a.house_code, backfill=backfill)
+            done += 1
+        except Exception as e:  # noqa: BLE001 — never let one bad state stall the rollout
+            print(f"[onboard-pending] WARN {a.house_code} failed: {e!r} — continuing.")
+    print(f"[onboard-pending] no pending state houses left ({done} onboarded this run).")

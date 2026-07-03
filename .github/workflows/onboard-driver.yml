@@ -1,0 +1,31 @@
+name: onboard-driver
+
+# Cloud-side dispatcher for the state-assembly rollout — self-drives with NO laptop in the loop.
+# Each run onboards every registered state house that has no data yet (base pipeline), one at a time,
+# until a ~5h budget; the cron re-invokes to continue where it left off. Shares the `ingest` concurrency
+# group so it never writes Neon alongside another ingest run. Idempotent + resumable.
+#
+# Temporary: once every state has data (onboard-pending is a no-op), delete this workflow (or leave it —
+# it just no-ops each tick). The deeper `--backfill` "double-down" pass is run separately, state by state.
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "*/20 * * * *"   # every 20 min: continue the rollout until all registered states have data
+
+concurrency:
+  group: ingest              # same guard as ingest.yml — one Neon writer at a time
+  cancel-in-progress: false
+
+jobs:
+  drive:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350      # < GitHub's 6h cap; onboard-pending stops itself at --minutes 300
+    env:
+      NETA_DATABASE_URL: ${{ secrets.NETA_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync
+      - name: Onboard pending state assemblies (base, breadth pass)
+        run: uv run neta onboard-pending --minutes 300

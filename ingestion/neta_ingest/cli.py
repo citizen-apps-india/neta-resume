@@ -211,6 +211,18 @@ def onboard_state(house: str = typer.Option(..., "--house", help="registered sta
     p.run(house=house, cycle=cycle, backfill=backfill)
 
 
+@app.command(name="onboard-pending")
+def onboard_pending(minutes: int = typer.Option(300, help="time budget: onboard un-onboarded state houses "
+                                                "until this many minutes elapse (fits under the 6h job cap)"),
+                    backfill: bool = typer.Option(False, help="also run historical-lookup per older cycle")
+                    ) -> None:
+    """Onboard every registered state house with no data yet (base), one at a time, within a time budget.
+    Idempotent + resumable — the scheduled onboard-driver workflow calls this to self-drive the rollout
+    entirely on GitHub (no laptop dispatcher needed)."""
+    from neta_ingest.pipelines.state import onboard as p
+    p.run_pending(minutes=minutes, backfill=backfill)
+
+
 @app.command(name="party-switch")
 def party_switch() -> None:
     """Diff office_term party across cycles -> party_affiliation + party_switch_event."""
