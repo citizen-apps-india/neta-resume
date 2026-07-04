@@ -23,7 +23,7 @@ async function resolveFeatured(): Promise<Featured> {
     if (Number.isFinite(lat) && Number.isFinite(lng)) {
       const pc = pointToConstituency(lat, lng);
       if (pc) {
-        const m = await listPersons({ constituency: pc, limit: 1 });
+        const { items: m } = await listPersons({ constituency: pc, limit: 1 });
         if (m[0]) return { id: m[0].id, lead: "Your area’s MP", place: titleCase(m[0].constituency ?? pc), precise: true };
       }
     }
@@ -31,7 +31,7 @@ async function resolveFeatured(): Promise<Featured> {
     const region = h.get("x-vercel-ip-country-region");
     const state = region ? REGION_TO_STATE[region.toUpperCase()] : undefined;
     if (state) {
-      const list = await listPersons({ state, limit: 80 });
+      const { items: list } = await listPersons({ state, limit: 80 });
       const ls = list.filter((p) => p.current_house === "Lok Sabha");
       const pool = ls.length ? ls : list;
       if (pool.length) {

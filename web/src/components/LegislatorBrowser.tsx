@@ -1,14 +1,12 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { type PersonSummary } from "@/lib/api";
+import { useEffect, useRef, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { type PersonSummary, type Facets } from "@/lib/api";
+import { type BrowseFilters } from "@/lib/browse";
 import { DirectoryCard } from "@/components/DirectoryCard";
 
 type Scope = "all" | "ls" | "rs" | "state" | "municipal" | "election";
-type Sort = "assets" | "cases" | "attendance" | "name";
-type CaseFilter = "any" | "with" | "clean" | "heinous" | "serious" | "minor";
-
-const PAGE = 60;
 
 /** "MAHARASHTRA" / "tamil nadu" → "Maharashtra" / "Tamil Nadu" for the state dropdown labels. */
 const titleCase = (s: string) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
@@ -20,86 +18,59 @@ const selectStyle: React.CSSProperties = {
 };
 
 /**
- * Client-side directory engine: instant search + filter + sort over the full in-memory list for a scope.
- * The dataset (a few hundred per house) is small enough to filter in the browser — no per-keystroke API
- * calls. Used by the Lok Sabha, Rajya Sabha and Directory pages (each passes its own people + scope).
+ * URL-driven browse engine: filter / sort / search / page all live in the query string, and the server
+ * renders the matching ~60-row slice (so no giant client payload). Every control writes to the URL and
+ * navigates; the loading bar + skeletons give feedback. Dropdown options come from `facets` (the client no
+ * longer holds the full dataset). Used by the Lok Sabha, Rajya Sabha, Directory, State and Municipal pages.
  */
 export function LegislatorBrowser({
   people,
   scope,
-  initialQuery = "",
-  defaultState,
-  defaultCorporation,
+  facets,
+  total,
+  page,
+  pageSize,
+  filters,
 }: {
   people: PersonSummary[];
   scope: Scope;
-  initialQuery?: string;
-  defaultState?: string;
-  defaultCorporation?: string;
+  facets: Facets;
+  total: number;
+  page: number;
+  pageSize: number;
+  filters: BrowseFilters;
 }) {
-  const [q, setQ] = useState(initialQuery);
-  const [party, setParty] = useState("");
-  const [house, setHouse] = useState(""); // only used when scope === "all"
-  // State Level opens pre-filtered to one state (e.g. Maharashtra); other scopes ignore this.
-  const [state, setState] = useState(scope === "state" ? (defaultState ?? "") : "");
-  // Municipal opens pre-filtered to one corporation (keyed on current_house, e.g. "Delhi MCD").
-  const [corporation, setCorporation] = useState(scope === "municipal" ? (defaultCorporation ?? "") : "");
-  const [caseFilter, setCaseFilter] = useState<CaseFilter>("any");
-  const [sort, setSort] = useState<Sort>("assets");
-  const [visible, setVisible] = useState(PAGE);
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
 
-  // Party options present in this dataset, with counts, most-common first.
-  const parties = useMemo(() => {
-    const counts = new Map<string, number>();
-    for (const p of people) if (p.current_party) counts.set(p.current_party, (counts.get(p.current_party) ?? 0) + 1);
-    return [...counts.entries()].sort((a, b) => b[1] - a[1]);
-  }, [people]);
+  /** Apply query-param updates and navigate. Resets to page 1 unless `keepPage` (used by Prev/Next). */
+  function navigate(updates: Record<string, string | null>, keepPage = false) {
+    const params = new URLSearchParams(searchParams.toString());
+    for (const [k, v] of Object.entries(updates)) {
+      if (v === null || v === "") params.delete(k);
+      else params.set(k, v);
+    }
+    if (!keepPage) params.delete("page");
+    window.dispatchEvent(new Event("nr:nav"));
+    const qs = params.toString();
+    router.push(qs ? `${pathname}?${qs}` : pathname);
+  }
 
-  // State options present in this dataset (for the State Level page), alphabetical.
-  const states = useMemo(() => {
-    const set = new Set<string>();
-    for (const p of people) if (p.state) set.add(p.state);
-    return [...set].sort();
-  }, [people]);
+  // Search: controlled locally, debounced into the URL so we don't navigate on every keystroke.
+  const [q, setQ] = useState(filters.q);
+  useEffect(() => setQ(filters.q), [filters.q]);
+  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  function onSearch(v: string) {
+    setQ(v);
+    if (timer.current) clearTimeout(timer.current);
+    timer.current = setTimeout(() => navigate({ q: v.trim() || null }), 350);
+  }
+  useEffect(() => () => { if (timer.current) clearTimeout(timer.current); }, []);
 
-  // Corporation options present in this dataset (for the Municipal page), keyed on current_house.
-  const corporations = useMemo(() => {
-    const set = new Set<string>();
-    for (const p of people) if (p.current_house) set.add(p.current_house);
-    return [...set].sort();
-  }, [people]);
-
-  const filtered = useMemo(() => {
-    const needle = q.trim().toLowerCase();
-    let out = people.filter((p) => {
-      if (scope === "all" && house && p.current_house !== house) return false;
-      if (scope === "state" && state && p.state !== state) return false;
-      if (scope === "municipal" && corporation && p.current_house !== corporation) return false;
-      if (party && p.current_party !== party) return false;
-      if (caseFilter === "with" && p.total_cases <= 0) return false;
-      if (caseFilter === "clean" && p.total_cases > 0) return false;
-      if ((caseFilter === "heinous" || caseFilter === "serious" || caseFilter === "minor") && p.top_severity !== caseFilter)
-        return false;
-      if (needle) {
-        const hay = `${p.display_name} ${p.native_name ?? ""} ${p.current_party ?? ""} ${p.constituency ?? ""}`.toLowerCase();
-        if (!hay.includes(needle)) return false;
-      }
-      return true;
-    });
-    out = [...out].sort((a, b) => {
-      switch (sort) {
-        case "cases": return (b.total_cases ?? 0) - (a.total_cases ?? 0);
-        case "attendance": return (b.current_attendance_pct ?? -1) - (a.current_attendance_pct ?? -1);
-        case "name": return a.display_name.localeCompare(b.display_name);
-        default: return (b.net_assets ?? -1) - (a.net_assets ?? -1); // assets desc, nulls last
-      }
-    });
-    return out;
-  }, [people, scope, q, party, house, state, corporation, caseFilter, sort]);
-
-  // Reset the visible window whenever the result set changes.
-  const shown = filtered.slice(0, visible);
-  function resetAnd(fn: () => void) { fn(); setVisible(PAGE); }
+  const totalPages = Math.max(1, Math.ceil(total / pageSize));
+  const from = total === 0 ? 0 : (page - 1) * pageSize + 1;
+  const to = Math.min(page * pageSize, total);
 
   return (
     <div style={{ border: "1px solid var(--border)", borderRadius: 14, overflow: "hidden", background: "var(--bg)", boxShadow: "0 24px 60px -32px var(--shadow)" }}>
@@ -112,17 +83,17 @@ export function LegislatorBrowser({
           <select
             id="state-select"
             aria-label="State"
-            value={state}
-            onChange={(e) => resetAnd(() => setState(e.target.value))}
+            value={filters.state}
+            onChange={(e) => navigate({ state: e.target.value || null })}
             style={{ ...selectStyle, fontSize: 16, fontWeight: 600, padding: "11px 16px", minWidth: 220, flex: "0 1 320px" }}
           >
             <option value="">All states</option>
-            {states.map((s) => (
-              <option key={s} value={s}>{titleCase(s)}</option>
+            {facets.states.map((s) => (
+              <option key={s.value} value={s.value}>{titleCase(s.value)} ({s.count})</option>
             ))}
           </select>
           <span style={{ fontSize: 12.5, color: "var(--accent-soft-fg)" }}>
-            {states.length === 1 ? "More states coming soon" : `${states.length} states available`}
+            {facets.states.length === 1 ? "More states coming soon" : `${facets.states.length} states available`}
           </span>
         </div>
       )}
@@ -136,17 +107,17 @@ export function LegislatorBrowser({
           <select
             id="corp-select"
             aria-label="Corporation"
-            value={corporation}
-            onChange={(e) => resetAnd(() => setCorporation(e.target.value))}
+            value={filters.corporation}
+            onChange={(e) => navigate({ corporation: e.target.value || null })}
             style={{ ...selectStyle, fontSize: 16, fontWeight: 600, padding: "11px 16px", minWidth: 220, flex: "0 1 320px" }}
           >
             <option value="">All corporations</option>
-            {corporations.map((c) => (
-              <option key={c} value={c}>{c}</option>
+            {facets.houses.map((c) => (
+              <option key={c.value} value={c.value}>{c.value} ({c.count})</option>
             ))}
           </select>
           <span style={{ fontSize: 12.5, color: "var(--accent-soft-fg)" }}>
-            {corporations.length === 1 ? "More corporations coming soon" : `${corporations.length} corporations available`}
+            {facets.houses.length === 1 ? "More corporations coming soon" : `${facets.houses.length} corporations available`}
           </span>
         </div>
       )}
@@ -157,7 +128,7 @@ export function LegislatorBrowser({
           <span style={{ color: "var(--faint)", fontSize: 14 }}>⌕</span>
           <input
             value={q}
-            onChange={(e) => resetAnd(() => setQ(e.target.value))}
+            onChange={(e) => onSearch(e.target.value)}
             placeholder="Search name, party or constituency…"
             aria-label="Search this list"
             style={{ border: "none", outline: "none", background: "transparent", fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 13.5, color: "var(--ink)", width: "100%" }}
@@ -165,21 +136,21 @@ export function LegislatorBrowser({
         </div>
 
         {scope === "all" && (
-          <select aria-label="House" value={house} onChange={(e) => resetAnd(() => setHouse(e.target.value))} style={selectStyle}>
+          <select aria-label="House" value={filters.house} onChange={(e) => navigate({ house: e.target.value || null })} style={selectStyle}>
             <option value="">All houses</option>
             <option value="Lok Sabha">Lok Sabha</option>
             <option value="Rajya Sabha">Rajya Sabha</option>
           </select>
         )}
 
-        <select aria-label="Party" value={party} onChange={(e) => resetAnd(() => setParty(e.target.value))} style={selectStyle}>
+        <select aria-label="Party" value={filters.party} onChange={(e) => navigate({ party: e.target.value || null })} style={selectStyle}>
           <option value="">All parties</option>
-          {parties.map(([name, n]) => (
-            <option key={name} value={name}>{name} ({n})</option>
+          {facets.parties.map((p) => (
+            <option key={p.value} value={p.value}>{p.value} ({p.count})</option>
           ))}
         </select>
 
-        <select aria-label="Criminal cases" value={caseFilter} onChange={(e) => resetAnd(() => setCaseFilter(e.target.value as CaseFilter))} style={selectStyle}>
+        <select aria-label="Criminal cases" value={filters.cases} onChange={(e) => navigate({ cases: e.target.value === "any" ? null : e.target.value })} style={selectStyle}>
           <option value="any">Any cases</option>
           <option value="with">With cases</option>
           <option value="clean">No cases</option>
@@ -188,7 +159,7 @@ export function LegislatorBrowser({
           <option value="minor">Minor</option>
         </select>
 
-        <select aria-label="Sort by" value={sort} onChange={(e) => setSort(e.target.value as Sort)} style={selectStyle}>
+        <select aria-label="Sort by" value={filters.sort} onChange={(e) => navigate({ sort: e.target.value === "assets" ? null : e.target.value })} style={selectStyle}>
           <option value="assets">Sort: Assets ↓</option>
           <option value="cases">Sort: Cases ↓</option>
           <option value="attendance">Sort: Attendance ↓</option>
@@ -199,36 +170,51 @@ export function LegislatorBrowser({
       {/* count */}
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "12px 22px", background: "var(--sunken)", borderBottom: "1px solid var(--rule)" }}>
         <span style={{ fontSize: 12.5, color: "var(--muted)" }}>
-          <strong className="mono" style={{ color: "var(--ink)" }}>{filtered.length.toLocaleString("en-IN")}</strong>{" "}
-          {filtered.length === 1 ? "legislator" : "legislators"}
+          <strong className="mono" style={{ color: "var(--ink)" }}>{total.toLocaleString("en-IN")}</strong>{" "}
+          {total === 1 ? "legislator" : "legislators"}
         </span>
-        {shown.length < filtered.length && (
-          <span className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>SHOWING {shown.length}</span>
+        {total > 0 && (
+          <span className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>
+            SHOWING {from.toLocaleString("en-IN")}–{to.toLocaleString("en-IN")}
+          </span>
         )}
       </div>
 
       {/* grid */}
       <div style={{ padding: "clamp(14px,4vw,22px)", background: "var(--bg)" }}>
-        {filtered.length === 0 ? (
+        {people.length === 0 ? (
           <div style={{ padding: "48px 24px", textAlign: "center", color: "var(--muted)", fontSize: 14 }}>
             No legislators match these filters.
           </div>
         ) : (
           <>
             <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 270px), 1fr))", gap: 16, alignItems: "stretch" }}>
-              {shown.map((p) => (
+              {people.map((p) => (
                 <DirectoryCard key={p.id} p={p} />
               ))}
             </div>
-            {shown.length < filtered.length && (
-              <div style={{ display: "flex", justifyContent: "center", marginTop: 24 }}>
+            {totalPages > 1 && (
+              <div style={{ display: "flex", justifyContent: "center", alignItems: "center", gap: 14, marginTop: 24 }}>
                 <button
                   type="button"
                   className="btnGhost"
-                  onClick={() => setVisible((v) => v + PAGE)}
-                  style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 13, fontWeight: 600, padding: "10px 22px", borderRadius: 9, border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)", cursor: "pointer" }}
+                  disabled={page <= 1}
+                  onClick={() => navigate({ page: String(page - 1) }, true)}
+                  style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 13, fontWeight: 600, padding: "9px 18px", borderRadius: 9, border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)", cursor: "pointer" }}
                 >
-                  Show more ({(filtered.length - shown.length).toLocaleString("en-IN")} more)
+                  ← Prev
+                </button>
+                <span className="mono" style={{ fontSize: 12, color: "var(--muted)", whiteSpace: "nowrap" }}>
+                  Page {page.toLocaleString("en-IN")} of {totalPages.toLocaleString("en-IN")}
+                </span>
+                <button
+                  type="button"
+                  className="btnGhost"
+                  disabled={page >= totalPages}
+                  onClick={() => navigate({ page: String(page + 1) }, true)}
+                  style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 13, fontWeight: 600, padding: "9px 18px", borderRadius: 9, border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)", cursor: "pointer" }}
+                >
+                  Next →
                 </button>
               </div>
             )}

@@ -1,25 +1,21 @@
 import { BrowseShell } from "@/components/BrowseShell";
-import { listPersons, type PersonSummary } from "@/lib/api";
+import { loadBrowse } from "@/lib/browse";
 
 export const dynamic = "force-dynamic";
 export const metadata = { title: "Municipal", description: "Municipal corporation members — the sourced public record of India’s city-level elected representatives." };
 
-export default async function MunicipalPage() {
-  let people: PersonSummary[] = [];
-  let error = false;
-  try {
-    people = await listPersons({ limit: 10000, jurisdiction: "municipal", revalidate: 0 });
-  } catch {
-    error = true;
-  }
+export default async function MunicipalPage({
+  searchParams,
+}: {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+}) {
+  const data = await loadBrowse(await searchParams, { base: { jurisdiction: "municipal" } });
   return (
     <BrowseShell
       title="Municipal"
-      intro="Elected members of India's municipal bodies — starting with the Municipal Corporation of Delhi (MCD). Pick a corporation, then filter by party or criminal record and sort by declared wealth or cases. Local bodies aren't covered by attendance records, so that field reads '—'; wealth, cases and party still apply."
-      people={people}
+      intro="Elected members of India's municipal bodies. Pick a corporation or browse them all, then filter by party or criminal record and sort by declared wealth or cases. Local bodies aren't covered by attendance records, so that field reads '—'; wealth, cases and party still apply."
       scope="municipal"
-      error={error}
-      defaultCorporation="Delhi MCD"
+      {...data}
     />
   );
 }

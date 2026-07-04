@@ -1,27 +1,23 @@
 import { SiteHeader } from "@/components/SiteHeader";
 import { LegislatorBrowser } from "@/components/LegislatorBrowser";
-import { type PersonSummary } from "@/lib/api";
+import { type BrowseData } from "@/lib/browse";
 
-/** Page chrome shared by the Lok Sabha / Rajya Sabha / Directory browse pages. */
+type Scope = "all" | "ls" | "rs" | "state" | "municipal" | "election";
+
+/** Page chrome shared by the Lok Sabha / Rajya Sabha / Directory / State / Municipal browse pages.
+ *  Spreads the server-loaded {@link BrowseData} (page slice + total + facets + current filters) down. */
 export function BrowseShell({
   title,
   intro,
-  people,
   scope,
+  people,
+  total,
+  facets,
+  page,
+  pageSize,
+  filters,
   error,
-  initialQuery = "",
-  defaultState,
-  defaultCorporation,
-}: {
-  title: string;
-  intro: string;
-  people: PersonSummary[];
-  scope: "all" | "ls" | "rs" | "state" | "municipal" | "election";
-  error: boolean;
-  initialQuery?: string;
-  defaultState?: string;
-  defaultCorporation?: string;
-}) {
+}: { title: string; intro: string; scope: Scope } & BrowseData) {
   return (
     <>
       <SiteHeader />
@@ -35,7 +31,15 @@ export function BrowseShell({
             The API isn&rsquo;t reachable right now. Please try again shortly.
           </div>
         ) : (
-          <LegislatorBrowser people={people} scope={scope} initialQuery={initialQuery} defaultState={defaultState} defaultCorporation={defaultCorporation} />
+          <LegislatorBrowser
+            people={people}
+            scope={scope}
+            facets={facets}
+            total={total}
+            page={page}
+            pageSize={pageSize}
+            filters={filters}
+          />
         )}
       </main>
     </>

@@ -1,5 +1,5 @@
 import { BrowseShell } from "@/components/BrowseShell";
-import { listPersons, type PersonSummary } from "@/lib/api";
+import { loadBrowse } from "@/lib/browse";
 
 export const dynamic = "force-dynamic";
 
@@ -13,24 +13,15 @@ export const metadata = {
 export default async function Directory({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; house?: string }>;
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
-  const { q } = await searchParams;
-  let people: PersonSummary[] = [];
-  let error = false;
-  try {
-    people = await listPersons({ limit: 10000 });
-  } catch {
-    error = true;
-  }
+  const data = await loadBrowse(await searchParams);
   return (
     <BrowseShell
       title="Directory"
-      intro="Every legislator on file, across both houses. Search by name, party or constituency, then filter by party or criminal record and sort by wealth, cases or attendance. Any two people are comparable at a glance."
-      people={people}
+      intro="Every legislator on file, across both houses and the state assemblies. Search by name, party or constituency, then filter by party or criminal record and sort by wealth, cases or attendance. Any two people are comparable at a glance."
       scope="all"
-      error={error}
-      initialQuery={q ?? ""}
+      {...data}
     />
   );
 }

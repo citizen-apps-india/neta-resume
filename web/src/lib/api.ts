@@ -30,12 +30,13 @@ export async function getPersonResume(id: number): Promise<PersonResume | null> 
   return res.json();
 }
 
-export function listPersons(
-  opts: {
-    limit?: number; offset?: number; house?: string; state?: string;
-    constituency?: string; jurisdiction?: string; revalidate?: number;
-  } = {},
-): Promise<PersonSummary[]> {
+export type ListPersonsOpts = {
+  limit?: number; offset?: number; house?: string; state?: string; constituency?: string;
+  jurisdiction?: string; party?: string; cases?: string; q?: string; sort?: string; revalidate?: number;
+};
+
+/** A page of legislators plus the total count of matches (from the X-Total-Count header) for paging. */
+export async function listPersons(opts: ListPersonsOpts = {}): Promise<{ items: PersonSummary[]; total: number }> {
   const q = new URLSearchParams();
   q.set("limit", String(opts.limit ?? 60));
   q.set("offset", String(opts.offset ?? 0));
@@ -43,7 +44,28 @@ export function listPersons(
   if (opts.state) q.set("state", opts.state);
   if (opts.constituency) q.set("constituency", opts.constituency);
   if (opts.jurisdiction) q.set("jurisdiction", opts.jurisdiction);
-  return getJSON<PersonSummary[]>(`/persons?${q.toString()}`, opts.revalidate ?? 3600);
+  if (opts.party) q.set("party", opts.party);
+  if (opts.cases) q.set("cases", opts.cases);
+  if (opts.q) q.set("q", opts.q);
+  if (opts.sort) q.set("sort", opts.sort);
+  const res = await fetch(`${API_BASE}/persons?${q.toString()}`, { next: { revalidate: opts.revalidate ?? 3600 } });
+  if (!res.ok) throw new Error(`API ${res.status} for /persons`);
+  const items = (await res.json()) as PersonSummary[];
+  const total = Number(res.headers.get("x-total-count") ?? items.length);
+  return { items, total };
+}
+
+/** Dropdown option lists (party / state / house, each with a count) for a browse scope. */
+export type FacetCount = { value: string; count: number };
+export type Facets = { parties: FacetCount[]; states: FacetCount[]; houses: FacetCount[] };
+export function getFacets(
+  opts: { house?: string; state?: string; jurisdiction?: string } = {},
+): Promise<Facets> {
+  const q = new URLSearchParams();
+  if (opts.house) q.set("house", opts.house);
+  if (opts.state) q.set("state", opts.state);
+  if (opts.jurisdiction) q.set("jurisdiction", opts.jurisdiction);
+  return getJSON<Facets>(`/persons/facets?${q.toString()}`, 3600);
 }
 
 export function searchPersons(q: string): Promise<PersonSummary[]> {

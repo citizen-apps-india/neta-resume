@@ -23,7 +23,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   let people: PersonSummary[] = [];
   try {
-    people = await listPersons({ limit: 6000 });
+    people = (await listPersons({ limit: 6000 })).items;
   } catch {
     return staticRoutes;
   }
