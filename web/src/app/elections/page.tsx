@@ -4,7 +4,7 @@ import { getElections, type Election } from "@/lib/api";
 import { pretty, year } from "@/lib/format";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Elections" };
+export const metadata = { title: "Elections", description: "Indian elections and their winners — Lok Sabha, Rajya Sabha and state assemblies — with sourced candidate records and results." };
 
 const LEVEL_LABEL: Record<string, string> = { national: "National", state: "State", municipal: "Municipal" };
 

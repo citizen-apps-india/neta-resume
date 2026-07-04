@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getPersonResume, photoSrc, type PersonResume } from "@/lib/api";
@@ -8,6 +9,37 @@ import { ProfileTabs } from "@/components/resume/ProfileTabs";
 import { ReportDiscrepancyButton } from "@/components/ReportDiscrepancy";
 
 export const dynamic = "force-dynamic";
+
+const SITE = "https://neta-resume.app";
+
+/** The current party for a resume: the flagged-current affiliation, else the latest term's party. */
+function currentPartyOf(r: PersonResume): string | null {
+  return r.party_history?.find((p) => p.is_current)?.party ?? r.office_terms[0]?.party ?? null;
+}
+
+// Per-legislator title + description so an exact full-name search resolves to this page (the layout title
+// template renders it as "<name> — <party>, <house> · Neta·Resume", name first).
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const r = await getPersonResume(Number(id)).catch(() => null);
+  if (!r) return { title: "Legislator not found", robots: { index: false, follow: true } };
+  const lead = r.office_terms[0];
+  const party = currentPartyOf(r);
+  const suffix = [party, lead?.house].filter(Boolean).join(", ");
+  const title = suffix ? `${r.display_name} — ${suffix}` : r.display_name;
+  const where = lead?.constituency ? ` (${lead.constituency})` : "";
+  const description =
+    `${r.display_name}${where}: declared assets, criminal cases, party switches, attendance and full ` +
+    `career — every fact sourced to the Election Commission. Free public record on Neta·Resume.`;
+  const canonical = `/person/${id}`;
+  return {
+    title,
+    description,
+    alternates: { canonical },
+    openGraph: { title: `${title} · Neta·Resume`, description, url: `${SITE}${canonical}`, type: "profile" },
+    twitter: { card: "summary_large_image", title: `${title} · Neta·Resume`, description },
+  };
+}
 
 export default async function PersonPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
@@ -40,10 +72,23 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
     { label: "Party labels held", src: "PUBLIC RECORD", value: String(parties.size), color: "var(--ink)", dot: "" },
   ];
 
-  const url = `neta-resume.in / mp / ${slug(resume.display_name)}`;
+  const url = `neta-resume.app / person / ${slug(resume.display_name)}`;
+
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: resume.display_name,
+    ...(resume.native_name ? { alternateName: resume.native_name } : {}),
+    ...(lead?.house ? { jobTitle: `Member of ${lead.house}` } : {}),
+    ...(currentParty ? { affiliation: { "@type": "Organization", name: currentParty } } : {}),
+    ...(lead?.constituency ? { homeLocation: { "@type": "Place", name: lead.constituency } } : {}),
+    ...(photoSrc(resume.id, resume.photo_url) ? { image: photoSrc(resume.id, resume.photo_url) } : {}),
+    url: `${SITE}/person/${resume.id}`,
+  };
 
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
       <main style={{ maxWidth: 1080, margin: "0 auto", padding: "24px clamp(14px,4vw,28px) 72px", width: "100%" }}>
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 12, marginBottom: 16 }}>

@@ -2,7 +2,7 @@ import { BrowseShell } from "@/components/BrowseShell";
 import { listPersons, type PersonSummary } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "State Level" };
+export const metadata = { title: "State Level", description: "Members of India’s state legislative assemblies (MLAs) — declared assets, criminal cases and party history, sourced and comparable, state by state." };
 
 export default async function StateLevelPage() {
   let people: PersonSummary[] = [];

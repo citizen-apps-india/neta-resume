@@ -2,7 +2,7 @@ import { BrowseShell } from "@/components/BrowseShell";
 import { listPersons, type PersonSummary } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
-export const metadata = { title: "Rajya Sabha" };
+export const metadata = { title: "Rajya Sabha", description: "Every sitting Rajya Sabha MP — party, state represented, attendance and full career, from the public record. Search and compare." };
 
 export default async function RajyaSabhaPage() {
   let people: PersonSummary[] = [];

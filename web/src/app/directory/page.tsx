@@ -3,6 +3,13 @@ import { listPersons, type PersonSummary } from "@/lib/api";
 
 export const dynamic = "force-dynamic";
 
+export const metadata = {
+  title: "Directory",
+  description:
+    "Search every Indian legislator — MPs and MLAs — by name, party or constituency. Declared wealth, " +
+    "criminal cases, party switches and career, each fact sourced to the Election Commission.",
+};
+
 export default async function Directory({
   searchParams,
 }: {

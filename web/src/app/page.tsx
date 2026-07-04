@@ -31,8 +31,33 @@ export default async function Home() {
     { num: "100%", label: "Sourced to public records" },
   ];
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        name: "Neta·Resume",
+        url: "https://neta-resume.app",
+        description:
+          "The sourced public record of every Indian legislator — wealth, criminal cases, party switches and career.",
+        potentialAction: {
+          "@type": "SearchAction",
+          target: "https://neta-resume.app/directory?q={search_term_string}",
+          "query-input": "required name=search_term_string",
+        },
+      },
+      {
+        "@type": "Organization",
+        name: "Neta·Resume",
+        url: "https://neta-resume.app",
+        logo: "https://neta-resume.app/logo.svg",
+      },
+    ],
+  };
+
   return (
     <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
       <SiteHeader />
 
       {/* hero */}
