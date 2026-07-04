@@ -182,3 +182,17 @@ Table case_charge {
   section_id bigint [ref: > legal_section.id]
   raw_section_text text
 }
+
+Table person_merge_candidate {
+  id bigint [pk]
+  person_lo bigint [ref: > person.id]  // min(id); ON DELETE SET NULL
+  person_hi bigint [ref: > person.id]  // max(id); ON DELETE SET NULL
+  score numeric
+  band text            // auto_merge | review | reject
+  evidence jsonb       // per-signal breakdown + {"pair":[lo,hi]}
+  rule_version text
+  status text          // pending | accepted | rejected | auto_merged
+  decided_by text
+  decided_at timestamptz
+  indexes { (person_lo, person_hi) [unique] }
+}

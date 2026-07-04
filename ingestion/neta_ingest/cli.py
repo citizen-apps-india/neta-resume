@@ -98,10 +98,55 @@ def relatives(cycle: str = typer.Option(None, help="limit to one cycle (e.g. LS2
 
 @app.command(name="derive-signals")
 def derive_signals() -> None:
-    """Refresh person identity match-features (home_state, father_name, spouse_name) from affidavit/terms."""
+    """Refresh person identity match-features (home_state, relative_name) from affidavit/office_term."""
     from neta_ingest.pipelines.identity import derive_identity_signals as p
 
     p.run()
+
+
+@app.command(name="stitch-identities")
+def stitch_identities(dry_run: bool = typer.Option(False, "--dry-run", help="score + report, no merges"),
+                      limit: int = typer.Option(0, help="cap candidate pairs (0 = all)")) -> None:
+    """Cross-house identity stitcher: (auto-)merge the same human across houses; queue the rest for review."""
+    from neta_ingest.pipelines.identity import stitch_identities as p
+
+    p.run(dry_run=dry_run, limit=limit)
+
+
+review_app = typer.Typer(help="Review the cross-house merge queue (person_merge_candidate).")
+app.add_typer(review_app, name="review")
+
+
+@review_app.command("list")
+def review_list(limit: int = 30) -> None:
+    """List pending merge candidates, highest score first."""
+    from neta_ingest.pipelines.identity import review
+
+    review.list_pending(limit=limit)
+
+
+@review_app.command("show")
+def review_show(candidate_id: int) -> None:
+    """Show both persons' terms + the per-signal evidence for one candidate."""
+    from neta_ingest.pipelines.identity import review
+
+    review.show(candidate_id)
+
+
+@review_app.command("accept")
+def review_accept(candidate_id: int, by: str = "cli") -> None:
+    """Accept a candidate -> merge the two persons."""
+    from neta_ingest.pipelines.identity import review
+
+    review.accept(candidate_id, by=by)
+
+
+@review_app.command("reject")
+def review_reject(candidate_id: int, by: str = "cli", reason: str = "") -> None:
+    """Reject a candidate -> suppress it from future proposals."""
+    from neta_ingest.pipelines.identity import review
+
+    review.reject(candidate_id, by=by, reason=reason or None)
 
 
 @app.command(name="enrich-missing")

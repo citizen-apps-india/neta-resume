@@ -221,3 +221,16 @@ IPC and BNS alike).
 
 `case_charge(criminal_case_id, section_id, raw_section_text)` — IPC/BNS sections on a case (many per case);
 `section_id` FK→legal_section (nullable until resolved); `raw_section_text` as scraped; cascades on case delete.
+
+### `person_merge_candidate` — cross-house identity-stitcher review queue + audit (added in 0022)
+| Column | Type | Notes |
+|---|---|---|
+| `person_lo` / `person_hi` | bigint FK→person (ON DELETE SET NULL) | the proposed-merge pair, ordered min/max; a side nulls out when merged away (audit survives via `evidence.pair`) |
+| `score` | numeric | 0..1 from `stitch_score.score_person_pair` |
+| `band` | text | `auto_merge` \| `review` \| `reject` |
+| `evidence` | jsonb | per-signal breakdown (name/relative/birth/state/party/gender) + `pair` + vetoes |
+| `rule_version` | text | scorer version (`stitch-v1`); a `rejected` pair is re-proposed only if this changes |
+| `status` | text | `pending` (awaiting review) \| `accepted` \| `rejected` (suppressed) \| `auto_merged` |
+| `decided_by` / `decided_at` | text / timestamptz | `auto` for auto-merges, else the reviewer |
+
+Populated by `neta stitch-identities`; reviewed via `neta review list|show|accept|reject`.
