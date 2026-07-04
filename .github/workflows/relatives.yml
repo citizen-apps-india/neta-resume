@@ -1,0 +1,31 @@
+name: relatives-backfill
+
+# Cloud-side re-crawl of MyNeta candidate pages to backfill affidavit.relative_name (the S/o|D/o|W/o
+# relative — the key disambiguation signal for cross-house identity stitching). Polite (~1 req/s),
+# idempotent, resumable: each run processes affidavits still missing a relative until a time budget,
+# and the cron re-invokes to continue. Self-limiting — once every affidavit is filled, ticks no-op.
+# Shares the `ingest` concurrency group so it never writes Neon alongside another ingest run.
+#
+# Requires migrations 0020/0021 applied first (migrate.yml). Enable this workflow to run the backfill.
+
+on:
+  workflow_dispatch: {}
+  schedule:
+    - cron: "*/20 * * * *"   # every 20 min: continue the re-crawl until all affidavits carry a relative
+
+concurrency:
+  group: ingest              # one Neon writer at a time (same guard as ingest.yml)
+  cancel-in-progress: false
+
+jobs:
+  backfill:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350      # < GitHub's 6h cap; the pipeline stops itself at --minutes 270
+    env:
+      NETA_DATABASE_URL: ${{ secrets.NETA_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync
+      - name: Re-crawl MyNeta for affidavit relatives (resumable, polite)
+        run: uv run neta relatives --minutes 270

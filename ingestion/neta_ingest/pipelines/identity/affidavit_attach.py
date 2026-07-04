@@ -138,13 +138,16 @@ def write_affidavit(s, c: ParsedCandidate, person_id: int, candidate_id: str, ra
         """
         INSERT INTO affidavit
           (person_id, source_ref_id, election_cycle, house_id, filed_year, age, education,
-           total_assets, total_liabilities, movable_assets, immovable_assets, self_income, income_year, raw_url)
-        VALUES (:pid,:sr,:cycle,:hid,:fy,:age,:edu,:assets,:liab,:mov,:immov,:income,:iyear,:url)
+           total_assets, total_liabilities, movable_assets, immovable_assets, self_income, income_year,
+           raw_url, relative_name, relation_type)
+        VALUES (:pid,:sr,:cycle,:hid,:fy,:age,:edu,:assets,:liab,:mov,:immov,:income,:iyear,
+                :url,:relname,:reltype)
         RETURNING id
         """,
         pid=person_id, sr=source_ref_id, cycle=cycle, hid=house_id, fy=filed_year, age=c.age,
         edu=c.education, assets=c.total_assets, liab=c.total_liabilities, mov=c.movable_assets,
         immov=c.immovable_assets, income=c.self_income, iyear=c.income_year, url=source_url,
+        relname=c.relative_name, reltype=c.relation_type,
     )
     for case in c.criminal_cases:
         severities = [

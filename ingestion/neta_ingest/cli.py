@@ -85,6 +85,25 @@ def resolve() -> None:
     p.run()
 
 
+@app.command()
+def relatives(cycle: str = typer.Option(None, help="limit to one cycle (e.g. LS2024, MH_VS_2024)"),
+              minutes: float = typer.Option(None, help="time budget before exiting (resumable)"),
+              limit: int = typer.Option(0, help="cap pages this run (0 = all pending)")) -> None:
+    """Re-crawl MyNeta to backfill each affidavit's relative (S/o father / W/o spouse) — the key
+    disambiguation signal for cross-house identity stitching. Idempotent + resumable + polite."""
+    from neta_ingest.pipelines.identity import relatives_backfill as p
+
+    p.run(cycle=cycle, minutes=minutes, limit=limit)
+
+
+@app.command(name="derive-signals")
+def derive_signals() -> None:
+    """Refresh person identity match-features (home_state, father_name, spouse_name) from affidavit/terms."""
+    from neta_ingest.pipelines.identity import derive_identity_signals as p
+
+    p.run()
+
+
 @app.command(name="enrich-missing")
 def enrich_missing(cycle: str = "LS2024") -> None:
     """Backfill affidavit data for LS members MyNeta omitted from its winners list (per-constituency)."""
