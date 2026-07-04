@@ -10,7 +10,7 @@ export default async function StateLevelPage() {
   try {
     // revalidate: 0 — always reflect the live API (this list is small and changes rarely; avoids any
     // stale full-directory response getting cached during an API deploy).
-    people = await listPersons({ limit: 2000, jurisdiction: "state", revalidate: 0 });
+    people = await listPersons({ limit: 10000, jurisdiction: "state", revalidate: 0 });
   } catch {
     error = true;
   }

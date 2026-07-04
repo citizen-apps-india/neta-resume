@@ -19,7 +19,7 @@ export default async function Directory({
   let people: PersonSummary[] = [];
   let error = false;
   try {
-    people = await listPersons({ limit: 2000 });
+    people = await listPersons({ limit: 10000 });
   } catch {
     error = true;
   }
