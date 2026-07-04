@@ -38,6 +38,22 @@ def test_asset_breakdown_and_income():
     assert c.income_year == 2022
 
 
+def test_relative_name_extracted():
+    # MyNeta prints the generic "S/o|D/o|W/o: Late Godam Rama Rao Age: 59" label — capture the name,
+    # strip the "Late" honorific, and leave relation_type unknown (the label doesn't disambiguate).
+    c = _candidate()
+    assert c.relative_name == "Godam Rama Rao"
+    assert c.relation_type is None
+
+
+def test_relative_name_state_fixture():
+    # Nitesh Rane's affidavit names his father Narayan Rane (himself a former CM/MP) — the kind of
+    # cross-house disambiguation signal this feeds.
+    html = (FIXTURES / "myneta_candidate_mh2024_1148.html").read_text(encoding="utf-8", errors="ignore")
+    c = parse_candidate(html, candidate_id="1148")
+    assert c.relative_name == "Narayan Tatu Rane"
+
+
 def test_criminal_case_extracted():
     c = _candidate()
     assert len(c.criminal_cases) == 1

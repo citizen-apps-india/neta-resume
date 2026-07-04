@@ -99,6 +99,8 @@ when one fact is corroborated by several sources.
 | `tcpd_surf_id` | text UNIQUE | seeded from TCPD where available |
 | `wikidata_qid` | text | |
 | `photo_url` | text | official photo — sansad.in for MPs, MyNeta candidate image for state MLAs; proxied + disk-cached by the API. Added in 0008 |
+| `home_state` | text | derived match feature: modal `office_term` state / `rs_state_code`. Refreshed by `neta derive-signals`. Added in 0021 |
+| `relative_name` | text | derived match feature: the S/o\|D/o\|W/o relative from the person's latest affidavit — a decisive cross-house disambiguation signal. Added in 0021 |
 | `created_at` / `updated_at` | timestamptz | |
 
 `person_name_variant(person_id, variant, source_id, script)` — every observed spelling; `script` is
@@ -172,6 +174,8 @@ offices; provenance: `source_ref_id`.
 | `income_year` | int | |
 | `pan_given` | boolean | |
 | `raw_url` | text | direct affidavit page link (shown in UI) |
+| `relative_name` | text | the S/o\|D/o\|W/o relative printed on the affidavit; `''` = fetched but none. Added in 0020 |
+| `relation_type` | text | `father`\|`spouse`\|`guardian` when a specific marker is present, else null (MyNeta's label is usually the generic "S/o\|D/o\|W/o"). Added in 0020 |
 
 UNIQUE `(person_id, election_cycle, source_ref_id)`.
 

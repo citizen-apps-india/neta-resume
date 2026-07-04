@@ -71,6 +71,8 @@ class ParsedCandidate:
     self_income: int | None = None       # latest declared ITR income (rupees)
     income_year: int | None = None
     photo_url: str | None = None          # MyNeta candidate profile image
+    relative_name: str | None = None      # name after S/o | D/o | W/o — key disambiguation signal
+    relation_type: str | None = None      # 'father' (S/o, D/o) | 'spouse' (W/o)
     criminal_cases: list[ParsedCase] = field(default_factory=list)
 
 
@@ -120,6 +122,25 @@ def parse_candidate(html: str, candidate_id: str | None = None) -> ParsedCandida
     mp = re.search(r"Party:\s*(.+?)\s+(?:S/o|D/o|W/o|Age|Name Enrolled)", text)
     if mp:
         party = mp.group(1).strip() or None
+
+    # Relative (disambiguation signal). MyNeta usually prints the GENERIC label
+    # "S/o|D/o|W/o: <relative> Age:" (it does not say which relation), so we capture just the name —
+    # relation_type stays None. Some pages use a single specific marker; capture that when present.
+    relative_name = relation_type = None
+    mr = re.search(r"S/o\|D/o\|W/o:\s*(.+?)\s+(?:Age:|Name Enrolled)", text)
+    if mr:
+        relative_name = mr.group(1).strip() or None
+    else:
+        mr2 = re.search(r"\b(S/o|D/o|W/o)[:\s]\s*(.+?)\s+(?:Age:|Name Enrolled)", text)
+        if mr2:
+            relation_type = "spouse" if mr2.group(1) == "W/o" else "father"
+            relative_name = mr2.group(2).strip() or None
+    if relative_name:
+        # Drop a leading honorific/"Late" so the name matches across filings.
+        relative_name = re.sub(
+            r"^(?:Late|Shri|Sh\.?|Smt\.?|Kum\.?|Mr\.?|Mrs\.?|Ms\.?|Dr\.?)\s+", "", relative_name, flags=re.I
+        )
+        relative_name = relative_name.strip()[:120] or None
 
     # Constituency + state from header: "NAME (Winner) ADILABAD (ST) (TELANGANA) Party:"
     # The constituency is the text before the FIRST parenthesis (robust to nested parens like
@@ -188,6 +209,8 @@ def parse_candidate(html: str, candidate_id: str | None = None) -> ParsedCandida
         self_income=self_income,
         income_year=income_year,
         photo_url=photo_url,
+        relative_name=relative_name,
+        relation_type=relation_type,
         criminal_cases=cases,
     )
 

@@ -57,6 +57,8 @@ Table person {
   birth_year int
   tcpd_surf_id text [unique]
   wikidata_qid text
+  home_state text        // derived match feature (modal office_term state)
+  relative_name text     // derived match feature (S/o|D/o|W/o from latest affidavit)
 }
 
 Table person_name_variant {
@@ -131,6 +133,8 @@ Table affidavit {
   total_liabilities bigint
   self_income bigint
   raw_url text
+  relative_name text     // S/o|D/o|W/o relative printed on the affidavit (disambiguation signal)
+  relation_type text     // 'father'|'spouse'|'guardian' when a specific marker is present, else null
   indexes { (person_id, election_cycle, source_ref_id) [unique] }
 }
 
