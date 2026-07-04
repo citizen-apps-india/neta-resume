@@ -8,7 +8,7 @@ export default async function MunicipalPage() {
   let people: PersonSummary[] = [];
   let error = false;
   try {
-    people = await listPersons({ limit: 2000, jurisdiction: "municipal", revalidate: 0 });
+    people = await listPersons({ limit: 10000, jurisdiction: "municipal", revalidate: 0 });
   } catch {
     error = true;
   }
