@@ -15,7 +15,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from neta_api.deps import get_db
-from neta_api.schemas import PersonResume, PersonSummary
+from neta_api.schemas import Facets, PersonResume, PersonSummary
 from neta_api.services import resume as resume_service
 
 router = APIRouter(prefix="/persons", tags=["persons"])
@@ -75,19 +75,39 @@ def person_photo(person_id: int, db: Session = Depends(get_db)) -> Response:
 
 @router.get("", response_model=list[PersonSummary])
 def list_persons(
+    response: Response,
     limit: int = 60,
     offset: int = 0,
     house: str | None = None,
     state: str | None = None,
     constituency: str | None = None,
     jurisdiction: str | None = None,
+    party: str | None = None,
+    cases: str | None = None,
+    q: str | None = None,
+    sort: str = "assets",
     db: Session = Depends(get_db),
 ) -> list[PersonSummary]:
-    """Browse legislators (directory). Optionally filter by house/state/constituency/jurisdiction. Assets desc."""
-    return resume_service.list_persons(
+    """Browse legislators (directory): filter by house/state/constituency/jurisdiction/party/cases/search,
+    sort by assets|cases|attendance|name, and page via limit/offset. Total match count is returned in the
+    `X-Total-Count` response header (the body stays a plain list)."""
+    items, total = resume_service.list_persons(
         db, limit=limit, offset=offset, house=house, state=state, constituency=constituency,
-        jurisdiction=jurisdiction,
+        jurisdiction=jurisdiction, party=party, cases=cases, q=q, sort=sort,
     )
+    response.headers["X-Total-Count"] = str(total)
+    return items
+
+
+@router.get("/facets", response_model=Facets)
+def person_facets(
+    house: str | None = None,
+    state: str | None = None,
+    jurisdiction: str | None = None,
+    db: Session = Depends(get_db),
+) -> Facets:
+    """Dropdown option lists (party / state / house, each with a count) for a browse scope."""
+    return resume_service.facets(db, house=house, state=state, jurisdiction=jurisdiction)
 
 
 @router.get("/{person_id}", response_model=PersonResume)

@@ -14,6 +14,8 @@ from neta_api.schemas import (
     ChargeSection,
     Contact,
     CriminalCase,
+    Facets,
+    FacetCount,
     NewsItem,
     OfficeTerm,
     PartyStint,
@@ -333,13 +335,15 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
 
 
 # Shared summary projection: per person, current party + house/constituency, latest assets,
-# case counts, and worst severity. `{where}` and `{order}` are filled by list/search.
-_SUMMARY_SQL = """
+# case counts, and worst severity. Used raw by search (filters on base columns) and wrapped as a
+# subquery `s` by list/facets (so the computed columns below are filterable/sortable by name).
+_SUMMARY_BASE = """
     SELECT p.id, p.display_name, p.photo_url,
            (SELECT variant FROM person_name_variant
             WHERE person_id = p.id AND script = 'devanagari' LIMIT 1) AS native_name,
            cur.party       AS current_party,
            oh.house        AS current_house,
+           oh.jurisdiction AS jurisdiction,
            oh.constituency AS constituency,
            oh.state        AS state,
            w.total_assets  AS net_assets,
@@ -380,6 +384,10 @@ _SUMMARY_SQL = """
         ORDER BY CASE severity WHEN 'heinous' THEN 1 WHEN 'serious' THEN 2 WHEN 'minor' THEN 3 ELSE 4 END
         LIMIT 1
     ) sev ON true
+"""
+
+# Search filters/orders on base columns (p.normalized_name, p.display_name), so it appends its own tail.
+_SUMMARY_SQL = _SUMMARY_BASE + """
     {where}
     {order}
     LIMIT :limit OFFSET :offset
@@ -409,27 +417,82 @@ def _to_summary(r) -> PersonSummary:
 _NORM = "upper(regexp_replace({col}, '[^a-zA-Z0-9]', '', 'g')) = upper(regexp_replace(:{p}, '[^a-zA-Z0-9]', '', 'g'))"
 
 
-def list_persons(db: Session, limit: int = 60, offset: int = 0, house: str | None = None,
-                 state: str | None = None, constituency: str | None = None,
-                 jurisdiction: str | None = None) -> list[PersonSummary]:
+# sort key -> ORDER BY fragment (whitelist: the raw ?sort= value is never interpolated into SQL).
+_SORTS = {
+    "assets": "net_assets DESC NULLS LAST, display_name",
+    "cases": "total_cases DESC, display_name",
+    "attendance": "current_attendance_pct DESC NULLS LAST, display_name",
+    "name": "display_name ASC",
+}
+
+# ?cases= value -> predicate over the wrapped subquery (fixed SQL, no user text interpolated).
+_CASE_FILTERS = {
+    "with": "s.total_cases > 0",
+    "clean": "s.total_cases = 0",
+    "heinous": "s.top_severity = 'heinous'",
+    "serious": "s.top_severity = 'serious'",
+    "minor": "s.top_severity = 'minor'",
+}
+
+
+def _list_conditions(params: dict, *, house=None, state=None, constituency=None, jurisdiction=None,
+                     party=None, cases=None, q=None) -> list[str]:
+    """WHERE conditions over the wrapped summary subquery `s`; mutates `params` with bound values."""
     conds: list[str] = []
-    params: dict = {"limit": limit, "offset": offset}
     if house:
-        conds.append("oh.house = :house")
+        conds.append("s.current_house = :house")
         params["house"] = house
     if jurisdiction:
-        conds.append("oh.jurisdiction = :jurisdiction")
+        conds.append("s.jurisdiction = :jurisdiction")
         params["jurisdiction"] = jurisdiction
     if state:
-        conds.append(_NORM.format(col="oh.state", p="state"))
+        conds.append(_NORM.format(col="s.state", p="state"))
         params["state"] = state
     if constituency:
-        conds.append(_NORM.format(col="oh.constituency", p="constituency"))
+        conds.append(_NORM.format(col="s.constituency", p="constituency"))
         params["constituency"] = constituency
+    if party:
+        conds.append("s.current_party = :party")
+        params["party"] = party
+    if cases in _CASE_FILTERS:
+        conds.append(_CASE_FILTERS[cases])
+    if q and q.strip():
+        conds.append("(s.display_name ILIKE :q OR s.current_party ILIKE :q "
+                     "OR s.constituency ILIKE :q OR s.native_name ILIKE :q)")
+        params["q"] = f"%{q.strip()}%"
+    return conds
+
+
+def list_persons(db: Session, *, limit: int = 60, offset: int = 0, house: str | None = None,
+                 state: str | None = None, constituency: str | None = None, jurisdiction: str | None = None,
+                 party: str | None = None, cases: str | None = None, q: str | None = None,
+                 sort: str = "assets") -> tuple[list[PersonSummary], int]:
+    """Browse legislators: filter (house/jurisdiction/state/constituency/party/cases/search) + sort +
+    page. Returns (page rows, total matching count) so the caller can emit an X-Total-Count header."""
+    params: dict = {"limit": limit, "offset": offset}
+    conds = _list_conditions(params, house=house, state=state, constituency=constituency,
+                             jurisdiction=jurisdiction, party=party, cases=cases, q=q)
     where = ("WHERE " + " AND ".join(conds)) if conds else ""
-    sql = _SUMMARY_SQL.format(where=where, order="ORDER BY w.total_assets DESC NULLS LAST, p.display_name")
-    rows = db.execute(text(sql), params)
-    return [_to_summary(r) for r in rows]
+    order = "ORDER BY " + _SORTS.get(sort, _SORTS["assets"])
+    total = db.execute(text(f"SELECT count(*) FROM ({_SUMMARY_BASE}) s {where}"), params).scalar_one()
+    rows = db.execute(
+        text(f"SELECT * FROM ({_SUMMARY_BASE}) s {where} {order} LIMIT :limit OFFSET :offset"), params
+    )
+    return [_to_summary(r) for r in rows], total
+
+
+def facets(db: Session, *, house: str | None = None, state: str | None = None,
+           jurisdiction: str | None = None) -> Facets:
+    """Distinct party / state / house option lists (+counts) for a browse scope, to populate dropdowns."""
+    params: dict = {}
+    conds = _list_conditions(params, house=house, state=state, jurisdiction=jurisdiction)
+
+    def group(col: str) -> list[FacetCount]:
+        where = "WHERE " + " AND ".join([*conds, f"{col} IS NOT NULL"])
+        sql = f"SELECT {col} AS value, count(*) AS n FROM ({_SUMMARY_BASE}) s {where} GROUP BY {col} ORDER BY n DESC, value"
+        return [FacetCount(value=r.value, count=r.n) for r in db.execute(text(sql), params)]
+
+    return Facets(parties=group("s.current_party"), states=group("s.state"), houses=group("s.current_house"))
 
 
 def search_persons(db: Session, q: str, limit: int = 25) -> list[PersonSummary]:

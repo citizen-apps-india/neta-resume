@@ -166,3 +166,16 @@ class PersonSummary(BaseModel):
     total_cases: int = 0
     top_severity: Severity | None = None    # worst severity across cases (heinous>serious>minor)
     current_attendance_pct: float | None = None  # current-term parliamentary attendance %, PRS
+
+
+class FacetCount(BaseModel):
+    value: str
+    count: int
+
+
+class Facets(BaseModel):
+    """Dropdown option lists for a browse scope (party / state / house), each with its row count."""
+
+    parties: list[FacetCount] = []
+    states: list[FacetCount] = []
+    houses: list[FacetCount] = []
