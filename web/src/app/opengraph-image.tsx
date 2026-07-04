@@ -4,10 +4,13 @@ export const alt = "Neta·Resume — the public record of every Indian legislato
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-// Branded social-share card, generated at build/request time (no static asset needed).
+// Branded social-share card, generated at build/request time.
 // Note: keep to Latin glyphs only — exotic glyphs trigger a dynamic font fetch; and every element with
-// more than one child must set display:flex (Satori requirement).
-export default function OpengraphImage() {
+// more than one child must set display:flex (Satori requirement). The logo's cap is a raster inside its
+// SVG, which Satori can't render, so we embed the PNG as a data-URI instead.
+export default async function OpengraphImage() {
+  const logo = await fetch(new URL("./og-logo.png", import.meta.url)).then((r) => r.arrayBuffer());
+  const logoSrc = `data:image/png;base64,${Buffer.from(logo).toString("base64")}`;
   return new ImageResponse(
     (
       <div
@@ -29,9 +32,8 @@ export default function OpengraphImage() {
               display: "flex", alignItems: "center", justifyContent: "center", border: "1px solid #E2E5E8",
             }}
           >
-            <svg width="46" height="46" viewBox="0 0 282 282" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M92 92H190.28V109.472H175.928V189.032H154.088V148.316H131V151.748C131 160.952 127.1 165.164 120.08 165.164C109.784 165.164 96.836 151.28 96.836 140.984C96.836 134.9 99.488 130.844 109.004 130.844H154.088V109.472H92V92Z" fill="#121317" />
-            </svg>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img width="52" height="52" src={logoSrc} alt="" />
           </div>
           <div style={{ display: "flex", fontSize: 30, fontWeight: 700, color: "#121317", marginLeft: 18 }}>
             Neta-Resume
