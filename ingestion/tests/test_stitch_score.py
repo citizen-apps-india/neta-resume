@@ -65,3 +65,39 @@ def test_veto_relative_mismatch():
 def test_name_below_floor_rejected():
     _, band, _ = score_person_pair(P("RAM KUMAR SINGH"), P("GEETA BEN PATEL"))
     assert band == "reject"
+
+
+# ---- phonetic tier (metaphone-equal, below the jaro-winkler floor) ----
+
+def test_phonetic_tier_still_needs_corroboration():
+    # "Muhammad Rafi"/"Mohammed Raffi" score ~0.835 by JW -> phonetic tier lifts to 0.88; with 3 signals
+    # it reaches review but NOT auto_merge (a boosted name can't reach 0.92 without ~5 signals).
+    a = P("Muhammad Rafi", birth=1960, state="BIHAR", rel="Deen Muhammad")
+    b = P("Mohammed Raffi", birth=1960, state="BIHAR", rel="Deen Muhammad")
+    _, band, ev = score_person_pair(a, b)
+    assert ev.get("phonetic")           # the phonetic tier fired
+    assert band == "review"
+
+
+def test_phonetic_tier_can_auto_merge_with_many_signals():
+    a = P("Muhammad Rafi", birth=1960, state="BIHAR", rel="Deen Muhammad", gender="M", parties=(5,))
+    b = P("Mohammed Raffi", birth=1960, state="BIHAR", rel="Deen Muhammad", gender="M", parties=(5,))
+    _, band, ev = score_person_pair(a, b)
+    assert ev.get("phonetic")
+    assert band == "auto_merge"
+
+
+def test_phonetic_tier_does_not_rescue_a_veto():
+    a = P("Muhammad Rafi", birth=1960, rel="Deen Muhammad")
+    b = P("Mohammed Raffi", birth=1995, rel="Deen Muhammad")   # birth gap 35 -> veto
+    _, band, ev = score_person_pair(a, b)
+    assert band == "reject"
+    assert "birth_year_gap" in ev["vetoes"]
+
+
+def test_shared_name_score_unaffected_by_phonetic_tier():
+    # The phonetic boost lives only in the stitcher; the shared matcher (criminal-record linking) is unchanged.
+    from neta_core.transform.names import normalize_name
+
+    from neta_ingest.pipelines.identity.affidavit_attach import name_score
+    assert name_score("Muhammad Rafi", "Mohammed Raffi", normalize_name("Muhammad Rafi")) < 0.85

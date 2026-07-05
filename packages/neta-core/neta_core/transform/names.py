@@ -16,6 +16,8 @@ from __future__ import annotations
 import re
 import unicodedata
 
+import jellyfish
+
 # Honorifics / titles to strip (leading or anywhere as a standalone token).
 _HONORIFICS = {
     "dr", "shri", "sri", "smt", "kumari", "km", "adv", "advocate", "prof",
@@ -46,3 +48,15 @@ def normalize_name(raw: str) -> str:
 def name_tokens(raw: str) -> set[str]:
     """Normalized token set — useful for Jaccard blocking before SURF scoring."""
     return set(normalize_name(raw).split())
+
+
+def phonetic_key(raw: str) -> str:
+    """A metaphone-over-sorted-tokens key for blocking same-SOUND / different-SPELLING names.
+
+    Collapses transliteration variants trigram misses:
+        phonetic_key("Muhammad Ali") == phonetic_key("Mohammed Ali")   # both "AL MHMT"
+    Order-stable (tokens are normalized+sorted first, codes sorted again); "" for empty input.
+    """
+    codes = [c for t in normalize_name(raw).split() if (c := jellyfish.metaphone(t))]
+    codes.sort()
+    return " ".join(codes)

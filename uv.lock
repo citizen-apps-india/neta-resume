@@ -338,6 +338,7 @@ version = "0.1.0"
 source = { editable = "packages/neta-core" }
 dependencies = [
     { name = "httpx" },
+    { name = "jellyfish" },
     { name = "psycopg", extra = ["binary"] },
     { name = "pydantic" },
     { name = "pydantic-settings" },
@@ -348,6 +349,7 @@ dependencies = [
 [package.metadata]
 requires-dist = [
     { name = "httpx", specifier = ">=0.27" },
+    { name = "jellyfish", specifier = ">=1.0" },
     { name = "psycopg", extras = ["binary"], specifier = ">=3.2" },
     { name = "pydantic", specifier = ">=2.7" },
     { name = "pydantic-settings", specifier = ">=2.3" },

@@ -10,6 +10,7 @@ dependencies = [
     "psycopg[binary]>=3.2", # postgres driver
     "pydantic>=2.7",
     "pydantic-settings>=2.3",
+    "jellyfish>=1.0",       # phonetic keys (metaphone) for ER blocking
 ]
 
 [build-system]

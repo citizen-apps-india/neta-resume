@@ -12,16 +12,17 @@ native_name, party_ids (iterable). Missing signals are neutral (neither help nor
 
 from __future__ import annotations
 
-from neta_core.transform.names import normalize_name
+from neta_core.transform.names import normalize_name, phonetic_key
 
 from neta_ingest.pipelines.identity.affidavit_attach import name_score
 
-RULE_VERSION = "stitch-v1"
+RULE_VERSION = "stitch-v2"   # v2: phonetic name tier (re-opens prior rejects for re-scoring once)
 
 # Contributions sum to 1.0 when every signal agrees perfectly.
 W_NAME, W_REL, W_BIRTH, W_STATE, W_PARTY, W_GENDER, W_NATIVE = 0.35, 0.25, 0.15, 0.10, 0.08, 0.04, 0.03
 
 NAME_FLOOR = 0.85          # below this the pair is not a real candidate
+PHONETIC_NAME_FLOOR = 0.88  # a metaphone-equal below-floor name is lifted to here (clears floor, < token-subset)
 REL_MATCH = 0.85           # relatives this similar corroborate
 REL_VETO = 0.50            # both relatives known and this dissimilar -> veto
 AUTO_MERGE_SCORE = 0.92
@@ -39,9 +40,17 @@ def score_person_pair(a: dict, b: dict) -> tuple[float, str, dict]:
     vetoes: list[str] = []
 
     name_sim = name_score(a["display_name"], b["display_name"], a.get("normalized_name"))
+    # Phonetic tier (stitcher-only): lift a below-floor name if the two are metaphone-equal (same sound,
+    # different spelling). This never adds a corroborating signal, so a phonetic name still needs >=2 hard
+    # signals to auto-merge — and vetoes still override.
+    if name_sim < NAME_FLOOR:
+        pa, pb = phonetic_key(a["display_name"]), phonetic_key(b["display_name"])
+        if pa and pa == pb:
+            ev["phonetic"] = {"a": pa, "b": pb, "boosted_from": round(name_sim, 4)}
+            name_sim = max(name_sim, PHONETIC_NAME_FLOOR)
     ev["name"] = round(name_sim, 4)
     if name_sim < NAME_FLOOR:
-        ev["reason"] = "name below floor"
+        ev["gate"] = "name_floor"
         return 0.0, "reject", ev
 
     score = W_NAME * name_sim
@@ -104,12 +113,15 @@ def score_person_pair(a: dict, b: dict) -> tuple[float, str, dict]:
     ev["corroborating"] = corroborating
     ev["vetoes"] = vetoes
 
+    # `gate` records why the pair landed where it did (for the recall audit's near-miss listing).
     if vetoes:
-        band = "reject"
+        band, ev["gate"] = "reject", "veto:" + vetoes[0]
     elif score >= AUTO_MERGE_SCORE and corroborating >= AUTO_MERGE_MIN_CORROBORATING:
-        band = "auto_merge"
+        band, ev["gate"] = "auto_merge", "auto_merge"
+    elif score >= AUTO_MERGE_SCORE:  # score high enough but too few corroborating signals
+        band, ev["gate"] = "review", "insufficient_corroborating"
     elif score < REJECT_SCORE:
-        band = "reject"
+        band, ev["gate"] = "reject", "score<reject"
     else:
-        band = "review"
+        band, ev["gate"] = "review", "review"
     return round(score, 4), band, ev

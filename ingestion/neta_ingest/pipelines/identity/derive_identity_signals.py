@@ -4,6 +4,7 @@ cross-house stitcher scores against these columns instead of re-aggregating per 
 
 relative_name = the S/o|D/o|W/o relative from the person's most-recent affidavit that has one.
 home_state    = the person's modal office_term state (ls_state_code / rs_state_code).
+phonetic_key  = metaphone-over-sorted-tokens of the name, for same-sound stitcher blocking.
 """
 
 from __future__ import annotations
@@ -11,6 +12,7 @@ from __future__ import annotations
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
+from neta_core.transform.names import phonetic_key
 
 
 def run() -> None:
@@ -51,7 +53,16 @@ def run() -> None:
                 """
             )
         )
+        # phonetic_key: computed in Python (metaphone), bulk-written via a temp table (recompute each run).
+        rows = s.execute(text("SELECT id, normalized_name FROM person WHERE normalized_name <> ''")).all()
+        data = [{"id": r.id, "pk": phonetic_key(r.normalized_name)} for r in rows]
+        if data:
+            s.execute(text("CREATE TEMP TABLE _pk (id bigint PRIMARY KEY, pk text) ON COMMIT DROP"))
+            s.execute(text("INSERT INTO _pk (id, pk) VALUES (:id, :pk)"), data)
+            s.execute(text("UPDATE person p SET phonetic_key = _pk.pk FROM _pk WHERE p.id = _pk.id"))
+
         n = s.execute(
             text("SELECT count(*) FROM person WHERE relative_name IS NOT NULL OR home_state IS NOT NULL")
         ).scalar()
-    print(f"[derive-signals] refreshed identity features; {n} persons now carry a relative_name/home_state.")
+    print(f"[derive-signals] refreshed identity features; {n} persons now carry a relative_name/home_state; "
+          f"phonetic_key set on {len(data)}.")

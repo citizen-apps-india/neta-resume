@@ -1,7 +1,7 @@
 """Unit tests for the pure transform logic (no DB needed): money, sections, names."""
 
 from neta_core.transform.money import parse_rupees
-from neta_core.transform.names import normalize_name
+from neta_core.transform.names import normalize_name, phonetic_key
 from neta_core.transform.sections import parse_sections, rollup_severity
 
 
@@ -54,3 +54,16 @@ class TestNormalizeName:
 
     def test_token_sort_collides_order_variants(self):
         assert normalize_name("Narendra Modi") == normalize_name("Modi Narendra")
+
+
+class TestPhoneticKey:
+    def test_same_sound_different_spelling_collides(self):
+        # The whole point: transliteration variants trigram would miss.
+        assert phonetic_key("Muhammad Ali") == phonetic_key("Mohammed Ali")
+
+    def test_token_order_stable(self):
+        assert phonetic_key("Ram Kumar Singh") == phonetic_key("Kumar Ram Singh")
+
+    def test_empty_and_distinct(self):
+        assert phonetic_key("") == ""
+        assert phonetic_key("Ram Singh") != phonetic_key("Geeta Patel")

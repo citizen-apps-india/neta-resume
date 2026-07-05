@@ -59,6 +59,7 @@ Table person {
   wikidata_qid text
   home_state text        // derived match feature (modal office_term state)
   relative_name text     // derived match feature (S/o|D/o|W/o from latest affidavit)
+  phonetic_key text      // derived: metaphone-over-sorted-tokens key for same-sound stitcher blocking
 }
 
 Table person_name_variant {

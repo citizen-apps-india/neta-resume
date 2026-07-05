@@ -101,6 +101,7 @@ when one fact is corroborated by several sources.
 | `photo_url` | text | official photo — sansad.in for MPs, MyNeta candidate image for state MLAs; proxied + disk-cached by the API. Added in 0008 |
 | `home_state` | text | derived match feature: modal `office_term` state / `rs_state_code`. Refreshed by `neta derive-signals`. Added in 0021 |
 | `relative_name` | text | derived match feature: the S/o\|D/o\|W/o relative from the person's latest affidavit — a decisive cross-house disambiguation signal. Added in 0021 |
+| `phonetic_key` | text | derived match feature: metaphone-over-sorted-tokens key so the stitcher blocks same-sound / different-spelling names (Muhammad≡Mohammed). Refreshed by `neta derive-signals`. Added in 0023 |
 | `created_at` / `updated_at` | timestamptz | |
 
 `person_name_variant(person_id, variant, source_id, script)` — every observed spelling; `script` is

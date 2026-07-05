@@ -106,11 +106,12 @@ def derive_signals() -> None:
 
 @app.command(name="stitch-identities")
 def stitch_identities(dry_run: bool = typer.Option(False, "--dry-run", help="score + report, no merges"),
+                      audit: bool = typer.Option(False, "--audit", help="dry-run + list near-miss rejects"),
                       limit: int = typer.Option(0, help="cap candidate pairs (0 = all)")) -> None:
     """Cross-house identity stitcher: (auto-)merge the same human across houses; queue the rest for review."""
     from neta_ingest.pipelines.identity import stitch_identities as p
 
-    p.run(dry_run=dry_run, limit=limit)
+    p.run(dry_run=dry_run, limit=limit, audit=audit)
 
 
 review_app = typer.Typer(help="Review the cross-house merge queue (person_merge_candidate).")
