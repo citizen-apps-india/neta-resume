@@ -1,0 +1,38 @@
+name: stitch-identities
+
+# Recurring cross-house identity stitcher. Refreshes match-features, then auto-merges the confident tier
+# (score >= 0.92, >= 2 corroborating non-name signals, no veto) and queues the rest to
+# person_merge_candidate for `neta review`. Global + idempotent: decided pairs (accepted / auto_merged /
+# human-rejected) are skipped, so re-runs never re-propose settled pairs. This keeps cross-house movers
+# stitched as the state/backfill rollout adds people — onboard-state/rollout run merge-cycles but NOT
+# stitch, so without this pass movers accumulate unstitched.
+#
+# Shares the `ingest` concurrency group so it never writes Neon alongside another ingest run.
+# Requires migrations 0021/0022/0023 applied (migrate.yml).
+#
+# Shipped workflow_dispatch-first: the weekly schedule below stays commented until supervised dispatches
+# confirm the review-queue volume is sane, then uncomment to enable.
+
+on:
+  workflow_dispatch: {}
+  # schedule:
+  #   - cron: "0 6 * * 1"    # weekly, Mon 06:00 UTC — enable after supervised runs
+
+concurrency:
+  group: ingest              # one Neon writer at a time (same guard as ingest.yml / relatives.yml)
+  cancel-in-progress: false
+
+jobs:
+  stitch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      NETA_DATABASE_URL: ${{ secrets.NETA_DATABASE_URL }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - run: uv sync
+      - name: Refresh identity match-features (home_state, relative_name, phonetic_key)
+        run: uv run neta derive-signals
+      - name: Cross-house stitch (auto-merge confident tier + queue rest for review)
+        run: uv run neta stitch-identities
