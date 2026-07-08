@@ -10,13 +10,13 @@ name: stitch-identities
 # Shares the `ingest` concurrency group so it never writes Neon alongside another ingest run.
 # Requires migrations 0021/0022/0023 applied (migrate.yml).
 #
-# Shipped workflow_dispatch-first: the weekly schedule below stays commented until supervised dispatches
-# confirm the review-queue volume is sane, then uncomment to enable.
+# Weekly schedule enabled after supervised dispatches confirmed a sane review-queue volume (2026-07-08:
+# live run auto-merged 0, queued 0; the blocking band keeps candidate volume ~8x below pre-band levels).
 
 on:
   workflow_dispatch: {}
-  # schedule:
-  #   - cron: "0 6 * * 1"    # weekly, Mon 06:00 UTC — enable after supervised runs
+  schedule:
+    - cron: "0 6 * * 1"    # weekly, Mon 06:00 UTC
 
 concurrency:
   group: ingest              # one Neon writer at a time (same guard as ingest.yml / relatives.yml)
