@@ -114,6 +114,24 @@ class PartySwitch(BaseModel):
     source: Source | None
 
 
+class ActivityMetric(BaseModel):
+    value: int | None                  # this MP's cumulative count (None = not reported by PRS)
+    house_median: float | None = None  # median across sitting members of the same house/term
+    percentile: int | None = None      # 0..100: share of house peers this MP's count exceeds
+
+
+class ParliamentaryActivity(BaseModel):
+    """What an MP did in the House — counts with peer context, from PRS MP Track (CC-BY 4.0)."""
+
+    house: str                         # 'Lok Sabha' | 'Rajya Sabha'
+    questions: ActivityMetric
+    debates: ActivityMetric
+    private_member_bills: ActivityMetric
+    period_start: date | None = None
+    period_end: date | None = None     # data currency ("as of")
+    source: Source
+
+
 class NewsItem(BaseModel):
     title: str
     snippet: str | None = None
@@ -137,6 +155,7 @@ class PersonResume(BaseModel):
     party_switches: list[PartySwitch] = []
     wealth: list[AffidavitWealth]      # ordered by filed_year for YoY
     criminal_cases: list[CriminalCase]
+    activity: ParliamentaryActivity | None = None   # PRS scorecard: questions/debates/bills + peer context
     news: list[NewsItem] = []          # recent press coverage (Google News), newest first
 
 

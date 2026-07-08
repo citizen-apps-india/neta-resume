@@ -197,3 +197,18 @@ Table person_merge_candidate {
   decided_at timestamptz
   indexes { (person_lo, person_hi) [unique] }
 }
+
+Table parliamentary_activity {
+  id bigint [pk]
+  person_id bigint [ref: > person.id]         // ON DELETE CASCADE
+  house_id smallint [ref: > house.id]
+  term_cycle_id bigint [ref: > term_cycle.id]
+  questions_asked int                         // NULL = not reported (!= 0)
+  debates_participated int
+  private_member_bills int
+  period_start date                           // PRS reporting window
+  period_end date                             // data currency (as-of)
+  source_ref_id bigint [ref: > source_ref.id] // ON DELETE SET NULL
+  updated_at timestamptz
+  indexes { (person_id, term_cycle_id) [unique] }
+}

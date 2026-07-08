@@ -211,6 +211,14 @@ def attendance(house: str = "ls") -> None:
     p.run(house=house)
 
 
+@app.command()
+def activity(house: str = "ls") -> None:
+    """Attach the PRS activity scorecard (questions/debates/private-bills) per MP. house: ls|rs."""
+    from neta_ingest.pipelines.enrich import activity as p
+
+    p.run(house=house)
+
+
 @app.command(name="native-names")
 def native_names() -> None:
     """Backfill Devanagari (Hindi) names from Wikidata for the 18th Lok Sabha."""

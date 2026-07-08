@@ -6,7 +6,7 @@ import { rupees, severityMeta, year, pretty } from "@/lib/format";
 import { Donut, WealthLine } from "@/components/resume/charts";
 import { SourceLink, SourceChip, PendingFlag, SeverityBadge, PartyPill } from "@/components/ui";
 
-const TABS = ["Overview", "Wealth", "Cases", "Career & Roles", "Contact", "In The News"] as const;
+const TABS = ["Overview", "Activity", "Wealth", "Cases", "Career & Roles", "Contact", "In The News"] as const;
 type Tab = (typeof TABS)[number];
 
 function isRajyaSabha(resume: PersonResume): boolean {
@@ -15,12 +15,14 @@ function isRajyaSabha(resume: PersonResume): boolean {
 
 export function ProfileTabs({ resume }: { resume: PersonResume }) {
   const [tab, setTab] = useState<Tab>("Overview");
+  // Hide the Activity tab for members with no PRS scorecard (former members, unmatched, RS with no data).
+  const tabs = TABS.filter((t) => t !== "Activity" || resume.activity);
 
   return (
     <>
       <div style={{ padding: "0 clamp(14px,4vw,40px)", borderBottom: "1px solid var(--rule)", background: "var(--card)" }}>
         <div style={{ display: "flex", gap: 2, flexWrap: "wrap" }}>
-          {TABS.map((t) => {
+          {tabs.map((t) => {
             const active = t === tab;
             return (
               <button
@@ -43,6 +45,7 @@ export function ProfileTabs({ resume }: { resume: PersonResume }) {
 
       <div style={{ padding: "clamp(20px,4vw,30px) clamp(16px,4vw,40px) 40px", background: "var(--bg)" }}>
         {tab === "Overview" && <Overview resume={resume} />}
+        {tab === "Activity" && <Activity resume={resume} />}
         {tab === "Wealth" && <Wealth resume={resume} />}
         {tab === "Cases" && <Cases resume={resume} />}
         {tab === "Career & Roles" && <Career resume={resume} />}
@@ -110,6 +113,73 @@ function Overview({ resume }: { resume: PersonResume }) {
             <Muted>No affidavit on record.</Muted>
           )}
         </div>
+      </div>
+    </div>
+  );
+}
+
+const ACT_METRICS = [
+  { key: "questions", label: "Questions asked" },
+  { key: "debates", label: "Debates participated" },
+  { key: "private_member_bills", label: "Private member's bills" },
+] as const;
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+function isoDate(d: string | null | undefined): string {
+  if (!d) return "";
+  const [y, m, day] = d.slice(0, 10).split("-");
+  const mi = parseInt(m, 10) - 1;
+  return MONTHS[mi] ? `${parseInt(day, 10)} ${MONTHS[mi]} ${y}` : "";
+}
+
+function Activity({ resume }: { resume: PersonResume }) {
+  const a = resume.activity;
+  if (!a) return <Muted>No parliamentary activity data on record.</Muted>;
+  const asOf = isoDate(a.period_end);
+  return (
+    <div className="fadeUp">
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
+        <span style={headStyle}>Parliamentary activity — {a.house}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--faint)" }}>PRS MP TRACK</span>
+      </div>
+      <Muted>Cumulative over the term{asOf ? `, as of ${asOf}` : ""}. Bars compare this member against the {a.house} median.</Muted>
+      <div style={{ display: "grid", gap: 12, marginTop: 16 }}>
+        {ACT_METRICS.map((m) => <MetricBar key={m.key} label={m.label} metric={a[m.key]} />)}
+      </div>
+      <div style={{ marginTop: 16, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+        <SourceLink source={a.source} />
+        <span className="mono" style={{ fontSize: 10, color: "var(--faint)" }}>Source: PRS Legislative Research (CC-BY 4.0)</span>
+      </div>
+    </div>
+  );
+}
+
+function MetricBar({ label, metric }: { label: string; metric: { value: number | null; house_median?: number | null; percentile?: number | null } }) {
+  const { value, house_median, percentile } = metric;
+  if (value == null) {
+    return (
+      <div style={cardStyle}>
+        <div style={{ ...headStyle, fontSize: 14 }}>{label}</div>
+        <Muted>Not reported.</Muted>
+      </div>
+    );
+  }
+  const median = house_median ?? 0;
+  const scale = Math.max(value, median * 2, 1);
+  const above = median > 0 && value >= median;
+  return (
+    <div style={cardStyle}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 10 }}>
+        <span style={{ ...headStyle, fontSize: 14 }}>{label}</span>
+        <span className="mono" style={{ fontSize: 22, fontWeight: 700, color: "var(--ink)" }}>{value}</span>
+      </div>
+      <div style={{ position: "relative", height: 10, borderRadius: 6, background: "var(--rule)", overflow: "hidden" }}>
+        <div style={{ position: "absolute", inset: 0, width: `${Math.min(100, (value / scale) * 100)}%`, background: above ? "var(--accent-2)" : "var(--accent-3)", borderRadius: 6 }} />
+        {median > 0 && <div style={{ position: "absolute", top: -2, bottom: -2, left: `${Math.min(100, (median / scale) * 100)}%`, width: 2, background: "var(--ink)" }} title={`Median ${Math.round(median)}`} />}
+      </div>
+      <div style={{ display: "flex", justifyContent: "space-between", marginTop: 7 }}>
+        <span style={{ fontSize: 12, color: "var(--muted)" }}>{house_median != null ? `House median ${Math.round(house_median)}` : ""}</span>
+        {percentile != null && <span style={{ fontSize: 12, color: "var(--muted)" }}>Ahead of {percentile}% of the House</span>}
       </div>
     </div>
   );

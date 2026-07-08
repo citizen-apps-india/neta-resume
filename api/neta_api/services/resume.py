@@ -10,6 +10,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from neta_api.schemas import (
+    ActivityMetric,
     AffidavitWealth,
     ChargeSection,
     Contact,
@@ -18,6 +19,7 @@ from neta_api.schemas import (
     FacetCount,
     NewsItem,
     OfficeTerm,
+    ParliamentaryActivity,
     PartyStint,
     PartySwitch,
     PersonResume,
@@ -41,6 +43,68 @@ def _attendance_source(row) -> Source | None:
     if not row.att_code:
         return None
     return Source(code=row.att_code, name=row.att_name, url=row.att_url, trust_tier=row.att_trust)
+
+
+def _build_activity(db: Session, person_id: int) -> ParliamentaryActivity | None:
+    """The PRS activity scorecard + peer context, computed at read time from all same-term rows.
+
+    Percentile = share of house peers whose count this MP strictly exceeds (top MP = 100). NULL counts
+    (metric not reported) yield a null value + null percentile, never a misleading 0.
+    """
+    row = db.execute(
+        text(
+            """
+            WITH me AS (
+                SELECT pa.house_id, pa.term_cycle_id, pa.questions_asked, pa.debates_participated,
+                       pa.private_member_bills, pa.period_start, pa.period_end,
+                       h.name AS house_name,
+                       s.code AS source_code, s.name AS source_name, s.trust_tier, sr.native_url
+                FROM parliamentary_activity pa
+                JOIN house h ON h.id = pa.house_id
+                LEFT JOIN source_ref sr ON sr.id = pa.source_ref_id
+                LEFT JOIN source s ON s.id = sr.source_id
+                WHERE pa.person_id = :pid
+                ORDER BY pa.period_end DESC NULLS LAST
+                LIMIT 1
+            ),
+            peers AS (
+                SELECT questions_asked AS q, debates_participated AS d, private_member_bills AS pmb
+                FROM parliamentary_activity WHERE term_cycle_id = (SELECT term_cycle_id FROM me)
+            )
+            SELECT me.house_name, me.questions_asked, me.debates_participated, me.private_member_bills,
+                   me.period_start, me.period_end,
+                   me.source_code, me.source_name, me.trust_tier, me.native_url,
+                   (SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY q)   FROM peers) AS q_med,
+                   (SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY d)   FROM peers) AS d_med,
+                   (SELECT percentile_cont(0.5) WITHIN GROUP (ORDER BY pmb) FROM peers) AS pmb_med,
+                   (SELECT count(*) FROM peers WHERE q   < me.questions_asked)      AS q_below,
+                   (SELECT count(*) FROM peers WHERE d   < me.debates_participated) AS d_below,
+                   (SELECT count(*) FROM peers WHERE pmb < me.private_member_bills) AS pmb_below,
+                   (SELECT count(*) FROM peers) AS peer_n
+            FROM me
+            """
+        ),
+        {"pid": person_id},
+    ).first()
+    if row is None or not row.source_code:
+        return None
+
+    def metric(value, median, below) -> ActivityMetric:
+        pct = None
+        if value is not None and row.peer_n and row.peer_n > 1:
+            pct = round(100.0 * below / (row.peer_n - 1))
+        return ActivityMetric(value=value, house_median=median, percentile=pct)
+
+    return ParliamentaryActivity(
+        house=row.house_name,
+        questions=metric(row.questions_asked, row.q_med, row.q_below),
+        debates=metric(row.debates_participated, row.d_med, row.d_below),
+        private_member_bills=metric(row.private_member_bills, row.pmb_med, row.pmb_below),
+        period_start=row.period_start,
+        period_end=row.period_end,
+        source=Source(code=row.source_code, name=row.source_name, url=row.native_url,
+                      trust_tier=row.trust_tier),
+    )
 
 
 def build_resume(db: Session, person_id: int) -> PersonResume | None:
@@ -330,6 +394,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
         party_switches=party_switches,
         wealth=wealth,
         criminal_cases=criminal_cases,
+        activity=_build_activity(db, person_id),
         news=news,
     )
 
