@@ -30,9 +30,31 @@ export interface paths {
         };
         /**
          * List Persons
-         * @description Browse legislators (directory). Optionally filter by house/state/constituency/jurisdiction. Assets desc.
+         * @description Browse legislators (directory): filter by house/state/constituency/jurisdiction/party/cases/search,
+         *     sort by assets|cases|attendance|name, and page via limit/offset. Total match count is returned in the
+         *     `X-Total-Count` response header (the body stays a plain list).
          */
         get: operations["list_persons_persons_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/persons/facets": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Person Facets
+         * @description Dropdown option lists (party / state / house, each with a count) for a browse scope.
+         */
+        get: operations["person_facets_persons_facets_get"];
         put?: never;
         post?: never;
         delete?: never;
@@ -182,6 +204,15 @@ export interface paths {
 export type webhooks = Record<string, never>;
 export interface components {
     schemas: {
+        /** ActivityMetric */
+        ActivityMetric: {
+            /** Value */
+            value: number | null;
+            /** House Median */
+            house_median?: number | null;
+            /** Percentile */
+            percentile?: number | null;
+        };
         /** AffidavitWealth */
         AffidavitWealth: {
             /** Election Cycle */
@@ -260,6 +291,34 @@ export interface components {
             /** Note */
             note?: string | null;
         };
+        /** FacetCount */
+        FacetCount: {
+            /** Value */
+            value: string;
+            /** Count */
+            count: number;
+        };
+        /**
+         * Facets
+         * @description Dropdown option lists for a browse scope (party / state / house), each with its row count.
+         */
+        Facets: {
+            /**
+             * Parties
+             * @default []
+             */
+            parties: components["schemas"]["FacetCount"][];
+            /**
+             * States
+             * @default []
+             */
+            states: components["schemas"]["FacetCount"][];
+            /**
+             * Houses
+             * @default []
+             */
+            houses: components["schemas"]["FacetCount"][];
+        };
         /** HTTPValidationError */
         HTTPValidationError: {
             /** Detail */
@@ -303,6 +362,22 @@ export interface components {
             /** Attendance Pct */
             attendance_pct?: number | null;
             attendance_source?: components["schemas"]["Source"] | null;
+        };
+        /**
+         * ParliamentaryActivity
+         * @description What an MP did in the House — counts with peer context, from PRS MP Track (CC-BY 4.0).
+         */
+        ParliamentaryActivity: {
+            /** House */
+            house: string;
+            questions: components["schemas"]["ActivityMetric"];
+            debates: components["schemas"]["ActivityMetric"];
+            private_member_bills: components["schemas"]["ActivityMetric"];
+            /** Period Start */
+            period_start?: string | null;
+            /** Period End */
+            period_end?: string | null;
+            source: components["schemas"]["Source"];
         };
         /** PartyStint */
         PartyStint: {
@@ -370,6 +445,7 @@ export interface components {
             wealth: components["schemas"]["AffidavitWealth"][];
             /** Criminal Cases */
             criminal_cases: components["schemas"]["CriminalCase"][];
+            activity?: components["schemas"]["ParliamentaryActivity"] | null;
             /**
              * News
              * @default []
@@ -522,6 +598,10 @@ export interface operations {
                 state?: string | null;
                 constituency?: string | null;
                 jurisdiction?: string | null;
+                party?: string | null;
+                cases?: string | null;
+                q?: string | null;
+                sort?: string;
             };
             header?: never;
             path?: never;
@@ -536,6 +616,39 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PersonSummary"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    person_facets_persons_facets_get: {
+        parameters: {
+            query?: {
+                house?: string | null;
+                state?: string | null;
+                jurisdiction?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Facets"];
                 };
             };
             /** @description Validation Error */

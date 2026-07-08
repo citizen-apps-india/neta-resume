@@ -235,3 +235,18 @@ IPC and BNS alike).
 | `decided_by` / `decided_at` | text / timestamptz | `auto` for auto-merges, else the reviewer |
 
 Populated by `neta stitch-identities`; reviewed via `neta review list|show|accept|reject`.
+
+### `parliamentary_activity` — per-MP activity scorecard (added in 0024)
+| Column | Type | Notes |
+|---|---|---|
+| `person_id` | bigint FK→person (ON DELETE CASCADE) | the legislator |
+| `house_id` / `term_cycle_id` | smallint / bigint FK | which house + term the counts cover (18th LS / current RS) |
+| `questions_asked` | int | cumulative over the term; **NULL = not reported**, distinct from `0` |
+| `debates_participated` | int | " |
+| `private_member_bills` | int | " |
+| `period_start` / `period_end` | date | PRS reporting window (`period_end` = data currency) |
+| `source_ref_id` | bigint FK→source_ref (ON DELETE SET NULL) | PRS MP Track provenance |
+
+Sourced from **PRS Legislative Research** MP Track (CC-BY 4.0; attribute in the UI). Populated by
+`neta activity`; one row per MP per term (`UNIQUE (person_id, term_cycle_id)`). Attendance-% is NOT here —
+it stays on `office_term.attendance_pct`. Peer context (house median/percentile) is computed at read time.
