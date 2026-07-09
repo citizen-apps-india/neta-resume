@@ -1,5 +1,6 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { SiteHeader } from "@/components/SiteHeader";
 import { getPersonResume, photoSrc, type PersonResume } from "@/lib/api";
 import { PhotoBox, PartyPill } from "@/components/ui";
 import { SegmentedBar } from "@/components/resume/policy-focus";
@@ -63,7 +64,9 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
   const { a, b } = await searchParams;
   const [ra, rb] = await Promise.all([load(a), load(b)]);
   return (
-    <div style={{ maxWidth: 900, margin: "0 auto", padding: "clamp(20px,4vw,36px) clamp(16px,4vw,24px)" }}>
+    <>
+      <SiteHeader />
+      <main style={{ maxWidth: 900, margin: "0 auto", padding: "clamp(20px,4vw,36px) clamp(16px,4vw,24px)" }}>
       <div style={{ marginBottom: 6 }}>
         <Link href="/directory" className="mono" style={{ fontSize: 12, color: "var(--muted)", textDecoration: "none" }}>← Directory</Link>
       </div>
@@ -73,6 +76,7 @@ export default async function ComparePage({ searchParams }: { searchParams: Prom
         <Column r={ra} />
         <Column r={rb} />
       </div>
-    </div>
+      </main>
+    </>
   );
 }

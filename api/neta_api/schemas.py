@@ -250,3 +250,35 @@ class Facets(BaseModel):
     states: list[FacetCount] = []
     houses: list[FacetCount] = []
     themes: list[FacetCount] = []
+
+
+# --- "Parliament functioning" section — national/ministry aggregates over parliamentary_question --------
+class ThemeCount(BaseModel):
+    theme: str
+    count: int
+
+
+class MinistryCount(BaseModel):
+    ministry: str
+    theme: str
+    count: int
+
+
+class MpCount(BaseModel):
+    id: int
+    display_name: str
+    photo_url: str | None = None
+    count: int
+    top_theme: str | None = None
+
+
+class ParliamentStats(BaseModel):
+    """Institutional-lens dashboard: what the House is asking (currently the 18th Lok Sabha)."""
+
+    house: str
+    total_questions: int
+    total_debates: int
+    active_mps: int                          # distinct members who asked >= 1 question
+    themes: list[ThemeCount]                 # question distribution across policy themes
+    top_ministries: list[MinistryCount]      # most-questioned ministries
+    most_active: list[MpCount]               # top questioners

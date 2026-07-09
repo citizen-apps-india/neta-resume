@@ -89,6 +89,21 @@ export function getStats(): Promise<Stats> {
   return getJSON<Stats>("/stats", 600);
 }
 
+// "Parliament functioning" section aggregates.
+export type ThemeCount = { theme: string; count: number };
+export type MinistryCount = { ministry: string; theme: string; count: number };
+export type MpCount = { id: number; display_name: string; photo_url: string | null; count: number; top_theme: string | null };
+export type ParliamentStats = {
+  house: string; total_questions: number; total_debates: number; active_mps: number;
+  themes: ThemeCount[]; top_ministries: MinistryCount[]; most_active: MpCount[];
+};
+export function getParliamentStats(): Promise<ParliamentStats> {
+  return getJSON<ParliamentStats>("/parliament/stats", 3600);
+}
+export function getParliamentMinistries(): Promise<MinistryCount[]> {
+  return getJSON<MinistryCount[]>("/parliament/ministries", 3600);
+}
+
 /** Lifetime unique-visitor counter (homepage). */
 export type Visits = { count: number };
 export function getVisits(): Promise<Visits> {
