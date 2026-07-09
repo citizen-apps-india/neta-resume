@@ -41,3 +41,4 @@ api/.photo_cache/
 
 # raw provenance cache when a pipeline is run from the repo root (workspace)
 /data/raw_cache/
+api/.doc_cache/

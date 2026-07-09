@@ -83,6 +83,40 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/questions/{question_id}/document": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Question Document */
+        get: operations["question_document_questions__question_id__document_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/debates/{debate_id}/document": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Debate Document */
+        get: operations["debate_document_debates__debate_id__document_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/search": {
         parameters: {
             query?: never;
@@ -381,6 +415,8 @@ export interface components {
         };
         /** ParliamentaryDebate */
         ParliamentaryDebate: {
+            /** Id */
+            id: number;
             /** Title */
             title?: string | null;
             /** Debate Type */
@@ -392,6 +428,8 @@ export interface components {
         };
         /** ParliamentaryQuestion */
         ParliamentaryQuestion: {
+            /** Id */
+            id: number;
             /** Subject */
             subject?: string | null;
             /** Ministry */
@@ -750,6 +788,68 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["PersonResume"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    question_document_questions__question_id__document_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                question_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    debate_document_debates__debate_id__document_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                debate_id: number;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": unknown;
                 };
             };
             /** @description Validation Error */

@@ -195,13 +195,13 @@ def _build_parliamentary_record(db: Session, person_id: int) -> ParliamentaryRec
 
     questions = [
         ParliamentaryQuestion(
-            subject=r.subject, ministry=r.ministry, theme=r.theme, question_type=r.question_type,
+            id=r.id, subject=r.subject, ministry=r.ministry, theme=r.theme, question_type=r.question_type,
             asked_date=r.asked_date, document_url=r.document_url,
         )
         for r in db.execute(
             text(
                 """
-                SELECT pq.subject, pq.ministry, pq.question_type, pq.asked_date, pq.document_url,
+                SELECT pq.id, pq.subject, pq.ministry, pq.question_type, pq.asked_date, pq.document_url,
                        COALESCE(mt.theme, 'Other') AS theme
                 FROM parliamentary_question pq
                 LEFT JOIN ministry_theme mt ON mt.ministry_key = lower(btrim(pq.ministry))
@@ -215,13 +215,13 @@ def _build_parliamentary_record(db: Session, person_id: int) -> ParliamentaryRec
     ]
     debates = [
         ParliamentaryDebate(
-            title=r.title, debate_type=r.debate_type, debate_date=r.debate_date,
+            id=r.id, title=r.title, debate_type=r.debate_type, debate_date=r.debate_date,
             document_url=r.document_url,
         )
         for r in db.execute(
             text(
                 """
-                SELECT title, debate_type, debate_date, document_url
+                SELECT id, title, debate_type, debate_date, document_url
                 FROM parliamentary_debate WHERE person_id = :pid
                 ORDER BY debate_date DESC NULLS LAST, id DESC
                 LIMIT :cap

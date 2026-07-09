@@ -133,6 +133,7 @@ class ParliamentaryActivity(BaseModel):
 
 
 class ParliamentaryQuestion(BaseModel):
+    id: int                            # row id — the web links the reply via /questions/{id}/document (proxy)
     subject: str | None = None
     ministry: str | None = None
     theme: str | None = None           # policy theme (from ministry_theme map); for grouping/filtering
@@ -142,6 +143,7 @@ class ParliamentaryQuestion(BaseModel):
 
 
 class ParliamentaryDebate(BaseModel):
+    id: int                            # row id — the web links the doc via /debates/{id}/document (proxy)
     title: str | None = None
     debate_type: str | None = None
     debate_date: date | None = None

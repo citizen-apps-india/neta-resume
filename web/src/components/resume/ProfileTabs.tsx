@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import type { PersonResume, ParliamentaryQuestion, ThemeFocus } from "@/lib/api";
+import { docSrc } from "@/lib/api";
 import { rupees, severityMeta, year, pretty } from "@/lib/format";
 import { Donut, WealthLine } from "@/components/resume/charts";
 import { SourceLink, SourceChip, PendingFlag, SeverityBadge, PartyPill } from "@/components/ui";
@@ -266,7 +267,7 @@ function QuestionCard({ q }: { q: ParliamentaryQuestion }) {
           {meta}
         </span>
         {q.document_url && (
-          <a href={q.document_url} target="_blank" rel="noreferrer" className="btnGhost mono"
+          <a href={docSrc("question", q.id)} target="_blank" rel="noreferrer" className="btnGhost mono"
             style={{ fontSize: 11, padding: "3px 11px", borderRadius: 8, marginLeft: "auto" }}>
             {reply} →
           </a>
@@ -331,7 +332,7 @@ function Questions({ resume }: { resume: PersonResume }) {
       {pr.debates.length === 0 ? <Muted>None listed.</Muted> : (
         <div style={{ display: "grid", gap: 10 }}>
           {pr.debates.map((d, i) => (
-            <QARow key={i} title={d.title || "Debate"} date={d.debate_date} meta={d.debate_type || ""} url={d.document_url} />
+            <QARow key={i} title={d.title || "Debate"} date={d.debate_date} meta={d.debate_type || ""} url={d.document_url ? docSrc("debate", d.id) : null} />
           ))}
         </div>
       )}

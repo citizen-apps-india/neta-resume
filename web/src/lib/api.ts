@@ -109,3 +109,9 @@ export function getElections(): Promise<Election[]> {
 export function photoSrc(id: number, hasPhoto: string | null | undefined): string | null {
   return hasPhoto ? `${API_BASE}/persons/${id}/photo` : null;
 }
+
+/** Reply/debate PDFs are served via the API proxy — sansad.in/getFile is flaky (has 308-looped), so we
+ * fetch + cache server-side and degrade gracefully instead of dumping users into a redirect loop. */
+export function docSrc(kind: "question" | "debate", id: number): string {
+  return `${API_BASE}/${kind}s/${id}/document`;
+}
