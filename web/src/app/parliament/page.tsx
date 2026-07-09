@@ -45,9 +45,14 @@ export default async function ParliamentPage() {
         <h1 className="serif" style={{ fontSize: "clamp(26px,5.5vw,34px)", fontWeight: 500, letterSpacing: "-0.02em", margin: "0 0 6px" }}>
           What the House is asking
         </h1>
-        <p style={{ fontSize: 15, color: "var(--ink2)", margin: "0 0 26px", maxWidth: "64ch" }}>
+        <p style={{ fontSize: 15, color: "var(--ink2)", margin: "0 0 18px", maxWidth: "64ch" }}>
           The {s?.house ?? "18th Lok Sabha"}, seen through its parliamentary questions — by policy area and ministry, and the members driving it. Every figure is read live from the official record.
         </p>
+
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 26 }}>
+          <Link href="/parliament/search" className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>⌕ Search the record</Link>
+          <Link href="/parliament/trends" className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>See trends over time →</Link>
+        </div>
 
         {!s ? (
           <p style={{ color: "var(--muted)" }}>Parliament data is loading…</p>

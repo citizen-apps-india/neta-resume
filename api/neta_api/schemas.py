@@ -12,6 +12,10 @@ from pydantic import BaseModel
 
 Severity = Literal["heinous", "serious", "minor"]
 
+# Alias so a model can expose a field literally named `date` without the field default shadowing the
+# `date` type in its own annotation (see RecordHit).
+_Date = date
+
 
 class Source(BaseModel):
     code: str               # 'myneta','sansad',...
@@ -282,3 +286,30 @@ class ParliamentStats(BaseModel):
     themes: list[ThemeCount]                 # question distribution across policy themes
     top_ministries: list[MinistryCount]      # most-questioned ministries
     most_active: list[MpCount]               # top questioners
+
+
+class RecordHit(BaseModel):
+    """One topic-search hit — a question or debate matching the query (18th Lok Sabha)."""
+
+    kind: Literal["question", "debate"]
+    id: int                                  # row id — the doc link is built via /{kind}s/{id}/document
+    title: str | None = None                 # question subject / debate title
+    mp_id: int
+    mp_name: str
+    ministry: str | None = None              # questions only
+    theme: str | None = None                 # policy theme (questions only)
+    date: _Date | None = None                # asked_date / debate_date
+
+
+class ThemeSeries(BaseModel):
+    theme: str
+    points: list[int]                        # one count per month, aligned to Trends.months
+
+
+class Trends(BaseModel):
+    """Monthly question volume split by policy theme (stacked-area trends over the term)."""
+
+    house: str
+    months: list[str]                        # dense 'YYYY-MM', oldest first
+    totals: list[int]                        # total questions per month (sum across themes)
+    series: list[ThemeSeries]                # per-theme monthly counts, ordered by total volume
