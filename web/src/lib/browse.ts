@@ -5,7 +5,7 @@ export const BROWSE_PAGE_SIZE = 60;
 /** UI-level filter state, mirrored in the URL query. `house` is the LS/RS filter (directory scope);
  *  `state`/`corporation` are the scope-specific selectors (state-level / municipal). */
 export type BrowseFilters = {
-  q: string; party: string; house: string; state: string; corporation: string; cases: string; sort: string;
+  q: string; party: string; house: string; state: string; corporation: string; cases: string; theme: string; sort: string;
 };
 
 export type BrowseData = {
@@ -16,7 +16,7 @@ export type BrowseData = {
 type SP = Record<string, string | string[] | undefined>;
 const one = (v: string | string[] | undefined): string => (Array.isArray(v) ? v[0] : v) ?? "";
 
-const EMPTY_FACETS: Facets = { parties: [], states: [], houses: [] };
+const EMPTY_FACETS: Facets = { parties: [], states: [], houses: [], themes: [] };
 
 /** Parse the browse URL params, fetch the matching page + total + facet options for a scope, and hand
  *  back everything the shell/browser render. Server-side (URL-driven pagination); ~60 rows per load. */
@@ -30,7 +30,8 @@ export async function loadBrowse(
   const page = Math.max(1, Number(one(sp.page)) || 1);
   const filters: BrowseFilters = {
     q: one(sp.q), party: one(sp.party), house: one(sp.house), state: one(sp.state),
-    corporation: one(sp.corporation), cases: one(sp.cases) || "any", sort: one(sp.sort) || "assets",
+    corporation: one(sp.corporation), cases: one(sp.cases) || "any", theme: one(sp.theme),
+    sort: one(sp.sort) || "assets",
   };
   try {
     const [res, facets] = await Promise.all([
@@ -44,6 +45,7 @@ export async function loadBrowse(
         party: filters.party || undefined,
         cases: filters.cases !== "any" ? filters.cases : undefined,
         q: filters.q || undefined,
+        theme: filters.theme || undefined,
         sort: filters.sort,
         revalidate: 0,
       }),

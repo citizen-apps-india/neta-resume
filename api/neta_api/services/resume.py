@@ -572,7 +572,9 @@ _SUMMARY_BASE = """
            COALESCE(cc.total, 0)   AS total_cases,
            COALESCE(cc.pending, 0) AS pending_cases,
            sev.severity    AS top_severity,
-           oh.attendance_pct AS current_attendance_pct
+           oh.attendance_pct AS current_attendance_pct,
+           qc.cnt          AS questions_count,
+           tt.theme        AS top_theme
     FROM person p
     LEFT JOIN LATERAL (
         SELECT pt.canonical_name AS party
@@ -606,6 +608,18 @@ _SUMMARY_BASE = """
         ORDER BY CASE severity WHEN 'heinous' THEN 1 WHEN 'serious' THEN 2 WHEN 'minor' THEN 3 ELSE 4 END
         LIMIT 1
     ) sev ON true
+    -- Parliamentary-questions discovery signals. Both are LIMIT-1 / single-row LATERALs, so the planner
+    -- removes them from the count/facets queries that don't reference them (left-join removal).
+    LEFT JOIN LATERAL (
+        SELECT count(*) AS cnt FROM parliamentary_question WHERE person_id = p.id
+    ) qc ON true
+    LEFT JOIN LATERAL (
+        SELECT COALESCE(mt.theme, 'Other') AS theme
+        FROM parliamentary_question pq
+        LEFT JOIN ministry_theme mt ON mt.ministry_key = lower(btrim(pq.ministry))
+        WHERE pq.person_id = p.id
+        GROUP BY 1 ORDER BY count(*) DESC LIMIT 1
+    ) tt ON true
 """
 
 # Search filters/orders on base columns (p.normalized_name, p.display_name), so it appends its own tail.
@@ -631,6 +645,8 @@ def _to_summary(r) -> PersonSummary:
         total_cases=r.total_cases,
         top_severity=r.top_severity,
         current_attendance_pct=float(r.current_attendance_pct) if r.current_attendance_pct is not None else None,
+        questions_count=r.questions_count or None,   # 0 questions -> None (missing != zero; hides the card row)
+        top_theme=r.top_theme,
     )
 
 
@@ -644,6 +660,7 @@ _SORTS = {
     "assets": "net_assets DESC NULLS LAST, display_name",
     "cases": "total_cases DESC, display_name",
     "attendance": "current_attendance_pct DESC NULLS LAST, display_name",
+    "theme_questions": "questions_count DESC NULLS LAST, display_name",
     "name": "display_name ASC",
 }
 
@@ -658,9 +675,17 @@ _CASE_FILTERS = {
 
 
 def _list_conditions(params: dict, *, house=None, state=None, constituency=None, jurisdiction=None,
-                     party=None, cases=None, q=None) -> list[str]:
+                     party=None, cases=None, q=None, theme=None) -> list[str]:
     """WHERE conditions over the wrapped summary subquery `s`; mutates `params` with bound values."""
     conds: list[str] = []
+    if theme:
+        # MPs with >= 1 question in this policy area (theme via the ministry_theme map; read-time).
+        conds.append(
+            "EXISTS (SELECT 1 FROM parliamentary_question pq "
+            "LEFT JOIN ministry_theme mt ON mt.ministry_key = lower(btrim(pq.ministry)) "
+            "WHERE pq.person_id = s.id AND COALESCE(mt.theme, 'Other') = :theme)"
+        )
+        params["theme"] = theme
     if house:
         conds.append("s.current_house = :house")
         params["house"] = house
@@ -688,17 +713,27 @@ def _list_conditions(params: dict, *, house=None, state=None, constituency=None,
 def list_persons(db: Session, *, limit: int = 60, offset: int = 0, house: str | None = None,
                  state: str | None = None, constituency: str | None = None, jurisdiction: str | None = None,
                  party: str | None = None, cases: str | None = None, q: str | None = None,
-                 sort: str = "assets") -> tuple[list[PersonSummary], int]:
-    """Browse legislators: filter (house/jurisdiction/state/constituency/party/cases/search) + sort +
+                 theme: str | None = None, sort: str = "assets") -> tuple[list[PersonSummary], int]:
+    """Browse legislators: filter (house/jurisdiction/state/constituency/party/cases/theme/search) + sort +
     page. Returns (page rows, total matching count) so the caller can emit an X-Total-Count header."""
     params: dict = {"limit": limit, "offset": offset}
     conds = _list_conditions(params, house=house, state=state, constituency=constituency,
-                             jurisdiction=jurisdiction, party=party, cases=cases, q=q)
+                             jurisdiction=jurisdiction, party=party, cases=cases, q=q, theme=theme)
     where = ("WHERE " + " AND ".join(conds)) if conds else ""
-    order = "ORDER BY " + _SORTS.get(sort, _SORTS["assets"])
+    # When a theme is selected, "sort by questions" means questions IN THAT theme (a true theme leaderboard),
+    # not overall volume. Compute a theme-scoped count and sort on it; otherwise sort by total questions.
+    sorts, extra = _SORTS, ""
+    if theme:
+        theme_count = ("(SELECT count(*) FROM parliamentary_question pq "
+                       "LEFT JOIN ministry_theme mt ON mt.ministry_key = lower(btrim(pq.ministry)) "
+                       "WHERE pq.person_id = s.id AND COALESCE(mt.theme,'Other') = :theme)")
+        extra = f", {theme_count} AS theme_q_count"
+        sorts = {**_SORTS, "theme_questions": "theme_q_count DESC NULLS LAST, display_name"}
+    order = "ORDER BY " + sorts.get(sort, sorts["assets"])
     total = db.execute(text(f"SELECT count(*) FROM ({_SUMMARY_BASE}) s {where}"), params).scalar_one()
     rows = db.execute(
-        text(f"SELECT * FROM ({_SUMMARY_BASE}) s {where} {order} LIMIT :limit OFFSET :offset"), params
+        text(f"SELECT s.*{extra} FROM ({_SUMMARY_BASE}) s {where} {order} LIMIT :limit OFFSET :offset"),
+        params,
     )
     return [_to_summary(r) for r in rows], total
 
@@ -714,7 +749,22 @@ def facets(db: Session, *, house: str | None = None, state: str | None = None,
         sql = f"SELECT {col} AS value, count(*) AS n FROM ({_SUMMARY_BASE}) s {where} GROUP BY {col} ORDER BY n DESC, value"
         return [FacetCount(value=r.value, count=r.n) for r in db.execute(text(sql), params)]
 
-    return Facets(parties=group("s.current_party"), states=group("s.state"), houses=group("s.current_house"))
+    def themes_group() -> list[FacetCount]:
+        # Policy themes (via ministry_theme) with the count of distinct MPs who asked in each. Only restrict
+        # to a person-id subquery when a scope filter is active — unscoped, group the questions directly
+        # (every question already belongs to a real person), avoiding a needless _SUMMARY_BASE re-run.
+        scope = (f"WHERE pq.person_id IN (SELECT s.id FROM ({_SUMMARY_BASE}) s "
+                 f"WHERE {' AND '.join(conds)})") if conds else ""
+        sql = (
+            "SELECT COALESCE(mt.theme, 'Other') AS value, count(DISTINCT pq.person_id) AS n "
+            "FROM parliamentary_question pq "
+            "LEFT JOIN ministry_theme mt ON mt.ministry_key = lower(btrim(pq.ministry)) "
+            f"{scope} GROUP BY 1 ORDER BY n DESC, value"
+        )
+        return [FacetCount(value=r.value, count=r.n) for r in db.execute(text(sql), params)]
+
+    return Facets(parties=group("s.current_party"), states=group("s.state"),
+                  houses=group("s.current_house"), themes=themes_group())
 
 
 def search_persons(db: Session, q: str, limit: int = 25) -> list[PersonSummary]:

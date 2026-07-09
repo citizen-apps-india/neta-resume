@@ -85,15 +85,16 @@ def list_persons(
     party: str | None = None,
     cases: str | None = None,
     q: str | None = None,
+    theme: str | None = None,
     sort: str = "assets",
     db: Session = Depends(get_db),
 ) -> list[PersonSummary]:
-    """Browse legislators (directory): filter by house/state/constituency/jurisdiction/party/cases/search,
-    sort by assets|cases|attendance|name, and page via limit/offset. Total match count is returned in the
-    `X-Total-Count` response header (the body stays a plain list)."""
+    """Browse legislators (directory): filter by house/state/constituency/jurisdiction/party/cases/theme/
+    search, sort by assets|cases|attendance|theme_questions|name, and page via limit/offset. Total match
+    count is returned in the `X-Total-Count` response header (the body stays a plain list)."""
     items, total = resume_service.list_persons(
         db, limit=limit, offset=offset, house=house, state=state, constituency=constituency,
-        jurisdiction=jurisdiction, party=party, cases=cases, q=q, sort=sort,
+        jurisdiction=jurisdiction, party=party, cases=cases, q=q, theme=theme, sort=sort,
     )
     response.headers["X-Total-Count"] = str(total)
     return items

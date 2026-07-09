@@ -234,6 +234,8 @@ class PersonSummary(BaseModel):
     total_cases: int = 0
     top_severity: Severity | None = None    # worst severity across cases (heinous>serious>minor)
     current_attendance_pct: float | None = None  # current-term parliamentary attendance %, PRS
+    questions_count: int | None = None      # parliamentary questions asked (None = none on record)
+    top_theme: str | None = None            # the policy area this MP raises most (from ministry_theme)
 
 
 class FacetCount(BaseModel):
@@ -242,8 +244,9 @@ class FacetCount(BaseModel):
 
 
 class Facets(BaseModel):
-    """Dropdown option lists for a browse scope (party / state / house), each with its row count."""
+    """Dropdown option lists for a browse scope (party / state / house / theme), each with its row count."""
 
     parties: list[FacetCount] = []
     states: list[FacetCount] = []
     houses: list[FacetCount] = []
+    themes: list[FacetCount] = []

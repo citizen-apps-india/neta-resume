@@ -159,10 +159,20 @@ export function LegislatorBrowser({
           <option value="minor">Minor</option>
         </select>
 
+        {facets.themes.length > 0 && (
+          <select aria-label="Policy area" value={filters.theme} onChange={(e) => navigate({ theme: e.target.value || null })} style={selectStyle}>
+            <option value="">All policy areas</option>
+            {facets.themes.map((t) => (
+              <option key={t.value} value={t.value}>{t.value} ({t.count})</option>
+            ))}
+          </select>
+        )}
+
         <select aria-label="Sort by" value={filters.sort} onChange={(e) => navigate({ sort: e.target.value === "assets" ? null : e.target.value })} style={selectStyle}>
           <option value="assets">Sort: Assets ↓</option>
           <option value="cases">Sort: Cases ↓</option>
           <option value="attendance">Sort: Attendance ↓</option>
+          <option value="theme_questions">Sort: Questions ↓</option>
           <option value="name">Sort: Name A–Z</option>
         </select>
       </div>
