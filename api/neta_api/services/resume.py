@@ -297,7 +297,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
             text(
                 """
                 SELECT h.name AS house, tc.number AS cycle_number, ot.constituency,
-                       ot.rs_state_code AS state,
+                       COALESCE(ot.ls_state_code, ot.rs_state_code) AS state,
                        pt.canonical_name AS party, ot.membership_type, ot.start_date, ot.end_date,
                        ot.status, s.code AS source_code, s.name AS source_name, s.trust_tier,
                        sr.native_url, ot.attendance_pct,

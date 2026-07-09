@@ -313,3 +313,30 @@ class Trends(BaseModel):
     months: list[str]                        # dense 'YYYY-MM', oldest first
     totals: list[int]                        # total questions per month (sum across themes)
     series: list[ThemeSeries]                # per-theme monthly counts, ordered by total volume
+
+
+class ThemeShare(BaseModel):
+    theme: str
+    count: int
+    share: float                             # count / this group's total questions (0..1)
+
+
+class AggregateGroup(BaseModel):
+    """One party or state's collective question profile (18th Lok Sabha)."""
+
+    key: str                                 # party canonical name / state
+    total: int                               # total questions by this group's members
+    mps: int                                 # members of this group who asked >= 1 question
+    themes: list[ThemeShare]                 # theme emphasis (shares), ordered by count desc
+
+
+class ThemeFocusBreakdown(BaseModel):
+    """Descriptive theme-emphasis breakdown by party or state — what a group's members collectively raise.
+
+    Topical emphasis derived from the official ministry each question addressed; a comparison of focus, never
+    a value judgment or productivity ranking (same ethic as the per-MP 'Policy focus'). Missing ≠ zero.
+    """
+
+    by: Literal["party", "state"]
+    house: str
+    groups: list[AggregateGroup]             # ordered by total volume desc

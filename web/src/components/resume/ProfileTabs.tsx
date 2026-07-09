@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState } from "react";
 import type { PersonResume, ParliamentaryQuestion, ThemeFocus } from "@/lib/api";
 import { docSrc } from "@/lib/api";
@@ -245,6 +246,10 @@ function Questions({ resume }: { resume: PersonResume }) {
   const shown = theme ? pr.questions.filter((q) => q.theme === theme) : pr.questions;
   const sel = theme ? focus.find((t) => t.theme === theme) : null;
   const ratio = sel && sel.house_share && sel.house_share > 0 ? sel.share / sel.house_share : null;
+  // Contextual links into the collective (party/state) lenses — same derivation the directory uses.
+  const party = resume.party_history?.find((s) => s.is_current)?.party;
+  const currentTerm = resume.office_terms?.find((t) => t.status === "sitting") ?? resume.office_terms?.[0];
+  const state = currentTerm?.state ?? undefined;
   return (
     <div className="fadeUp">
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
@@ -269,6 +274,20 @@ function Questions({ resume }: { resume: PersonResume }) {
           {sel && (
             <div style={{ marginTop: 12 }}>
               <Muted>{sel.theme} — {Math.round(sel.share * 100)}% of questions{ratio ? ` · ${ratio.toFixed(1)}× the Lok Sabha average` : ""}.</Muted>
+            </div>
+          )}
+          {(party || state) && (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 18px", marginTop: 13 }}>
+              {party && (
+                <Link href={`/parliament/parties?focus=${encodeURIComponent(party)}`} className="tap" style={{ fontSize: 12.5, color: "var(--accent-2)", textDecoration: "none" }}>
+                  See what {party} MPs raise →
+                </Link>
+              )}
+              {state && (
+                <Link href={`/parliament/states?focus=${encodeURIComponent(state)}`} className="tap" style={{ fontSize: 12.5, color: "var(--accent-2)", textDecoration: "none" }}>
+                  See what {state} focuses on →
+                </Link>
+              )}
             </div>
           )}
         </>

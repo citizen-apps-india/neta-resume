@@ -51,7 +51,9 @@ export default async function ParliamentPage() {
 
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 26 }}>
           <Link href="/parliament/search" className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>⌕ Search the record</Link>
-          <Link href="/parliament/trends" className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>See trends over time →</Link>
+          <Link href="/parliament/trends" className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>Trends over time →</Link>
+          <Link href="/parliament/parties" className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>By party →</Link>
+          <Link href="/parliament/states" className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>By state →</Link>
         </div>
 
         {!s ? (

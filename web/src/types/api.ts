@@ -198,6 +198,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/aggregate/theme-focus": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Theme Focus
+         * @description Theme-emphasis mix per party or state (18th Lok Sabha): each group's policy-theme shares + volume.
+         */
+        get: operations["theme_focus_aggregate_theme_focus_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/search": {
         parameters: {
             query?: never;
@@ -345,6 +365,20 @@ export interface components {
             /** Self Income */
             self_income?: number | null;
             source: components["schemas"]["Source"];
+        };
+        /**
+         * AggregateGroup
+         * @description One party or state's collective question profile (18th Lok Sabha).
+         */
+        AggregateGroup: {
+            /** Key */
+            key: string;
+            /** Total */
+            total: number;
+            /** Mps */
+            mps: number;
+            /** Themes */
+            themes: components["schemas"]["ThemeShare"][];
         };
         /** ChargeSection */
         ChargeSection: {
@@ -803,12 +837,39 @@ export interface components {
             /** House Share */
             house_share?: number | null;
         };
+        /**
+         * ThemeFocusBreakdown
+         * @description Descriptive theme-emphasis breakdown by party or state — what a group's members collectively raise.
+         *
+         *     Topical emphasis derived from the official ministry each question addressed; a comparison of focus, never
+         *     a value judgment or productivity ranking (same ethic as the per-MP 'Policy focus'). Missing ≠ zero.
+         */
+        ThemeFocusBreakdown: {
+            /**
+             * By
+             * @enum {string}
+             */
+            by: "party" | "state";
+            /** House */
+            house: string;
+            /** Groups */
+            groups: components["schemas"]["AggregateGroup"][];
+        };
         /** ThemeSeries */
         ThemeSeries: {
             /** Theme */
             theme: string;
             /** Points */
             points: number[];
+        };
+        /** ThemeShare */
+        ThemeShare: {
+            /** Theme */
+            theme: string;
+            /** Count */
+            count: number;
+            /** Share */
+            share: number;
         };
         /**
          * Trends
@@ -1140,6 +1201,38 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Trends"];
+                };
+            };
+        };
+    };
+    theme_focus_aggregate_theme_focus_get: {
+        parameters: {
+            query: {
+                by: string;
+                house?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ThemeFocusBreakdown"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

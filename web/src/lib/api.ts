@@ -138,6 +138,16 @@ export function getParliamentTrends(): Promise<Trends> {
   return getJSON<Trends>("/parliament/trends", 3600);
 }
 
+// Collective theme-emphasis breakdown by party / state (descriptive, share-based).
+export type ThemeShare = { theme: string; count: number; share: number };
+export type AggregateGroup = { key: string; total: number; mps: number; themes: ThemeShare[] };
+export type ThemeFocusBreakdown = { by: "party" | "state"; house: string; groups: AggregateGroup[] };
+export function getThemeFocus(by: "party" | "state", house?: string): Promise<ThemeFocusBreakdown> {
+  const p = new URLSearchParams({ by });
+  if (house) p.set("house", house);
+  return getJSON<ThemeFocusBreakdown>(`/aggregate/theme-focus?${p.toString()}`, 3600);
+}
+
 /** Lifetime unique-visitor counter (homepage). */
 export type Visits = { count: number };
 export function getVisits(): Promise<Visits> {

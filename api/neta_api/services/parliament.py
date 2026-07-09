@@ -240,3 +240,69 @@ def trends(db: Session) -> dict:
     series = [{"theme": t, "points": [by_theme[t].get(m, 0) for m in months]} for t in ordered]
     totals = [sum(by_theme[t].get(m, 0) for t in ordered) for m in months]
     return {"house": house_name, "months": months, "totals": totals, "series": series}
+
+
+# Per-asker dimension expressions — the SAME derivation the directory uses (services/resume.py::_SUMMARY_BASE),
+# so a member's group here matches their profile: current party from party_affiliation.is_current -> canonical
+# name; state from the current (sitting, else most-recent-dated) office_term. Whitelisted: `by` selects the
+# expression, no user text is interpolated.
+_DIM_SQL = {
+    "party": """(SELECT pt.canonical_name FROM party_affiliation pa JOIN party pt ON pt.id = pa.party_id
+                 WHERE pa.person_id = p.id AND pa.is_current LIMIT 1)""",
+    "state": """(SELECT COALESCE(ot.ls_state_code, ot.rs_state_code)
+                 FROM office_term ot JOIN term_cycle tc ON tc.id = ot.term_cycle_id
+                 WHERE ot.person_id = p.id
+                 ORDER BY (ot.status = 'sitting') DESC, COALESCE(tc.start_date, DATE '2099-12-31') DESC
+                 LIMIT 1)""",
+}
+
+
+def theme_focus_by(db: Session, by: str, house: str | None = None) -> dict:
+    """Theme-emphasis breakdown by party or state (18th Lok Sabha) — the collective 'what a group raises'.
+
+    For each group (party/state), returns its policy-theme mix as SHARES (descriptive emphasis, normalised so
+    a bigger group isn't simply 'more'), plus the raw total and the count of members who asked. Groups are
+    ordered by total volume. `house` is accepted for forward-compat; only LS data exists today.
+    """
+    if by not in _DIM_SQL:
+        raise ValueError(f"unsupported dimension: {by}")
+    hid, house_name = _ls_house(db)
+    dim = _DIM_SQL[by]
+
+    rows = db.execute(
+        text(
+            f"""
+            WITH member AS (
+                SELECT p.id, {dim} AS grp
+                FROM person p
+                WHERE p.id IN (SELECT DISTINCT person_id FROM parliamentary_question WHERE house_id = :hid)
+            ),
+            q AS (
+                SELECT m.grp, COALESCE(mt.theme, 'Other') AS theme, count(*) AS n
+                FROM parliamentary_question pq
+                JOIN member m ON m.id = pq.person_id {_JOIN_THEME}
+                WHERE pq.house_id = :hid AND m.grp IS NOT NULL
+                GROUP BY 1, 2
+            ),
+            mps AS (SELECT grp, count(*) AS mp_count FROM member WHERE grp IS NOT NULL GROUP BY 1)
+            SELECT q.grp AS grp, q.theme AS theme, q.n AS n, mps.mp_count AS mp_count,
+                   sum(q.n) OVER (PARTITION BY q.grp) AS grp_total
+            FROM q JOIN mps ON mps.grp = q.grp
+            ORDER BY grp_total DESC, q.grp, q.n DESC
+            """
+        ),
+        {"hid": hid},
+    ).all()
+
+    groups: list[dict] = []
+    cur_key = object()  # sentinel so a real NULL key (already filtered) can't collide
+    cur: dict = {}
+    for r in rows:
+        if r.grp != cur_key:
+            cur = {"key": r.grp, "total": r.grp_total, "mps": r.mp_count, "themes": []}
+            groups.append(cur)
+            cur_key = r.grp
+        cur["themes"].append(
+            {"theme": r.theme, "count": r.n, "share": (r.n / r.grp_total) if r.grp_total else 0.0}
+        )
+    return {"by": by, "house": house_name, "groups": groups}
