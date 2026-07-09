@@ -1,0 +1,35 @@
+name: keep-warm
+
+# Render's free tier spins the API dyno down after ~15 min idle; the next request then cold-starts (several
+# seconds). During that window an ISR page can (re)render a "loading"/"—" fallback and cache it for an hour
+# (this bit /parliament right after launch). Pinging /health every ~10 min keeps the dyno awake, so every
+# page's first-render-per-hour stays fast and reliable.
+#
+# Notes: GitHub may delay scheduled runs under load, so 10 min leaves headroom under the 15-min sleep
+# threshold; and the ping itself wakes a sleeping dyno (the retry loop waits out a cold start). No secrets —
+# the API URL is public. Update API_URL below if the Render service URL ever changes.
+
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+  workflow_dispatch:
+
+concurrency:
+  group: keep-warm
+  cancel-in-progress: true
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping API /health
+        env:
+          API_URL: https://neta-api-lqtc.onrender.com/health
+        run: |
+          for attempt in 1 2 3; do
+            code=$(curl -sS -o /dev/null -w "%{http_code}" --max-time 60 "$API_URL" || echo 000)
+            echo "attempt $attempt: HTTP $code"
+            [ "$code" = "200" ] && exit 0
+            sleep 15
+          done
+          echo "::warning::API /health did not return 200 after 3 tries (dyno may still be waking)."
