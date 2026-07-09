@@ -17,6 +17,7 @@ export type PartySwitch = Schemas["PartySwitch"];
 export type PersonResume = Schemas["PersonResume"];
 export type PersonSummary = Schemas["PersonSummary"];
 export type ParliamentaryActivity = Schemas["ParliamentaryActivity"];
+export type ParliamentaryRecord = Schemas["ParliamentaryRecord"];
 
 async function getJSON<T>(path: string, revalidate = 3600): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, { next: { revalidate } });

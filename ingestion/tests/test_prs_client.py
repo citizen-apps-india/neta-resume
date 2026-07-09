@@ -7,7 +7,13 @@ member's own attendance on the profile. All three parse from server-rendered HTM
 from datetime import date
 from pathlib import Path
 
-from neta_sources.prs.client import parse_attendance, parse_listing, parse_report_period
+from neta_sources.prs.client import (
+    parse_attendance,
+    parse_debates,
+    parse_listing,
+    parse_questions,
+    parse_report_period,
+)
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
@@ -46,3 +52,32 @@ def test_profile_attendance():
 
 def test_report_period_absent_returns_none():
     assert parse_report_period("<html>no period here</html>") is None
+
+
+def test_profile_questions_parse_fully():
+    qs = parse_questions(_profile())
+    assert len(qs) == 119                          # matches the PRS scorecard's question count exactly
+    assert len({q.question_ref for q in qs}) == 119  # refs unique -> idempotent upsert key
+    assert all(q.question_type in {"Starred", "Unstarred"} for q in qs)
+
+
+def test_profile_question_fields():
+    by_ref = {q.question_ref: q for q in parse_questions(_profile())}
+    q = by_ref["187-AU6358"]                        # session-scoped annex id from the PDF path
+    assert q.subject == "Norms for Setting up of New Airports"
+    assert q.ministry == "Civil Aviation"
+    assert q.question_type == "Unstarred"
+    assert q.asked_date == date(2026, 4, 2)
+    assert q.document_url.startswith("https://sansad.in/getFile/loksabhaquestions/annex/187/AU6358_")
+
+
+def test_profile_debates_parse_fully():
+    ds = parse_debates(_profile())
+    assert len(ds) == 33                            # matches the PRS scorecard's debate count exactly
+    assert len({d.debate_ref for d in ds}) == 33
+    assert all(d.debate_date is not None and d.title for d in ds)
+
+
+def test_questions_and_debates_absent_return_empty():
+    assert parse_questions("<html>nothing</html>") == []
+    assert parse_debates("<html>nothing</html>") == []

@@ -63,12 +63,15 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
   // not on record — shown as "—", never 0.
   const attendance = lead?.attendance_pct ?? null;
   const houseTag = lead ? `${lead.house.replace(/[^A-Z]/g, "") || "LS"}-${lead.cycle_number}` : "";
+  // Individual questions this MP asked (PRS enumeration). Null record = not on record -> "—", never 0.
+  const pRecord = resume.parliamentary_record;
 
   const metrics = [
     { label: "Declared net assets", src: latestAssets ? `ECI · ${latestAssets.election_cycle}` : "NO AFFIDAVIT", value: rupees(latestAssets?.total_assets ?? null), color: "var(--ink)", dot: "" },
     { label: "Pending criminal cases", src: hasAffidavit ? "ECI AFFIDAVIT" : "NO AFFIDAVIT", value: hasAffidavit ? String(pending) : "—", color: !hasAffidavit ? "var(--muted)" : pending ? "var(--sev2)" : "var(--ok)", dot: hasAffidavit && pending ? "var(--sev2)" : hasAffidavit ? "var(--ok)" : "" },
     { label: "Convictions on record", src: hasAffidavit ? "COURT / AFFIDAVIT" : "NO AFFIDAVIT", value: hasAffidavit ? String(convictions) : "—", color: convictions ? "var(--sev1)" : "var(--ink)", dot: "" },
     { label: "House attendance", src: attendance != null ? `PRS · ${houseTag}` : "NO RECORD", value: attendancePct(attendance), color: attendanceColor(attendance), dot: "" },
+    { label: "Questions asked", src: pRecord ? `PRS · ${houseTag}` : "NO RECORD", value: pRecord ? String(pRecord.questions_count) : "—", color: pRecord ? "var(--ink)" : "var(--muted)", dot: "" },
     { label: "Party labels held", src: "PUBLIC RECORD", value: String(parties.size), color: "var(--ink)", dot: "" },
   ];
 

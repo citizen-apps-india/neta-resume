@@ -212,3 +212,34 @@ Table parliamentary_activity {
   updated_at timestamptz
   indexes { (person_id, term_cycle_id) [unique] }
 }
+
+Table parliamentary_question {
+  id bigint [pk]
+  person_id bigint [ref: > person.id]         // ON DELETE CASCADE
+  house_id smallint [ref: > house.id]
+  term_cycle_id bigint [ref: > term_cycle.id]
+  question_ref text                           // PRS annex id, e.g. "AS150"/"AU1111"
+  subject text                                // question subject line
+  ministry text
+  question_type text                          // 'Starred' | 'Unstarred'
+  asked_date date
+  document_url text                           // official sansad.in/getFile PDF
+  source_ref_id bigint [ref: > source_ref.id] // ON DELETE SET NULL
+  updated_at timestamptz
+  indexes { (person_id, term_cycle_id, question_ref) [unique] }
+}
+
+Table parliamentary_debate {
+  id bigint [pk]
+  person_id bigint [ref: > person.id]         // ON DELETE CASCADE
+  house_id smallint [ref: > house.id]
+  term_cycle_id bigint [ref: > term_cycle.id]
+  debate_ref text                             // stable key: normalized(title|date)
+  title text                                  // debate title / bill name
+  debate_type text
+  debate_date date
+  document_url text                           // official sansad.in/getFile PDF
+  source_ref_id bigint [ref: > source_ref.id] // ON DELETE SET NULL
+  updated_at timestamptz
+  indexes { (person_id, term_cycle_id, debate_ref) [unique] }
+}

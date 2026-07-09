@@ -6,7 +6,7 @@ import { rupees, severityMeta, year, pretty } from "@/lib/format";
 import { Donut, WealthLine } from "@/components/resume/charts";
 import { SourceLink, SourceChip, PendingFlag, SeverityBadge, PartyPill } from "@/components/ui";
 
-const TABS = ["Overview", "Activity", "Wealth", "Cases", "Career & Roles", "Contact", "In The News"] as const;
+const TABS = ["Overview", "Activity", "Questions", "Wealth", "Cases", "Career & Roles", "Contact", "In The News"] as const;
 type Tab = (typeof TABS)[number];
 
 function isRajyaSabha(resume: PersonResume): boolean {
@@ -16,7 +16,9 @@ function isRajyaSabha(resume: PersonResume): boolean {
 export function ProfileTabs({ resume }: { resume: PersonResume }) {
   const [tab, setTab] = useState<Tab>("Overview");
   // Hide the Activity tab for members with no PRS scorecard (former members, unmatched, RS with no data).
-  const tabs = TABS.filter((t) => t !== "Activity" || resume.activity);
+  const tabs = TABS.filter(
+    (t) => (t !== "Activity" || resume.activity) && (t !== "Questions" || resume.parliamentary_record)
+  );
 
   return (
     <>
@@ -46,6 +48,7 @@ export function ProfileTabs({ resume }: { resume: PersonResume }) {
       <div style={{ padding: "clamp(20px,4vw,30px) clamp(16px,4vw,40px) 40px", background: "var(--bg)" }}>
         {tab === "Overview" && <Overview resume={resume} />}
         {tab === "Activity" && <Activity resume={resume} />}
+        {tab === "Questions" && <Questions resume={resume} />}
         {tab === "Wealth" && <Wealth resume={resume} />}
         {tab === "Cases" && <Cases resume={resume} />}
         {tab === "Career & Roles" && <Career resume={resume} />}
@@ -180,6 +183,70 @@ function MetricBar({ label, metric }: { label: string; metric: { value: number |
       <div style={{ display: "flex", justifyContent: "space-between", marginTop: 7 }}>
         <span style={{ fontSize: 12, color: "var(--muted)" }}>{house_median != null ? `House median ${Math.round(house_median)}` : ""}</span>
         {percentile != null && <span style={{ fontSize: 12, color: "var(--muted)" }}>Ahead of {percentile}% of the House</span>}
+      </div>
+    </div>
+  );
+}
+
+function QARow({ title, date, meta, url }: { title: string; date?: string | null; meta: string; url?: string | null }) {
+  return (
+    <div style={cardStyle}>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12, marginBottom: 6 }}>
+        <span style={{ ...headStyle, fontSize: 14, lineHeight: 1.35 }}>{title}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--muted)", whiteSpace: "nowrap" }}>{isoDate(date)}</span>
+      </div>
+      <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
+        {meta && <span className="mono" style={{ fontSize: 11, color: "var(--faint)" }}>{meta}</span>}
+        {url && <a href={url} target="_blank" rel="noreferrer" className="mono" style={{ fontSize: 11, color: "var(--accent-2)" }}>Official PDF ↗</a>}
+      </div>
+    </div>
+  );
+}
+
+function CountChip({ n }: { n: number }) {
+  return <span className="mono" style={{ fontSize: 12, color: "var(--accent-2)", background: "var(--accent-soft)", borderRadius: 20, padding: "2px 10px" }}>{n}</span>;
+}
+
+function Questions({ resume }: { resume: PersonResume }) {
+  const pr = resume.parliamentary_record;
+  if (!pr) return <Muted>No questions or debates on record.</Muted>;
+  const sectionHead: React.CSSProperties = { ...headStyle, fontSize: 15, display: "flex", alignItems: "center", gap: 10, margin: "22px 0 12px" };
+  return (
+    <div className="fadeUp">
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
+        <span style={headStyle}>Questions &amp; debates — {pr.house}</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--faint)" }}>PRS · DIGITAL SANSAD</span>
+      </div>
+      <Muted>Individual matters this member raised in the House — each links the official Lok Sabha document.</Muted>
+
+      <div style={sectionHead}><span>Questions asked</span><CountChip n={pr.questions_count} /></div>
+      {pr.questions.length === 0 ? <Muted>None listed.</Muted> : (
+        <div style={{ display: "grid", gap: 10 }}>
+          {pr.questions.map((q, i) => (
+            <QARow key={i} title={q.subject || "Question"} date={q.asked_date}
+              meta={[q.question_type, q.ministry].filter(Boolean).join(" · ")} url={q.document_url} />
+          ))}
+        </div>
+      )}
+      {pr.questions_count > pr.questions.length && (
+        <Muted>Showing {pr.questions.length} most recent of {pr.questions_count}.</Muted>
+      )}
+
+      <div style={sectionHead}><span>Debates participated in</span><CountChip n={pr.debates_count} /></div>
+      {pr.debates.length === 0 ? <Muted>None listed.</Muted> : (
+        <div style={{ display: "grid", gap: 10 }}>
+          {pr.debates.map((d, i) => (
+            <QARow key={i} title={d.title || "Debate"} date={d.debate_date} meta={d.debate_type || ""} url={d.document_url} />
+          ))}
+        </div>
+      )}
+      {pr.debates_count > pr.debates.length && (
+        <Muted>Showing {pr.debates.length} most recent of {pr.debates_count}.</Muted>
+      )}
+
+      <div style={{ marginTop: 20, display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap" }}>
+        <SourceLink source={pr.source} />
+        <span className="mono" style={{ fontSize: 10, color: "var(--faint)" }}>Enumerated from PRS Legislative Research (CC-BY 4.0); documents © Lok Sabha Secretariat</span>
       </div>
     </div>
   );

@@ -20,6 +20,9 @@ from neta_api.schemas import (
     NewsItem,
     OfficeTerm,
     ParliamentaryActivity,
+    ParliamentaryDebate,
+    ParliamentaryQuestion,
+    ParliamentaryRecord,
     PartyStint,
     PartySwitch,
     PersonResume,
@@ -104,6 +107,94 @@ def _build_activity(db: Session, person_id: int) -> ParliamentaryActivity | None
         period_end=row.period_end,
         source=Source(code=row.source_code, name=row.source_name, url=row.native_url,
                       trust_tier=row.trust_tier),
+    )
+
+
+# The lists are capped so a prolific MP (100s of questions) doesn't bloat the resume payload; the full
+# tallies come from a cheap count(*) so the UI can show "showing N of total" + a hero quick-stat.
+_RECORD_LIST_CAP = 50
+
+
+def _build_parliamentary_record(db: Session, person_id: int) -> ParliamentaryRecord | None:
+    """Individual questions + debates from PRS profiles, newest first, capped; None if the MP has none."""
+    counts = db.execute(
+        text(
+            """
+            SELECT
+              (SELECT count(*) FROM parliamentary_question WHERE person_id = :pid) AS q_count,
+              (SELECT count(*) FROM parliamentary_debate   WHERE person_id = :pid) AS d_count,
+              (SELECT h.name FROM office_term ot JOIN house h ON h.id = ot.house_id
+                 WHERE ot.person_id = :pid ORDER BY ot.start_date DESC NULLS LAST LIMIT 1) AS house_name
+            """
+        ),
+        {"pid": person_id},
+    ).first()
+    if not counts or (counts.q_count == 0 and counts.d_count == 0):
+        return None
+
+    questions = [
+        ParliamentaryQuestion(
+            subject=r.subject, ministry=r.ministry, question_type=r.question_type,
+            asked_date=r.asked_date, document_url=r.document_url,
+        )
+        for r in db.execute(
+            text(
+                """
+                SELECT subject, ministry, question_type, asked_date, document_url
+                FROM parliamentary_question WHERE person_id = :pid
+                ORDER BY asked_date DESC NULLS LAST, id DESC
+                LIMIT :cap
+                """
+            ),
+            {"pid": person_id, "cap": _RECORD_LIST_CAP},
+        )
+    ]
+    debates = [
+        ParliamentaryDebate(
+            title=r.title, debate_type=r.debate_type, debate_date=r.debate_date,
+            document_url=r.document_url,
+        )
+        for r in db.execute(
+            text(
+                """
+                SELECT title, debate_type, debate_date, document_url
+                FROM parliamentary_debate WHERE person_id = :pid
+                ORDER BY debate_date DESC NULLS LAST, id DESC
+                LIMIT :cap
+                """
+            ),
+            {"pid": person_id, "cap": _RECORD_LIST_CAP},
+        )
+    ]
+    # One PRS source_ref backs all of a member's rows — read it once for the container-level provenance.
+    src = db.execute(
+        text(
+            """
+            SELECT s.code AS source_code, s.name AS source_name, s.trust_tier, sr.native_url
+            FROM parliamentary_question pq
+            JOIN source_ref sr ON sr.id = pq.source_ref_id
+            JOIN source s ON s.id = sr.source_id
+            WHERE pq.person_id = :pid
+            UNION ALL
+            SELECT s.code, s.name, s.trust_tier, sr.native_url
+            FROM parliamentary_debate pd
+            JOIN source_ref sr ON sr.id = pd.source_ref_id
+            JOIN source s ON s.id = sr.source_id
+            WHERE pd.person_id = :pid
+            LIMIT 1
+            """
+        ),
+        {"pid": person_id},
+    ).first()
+
+    return ParliamentaryRecord(
+        house=counts.house_name or "",
+        questions_count=counts.q_count,
+        debates_count=counts.d_count,
+        questions=questions,
+        debates=debates,
+        source=_source(src) if src else Source(code="prs", name="PRS Legislative Research",
+                                               url=None, trust_tier=2),
     )
 
 
@@ -395,6 +486,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
         wealth=wealth,
         criminal_cases=criminal_cases,
         activity=_build_activity(db, person_id),
+        parliamentary_record=_build_parliamentary_record(db, person_id),
         news=news,
     )
 

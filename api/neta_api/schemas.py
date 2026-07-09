@@ -132,6 +132,36 @@ class ParliamentaryActivity(BaseModel):
     source: Source
 
 
+class ParliamentaryQuestion(BaseModel):
+    subject: str | None = None
+    ministry: str | None = None
+    question_type: str | None = None   # 'Starred' | 'Unstarred'
+    asked_date: date | None = None
+    document_url: str | None = None    # official sansad.in question PDF
+
+
+class ParliamentaryDebate(BaseModel):
+    title: str | None = None
+    debate_type: str | None = None
+    debate_date: date | None = None
+    document_url: str | None = None    # official sansad.in debate PDF (per sitting-day)
+
+
+class ParliamentaryRecord(BaseModel):
+    """Individual questions asked + debates joined — the content behind the activity counts.
+
+    Enumerated from PRS MP Track profiles (CC-BY 4.0). `*_count` is the full total; the lists are capped
+    (most-recent first) to bound payload — the UI shows "showing N of total".
+    """
+
+    house: str                         # 'Lok Sabha' | 'Rajya Sabha'
+    questions_count: int
+    debates_count: int
+    questions: list[ParliamentaryQuestion]
+    debates: list[ParliamentaryDebate]
+    source: Source                     # PRS provenance (per-item official doc links live on each row)
+
+
 class NewsItem(BaseModel):
     title: str
     snippet: str | None = None
@@ -156,6 +186,7 @@ class PersonResume(BaseModel):
     wealth: list[AffidavitWealth]      # ordered by filed_year for YoY
     criminal_cases: list[CriminalCase]
     activity: ParliamentaryActivity | None = None   # PRS scorecard: questions/debates/bills + peer context
+    parliamentary_record: ParliamentaryRecord | None = None  # individual questions + debates (PRS profiles)
     news: list[NewsItem] = []          # recent press coverage (Google News), newest first
 
 
