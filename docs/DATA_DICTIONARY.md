@@ -250,3 +250,33 @@ Populated by `neta stitch-identities`; reviewed via `neta review list|show|accep
 Sourced from **PRS Legislative Research** MP Track (CC-BY 4.0; attribute in the UI). Populated by
 `neta activity`; one row per MP per term (`UNIQUE (person_id, term_cycle_id)`). Attendance-% is NOT here —
 it stays on `office_term.attendance_pct`. Peer context (house median/percentile) is computed at read time.
+
+### `parliamentary_question` — individual questions asked (added in 0025)
+| Column | Type | Notes |
+|---|---|---|
+| `person_id` | bigint FK→person (ON DELETE CASCADE) | the asking legislator |
+| `house_id` / `term_cycle_id` | smallint / bigint FK | house + term (18th LS for now) |
+| `question_ref` | text | PRS annex id, e.g. `AS150` (Answered Starred) / `AU1111` (Answered Unstarred) |
+| `subject` | text | the question's subject line |
+| `ministry` | text | ministry addressed |
+| `question_type` | text | `Starred` / `Unstarred` |
+| `asked_date` | date | date the question was listed |
+| `document_url` | text | official `sansad.in/getFile/loksabhaquestions/...` PDF |
+| `source_ref_id` | bigint FK→source_ref (ON DELETE SET NULL) | PRS MP Track provenance |
+
+### `parliamentary_debate` — debates participated in (added in 0025)
+| Column | Type | Notes |
+|---|---|---|
+| `person_id` | bigint FK→person (ON DELETE CASCADE) | the participating legislator |
+| `house_id` / `term_cycle_id` | smallint / bigint FK | house + term (18th LS for now) |
+| `debate_ref` | text | stable key `normalized(title\|date)` (debates lack a public id) |
+| `title` | text | debate title / bill name |
+| `debate_type` | text | e.g. `Discussion`, `Zero Hour`, `Special Mention` |
+| `debate_date` | date | sitting date |
+| `document_url` | text | official `sansad.in/getFile/debatestextmk/...` PDF (per sitting-day) |
+| `source_ref_id` | bigint FK→source_ref (ON DELETE SET NULL) | PRS MP Track provenance |
+
+Both added in `0025`, sourced from **PRS MP Track** per-member profiles (CC-BY 4.0; attribute in the UI) —
+the reachable enumeration of the content the `0024` scorecard only counts. Populated by `neta questions` /
+`neta debates`; one row per (member, item), idempotent on the `UNIQUE` keys. Each row links the official
+sansad.in document PDF (`document_url`). **Missing ≠ zero** — an MP with no rows simply asked/joined none listed.

@@ -17,6 +17,7 @@ sign the attendance register, so their profile carries no %, and fetch_attendanc
 
 from __future__ import annotations
 
+import hashlib
 import re
 from dataclasses import dataclass
 from datetime import date, datetime
@@ -153,3 +154,115 @@ def fetch_report_period(house: str) -> tuple[date, date] | None:
         return None
     resp = http.get(roster[0].profile_url)
     return parse_report_period(resp.text)
+
+
+# --- Individual questions + debates (the content behind the 0024 scorecard counts) -----------------
+# The profile page renders a member's questions and debates as two Drupal views tables. Each data row is
+# a <tr> of responsive cells tagged with data-title="…". Both tables reuse generic field classes, so we
+# key off the human-readable data-title labels, which ARE table-specific:
+#   questions -> a "Ministry or Category" cell;   debates -> a "Debate Type" cell.
+# Question rows link the official annex PDF on the reachable sansad.in/getFile host; the annex path
+# encodes session + question id (e.g. .../annex/187/AU6358_….pdf -> ref "187-AU6358", stable per term).
+
+_TR = re.compile(r"<tr\b.*?</tr>", re.S)
+_QUESTION_REF = re.compile(r"/annex/(\d+)/([A-Za-z]+\d+)_")
+
+
+def _digest(s: str) -> str:
+    """Deterministic short hash (built-in hash() is per-process randomized -> breaks idempotency)."""
+    return hashlib.sha1((s or "").encode("utf-8")).hexdigest()[:10]
+
+
+@dataclass(slots=True)
+class PrsQuestion:
+    question_ref: str
+    subject: str | None
+    ministry: str | None
+    question_type: str | None       # 'Starred' | 'Unstarred'
+    asked_date: date | None
+    document_url: str | None
+
+
+@dataclass(slots=True)
+class PrsDebate:
+    debate_ref: str
+    title: str | None
+    debate_type: str | None
+    debate_date: date | None
+    document_url: str | None
+
+
+def _cell(row: str, data_title: str) -> str | None:
+    """Inner HTML of the <td data-title="…"> cell, or None if this row has no such cell."""
+    m = re.search(rf'<td[^>]*data-title="{re.escape(data_title)}"[^>]*>(.*?)</td>', row, re.S)
+    return m.group(1) if m else None
+
+
+def _href(frag: str | None) -> str | None:
+    if not frag:
+        return None
+    m = re.search(r'href="([^"]+)"', frag)
+    return m.group(1).replace("&amp;", "&") if m else None
+
+
+def _row_date(frag: str | None) -> date | None:
+    m = re.search(r"(\d{2})\.(\d{2})\.(\d{4})", frag or "")
+    return date(int(m[3]), int(m[2]), int(m[1])) if m else None
+
+
+def parse_questions(html: str) -> list[PrsQuestion]:
+    """Parse a member profile's questions table (pure; shared by fetch_record + tests)."""
+    out: list[PrsQuestion] = []
+    seen: set[str] = set()
+    for row in _TR.findall(html):
+        ministry_cell = _cell(row, "Ministry or Category")
+        if ministry_cell is None:               # not a question row (header, or a different table)
+            continue
+        title_cell = _cell(row, "Title")
+        url = _href(title_cell)
+        subject = _clean(title_cell) if title_cell else None
+        d = _row_date(_cell(row, "Date"))
+        rm = _QUESTION_REF.search(url or "")
+        if rm:
+            ref = f"{rm[1]}-{rm[2]}"             # session-scoped annex id, e.g. "187-AU6358"
+        else:                                    # ~2% of rows carry no annex PDF -> synthesize a stable ref
+            ref = f"q-{d.isoformat() if d else 'na'}-{_digest(subject or '')}"
+        if ref in seen:
+            continue
+        seen.add(ref)
+        out.append(PrsQuestion(
+            question_ref=ref, subject=subject or None, ministry=_clean(ministry_cell) or None,
+            question_type=_clean(_cell(row, "Type")) or None, asked_date=d, document_url=url,
+        ))
+    return out
+
+
+def parse_debates(html: str) -> list[PrsDebate]:
+    """Parse a member profile's debates table (pure; shared by fetch_record + tests)."""
+    out: list[PrsDebate] = []
+    seen: set[str] = set()
+    for row in _TR.findall(html):
+        type_cell = _cell(row, "Debate Type")
+        if type_cell is None:                    # not a debate row
+            continue
+        title_cell = _cell(row, "Debate title/Bill name")
+        url = _href(title_cell)
+        title = _clean(title_cell) if title_cell else None
+        d = _row_date(_cell(row, "Date"))
+        # Debates have no per-item public id (the PDF is per sitting-day, shared) -> key on date|title.
+        ref = f"{d.isoformat() if d else 'na'}-{_digest(title or '')}"
+        if ref in seen:
+            continue
+        seen.add(ref)
+        out.append(PrsDebate(
+            debate_ref=ref, title=title or None, debate_type=_clean(type_cell) or None,
+            debate_date=d, document_url=url,
+        ))
+    return out
+
+
+def fetch_record(member: PrsMember) -> tuple[list[PrsQuestion], list[PrsDebate], str]:
+    """One profile fetch -> (questions, debates, raw_cache_relpath). Cheaper than fetching per-table."""
+    resp = http.get(member.profile_url)
+    rel = cache_raw(resp.content, suffix=f"_prs_{member.slug}.html")
+    return parse_questions(resp.text), parse_debates(resp.text), rel

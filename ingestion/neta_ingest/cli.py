@@ -219,6 +219,14 @@ def activity(house: str = "ls") -> None:
     p.run(house=house)
 
 
+@app.command(name="parliamentary-record")
+def parliamentary_record(house: str = "ls") -> None:
+    """Attach individual questions + debates (text/subject) per MP from PRS profiles. house: ls|rs."""
+    from neta_ingest.pipelines.enrich import parliamentary_record as p
+
+    p.run(house=house)
+
+
 @app.command(name="native-names")
 def native_names() -> None:
     """Backfill Devanagari (Hindi) names from Wikidata for the 18th Lok Sabha."""

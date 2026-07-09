@@ -379,6 +379,50 @@ export interface components {
             period_end?: string | null;
             source: components["schemas"]["Source"];
         };
+        /** ParliamentaryDebate */
+        ParliamentaryDebate: {
+            /** Title */
+            title?: string | null;
+            /** Debate Type */
+            debate_type?: string | null;
+            /** Debate Date */
+            debate_date?: string | null;
+            /** Document Url */
+            document_url?: string | null;
+        };
+        /** ParliamentaryQuestion */
+        ParliamentaryQuestion: {
+            /** Subject */
+            subject?: string | null;
+            /** Ministry */
+            ministry?: string | null;
+            /** Question Type */
+            question_type?: string | null;
+            /** Asked Date */
+            asked_date?: string | null;
+            /** Document Url */
+            document_url?: string | null;
+        };
+        /**
+         * ParliamentaryRecord
+         * @description Individual questions asked + debates joined — the content behind the activity counts.
+         *
+         *     Enumerated from PRS MP Track profiles (CC-BY 4.0). `*_count` is the full total; the lists are capped
+         *     (most-recent first) to bound payload — the UI shows "showing N of total".
+         */
+        ParliamentaryRecord: {
+            /** House */
+            house: string;
+            /** Questions Count */
+            questions_count: number;
+            /** Debates Count */
+            debates_count: number;
+            /** Questions */
+            questions: components["schemas"]["ParliamentaryQuestion"][];
+            /** Debates */
+            debates: components["schemas"]["ParliamentaryDebate"][];
+            source: components["schemas"]["Source"];
+        };
         /** PartyStint */
         PartyStint: {
             /** Party */
@@ -446,6 +490,7 @@ export interface components {
             /** Criminal Cases */
             criminal_cases: components["schemas"]["CriminalCase"][];
             activity?: components["schemas"]["ParliamentaryActivity"] | null;
+            parliamentary_record?: components["schemas"]["ParliamentaryRecord"] | null;
             /**
              * News
              * @default []
