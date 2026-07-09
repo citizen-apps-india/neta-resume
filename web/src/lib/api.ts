@@ -104,6 +104,40 @@ export function getParliamentMinistries(): Promise<MinistryCount[]> {
   return getJSON<MinistryCount[]>("/parliament/ministries", 3600);
 }
 
+// Topic search over question subjects + debate titles (18th Lok Sabha).
+export type RecordHit = {
+  kind: "question" | "debate";
+  id: number;
+  title: string | null;
+  mp_id: number;
+  mp_name: string;
+  ministry: string | null;
+  theme: string | null;
+  date: string | null;
+};
+export type SearchRecordsOpts = { q: string; kind?: string; theme?: string; limit?: number; offset?: number };
+/** A page of matching questions/debates plus the total match count (from X-Total-Count). */
+export async function searchRecords(opts: SearchRecordsOpts): Promise<{ items: RecordHit[]; total: number }> {
+  const p = new URLSearchParams();
+  p.set("q", opts.q);
+  if (opts.kind) p.set("kind", opts.kind);
+  if (opts.theme) p.set("theme", opts.theme);
+  p.set("limit", String(opts.limit ?? 30));
+  p.set("offset", String(opts.offset ?? 0));
+  const res = await fetch(`${API_BASE}/parliament/search?${p.toString()}`, { next: { revalidate: 3600 } });
+  if (!res.ok) throw new Error(`API ${res.status} for /parliament/search`);
+  const items = (await res.json()) as RecordHit[];
+  const total = Number(res.headers.get("x-total-count") ?? items.length);
+  return { items, total };
+}
+
+// Monthly question volume split by policy theme (stacked-area trends).
+export type ThemeSeries = { theme: string; points: number[] };
+export type Trends = { house: string; months: string[]; totals: number[]; series: ThemeSeries[] };
+export function getParliamentTrends(): Promise<Trends> {
+  return getJSON<Trends>("/parliament/trends", 3600);
+}
+
 /** Lifetime unique-visitor counter (homepage). */
 export type Visits = { count: number };
 export function getVisits(): Promise<Visits> {

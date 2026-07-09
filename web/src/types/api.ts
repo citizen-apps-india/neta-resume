@@ -117,6 +117,87 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/parliament/stats": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Parliament Stats
+         * @description National dashboard: totals + theme mix + top ministries + most-active MPs (18th Lok Sabha).
+         */
+        get: operations["parliament_stats_parliament_stats_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/parliament/ministries": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Parliament Ministries
+         * @description The full ranked list of ministries by question count.
+         */
+        get: operations["parliament_ministries_parliament_ministries_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/parliament/search": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Parliament Search
+         * @description Topic search over question subjects + debate titles (18th Lok Sabha). Filter by kind/theme, page via
+         *     limit/offset; the total match count is in the `X-Total-Count` header (body stays a plain list).
+         */
+        get: operations["parliament_search_parliament_search_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/parliament/trends": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Parliament Trends
+         * @description Monthly question volume split by policy theme (18th Lok Sabha) — the stacked-area trends view.
+         */
+        get: operations["parliament_trends_parliament_trends_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/search": {
         parameters: {
             query?: never;
@@ -363,6 +444,28 @@ export interface components {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
         };
+        /** MinistryCount */
+        MinistryCount: {
+            /** Ministry */
+            ministry: string;
+            /** Theme */
+            theme: string;
+            /** Count */
+            count: number;
+        };
+        /** MpCount */
+        MpCount: {
+            /** Id */
+            id: number;
+            /** Display Name */
+            display_name: string;
+            /** Photo Url */
+            photo_url?: string | null;
+            /** Count */
+            count: number;
+            /** Top Theme */
+            top_theme?: string | null;
+        };
         /** NewsItem */
         NewsItem: {
             /** Title */
@@ -401,6 +504,26 @@ export interface components {
             /** Attendance Pct */
             attendance_pct?: number | null;
             attendance_source?: components["schemas"]["Source"] | null;
+        };
+        /**
+         * ParliamentStats
+         * @description Institutional-lens dashboard: what the House is asking (currently the 18th Lok Sabha).
+         */
+        ParliamentStats: {
+            /** House */
+            house: string;
+            /** Total Questions */
+            total_questions: number;
+            /** Total Debates */
+            total_debates: number;
+            /** Active Mps */
+            active_mps: number;
+            /** Themes */
+            themes: components["schemas"]["ThemeCount"][];
+            /** Top Ministries */
+            top_ministries: components["schemas"]["MinistryCount"][];
+            /** Most Active */
+            most_active: components["schemas"]["MpCount"][];
         };
         /**
          * ParliamentaryActivity
@@ -586,6 +709,31 @@ export interface components {
             /** Top Theme */
             top_theme?: string | null;
         };
+        /**
+         * RecordHit
+         * @description One topic-search hit — a question or debate matching the query (18th Lok Sabha).
+         */
+        RecordHit: {
+            /**
+             * Kind
+             * @enum {string}
+             */
+            kind: "question" | "debate";
+            /** Id */
+            id: number;
+            /** Title */
+            title?: string | null;
+            /** Mp Id */
+            mp_id: number;
+            /** Mp Name */
+            mp_name: string;
+            /** Ministry */
+            ministry?: string | null;
+            /** Theme */
+            theme?: string | null;
+            /** Date */
+            date?: string | null;
+        };
         /** RoleEntry */
         RoleEntry: {
             /** Role Type */
@@ -630,6 +778,13 @@ export interface components {
             /** Crorepatis */
             crorepatis: number;
         };
+        /** ThemeCount */
+        ThemeCount: {
+            /** Theme */
+            theme: string;
+            /** Count */
+            count: number;
+        };
         /**
          * ThemeFocus
          * @description One policy theme's weight in an MP's questions, vs the House — the 'Policy focus' breakdown.
@@ -647,6 +802,27 @@ export interface components {
             share: number;
             /** House Share */
             house_share?: number | null;
+        };
+        /** ThemeSeries */
+        ThemeSeries: {
+            /** Theme */
+            theme: string;
+            /** Points */
+            points: number[];
+        };
+        /**
+         * Trends
+         * @description Monthly question volume split by policy theme (stacked-area trends over the term).
+         */
+        Trends: {
+            /** House */
+            house: string;
+            /** Months */
+            months: string[];
+            /** Totals */
+            totals: number[];
+            /** Series */
+            series: components["schemas"]["ThemeSeries"][];
         };
         /** ValidationError */
         ValidationError: {
@@ -869,6 +1045,101 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    parliament_stats_parliament_stats_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["ParliamentStats"];
+                };
+            };
+        };
+    };
+    parliament_ministries_parliament_ministries_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["MinistryCount"][];
+                };
+            };
+        };
+    };
+    parliament_search_parliament_search_get: {
+        parameters: {
+            query: {
+                q: string;
+                kind?: string | null;
+                theme?: string | null;
+                limit?: number;
+                offset?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["RecordHit"][];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    parliament_trends_parliament_trends_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["Trends"];
                 };
             };
         };
