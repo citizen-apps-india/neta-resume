@@ -2,6 +2,7 @@ import Link from "next/link";
 import { photoSrc, type PersonSummary } from "@/lib/api";
 import { rupees, caseSignalColor, attendancePct, attendanceColor } from "@/lib/format";
 import { PartyPill, PhotoBox, Dot } from "@/components/ui";
+import { themeColor } from "@/lib/themes";
 
 /** The comparable directory card — the same four signals for every legislator. */
 export function DirectoryCard({ p }: { p: PersonSummary }) {
@@ -44,6 +45,13 @@ export function DirectoryCard({ p }: { p: PersonSummary }) {
           <div style={{ fontSize: 9.5, color: "var(--muted)", marginTop: 2 }}>{p.current_attendance_pct == null ? "NO RECORD" : "ATTENDANCE"}</div>
         </div>
       </div>
+      {p.questions_count != null && (
+        <div style={{ display: "flex", alignItems: "center", gap: 7, padding: "8px 14px", borderTop: "1px solid var(--rule)", fontSize: 12 }}>
+          <span style={{ width: 8, height: 8, borderRadius: 2, background: themeColor(p.top_theme), flexShrink: 0 }} />
+          <span style={{ color: "var(--ink2)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{p.top_theme ?? "—"}</span>
+          <span className="mono" style={{ marginLeft: "auto", color: "var(--muted)", fontSize: 11, whiteSpace: "nowrap" }}>{p.questions_count} Q{p.questions_count === 1 ? "" : "s"}</span>
+        </div>
+      )}
       {seat && (
         <div className="mono" style={{ padding: "8px 14px", background: "var(--sunken)", fontSize: 9, letterSpacing: "0.05em", color: "var(--muted)" }}>
           {seat}

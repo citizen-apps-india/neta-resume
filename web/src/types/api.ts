@@ -30,9 +30,9 @@ export interface paths {
         };
         /**
          * List Persons
-         * @description Browse legislators (directory): filter by house/state/constituency/jurisdiction/party/cases/search,
-         *     sort by assets|cases|attendance|name, and page via limit/offset. Total match count is returned in the
-         *     `X-Total-Count` response header (the body stays a plain list).
+         * @description Browse legislators (directory): filter by house/state/constituency/jurisdiction/party/cases/theme/
+         *     search, sort by assets|cases|attendance|theme_questions|name, and page via limit/offset. Total match
+         *     count is returned in the `X-Total-Count` response header (the body stays a plain list).
          */
         get: operations["list_persons_persons_get"];
         put?: never;
@@ -334,7 +334,7 @@ export interface components {
         };
         /**
          * Facets
-         * @description Dropdown option lists for a browse scope (party / state / house), each with its row count.
+         * @description Dropdown option lists for a browse scope (party / state / house / theme), each with its row count.
          */
         Facets: {
             /**
@@ -352,6 +352,11 @@ export interface components {
              * @default []
              */
             houses: components["schemas"]["FacetCount"][];
+            /**
+             * Themes
+             * @default []
+             */
+            themes: components["schemas"]["FacetCount"][];
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -576,6 +581,10 @@ export interface components {
             top_severity?: ("heinous" | "serious" | "minor") | null;
             /** Current Attendance Pct */
             current_attendance_pct?: number | null;
+            /** Questions Count */
+            questions_count?: number | null;
+            /** Top Theme */
+            top_theme?: string | null;
         };
         /** RoleEntry */
         RoleEntry: {
@@ -709,6 +718,7 @@ export interface operations {
                 party?: string | null;
                 cases?: string | null;
                 q?: string | null;
+                theme?: string | null;
                 sort?: string;
             };
             header?: never;

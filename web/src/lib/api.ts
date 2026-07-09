@@ -36,7 +36,7 @@ export async function getPersonResume(id: number): Promise<PersonResume | null> 
 
 export type ListPersonsOpts = {
   limit?: number; offset?: number; house?: string; state?: string; constituency?: string;
-  jurisdiction?: string; party?: string; cases?: string; q?: string; sort?: string; revalidate?: number;
+  jurisdiction?: string; party?: string; cases?: string; q?: string; theme?: string; sort?: string; revalidate?: number;
 };
 
 /** A page of legislators plus the total count of matches (from the X-Total-Count header) for paging. */
@@ -51,6 +51,7 @@ export async function listPersons(opts: ListPersonsOpts = {}): Promise<{ items: 
   if (opts.party) q.set("party", opts.party);
   if (opts.cases) q.set("cases", opts.cases);
   if (opts.q) q.set("q", opts.q);
+  if (opts.theme) q.set("theme", opts.theme);
   if (opts.sort) q.set("sort", opts.sort);
   const res = await fetch(`${API_BASE}/persons?${q.toString()}`, { next: { revalidate: opts.revalidate ?? 3600 } });
   if (!res.ok) throw new Error(`API ${res.status} for /persons`);
@@ -61,7 +62,7 @@ export async function listPersons(opts: ListPersonsOpts = {}): Promise<{ items: 
 
 /** Dropdown option lists (party / state / house, each with a count) for a browse scope. */
 export type FacetCount = { value: string; count: number };
-export type Facets = { parties: FacetCount[]; states: FacetCount[]; houses: FacetCount[] };
+export type Facets = { parties: FacetCount[]; states: FacetCount[]; houses: FacetCount[]; themes: FacetCount[] };
 export function getFacets(
   opts: { house?: string; state?: string; jurisdiction?: string } = {},
 ): Promise<Facets> {

@@ -3,6 +3,8 @@
 import { useState } from "react";
 import type { PersonResume, ParliamentaryQuestion, ThemeFocus } from "@/lib/api";
 import { docSrc } from "@/lib/api";
+import { THEME_COLORS, themeColor } from "@/lib/themes";
+import { SegmentedBar, ThemeChip } from "@/components/resume/policy-focus";
 import { rupees, severityMeta, year, pretty } from "@/lib/format";
 import { Donut, WealthLine } from "@/components/resume/charts";
 import { SourceLink, SourceChip, PendingFlag, SeverityBadge, PartyPill } from "@/components/ui";
@@ -206,50 +208,6 @@ function QARow({ title, date, meta, url }: { title: string; date?: string | null
 
 function CountChip({ n }: { n: number }) {
   return <span className="mono" style={{ fontSize: 12, color: "var(--accent-2)", background: "var(--accent-soft)", borderRadius: 20, padding: "2px 10px" }}>{n}</span>;
-}
-
-const THEME_COLORS: Record<string, string> = {
-  "Economy & Industry": "var(--accent-2)",
-  "Health": "var(--sev1)",
-  "Education & Skills": "var(--sev2)",
-  "Social Welfare & Justice": "var(--ok)",
-  "Agriculture & Environment": "var(--accent-3)",
-  "Infrastructure & Connectivity": "var(--accent)",
-  "Governance & External": "var(--sev3)",
-  "Other": "var(--muted)",
-};
-
-function themeColor(theme: string | null | undefined): string {
-  return THEME_COLORS[theme ?? "Other"] ?? "var(--muted)";
-}
-
-// A single stacked bar of the theme mix; clicking a segment toggles the filter (synced with the chips).
-function SegmentedBar({ focus, selected, onSelect }: { focus: ThemeFocus[]; selected: string | null; onSelect: (t: string | null) => void }) {
-  return (
-    <div style={{ display: "flex", height: 16, borderRadius: 8, overflow: "hidden", background: "var(--rule)" }}>
-      {focus.map((t) => {
-        const active = selected === null || selected === t.theme;
-        return (
-          <button key={t.theme} title={`${t.theme} — ${Math.round(t.share * 100)}%`} aria-label={`${t.theme} ${Math.round(t.share * 100)} percent`}
-            onClick={() => onSelect(selected === t.theme ? null : t.theme)}
-            style={{ width: `${t.share * 100}%`, background: themeColor(t.theme), opacity: active ? 1 : 0.28,
-              border: "none", borderRight: "1px solid var(--card)", cursor: "pointer", padding: 0, transition: "opacity .2s" }} />
-        );
-      })}
-    </div>
-  );
-}
-
-function ThemeChip({ label, count, color, active, onClick }: { label: string; count: number; color?: string; active: boolean; onClick: () => void }) {
-  return (
-    <button onClick={onClick} className="tap"
-      style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 12, padding: "4px 11px", borderRadius: 20, cursor: "pointer",
-        border: `1px solid ${active ? "var(--accent)" : "var(--rule)"}`, background: active ? "var(--accent-soft)" : "var(--card)",
-        color: active ? "var(--accent-soft-fg)" : "var(--ink2)" }}>
-      {color && <span style={{ width: 8, height: 8, borderRadius: 8, background: color, display: "inline-block" }} />}
-      {label} <span className="mono" style={{ color: active ? "var(--accent-soft-fg)" : "var(--muted)" }}>{count}</span>
-    </button>
-  );
 }
 
 function QuestionCard({ q }: { q: ParliamentaryQuestion }) {
