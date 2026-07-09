@@ -35,12 +35,29 @@ NETA_MIGRATE_DATABASE_URL="postgresql+psycopg://OWNER:PASS@HOST/neondb?sslmode=r
 (Ideally run against a Neon **branch** first to confirm, then the main DB.) After this, `migrate.yml`
 applies only genuinely new migrations.
 
+## How code reaches the running services (auto-deploy)
+
+Merging to `main` advances the **DB** (via `migrate.yml`) but does **not** rebuild the running api/web by
+itself — those are separate Render/Vercel builds. `.github/workflows/deploy.yml` closes that gap: on every
+push to `main` (or manual dispatch) it pings each service's **deploy hook** so the merge actually goes live.
+
+One-time setup (create the hooks, then add them as repo secrets):
+- **Render** → the `api` service → **Settings → Deploy Hook** → copy the URL → repo secret `RENDER_DEPLOY_HOOK`.
+- **Vercel** → the `web` project → **Settings → Git → Deploy Hooks** → create one targeting `main` → copy
+  the URL → repo secret `VERCEL_DEPLOY_HOOK`.
+
+A missing secret is skipped (the job logs a notice, doesn't fail). Trigger the first deploy by pushing to
+`main` or **Actions → deploy → Run workflow**. (Turning OFF Render/Vercel's own git auto-deploy is optional —
+this workflow is now the single source of truth; leaving both on just means a harmless double-build.)
+
 ## Environment variables / secrets
 
 | Var | Where | Value |
 |---|---|---|
 | `NETA_MIGRATE_DATABASE_URL` | GitHub secret (migrate.yml) | Neon **owner** DSN (DDL) |
 | `NETA_DATABASE_URL` | GitHub secret (ingest.yml/news.yml) | **ingest write-role** DSN |
+| `RENDER_DEPLOY_HOOK` | GitHub secret (deploy.yml) | Render api service deploy-hook URL |
+| `VERCEL_DEPLOY_HOOK` | GitHub secret (deploy.yml) | Vercel web project deploy-hook URL |
 | `NETA_DATABASE_URL` | Render (api) | **read-only** role DSN |
 | `NETA_API_BASE` | Vercel (web) | the api's public URL |
 | `NETA_ALLOWED_ORIGINS` | Render (api) | the web origin(s), comma-separated |

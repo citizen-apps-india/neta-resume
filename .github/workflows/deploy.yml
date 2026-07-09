@@ -1,0 +1,54 @@
+name: deploy
+
+# Redeploy the running services when `main` updates. There are NO build steps here — Render (api) and
+# Vercel (web) build from the repo themselves; this workflow just pings their **deploy hooks** so that a
+# merge actually goes live. (Previously nothing redeployed on merge, so the DB/schema advanced while the
+# running api + web stayed on an old build — see docs/DEPLOYMENT.md.)
+#
+# One-time setup — add these repo secrets (Settings → Secrets and variables → Actions):
+#   RENDER_DEPLOY_HOOK  — Render → the api service → Settings → "Deploy Hook" URL
+#   VERCEL_DEPLOY_HOOK  — Vercel → the web project → Settings → Git → "Deploy Hooks" → create one for `main`
+# A missing secret is skipped (not failed), so you can wire one before the other. Trigger the first deploy
+# by pushing to main or running this workflow manually (Actions → deploy → Run workflow).
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: deploy-main
+  cancel-in-progress: true
+
+jobs:
+  api:
+    name: Deploy api (Render)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render deploy hook
+        env:
+          HOOK: ${{ secrets.RENDER_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::notice::RENDER_DEPLOY_HOOK not set — skipping api deploy."
+            exit 0
+          fi
+          code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$HOOK")
+          echo "Render deploy hook → HTTP $code"
+          case "$code" in 2*) echo "api deploy triggered ✓";; *) echo "::warning::Render hook returned $code";; esac
+
+  web:
+    name: Deploy web (Vercel)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Vercel deploy hook
+        env:
+          HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::notice::VERCEL_DEPLOY_HOOK not set — skipping web deploy."
+            exit 0
+          fi
+          code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$HOOK")
+          echo "Vercel deploy hook → HTTP $code"
+          case "$code" in 2*) echo "web deploy triggered ✓";; *) echo "::warning::Vercel hook returned $code";; esac
