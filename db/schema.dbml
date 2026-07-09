@@ -243,3 +243,9 @@ Table parliamentary_debate {
   updated_at timestamptz
   indexes { (person_id, term_cycle_id, debate_ref) [unique] }
 }
+
+// Reference map (seeded): official ministry -> policy theme, for the read-time "Policy focus" breakdown.
+Table ministry_theme {
+  ministry_key text [pk]                      // lower(trim(ministry)) as in parliamentary_question
+  theme text                                  // policy domain (Economy & Industry, Health, …)
+}

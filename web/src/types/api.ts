@@ -421,6 +421,11 @@ export interface components {
             questions: components["schemas"]["ParliamentaryQuestion"][];
             /** Debates */
             debates: components["schemas"]["ParliamentaryDebate"][];
+            /**
+             * Thematic Focus
+             * @default []
+             */
+            thematic_focus: components["schemas"]["ThemeFocus"][];
             source: components["schemas"]["Source"];
         };
         /** PartyStint */
@@ -575,6 +580,24 @@ export interface components {
             with_cases: number;
             /** Crorepatis */
             crorepatis: number;
+        };
+        /**
+         * ThemeFocus
+         * @description One policy theme's weight in an MP's questions, vs the House — the 'Policy focus' breakdown.
+         *
+         *     Descriptive topical emphasis derived from the official ministry each question addressed (never a value
+         *     judgment). `share` = this MP's fraction of questions in the theme; `house_share` = the same fraction
+         *     pooled across all sitting members of the house (None until the house corpus is large enough to average).
+         */
+        ThemeFocus: {
+            /** Theme */
+            theme: string;
+            /** Count */
+            count: number;
+            /** Share */
+            share: number;
+            /** House Share */
+            house_share?: number | null;
         };
         /** ValidationError */
         ValidationError: {

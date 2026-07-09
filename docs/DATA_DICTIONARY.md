@@ -280,3 +280,15 @@ Both added in `0025`, sourced from **PRS MP Track** per-member profiles (CC-BY 4
 the reachable enumeration of the content the `0024` scorecard only counts. Populated by `neta questions` /
 `neta debates`; one row per (member, item), idempotent on the `UNIQUE` keys. Each row links the official
 sansad.in document PDF (`document_url`). **Missing ≠ zero** — an MP with no rows simply asked/joined none listed.
+
+### `ministry_theme` — ministry → policy-theme map (added in 0026, seeded)
+| Column | Type | Notes |
+|---|---|---|
+| `ministry_key` | text PK | `lower(trim(ministry))` as it appears in `parliamentary_question.ministry` (casing variants collapse) |
+| `theme` | text | policy domain: Economy & Industry, Health, Education & Skills, Social Welfare & Justice, Agriculture & Environment, Infrastructure & Connectivity, Governance & External |
+
+A curated, versionable reference table (seeded via `db/seeds/ministry_themes.sql`) powering the **read-time
+"Policy focus" breakdown** — what policy areas an MP raises, vs the House average. The API `LEFT JOIN`s
+`parliamentary_question` to it and `GROUP BY theme`; unmapped ministries render as **"Other"**. Editorial by
+nature (grouping is a judgment call) — kept auditable here and labelled in the UI as *derived from the
+official ministry each question addresses*, never a value judgment.

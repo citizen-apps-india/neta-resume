@@ -29,6 +29,7 @@ from neta_api.schemas import (
     PersonSummary,
     RoleEntry,
     Source,
+    ThemeFocus,
 )
 
 
@@ -114,6 +115,65 @@ def _build_activity(db: Session, person_id: int) -> ParliamentaryActivity | None
 # tallies come from a cheap count(*) so the UI can show "showing N of total" + a hero quick-stat.
 _RECORD_LIST_CAP = 50
 
+# Below this many distinct MPs in the term's question corpus, a "House average" is not yet meaningful
+# (e.g. before the full-house ingest) — we return house_share = None so the UI shows the MP's own mix only.
+_HOUSE_AVG_MIN_MEMBERS = 25
+
+
+def _build_thematic_focus(db: Session, person_id: int) -> list[ThemeFocus]:
+    """Policy-theme emphasis of an MP's questions vs the House, from the ministry->theme map (read time).
+
+    Descriptive only (topical mix from official ministry tags). `share` = this MP's fraction per theme;
+    `house_share` = the pooled same-term fraction, or None until the house corpus has enough members.
+    """
+    rows = db.execute(
+        text(
+            """
+            WITH me_terms AS (
+                SELECT DISTINCT term_cycle_id FROM parliamentary_question WHERE person_id = :pid
+            ),
+            me AS (
+                SELECT COALESCE(mt.theme, 'Other') AS theme, count(*) AS cnt
+                FROM parliamentary_question pq
+                LEFT JOIN ministry_theme mt ON mt.ministry_key = lower(btrim(pq.ministry))
+                WHERE pq.person_id = :pid
+                GROUP BY 1
+            ),
+            house AS (
+                SELECT COALESCE(mt.theme, 'Other') AS theme, count(*) AS cnt
+                FROM parliamentary_question pq
+                LEFT JOIN ministry_theme mt ON mt.ministry_key = lower(btrim(pq.ministry))
+                WHERE pq.term_cycle_id IN (SELECT term_cycle_id FROM me_terms)
+                GROUP BY 1
+            )
+            SELECT me.theme, me.cnt AS me_cnt,
+                   (SELECT sum(cnt) FROM me) AS me_total,
+                   h.cnt AS house_cnt,
+                   (SELECT sum(cnt) FROM house) AS house_total,
+                   (SELECT count(DISTINCT person_id) FROM parliamentary_question
+                    WHERE term_cycle_id IN (SELECT term_cycle_id FROM me_terms)) AS house_members
+            FROM me LEFT JOIN house h ON h.theme = me.theme
+            ORDER BY me.cnt DESC, me.theme
+            """
+        ),
+        {"pid": person_id},
+    ).all()
+    if not rows:
+        return []
+
+    me_total = rows[0].me_total or 0
+    house_total = rows[0].house_total or 0
+    house_ok = (rows[0].house_members or 0) >= _HOUSE_AVG_MIN_MEMBERS and house_total > 0
+    out: list[ThemeFocus] = []
+    for r in rows:
+        out.append(ThemeFocus(
+            theme=r.theme,
+            count=r.me_cnt,
+            share=(r.me_cnt / me_total) if me_total else 0.0,
+            house_share=(r.house_cnt / house_total) if (house_ok and r.house_cnt is not None) else None,
+        ))
+    return out
+
 
 def _build_parliamentary_record(db: Session, person_id: int) -> ParliamentaryRecord | None:
     """Individual questions + debates from PRS profiles, newest first, capped; None if the MP has none."""
@@ -193,6 +253,7 @@ def _build_parliamentary_record(db: Session, person_id: int) -> ParliamentaryRec
         debates_count=counts.d_count,
         questions=questions,
         debates=debates,
+        thematic_focus=_build_thematic_focus(db, person_id),
         source=_source(src) if src else Source(code="prs", name="PRS Legislative Research",
                                                url=None, trust_tier=2),
     )
