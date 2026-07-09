@@ -26,6 +26,7 @@ from neta_core.config import settings
 _SEED_ORDER = [
     "houses.sql", "sources.sql", "parties.sql",
     "ipc_bns_sections.sql", "severity_rules.sql", "elections.sql",
+    "ministry_themes.sql",
 ]
 
 

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import type { PersonResume } from "@/lib/api";
+import type { PersonResume, ThemeFocus } from "@/lib/api";
 import { rupees, severityMeta, year, pretty } from "@/lib/format";
 import { Donut, WealthLine } from "@/components/resume/charts";
 import { SourceLink, SourceChip, PendingFlag, SeverityBadge, PartyPill } from "@/components/ui";
@@ -207,6 +207,58 @@ function CountChip({ n }: { n: number }) {
   return <span className="mono" style={{ fontSize: 12, color: "var(--accent-2)", background: "var(--accent-soft)", borderRadius: 20, padding: "2px 10px" }}>{n}</span>;
 }
 
+const THEME_COLORS: Record<string, string> = {
+  "Economy & Industry": "var(--accent-2)",
+  "Health": "var(--sev1)",
+  "Education & Skills": "var(--sev2)",
+  "Social Welfare & Justice": "var(--ok)",
+  "Agriculture & Environment": "var(--accent-3)",
+  "Infrastructure & Connectivity": "var(--accent)",
+  "Governance & External": "var(--sev3)",
+  "Other": "var(--muted)",
+};
+
+// The "Policy focus" meter: what policy areas this MP raises (from the ministry each question addresses),
+// each theme's share of their questions drawn as a bar, with the Lok Sabha average marked as a tick.
+function PolicyFocus({ focus, total }: { focus: ThemeFocus[]; total: number }) {
+  if (total < 8) return <Muted>Too few questions to chart a reliable focus.</Muted>;
+  if (!focus?.length) return null;
+  const scale = Math.max(...focus.map((t) => Math.max(t.share, t.house_share ?? 0)), 0.01);
+  const hasHouse = focus.some((t) => t.house_share != null);
+  return (
+    <div style={{ marginTop: 14 }}>
+      <div style={{ display: "grid", gap: 11 }}>
+        {focus.map((t) => {
+          const color = THEME_COLORS[t.theme] ?? "var(--muted)";
+          const ratio = t.house_share && t.house_share > 0 ? t.share / t.house_share : null;
+          return (
+            <div key={t.theme}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 5 }}>
+                <span style={{ fontSize: 13, color: "var(--ink)" }}>{t.theme}</span>
+                <span className="mono" style={{ fontSize: 12, color: "var(--muted)" }}>
+                  {Math.round(t.share * 100)}%{ratio ? ` · ${ratio.toFixed(1)}× avg` : ""}
+                </span>
+              </div>
+              <div style={{ position: "relative", height: 9, borderRadius: 5, background: "var(--rule)", overflow: "hidden" }}>
+                <div style={{ position: "absolute", inset: 0, width: `${(t.share / scale) * 100}%`, background: color, borderRadius: 5 }} />
+                {t.house_share != null && (
+                  <div title={`Lok Sabha average ${Math.round(t.house_share * 100)}%`}
+                    style={{ position: "absolute", top: -2, bottom: -2, left: `${(t.house_share / scale) * 100}%`, width: 2, background: "var(--ink)" }} />
+                )}
+              </div>
+            </div>
+          );
+        })}
+      </div>
+      {hasHouse && (
+        <div className="mono" style={{ fontSize: 10, color: "var(--faint)", marginTop: 10 }}>
+          Bar = share of this member’s questions · ▏ marks the Lok Sabha average
+        </div>
+      )}
+    </div>
+  );
+}
+
 function Questions({ resume }: { resume: PersonResume }) {
   const pr = resume.parliamentary_record;
   if (!pr) return <Muted>No questions or debates on record.</Muted>;
@@ -218,6 +270,11 @@ function Questions({ resume }: { resume: PersonResume }) {
         <span className="mono" style={{ fontSize: 11, color: "var(--faint)" }}>PRS · DIGITAL SANSAD</span>
       </div>
       <Muted>Individual matters this member raised in the House — each links the official Lok Sabha document.</Muted>
+
+      <div style={{ ...sectionHead, marginTop: 20 }}><span>Policy focus</span>
+        <span className="mono" style={{ fontSize: 11, color: "var(--faint)", fontWeight: 400 }}>BY MINISTRY</span>
+      </div>
+      <PolicyFocus focus={pr.thematic_focus} total={pr.questions_count} />
 
       <div style={sectionHead}><span>Questions asked</span><CountChip n={pr.questions_count} /></div>
       {pr.questions.length === 0 ? <Muted>None listed.</Muted> : (

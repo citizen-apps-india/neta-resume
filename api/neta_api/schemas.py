@@ -147,6 +147,20 @@ class ParliamentaryDebate(BaseModel):
     document_url: str | None = None    # official sansad.in debate PDF (per sitting-day)
 
 
+class ThemeFocus(BaseModel):
+    """One policy theme's weight in an MP's questions, vs the House — the 'Policy focus' breakdown.
+
+    Descriptive topical emphasis derived from the official ministry each question addressed (never a value
+    judgment). `share` = this MP's fraction of questions in the theme; `house_share` = the same fraction
+    pooled across all sitting members of the house (None until the house corpus is large enough to average).
+    """
+
+    theme: str
+    count: int                         # this MP's questions in the theme
+    share: float                       # count / this MP's total mapped questions (0..1)
+    house_share: float | None = None   # pooled house fraction for the theme (0..1); None if house data thin
+
+
 class ParliamentaryRecord(BaseModel):
     """Individual questions asked + debates joined — the content behind the activity counts.
 
@@ -159,6 +173,7 @@ class ParliamentaryRecord(BaseModel):
     debates_count: int
     questions: list[ParliamentaryQuestion]
     debates: list[ParliamentaryDebate]
+    thematic_focus: list[ThemeFocus] = []   # 'Policy focus' — theme emphasis vs House, sorted by count desc
     source: Source                     # PRS provenance (per-item official doc links live on each row)
 
 
