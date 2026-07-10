@@ -162,9 +162,10 @@ select:hover { border-color: var(--accent-2); }
   .nr-cells > *:nth-last-child(-n + 2) { border-bottom: none; }
 }
 
-/* donut: chart + legend side by side → stacked on small phones */
+/* donut: chart + legend side by side → stacked on small phones. Stacks at 640 (not 560): the fixed-width
+   chart + legend get cramped in the 390–560 band, so give them room sooner. */
 .nr-donut { display: flex; align-items: center; gap: 16px; }
-@media (max-width: 560px) { .nr-donut { flex-direction: column; align-items: stretch; gap: 14px; } }
+@media (max-width: 640px) { .nr-donut { flex-direction: column; align-items: stretch; gap: 14px; } }
 
 /* horizontal-scroll wrapper for the dense wealth table */
 .nr-xscroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
@@ -178,6 +179,9 @@ select:hover { border-color: var(--accent-2); }
 .nr-bento > .col4 { grid-column: span 4; }
 .nr-bento > .col6 { grid-column: span 6; }
 @media (max-width: 760px) { .nr-bento { grid-template-columns: 1fr; } .nr-bento > * { grid-column: 1 / -1; } }
+/* grid items default to min-width:auto (won't shrink below content) → let cards shrink so dense rows inside
+   can ellipsize instead of forcing horizontal page overflow. */
+.nr-bento > * { min-width: 0; }
 
 /* auto-fit rows for the headline stats and the "explore" nav cards */
 .nr-statgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
@@ -194,4 +198,50 @@ select:hover { border-color: var(--accent-2); }
   .nr-nav-desktop { display: none; }
   .nr-nav-burger { display: inline-flex; }
   .nr-menu-panel.open { display: flex; }
+}
+
+/* ---------- mobile optimization pass (additive; all max-width / touch-only, desktop unchanged) ---------- */
+
+/* Touch targets: enlarge interactive controls to the ~44px minimum on touch devices only, so a mouse-driven
+   desktop is left pixel-identical. Sizing elsewhere is inline; min-height is the least-invasive nudge. */
+@media (pointer: coarse) {
+  .seg, .btnGhost, .btnDark, .tap, .nr-nav-burger { min-height: 44px; }
+}
+
+/* "Most active members" row: allow the row to shrink (grid/flex min-width trap) so the name ellipsizes; and
+   below ~430px drop the theme *label text* (the colour dot stays) so a long theme name
+   ("Infrastructure & Connectivity") can't crush the member name. */
+.nr-mprow { min-width: 0; }
+/* only on small screens does the name grow+ellipsize to absorb the row; desktop keeps its content-width name
+   with the theme badge beside it. */
+@media (max-width: 640px) { .nr-mprow-name { flex: 1 1 0; } }
+@media (max-width: 430px) { .nr-mprow-theme { display: none; } }
+
+/* Section hero: the soft glow wash bleeds ±32px horizontally (desktop aesthetic); clip that bleed on small
+   screens so it can't create page-level horizontal scroll. */
+@media (max-width: 760px) { .nr-hero-clip { overflow-x: clip; } }
+
+/* Directory filter row: on phones each control (search + every select) becomes a clean full-width row
+   instead of a ragged multi-row wrap. */
+@media (max-width: 560px) { .nr-filters > * { flex: 1 1 100% !important; min-width: 0 !important; } }
+
+/* Homepage hero actions: search box + "View all" CTA stack full-width (CTA centred) on narrow screens. */
+@media (max-width: 480px) {
+  .nr-hero-actions > * { flex: 1 1 100% !important; max-width: none !important; }
+  .nr-hero-actions .btnDark { justify-content: center; }
+}
+
+/* Parliament section hero: the right slot (house toggle) drops full-width under the title on narrow. */
+@media (max-width: 520px) { .nr-hero-right { width: 100%; margin-top: 4px; } }
+
+/* Horizontal-scroll cue: left/right edge shadows that appear ONLY when the panel actually overflows
+   (pure-CSS scroll-shadow — cover gradients scroll with content via background-attachment:local and mask the
+   shadow at each end). Opt-in via .nr-xscroll-cue so plain tab bars keep their transparent background. */
+.nr-xscroll-cue {
+  background:
+    linear-gradient(to right, var(--card2) 32%, transparent) 0 0 / 30px 100% no-repeat,
+    linear-gradient(to left, var(--card2) 32%, transparent) 100% 0 / 30px 100% no-repeat,
+    radial-gradient(farthest-side at 0 50%, var(--shadow), transparent) 0 0 / 14px 100% no-repeat,
+    radial-gradient(farthest-side at 100% 50%, var(--shadow), transparent) 100% 0 / 14px 100% no-repeat;
+  background-attachment: local, local, scroll, scroll;
 }

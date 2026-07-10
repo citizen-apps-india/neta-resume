@@ -14,7 +14,7 @@ const titleCase = (s: string) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpp
 const selectStyle: React.CSSProperties = {
   fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 13, color: "var(--ink)",
   background: "var(--card2)", border: "1px solid var(--border)", borderRadius: 8,
-  padding: "9px 12px", cursor: "pointer", outline: "none",
+  padding: "9px 12px", cursor: "pointer", outline: "none", minWidth: 0,
 };
 
 /**
@@ -123,7 +123,7 @@ export function LegislatorBrowser({
       )}
 
       {/* controls */}
-      <div style={{ padding: "16px clamp(14px,4vw,22px)", borderBottom: "1px solid var(--rule)", background: "var(--card)", display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
+      <div className="nr-filters" style={{ padding: "16px clamp(14px,4vw,22px)", borderBottom: "1px solid var(--rule)", background: "var(--card)", display: "flex", flexWrap: "wrap", gap: 10, alignItems: "center" }}>
         <div className="focusring" style={{ display: "flex", alignItems: "center", gap: 8, flex: "1 1 240px", minWidth: 160, border: "1px solid var(--border)", borderRadius: 8, background: "var(--card2)", padding: "9px 12px" }}>
           <span style={{ color: "var(--faint)", fontSize: 14 }}>⌕</span>
           <input

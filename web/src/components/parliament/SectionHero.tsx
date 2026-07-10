@@ -14,7 +14,7 @@ export function SectionHero({
   backLabel?: string;
 }) {
   return (
-    <div style={{ position: "relative", marginBottom: 24 }}>
+    <div className="nr-hero-clip" style={{ position: "relative", marginBottom: 24 }}>
       <div aria-hidden style={{ position: "absolute", inset: "-28px -32px auto -32px", height: 190, background: "radial-gradient(560px 190px at 14% 0%, var(--glow1), transparent 72%)", pointerEvents: "none", zIndex: 0 }} />
       <div style={{ position: "relative", zIndex: 1 }}>
         {backHref && (
@@ -30,7 +30,7 @@ export function SectionHero({
             <h1 className="serif" style={{ fontSize: "clamp(28px,5.4vw,38px)", fontWeight: 500, letterSpacing: "-0.02em", margin: "0 0 8px", lineHeight: 1.04 }}>{title}</h1>
             {subtitle && <p style={{ fontSize: 15, color: "var(--ink2)", margin: 0, maxWidth: "62ch", lineHeight: 1.5 }}>{subtitle}</p>}
           </div>
-          {right && <div style={{ flexShrink: 0 }}>{right}</div>}
+          {right && <div className="nr-hero-right" style={{ flexShrink: 0 }}>{right}</div>}
         </div>
       </div>
     </div>

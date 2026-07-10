@@ -75,7 +75,7 @@ export default async function Home() {
             The full public record of every legislator in India — wealth declared, cases pending, parties switched —
             sourced to the Election Commission and shown without spin.
           </p>
-          <div className="fadeUp" style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "stretch" }}>
+          <div className="fadeUp nr-hero-actions" style={{ display: "flex", gap: 12, flexWrap: "wrap", alignItems: "stretch" }}>
             <div style={{ minWidth: 200, maxWidth: 440, flex: 1, display: "flex" }}>
               <SearchBox big placeholder="Search by name, constituency or party…" />
             </div>

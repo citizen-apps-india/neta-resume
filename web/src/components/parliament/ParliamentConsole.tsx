@@ -123,12 +123,12 @@ export function ParliamentConsole({
                   </p>
                   <div style={{ display: "grid" }}>
                     {stats.most_active.map((m, i) => (
-                      <Link key={m.id} href={`/person/${m.id}`} className="tap" style={{ display: "flex", alignItems: "center", gap: 13, padding: "9px 8px", borderRadius: 10, textDecoration: "none", color: "var(--ink)", borderTop: i === 0 ? "none" : "1px solid var(--rule2)" }}>
+                      <Link key={m.id} href={`/person/${m.id}`} className="tap nr-mprow" style={{ display: "flex", alignItems: "center", gap: 13, padding: "9px 8px", borderRadius: 10, textDecoration: "none", color: "var(--ink)", borderTop: i === 0 ? "none" : "1px solid var(--rule2)" }}>
                         <span className="mono" style={{ fontSize: 12, fontWeight: 600, color: i < 3 ? "var(--accent-2)" : "var(--faint)", width: 22, textAlign: "right", flexShrink: 0 }}>{i + 1}</span>
                         <PhotoBox w={32} h={38} src={photoSrc(m.id, m.photo_url)} />
-                        <span style={{ fontWeight: 500, fontSize: 14, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{m.display_name}</span>
+                        <span className="nr-mprow-name" style={{ fontWeight: 500, fontSize: 14, minWidth: 0, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{m.display_name}</span>
                         <span style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11.5, color: "var(--muted)", flexShrink: 0 }}>
-                          <Dot color={themeColor(m.top_theme)} sq />{m.top_theme}
+                          <Dot color={themeColor(m.top_theme)} sq /><span className="nr-mprow-theme">{m.top_theme}</span>
                         </span>
                         <span className="mono" style={{ marginLeft: "auto", fontSize: 13.5, fontWeight: 600, flexShrink: 0 }}>{fmt(m.count)}<span style={{ color: "var(--muted)", fontWeight: 400 }}> Qs</span></span>
                       </Link>

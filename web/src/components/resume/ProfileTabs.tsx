@@ -354,12 +354,12 @@ function Wealth({ resume }: { resume: PersonResume }) {
         )}
       </div>
       <div style={{ minWidth: 0, border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", overflow: "hidden" }}>
-        <div className="nr-xscroll">
-        <div className="mono" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr 1fr", padding: "13px 20px", background: "var(--sunken)", borderBottom: "1px solid var(--rule)", fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>
+        <div className="nr-xscroll nr-xscroll-cue">
+        <div className="mono" style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr 1fr", padding: "13px clamp(12px,4vw,20px)", background: "var(--sunken)", borderBottom: "1px solid var(--rule)", fontSize: 10, letterSpacing: "0.08em", textTransform: "uppercase", color: "var(--muted)" }}>
           <span>Cycle</span><span style={{ textAlign: "right" }}>Assets</span><span style={{ textAlign: "right" }}>Liabilities</span><span style={{ textAlign: "right" }}>Income</span>
         </div>
         {rows.map((r, i) => (
-          <div key={i} style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr 1fr", padding: "15px 20px", borderBottom: "1px solid var(--rule2)", alignItems: "center" }}>
+          <div key={i} style={{ display: "grid", gridTemplateColumns: "1.6fr 1fr 1fr 1fr", padding: "15px clamp(12px,4vw,20px)", borderBottom: "1px solid var(--rule2)", alignItems: "center" }}>
             <span style={{ display: "flex", flexDirection: "column", gap: 4 }}>
               <span style={{ fontSize: 13, fontWeight: 600 }}>{r.election_cycle}</span>
               <SourceLink source={r.source} />
@@ -370,7 +370,7 @@ function Wealth({ resume }: { resume: PersonResume }) {
           </div>
         ))}
         </div>
-        <div className="mono" style={{ padding: "13px 20px", background: "var(--sunken)", fontSize: 10, color: "var(--accent)", letterSpacing: "0.06em" }}>
+        <div className="mono" style={{ padding: "13px clamp(12px,4vw,20px)", background: "var(--sunken)", fontSize: 10, color: "var(--accent)", letterSpacing: "0.06em" }}>
           ↗ EACH ROW LINKS TO THE SIGNED ECI AFFIDAVIT
         </div>
       </div>

@@ -180,7 +180,7 @@ export function ThemeStackedArea({ months, series }: { months: string[]; series:
 
   return (
     <>
-      <div style={{ width: "100%", height: "clamp(240px,46vw,360px)" }}>
+      <div style={{ width: "100%", height: "clamp(200px,44vw,360px)" }}>
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }}>
             <XAxis

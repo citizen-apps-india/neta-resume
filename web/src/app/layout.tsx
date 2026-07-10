@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Suspense, type ReactNode } from "react";
 import { Footer } from "@/components/Footer";
 import { RouteProgress } from "@/components/RouteProgress";
@@ -11,6 +11,13 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://neta-resume.app";
 const DESCRIPTION =
   "Offices held, parties switched, wealth declared, and cases pending — every fact sourced to the " +
   "Election Commission and shown without spin. A free, open public record of every Indian legislator.";
+
+// Explicit mobile viewport. width=device-width + initialScale 1 is Next's default, set here explicitly;
+// deliberately NOT locking maximumScale/userScalable so pinch-zoom stays available (accessibility).
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

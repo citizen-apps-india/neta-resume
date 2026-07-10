@@ -36,7 +36,7 @@ export function HeaderNav() {
         aria-expanded={open}
         onClick={() => setOpen((o) => !o)}
         style={{
-          alignItems: "center", justifyContent: "center", width: 38, height: 38, borderRadius: 8,
+          alignItems: "center", justifyContent: "center", width: 44, height: 44, borderRadius: 8,
           border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)",
           fontSize: 17, cursor: "pointer",
         }}
