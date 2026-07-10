@@ -101,7 +101,9 @@ export default async function SearchPage({
           right={<HouseToggle house={house} hrefLs={href(cur, { house: undefined, offset: undefined })} hrefRs={href(cur, { house: "rs", offset: undefined })} />}
         />
 
-        <ParliamentSearchInput initial={q} kind={kind} theme={theme} house={houseParam} />
+        <div style={{ display: "flex" }}>
+          <ParliamentSearchInput initial={q} kind={kind} theme={theme} house={houseParam} big />
+        </div>
 
         {/* Kind filter */}
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 16 }}>

@@ -3,9 +3,9 @@
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-/** Free-text input for /parliament/search. Routes to the same page with `q`, preserving the current
- *  kind/theme filters (which are plain URL links rendered server-side). Mirrors SearchBox's styling. */
-export function ParliamentSearchInput({ initial = "", kind, theme, house }: { initial?: string; kind?: string; theme?: string; house?: string }) {
+/** Free-text input for /parliament/search. Routes to /parliament/search with `q`, preserving the current
+ *  kind/theme/house filters. `big` gives the prominent full-width treatment used on the console. */
+export function ParliamentSearchInput({ initial = "", kind, theme, house, big = false }: { initial?: string; kind?: string; theme?: string; house?: string; big?: boolean }) {
   const router = useRouter();
   const [q, setQ] = useState(initial);
 
@@ -26,26 +26,30 @@ export function ParliamentSearchInput({ initial = "", kind, theme, house }: { in
       onSubmit={submit}
       className="focusring"
       style={{
-        display: "flex", alignItems: "center", gap: 10, border: "1px solid var(--border)",
-        borderRadius: 10, background: "var(--card2)", padding: "7px 7px 7px 16px", flex: 1, minWidth: 0,
+        display: "flex", alignItems: "center", gap: 12, border: "1px solid var(--border)",
+        borderRadius: big ? 13 : 10, background: "var(--card2)", width: "100%", minWidth: 0,
+        padding: big ? "9px 9px 9px 20px" : "7px 7px 7px 16px",
+        boxShadow: big ? "0 2px 10px -6px var(--shadow)" : "none",
       }}
     >
-      <span style={{ color: "var(--faint)", fontSize: 16 }}>⌕</span>
+      <span style={{ color: "var(--faint)", fontSize: big ? 19 : 16 }}>⌕</span>
       <input
         value={q}
         onChange={(e) => setQ(e.target.value)}
-        placeholder="Search questions & debates — e.g. railways, MSP, NEET…"
+        placeholder={big ? "Search questions & debates by topic — railways, MSP, NEET…" : "Search questions & debates — e.g. railways, MSP, NEET…"}
         aria-label="Search the parliamentary record"
         style={{
           border: "none", outline: "none", background: "transparent", fontFamily: "'Bricolage Grotesque',sans-serif",
-          fontSize: 14.5, color: "var(--ink)", width: "100%",
+          fontSize: big ? 16 : 14.5, color: "var(--ink)", width: "100%",
         }}
       />
       <button
         type="submit"
+        className="btnDark"
         style={{
-          flexShrink: 0, fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 13.5, fontWeight: 600,
-          padding: "9px 18px", borderRadius: 7, border: "none", background: "var(--btn-bg)", color: "var(--btn-fg)", cursor: "pointer",
+          flexShrink: 0, fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: big ? 14 : 13.5, fontWeight: 600,
+          padding: big ? "11px 22px" : "9px 18px", borderRadius: big ? 9 : 7, border: "none",
+          background: "var(--btn-bg)", color: "var(--btn-fg)", cursor: "pointer",
         }}
       >
         Search
