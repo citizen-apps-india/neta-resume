@@ -227,7 +227,7 @@ export function ThemeStackedArea({ months, series }: { months: string[]; series:
                 strokeWidth={0.75}
                 fill={fill(s.theme)}
                 fillOpacity={0.82}
-                isAnimationActive
+                isAnimationActive={false}
               />
             ))}
           </AreaChart>
