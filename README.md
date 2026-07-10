@@ -39,7 +39,7 @@ method, fields, licensing, reuse libraries). Spine: `sansad.in` roster · MyNeta
 - **Phase 1** — end-to-end vertical slice for one MP (roster + affidavit + case + party history + provenance). **Done.**
 - **Phase 2** — breadth on the 18th Lok Sabha: full roster + official photos from sansad.in, MyNeta affidavits/criminal at scale, cross-cycle merge. **Done.**
 - **Phase 3** — Rajya Sabha roster (sansad.in), Devanagari native names, **PRS attendance %** (LS + RS). **Done.**
-- **Phase 4** — court live-status enrichment + structured party-switch narrative + search. *In progress.*
+- **Phase 4** — search + the Parliament-functioning module (full-text question/debate search, monthly theme trends, ministry & party/state aggregate lenses, LS + RS). **Done.** Court live-status enrichment + structured party-switch narrative still *in progress*.
 - **Phase 5** — state + municipal extension (Maharashtra Vidhan Sabha, Delhi MCD; zero schema change) + independent data platform (migrations-as-code, GitHub-Actions ingestion). **Done.**
 
 **Now shipping:** a teal-themed Next.js directory + per-legislator resume page (office history, party
@@ -54,7 +54,7 @@ migrations and ingestion pipelines directly on Neon — see [`docs/DEPLOYMENT.md
 - [`docs/DATA_DICTIONARY.md`](./docs/DATA_DICTIONARY.md) — per-table/column reference + enums.
 - [`docs/schema.md`](./docs/schema.md) — schema overview, constraints, provenance model.
 - [`docs/OPERATIONS.md`](./docs/OPERATIONS.md) — pipeline runbook, backfills, recovery, tracing a fact.
-- [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) — AWS path, env vars, DB roles, photo-cache caveat.
+- [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) — Vercel/Render/Neon deploy, env vars, DB roles, photo-cache caveat.
 - [`docs/local-dev.md`](./docs/local-dev.md) · [`docs/data-sources.md`](./docs/data-sources.md) ·
   [`docs/entity-resolution.md`](./docs/entity-resolution.md) ·
   [`docs/severity-rubric.md`](./docs/severity-rubric.md) · [`docs/data-license.md`](./docs/data-license.md)

@@ -33,8 +33,8 @@ def parliament_search(
     q: str = Query(min_length=2),
     kind: str | None = Query(default=None, pattern="^(question|debate)$"),
     theme: str | None = None,
-    limit: int = 30,
-    offset: int = 0,
+    limit: int = Query(30, ge=1, le=100),
+    offset: int = Query(0, ge=0),
     house: str = _HOUSE_Q,
     db: Session = Depends(get_db),
 ) -> list[RecordHit]:

@@ -11,6 +11,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from neta_api.deps import settings
+from neta_api.ratelimit import RateLimitMiddleware
 from neta_api.routers import aggregate, elections, parliament, persons, questions, search, stats, visits
 
 app = FastAPI(
@@ -19,12 +20,16 @@ app = FastAPI(
     description="Read-only resume aggregate for Indian legislators. Every fact carries provenance.",
 )
 
+# Per-IP rate limiting (see ratelimit.py). Added before CORS so CORS ends up the OUTER middleware and a 429
+# still carries Access-Control-Allow-Origin for browser callers.
+app.add_middleware(RateLimitMiddleware)
+
 # Allowed origins are env-driven (NETA_ALLOWED_ORIGINS); the default is the local Next.js dev server.
-# Read-only API, so GET only and no credentials.
+# Read-only API plus the browser-side visitor counter (POST /visits/hit), so GET + POST, no credentials.
 app.add_middleware(
     CORSMiddleware,
     allow_origins=settings.cors_origins,
-    allow_methods=["GET"],
+    allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
 

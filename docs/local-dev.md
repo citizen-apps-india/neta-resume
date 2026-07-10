@@ -76,9 +76,13 @@ curl localhost:8000/persons/1                  # full resume aggregate (provenan
 curl "localhost:8000/search?q=godam"           # trigram name search
 ```
 
-## Current state (Phase 1 vertical slice — DONE)
+## Milestone snapshot (Phase 1 vertical slice — DONE)
 
-- Postgres schema (18 tables) + reference seeds (houses, sources, parties, IPC/BNS severity catalog).
+> Historical note: this captured the first end-to-end slice. The project has since shipped Phases 2–5 (full
+> 18th-LS + sitting-RS rosters, parliamentary-activity module, state houses, GitHub-Actions data platform);
+> the schema is now **29 tables**. See the README build-phases and `db/migrations/` for the current shape.
+
+- Postgres schema (29 tables today; 18 at the Phase-1 slice) + reference seeds (houses, sources, parties, IPC/BNS severity catalog).
 - Real MyNeta ingestion: winners list + candidate pages → person, office_term, party_affiliation,
   affidavit (assets/liabilities), criminal_case + case_charge with **derived severity**.
 - Table-based criminal-case parser (robust to MyNeta's varied FIR/section formats), validated by tests.
@@ -90,6 +94,7 @@ curl "localhost:8000/search?q=godam"           # trigram name search
   no severity impact.
 - Auto-created parties (e.g. "Nationalist Congress Party – Sharadchandra Pawar") should be reviewed/
   merged into canonical parties + aliases.
-- sansad.in roster (official member IDs, RS) not yet wired — MyNeta currently supplies roster for the slice.
+- ~~sansad.in roster (official member IDs, RS) not yet wired~~ — **shipped**: `neta ls-roster` and
+  `neta rajya-sabha` ingest the LS + sitting-RS rosters (official member IDs + photos) from sansad.in.
 - Entity resolution (SURF) bypassed for the slice (1 MyNeta candidate = 1 person); needed before
   multi-cycle / multi-source merges.

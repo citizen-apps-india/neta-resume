@@ -29,7 +29,7 @@ non-re-runnable ALTERs aren't replayed:
 
 ```bash
 NETA_MIGRATE_DATABASE_URL="postgresql+psycopg://OWNER:PASS@HOST/neondb?sslmode=require" \
-  uv run neta migrate --baseline    # records 0001–0016 as applied, executes nothing
+  uv run neta migrate --baseline    # records all current migrations as applied, executes nothing
 ```
 
 (Ideally run against a Neon **branch** first to confirm, then the main DB.) After this, `migrate.yml`

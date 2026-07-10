@@ -112,5 +112,5 @@ bootstrap only** — not the routine path. Local Postgres is a dev environment; 
 on it.
 
 > **One-time adoption** on the already-populated Neon: set both secrets, then run `neta migrate --baseline`
-> against it ONCE (records 0001–0016 as applied without re-executing the non-re-runnable early ALTERs).
+> against it ONCE (records all current migrations as applied without re-executing the non-re-runnable early ALTERs).
 > After that, `migrate.yml` applies only genuinely new migrations.

@@ -246,16 +246,18 @@ def trends(db: Session, house: str = "LS") -> dict:
     return {"house": house_name, "months": months, "totals": totals, "series": series}
 
 
-# Per-asker dimension expressions — the SAME derivation the directory uses (services/resume.py::_SUMMARY_BASE),
-# so a member's group here matches their profile: current party from party_affiliation.is_current -> canonical
-# name; state from the current (sitting, else most-recent-dated) office_term. Whitelisted: `by` selects the
-# expression, no user text is interpolated.
+# Per-asker dimension expressions, close to the derivation the directory uses
+# (services/resume.py::_SUMMARY_BASE). `party` is current party from party_affiliation.is_current ->
+# canonical name (genuinely house-agnostic). `state`, by contrast, is house-specific — a cross-house member
+# represents a different state in each house — so it is scoped to the queried house via `ot.house_id = :hid`
+# (the same bound param the outer query uses); without that, an LS/RS member's questions would be attributed
+# to their other house's state. Whitelisted: `by` selects the expression, no user text is interpolated.
 _DIM_SQL = {
     "party": """(SELECT pt.canonical_name FROM party_affiliation pa JOIN party pt ON pt.id = pa.party_id
                  WHERE pa.person_id = p.id AND pa.is_current LIMIT 1)""",
     "state": """(SELECT COALESCE(ot.ls_state_code, ot.rs_state_code)
                  FROM office_term ot JOIN term_cycle tc ON tc.id = ot.term_cycle_id
-                 WHERE ot.person_id = p.id
+                 WHERE ot.person_id = p.id AND ot.house_id = :hid
                  ORDER BY (ot.status = 'sitting') DESC, COALESCE(tc.start_date, DATE '2099-12-31') DESC
                  LIMIT 1)""",
 }
@@ -266,7 +268,8 @@ def theme_focus_by(db: Session, by: str, house: str = "LS") -> dict:
 
     For each group (party/state), returns its policy-theme mix as SHARES (descriptive emphasis, normalised so
     a bigger group isn't simply 'more'), plus the raw total and the count of members who asked. Groups are
-    ordered by total volume. Scoped to the given house (party/state derivation is house-agnostic).
+    ordered by total volume. Scoped to the given house: questions and the state derivation are both filtered
+    to that house (party is current-party, house-agnostic).
     """
     if by not in _DIM_SQL:
         raise ValueError(f"unsupported dimension: {by}")

@@ -10,7 +10,7 @@ import urllib.request
 from pathlib import Path
 from urllib.parse import urlparse
 
-from fastapi import APIRouter, Depends, HTTPException, Response
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
@@ -76,8 +76,8 @@ def person_photo(person_id: int, db: Session = Depends(get_db)) -> Response:
 @router.get("", response_model=list[PersonSummary])
 def list_persons(
     response: Response,
-    limit: int = 60,
-    offset: int = 0,
+    limit: int = Query(60, ge=1, le=200),
+    offset: int = Query(0, ge=0),
     house: str | None = None,
     state: str | None = None,
     constituency: str | None = None,

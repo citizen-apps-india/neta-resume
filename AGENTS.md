@@ -9,7 +9,7 @@ Per-area notes:
 - **Schema / data model** — `docs/DATA_DICTIONARY.md` (per-table reference + enums), `docs/schema.md`,
   `db/schema.dbml`. Source of truth is `db/migrations/*.sql`.
 - **Running pipelines / backfills / recovery** — `docs/OPERATIONS.md`.
-- **Deploying to AWS** — `docs/DEPLOYMENT.md` (env-var mapping, secrets, read-only DB role, photo-cache caveat).
+- **Deploying (Vercel/Render/Neon)** — `docs/DEPLOYMENT.md` (env-var mapping, secrets, read-only DB role, photo-cache caveat).
 - **Sources, licensing, ethics** — `docs/data-sources.md`, `docs/data-license.md`, `docs/severity-rubric.md`.
 - **Entity resolution** — `docs/entity-resolution.md`.
 

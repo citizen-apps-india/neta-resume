@@ -25,6 +25,14 @@ carries a `source_ref_id` and date-of-observation, so any datapoint links back t
 | `criminal_case` | a case: status, `is_convicted`, derived `severity` | `source_ref_id`, `court_source_ref_id` |
 | `case_charge` | IPC/BNS sections on a case (many per case) | via case |
 | `legal_section` | IPC/BNS section catalog + crosswalk + `base_severity` | seed |
+| `parliamentary_activity` | per-MP scorecard: questions/debates/PMB counts per term (`NULL`≠`0`) | `source_ref_id` (PRS) |
+| `parliamentary_question` | individual questions asked (subject, ministry, type, date, PDF) | `source_ref_id` (PRS) |
+| `parliamentary_debate` | debates participated in (title, type, date, PDF) | `source_ref_id` (PRS) |
+| `ministry_theme` | curated ministry → policy-theme map (read-time "policy focus") | seed |
+
+Identity/ER working tables (`person_name_variant` above, plus `person_identity_signals`,
+`person_merge_candidate`, `person_phonetic_key`, `affidavit_relatives`) and the parliamentary set are
+detailed column-by-column in [`DATA_DICTIONARY.md`](./DATA_DICTIONARY.md) — the canonical full reference.
 
 ## Valid values / enums
 

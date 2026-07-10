@@ -24,7 +24,14 @@ class ApiSettings(BaseSettings):
 
 
 settings = ApiSettings()
-engine = create_engine(settings.database_url, pool_pre_ping=True, future=True)
+# Cap any single statement at 15s so a runaway FTS/aggregate query can't pin a Neon connection. Passed as a
+# libpq option on connect (psycopg3); Postgres aborts the statement server-side and frees the backend.
+engine = create_engine(
+    settings.database_url,
+    pool_pre_ping=True,
+    future=True,
+    connect_args={"options": "-c statement_timeout=15000"},
+)
 SessionLocal = sessionmaker(bind=engine, expire_on_commit=False, future=True)
 
 

@@ -113,12 +113,16 @@ CI (`.github/workflows/ci.yml`) runs all of the above per push/PR.
   Data you just ingested won't appear instantly in the running web app.
 - **Photo proxy (CORP):** sansad.in photos set `Cross-Origin-Resource-Policy: same-site`, so a browser
   refuses to embed them. The API proxies them at `GET /persons/{id}/photo`, fetching server-side and
-  **disk-caching** to `api/.photo_cache/`. The web client builds that URL via `photoSrc()`. On serverless
-  (Lambda) that disk cache is **ephemeral** — see `docs/DEPLOYMENT.md`.
+  **disk-caching** to `api/.photo_cache/`. The web client builds that URL via `photoSrc()`. The API runs on
+  Render (persistent per-instance disk); on a fully ephemeral serverless host that disk cache would not
+  survive between invocations — see `docs/DEPLOYMENT.md`.
 - **mpsno namespacing:** sansad member id (`mpsno`) is namespaced per house into `source_ref.native_id`
   as `ls-{mpsno}` / `rs-{mpsno}` so LS and RS ids never collide.
-- **CORS** is currently hard-coded to `http://localhost:3000` in `api/neta_api/main.py`; deployment makes
-  it env-driven (`NETA_ALLOWED_ORIGINS`). See `docs/DEPLOYMENT.md`.
+- **CORS** is env-driven (`NETA_ALLOWED_ORIGINS`, default `http://localhost:3000`) in `api/neta_api/main.py`;
+  `GET` + `POST` (the browser visitor-counter `POST /visits/hit`), no credentials. See `docs/DEPLOYMENT.md`.
+- **Rate limiting:** the API applies a per-IP cap (`api/neta_api/ratelimit.py`, keyed on `X-Forwarded-For`
+  behind Render's proxy), exempting `/health` and the photo proxy; a per-statement DB `statement_timeout`
+  (`deps.py`) bounds any single query. In-process storage — fine for the single Render instance.
 - **Money** is stored as **integer rupees** (`bigint`); `₹ lakh/crore` text is parsed upstream. Never store a float/string.
 
 ## Boundaries
