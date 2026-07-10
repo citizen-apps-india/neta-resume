@@ -1,8 +1,9 @@
-import Link from "next/link";
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { MinistryBars } from "@/components/MinistryBars";
 import { HouseToggle } from "@/components/HouseToggle";
+import { SectionHero } from "@/components/parliament/SectionHero";
+import { SectionCard } from "@/components/parliament/SectionCard";
 import { getParliamentMinistries, type House, type MinistryCount } from "@/lib/api";
 
 export const revalidate = 3600;
@@ -24,16 +25,17 @@ export default async function MinistriesPage({ searchParams }: { searchParams: P
   return (
     <>
       <SiteHeader />
-      <main style={{ maxWidth: 820, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 64px", width: "100%" }}>
-        <div style={{ marginBottom: 6 }}>
-          <Link href={`/parliament${hq}`} className="mono" style={{ fontSize: 12, color: "var(--muted)", textDecoration: "none" }}>← Parliament functioning</Link>
-        </div>
-        <h1 className="serif" style={{ fontSize: "clamp(24px,5vw,32px)", fontWeight: 500, letterSpacing: "-0.02em", margin: "0 0 6px" }}>Ministries by questions</h1>
-        <p style={{ fontSize: 15, color: "var(--ink2)", margin: "0 0 20px", maxWidth: "64ch" }}>
-          Every Union ministry ranked by {houseLabel} questions ({total.toLocaleString("en-IN")} in all). Colours mark the policy theme; each links to the members who raise it.
-        </p>
-        <HouseToggle house={house} hrefLs="/parliament/ministries" hrefRs="/parliament/ministries?house=rs" />
-        {items.length === 0 ? <p style={{ color: "var(--muted)" }}>No data.</p> : <MinistryBars items={items} />}
+      <main style={{ maxWidth: 860, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 72px", width: "100%" }}>
+        <SectionHero
+          eyebrow={`MINISTRIES · ${house === "rs" ? "RAJYA SABHA" : "18TH LOK SABHA"}`}
+          title="Ministries by questions"
+          subtitle={<>Every Union ministry ranked by {houseLabel} questions ({total.toLocaleString("en-IN")} in all). Colours mark the policy theme; each links to the members who raise it.</>}
+          backHref={`/parliament${hq}`}
+          right={<HouseToggle house={house} hrefLs="/parliament/ministries" hrefRs="/parliament/ministries?house=rs" />}
+        />
+        {items.length === 0
+          ? <p style={{ color: "var(--muted)" }}>No data.</p>
+          : <div className="fadeUp"><SectionCard><MinistryBars items={items} /></SectionCard></div>}
       </main>
     </>
   );

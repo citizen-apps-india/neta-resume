@@ -14,18 +14,18 @@ const fmt = (n: number) => n.toLocaleString("en-IN");
 function GroupRow({ g, highlighted }: { g: AggregateGroup; highlighted?: boolean }) {
   const top = [...g.themes].sort((a, b) => b.share - a.share)[0];
   return (
-    <div style={{
-      padding: "13px 14px", borderRadius: 10,
-      border: `1px solid ${highlighted ? "var(--accent)" : "var(--rule)"}`,
+    <div className="liftsm" style={{
+      padding: "15px 16px", borderRadius: 14,
+      border: `1px solid ${highlighted ? "var(--accent-soft-bd)" : "var(--rule)"}`,
       background: highlighted ? "var(--accent-soft)" : "var(--card2)",
     }}>
-      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12, marginBottom: 9 }}>
-        <span style={{ fontFamily: "'Bricolage Grotesque',sans-serif", fontSize: 14.5, fontWeight: 600, color: "var(--ink)" }}>{g.key}</span>
+      <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: 12, marginBottom: 10 }}>
+        <span className="serif" style={{ fontSize: 15, fontWeight: 600, color: "var(--ink)" }}>{g.key}</span>
         <span className="mono" style={{ fontSize: 11.5, color: "var(--muted)", flexShrink: 0 }}>{fmt(g.total)} Qs · {fmt(g.mps)} MPs</span>
       </div>
       <SegmentedBar focus={canonical(g.themes)} />
       {top && (
-        <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 8 }}>
+        <div style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 9 }}>
           Most on <strong style={{ color: "var(--ink2)", fontWeight: 600 }}>{top.theme}</strong> — {Math.round(top.share * 100)}% of its questions
         </div>
       )}

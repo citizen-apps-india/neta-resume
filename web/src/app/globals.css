@@ -61,7 +61,8 @@ a { color: inherit; }
 /* hover/interaction utilities (React inline styles can't do :hover) */
 .lift { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
 .lift:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 16px 36px -20px var(--shadow); }
-.liftsm:hover { transform: translateY(-2px); border-color: var(--accent-soft-bd); }
+.liftsm { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
+.liftsm:hover { transform: translateY(-2px); border-color: var(--accent-soft-bd); box-shadow: 0 10px 26px -20px var(--shadow); }
 .navlink { text-decoration: none; transition: color .15s ease; }
 .navlink:hover { color: var(--accent); }
 
@@ -168,6 +169,22 @@ select:hover { border-color: var(--accent-2); }
 /* horizontal-scroll wrapper for the dense wealth table */
 .nr-xscroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 .nr-xscroll > * { min-width: 340px; }
+
+/* Parliament "bento" console: intentional varied spans on desktop, graceful reflow on small screens.
+   6-col track; children opt into a span via .col2/.col3/.col4/.col6. Collapses to a single column ≤760. */
+.nr-bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 14px; }
+.nr-bento > .col2 { grid-column: span 2; }
+.nr-bento > .col3 { grid-column: span 3; }
+.nr-bento > .col4 { grid-column: span 4; }
+.nr-bento > .col6 { grid-column: span 6; }
+@media (max-width: 760px) { .nr-bento { grid-template-columns: 1fr; } .nr-bento > * { grid-column: 1 / -1; } }
+
+/* auto-fit rows for the headline stats and the "explore" nav cards */
+.nr-statgrid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+.nr-navgrid  { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; }
+
+/* live pulse dot for section eyebrows */
+.pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); animation: nrPulse 2s ease-in-out infinite; flex-shrink: 0; }
 
 /* header: desktop nav row vs. hamburger menu */
 .nr-nav-desktop { display: flex; align-items: center; gap: 22px; }
