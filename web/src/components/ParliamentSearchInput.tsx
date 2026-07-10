@@ -5,7 +5,7 @@ import { useState } from "react";
 
 /** Free-text input for /parliament/search. Routes to the same page with `q`, preserving the current
  *  kind/theme filters (which are plain URL links rendered server-side). Mirrors SearchBox's styling. */
-export function ParliamentSearchInput({ initial = "", kind, theme }: { initial?: string; kind?: string; theme?: string }) {
+export function ParliamentSearchInput({ initial = "", kind, theme, house }: { initial?: string; kind?: string; theme?: string; house?: string }) {
   const router = useRouter();
   const [q, setQ] = useState(initial);
 
@@ -16,6 +16,7 @@ export function ParliamentSearchInput({ initial = "", kind, theme }: { initial?:
     if (v.length >= 2) p.set("q", v);
     if (kind) p.set("kind", kind);
     if (theme) p.set("theme", theme);
+    if (house) p.set("house", house);
     window.dispatchEvent(new Event("nr:nav")); // top progress bar for the programmatic push
     router.push(`/parliament/search${p.toString() ? `?${p.toString()}` : ""}`);
   }

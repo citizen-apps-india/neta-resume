@@ -2,8 +2,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { SiteHeader } from "@/components/SiteHeader";
 import { ParliamentSearchInput } from "@/components/ParliamentSearchInput";
+import { HouseToggle } from "@/components/HouseToggle";
 import { THEME_COLORS, themeColor } from "@/lib/themes";
-import { searchRecords, docSrc, type RecordHit } from "@/lib/api";
+import { searchRecords, docSrc, type House, type RecordHit } from "@/lib/api";
 
 export const revalidate = 3600;
 export const metadata: Metadata = {
@@ -16,7 +17,7 @@ const THEMES = Object.keys(THEME_COLORS).filter((t) => t !== "Other");
 const cardStyle: React.CSSProperties = { border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "clamp(14px,3vw,20px)" };
 
 /** Build a /parliament/search URL with the given params merged over the current ones. */
-function href(cur: { q?: string; kind?: string; theme?: string }, patch: Record<string, string | undefined>): string {
+function href(cur: { q?: string; kind?: string; theme?: string; house?: string }, patch: Record<string, string | undefined>): string {
   const merged = { ...cur, ...patch };
   const p = new URLSearchParams();
   for (const [k, v] of Object.entries(merged)) if (v) p.set(k, v);
@@ -64,21 +65,24 @@ function Hit({ h }: { h: RecordHit }) {
 export default async function SearchPage({
   searchParams,
 }: {
-  searchParams: Promise<{ q?: string; kind?: string; theme?: string; offset?: string }>;
+  searchParams: Promise<{ q?: string; kind?: string; theme?: string; offset?: string; house?: string }>;
 }) {
   const sp = await searchParams;
   const q = (sp.q ?? "").trim();
   const kind = sp.kind === "question" || sp.kind === "debate" ? sp.kind : undefined;
   const theme = sp.theme && THEMES.includes(sp.theme) ? sp.theme : undefined;
   const offset = Math.max(0, Number(sp.offset ?? 0) || 0);
-  const cur = { q, kind, theme };
+  const house: House = sp.house === "rs" ? "rs" : "ls";
+  const houseParam = house === "rs" ? "rs" : undefined;   // keep ?house out of LS (default) URLs
+  const houseLabel = house === "rs" ? "Rajya Sabha" : "18th Lok Sabha";
+  const cur = { q, kind, theme, house: houseParam };
 
   let items: RecordHit[] = [];
   let total = 0;
   let failed = false;
   if (q.length >= 2) {
     try {
-      const r = await searchRecords({ q, kind, theme, limit: PAGE, offset });
+      const r = await searchRecords({ q, kind, theme, limit: PAGE, offset, house });
       items = r.items;
       total = r.total;
     } catch { failed = true; }
@@ -89,14 +93,16 @@ export default async function SearchPage({
       <SiteHeader />
       <main style={{ maxWidth: 900, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 64px", width: "100%" }}>
         <div style={{ marginBottom: 8 }}>
-          <Link href="/parliament" className="mono" style={{ fontSize: 12, color: "var(--muted)", textDecoration: "none" }}>← Parliament functioning</Link>
+          <Link href={`/parliament${houseParam ? "?house=rs" : ""}`} className="mono" style={{ fontSize: 12, color: "var(--muted)", textDecoration: "none" }}>← Parliament functioning</Link>
         </div>
         <h1 className="serif" style={{ fontSize: "clamp(24px,5vw,32px)", fontWeight: 500, letterSpacing: "-0.02em", margin: "0 0 6px" }}>Search the record</h1>
         <p style={{ fontSize: 15, color: "var(--ink2)", margin: "0 0 20px", maxWidth: "64ch" }}>
-          Search the 18th Lok Sabha&rsquo;s questions and debates by topic. Each result links to the member and the official document.
+          Search the {houseLabel}&rsquo;s questions and debates by topic. Each result links to the member and the official document.
         </p>
 
-        <ParliamentSearchInput initial={q} kind={kind} theme={theme} />
+        <HouseToggle house={house} hrefLs={href(cur, { house: undefined, offset: undefined })} hrefRs={href(cur, { house: "rs", offset: undefined })} />
+
+        <ParliamentSearchInput initial={q} kind={kind} theme={theme} house={houseParam} />
 
         {/* Kind filter */}
         <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 16 }}>

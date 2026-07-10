@@ -5,7 +5,8 @@ import { Donut } from "@/components/resume/charts";
 import { MinistryBars } from "@/components/MinistryBars";
 import { PhotoBox } from "@/components/ui";
 import { themeColor } from "@/lib/themes";
-import { getParliamentStats, photoSrc, type ParliamentStats } from "@/lib/api";
+import { HouseToggle } from "@/components/HouseToggle";
+import { getParliamentStats, photoSrc, type House, type ParliamentStats } from "@/lib/api";
 
 export const revalidate = 3600;
 export const metadata: Metadata = {
@@ -27,10 +28,12 @@ function Tile({ num, label, accent }: { num: string; label: string; accent?: boo
   );
 }
 
-export default async function ParliamentPage() {
+export default async function ParliamentPage({ searchParams }: { searchParams: Promise<{ house?: string }> }) {
+  const house: House = (await searchParams).house === "rs" ? "rs" : "ls";
+  const hq = house === "rs" ? "?house=rs" : "";
   let s: ParliamentStats | null = null;
   try {
-    s = await getParliamentStats();
+    s = await getParliamentStats(house);
   } catch { /* API not up yet */ }
 
   const themes = s?.themes ?? [];
@@ -46,14 +49,16 @@ export default async function ParliamentPage() {
           What the House is asking
         </h1>
         <p style={{ fontSize: 15, color: "var(--ink2)", margin: "0 0 18px", maxWidth: "64ch" }}>
-          The {s?.house ?? "18th Lok Sabha"}, seen through its parliamentary questions — by policy area and ministry, and the members driving it. Every figure is read live from the official record.
+          The {s?.house ?? (house === "rs" ? "Rajya Sabha" : "18th Lok Sabha")}, seen through its parliamentary questions — by policy area and ministry, and the members driving it. Every figure is read live from the official record.
         </p>
 
+        <HouseToggle house={house} hrefLs="/parliament" hrefRs="/parliament?house=rs" />
+
         <div style={{ display: "flex", gap: 10, flexWrap: "wrap", marginBottom: 26 }}>
-          <Link href="/parliament/search" className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>⌕ Search the record</Link>
-          <Link href="/parliament/trends" className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>Trends over time →</Link>
-          <Link href="/parliament/parties" className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>By party →</Link>
-          <Link href="/parliament/states" className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>By state →</Link>
+          <Link href={`/parliament/search${hq}`} className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>⌕ Search the record</Link>
+          <Link href={`/parliament/trends${hq}`} className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>Trends over time →</Link>
+          <Link href={`/parliament/parties${hq}`} className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>By party →</Link>
+          <Link href={`/parliament/states${hq}`} className="tap" style={{ fontSize: 13, fontWeight: 500, padding: "8px 15px", borderRadius: 8, textDecoration: "none", border: "1px solid var(--border)", background: "var(--card2)", color: "var(--ink)" }}>By state →</Link>
         </div>
 
         {!s ? (
@@ -77,7 +82,7 @@ export default async function ParliamentPage() {
               <div style={cardStyle}>
                 <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 4 }}>
                   <span style={headStyle}>Most-questioned ministries</span>
-                  <Link href="/parliament/ministries" className="mono" style={{ fontSize: 11.5, color: "var(--accent-2)", textDecoration: "none" }}>See all →</Link>
+                  <Link href={`/parliament/ministries${hq}`} className="mono" style={{ fontSize: 11.5, color: "var(--accent-2)", textDecoration: "none" }}>See all →</Link>
                 </div>
                 <p style={{ fontSize: 12.5, color: "var(--muted)", margin: "0 0 14px" }}>Which departments the House scrutinises most.</p>
                 <MinistryBars items={s.top_ministries} />

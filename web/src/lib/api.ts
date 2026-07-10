@@ -97,11 +97,12 @@ export type ParliamentStats = {
   house: string; total_questions: number; total_debates: number; active_mps: number;
   themes: ThemeCount[]; top_ministries: MinistryCount[]; most_active: MpCount[];
 };
-export function getParliamentStats(): Promise<ParliamentStats> {
-  return getJSON<ParliamentStats>("/parliament/stats", 3600);
+export type House = "ls" | "rs";
+export function getParliamentStats(house: House = "ls"): Promise<ParliamentStats> {
+  return getJSON<ParliamentStats>(`/parliament/stats?house=${house}`, 3600);
 }
-export function getParliamentMinistries(): Promise<MinistryCount[]> {
-  return getJSON<MinistryCount[]>("/parliament/ministries", 3600);
+export function getParliamentMinistries(house: House = "ls"): Promise<MinistryCount[]> {
+  return getJSON<MinistryCount[]>(`/parliament/ministries?house=${house}`, 3600);
 }
 
 // Topic search over question subjects + debate titles (18th Lok Sabha).
@@ -115,13 +116,14 @@ export type RecordHit = {
   theme: string | null;
   date: string | null;
 };
-export type SearchRecordsOpts = { q: string; kind?: string; theme?: string; limit?: number; offset?: number };
+export type SearchRecordsOpts = { q: string; kind?: string; theme?: string; limit?: number; offset?: number; house?: House };
 /** A page of matching questions/debates plus the total match count (from X-Total-Count). */
 export async function searchRecords(opts: SearchRecordsOpts): Promise<{ items: RecordHit[]; total: number }> {
   const p = new URLSearchParams();
   p.set("q", opts.q);
   if (opts.kind) p.set("kind", opts.kind);
   if (opts.theme) p.set("theme", opts.theme);
+  if (opts.house) p.set("house", opts.house);
   p.set("limit", String(opts.limit ?? 30));
   p.set("offset", String(opts.offset ?? 0));
   const res = await fetch(`${API_BASE}/parliament/search?${p.toString()}`, { next: { revalidate: 3600 } });
@@ -134,18 +136,16 @@ export async function searchRecords(opts: SearchRecordsOpts): Promise<{ items: R
 // Monthly question volume split by policy theme (stacked-area trends).
 export type ThemeSeries = { theme: string; points: number[] };
 export type Trends = { house: string; months: string[]; totals: number[]; series: ThemeSeries[] };
-export function getParliamentTrends(): Promise<Trends> {
-  return getJSON<Trends>("/parliament/trends", 3600);
+export function getParliamentTrends(house: House = "ls"): Promise<Trends> {
+  return getJSON<Trends>(`/parliament/trends?house=${house}`, 3600);
 }
 
 // Collective theme-emphasis breakdown by party / state (descriptive, share-based).
 export type ThemeShare = { theme: string; count: number; share: number };
 export type AggregateGroup = { key: string; total: number; mps: number; themes: ThemeShare[] };
 export type ThemeFocusBreakdown = { by: "party" | "state"; house: string; groups: AggregateGroup[] };
-export function getThemeFocus(by: "party" | "state", house?: string): Promise<ThemeFocusBreakdown> {
-  const p = new URLSearchParams({ by });
-  if (house) p.set("house", house);
-  return getJSON<ThemeFocusBreakdown>(`/aggregate/theme-focus?${p.toString()}`, 3600);
+export function getThemeFocus(by: "party" | "state", house: House = "ls"): Promise<ThemeFocusBreakdown> {
+  return getJSON<ThemeFocusBreakdown>(`/aggregate/theme-focus?by=${by}&house=${house}`, 3600);
 }
 
 /** Lifetime unique-visitor counter (homepage). */

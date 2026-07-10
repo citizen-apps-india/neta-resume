@@ -126,7 +126,7 @@ export interface paths {
         };
         /**
          * Parliament Stats
-         * @description National dashboard: totals + theme mix + top ministries + most-active MPs (18th Lok Sabha).
+         * @description National dashboard: totals + theme mix + top ministries + most-active MPs, for the given house.
          */
         get: operations["parliament_stats_parliament_stats_get"];
         put?: never;
@@ -146,7 +146,7 @@ export interface paths {
         };
         /**
          * Parliament Ministries
-         * @description The full ranked list of ministries by question count.
+         * @description The full ranked list of ministries by question count, for the given house.
          */
         get: operations["parliament_ministries_parliament_ministries_get"];
         put?: never;
@@ -166,7 +166,7 @@ export interface paths {
         };
         /**
          * Parliament Search
-         * @description Topic search over question subjects + debate titles (18th Lok Sabha). Filter by kind/theme, page via
+         * @description Topic search over question subjects + debate titles for the given house. Filter by kind/theme, page via
          *     limit/offset; the total match count is in the `X-Total-Count` header (body stays a plain list).
          */
         get: operations["parliament_search_parliament_search_get"];
@@ -187,7 +187,7 @@ export interface paths {
         };
         /**
          * Parliament Trends
-         * @description Monthly question volume split by policy theme (18th Lok Sabha) — the stacked-area trends view.
+         * @description Monthly question volume split by policy theme, for the given house — the stacked-area trends view.
          */
         get: operations["parliament_trends_parliament_trends_get"];
         put?: never;
@@ -207,7 +207,7 @@ export interface paths {
         };
         /**
          * Theme Focus
-         * @description Theme-emphasis mix per party or state (18th Lok Sabha): each group's policy-theme shares + volume.
+         * @description Theme-emphasis mix per party or state, for the given house: each group's policy-theme shares + volume.
          */
         get: operations["theme_focus_aggregate_theme_focus_get"];
         put?: never;
@@ -1112,7 +1112,9 @@ export interface operations {
     };
     parliament_stats_parliament_stats_get: {
         parameters: {
-            query?: never;
+            query?: {
+                house?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -1128,11 +1130,22 @@ export interface operations {
                     "application/json": components["schemas"]["ParliamentStats"];
                 };
             };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
         };
     };
     parliament_ministries_parliament_ministries_get: {
         parameters: {
-            query?: never;
+            query?: {
+                house?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -1148,6 +1161,15 @@ export interface operations {
                     "application/json": components["schemas"]["MinistryCount"][];
                 };
             };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
         };
     };
     parliament_search_parliament_search_get: {
@@ -1158,6 +1180,7 @@ export interface operations {
                 theme?: string | null;
                 limit?: number;
                 offset?: number;
+                house?: string;
             };
             header?: never;
             path?: never;
@@ -1187,7 +1210,9 @@ export interface operations {
     };
     parliament_trends_parliament_trends_get: {
         parameters: {
-            query?: never;
+            query?: {
+                house?: string;
+            };
             header?: never;
             path?: never;
             cookie?: never;
@@ -1203,13 +1228,22 @@ export interface operations {
                     "application/json": components["schemas"]["Trends"];
                 };
             };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
         };
     };
     theme_focus_aggregate_theme_focus_get: {
         parameters: {
             query: {
                 by: string;
-                house?: string | null;
+                house?: string;
             };
             header?: never;
             path?: never;
