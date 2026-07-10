@@ -1,8 +1,9 @@
 """Aggregates for the "Parliament functioning" section — the institutional lens over the questions data.
 
-Read-time GROUP BYs over parliamentary_question (+ the ministry_theme map). All current rows are the 18th
-Lok Sabha; queries are scoped by the LS house_id so Rajya Sabha extends cleanly once its questions land.
-Everything is cached by the web's 1-hour ISR, so per-request compute is near-zero.
+Read-time GROUP BYs over parliamentary_question (+ the ministry_theme map). Every function is scoped by a
+house_id (via `_house`), so the same code serves the 18th Lok Sabha and the current Rajya Sabha — only the
+questions ingested per house differ. Everything is cached by the web's 1-hour ISR, so per-request compute is
+near-zero.
 """
 
 from __future__ import annotations
@@ -20,13 +21,15 @@ _JOIN_THEME = "LEFT JOIN ministry_theme mt ON mt.ministry_key = lower(btrim(pq.m
 _TSQ = "websearch_to_tsquery('english', :q)"
 
 
-def _ls_house(db: Session) -> tuple[int, str]:
-    row = db.execute(text("SELECT id, name FROM house WHERE code = 'LS'")).one()
+def _house(db: Session, code: str = "LS") -> tuple[int, str]:
+    """Resolve a house by code ('LS'/'RS') to (id, name). Every function scopes its queries by this id, so
+    the whole Parliament section is house-agnostic — only the roster/questions ingested differ per house."""
+    row = db.execute(text("SELECT id, name FROM house WHERE code = :c"), {"c": code}).one()
     return row.id, row.name
 
 
-def parliament_stats(db: Session) -> dict:
-    hid, house_name = _ls_house(db)
+def parliament_stats(db: Session, house: str = "LS") -> dict:
+    hid, house_name = _house(db, house)
     p = {"hid": hid}
 
     totals = db.execute(
@@ -100,9 +103,9 @@ def parliament_stats(db: Session) -> dict:
     }
 
 
-def ministries(db: Session) -> list[dict]:
+def ministries(db: Session, house: str = "LS") -> list[dict]:
     """The full ranked ministry list (name, theme, question count) for the /parliament/ministries page."""
-    hid, _ = _ls_house(db)
+    hid, _ = _house(db, house)
     rows = db.execute(
         text(
             f"""
@@ -124,14 +127,15 @@ def search_records(
     theme: str | None = None,
     limit: int = 30,
     offset: int = 0,
+    house: str = "LS",
 ) -> tuple[list[dict], int]:
-    """Full-text topic search over question subjects + debate titles (18th Lok Sabha).
+    """Full-text topic search over question subjects + debate titles (scoped to the given house).
 
     Returns (page, total). `kind` filters to 'question'/'debate' (default both). `theme` (a policy theme)
     filters via the ministry_theme map — debates carry no ministry, so a theme filter narrows to questions.
     Ranked by ts_rank, then most-recent first.
     """
-    hid, _ = _ls_house(db)
+    hid, _ = _house(db, house)
     params: dict = {"hid": hid, "q": q, "limit": limit, "offset": offset}
 
     want_q = kind in (None, "question")
@@ -204,13 +208,13 @@ def _dense_months(start: str, end: str) -> list[str]:
     return out
 
 
-def trends(db: Session) -> dict:
-    """Monthly question volume split by policy theme (18th Lok Sabha) — how the House's attention shifted.
+def trends(db: Session, house: str = "LS") -> dict:
+    """Monthly question volume split by policy theme — how the House's attention shifted over the term.
 
     Months are dense (zero-filled between sittings) so the stacked area stays continuous; themes are ordered
     by total volume to match the dashboard donut.
     """
-    hid, house_name = _ls_house(db)
+    hid, house_name = _house(db, house)
     rows = db.execute(
         text(
             f"""
@@ -257,16 +261,16 @@ _DIM_SQL = {
 }
 
 
-def theme_focus_by(db: Session, by: str, house: str | None = None) -> dict:
-    """Theme-emphasis breakdown by party or state (18th Lok Sabha) — the collective 'what a group raises'.
+def theme_focus_by(db: Session, by: str, house: str = "LS") -> dict:
+    """Theme-emphasis breakdown by party or state — the collective 'what a group raises'.
 
     For each group (party/state), returns its policy-theme mix as SHARES (descriptive emphasis, normalised so
     a bigger group isn't simply 'more'), plus the raw total and the count of members who asked. Groups are
-    ordered by total volume. `house` is accepted for forward-compat; only LS data exists today.
+    ordered by total volume. Scoped to the given house (party/state derivation is house-agnostic).
     """
     if by not in _DIM_SQL:
         raise ValueError(f"unsupported dimension: {by}")
-    hid, house_name = _ls_house(db)
+    hid, house_name = _house(db, house)
     dim = _DIM_SQL[by]
 
     rows = db.execute(

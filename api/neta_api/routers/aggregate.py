@@ -20,8 +20,8 @@ router = APIRouter(prefix="/aggregate", tags=["aggregate"])
 @router.get("/theme-focus", response_model=ThemeFocusBreakdown)
 def theme_focus(
     by: str = Query(pattern="^(party|state)$"),
-    house: str | None = None,
+    house: str = Query("ls", pattern="^(ls|rs)$"),
     db: Session = Depends(get_db),
 ) -> ThemeFocusBreakdown:
-    """Theme-emphasis mix per party or state (18th Lok Sabha): each group's policy-theme shares + volume."""
-    return ThemeFocusBreakdown(**parliament_service.theme_focus_by(db, by=by, house=house))
+    """Theme-emphasis mix per party or state, for the given house: each group's policy-theme shares + volume."""
+    return ThemeFocusBreakdown(**parliament_service.theme_focus_by(db, by=by, house=house.upper()))
