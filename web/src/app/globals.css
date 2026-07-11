@@ -178,7 +178,13 @@ select:hover { border-color: var(--accent-2); }
 .nr-bento > .col3 { grid-column: span 3; }
 .nr-bento > .col4 { grid-column: span 4; }
 .nr-bento > .col6 { grid-column: span 6; }
-@media (max-width: 760px) { .nr-bento { grid-template-columns: 1fr; } .nr-bento > * { grid-column: 1 / -1; } }
+/* Collapse to one column ≤760. The per-child span reset MUST match the .colN specificity (0,2,0) — a bare
+   `.nr-bento > *` (0,1,0) is out-ranked by `.nr-bento > .col3` etc., leaving the spans active so the grid
+   regenerates implicit columns and stays multi-column (the crushed-card mobile bug). */
+@media (max-width: 760px) {
+  .nr-bento { grid-template-columns: 1fr; }
+  .nr-bento > .col2, .nr-bento > .col3, .nr-bento > .col4, .nr-bento > .col6 { grid-column: auto; }
+}
 /* grid items default to min-width:auto (won't shrink below content) → let cards shrink so dense rows inside
    can ellipsize instead of forcing horizontal page overflow. */
 .nr-bento > * { min-width: 0; }
