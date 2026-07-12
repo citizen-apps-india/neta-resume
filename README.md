@@ -54,6 +54,7 @@ migrations and ingestion pipelines directly on Neon — see [`docs/DEPLOYMENT.md
 - [`docs/DATA_DICTIONARY.md`](./docs/DATA_DICTIONARY.md) — per-table/column reference + enums.
 - [`docs/schema.md`](./docs/schema.md) — schema overview, constraints, provenance model.
 - [`docs/OPERATIONS.md`](./docs/OPERATIONS.md) — pipeline runbook, backfills, recovery, tracing a fact.
+- [`docs/FUTURE_FEATURES.md`](./docs/FUTURE_FEATURES.md) — researched "more data for citizens" wishlist (contributions welcome).
 - [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md) — Vercel/Render/Neon deploy, env vars, DB roles, photo-cache caveat.
 - [`docs/local-dev.md`](./docs/local-dev.md) · [`docs/data-sources.md`](./docs/data-sources.md) ·
   [`docs/entity-resolution.md`](./docs/entity-resolution.md) ·
