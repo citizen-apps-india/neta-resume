@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { photoSrc, type PersonSummary } from "@/lib/api";
-import { rupees, caseSignalColor, attendancePct, attendanceColor } from "@/lib/format";
+import { rupees, caseSignalColor, attendancePct, attendanceColor, eduLevel } from "@/lib/format";
 import { PartyPill, PhotoBox, Dot } from "@/components/ui";
 import { themeColor } from "@/lib/themes";
 
@@ -20,6 +20,15 @@ export function DirectoryCard({ p }: { p: PersonSummary }) {
           <div style={{ marginTop: 8 }}>
             <PartyPill party={p.current_party} />
           </div>
+          {(() => {
+            const bits = [eduLevel(p.education), p.age ? `${p.age} yrs` : null,
+              p.gender ? p.gender[0].toUpperCase() + p.gender.slice(1) : null].filter(Boolean);
+            return bits.length ? (
+              <div style={{ marginTop: 7, fontSize: 11, color: "var(--muted)", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                {bits.join(" · ")}
+              </div>
+            ) : null;
+          })()}
         </div>
       </div>
       <div style={{ display: "flex", borderTop: "1px solid var(--rule)", marginTop: "auto" }}>

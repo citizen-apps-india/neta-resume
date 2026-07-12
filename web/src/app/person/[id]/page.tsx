@@ -134,6 +134,12 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
                       EDUCATION · {resume.education}
                     </div>
                   )}
+                  {(resume.relative_name || (resume.home_state && !lead?.state)) && (
+                    <div className="mono" style={{ fontSize: 10.5, color: "var(--faint)", letterSpacing: "0.04em", marginTop: 5, display: "flex", flexWrap: "wrap", gap: "2px 14px" }}>
+                      {resume.relative_name && <span>S/O · D/O · W/O · {resume.relative_name}</span>}
+                      {resume.home_state && !lead?.state && <span>HOME STATE · {resume.home_state}</span>}
+                    </div>
+                  )}
                 </div>
               </div>
               <p className="serif" style={{ fontSize: "clamp(15px,4vw,18px)", lineHeight: 1.55, color: "var(--ink2)", margin: "24px 0 0", maxWidth: "62ch" }}>

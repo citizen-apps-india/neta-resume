@@ -267,7 +267,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
     person = db.execute(
         text(
             """
-            SELECT p.id, p.display_name, p.photo_url,
+            SELECT p.id, p.display_name, p.photo_url, p.relative_name, p.home_state,
                    (SELECT variant FROM person_name_variant
                     WHERE person_id = p.id AND script = 'devanagari' LIMIT 1) AS native_name
             FROM person p WHERE p.id = :pid
@@ -543,6 +543,8 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
         photo_url=person.photo_url,
         age=latest.age if latest else None,
         education=latest.education if latest else None,
+        relative_name=person.relative_name,
+        home_state=person.home_state,
         office_terms=office_terms,
         roles=roles,
         contacts=contacts,
@@ -569,6 +571,9 @@ _SUMMARY_BASE = """
            oh.constituency AS constituency,
            oh.state        AS state,
            w.total_assets  AS net_assets,
+           w.age           AS age,
+           w.education     AS education,
+           p.gender        AS gender,
            COALESCE(cc.total, 0)   AS total_cases,
            COALESCE(cc.pending, 0) AS pending_cases,
            sev.severity    AS top_severity,
@@ -595,7 +600,7 @@ _SUMMARY_BASE = """
         ORDER BY (ot.status = 'sitting') DESC, COALESCE(tc.start_date, DATE '2099-12-31') DESC LIMIT 1
     ) oh ON true
     LEFT JOIN LATERAL (
-        SELECT total_assets FROM affidavit
+        SELECT total_assets, age, education FROM affidavit
         WHERE person_id = p.id ORDER BY filed_year DESC LIMIT 1
     ) w ON true
     LEFT JOIN LATERAL (
@@ -641,6 +646,9 @@ def _to_summary(r) -> PersonSummary:
         constituency=r.constituency,
         state=r.state,
         net_assets=r.net_assets,
+        age=r.age,
+        education=r.education,
+        gender=r.gender,
         pending_cases=r.pending_cases,
         total_cases=r.total_cases,
         top_severity=r.top_severity,

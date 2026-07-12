@@ -50,6 +50,21 @@ export function attendanceColor(pct: number | null | undefined): string {
   return "var(--sev2)";
 }
 
+/** Condense a verbose affidavit education string to its qualification level (the leading phrase MyNeta
+ *  uses), e.g. "Post Graduate M.D. Internal Medicine…" -> "Post Graduate". Falls back to the first words. */
+export function eduLevel(edu: string | null | undefined): string | null {
+  if (!edu) return null;
+  const s = edu.trim();
+  const levels = [
+    "Doctorate", "Post Graduate", "Graduate Professional", "Graduate",
+    "12th Pass", "10th Pass", "8th Pass", "5th Pass",
+    "Literate", "Illiterate", "Others",
+  ];
+  const hit = levels.find((l) => s.toLowerCase().startsWith(l.toLowerCase()));
+  if (hit) return hit;
+  return s.split(/[\s,]+/).slice(0, 2).join(" ");
+}
+
 export function year(dateStr: string | null | undefined): string {
   if (!dateStr) return "—";
   return dateStr.slice(0, 4);

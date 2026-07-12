@@ -673,6 +673,10 @@ export interface components {
             age?: number | null;
             /** Education */
             education?: string | null;
+            /** Relative Name */
+            relative_name?: string | null;
+            /** Home State */
+            home_state?: string | null;
             /** Office Terms */
             office_terms: components["schemas"]["OfficeTerm"][];
             /**
@@ -724,6 +728,12 @@ export interface components {
             state?: string | null;
             /** Net Assets */
             net_assets?: number | null;
+            /** Age */
+            age?: number | null;
+            /** Education */
+            education?: string | null;
+            /** Gender */
+            gender?: string | null;
             /**
              * Pending Cases
              * @default 0

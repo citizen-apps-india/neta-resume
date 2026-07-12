@@ -200,6 +200,8 @@ class PersonResume(BaseModel):
     photo_url: str | None = None
     age: int | None = None
     education: str | None = None
+    relative_name: str | None = None   # S/o · D/o · W/o name from the ECI affidavit (identity signal)
+    home_state: str | None = None      # modal state across the person's terms (context, esp. between terms)
     office_terms: list[OfficeTerm]
     roles: list[RoleEntry] = []
     contacts: list[Contact] = []
@@ -234,6 +236,9 @@ class PersonSummary(BaseModel):
     constituency: str | None           # for RS this carries the represented state
     state: str | None = None           # the member's state (LS: constituency's state; RS: represented state)
     net_assets: int | None = None          # latest declared total assets (rupees)
+    age: int | None = None                  # from the latest affidavit
+    education: str | None = None            # highest qualification declared (latest affidavit)
+    gender: str | None = None               # 'male' | 'female' | 'other' where declared
     pending_cases: int = 0                  # count of non-convicted cases
     total_cases: int = 0
     top_severity: Severity | None = None    # worst severity across cases (heinous>serious>minor)
