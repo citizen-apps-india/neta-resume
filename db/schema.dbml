@@ -249,3 +249,25 @@ Table ministry_theme {
   ministry_key text [pk]                      // lower(trim(ministry)) as in parliamentary_question
   theme text                                  // policy domain (Economy & Industry, Health, …)
 }
+
+// India Dashboard: curated catalog of country-level macro series (seeded from db/seeds/macro_indicators.sql).
+Table macro_indicator_def {
+  code text [pk]                              // source-native series code, e.g. 'NY.GDP.MKTP.CD'
+  name text                                   // source's official series name
+  unit text                                   // display unit ('US$', '%', 'years', …)
+  format text                                 // render hint: usd_compact | pct | number | count_compact
+  category text                               // dashboard section ('Economy & Growth', …)
+  category_order smallint
+  ind_order smallint
+}
+
+// India Dashboard: fetched values — one row per indicator × country × year (World Bank v1; no person FK).
+Table macro_indicator_value {
+  indicator_code text [ref: > macro_indicator_def.code]
+  country_code text                           // ISO alpha-3, 'IND'
+  year int
+  value numeric                               // never null: absent source years are absent rows
+  source_ref_id bigint [ref: > source_ref.id]
+  fetched_at timestamptz
+  indexes { (indicator_code, country_code, year) [pk] }
+}

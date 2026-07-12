@@ -318,6 +318,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/indicators/india": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * India
+         * @description The full India Dashboard: every catalogued macro series (history + latest), grouped by category.
+         */
+        get: operations["india_indicators_india_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -477,6 +497,57 @@ export interface components {
         HTTPValidationError: {
             /** Detail */
             detail?: components["schemas"]["ValidationError"][];
+        };
+        /**
+         * IndiaDashboard
+         * @description The India Dashboard aggregate — country-level macro indicators, grouped by category.
+         *
+         *     Descriptive official statistics (World Bank Open Data, CC-BY 4.0, trust tier 1) — what the record
+         *     says, never a judgment. Every series carries its own source link and its latest year (series lag
+         *     differs: GDP is near-current, survey series like the Gini update only in survey years).
+         */
+        IndiaDashboard: {
+            /** Country */
+            country: string;
+            /** Categories */
+            categories: components["schemas"]["IndicatorCategory"][];
+            /** Total Indicators */
+            total_indicators: number;
+        };
+        /** IndicatorCategory */
+        IndicatorCategory: {
+            /** Name */
+            name: string;
+            /** Indicators */
+            indicators: components["schemas"]["IndicatorSeries"][];
+        };
+        /** IndicatorPoint */
+        IndicatorPoint: {
+            /** Year */
+            year: number;
+            /** Value */
+            value: number;
+        };
+        /**
+         * IndicatorSeries
+         * @description One macro series (e.g. GDP) — full yearly history + the latest value, with provenance.
+         */
+        IndicatorSeries: {
+            /** Code */
+            code: string;
+            /** Name */
+            name: string;
+            /** Unit */
+            unit: string;
+            /** Format */
+            format: string;
+            /** Latest Value */
+            latest_value: number;
+            /** Latest Year */
+            latest_year: number;
+            /** Points */
+            points: components["schemas"]["IndicatorPoint"][];
+            source: components["schemas"]["Source"];
         };
         /** MinistryCount */
         MinistryCount: {
@@ -1388,6 +1459,26 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["Election"][];
+                };
+            };
+        };
+    };
+    india_indicators_india_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["IndiaDashboard"];
                 };
             };
         };

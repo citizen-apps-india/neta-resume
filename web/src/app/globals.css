@@ -138,7 +138,8 @@ select:hover { border-color: var(--accent-2); }
 /* ---- responsive layer ---------------------------------------------------------------------------
    The UI is built with inline styles; these classes carry the structural properties (column count,
    flex direction) so media queries can override them (inline styles would otherwise win). Fluid type
-   and gutters use clamp() inline. Breakpoints: 820 (header→menu), 760 (2-col stacks), 560 (densify). */
+   and gutters use clamp() inline. Breakpoints: 1080 (header→menu; the full nav row needs ~1060px), 760
+   (2-col stacks), 560 (densify). */
 
 /* generic 2-col grid that stacks; ratio per use via --cols */
 .nr-2col { display: grid; grid-template-columns: var(--cols, 1fr 1fr); gap: var(--gap, 18px); }
@@ -200,7 +201,7 @@ select:hover { border-color: var(--accent-2); }
 .nr-nav-desktop { display: flex; align-items: center; gap: 22px; }
 .nr-nav-burger { display: none; }
 .nr-menu-panel { display: none; }
-@media (max-width: 820px) {
+@media (max-width: 1080px) {
   .nr-nav-desktop { display: none; }
   .nr-nav-burger { display: inline-flex; }
   .nr-menu-panel.open { display: flex; }
@@ -223,9 +224,11 @@ select:hover { border-color: var(--accent-2); }
 @media (max-width: 640px) { .nr-mprow-name { flex: 1 1 0; } }
 @media (max-width: 430px) { .nr-mprow-theme { display: none; } }
 
-/* Section hero: the soft glow wash bleeds ±32px horizontally (desktop aesthetic); clip that bleed on small
-   screens so it can't create page-level horizontal scroll. */
-@media (max-width: 760px) { .nr-hero-clip { overflow-x: clip; } }
+/* Section hero: the soft glow wash bleeds ±32px horizontally (desktop aesthetic). The main gutter clamps
+   at 28px, so on any viewport where the 1120px container isn't yet centered with spare margin (≤ ~1128px)
+   the bleed pokes 4px past the page edge and creates horizontal scroll — clip it there. On wider screens
+   the bleed lands in the centered whitespace and stays unclipped. */
+@media (max-width: 1128px) { .nr-hero-clip { overflow-x: clip; } }
 
 /* Directory filter row: on phones each control (search + every select) becomes a clean full-width row
    instead of a ragged multi-row wrap. */

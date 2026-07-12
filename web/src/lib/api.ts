@@ -148,6 +148,15 @@ export function getThemeFocus(by: "party" | "state", house: House = "ls"): Promi
   return getJSON<ThemeFocusBreakdown>(`/aggregate/theme-focus?by=${by}&house=${house}`, 3600);
 }
 
+// India Dashboard: country-level macro indicators (World Bank v1), grouped by curated category.
+export type IndicatorPoint = Schemas["IndicatorPoint"];
+export type IndicatorSeries = Schemas["IndicatorSeries"];
+export type IndicatorCategory = Schemas["IndicatorCategory"];
+export type IndiaDashboard = Schemas["IndiaDashboard"];
+export function getIndiaDashboard(): Promise<IndiaDashboard> {
+  return getJSON<IndiaDashboard>("/indicators/india", 3600);
+}
+
 /** Lifetime unique-visitor counter (homepage). */
 export type Visits = { count: number };
 export function getVisits(): Promise<Visits> {

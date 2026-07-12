@@ -219,6 +219,14 @@ def activity(house: str = "ls") -> None:
     p.run(house=house)
 
 
+@app.command(name="macro-indicators")
+def macro_indicators(only: list[str] = typer.Option(None, help="specific indicator code(s); default all catalogued")) -> None:
+    """Fetch country-level macro indicators (World Bank) -> macro_indicator_value (India Dashboard)."""
+    from neta_ingest.pipelines.macro import indicators as p
+
+    p.run(only=only or None)
+
+
 @app.command(name="parliamentary-record")
 def parliamentary_record(house: str = "ls") -> None:
     """Attach individual questions + debates (text/subject) per MP from PRS profiles. house: ls|rs."""

@@ -292,3 +292,32 @@ A curated, versionable reference table (seeded via `db/seeds/ministry_themes.sql
 `parliamentary_question` to it and `GROUP BY theme`; unmapped ministries render as **"Other"**. Editorial by
 nature (grouping is a judgment call) — kept auditable here and labelled in the UI as *derived from the
 official ministry each question addresses*, never a value judgment.
+
+### `macro_indicator_def` — India Dashboard indicator catalog (added in 0028, seeded)
+| Column | Type | Notes |
+|---|---|---|
+| `code` | text PK | source-native series code, e.g. `NY.GDP.MKTP.CD` (World Bank v1) |
+| `name` | text | the source's official series name (descriptive, not ours) |
+| `unit` | text | display unit label (`US$`, `%`, `years`, `per 1,000 live births`, …) |
+| `format` | text | render hint: `usd_compact` \| `pct` \| `number` \| `count_compact` |
+| `category` | text | dashboard section (`Economy & Growth`, `Health`, …) |
+| `category_order` | smallint | section order on the page |
+| `ind_order` | smallint | order within the section |
+
+A curated, versionable catalog (seeded via `db/seeds/macro_indicators.sql`) of WHICH country-level series the
+India Dashboard shows and how they group/order/render. Adding an indicator = one seed row (plus the next
+`neta macro-indicators` run); no code change.
+
+### `macro_indicator_value` — country-level macro time series (added in 0028) — *provenance: `source_ref_id`*
+| Column | Type | Notes |
+|---|---|---|
+| `indicator_code` | text FK → macro_indicator_def | |
+| `country_code` | text | ISO alpha-3; `'IND'` today (extensible) |
+| `year` | int | |
+| `value` | numeric NOT NULL | **never null** — years the source has no value for are absent rows (missing ≠ zero) |
+| `source_ref_id` | bigint FK → source_ref | World Bank source_ref; `person_id` stays NULL (country-level fact) |
+| `fetched_at` | timestamptz | |
+
+PK `(indicator_code, country_code, year)` — the upsert key for `neta macro-indicators` (idempotent re-runs
+refresh in place). Sparse series (Gini, poverty — survey years only) stay sparse; the UI charts actual points
+and labels every latest value with the year it is "as of".

@@ -65,6 +65,45 @@ export function eduLevel(edu: string | null | undefined): string | null {
   return s.split(/[\s,]+/).slice(0, 2).join(" ");
 }
 
+/** Compact US$ for macro figures: $3.96T / $700.1B / $2,740. (World Bank series are US$, not ₹.) */
+export function usdCompact(n: number): string {
+  const abs = Math.abs(n);
+  if (abs >= 1e12) return `$${(n / 1e12).toFixed(2)}T`;
+  if (abs >= 1e9) return `$${(n / 1e9).toFixed(1)}B`;
+  if (abs >= 1e6) return `$${(n / 1e6).toFixed(1)}M`;
+  return `$${Math.round(n).toLocaleString("en-US")}`;
+}
+
+/** Compact plain count: 1.46B / 146.4M / 25,300. */
+export function countCompact(n: number): string {
+  const abs = Math.abs(n);
+  if (abs >= 1e9) return `${(n / 1e9).toFixed(2)}B`;
+  if (abs >= 1e6) return `${(n / 1e6).toFixed(1)}M`;
+  return Math.round(n).toLocaleString("en-IN");
+}
+
+/** Bare number at a sensible precision for its magnitude (97 / 72.2 / 1.96). */
+export function smartNumber(n: number): string {
+  const abs = Math.abs(n);
+  if (abs >= 100) return Math.round(n).toLocaleString("en-IN");
+  if (abs >= 10) return n.toFixed(1);
+  return n.toFixed(2);
+}
+
+/** Render a macro-indicator value per its catalog `format` hint (see macro_indicator_def.format). */
+export function indicatorValue(value: number, format: string): string {
+  switch (format) {
+    case "usd_compact":
+      return usdCompact(value);
+    case "pct":
+      return `${smartNumber(value)}%`;
+    case "count_compact":
+      return countCompact(value);
+    default:
+      return smartNumber(value);
+  }
+}
+
 export function year(dateStr: string | null | undefined): string {
   if (!dateStr) return "—";
   return dateStr.slice(0, 4);

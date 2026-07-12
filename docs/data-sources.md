@@ -103,6 +103,26 @@ See `severity-rubric.md`.
 
 ---
 
+## E. Country-level context — the India Dashboard
+
+### World Bank Open Data API — ✓ PRIMARY (macro indicators)
+- **URL:** `https://api.worldbank.org/v2/country/IND/indicator/{code}?format=json&per_page=500`
+- **Access:** keyless REST; one call returns an indicator's FULL yearly history for India (~65 points).
+  License **CC-BY 4.0** (the most permissive source we ingest). Trust tier 1.
+- **Fields:** ~24 curated series (catalog in `db/seeds/macro_indicators.sql`): GDP + growth + per-capita,
+  CPI inflation, unemployment/LFPR, poverty + Gini, life expectancy / infant + maternal mortality,
+  literacy/enrollment, electricity/internet access, population/urbanisation/fertility, CO2/forest.
+- **Pipeline:** `neta macro-indicators` → `macro_indicator_value` (monthly cron in ingest.yml).
+- **Gotchas (verified live):** EN.GHG.* responses carry a UTF-8 BOM (decode `utf-8-sig`); retired codes
+  (e.g. `EN.ATM.CO2E.PC`) return HTTP 200 with a `[{"message": …}]` body, not an error; null-value years
+  are dropped on ingest (missing ≠ zero). Series lag differs — GDP/CPI near-current, survey series
+  (Gini, poverty, literacy) update only in survey years.
+- **Future v2 sources** (fresher, Indian-official — see `docs/FUTURE_FEATURES.md`): MoSPI eSankhyiki
+  (monthly CPI/IIP, quarterly GDP/PLFS), data.gov.in OGD API (free key), RBI DBIE weekly forex (no REST
+  API — portal downloads), WHO GHO (CC-BY-NC-SA), IMF SDMX (WEO projections).
+
+---
+
 ## Entity resolution — unique-ID strategy
 
 - **TCPD SURF** (https://tcpd.ashoka.edu.in/surf-an-entity-mapping-and-resolution-system-for-indian/) —

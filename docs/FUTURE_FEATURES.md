@@ -26,6 +26,10 @@ note, rough **effort**, and where it would **hook into the codebase** — so a c
 
 - **Profile depth** — education level + age (+ gender where declared) on directory cards; father/spouse name
   and home state on profiles. All from data we already store. (PR #79.)
+- **India Dashboard v1** — `/india`: ~24 country-level macro series (GDP, prices, work, poverty, health,
+  education, infrastructure, people, environment) from the **World Bank Open Data API** (keyless, CC-BY 4.0,
+  tier 1), each with full history, an "as of" year, and a source link. Catalog in
+  `db/seeds/macro_indicators.sql`; pipeline `neta macro-indicators` (monthly cron).
 
 ---
 
@@ -57,11 +61,30 @@ beyond attendance.
 `normalize_name` → upsert with `record_source_ref`). New tables `committee` + `committee_membership`
 (next migration is `0028`). Surface in the profile "Career & Roles" area.
 
+### 3. India Dashboard v2 — fresher, Indian-official sources
+**What:** upgrade the `/india` dashboard beyond the World Bank's 1–2-year lag with Indian-official and
+UN-agency series: monthly **CPI/IIP** + quarterly **GDP/PLFS** (MoSPI), weekly **forex reserves + repo rate**
+(RBI), health survey detail (**NFHS**), **WEO projections** (IMF).
+**Citizen value:** High — the "understand the data your government puts out" page gets current-month numbers.
+**Data (researched mid-2026):**
+- **MoSPI eSankhyiki** (esankhyiki.mospi.gov.in, GODL) — portal live since Jun 2024; an official MCP server
+  appeared Feb 2026; no stable documented REST API yet.
+- **data.gov.in OGD API** (GODL) — works, needs a **free API key** (register at api.data.gov.in) as a repo
+  secret; finish the stub client `packages/neta-sources/neta_sources/datagovin/client.py`.
+- **RBI DBIE** (data.rbi.org.in) — CSV/Excel downloads only, **no REST API**; attribution expected.
+- **WHO GHO** OData API (keyless) — CC-BY-**NC**-SA, fine for this non-commercial project.
+- **IMF SDMX 3.0** (api.imf.org) — keyless; public-data reuse OK, commercial needs permission.
+**Feasibility:** Feasible incrementally — each source is its own small client + catalog rows (the
+`macro_indicator_def` catalog + `/india` page are source-agnostic; a series carries its own `source_ref`).
+**Effort:** M per source.
+**Reuse:** mirror `neta_sources/worldbank/client.py` + `pipelines/macro/indicators.py`; add the source to
+`db/seeds/sources.sql`; catalog rows in `db/seeds/macro_indicators.sql`.
+
 ---
 
 ## 🟡 Blocked on data access (need a source breakthrough)
 
-### 3. MPLADS fund tracking ("follow the money")
+### 4. MPLADS fund tracking ("follow the money")
 **What:** local-area development funds **allocated / released / sanctioned / spent / unspent** per MP /
 constituency, with utilisation %.
 **Citizen value:** High.
@@ -81,13 +104,13 @@ login; (c) ship the 16th-LS open data as an explicitly-labelled *historical* lay
 **Reuse:** the registered `datagovin` source (`db/seeds/sources.sql`) — but its client
 (`packages/neta-sources/neta_sources/datagovin/client.py`) is currently a stub needing an OGD API key.
 
-### 4. Election / campaign expenditure + electoral bonds
+### 5. Election / campaign expenditure + electoral bonds
 **What:** candidate campaign spend (ECI statements); political-party donations.
 **Data:** ECI candidate expenditure PDFs (need OCR); ADR analyses; electoral-bond data is partly restricted
 post-2024.
 **Feasibility:** Blocked/hard (OCR + restricted bond data). Effort L.
 
-### 5. Open data API / bulk export (for researchers & journalists)
+### 6. Open data API / bulk export (for researchers & journalists)
 **What:** a documented read API + bulk JSON/CSV of the deduplicated, sourced record.
 **Citizen value:** High (multiplies external scrutiny).
 **Feasibility:** **Blocked on policy, not tech** — the MyNeta/ADR non-commercial license and a **DPDP Act**

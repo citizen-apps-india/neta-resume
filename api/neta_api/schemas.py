@@ -345,3 +345,39 @@ class ThemeFocusBreakdown(BaseModel):
     by: Literal["party", "state"]
     house: str
     groups: list[AggregateGroup]             # ordered by total volume desc
+
+
+class IndicatorPoint(BaseModel):
+    year: int
+    value: float
+
+
+class IndicatorSeries(BaseModel):
+    """One macro series (e.g. GDP) — full yearly history + the latest value, with provenance."""
+
+    code: str                                # source-native series code, e.g. 'NY.GDP.MKTP.CD'
+    name: str                                # the source's official series name
+    unit: str                                # display unit label ('US$', '%', 'years', …)
+    format: str                              # render hint: usd_compact | pct | number | count_compact
+    latest_value: float
+    latest_year: int                         # ALWAYS show this next to the value — series lag differs
+    points: list[IndicatorPoint]             # ascending by year; sparse series stay sparse (missing ≠ zero)
+    source: Source
+
+
+class IndicatorCategory(BaseModel):
+    name: str                                # dashboard section ('Economy & Growth', …)
+    indicators: list[IndicatorSeries]
+
+
+class IndiaDashboard(BaseModel):
+    """The India Dashboard aggregate — country-level macro indicators, grouped by category.
+
+    Descriptive official statistics (World Bank Open Data, CC-BY 4.0, trust tier 1) — what the record
+    says, never a judgment. Every series carries its own source link and its latest year (series lag
+    differs: GDP is near-current, survey series like the Gini update only in survey years).
+    """
+
+    country: str                             # 'India'
+    categories: list[IndicatorCategory]      # in curated display order
+    total_indicators: int

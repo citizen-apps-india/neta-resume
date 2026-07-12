@@ -9,5 +9,6 @@ INSERT INTO source (code, name, base_url, license, trust_tier) VALUES
     ('prs',           'PRS Legislative Research',           'https://prsindia.org/',              'non-commercial',  2),
     ('wikidata',      'Wikidata',                           'https://www.wikidata.org/',          'CC0',             3),
     ('news',          'News / reported',                    NULL,                                  'reported',        3),
-    ('govt',          'Government of India (official portals)', 'https://www.india.gov.in/',       'public-official', 1)
+    ('govt',          'Government of India (official portals)', 'https://www.india.gov.in/',       'public-official', 1),
+    ('worldbank',     'World Bank Open Data',               'https://data.worldbank.org/',        'CC-BY-4.0',       1)
 ON CONFLICT (code) DO NOTHING;

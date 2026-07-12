@@ -44,7 +44,8 @@ method, fields, licensing, reuse libraries). Spine: `sansad.in` roster · MyNeta
 
 **Now shipping:** a teal-themed Next.js directory + per-legislator resume page (office history, party
 history, YoY wealth, criminal cases with derived severity, attendance %), every fact carrying a
-provenance link. **Deployed** on Vercel (web) · Render (API) · Neon (Postgres); GitHub Actions runs the
+provenance link. Plus the **India Dashboard** (`/india`) — ~24 country-level macro series (GDP, prices,
+work, health, education, …) from the World Bank Open Data API (CC-BY 4.0), each with history + source link. **Deployed** on Vercel (web) · Render (API) · Neon (Postgres); GitHub Actions runs the
 migrations and ingestion pipelines directly on Neon — see [`docs/DEPLOYMENT.md`](./docs/DEPLOYMENT.md).
 
 ## Documentation

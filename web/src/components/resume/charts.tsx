@@ -3,10 +3,11 @@
 // Recharts-backed charts: interactive, responsive, and dark-mode aware. Same prop shapes as before
 // (Donut/WealthLine) so call sites are untouched.
 
+import { useId } from "react";
 import {
   Area, AreaChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from "recharts";
-import { rupees } from "@/lib/format";
+import { indicatorValue, rupees } from "@/lib/format";
 import { themeColor } from "@/lib/themes";
 import { resolveColor, useThemeColors } from "@/lib/useThemeColors";
 
@@ -152,6 +153,60 @@ export function WealthLine({ points }: { points: { label: string; value: number 
             dot={{ r: 3.5, fill: colors["--card"], stroke: accent, strokeWidth: 2.5 }}
             activeDot={{ r: 5, fill: accent, stroke: colors["--card"], strokeWidth: 2 }}
             isAnimationActive
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
+  );
+}
+
+/** Generic macro-indicator trend (India Dashboard): year series, area+line, values formatted by the
+ *  catalog `format` hint (a string, not a function — server components pass it across the RSC boundary).
+ *  Unlike WealthLine the Y domain is auto on both ends: series like GDP growth go negative (2020). */
+export function IndicatorLine({ points, format }: { points: { year: number; value: number }[]; format: string }) {
+  const colors = useThemeColors();
+  const accent = colors["--accent"];
+  const gid = useId(); // many IndicatorLines per page — gradient ids must not collide
+
+  return (
+    <div style={{ width: "100%", height: "clamp(96px,26vw,120px)" }}>
+      <ResponsiveContainer width="100%" height="100%">
+        <AreaChart data={points} margin={{ top: 6, right: 6, bottom: 0, left: 6 }}>
+          <defs>
+            <linearGradient id={gid} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={accent} stopOpacity={0.2} />
+              <stop offset="100%" stopColor={accent} stopOpacity={0.02} />
+            </linearGradient>
+          </defs>
+          <XAxis
+            dataKey="year"
+            tick={{ fontSize: 10, fill: colors["--muted"], fontFamily: "var(--font-mono, monospace)" }}
+            tickLine={false}
+            axisLine={{ stroke: colors["--rule2"] }}
+            interval="preserveStartEnd"
+            minTickGap={28}
+          />
+          <YAxis hide domain={["auto", "auto"]} />
+          <Tooltip
+            cursor={{ stroke: colors["--rule2"] }}
+            content={({ active, payload, label }) =>
+              active && payload && payload.length ? (
+                <TooltipBox>
+                  <div style={{ color: "var(--muted)", marginBottom: 2 }}>{label}</div>
+                  <strong>{indicatorValue(payload[0].value as number, format)}</strong>
+                </TooltipBox>
+              ) : null
+            }
+          />
+          <Area
+            type="monotone"
+            dataKey="value"
+            stroke={accent}
+            strokeWidth={2}
+            fill={`url(#${gid})`}
+            dot={points.length <= 12 ? { r: 2.5, fill: colors["--card"], stroke: accent, strokeWidth: 2 } : false}
+            activeDot={{ r: 4, fill: accent, stroke: colors["--card"], strokeWidth: 2 }}
+            isAnimationActive={false}
           />
         </AreaChart>
       </ResponsiveContainer>

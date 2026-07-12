@@ -12,6 +12,7 @@ const LINKS: [string, string][] = [
   ["/state-level", "State Level"],
   ["/municipal", "Municipal"],
   ["/parliament", "Parliament"],
+  ["/india", "India Dashboard"],
   ["/directory", "Directory"],
 ];
 
