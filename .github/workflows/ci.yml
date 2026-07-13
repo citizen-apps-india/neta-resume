@@ -26,6 +26,12 @@ jobs:
       - uses: astral-sh/setup-uv@v3
       - run: uv sync --dev
       - run: uv run ruff check .
+      # Render pip-installs from api/requirements.txt (NOT uv sync) — a stale export crash-loops the deploy
+      # (learned the hard way: `limits` was in pyproject but missing from the export → ModuleNotFoundError).
+      - name: requirements.txt matches pyproject/uv.lock
+        run: |
+          uv export --no-dev --no-hashes --no-emit-project | diff - requirements.txt \
+            || { echo "::error::api/requirements.txt is stale — regenerate with: cd api && uv export --no-dev --no-hashes --no-emit-project -o requirements.txt"; exit 1; }
 
   web:
     runs-on: ubuntu-latest
