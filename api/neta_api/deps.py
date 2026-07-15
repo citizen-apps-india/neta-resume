@@ -5,7 +5,7 @@ from __future__ import annotations
 from collections.abc import Iterator
 
 from pydantic_settings import BaseSettings, SettingsConfigDict
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, event
 from sqlalchemy.orm import Session, sessionmaker
 
 
@@ -24,14 +24,20 @@ class ApiSettings(BaseSettings):
 
 
 settings = ApiSettings()
-# Cap any single statement at 15s so a runaway FTS/aggregate query can't pin a Neon connection. Passed as a
-# libpq option on connect (psycopg3); Postgres aborts the statement server-side and frees the backend.
-engine = create_engine(
-    settings.database_url,
-    pool_pre_ping=True,
-    future=True,
-    connect_args={"options": "-c statement_timeout=15000"},
-)
+engine = create_engine(settings.database_url, pool_pre_ping=True, future=True)
+
+
+# Cap any single statement at 15s so a runaway FTS/aggregate query can't pin a Neon connection; Postgres
+# aborts the statement server-side and frees the backend. Issued as `SET LOCAL` at the start of EVERY
+# transaction — NOT as a libpq `options` startup parameter (connect_args): Neon's pooled endpoint
+# (pgbouncer) rejects the `options` startup parameter outright, which made every connection — and thus
+# every DB endpoint — fail instantly in production while local/direct Postgres accepted it fine.
+# SET LOCAL scopes to the transaction, the only scope that survives pgbouncer transaction pooling.
+@event.listens_for(engine, "begin")
+def _statement_timeout(conn) -> None:
+    conn.exec_driver_sql("SET LOCAL statement_timeout = 15000")
+
+
 SessionLocal = sessionmaker(bind=engine, expire_on_commit=False, future=True)
 
 
