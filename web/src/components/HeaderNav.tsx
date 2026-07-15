@@ -5,24 +5,24 @@ import { useState } from "react";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { ReportDiscrepancyButton } from "@/components/ReportDiscrepancy";
 import { ElectionsNav } from "@/components/ElectionsNav";
+import { LegislatorsNav } from "@/components/LegislatorsNav";
 
+// The five top-level menus are: Legislators (LegislatorsNav — houses Lok Sabha / Rajya Sabha /
+// State Level / Municipal behind an inline morph), these three plain links, then Elections.
 const LINKS: [string, string][] = [
-  ["/lok-sabha", "Lok Sabha"],
-  ["/rajya-sabha", "Rajya Sabha"],
-  ["/state-level", "State Level"],
-  ["/municipal", "Municipal"],
-  ["/parliament", "Parliament"],
+  ["/parliament", "Parliament Report"],
   ["/india", "India Dashboard"],
-  ["/directory", "Directory"],
+  ["/directory", "Politician Directory"],
 ];
 
-/** Header navigation: a desktop row, collapsing to a hamburger + dropdown panel on ≤820px. */
+/** Header navigation: a desktop row, collapsing to a hamburger + dropdown panel on ≤1080px. */
 export function HeaderNav() {
   const [open, setOpen] = useState(false);
 
   return (
     <>
       <nav className="nr-nav-desktop">
+        <LegislatorsNav />
         {LINKS.map(([href, label]) => (
           <Link key={href} className="navlink" href={href} style={{ fontSize: 13, color: "var(--ink2)" }}>{label}</Link>
         ))}
@@ -53,6 +53,7 @@ export function HeaderNav() {
           boxShadow: "0 18px 32px -22px var(--shadow)",
         }}
       >
+        <LegislatorsNav variant="panel" onNavigate={() => setOpen(false)} />
         {LINKS.map(([href, label]) => (
           <Link key={href} className="navlink" href={href} onClick={() => setOpen(false)} style={{ fontSize: 16, color: "var(--ink)" }}>
             {label}

@@ -207,6 +207,72 @@ select:hover { border-color: var(--accent-2); }
   .nr-menu-panel.open { display: flex; }
 }
 
+/* "Legislators" inline morph: the word collapses while a pill row of the four house links expands in
+   its place — the nav is flex, so animating this item's width slides the siblings aside. Both halves
+   stay in the DOM (max-width/opacity swap); focusability is handled with tabIndex in the component. */
+.nr-morph { display: inline-flex; align-items: center; }
+.nr-morph-word {
+  display: inline-flex; align-items: center; gap: 5px; max-width: 130px; overflow: hidden;
+  white-space: nowrap; background: none; border: 0; padding: 0; cursor: pointer;
+  font: inherit; font-size: 13px; color: var(--ink2);
+}
+.nr-morph.open .nr-morph-word { max-width: 0; opacity: 0; pointer-events: none; }
+.nr-morph-pill {
+  display: inline-flex; align-items: center; gap: 9px; max-width: 0; opacity: 0; visibility: hidden;
+  overflow: hidden; white-space: nowrap; border: 1px solid transparent; border-radius: 999px;
+  background: var(--card2); padding: 5px 0;
+}
+.nr-morph.open .nr-morph-pill {
+  max-width: 460px; opacity: 1; visibility: visible; border-color: var(--border); padding: 5px 12px;
+}
+.nr-morph-item { font-size: 13px; color: var(--ink); }
+.nr-morph-sep { color: var(--ink2); opacity: .55; }
+.nr-morph-close { background: none; border: 0; padding: 0 0 0 2px; cursor: pointer; font-size: 11px; color: var(--ink2); }
+.nr-morph-close:hover { color: var(--accent); }
+
+/* hamburger-panel variant: the morph runs downward as an accordion instead */
+.nr-morph-acc { display: flex; flex-direction: column; }
+.nr-morph-acc-head {
+  display: flex; align-items: center; justify-content: space-between; background: none; border: 0;
+  padding: 0; cursor: pointer; font: inherit; font-size: 16px; color: var(--ink); text-align: left;
+}
+.nr-morph-acc-chev { display: inline-block; font-size: 13px; color: var(--ink2); }
+.nr-morph-acc-head.open .nr-morph-acc-chev { transform: rotate(90deg); }
+.nr-morph-acc-list {
+  display: flex; flex-direction: column; gap: 12px; overflow: hidden; max-height: 0;
+  margin-left: 4px; padding-left: 12px; border-left: 2px solid var(--rule);
+}
+.nr-morph-acc-list.open { max-height: 220px; margin-top: 12px; }
+.nr-morph-acc-item { font-size: 15px; color: var(--ink); }
+
+/* tightest desktop band (burger takes over below 1081): compress nav + pill spacing so the OPEN pill
+   still fits without horizontal overflow */
+@media (max-width: 1240px) {
+  .nr-nav-desktop { gap: 13px; }
+  .nr-morph-pill { gap: 7px; }
+  .nr-morph.open .nr-morph-pill { padding: 5px 9px; }
+  .nr-morph-item { font-size: 12px; }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .nr-morph-word { transition: max-width .3s ease, opacity .18s ease; }
+  /* delay visibility until the collapse finishes; the pill's fade-in trails the widening slightly so
+     the bar visibly "grows" first — that lag is the morph feel */
+  .nr-morph-pill {
+    transition: max-width .38s ease, padding .38s ease, opacity .22s ease .08s,
+      border-color .2s ease .08s, visibility 0s linear .38s;
+  }
+  .nr-morph.open .nr-morph-pill {
+    transition: max-width .38s ease, padding .38s ease, opacity .22s ease .08s, border-color .2s ease .08s;
+  }
+  .nr-morph.open .nr-morph-item,
+  .nr-morph.open .nr-morph-sep,
+  .nr-morph.open .nr-morph-close { animation: nrPop .3s ease both; animation-delay: calc(var(--i, 0) * 55ms); }
+  .nr-morph-acc-chev { transition: transform .25s ease; }
+  .nr-morph-acc-list { transition: max-height .3s ease, margin-top .3s ease; }
+  .nr-morph-acc-list.open .nr-morph-acc-item { animation: nrFadeUp .3s ease both; animation-delay: calc(var(--i, 0) * 55ms); }
+}
+
 /* ---------- mobile optimization pass (additive; all max-width / touch-only, desktop unchanged) ---------- */
 
 /* Touch targets: enlarge interactive controls to the ~44px minimum on touch devices only, so a mouse-driven
