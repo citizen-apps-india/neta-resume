@@ -82,6 +82,20 @@ export function countCompact(n: number): string {
   return Math.round(n).toLocaleString("en-IN");
 }
 
+/** Trim trailing zeros from a fixed-decimal string ("98.00" -> "98", "24.80" -> "24.8"). */
+function trimZeros(s: string): string {
+  return s.includes(".") ? s.replace(/\.?0+$/, "") : s;
+}
+
+/** Compact count in Indian units: 24.8 crore / 14.72 lakh / 48,246. For counts an Indian reader reads by
+ *  eye (schools, post offices, colleges) — the lakh/crore counterpart to countCompact's B/M. */
+export function countIndian(n: number): string {
+  const abs = Math.abs(n);
+  if (abs >= 1e7) return `${trimZeros((n / 1e7).toFixed(2))} crore`;
+  if (abs >= 1e5) return `${trimZeros((n / 1e5).toFixed(2))} lakh`;
+  return Math.round(n).toLocaleString("en-IN");
+}
+
 /** Bare number at a sensible precision for its magnitude (97 / 72.2 / 1.96). */
 export function smartNumber(n: number): string {
   const abs = Math.abs(n);
@@ -99,9 +113,30 @@ export function indicatorValue(value: number, format: string): string {
       return `${smartNumber(value)}%`;
     case "count_compact":
       return countCompact(value);
+    case "count_in":
+      return countIndian(value);
     default:
       return smartNumber(value);
   }
+}
+
+/** Year-on-year change for a change chip: the last two points' delta as a signed %, with a good/bad tone
+ *  keyed to polarity (+1 higher-is-better, -1 lower-is-better, 0 neutral). null when < 2 points. */
+export function indicatorChange(
+  points: { year: number; value: number }[],
+  polarity: number,
+): { text: string; tone: "good" | "bad" | "flat" } | null {
+  if (points.length < 2) return null;
+  const prev = points[points.length - 2].value;
+  const curr = points[points.length - 1].value;
+  if (prev === 0 || !isFinite(prev) || !isFinite(curr)) return null;
+  const pct = ((curr - prev) / Math.abs(prev)) * 100;
+  const sign = curr > prev ? 1 : curr < prev ? -1 : 0;
+  const arrow = sign > 0 ? "▲" : sign < 0 ? "▼" : "→";
+  const mag = Math.abs(pct);
+  const text = `${arrow} ${mag < 1 ? mag.toFixed(2) : mag.toFixed(1)}%`;
+  const tone = polarity === 0 || sign === 0 ? "flat" : sign === polarity ? "good" : "bad";
+  return { text, tone };
 }
 
 export function year(dateStr: string | null | undefined): string {

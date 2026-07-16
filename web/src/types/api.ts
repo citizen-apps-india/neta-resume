@@ -541,6 +541,13 @@ export interface components {
             unit: string;
             /** Format */
             format: string;
+            /**
+             * Polarity
+             * @default 0
+             */
+            polarity: number;
+            /** Note */
+            note?: string | null;
             /** Latest Value */
             latest_value: number;
             /** Latest Year */

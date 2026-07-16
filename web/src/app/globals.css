@@ -197,6 +197,39 @@ select:hover { border-color: var(--accent-2); }
 /* live pulse dot for section eyebrows */
 .pulse-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); animation: nrPulse 2s ease-in-out infinite; flex-shrink: 0; }
 
+/* ---------- India Dashboard ---------- */
+/* indicator tile: shared by the category grids and (prominent/hero variants) the headline row */
+.nr-ind-tile { border: 1px solid var(--rule); background: var(--card); padding: 14px 14px 10px; min-width: 0; display: flex; flex-direction: column; }
+.nr-ind-tile.prominent { padding: 16px 17px 12px; border-color: var(--border); background: var(--card2); }
+.nr-ind-tile.hero { border-color: var(--accent-soft-bd); background: var(--accent-soft); }
+.nr-ind-name { font-size: 12.5px; color: var(--ink2); line-height: 1.35; }
+.nr-ind-tile.hero .nr-ind-name { color: var(--accent-soft-fg); }
+.nr-ind-value { font-weight: 700; color: var(--ink); }
+.nr-ind-tile.hero .nr-ind-value { color: var(--accent-soft-fg); }
+.nr-ind-note { font-size: 11.5px; color: var(--faint); line-height: 1.4; padding: 6px 0 2px; }
+.nr-ind-foot { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--rule); font-size: 10.5px; color: var(--faint); }
+.nr-ind-tile.hero .nr-ind-foot { border-top-color: var(--accent-soft-bd); }
+
+/* good/bad-aware year-on-year change chip */
+.nr-chg { font-family: 'IBM Plex Mono', monospace; font-size: 11px; font-weight: 600; padding: 1px 6px; border-radius: 999px; white-space: nowrap; }
+.nr-chg-good { color: var(--ok); background: var(--ok-bg); }
+.nr-chg-bad  { color: var(--sev1); background: var(--sev1-bg); }
+.nr-chg-flat { color: var(--muted); background: var(--sunken); }
+
+/* freshness stamp: a standalone line above the hero stats (flows within the content box) */
+.nr-fresh-row { margin: -8px 0 16px; }
+.nr-fresh { display: inline-flex; align-items: center; gap: 7px; max-width: 100%; font-size: 11px; color: var(--muted); background: var(--card2); border: 1px solid var(--rule); padding: 5px 11px; border-radius: 999px; }
+
+/* sticky category anchor rail */
+.nr-cat-rail { position: sticky; top: 8px; z-index: 5; display: flex; gap: 7px; overflow-x: auto; scrollbar-width: none; margin: 0 0 18px; padding: 7px; background: color-mix(in srgb, var(--panel) 82%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--rule); border-radius: 12px; }
+.nr-cat-rail::-webkit-scrollbar { display: none; }
+.nr-cat-chip { flex: none; font-size: 12px; color: var(--ink2); text-decoration: none; padding: 6px 11px; border-radius: 8px; white-space: nowrap; }
+.nr-cat-chip:hover { background: var(--sunken); color: var(--ink); }
+.nr-cat-chip.active { background: var(--accent-soft); color: var(--accent-soft-fg); border: 1px solid var(--accent-soft-bd); padding: 5px 10px; }
+html { scroll-behavior: smooth; }
+@media (max-width: 640px) { .nr-cat-rail { top: 0; } }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+
 /* header: desktop nav row vs. hamburger menu */
 .nr-nav-desktop { display: flex; align-items: center; gap: 22px; }
 .nr-nav-burger { display: none; }
