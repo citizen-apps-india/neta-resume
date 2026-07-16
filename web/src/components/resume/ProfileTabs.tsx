@@ -143,6 +143,8 @@ function Activity({ resume }: { resume: PersonResume }) {
   const a = resume.activity;
   if (!a) return <Muted>No parliamentary activity data on record.</Muted>;
   const asOf = isoDate(a.period_end);
+  // A scorecard that reports every metric as 0 is a sourced fact (an inactive member), not missing data.
+  const allZero = ACT_METRICS.every((m) => a[m.key].value === 0);
   return (
     <div className="fadeUp">
       <div style={{ display: "flex", alignItems: "baseline", justifyContent: "space-between", marginBottom: 6 }}>
@@ -150,6 +152,12 @@ function Activity({ resume }: { resume: PersonResume }) {
         <span className="mono" style={{ fontSize: 11, color: "var(--faint)" }}>PRS MP TRACK</span>
       </div>
       <Muted>Cumulative over the term{asOf ? `, as of ${asOf}` : ""}. Bars compare this member against the {a.house} median.</Muted>
+      {allZero && (
+        <div style={{ display: "flex", gap: 9, alignItems: "flex-start", marginTop: 14, padding: "12px 14px", border: "1px solid var(--rule)", borderRadius: 10, background: "var(--card2)", fontSize: 12.5, color: "var(--ink2)", lineHeight: 1.5 }}>
+          <span className="mono" style={{ color: "var(--accent)", flexShrink: 0 }}>i</span>
+          <span>PRS records <strong style={{ color: "var(--ink)" }}>no questions, debates, or private member&rsquo;s bills</strong> for this member this term. A recorded zero — not missing data.</span>
+        </div>
+      )}
       <div style={{ display: "grid", gap: 12, marginTop: 16 }}>
         {ACT_METRICS.map((m) => <MetricBar key={m.key} label={m.label} metric={a[m.key]} />)}
       </div>
@@ -168,6 +176,29 @@ function MetricBar({ label, metric }: { label: string; metric: { value: number |
       <div style={cardStyle}>
         <div style={{ ...headStyle, fontSize: 14 }}>{label}</div>
         <Muted>Not reported.</Muted>
+      </div>
+    );
+  }
+  // Sourced zero: PRS scored this member at 0. Show it as an intentional "none" — the empty track against
+  // the retained house-median tick IS the signal — not the near-invisible bar a plain 0 would render.
+  if (value === 0) {
+    const med = house_median ?? 0;
+    return (
+      <div style={cardStyle}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10, marginBottom: 10 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 9 }}>
+            <span style={{ ...headStyle, fontSize: 14 }}>{label}</span>
+            <span className="mono" style={{ fontSize: 9.5, fontWeight: 600, letterSpacing: "0.06em", color: "var(--faint)", background: "var(--sunken)", border: "1px solid var(--rule2)", borderRadius: 5, padding: "3px 8px" }}>NONE THIS TERM</span>
+          </div>
+          <span className="mono" style={{ fontSize: 22, fontWeight: 700, color: "var(--ink2)" }}>0</span>
+        </div>
+        <div style={{ position: "relative", height: 10, borderRadius: 6, background: "var(--rule)", overflow: "hidden" }}>
+          {med > 0 && <div style={{ position: "absolute", top: -2, bottom: -2, left: `${Math.min(100, (med / (med * 2)) * 100)}%`, width: 2, background: "var(--ink)" }} title={`Median ${Math.round(med)}`} />}
+        </div>
+        <div style={{ display: "flex", justifyContent: "space-between", marginTop: 7 }}>
+          <span style={{ fontSize: 12, color: "var(--muted)" }}>{house_median != null ? `House median ${Math.round(house_median)}` : "None recorded this term"}</span>
+          {percentile != null && <span style={{ fontSize: 12, color: "var(--muted)" }}>Ahead of {percentile}% of the House</span>}
+        </div>
       </div>
     );
   }

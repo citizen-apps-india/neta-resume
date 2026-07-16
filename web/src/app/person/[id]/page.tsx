@@ -63,15 +63,18 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
   // not on record — shown as "—", never 0.
   const attendance = lead?.attendance_pct ?? null;
   const houseTag = lead ? `${lead.house.replace(/[^A-Z]/g, "") || "LS"}-${lead.cycle_number}` : "";
-  // Individual questions this MP asked (PRS enumeration). Null record = not on record -> "—", never 0.
+  // Questions asked: prefer the PRS scorecard count (a real 0 is a sourced fact — an MP who asked none),
+  // falling back to the enumerated record. Only a truly-unscored member (no scorecard, no record) is "—".
   const pRecord = resume.parliamentary_record;
+  const questionsAsked = resume.activity?.questions?.value ?? (pRecord ? pRecord.questions_count : null);
+  const questionsScored = questionsAsked != null;
 
   const metrics = [
     { label: "Declared net assets", src: latestAssets ? `ECI · ${latestAssets.election_cycle}` : "NO AFFIDAVIT", value: rupees(latestAssets?.total_assets ?? null), color: "var(--ink)", dot: "" },
     { label: "Pending criminal cases", src: hasAffidavit ? "ECI AFFIDAVIT" : "NO AFFIDAVIT", value: hasAffidavit ? String(pending) : "—", color: !hasAffidavit ? "var(--muted)" : pending ? "var(--sev2)" : "var(--ok)", dot: hasAffidavit && pending ? "var(--sev2)" : hasAffidavit ? "var(--ok)" : "" },
     { label: "Convictions on record", src: hasAffidavit ? "COURT / AFFIDAVIT" : "NO AFFIDAVIT", value: hasAffidavit ? String(convictions) : "—", color: convictions ? "var(--sev1)" : "var(--ink)", dot: "" },
     { label: "House attendance", src: attendance != null ? `PRS · ${houseTag}` : "NO RECORD", value: attendancePct(attendance), color: attendanceColor(attendance), dot: "" },
-    { label: "Questions asked", src: pRecord ? `PRS · ${houseTag}` : "NO RECORD", value: pRecord ? String(pRecord.questions_count) : "—", color: pRecord ? "var(--ink)" : "var(--muted)", dot: "" },
+    { label: "Questions asked", src: questionsScored ? (questionsAsked === 0 ? "PRS · none this term" : `PRS · ${houseTag}`) : "NO RECORD", value: questionsScored ? String(questionsAsked) : "—", color: !questionsScored ? "var(--muted)" : questionsAsked === 0 ? "var(--ink2)" : "var(--ink)", dot: "" },
     { label: "Party labels held", src: "PUBLIC RECORD", value: String(parties.size), color: "var(--ink)", dot: "" },
   ];
 
