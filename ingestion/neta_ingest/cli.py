@@ -227,6 +227,17 @@ def macro_indicators(only: list[str] = typer.Option(None, help="specific indicat
     p.run(only=only or None)
 
 
+@app.command(name="institution-stats")
+def institution_stats(only: list[str] = typer.Option(None, help="specific indicator code(s); default all curated")) -> None:
+    """Write verified public-institution counts (schools, hospitals, colleges, police, …) -> macro_indicator_value.
+
+    Curated tier-1 figures transcribed from official reports, plus the data.gov.in OGD subset when
+    NETA_DATAGOVIN_API_KEY is set. Catalogued in db/seeds/institution_indicators.sql."""
+    from neta_ingest.pipelines.macro import institutions as p
+
+    p.run(only=only or None)
+
+
 @app.command(name="parliamentary-record")
 def parliamentary_record(house: str = "ls") -> None:
     """Attach individual questions + debates (text/subject) per MP from PRS profiles. house: ls|rs."""

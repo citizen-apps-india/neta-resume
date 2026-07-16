@@ -358,7 +358,9 @@ class IndicatorSeries(BaseModel):
     code: str                                # source-native series code, e.g. 'NY.GDP.MKTP.CD'
     name: str                                # the source's official series name
     unit: str                                # display unit label ('US$', '%', 'years', …)
-    format: str                              # render hint: usd_compact | pct | number | count_compact
+    format: str                              # render hint: usd_compact | pct | number | count_compact | count_in
+    polarity: int = 0                        # +1 higher-is-better, -1 lower-is-better, 0 neutral (change chip)
+    note: str | None = None                  # optional caveat (e.g. the report + vintage a count came from)
     latest_value: float
     latest_year: int                         # ALWAYS show this next to the value — series lag differs
     points: list[IndicatorPoint]             # ascending by year; sparse series stay sparse (missing ≠ zero)
