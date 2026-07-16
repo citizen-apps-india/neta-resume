@@ -10,6 +10,7 @@ from __future__ import annotations
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
+from neta_api.cachecontrol import CacheControlMiddleware
 from neta_api.deps import settings
 from neta_api.ratelimit import RateLimitMiddleware
 from neta_api.routers import (
@@ -33,6 +34,10 @@ app = FastAPI(
 # Per-IP rate limiting (see ratelimit.py). Added before CORS so CORS ends up the OUTER middleware and a 429
 # still carries Access-Control-Allow-Origin for browser callers.
 app.add_middleware(RateLimitMiddleware)
+
+# Stale-while-revalidate cache headers on read GETs (see cachecontrol.py). Added before CORS for the same
+# reason — CORS stays the outermost layer; this only annotates the response headers on the way out.
+app.add_middleware(CacheControlMiddleware)
 
 # Allowed origins are env-driven (NETA_ALLOWED_ORIGINS); the default is the local Next.js dev server.
 # Read-only API plus the browser-side visitor counter (POST /visits/hit), so GET + POST, no credentials.
