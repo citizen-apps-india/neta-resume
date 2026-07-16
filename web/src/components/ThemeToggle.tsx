@@ -4,6 +4,9 @@ import { useEffect, useState } from "react";
 
 type Theme = "light" | "dark";
 
+// Shared across both ThemeToggle instances (desktop + mobile menu) — they toggle the same <html>.
+let themingTimer: ReturnType<typeof setTimeout> | undefined;
+
 /**
  * Icon-only theme switch: one button showing a sun (light) or moon (dark); clicking toggles.
  * The visible icon is driven by html[data-theme] in CSS, so it is correct even before hydration.
@@ -18,8 +21,14 @@ export function ThemeToggle() {
 
   function toggle() {
     const next: Theme = theme === "light" ? "dark" : "light";
+    const root = document.documentElement;
+    // Enable the cross-fade (see `.theming` in globals.css) only for the duration of the switch, so the
+    // colour transition isn't a permanent per-element cost that makes taps/scroll feel laggy on mobile.
+    root.classList.add("theming");
+    clearTimeout(themingTimer);
+    themingTimer = setTimeout(() => root.classList.remove("theming"), 400);
     setTheme(next);
-    document.documentElement.setAttribute("data-theme", next);
+    root.setAttribute("data-theme", next);
     try {
       localStorage.setItem("nr-theme", next);
     } catch {

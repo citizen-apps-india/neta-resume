@@ -47,24 +47,38 @@ body {
   background-attachment: fixed;
   min-height: 100vh;
 }
+/* `fixed` background attachment repaints the whole multi-layer gradient on every scroll frame on mobile,
+   which is the main cause of scroll jank there. The parallax is a desktop-only nicety — pin it to scroll
+   on touch/small screens. */
+@media (max-width: 760px) { body { background-attachment: scroll; } }
 ::selection { background: #12A594; color: #FFFFFF; }
 a { color: inherit; }
 
-[data-theme] *,
-[data-theme] { transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease, color .3s ease; }
+/* Theme cross-fade — applied ONLY while a switch is in flight (ThemeToggle adds `.theming` for ~400ms).
+   A permanent transition on *every* element made taps and scrolling feel laggy on mobile (the browser
+   tracks a transition on every node); gating it keeps the smooth toggle without the per-interaction cost. */
+html.theming, html.theming * {
+  transition: background-color .3s ease, border-color .3s ease, box-shadow .3s ease, color .3s ease;
+}
+
+/* Snappy taps on touch: drop the ~300ms double-tap-zoom wait before a click fires, and the grey
+   tap-highlight flash. Pressed/active feedback is handled by the :active rules below. */
+a, button, select, input, textarea, summary, label, [role="button"], [tabindex],
+.tap, .seg, .lift, .liftsm {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
 
 /* display / mono labels / Devanagari helpers */
 .serif { font-family: var(--font-serif), sans-serif; letter-spacing: -0.01em; }
 .mono  { font-family: var(--font-mono), monospace; }
 .deva  { font-family: var(--font-deva), sans-serif; }
 
-/* hover/interaction utilities (React inline styles can't do :hover) */
+/* hover/interaction utilities (React inline styles can't do :hover). The :hover effects live in the
+   @media (hover: hover) block further down, so they never stick after a tap on a touch device. */
 .lift { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
-.lift:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 16px 36px -20px var(--shadow); }
 .liftsm { transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease; }
-.liftsm:hover { transform: translateY(-2px); border-color: var(--accent-soft-bd); box-shadow: 0 10px 26px -20px var(--shadow); }
 .navlink { text-decoration: none; transition: color .15s ease; }
-.navlink:hover { color: var(--accent); }
 
 /* Elections nav confetti burst (see ElectionsNav.tsx) */
 @keyframes nrConfetti {
@@ -72,9 +86,7 @@ a { color: inherit; }
   100% { transform: translate(var(--dx), var(--dy)) rotate(var(--rot)); opacity: 0; }
 }
 .btnDark { transition: transform .15s ease, background-color .15s ease, color .15s ease; }
-.btnDark:hover { background: var(--accent) !important; color: #fff !important; transform: translateY(-1px); }
 .btnGhost { transition: transform .15s ease, border-color .15s ease; }
-.btnGhost:hover { border-color: var(--ink) !important; transform: translateY(-1px); }
 .focusring:focus-within { border-color: var(--accent) !important; }
 .scroll::-webkit-scrollbar { width: 9px; height: 9px; }
 .scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 9px; }
@@ -107,12 +119,23 @@ button:disabled, .btnDark:disabled, .btnGhost:disabled {
 }
 
 /* Form-control + segmented/tap affordances. */
-select:hover { border-color: var(--accent-2); }
 .tap { transition: background-color .15s ease, color .15s ease, transform .1s ease; }
-.tap:hover { background: var(--sunken); color: var(--ink); }
 .tap:active { transform: scale(.92); }
 .seg { transition: background-color .15s ease, color .15s ease; }
-.seg:hover { background: var(--sunken); color: var(--ink); }
+
+/* Hover effects — gated to real pointers only. On a touch device `:hover` fires on tap and then STICKS
+   until you tap elsewhere (an element left looking pressed/wrong), which reads as a glitch. Keeping them
+   here means taps get only the :active feedback, which releases cleanly. */
+@media (hover: hover) {
+  .lift:hover { transform: translateY(-3px); border-color: var(--accent); box-shadow: 0 16px 36px -20px var(--shadow); }
+  .liftsm:hover { transform: translateY(-2px); border-color: var(--accent-soft-bd); box-shadow: 0 10px 26px -20px var(--shadow); }
+  .navlink:hover { color: var(--accent); }
+  .btnDark:hover { background: var(--accent) !important; color: #fff !important; transform: translateY(-1px); }
+  .btnGhost:hover { border-color: var(--ink) !important; transform: translateY(-1px); }
+  select:hover { border-color: var(--accent-2); }
+  .tap:hover { background: var(--sunken); color: var(--ink); }
+  .seg:hover { background: var(--sunken); color: var(--ink); }
+}
 
 /* Spinner + skeleton shimmer (both degrade to static under the reduced-motion rule below). */
 @keyframes nrSpin { to { transform: rotate(360deg); } }
@@ -226,7 +249,7 @@ select:hover { border-color: var(--accent-2); }
 .nr-cat-rail { position: sticky; top: var(--nr-rail-top, 64px); z-index: 10; display: flex; gap: 7px; overflow-x: auto; scrollbar-width: none; margin: 0 0 18px; padding: 7px; background: color-mix(in srgb, var(--panel) 88%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--rule); border-radius: 12px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); }
 .nr-cat-rail::-webkit-scrollbar { display: none; }
 .nr-cat-chip { flex: none; font-size: 12px; color: var(--ink2); text-decoration: none; padding: 6px 11px; border-radius: 8px; white-space: nowrap; }
-.nr-cat-chip:hover { background: var(--sunken); color: var(--ink); }
+@media (hover: hover) { .nr-cat-chip:hover { background: var(--sunken); color: var(--ink); } }
 .nr-cat-chip.active { background: var(--accent-soft); color: var(--accent-soft-fg); border: 1px solid var(--accent-soft-bd); padding: 5px 10px; }
 /* anchored dashboard sections clear the sticky header + rail when jumped to */
 .nr-dash-section { scroll-margin-top: var(--nr-anchor-offset, 124px); }
@@ -264,7 +287,7 @@ html { scroll-behavior: smooth; }
 .nr-morph-item { font-size: 13px; color: var(--ink); }
 .nr-morph-sep { color: var(--ink2); opacity: .55; }
 .nr-morph-close { background: none; border: 0; padding: 0 0 0 2px; cursor: pointer; font-size: 11px; color: var(--ink2); }
-.nr-morph-close:hover { color: var(--accent); }
+@media (hover: hover) { .nr-morph-close:hover { color: var(--accent); } }
 
 /* hamburger-panel variant: the morph runs downward as an accordion instead */
 .nr-morph-acc { display: flex; flex-direction: column; }
@@ -288,7 +311,7 @@ html { scroll-behavior: smooth; }
   width: 34px; height: 34px; flex: none; border: 1px solid var(--border); border-radius: 9px;
   background: var(--card); color: var(--ink2); cursor: pointer; padding: 0; overflow: hidden;
 }
-.nr-theme-btn:hover { background: var(--sunken); color: var(--ink); }
+@media (hover: hover) { .nr-theme-btn:hover { background: var(--sunken); color: var(--ink); } }
 .nr-theme-btn svg { position: absolute; }
 .nr-theme-moon { opacity: 0; transform: rotate(90deg) scale(.4); }
 [data-theme="dark"] .nr-theme-sun { opacity: 0; transform: rotate(-90deg) scale(.4); }
