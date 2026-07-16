@@ -130,7 +130,7 @@ export default async function IndiaPage() {
 
             <div style={{ display: "flex", flexDirection: "column", gap: 18 }}>
               {dash!.categories.map((cat) => (
-                <section key={cat.name} id={slug(cat.name)} style={{ scrollMarginTop: 84 }}>
+                <section key={cat.name} id={slug(cat.name)} className="nr-dash-section">
                   <SectionCard title={cat.name} source={`OFFICIAL · TIER ${cat.indicators[0]?.source.trust_tier ?? 1}`}>
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(250px, 100%), 1fr))", gap: 12 }}>
                       {cat.indicators.map((ind) => (

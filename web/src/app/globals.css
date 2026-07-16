@@ -220,14 +220,17 @@ select:hover { border-color: var(--accent-2); }
 .nr-fresh-row { margin: -8px 0 16px; }
 .nr-fresh { display: inline-flex; align-items: center; gap: 7px; max-width: 100%; font-size: 11px; color: var(--muted); background: var(--card2); border: 1px solid var(--rule); padding: 5px 11px; border-radius: 999px; }
 
-/* sticky category anchor rail */
-.nr-cat-rail { position: sticky; top: 8px; z-index: 5; display: flex; gap: 7px; overflow-x: auto; scrollbar-width: none; margin: 0 0 18px; padding: 7px; background: color-mix(in srgb, var(--panel) 82%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--rule); border-radius: 12px; }
+/* sticky category anchor rail — pins just below the (also-sticky) site header via --nr-rail-top,
+   published at runtime by CategoryRail so it adapts to the header's real height (63px desktop / 73 mobile).
+   The edge-fade mask signals it scrolls horizontally when the chips overflow. */
+.nr-cat-rail { position: sticky; top: var(--nr-rail-top, 64px); z-index: 10; display: flex; gap: 7px; overflow-x: auto; scrollbar-width: none; margin: 0 0 18px; padding: 7px; background: color-mix(in srgb, var(--panel) 88%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--rule); border-radius: 12px; -webkit-mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); mask-image: linear-gradient(90deg, transparent, #000 14px, #000 calc(100% - 14px), transparent); }
 .nr-cat-rail::-webkit-scrollbar { display: none; }
 .nr-cat-chip { flex: none; font-size: 12px; color: var(--ink2); text-decoration: none; padding: 6px 11px; border-radius: 8px; white-space: nowrap; }
 .nr-cat-chip:hover { background: var(--sunken); color: var(--ink); }
 .nr-cat-chip.active { background: var(--accent-soft); color: var(--accent-soft-fg); border: 1px solid var(--accent-soft-bd); padding: 5px 10px; }
+/* anchored dashboard sections clear the sticky header + rail when jumped to */
+.nr-dash-section { scroll-margin-top: var(--nr-anchor-offset, 124px); }
 html { scroll-behavior: smooth; }
-@media (max-width: 640px) { .nr-cat-rail { top: 0; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
 
 /* header: desktop nav row vs. hamburger menu */
