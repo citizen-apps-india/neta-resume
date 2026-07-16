@@ -255,10 +255,12 @@ Table macro_indicator_def {
   code text [pk]                              // source-native series code, e.g. 'NY.GDP.MKTP.CD'
   name text                                   // source's official series name
   unit text                                   // display unit ('US$', '%', 'years', …)
-  format text                                 // render hint: usd_compact | pct | number | count_compact
+  format text                                 // render hint: usd_compact | pct | number | count_compact | count_in
   category text                               // dashboard section ('Economy & Growth', …)
   category_order smallint
   ind_order smallint
+  polarity smallint                           // +1 higher-is-better, -1 lower-is-better, 0 neutral (0029)
+  note text                                   // optional caveat (report + vintage a curated count came from) (0029)
 }
 
 // India Dashboard: fetched values — one row per indicator × country × year (World Bank v1; no person FK).

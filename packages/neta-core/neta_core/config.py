@@ -25,6 +25,10 @@ class Settings(BaseSettings):
     # Where raw fetched HTML/PDF/JSON snapshots are cached (provenance archive; gitignored).
     raw_cache_dir: str = "data/raw_cache"
 
+    # data.gov.in (OGD) resource API key — free, register at api.data.gov.in. Read from
+    # NETA_DATAGOVIN_API_KEY. Empty by default: the OGD fetch path no-ops (curated seeds still land).
+    datagovin_api_key: str = ""
+
     # Entity-resolution thresholds (see docs/entity-resolution.md).
     er_auto_merge_score: float = 0.92
     er_auto_reject_score: float = 0.55      # between reject..merge => review queue

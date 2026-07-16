@@ -12,7 +12,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 _DASHBOARD_SQL = text("""
-    SELECT d.code, d.name, d.unit, d.format, d.category,
+    SELECT d.code, d.name, d.unit, d.format, d.category, d.polarity, d.note,
            v.year, v.value,
            s.code AS src_code, s.name AS src_name, s.trust_tier, sr.native_url
     FROM macro_indicator_value v
@@ -38,6 +38,7 @@ def india_dashboard(db: Session) -> dict:
                 "trust_tier": r.trust_tier or 1,
             }
             series = {"code": r.code, "name": r.name, "unit": r.unit, "format": r.format,
+                      "polarity": r.polarity, "note": r.note,
                       "latest_value": 0.0, "latest_year": 0, "points": [], "source": source}
             if not categories or categories[-1]["name"] != r.category:
                 categories.append({"name": r.category, "indicators": []})
