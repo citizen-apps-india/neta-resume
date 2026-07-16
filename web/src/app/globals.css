@@ -245,6 +245,19 @@ select:hover { border-color: var(--accent-2); }
 .nr-morph-acc-list.open { max-height: 220px; margin-top: 12px; }
 .nr-morph-acc-item { font-size: 15px; color: var(--ink); }
 
+/* icon-only theme toggle (ThemeToggle.tsx): sun ⇄ moon cross-rotate. Keyed off html[data-theme]
+   (not React state) so the right icon shows before hydration. */
+.nr-theme-btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  width: 34px; height: 34px; flex: none; border: 1px solid var(--border); border-radius: 9px;
+  background: var(--card); color: var(--ink2); cursor: pointer; padding: 0; overflow: hidden;
+}
+.nr-theme-btn:hover { background: var(--sunken); color: var(--ink); }
+.nr-theme-btn svg { position: absolute; }
+.nr-theme-moon { opacity: 0; transform: rotate(90deg) scale(.4); }
+[data-theme="dark"] .nr-theme-sun { opacity: 0; transform: rotate(-90deg) scale(.4); }
+[data-theme="dark"] .nr-theme-moon { opacity: 1; transform: none; }
+
 /* tightest desktop band (burger takes over below 1081): compress nav + pill spacing so the OPEN pill
    still fits without horizontal overflow */
 @media (max-width: 1240px) {
@@ -271,6 +284,8 @@ select:hover { border-color: var(--accent-2); }
   .nr-morph-acc-chev { transition: transform .25s ease; }
   .nr-morph-acc-list { transition: max-height .3s ease, margin-top .3s ease; }
   .nr-morph-acc-list.open .nr-morph-acc-item { animation: nrFadeUp .3s ease both; animation-delay: calc(var(--i, 0) * 55ms); }
+  /* sun spins out as the moon rolls in (slight overshoot), and back */
+  .nr-theme-btn svg { transition: transform .45s cubic-bezier(.34, 1.56, .64, 1), opacity .2s ease; }
 }
 
 /* ---------- mobile optimization pass (additive; all max-width / touch-only, desktop unchanged) ---------- */
@@ -279,6 +294,7 @@ select:hover { border-color: var(--accent-2); }
    desktop is left pixel-identical. Sizing elsewhere is inline; min-height is the least-invasive nudge. */
 @media (pointer: coarse) {
   .seg, .btnGhost, .btnDark, .tap, .nr-nav-burger { min-height: 44px; }
+  .nr-theme-btn { width: 44px; height: 44px; }
 }
 
 /* "Most active members" row: allow the row to shrink (grid/flex min-width trap) so the name ellipsizes; and
