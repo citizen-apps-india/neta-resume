@@ -1,11 +1,16 @@
+import { Suspense } from "react";
 import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SearchBox } from "@/components/SearchBox";
 import { HomePreview } from "@/components/HomePreview";
 import { VisitorCount } from "@/components/VisitorCount";
+import { HomePreviewSkeleton } from "@/components/skeletons";
 import { getStats, type Stats } from "@/lib/api";
 
-export const dynamic = "force-dynamic";
+// The page reads the visitor's IP-geo headers (HomePreview) + the new-visitor flag (VisitorCount), so it's
+// dynamically rendered — but both are wrapped in <Suspense> below, so the static hero/stats/features shell
+// streams to the browser immediately and those two regions stream in when their data resolves. No
+// force-dynamic: nothing outside those boundaries needs per-request rendering.
 
 const FEATURES = [
   { icon: "₹", title: "Wealth declared", body: "Assets, liabilities and income from the candidate's own ECI affidavits — every cycle, side by side." },
@@ -84,7 +89,9 @@ export default async function Home() {
             </Link>
           </div>
           <div className="fadeUp" style={{ marginTop: 16 }}>
-            <VisitorCount />
+            <Suspense fallback={null}>
+              <VisitorCount />
+            </Suspense>
           </div>
         </div>
       </section>
@@ -99,8 +106,10 @@ export default async function Home() {
         ))}
       </section>
 
-      {/* live preview of the real resume UI */}
-      <HomePreview />
+      {/* live preview of the real resume UI — streamed in (reads IP-geo headers + fetches a nearby MP) */}
+      <Suspense fallback={<HomePreviewSkeleton />}>
+        <HomePreview />
+      </Suspense>
 
       {/* features */}
       <section style={{ padding: "clamp(32px,5vw,44px) clamp(16px,5vw,48px) clamp(48px,7vw,72px)", maxWidth: 1080, margin: "0 auto", width: "100%" }}>

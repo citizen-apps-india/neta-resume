@@ -84,6 +84,67 @@ export function ProfileSkeleton() {
   );
 }
 
+/** Inline fallback for the homepage's location-based preview (streamed in via <Suspense>). Header-less —
+ *  the page shell (hero, stats, features) is already on screen; this only holds the preview card's space. */
+export function HomePreviewSkeleton() {
+  return (
+    <section style={{ padding: "8px clamp(16px,5vw,48px) 64px", maxWidth: 1080, margin: "0 auto", width: "100%" }}>
+      <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16 }}>
+        <S w={150} h={14} r={6} />
+        <S w={92} h={24} r={999} />
+      </div>
+      <div style={{ border: "1px solid var(--rule)", borderRadius: 14, background: "var(--card2)", overflow: "hidden" }}>
+        <div style={{ padding: 22 }}>
+          <div style={{ display: "flex", gap: 16 }}>
+            <S w={64} h={78} />
+            <div style={{ flex: 1 }}>
+              <S w="55%" h={24} r={6} style={{ marginBottom: 10 }} />
+              <S w={150} h={22} r={20} />
+            </div>
+          </div>
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(4,1fr)", gap: 1, marginTop: 18, border: "1px solid var(--rule)", borderRadius: 10, overflow: "hidden" }}>
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} style={{ padding: "12px 14px" }}>
+                <S w="70%" h={15} r={4} style={{ marginBottom: 6 }} />
+                <S w="90%" h={9} r={3} />
+              </div>
+            ))}
+          </div>
+          <S h={120} style={{ marginTop: 18 }} />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+/** Inline fallback for the Parliament console (streamed in). Header-less — SiteHeader is already rendered. */
+export function ConsoleSkeleton() {
+  return (
+    <div>
+      <S w={260} h={30} r={7} style={{ marginBottom: 10 }} />
+      <S w={440} h={14} r={6} style={{ maxWidth: "90%", marginBottom: 22 }} />
+      <div style={{ display: "flex", gap: 14, borderBottom: "1px solid var(--rule)", paddingBottom: 12, marginBottom: 20 }}>
+        {Array.from({ length: 5 }).map((_, i) => <S key={i} w={78} h={16} r={5} />)}
+      </div>
+      <S h={360} r={12} />
+    </div>
+  );
+}
+
+/** Inline fallback for the India Dashboard body (streamed in below the static SectionHero). Header-less. */
+export function DashboardBodySkeleton() {
+  return (
+    <div>
+      <div className="nr-statgrid" style={{ marginBottom: 22 }}>
+        {Array.from({ length: 4 }).map((_, i) => <S key={i} h={120} r={14} />)}
+      </div>
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(250px, 100%), 1fr))", gap: 12 }}>
+        {Array.from({ length: 8 }).map((_, i) => <S key={i} h={150} r={12} />)}
+      </div>
+    </div>
+  );
+}
+
 /** Generic placeholder for other pages (home / elections). */
 export function PageSkeleton() {
   return (

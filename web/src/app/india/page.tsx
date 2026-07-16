@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SectionHero } from "@/components/parliament/SectionHero";
 import { SectionCard } from "@/components/parliament/SectionCard";
+import { DashboardBodySkeleton } from "@/components/skeletons";
 import { SourceLink } from "@/components/ui";
 import { IndicatorLine } from "@/components/resume/charts";
 import { CategoryRail } from "@/components/india/CategoryRail";
@@ -69,7 +71,10 @@ function IndicatorTile({ ind, prominent = false, hero = false, label }: {
   );
 }
 
-export default async function IndiaPage() {
+/** The dashboard payload (~24 series × history) and everything derived from it. Split into its own async
+ *  component so the static SectionHero paints immediately and this streams in below it once the (ISR-cached)
+ *  dashboard resolves — a cold render no longer blanks the whole page. */
+async function IndiaBody() {
   let dash: IndiaDashboard | null = null;
   try {
     dash = await getIndiaDashboard();
@@ -85,21 +90,7 @@ export default async function IndiaPage() {
 
   return (
     <>
-      <SiteHeader />
-      <main style={{ maxWidth: 1120, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 72px", width: "100%" }}>
-        <SectionHero
-          eyebrow="INDIA · OFFICIAL DATA"
-          title="India Dashboard"
-          subtitle={
-            <>
-              The country&apos;s own numbers — GDP, prices, work, health, education, and the public institutions
-              that run it — so the data the government puts out is one click from its source. Descriptive,
-              sourced, never a judgment.
-            </>
-          }
-        />
-
-        {empty ? (
+      {empty ? (
           <SectionCard>
             <div style={{ textAlign: "center", padding: "34px 12px", color: "var(--muted)", fontSize: 14 }}>
               The dashboard hasn&apos;t been populated yet — indicator data lands with the next ingestion run.
@@ -158,6 +149,29 @@ export default async function IndiaPage() {
             </p>
           </>
         )}
+    </>
+  );
+}
+
+export default function IndiaPage() {
+  return (
+    <>
+      <SiteHeader />
+      <main style={{ maxWidth: 1120, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 72px", width: "100%" }}>
+        <SectionHero
+          eyebrow="INDIA · OFFICIAL DATA"
+          title="India Dashboard"
+          subtitle={
+            <>
+              The country&apos;s own numbers — GDP, prices, work, health, education, and the public institutions
+              that run it — so the data the government puts out is one click from its source. Descriptive,
+              sourced, never a judgment.
+            </>
+          }
+        />
+        <Suspense fallback={<DashboardBodySkeleton />}>
+          <IndiaBody />
+        </Suspense>
       </main>
     </>
   );
