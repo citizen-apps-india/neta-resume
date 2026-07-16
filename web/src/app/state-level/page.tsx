@@ -1,7 +1,6 @@
 import { BrowseShell } from "@/components/BrowseShell";
 import { loadBrowse } from "@/lib/browse";
 
-export const dynamic = "force-dynamic";
 export const metadata = { title: "State Level", description: "Members of India’s state legislative assemblies (MLAs) — declared assets, criminal cases and party history, sourced and comparable, state by state." };
 
 export default async function StateLevelPage({

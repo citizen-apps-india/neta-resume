@@ -1,7 +1,6 @@
 import { BrowseShell } from "@/components/BrowseShell";
 import { loadBrowse } from "@/lib/browse";
 
-export const dynamic = "force-dynamic";
 export const metadata = { title: "Municipal", description: "Municipal corporation members — the sourced public record of India’s city-level elected representatives." };
 
 export default async function MunicipalPage({

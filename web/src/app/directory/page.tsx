@@ -1,8 +1,6 @@
 import { BrowseShell } from "@/components/BrowseShell";
 import { loadBrowse } from "@/lib/browse";
 
-export const dynamic = "force-dynamic";
-
 export const metadata = {
   title: "Directory",
   description:

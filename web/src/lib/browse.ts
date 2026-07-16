@@ -47,7 +47,11 @@ export async function loadBrowse(
         q: filters.q || undefined,
         theme: filters.theme || undefined,
         sort: filters.sort,
-        revalidate: 0,
+        // Short ISR (5 min) rather than always-live: the directory is URL-driven (searchParams) so the HTML
+        // is still rendered per request, but each distinct filter/offset now hits the fetch Data Cache and
+        // the API's stale-while-revalidate header instead of a cold Render round-trip. Legislator data lands
+        // in batch ingests, so a few minutes of staleness is invisible.
+        revalidate: 300,
       }),
       getFacets(cfg.facetScope ?? cfg.base ?? {}),
     ]);

@@ -1,7 +1,6 @@
 import { BrowseShell } from "@/components/BrowseShell";
 import { loadBrowse } from "@/lib/browse";
 
-export const dynamic = "force-dynamic";
 export const metadata = { title: "Rajya Sabha", description: "Every sitting Rajya Sabha MP — party, state represented, attendance and full career, from the public record. Search and compare." };
 
 export default async function RajyaSabhaPage({

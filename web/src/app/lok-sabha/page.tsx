@@ -1,7 +1,6 @@
 import { BrowseShell } from "@/components/BrowseShell";
 import { loadBrowse } from "@/lib/browse";
 
-export const dynamic = "force-dynamic";
 export const metadata = { title: "Lok Sabha", description: "Every sitting Lok Sabha MP — declared wealth, criminal cases, party switches and attendance, each fact sourced to the Election Commission. Search, filter and compare." };
 
 export default async function LokSabhaPage({

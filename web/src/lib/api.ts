@@ -74,7 +74,9 @@ export function getFacets(
 }
 
 export function searchPersons(q: string): Promise<PersonSummary[]> {
-  return getJSON<PersonSummary[]>(`/search?q=${encodeURIComponent(q)}`, 0);
+  // Short ISR (5 min): repeated queries collapse onto one cached API response; new ingests still surface
+  // within minutes. Was always-live (0), which meant every keystroke-driven search hit Render cold.
+  return getJSON<PersonSummary[]>(`/search?q=${encodeURIComponent(q)}`, 300);
 }
 
 /** Headline counts for the homepage (real totals, not capped by a list limit). */

@@ -4,8 +4,6 @@ import { getElections } from "@/lib/api";
 import { loadBrowse } from "@/lib/browse";
 import { pretty } from "@/lib/format";
 
-export const dynamic = "force-dynamic";
-
 const LEVEL_LABEL: Record<string, string> = { national: "National", state: "State", municipal: "Municipal" };
 
 export default async function ElectionResultsPage({
