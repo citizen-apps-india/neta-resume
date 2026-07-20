@@ -125,6 +125,20 @@ _PAST_ROLES: list[tuple[str, str, str, str, str, str | None, str, str, str]] = [
     ("Shashi Tharoor", "minister_state", "Minister of State, Human Resource Development",
      "Union Council of Ministers", "LS", "Human Resource Development", "2012-10-28", "2014-05-26",
      "https://www.education.gov.in/"),
+    # Former Chief Ministers now sitting in Parliament — high-confidence public record, term-level dates.
+    # These are typically a member's FIRST executive office, so they anchor "entered public life".
+    ("Shivraj Singh Chouhan", "chief_minister", "Chief Minister of Madhya Pradesh",
+     "Government of Madhya Pradesh", "MP_VS", None, "2005-11-29", "2018-12-17", "https://mp.gov.in/"),
+    ("Manohar Lal", "chief_minister", "Chief Minister of Haryana",
+     "Government of Haryana", "HR_VS", None, "2014-10-26", "2024-03-12", "https://haryana.gov.in/"),
+    ("Basavaraj Bommai", "chief_minister", "Chief Minister of Karnataka",
+     "Government of Karnataka", "KA_VS", None, "2021-07-28", "2023-05-20", "https://karnataka.gov.in/"),
+    ("Biplab Kumar Deb", "chief_minister", "Chief Minister of Tripura",
+     "Government of Tripura", "TR_VS", None, "2018-03-09", "2022-05-14", "https://tripura.gov.in/"),
+    ("Sarbananda Sonowal", "chief_minister", "Chief Minister of Assam",
+     "Government of Assam", "AS_VS", None, "2016-05-24", "2021-05-10", "https://assam.gov.in/"),
+    ("Jitan Ram Manjhi", "chief_minister", "Chief Minister of Bihar",
+     "Government of Bihar", "BR_VS", None, "2014-05-20", "2015-02-20", "https://state.bihar.gov.in/"),
 ]
 
 

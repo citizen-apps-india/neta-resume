@@ -573,7 +573,7 @@ function ContactTab({ resume }: { resume: PersonResume }) {
       : c.channel_type === "phone" ? `tel:${c.value.replace(/\s+/g, "")}`
       : c.channel_type === "website" || c.channel_type === "social" ? c.value
       : null;
-  const ICON: Record<string, string> = { email: "✉", phone: "☎", website: "↗", social: "↗", office_address: "⌂", party_office: "⌂" };
+  const ICON: Record<string, string> = { email: "✉", phone: "☎", website: "↗", social: "↗", office_address: "⌂", party_office: "⌂", home_state: "📍" };
   return (
     <div className="fadeUp">
       <div style={{ border: "1px solid var(--rule)", borderRadius: 12, overflow: "hidden", background: "var(--card2)" }}>
@@ -605,8 +605,17 @@ function ContactTab({ resume }: { resume: PersonResume }) {
 
 function Career({ resume }: { resume: PersonResume }) {
   const terms = resume.office_terms;
+  const fo = resume.first_office;
   return (
     <>
+    {fo && (
+      <div className="fadeUp" style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap", border: "1px solid var(--rule)", borderRadius: 12, background: "var(--accent-soft)", padding: "14px 18px", marginBottom: 16 }}>
+        <span className="mono" style={{ fontSize: 10.5, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent-soft-fg)", fontWeight: 600 }}>Entered public life</span>
+        <span style={{ fontSize: 17, fontWeight: 700 }}>{fo.year}</span>
+        <span style={{ fontSize: 13.5, color: "var(--muted)" }}>{fo.label}</span>
+        <SourceLink source={fo.source} />
+      </div>
+    )}
     <Positions resume={resume} />
     <PartySwitches resume={resume} />
     <div className="fadeUp" style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "clamp(22px,4vw,32px) clamp(16px,4vw,30px)" }}>

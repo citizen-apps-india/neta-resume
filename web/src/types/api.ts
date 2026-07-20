@@ -31,8 +31,9 @@ export interface paths {
         /**
          * List Persons
          * @description Browse legislators (directory): filter by house/state/constituency/jurisdiction/party/cases/theme/
-         *     search, sort by assets|cases|attendance|theme_questions|name, and page via limit/offset. Total match
-         *     count is returned in the `X-Total-Count` response header (the body stays a plain list).
+         *     search, sort by assets|cases|attendance|theme_questions|name, and page via limit/offset. `cycle` (a Lok
+         *     Sabha cycle number) browses that session's roster as it stood at the time. Total match count is returned
+         *     in the `X-Total-Count` response header (the body stays a plain list).
          */
         get: operations["list_persons_persons_get"];
         put?: never;
@@ -52,7 +53,7 @@ export interface paths {
         };
         /**
          * Person Facets
-         * @description Dropdown option lists (party / state / house, each with a count) for a browse scope.
+         * @description Dropdown option lists (party / state / house / LS session, each with a count) for a browse scope.
          */
         get: operations["person_facets_persons_facets_get"];
         put?: never;
@@ -492,6 +493,28 @@ export interface components {
              * @default []
              */
             themes: components["schemas"]["FacetCount"][];
+            /**
+             * Cycles
+             * @default []
+             */
+            cycles: components["schemas"]["FacetCount"][];
+        };
+        /**
+         * FirstOffice
+         * @description The earliest public office on record — a person's 'entered public life' anchor.
+         *
+         *     Derived (not stored): the earliest-dated of the person's office_terms and leadership roles. It's only
+         *     as deep as the sourced record reaches, so it's a floor ('at least since'), never a claim of the very
+         *     first office ever held. Carries the provenance of whichever fact it was derived from.
+         */
+        FirstOffice: {
+            /** Year */
+            year: number;
+            /** Label */
+            label: string;
+            /** Kind */
+            kind: string;
+            source: components["schemas"]["Source"];
         };
         /** HTTPValidationError */
         HTTPValidationError: {
@@ -755,6 +778,7 @@ export interface components {
             relative_name?: string | null;
             /** Home State */
             home_state?: string | null;
+            first_office?: components["schemas"]["FirstOffice"] | null;
             /** Office Terms */
             office_terms: components["schemas"]["OfficeTerm"][];
             /**
@@ -1044,6 +1068,7 @@ export interface operations {
                 cases?: string | null;
                 q?: string | null;
                 theme?: string | null;
+                cycle?: number | null;
                 sort?: string;
             };
             header?: never;
@@ -1078,6 +1103,7 @@ export interface operations {
                 house?: string | null;
                 state?: string | null;
                 jurisdiction?: string | null;
+                cycle?: number | null;
             };
             header?: never;
             path?: never;
