@@ -110,6 +110,19 @@ class RoleEntry(BaseModel):
     source: Source
 
 
+class FirstOffice(BaseModel):
+    """The earliest public office on record — a person's 'entered public life' anchor.
+
+    Derived (not stored): the earliest-dated of the person's office_terms and leadership roles. It's only
+    as deep as the sourced record reaches, so it's a floor ('at least since'), never a claim of the very
+    first office ever held. Carries the provenance of whichever fact it was derived from."""
+
+    year: int
+    label: str                   # 'Member of Lok Sabha, Aligarh' / 'Chief Minister, Madhya Pradesh'
+    kind: str                    # 'term' | 'role'
+    source: Source
+
+
 class PartySwitch(BaseModel):
     from_party: str | None
     to_party: str
@@ -202,6 +215,7 @@ class PersonResume(BaseModel):
     education: str | None = None
     relative_name: str | None = None   # S/o · D/o · W/o name from the ECI affidavit (identity signal)
     home_state: str | None = None      # modal state across the person's terms (context, esp. between terms)
+    first_office: FirstOffice | None = None   # earliest sourced office (derived) — 'entered public life'
     office_terms: list[OfficeTerm]
     roles: list[RoleEntry] = []
     contacts: list[Contact] = []
@@ -259,6 +273,7 @@ class Facets(BaseModel):
     states: list[FacetCount] = []
     houses: list[FacetCount] = []
     themes: list[FacetCount] = []
+    cycles: list[FacetCount] = []   # Lok Sabha sessions (cycle number + member count) — session selector
 
 
 # --- "Parliament functioning" section — national/ministry aggregates over parliamentary_question --------

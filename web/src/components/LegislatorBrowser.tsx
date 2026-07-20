@@ -11,6 +11,19 @@ type Scope = "all" | "ls" | "rs" | "state" | "municipal" | "election";
 /** "MAHARASHTRA" / "tamil nadu" → "Maharashtra" / "Tamil Nadu" for the state dropdown labels. */
 const titleCase = (s: string) => s.toLowerCase().replace(/\b\w/g, (c) => c.toUpperCase());
 
+/** Known Lok Sabha term spans (stable historical facts), for the session-selector option labels. */
+const LS_TERM_SPANS: Record<string, string> = {
+  "18": "2024–present", "17": "2019–24", "16": "2014–19", "15": "2009–14",
+  "14": "2004–09", "13": "1999–2004",
+};
+/** "18" → "18th Lok Sabha (2024–present)". */
+function lsSessionLabel(cycle: string): string {
+  const n = Number(cycle);
+  const suffix = n % 100 >= 11 && n % 100 <= 13 ? "th" : ["th", "st", "nd", "rd"][n % 10] ?? "th";
+  const span = LS_TERM_SPANS[cycle];
+  return `${n}${suffix} Lok Sabha${span ? ` (${span})` : ""}`;
+}
+
 const selectStyle: React.CSSProperties = {
   fontFamily: "var(--font-serif)", fontSize: 13, color: "var(--ink)",
   background: "var(--card2)", border: "1px solid var(--border)", borderRadius: 8,
@@ -74,6 +87,29 @@ export function LegislatorBrowser({
 
   return (
     <div style={{ border: "1px solid var(--border)", borderRadius: 14, overflow: "hidden", background: "var(--bg)", boxShadow: "0 24px 60px -32px var(--shadow)" }}>
+      {/* prominent session selector — the primary control on the Lok Sabha page */}
+      {scope === "ls" && facets.cycles.length > 0 && (
+        <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, padding: "18px clamp(14px,4vw,22px)", borderBottom: "1px solid var(--rule)", background: "var(--accent-soft)" }}>
+          <label htmlFor="session-select" className="mono" style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--accent-soft-fg)", fontWeight: 600 }}>
+            Session
+          </label>
+          <select
+            id="session-select"
+            aria-label="Lok Sabha session"
+            value={filters.session || facets.cycles[0]?.value || ""}
+            onChange={(e) => navigate({ session: e.target.value || null })}
+            style={{ ...selectStyle, fontSize: 16, fontWeight: 600, padding: "11px 16px", minWidth: 220, flex: "0 1 320px" }}
+          >
+            {facets.cycles.map((c) => (
+              <option key={c.value} value={c.value}>{lsSessionLabel(c.value)} ({c.count})</option>
+            ))}
+          </select>
+          <span style={{ fontSize: 12.5, color: "var(--accent-soft-fg)" }}>
+            Roster as it stood in the selected Lok Sabha
+          </span>
+        </div>
+      )}
+
       {/* prominent state selector — the primary control on the State Level page */}
       {scope === "state" && (
         <div style={{ display: "flex", alignItems: "center", flexWrap: "wrap", gap: 12, padding: "18px clamp(14px,4vw,22px)", borderBottom: "1px solid var(--rule)", background: "var(--accent-soft)" }}>

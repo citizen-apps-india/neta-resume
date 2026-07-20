@@ -303,6 +303,25 @@ def leadership() -> None:
     p.run()
 
 
+@app.command(name="affidavit-contacts")
+def affidavit_contacts() -> None:
+    """Attach each legislator's declared home state (ECI affidavit, via MyNeta) to the Contact tab."""
+    from neta_ingest.pipelines.enrich import affidavit_contacts as p
+
+    p.run()
+
+
+@app.command(name="committees")
+def committees(
+    loksabha: int = typer.Option(18, help="Lok Sabha number (default 18)"),
+    limit: int = typer.Option(None, help="cap committees fetched (testing/politeness)"),
+) -> None:
+    """Attach parliamentary committee memberships (member/chair) to sitting MPs from sansad.in -> role."""
+    from neta_ingest.pipelines.enrich import committees as p
+
+    p.run(loksabha=loksabha, limit=limit)
+
+
 @app.command(name="fill-assembly")
 def fill_assembly(house: str = "mh_vs", cycle: str = "MH_VS2024") -> None:
     """Backfill state-assembly winners MyNeta omits from its show_winners list (per-constituency)."""

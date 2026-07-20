@@ -6,6 +6,8 @@ frontend can render provenance on each datapoint.
 
 from __future__ import annotations
 
+from datetime import date
+
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
@@ -17,6 +19,7 @@ from neta_api.schemas import (
     CriminalCase,
     Facets,
     FacetCount,
+    FirstOffice,
     NewsItem,
     OfficeTerm,
     ParliamentaryActivity,
@@ -47,6 +50,25 @@ def _attendance_source(row) -> Source | None:
     if not row.att_code:
         return None
     return Source(code=row.att_code, name=row.att_name, url=row.att_url, trust_tier=row.att_trust)
+
+
+def _compute_first_office(office_terms: list[OfficeTerm], roles: list[RoleEntry]) -> FirstOffice | None:
+    """The earliest dated public office across a person's terms + leadership roles (an 'entered public
+    life' floor). Derived, not stored — only as deep as the sourced record reaches. Undated facts are
+    ignored (can't order them). Carries the provenance of whichever fact turned out earliest."""
+    candidates: list[tuple[date, str, str, Source]] = []
+    for t in office_terms:
+        if t.start_date:
+            seat = f", {t.constituency}" if t.constituency else (f", {t.state}" if t.state else "")
+            candidates.append((t.start_date, f"Member of {t.house}{seat}", "term", t.source))
+    for r in roles:
+        if r.start_date:
+            label = r.title or r.body or r.role_type.replace("_", " ").title()
+            candidates.append((r.start_date, label, "role", r.source))
+    if not candidates:
+        return None
+    start, label, kind, source = min(candidates, key=lambda c: c[0])
+    return FirstOffice(year=start.year, label=label, kind=kind, source=source)
 
 
 def _build_activity(db: Session, person_id: int) -> ParliamentaryActivity | None:
@@ -298,7 +320,10 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
                 """
                 SELECT h.name AS house, tc.number AS cycle_number, ot.constituency,
                        COALESCE(ot.ls_state_code, ot.rs_state_code) AS state,
-                       pt.canonical_name AS party, ot.membership_type, ot.start_date, ot.end_date,
+                       pt.canonical_name AS party, ot.membership_type,
+                       -- fall back to the term-cycle's own start (when the Lok Sabha began) if the
+                       -- individual term carries no date — the right "since" for the career timeline.
+                       COALESCE(ot.start_date, tc.start_date) AS start_date, ot.end_date,
                        ot.status, s.code AS source_code, s.name AS source_name, s.trust_tier,
                        sr.native_url, ot.attendance_pct,
                        att_s.code AS att_code, att_s.name AS att_name, att_s.trust_tier AS att_trust,
@@ -349,6 +374,8 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
         )
     ]
 
+    first_office = _compute_first_office(office_terms, roles)
+
     contacts = [
         Contact(
             channel_type=r.channel_type,
@@ -366,7 +393,8 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
                 JOIN source s ON s.id = sr.source_id
                 WHERE c.person_id = :pid
                 ORDER BY CASE c.channel_type WHEN 'email' THEN 1 WHEN 'phone' THEN 2
-                         WHEN 'office_address' THEN 3 WHEN 'website' THEN 4 ELSE 5 END
+                         WHEN 'office_address' THEN 3 WHEN 'home_state' THEN 4
+                         WHEN 'website' THEN 5 ELSE 6 END
                 """
             ),
             {"pid": person_id},
@@ -545,6 +573,7 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
         education=latest.education if latest else None,
         relative_name=person.relative_name,
         home_state=person.home_state,
+        first_office=first_office,
         office_terms=office_terms,
         roles=roles,
         contacts=contacts,
@@ -558,14 +587,40 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
     )
 
 
-# Shared summary projection: per person, current party + house/constituency, latest assets,
-# case counts, and worst severity. Used raw by search (filters on base columns) and wrapped as a
-# subquery `s` by list/facets (so the computed columns below are filterable/sortable by name).
-_SUMMARY_BASE = """
+# LS cycle number -> MyNeta election_cycle key (for at-the-time affidavit selection in session browsing).
+_LS_CYCLE_TO_ELECTION = {18: "LS2024", 17: "LS2019", 16: "LS2014", 15: "LS2009"}
+
+
+def _summary_base(cycle: int | None = None) -> str:
+    """Per-person summary projection: current party + house/constituency, latest assets, case counts,
+    worst severity. Used raw by search (filters on base columns) and wrapped as a subquery `s` by
+    list/facets (so the computed columns are filterable/sortable by name).
+
+    When `cycle` (a Lok Sabha cycle number, e.g. 17) is given, the house/constituency/party/assets are
+    projected **as they were in that Lok Sabha** (session browsing) rather than the current sitting term:
+    `oh` picks that cycle's LS term, party comes from that term, and the affidavit prefers that election.
+    Callers must then bind :cycle (and :cycle_str) in their params. Non-members of the cycle get a null
+    `current_house`, so a `house = 'Lok Sabha'` filter naturally scopes the result to that session's roster.
+    """
+    if cycle is None:
+        # current term = the sitting one; tie-break by most-recent DATE (cycle number isn't comparable
+        # across houses — LS is 15–18, state assemblies use year-numbers; RS-CURRENT has no date).
+        term_filter = "WHERE ot.person_id = p.id"
+        term_order = "ORDER BY (ot.status = 'sitting') DESC, COALESCE(tc.start_date, DATE '2099-12-31') DESC"
+        party_expr = "cur.party"
+        wealth_order = "ORDER BY filed_year DESC"
+    else:
+        term_filter = "WHERE ot.person_id = p.id AND tc.number = :cycle AND h.code = 'LS'"
+        term_order = "ORDER BY COALESCE(tc.start_date, DATE '2099-12-31') DESC"
+        # at-the-time party from that term; fall back to current party if the term carried no party_id.
+        party_expr = "COALESCE(oh.term_party, cur.party)"
+        # prefer that election's affidavit (at-the-time assets); fall back to latest so the card isn't empty.
+        wealth_order = "ORDER BY (election_cycle = :cycle_str) DESC, filed_year DESC"
+    return f"""
     SELECT p.id, p.display_name, p.photo_url,
            (SELECT variant FROM person_name_variant
             WHERE person_id = p.id AND script = 'devanagari' LIMIT 1) AS native_name,
-           cur.party       AS current_party,
+           {party_expr}    AS current_party,
            oh.house        AS current_house,
            oh.jurisdiction AS jurisdiction,
            oh.constituency AS constituency,
@@ -590,18 +645,17 @@ _SUMMARY_BASE = """
         SELECT h.name AS house, h.jurisdiction AS jurisdiction,
                COALESCE(ot.constituency, ot.rs_state_code) AS constituency,
                COALESCE(ot.ls_state_code, ot.rs_state_code) AS state,
-               ot.attendance_pct
+               ot.attendance_pct,
+               (SELECT canonical_name FROM party WHERE id = ot.party_id) AS term_party
         FROM office_term ot
         JOIN house h ON h.id = ot.house_id
         JOIN term_cycle tc ON tc.id = ot.term_cycle_id
-        -- current term = the sitting one; tie-break by most-recent DATE (cycle number isn't comparable
-        -- across houses — LS is 15–18, state assemblies use year-numbers; RS-CURRENT has no date).
-        WHERE ot.person_id = p.id
-        ORDER BY (ot.status = 'sitting') DESC, COALESCE(tc.start_date, DATE '2099-12-31') DESC LIMIT 1
+        {term_filter}
+        {term_order} LIMIT 1
     ) oh ON true
     LEFT JOIN LATERAL (
         SELECT total_assets, age, education FROM affidavit
-        WHERE person_id = p.id ORDER BY filed_year DESC LIMIT 1
+        WHERE person_id = p.id {wealth_order} LIMIT 1
     ) w ON true
     LEFT JOIN LATERAL (
         SELECT count(*) AS total, count(*) FILTER (WHERE NOT is_convicted) AS pending
@@ -626,6 +680,10 @@ _SUMMARY_BASE = """
         GROUP BY 1 ORDER BY count(*) DESC LIMIT 1
     ) tt ON true
 """
+
+
+# Default (current-term) projection — used by search and as the base for list/facets when no cycle is set.
+_SUMMARY_BASE = _summary_base()
 
 # Search filters/orders on base columns (p.normalized_name, p.display_name), so it appends its own tail.
 _SUMMARY_SQL = _SUMMARY_BASE + """
@@ -718,13 +776,24 @@ def _list_conditions(params: dict, *, house=None, state=None, constituency=None,
     return conds
 
 
+def _cycle_params(params: dict, cycle: int | None) -> None:
+    """Bind the session-browsing params (:cycle, :cycle_str) the cycle-scoped `_summary_base` references."""
+    if cycle is not None:
+        params["cycle"] = cycle
+        params["cycle_str"] = _LS_CYCLE_TO_ELECTION.get(cycle)
+
+
 def list_persons(db: Session, *, limit: int = 60, offset: int = 0, house: str | None = None,
                  state: str | None = None, constituency: str | None = None, jurisdiction: str | None = None,
                  party: str | None = None, cases: str | None = None, q: str | None = None,
-                 theme: str | None = None, sort: str = "assets") -> tuple[list[PersonSummary], int]:
+                 theme: str | None = None, cycle: int | None = None,
+                 sort: str = "assets") -> tuple[list[PersonSummary], int]:
     """Browse legislators: filter (house/jurisdiction/state/constituency/party/cases/theme/search) + sort +
-    page. Returns (page rows, total matching count) so the caller can emit an X-Total-Count header."""
+    page. `cycle` (an LS cycle number) projects each row as it stood in that Lok Sabha (session browsing).
+    Returns (page rows, total matching count) so the caller can emit an X-Total-Count header."""
     params: dict = {"limit": limit, "offset": offset}
+    _cycle_params(params, cycle)
+    base = _summary_base(cycle)
     conds = _list_conditions(params, house=house, state=state, constituency=constituency,
                              jurisdiction=jurisdiction, party=party, cases=cases, q=q, theme=theme)
     where = ("WHERE " + " AND ".join(conds)) if conds else ""
@@ -738,30 +807,33 @@ def list_persons(db: Session, *, limit: int = 60, offset: int = 0, house: str | 
         extra = f", {theme_count} AS theme_q_count"
         sorts = {**_SORTS, "theme_questions": "theme_q_count DESC NULLS LAST, display_name"}
     order = "ORDER BY " + sorts.get(sort, sorts["assets"])
-    total = db.execute(text(f"SELECT count(*) FROM ({_SUMMARY_BASE}) s {where}"), params).scalar_one()
+    total = db.execute(text(f"SELECT count(*) FROM ({base}) s {where}"), params).scalar_one()
     rows = db.execute(
-        text(f"SELECT s.*{extra} FROM ({_SUMMARY_BASE}) s {where} {order} LIMIT :limit OFFSET :offset"),
+        text(f"SELECT s.*{extra} FROM ({base}) s {where} {order} LIMIT :limit OFFSET :offset"),
         params,
     )
     return [_to_summary(r) for r in rows], total
 
 
 def facets(db: Session, *, house: str | None = None, state: str | None = None,
-           jurisdiction: str | None = None) -> Facets:
-    """Distinct party / state / house option lists (+counts) for a browse scope, to populate dropdowns."""
+           jurisdiction: str | None = None, cycle: int | None = None) -> Facets:
+    """Distinct party / state / house option lists (+counts) for a browse scope, to populate dropdowns.
+    `cycle` scopes the party/state/house counts to that Lok Sabha's session projection."""
     params: dict = {}
+    _cycle_params(params, cycle)
+    base = _summary_base(cycle)
     conds = _list_conditions(params, house=house, state=state, jurisdiction=jurisdiction)
 
     def group(col: str) -> list[FacetCount]:
         where = "WHERE " + " AND ".join([*conds, f"{col} IS NOT NULL"])
-        sql = f"SELECT {col} AS value, count(*) AS n FROM ({_SUMMARY_BASE}) s {where} GROUP BY {col} ORDER BY n DESC, value"
+        sql = f"SELECT {col} AS value, count(*) AS n FROM ({base}) s {where} GROUP BY {col} ORDER BY n DESC, value"
         return [FacetCount(value=r.value, count=r.n) for r in db.execute(text(sql), params)]
 
     def themes_group() -> list[FacetCount]:
         # Policy themes (via ministry_theme) with the count of distinct MPs who asked in each. Only restrict
         # to a person-id subquery when a scope filter is active — unscoped, group the questions directly
-        # (every question already belongs to a real person), avoiding a needless _SUMMARY_BASE re-run.
-        scope = (f"WHERE pq.person_id IN (SELECT s.id FROM ({_SUMMARY_BASE}) s "
+        # (every question already belongs to a real person), avoiding a needless summary-base re-run.
+        scope = (f"WHERE pq.person_id IN (SELECT s.id FROM ({base}) s "
                  f"WHERE {' AND '.join(conds)})") if conds else ""
         sql = (
             "SELECT COALESCE(mt.theme, 'Other') AS value, count(DISTINCT pq.person_id) AS n "
@@ -771,8 +843,21 @@ def facets(db: Session, *, house: str | None = None, state: str | None = None,
         )
         return [FacetCount(value=r.value, count=r.n) for r in db.execute(text(sql), params)]
 
+    def cycles_group() -> list[FacetCount]:
+        # Lok Sabha sessions (15th–18th) with their member counts — powers the session selector. Always the
+        # full list of LS cycles (independent of the selected cycle) so the dropdown never loses options.
+        sql = (
+            "SELECT tc.number::text AS value, count(DISTINCT ot.person_id) AS n "
+            "FROM office_term ot JOIN term_cycle tc ON tc.id = ot.term_cycle_id "
+            "JOIN house h ON h.id = ot.house_id WHERE h.code = 'LS' "
+            "GROUP BY tc.number ORDER BY tc.number DESC"
+        )
+        return [FacetCount(value=r.value, count=r.n) for r in db.execute(text(sql))]
+
+    # Session facet is only meaningful for the Lok Sabha scope; skip the extra query for other scopes.
+    cycles = cycles_group() if house == "Lok Sabha" else []
     return Facets(parties=group("s.current_party"), states=group("s.state"),
-                  houses=group("s.current_house"), themes=themes_group())
+                  houses=group("s.current_house"), themes=themes_group(), cycles=cycles)
 
 
 def search_persons(db: Session, q: str, limit: int = 25) -> list[PersonSummary]:

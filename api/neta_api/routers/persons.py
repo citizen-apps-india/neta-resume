@@ -86,15 +86,17 @@ def list_persons(
     cases: str | None = None,
     q: str | None = None,
     theme: str | None = None,
+    cycle: int | None = None,
     sort: str = "assets",
     db: Session = Depends(get_db),
 ) -> list[PersonSummary]:
     """Browse legislators (directory): filter by house/state/constituency/jurisdiction/party/cases/theme/
-    search, sort by assets|cases|attendance|theme_questions|name, and page via limit/offset. Total match
-    count is returned in the `X-Total-Count` response header (the body stays a plain list)."""
+    search, sort by assets|cases|attendance|theme_questions|name, and page via limit/offset. `cycle` (a Lok
+    Sabha cycle number) browses that session's roster as it stood at the time. Total match count is returned
+    in the `X-Total-Count` response header (the body stays a plain list)."""
     items, total = resume_service.list_persons(
         db, limit=limit, offset=offset, house=house, state=state, constituency=constituency,
-        jurisdiction=jurisdiction, party=party, cases=cases, q=q, theme=theme, sort=sort,
+        jurisdiction=jurisdiction, party=party, cases=cases, q=q, theme=theme, cycle=cycle, sort=sort,
     )
     response.headers["X-Total-Count"] = str(total)
     return items
@@ -105,10 +107,11 @@ def person_facets(
     house: str | None = None,
     state: str | None = None,
     jurisdiction: str | None = None,
+    cycle: int | None = None,
     db: Session = Depends(get_db),
 ) -> Facets:
-    """Dropdown option lists (party / state / house, each with a count) for a browse scope."""
-    return resume_service.facets(db, house=house, state=state, jurisdiction=jurisdiction)
+    """Dropdown option lists (party / state / house / LS session, each with a count) for a browse scope."""
+    return resume_service.facets(db, house=house, state=state, jurisdiction=jurisdiction, cycle=cycle)
 
 
 @router.get("/{person_id}", response_model=PersonResume)

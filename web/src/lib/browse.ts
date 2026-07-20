@@ -3,9 +3,10 @@ import { getFacets, listPersons, type Facets, type PersonSummary } from "@/lib/a
 export const BROWSE_PAGE_SIZE = 60;
 
 /** UI-level filter state, mirrored in the URL query. `house` is the LS/RS filter (directory scope);
- *  `state`/`corporation` are the scope-specific selectors (state-level / municipal). */
+ *  `state`/`corporation` are the scope-specific selectors (state-level / municipal); `session` is the
+ *  Lok Sabha cycle number (session selector) — browses that LS's roster as it stood at the time. */
 export type BrowseFilters = {
-  q: string; party: string; house: string; state: string; corporation: string; cases: string; theme: string; sort: string;
+  q: string; party: string; house: string; state: string; corporation: string; cases: string; theme: string; session: string; sort: string;
 };
 
 export type BrowseData = {
@@ -16,7 +17,7 @@ export type BrowseData = {
 type SP = Record<string, string | string[] | undefined>;
 const one = (v: string | string[] | undefined): string => (Array.isArray(v) ? v[0] : v) ?? "";
 
-const EMPTY_FACETS: Facets = { parties: [], states: [], houses: [], themes: [] };
+const EMPTY_FACETS: Facets = { parties: [], states: [], houses: [], themes: [], cycles: [] };
 
 /** Parse the browse URL params, fetch the matching page + total + facet options for a scope, and hand
  *  back everything the shell/browser render. Server-side (URL-driven pagination); ~60 rows per load. */
@@ -31,8 +32,11 @@ export async function loadBrowse(
   const filters: BrowseFilters = {
     q: one(sp.q), party: one(sp.party), house: one(sp.house), state: one(sp.state),
     corporation: one(sp.corporation), cases: one(sp.cases) || "any", theme: one(sp.theme),
-    sort: one(sp.sort) || "assets",
+    session: one(sp.session), sort: one(sp.sort) || "assets",
   };
+  // Lok Sabha session selector: the URL `session` is an LS cycle number; when set, the roster is
+  // projected as it stood in that Lok Sabha (party/constituency/assets at the time).
+  const cycle = filters.session ? Number(filters.session) || undefined : undefined;
   try {
     const [res, facets] = await Promise.all([
       listPersons({
@@ -46,6 +50,7 @@ export async function loadBrowse(
         cases: filters.cases !== "any" ? filters.cases : undefined,
         q: filters.q || undefined,
         theme: filters.theme || undefined,
+        cycle,
         sort: filters.sort,
         // Short ISR (5 min) rather than always-live: the directory is URL-driven (searchParams) so the HTML
         // is still rendered per request, but each distinct filter/offset now hits the fetch Data Cache and
@@ -53,7 +58,7 @@ export async function loadBrowse(
         // in batch ingests, so a few minutes of staleness is invisible.
         revalidate: 300,
       }),
-      getFacets(cfg.facetScope ?? cfg.base ?? {}),
+      getFacets({ ...(cfg.facetScope ?? cfg.base ?? {}), cycle }),
     ]);
     return { people: res.items, total: res.total, facets, page, pageSize: BROWSE_PAGE_SIZE, filters, error: false };
   } catch {
