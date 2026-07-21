@@ -7,7 +7,7 @@ import { docSrc } from "@/lib/api";
 import { THEME_COLORS, themeColor } from "@/lib/themes";
 import { SegmentedBar, ThemeChip } from "@/components/resume/policy-focus";
 import { rupees, severityMeta, year, pretty } from "@/lib/format";
-import { Donut, WealthLine } from "@/components/resume/charts";
+import { CaseTimeline, Donut, WealthLine } from "@/components/resume/charts";
 import { SourceLink, SourceChip, PendingFlag, SeverityBadge, PartyPill } from "@/components/ui";
 
 const TABS = ["Overview", "Activity", "Questions", "Wealth", "Cases", "Career & Roles", "Contact", "In The News"] as const;
@@ -431,11 +431,25 @@ function Cases({ resume }: { resume: PersonResume }) {
     );
   }
   const convictions = cases.filter((c) => c.is_convicted).length;
+  const undatedCases = cases.filter((c) => c.filed_year == null).length;
+  const hasTimeline = cases.length - undatedCases > 0;
   return (
     <div className="fadeUp">
       <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 16, flexWrap: "wrap" }}>
         <PendingFlag>{convictions ? `${convictions} CONVICTION(S) ON RECORD` : "PENDING · UNPROVEN — NO CONVICTIONS ON RECORD"}</PendingFlag>
       </div>
+      {hasTimeline && (
+        <div style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "clamp(16px,4vw,22px) clamp(14px,4vw,22px)", marginBottom: 16 }}>
+          <div style={{ fontSize: 13, fontWeight: 600, color: "var(--ink)" }}>When cases were filed</div>
+          <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2, marginBottom: 12 }}>Declared cases by year of filing, split by derived severity.</div>
+          <CaseTimeline cases={cases} />
+          {undatedCases > 0 && (
+            <p style={{ fontSize: 11.5, color: "var(--muted)", marginTop: 12, marginBottom: 0 }}>
+              {undatedCases} case{undatedCases === 1 ? "" : "s"} with no filing year on the affidavit {undatedCases === 1 ? "is" : "are"} not shown above.
+            </p>
+          )}
+        </div>
+      )}
       <div style={{ border: "1px solid var(--rule)", borderRadius: 12, overflow: "hidden", background: "var(--card2)" }}>
         {cases.map((c, i) => {
           const m = severityMeta(c.severity);

@@ -5,8 +5,9 @@
 
 import { useId } from "react";
 import {
-  Area, AreaChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
+  Area, AreaChart, Bar, BarChart, Cell, Pie, PieChart, ResponsiveContainer, Tooltip, XAxis, YAxis,
 } from "recharts";
+import type { CriminalCase } from "@/lib/api";
 import { indicatorValue, rupees } from "@/lib/format";
 import { themeColor } from "@/lib/themes";
 import { resolveColor, useThemeColors } from "@/lib/useThemeColors";
@@ -293,6 +294,115 @@ export function ThemeStackedArea({ months, series }: { months: string[]; series:
           <span key={s.theme} style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11.5, color: "var(--ink2)" }}>
             <span style={{ width: 10, height: 10, borderRadius: 3, background: themeColor(s.theme) }} />
             {s.theme}
+          </span>
+        ))}
+      </div>
+    </>
+  );
+}
+
+// Severity bands for the case-filing timeline, stacked bottom→top (unclassified at the base, heinous on
+// top). Colours match the severity donut / case cards (--sev1/2/3, --muted) so the tab reads consistently.
+type Band = { key: "unclassified" | "minor" | "serious" | "heinous"; label: string; color: string };
+const CASE_BANDS: Band[] = [
+  { key: "unclassified", label: "Unclassified", color: "var(--muted)" },
+  { key: "minor", label: "Minor", color: "var(--sev3)" },
+  { key: "serious", label: "Serious", color: "var(--sev2)" },
+  { key: "heinous", label: "Heinous", color: "var(--sev1)" },
+];
+const CASE_AXIS_CAP = 24; // gap-fill empty years only up to this many columns; beyond that, plot dated years only
+
+/** Cases filed per year, each bar stacked by derived severity — the "when + what kind" view above the
+ *  case list. Aggregates client-side from resume.criminal_cases (filed_year + severity). */
+export function CaseTimeline({ cases }: { cases: CriminalCase[] }) {
+  const colors = useThemeColors();
+
+  const dated = cases.filter((c) => c.filed_year != null);
+  const counts = new Map<number, Record<Band["key"], number>>();
+  for (const c of dated) {
+    const y = c.filed_year as number;
+    const row = counts.get(y) ?? { unclassified: 0, minor: 0, serious: 0, heinous: 0 };
+    const band = (c.severity ?? "unclassified") as Band["key"];
+    row[band] += 1;
+    counts.set(y, row);
+  }
+
+  const years = [...counts.keys()];
+  const minY = Math.min(...years);
+  const maxY = Math.max(...years);
+  // Continuous axis (empty years shown as gaps) when the span is reasonable; otherwise plot only the
+  // years that actually have filings so one stray old case can't spawn a wall of empty columns.
+  const axisYears =
+    maxY - minY + 1 <= CASE_AXIS_CAP
+      ? Array.from({ length: maxY - minY + 1 }, (_, i) => minY + i)
+      : years.sort((a, b) => a - b);
+  const data = axisYears.map((y) => {
+    const row = counts.get(y) ?? { unclassified: 0, minor: 0, serious: 0, heinous: 0 };
+    return { year: y, ...row };
+  });
+  // Only legend/stack the bands that actually occur.
+  const present = CASE_BANDS.filter((b) => dated.some((c) => (c.severity ?? "unclassified") === b.key));
+
+  return (
+    <>
+      <div style={{ width: "100%", height: "clamp(160px,38vw,240px)" }}>
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={data} margin={{ top: 8, right: 8, bottom: 0, left: 0 }} barCategoryGap="18%">
+            <XAxis
+              dataKey="year"
+              tick={{ fontSize: 10.5, fill: colors["--muted"], fontFamily: "var(--font-mono, monospace)" }}
+              tickLine={false}
+              axisLine={{ stroke: colors["--rule2"] }}
+              interval="preserveStartEnd"
+              minTickGap={16}
+            />
+            <YAxis
+              tick={{ fontSize: 10.5, fill: colors["--muted"], fontFamily: "var(--font-mono, monospace)" }}
+              tickLine={false}
+              axisLine={false}
+              width={28}
+              allowDecimals={false}
+            />
+            <Tooltip
+              cursor={{ fill: colors["--rule2"], fillOpacity: 0.35 }}
+              content={({ active, payload, label }) => {
+                if (!active || !payload || !payload.length) return null;
+                const rows = [...payload].filter((p) => (p.value as number) > 0).reverse();
+                if (!rows.length) return null;
+                const total = payload.reduce((n, p) => n + (p.value as number), 0);
+                return (
+                  <TooltipBox>
+                    <div style={{ color: "var(--muted)", marginBottom: 4 }}>{label} · <strong style={{ color: "var(--ink)" }}>{total}</strong> case{total === 1 ? "" : "s"}</div>
+                    {rows.map((p) => (
+                      <div key={p.dataKey as string} style={{ display: "flex", alignItems: "center", gap: 6, lineHeight: 1.5 }}>
+                        <span style={{ width: 8, height: 8, borderRadius: 2, background: p.color as string }} />
+                        <span style={{ color: "var(--ink2)", flex: 1, textTransform: "capitalize" }}>{p.dataKey as string}</span>
+                        <strong>{p.value as number}</strong>
+                      </div>
+                    ))}
+                  </TooltipBox>
+                );
+              }}
+            />
+            {present.map((b, i) => (
+              <Bar
+                key={b.key}
+                dataKey={b.key}
+                stackId="1"
+                fill={resolveColor(colors, b.color)}
+                radius={i === present.length - 1 ? [2, 2, 0, 0] : undefined}
+                isAnimationActive={false}
+                maxBarSize={54}
+              />
+            ))}
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 14px", marginTop: 14 }}>
+        {present.map((b) => (
+          <span key={b.key} style={{ display: "inline-flex", alignItems: "center", gap: 6, fontSize: 11.5, color: "var(--ink2)" }}>
+            <span style={{ width: 10, height: 10, borderRadius: 3, background: b.color }} />
+            {b.label}
           </span>
         ))}
       </div>
