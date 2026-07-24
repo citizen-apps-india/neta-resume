@@ -58,6 +58,30 @@ export function Footer() {
           Neta·Resume · public-interest project · sources: Election Commission of India, sansad.in,
           MyNeta/ADR, PRS Legislative Research.
         </div>
+
+        <div style={{ fontSize: 11.5, color: "var(--faint)" }}>
+          Built and maintained by{" "}
+          <Link
+            href="https://www.linkedin.com/in/sahilsawant/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="navlink"
+            style={{ color: "var(--accent)" }}
+          >
+            Sahil Sawant
+          </Link>{" "}
+          at{" "}
+          <Link
+            href="https://github.com/citizen-apps-india"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="navlink"
+            style={{ color: "var(--accent)" }}
+          >
+            Citizen Apps India
+          </Link>
+          .
+        </div>
       </div>
     </footer>
   );
