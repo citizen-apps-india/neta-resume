@@ -18,6 +18,7 @@ from sqlalchemy import text
 from neta_core.db.engine import session_scope
 from neta_core.provenance import record_source_ref
 from neta_core.transform.names import normalize_name
+from neta_ingest.extraction import source_extraction_context
 from neta_ingest.pipelines.identity.affidavit_attach import best_match
 from neta_sources.prs import client as prs
 
@@ -67,7 +68,8 @@ def run(house: str = "ls") -> None:
         raise ValueError(f"house must be 'ls' or 'rs', got {house!r}")
     house_code, cycle_where = _CYCLE[house]
 
-    roster = prs.fetch_roster(house)
+    extraction_context = source_extraction_context(prs.SOURCE_ID)
+    roster = prs.fetch_roster(house, context=extraction_context)
     print(f"[attendance] PRS {house_code} roster: {len(roster)} members")
 
     with session_scope() as s:
@@ -80,7 +82,7 @@ def run(house: str = "ls") -> None:
     unmatched = len(roster) - len(matched)
     for m, ot_id, person_id in matched:
         try:
-            pct, raw_rel = prs.fetch_attendance(m)
+            pct, raw_rel = prs.fetch_attendance(m, context=extraction_context)
         except Exception as e:  # one slow/blocked profile must not abort the whole run
             failed += 1
             print(f"  ! fetch failed for {m.name} ({m.slug}): {e!r}")

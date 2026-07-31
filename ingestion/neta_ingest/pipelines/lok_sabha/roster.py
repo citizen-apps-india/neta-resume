@@ -1,21 +1,21 @@
-"""Roster pipeline: sansad.in members -> office_term + source_ref.
-
-Steps (idempotent):
-  1. Fetch member list for (house, cycle) from neta_sources.sansad.
-  2. For each member: cache_raw + record_source_ref(source='sansad', native_id=member_id).
-  3. Upsert office_term (person_id resolved later by the `resolve` pipeline).
-
-Run order: this comes BEFORE resolve_persons; office_term.source_ref.person_id stays NULL until then.
-"""
+"""Compatibility command routing to the production Digital Sansad roster pipelines."""
 
 from __future__ import annotations
 
-from neta_sources.sansad import client as sansad
-
-
 def run(house: str = "ls", cycle: str = "18") -> None:
-    members = sansad.fetch_members(house=house, cycle=cycle)
-    raise NotImplementedError(
-        f"roster pipeline scaffolded for house={house} cycle={cycle}; "
-        f"got {len(members)} members from sansad. Wire upsert into office_term next (Phase 1)."
-    )
+    normalized_house = house.lower()
+    if normalized_house == "ls":
+        if cycle != "18":
+            raise ValueError("the Digital Sansad LS adapter currently supports cycle 18")
+        from neta_ingest.pipelines.lok_sabha import ls_roster
+
+        ls_roster.run()
+        return
+    if normalized_house == "rs":
+        if cycle not in {"current", "RS-CURRENT"}:
+            raise ValueError("the Digital Sansad RS adapter currently supports cycle 'current'")
+        from neta_ingest.pipelines.rajya_sabha import rajya_sabha
+
+        rajya_sabha.run()
+        return
+    raise ValueError(f"house must be 'ls' or 'rs', got {house!r}")

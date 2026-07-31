@@ -15,6 +15,7 @@ from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
 from neta_core.provenance import record_source_ref
+from neta_ingest.extraction import source_extraction_context
 from neta_sources.worldbank import client as wb
 
 _UPSERT = text("""
@@ -35,10 +36,12 @@ def run(only: list[str] | None = None) -> None:
         codes = [c for c in codes if c in wanted]
     print(f"[macro-indicators] {len(codes)} catalogued indicator(s) to fetch from the World Bank")
 
+    extraction_context = source_extraction_context(wb.SOURCE_ID)
     written = failed = 0
     for code in codes:
         try:
-            series = wb.fetch_indicator(code)
+            artifact = wb.extract_indicator(code, context=extraction_context)
+            series = wb.parse_indicator_artifact(artifact, code)
         except Exception as e:  # one bad/retired code must not abort the whole refresh
             failed += 1
             print(f"  ! {code}: {e!r}")

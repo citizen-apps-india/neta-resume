@@ -16,6 +16,7 @@ from pathlib import Path
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
+from neta_ingest.extraction import source_extraction_context
 from neta_ingest.pipelines.identity import affidavit_attach as aa
 from neta_sources.myneta import client as myneta
 
@@ -26,6 +27,7 @@ QDIR = Path("data/hist_index")
 
 
 def main():
+    extraction_context = source_extraction_context(myneta.SOURCE_ID)
     with session_scope() as s:
         house_id = s.execute(text("SELECT id FROM house WHERE code='LS'")).scalar()
 
@@ -58,7 +60,11 @@ def main():
             corroborating = []
             for c in cands[:5]:
                 try:
-                    parsed, raw_rel = myneta.fetch_candidate(c["candidate_id"], cycle)
+                    parsed, raw_rel = myneta.fetch_candidate(
+                        c["candidate_id"],
+                        cycle,
+                        context=extraction_context,
+                    )
                 except Exception:  # noqa: BLE001
                     continue
                 if parsed.age and abs((aa.cycle_year(cycle) - parsed.age) - birth_year) <= AGE_TOLERANCE:

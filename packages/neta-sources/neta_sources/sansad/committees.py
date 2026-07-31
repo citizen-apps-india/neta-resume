@@ -11,24 +11,33 @@ Discovered Digital Sansad endpoints (reachable without an India IP, unlike the q
 `committeeMembers` carries NO mpsno, so the pipeline matches members to persons by name. Joint
 Parliamentary Committees list Rajya Sabha members too (memberHouse distinguishes them).
 
-Official source (trust_tier 1). Every fetch is throttled by neta_core.http and cached by the pipeline.
+Official source (trust_tier 1). Every fetch is throttled and captured by the raw-envelope adapter.
 """
 
 from __future__ import annotations
 
+import json
 from dataclasses import dataclass
 
-from neta_core.http import client as http
+from neta_core.pipeline import (
+    ExtractionContext,
+    HttpExtractionRequest,
+    HttpSourceAdapter,
+    RawArtifact,
+    SourceAdapter,
+)
 
 from .client import _clean_name
 
 COMMITTEE_API = "https://sansad.in/api_ls/committee"
+SOURCE_ID = "digital_sansad.committees"
 
 
 @dataclass(slots=True)
 class Committee:
     code: int
     name: str
+    raw_ref: str | None = None
 
 
 @dataclass(slots=True)
@@ -40,37 +49,91 @@ class CommitteeMembership:
     member_name: str              # cleaned "Given Surname"
     is_chairperson: bool          # memberOrChairperson == 'Chairperson'
     member_house: str | None      # 'Lok sabha' / 'Rajya sabha' (JPCs include RS members)
+    raw_ref: str | None = None
 
 
-def _json_list(url: str, params: dict) -> list:
-    """GET a sansad committee endpoint and return its JSON array. Some committee codes have no roster and
-    the gateway answers with a plain-text '404 page not found' (HTTP 400) instead of JSON — treat any
-    non-200 / non-JSON / non-list response as empty rather than raising."""
-    resp = http.get(url, params=params, headers={"Accept": "application/json"})
-    if resp.status_code != 200:
+def _artifact_json_list(artifact: RawArtifact) -> list:
+    if artifact.envelope.http_metadata.get("status_code") != "200":
         return []
     try:
-        data = resp.json()
+        data = json.loads(artifact.text())
     except ValueError:
         return []
     return data if isinstance(data, list) else []
 
 
-def fetch_committees(loksabha: int = 18) -> list[Committee]:
-    """The full list of Lok Sabha committees for a given Lok Sabha (18th by default)."""
+def extract_committees(
+    loksabha: int = 18,
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> RawArtifact:
+    extractor = adapter if adapter is not None else HttpSourceAdapter()
+    return extractor.extract(
+        HttpExtractionRequest(
+            source_id=SOURCE_ID,
+            native_id=f"ls:{loksabha}:committees",
+            url=f"{COMMITTEE_API}/allCommittee",
+            default_content_type="application/json",
+            headers={"Accept": "application/json"},
+            params={"loksabha": loksabha, "locale": "en"},
+        ),
+        context=context,
+    )
+
+
+def parse_committees_artifact(artifact: RawArtifact) -> list[Committee]:
     return [
-        Committee(code=int(c["committeeCode"]), name=(c.get("committeeName") or "").strip())
-        for c in _json_list(f"{COMMITTEE_API}/allCommittee", {"loksabha": loksabha, "locale": "en"})
-        if c.get("committeeCode") is not None and (c.get("committeeName") or "").strip()
+        Committee(
+            code=int(row["committeeCode"]),
+            name=(row.get("committeeName") or "").strip(),
+            raw_ref=artifact.provenance_ref,
+        )
+        for row in _artifact_json_list(artifact)
+        if row.get("committeeCode") is not None and (row.get("committeeName") or "").strip()
     ]
 
 
-def fetch_committee_members(committee_code: int, loksabha: int = 18) -> list[CommitteeMembership]:
-    """One committee's members + chairperson. Names are cleaned to 'Given Surname' for person matching."""
-    rows = _json_list(
-        f"{COMMITTEE_API}/committeeMembers",
-        {"loksabha": loksabha, "committeeCode": committee_code, "locale": "en"},
+def fetch_committees(
+    loksabha: int = 18,
+    *,
+    context: ExtractionContext,
+) -> list[Committee]:
+    """The full list of Lok Sabha committees for a given Lok Sabha (18th by default)."""
+    return parse_committees_artifact(extract_committees(loksabha, context=context))
+
+
+def extract_committee_members(
+    committee_code: int,
+    loksabha: int = 18,
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> RawArtifact:
+    extractor = adapter if adapter is not None else HttpSourceAdapter()
+    return extractor.extract(
+        HttpExtractionRequest(
+            source_id=SOURCE_ID,
+            native_id=f"ls:{loksabha}:committee:{committee_code}:members",
+            url=f"{COMMITTEE_API}/committeeMembers",
+            default_content_type="application/json",
+            headers={"Accept": "application/json"},
+            params={
+                "loksabha": loksabha,
+                "committeeCode": committee_code,
+                "locale": "en",
+            },
+            accepted_status_codes=frozenset({200, 400}),
+        ),
+        context=context,
     )
+
+
+def parse_committee_members_artifact(
+    artifact: RawArtifact,
+    committee_code: int,
+) -> list[CommitteeMembership]:
+    rows = _artifact_json_list(artifact)
     out: list[CommitteeMembership] = []
     for r in rows:
         role = (r.get("memberOrChairperson") or "").strip().lower()
@@ -86,6 +149,22 @@ def fetch_committee_members(committee_code: int, loksabha: int = 18) -> list[Com
                 member_name=name,
                 is_chairperson=role.startswith("chair"),
                 member_house=(r.get("memberHouse") or "").strip() or None,
+                raw_ref=artifact.provenance_ref,
             )
         )
     return out
+
+
+def fetch_committee_members(
+    committee_code: int,
+    loksabha: int = 18,
+    *,
+    context: ExtractionContext,
+) -> list[CommitteeMembership]:
+    """One committee's members + chairperson. Names are cleaned to 'Given Surname' for matching."""
+    artifact = extract_committee_members(
+        committee_code,
+        loksabha,
+        context=context,
+    )
+    return parse_committee_members_artifact(artifact, committee_code)

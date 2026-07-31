@@ -18,10 +18,18 @@ from urllib.parse import quote_plus
 from xml.etree import ElementTree as ET
 
 from neta_core.http import client as http
+from neta_core.pipeline import (
+    ExtractionContext,
+    HttpExtractionRequest,
+    HttpSourceAdapter,
+    RawArtifact,
+    SourceAdapter,
+)
 from neta_core.provenance import cache_raw
 
 # Google sometimes serves the bot UA a thin page; a browser-like UA gets the full feed.
 _UA = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124 Safari/537.36"
+SOURCE_ID = "news.google_feed"
 
 
 @dataclass(slots=True)
@@ -64,18 +72,60 @@ def _pub_date(raw: str | None) -> date | None:
         return None
 
 
-def fetch_news(name: str, party: str | None = None, constituency: str | None = None,
-               slug: str = "x") -> tuple[list[ParsedArticle], str]:
+def extract_news(
+    name: str,
+    party: str | None = None,
+    constituency: str | None = None,
+    slug: str = "x",
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> RawArtifact:
+    """Fetch one legislator feed as a raw envelope, without parsing or canonical writes."""
+    url = feed_url(build_query(name, party, constituency))
+    extractor = adapter if adapter is not None else HttpSourceAdapter()
+    return extractor.extract(
+        HttpExtractionRequest(
+            source_id=SOURCE_ID,
+            native_id=f"legislator:{slug}",
+            url=url,
+            default_content_type="application/rss+xml",
+            headers={"User-Agent": _UA},
+        ),
+        context=context,
+    )
+
+
+def parse_news_artifact(artifact: RawArtifact) -> list[ParsedArticle]:
+    """Convert a stored Google News response with the existing feed parsing rules."""
+    return _parse_news_payload(artifact.payload)
+
+
+def fetch_news(
+    name: str,
+    party: str | None = None,
+    constituency: str | None = None,
+    slug: str = "x",
+    *,
+    context: ExtractionContext | None = None,
+) -> tuple[list[ParsedArticle], str | None]:
     """Fetch + parse the news feed for one legislator. Returns (articles, raw_cache_relpath)."""
+    if context is not None:
+        artifact = extract_news(name, party, constituency, slug, context=context)
+        return parse_news_artifact(artifact), artifact.provenance_ref
+
     url = feed_url(build_query(name, party, constituency))
     resp = http.get(url, headers={"User-Agent": _UA})
     rel = cache_raw(resp.content, suffix=f"_news_{slug}.xml")
+    return _parse_news_payload(resp.content), rel
 
+
+def _parse_news_payload(content: bytes) -> list[ParsedArticle]:
     out: list[ParsedArticle] = []
     try:
-        root = ET.fromstring(resp.content)
+        root = ET.fromstring(content)
     except ET.ParseError:
-        return out, rel
+        return out
     for item in root.iter("item"):
         title = (item.findtext("title") or "").strip()
         link = (item.findtext("link") or "").strip()
@@ -94,4 +144,4 @@ def fetch_news(name: str, party: str | None = None, constituency: str | None = N
             published_at=_pub_date(item.findtext("pubDate")),
             snippet=snippet[:240] if snippet else None,
         ))
-    return out, rel
+    return out

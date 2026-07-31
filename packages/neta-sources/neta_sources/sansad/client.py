@@ -12,13 +12,21 @@ ADR/MyNeta does not aggregate their affidavits). This is therefore a roster sour
 
 from __future__ import annotations
 
+import json
 import re
 from dataclasses import dataclass
 
-from neta_core.http import client as http
+from neta_core.pipeline import (
+    ExtractionContext,
+    HttpExtractionRequest,
+    HttpSourceAdapter,
+    RawArtifact,
+    SourceAdapter,
+)
 
 RS_API = "https://sansad.in/api_rs/member/sitting-members"
 LS_API = "https://sansad.in/api_ls/member"
+SOURCE_ID = "digital_sansad.members"
 _HONORIFICS = re.compile(
     r"\b(dr|shri|smt|kumari|km|adv|advocate|prof|mr|mrs|ms|thiru|selvi|justice|hon|md|mohd|capt|col)\.?\b",
     re.IGNORECASE,
@@ -41,6 +49,7 @@ class RsMember:
     profile_url: str
     official_email: str | None = None   # @*.sansad.in
     office_phone: str | None = None      # local office line
+    raw_ref: str | None = None
 
 
 def _clean_name(raw: str) -> str:
@@ -92,86 +101,189 @@ class LsMember:
     profile_url: str
     official_email: str | None = None   # @*.sansad.in
     office_phone: str | None = None      # Delhi/Parliament office line
+    raw_ref: str | None = None
 
 
-def fetch_ls_sitting_members(page_size: int = 100) -> list[LsMember]:
+def _ls_params(page: int, page_size: int) -> dict[str, object]:
+    return {
+        "loksabha": 18,
+        "sitting": 1,
+        "page": page,
+        "size": page_size,
+        "locale": "en",
+        "state": "",
+        "party": "",
+        "gender": "",
+        "ageFrom": "",
+        "ageTo": "",
+        "noOfTerms": "",
+        "searchText": "",
+        "constituency": "",
+        "month": "",
+    }
+
+
+def extract_ls_members_page(
+    page: int,
+    page_size: int,
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> RawArtifact:
+    extractor = adapter if adapter is not None else HttpSourceAdapter()
+    return extractor.extract(
+        HttpExtractionRequest(
+            source_id=SOURCE_ID,
+            native_id=f"ls:18:page:{page}:size:{page_size}",
+            url=LS_API,
+            default_content_type="application/json",
+            headers={"Accept": "application/json"},
+            params=_ls_params(page, page_size),
+        ),
+        context=context,
+    )
+
+
+def parse_ls_members_page(artifact: RawArtifact) -> tuple[list[LsMember], int]:
+    return _parse_ls_members_data(json.loads(artifact.text()), artifact.provenance_ref)
+
+
+def _parse_ls_members_data(
+    data: dict,
+    raw_ref: str | None,
+) -> tuple[list[LsMember], int]:
+    records = data.get("membersDtoList", [])
+    members: list[LsMember] = []
+    for record in records:
+        name = _HONORIFICS.sub("", record.get("mpFirstLastName") or "").strip()
+        name = re.sub(r"\s+", " ", name).strip(" .")
+        members.append(
+            LsMember(
+                member_id=str(record["mpsno"]),
+                name=name,
+                party=(record.get("partySname") or record.get("partyFname") or "").strip()
+                or None,
+                state=(record.get("stateName") or "").strip() or None,
+                constituency=(record.get("constName") or "").strip() or None,
+                photo_url=(record.get("imageUrl") or "").strip() or None,
+                age=record.get("age"),
+                gender=(record.get("gender") or "").strip().title() or None,
+                terms=record.get("noOfTerms"),
+                profile_url=f"https://sansad.in/ls/members?mpsno={record['mpsno']}",
+                official_email=_official_email(record.get("email")),
+                office_phone=(record.get("delhiPhone") or "").strip() or None,
+                raw_ref=raw_ref,
+            )
+        )
+    return members, int(data.get("metaDatasDto", {}).get("totalPages", 1))
+
+
+def fetch_ls_sitting_members(
+    page_size: int = 100,
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> list[LsMember]:
     """Fetch all sitting (18th) Lok Sabha members from the official sansad.in API."""
     out: list[LsMember] = []
     page = 1
     while True:
-        resp = http.get(
-            LS_API,
-            params={"loksabha": 18, "sitting": 1, "page": page, "size": page_size, "locale": "en",
-                    "state": "", "party": "", "gender": "", "ageFrom": "", "ageTo": "",
-                    "noOfTerms": "", "searchText": "", "constituency": "", "month": ""},
-            headers={"Accept": "application/json"},
-        )
-        data = resp.json()
-        records = data.get("membersDtoList", [])
-        for r in records:
-            name = _HONORIFICS.sub("", r.get("mpFirstLastName") or "").strip()
-            name = re.sub(r"\s+", " ", name).strip(" .")
-            out.append(
-                LsMember(
-                    member_id=str(r["mpsno"]),
-                    name=name,
-                    party=(r.get("partySname") or r.get("partyFname") or "").strip() or None,
-                    state=(r.get("stateName") or "").strip() or None,
-                    constituency=(r.get("constName") or "").strip() or None,
-                    photo_url=(r.get("imageUrl") or "").strip() or None,
-                    age=r.get("age"),
-                    gender=(r.get("gender") or "").strip().title() or None,
-                    terms=r.get("noOfTerms"),
-                    profile_url=f"https://sansad.in/ls/members?mpsno={r['mpsno']}",
-                    official_email=_official_email(r.get("email")),
-                    office_phone=(r.get("delhiPhone") or "").strip() or None,
-                )
-            )
-        meta = data.get("metaDatasDto", {})
-        if page >= meta.get("totalPages", 1) or not records:
-            break
+        artifact = extract_ls_members_page(page, page_size, context=context, adapter=adapter)
+        members, total_pages = parse_ls_members_page(artifact)
+        out.extend(members)
+        if page >= total_pages or not members:
+            return out
         page += 1
-    return out
 
 
-def fetch_rs_sitting_members(page_size: int = 100) -> list[RsMember]:
+def _rs_params(page: int, page_size: int) -> dict[str, object]:
+    return {
+        "page": page,
+        "size": page_size,
+        "mpFlag": 1,
+        "locale": "en",
+        "state": "",
+        "party": "",
+        "gender": "",
+        "ageFrom": "",
+        "ageTo": "",
+        "terms": "",
+        "search": "",
+        "month": "",
+        "minister": "",
+    }
+
+
+def extract_rs_members_page(
+    page: int,
+    page_size: int,
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> RawArtifact:
+    extractor = adapter if adapter is not None else HttpSourceAdapter()
+    return extractor.extract(
+        HttpExtractionRequest(
+            source_id=SOURCE_ID,
+            native_id=f"rs:sitting:page:{page}:size:{page_size}",
+            url=RS_API,
+            default_content_type="application/json",
+            headers={"Accept": "application/json"},
+            params=_rs_params(page, page_size),
+        ),
+        context=context,
+    )
+
+
+def parse_rs_members_page(artifact: RawArtifact) -> tuple[list[RsMember], int]:
+    return _parse_rs_members_data(json.loads(artifact.text()), artifact.provenance_ref)
+
+
+def _parse_rs_members_data(
+    data: dict,
+    raw_ref: str | None,
+) -> tuple[list[RsMember], int]:
+    records = data.get("records", [])
+    members: list[RsMember] = []
+    for record in records:
+        state_raw = (record.get("state") or "").strip()
+        nominated = state_raw.lower() == "nominated"
+        start_year, end_year = _years(record.get("term"))
+        members.append(
+            RsMember(
+                member_id=str(record["mpsno"]),
+                name=_clean_name(record.get("name", "")),
+                party=(record.get("partyCode") or record.get("party") or "").strip() or None,
+                state=None if nominated else (state_raw or None),
+                nominated=nominated,
+                photo_url=(record.get("imageUrl") or "").strip() or None,
+                term=record.get("term"),
+                start_year=start_year,
+                end_year=end_year,
+                gender=(record.get("gender") or "").strip() or None,
+                age=record.get("age"),
+                profile_url=f"https://sansad.in/rs/members?mpsno={record['mpsno']}",
+                official_email=_official_email(record.get("emailID")),
+                office_phone=(record.get("localTele") or "").strip() or None,
+                raw_ref=raw_ref,
+            )
+        )
+    return members, int(data.get("_metadata", {}).get("totalPages", 1))
+
+
+def fetch_rs_sitting_members(
+    page_size: int = 100,
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> list[RsMember]:
     """Fetch all sitting Rajya Sabha members across pages."""
     out: list[RsMember] = []
     page = 1
     while True:
-        resp = http.get(
-            RS_API,
-            params={"page": page, "size": page_size, "mpFlag": 1, "locale": "en",
-                    "state": "", "party": "", "gender": "", "ageFrom": "", "ageTo": "",
-                    "terms": "", "search": "", "month": "", "minister": ""},
-            headers={"Accept": "application/json"},
-        )
-        data = resp.json()
-        records = data.get("records", [])
-        for r in records:
-            state_raw = (r.get("state") or "").strip()
-            nominated = state_raw.lower() == "nominated"
-            sy, ey = _years(r.get("term"))
-            out.append(
-                RsMember(
-                    member_id=str(r["mpsno"]),
-                    name=_clean_name(r.get("name", "")),
-                    party=(r.get("partyCode") or r.get("party") or "").strip() or None,
-                    state=None if nominated else (state_raw or None),
-                    nominated=nominated,
-                    photo_url=(r.get("imageUrl") or "").strip() or None,
-                    term=r.get("term"),
-                    start_year=sy,
-                    end_year=ey,
-                    gender=(r.get("gender") or "").strip() or None,
-                    age=r.get("age"),
-                    profile_url=f"https://sansad.in/rs/members?mpsno={r['mpsno']}",
-                    official_email=_official_email(r.get("emailID")),
-                    office_phone=(r.get("localTele") or "").strip() or None,
-                )
-            )
-        meta = data.get("_metadata", {})
-        if page >= meta.get("totalPages", 1) or not records:
-            break
+        artifact = extract_rs_members_page(page, page_size, context=context, adapter=adapter)
+        members, total_pages = parse_rs_members_page(artifact)
+        out.extend(members)
+        if page >= total_pages or not members:
+            return out
         page += 1
-    return out

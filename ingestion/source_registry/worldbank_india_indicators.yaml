@@ -1,0 +1,51 @@
+schema_version: 1
+id: worldbank.india_indicators
+source_code: worldbank
+display_name: World Bank India indicator series
+publisher: World Bank
+lifecycle: active
+authority:
+  role: primary
+  trust_tier: 1
+  jurisdiction: India
+rights:
+  license: CC-BY-4.0
+  commercial_use: allowed
+  redistribution: allowed
+  store_raw: true
+  notes: Preserve indicator codes, observation years, and attribution.
+ingestion:
+  adapter: api
+  base_url: https://api.worldbank.org/
+  trigger:
+    mode: scheduled
+    profile: monthly-series
+  change_detection: [content_hash]
+  defaults:
+    enabled: true
+    paused: false
+    frequency_seconds: 2592000
+    concurrency_limit: 2
+    rate_limit_per_minute: 30
+    retry_limit: 4
+  guardrails:
+    min_frequency_seconds: 86400
+    max_frequency_seconds: 7776000
+    max_concurrency: 4
+    max_rate_limit_per_minute: 60
+    max_retry_limit: 6
+  secret_refs: []
+conversion:
+  converter: neta_ingest.converters.worldbank:convert_indicator
+  contract: macro_indicator_series.v1
+  produces: [macro_indicator_observation]
+quality:
+  freshness_slo_seconds: 2678400
+  minimum_records: 1
+  required_fields: [indicator_code, year, value]
+orchestration:
+  runner: neta_ingest.runners:run_worldbank_indicators
+  raw_history: dlt
+verification:
+  corroborate_with: []
+  human_review_required: false

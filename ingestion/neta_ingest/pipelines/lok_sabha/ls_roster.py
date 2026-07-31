@@ -15,13 +15,15 @@ from __future__ import annotations
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
-from neta_sources.sansad import client as sansad
 from neta_core.transform.names import normalize_name
 from neta_core.transform.parties import resolve_or_create_party_id
+from neta_ingest.extraction import source_extraction_context
+from neta_sources.sansad import client as sansad
 
 
 def run() -> None:
-    members = sansad.fetch_ls_sitting_members()
+    extraction_context = source_extraction_context(sansad.SOURCE_ID)
+    members = sansad.fetch_ls_sitting_members(context=extraction_context)
     print(f"[ls-roster] fetched {len(members)} sitting Lok Sabha members from sansad.in")
     with session_scope() as s:
         source_id = s.execute(text("SELECT id FROM source WHERE code = 'sansad'")).scalar()
@@ -64,13 +66,23 @@ def _record_sansad_ref(s, source_id: int, m: sansad.LsMember, person_id: int) ->
     s.execute(
         text(
             """
-            INSERT INTO source_ref (source_id, native_id, native_url, raw_name, person_id)
-            VALUES (:sid, :nid, :url, :name, :pid)
+            INSERT INTO source_ref
+              (source_id, native_id, native_url, raw_name, raw_payload_ref, person_id)
+            VALUES (:sid, :nid, :url, :name, :raw, :pid)
             ON CONFLICT (source_id, native_id) DO UPDATE
-              SET native_url = EXCLUDED.native_url, person_id = EXCLUDED.person_id
+              SET native_url = EXCLUDED.native_url, raw_name = EXCLUDED.raw_name,
+                  raw_payload_ref = EXCLUDED.raw_payload_ref, person_id = EXCLUDED.person_id,
+                  fetched_at = now()
             """
         ),
-        {"sid": source_id, "nid": f"ls-{m.member_id}", "url": m.profile_url, "name": m.name, "pid": person_id},
+        {
+            "sid": source_id,
+            "nid": f"ls-{m.member_id}",
+            "url": m.profile_url,
+            "name": m.name,
+            "raw": m.raw_ref,
+            "pid": person_id,
+        },
     )
 
 
@@ -78,13 +90,21 @@ def _create_member(s, m: sansad.LsMember, *, source_id: int, house_id: int, term
     source_ref_id = s.execute(
         text(
             """
-            INSERT INTO source_ref (source_id, native_id, native_url, raw_name)
-            VALUES (:sid, :nid, :url, :name)
-            ON CONFLICT (source_id, native_id) DO UPDATE SET native_url = EXCLUDED.native_url
+            INSERT INTO source_ref (source_id, native_id, native_url, raw_name, raw_payload_ref)
+            VALUES (:sid, :nid, :url, :name, :raw)
+            ON CONFLICT (source_id, native_id) DO UPDATE SET
+              native_url = EXCLUDED.native_url, raw_name = EXCLUDED.raw_name,
+              raw_payload_ref = EXCLUDED.raw_payload_ref, fetched_at = now()
             RETURNING id
             """
         ),
-        {"sid": source_id, "nid": f"ls-{m.member_id}", "url": m.profile_url, "name": m.name},
+        {
+            "sid": source_id,
+            "nid": f"ls-{m.member_id}",
+            "url": m.profile_url,
+            "name": m.name,
+            "raw": m.raw_ref,
+        },
     ).scalar()
     birth_year = (2024 - m.age) if m.age else None
     person_id = s.execute(

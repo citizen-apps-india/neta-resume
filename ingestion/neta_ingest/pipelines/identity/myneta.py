@@ -17,11 +17,12 @@ from sqlalchemy import text
 
 from neta_core.config import settings
 from neta_core.db.engine import session_scope
-from neta_sources.myneta import client as myneta
-from neta_sources.myneta.parser import ParsedCandidate
 from neta_core.transform.names import normalize_name
 from neta_core.transform.parties import resolve_or_create_party_id
 from neta_core.transform.sections import rollup_severity
+from neta_ingest.extraction import source_extraction_context
+from neta_sources.myneta import client as myneta
+from neta_sources.myneta.parser import ParsedCandidate
 
 # State-assembly candidate pages don't repeat the state (the whole election is one state), so we stamp it
 # from the house's state_code. ISO 3166-2:IN codes -> canonical state name (extend as states are added).
@@ -38,9 +39,10 @@ _STATE_CODE_TO_NAME = {
 
 def run(cycle: str = "LS2024", house: str = "ls", limit: int = 10,
         candidate_ids: list[str] | None = None) -> None:
+    extraction_context = source_extraction_context(myneta.SOURCE_ID)
     ids = candidate_ids
     if ids is None:
-        winners = myneta.fetch_winners(cycle)
+        winners = myneta.fetch_winners(cycle, context=extraction_context)
         all_ids = [w.candidate_id for w in winners]
         ids = all_ids if limit <= 0 else all_ids[:limit]  # limit<=0 => ingest all winners
     print(f"[myneta] ingesting {len(ids)} candidates for {cycle} ...")
@@ -52,9 +54,16 @@ def run(cycle: str = "LS2024", house: str = "ls", limit: int = 10,
         # must not abort the whole run. Each candidate is its own transaction (idempotent on
         # source_ref), so skipping a bad one and re-running later is safe.
         try:
-            parsed, raw_rel = myneta.fetch_candidate(cid, cycle)
+            artifact = myneta.extract_candidate(cid, cycle, context=extraction_context)
+            parsed = myneta.parse_candidate_artifact(artifact, cid)
             with session_scope() as s:
-                _persist_candidate(s, parsed, cycle=cycle, house=house, raw_rel=raw_rel)
+                _persist_candidate(
+                    s,
+                    parsed,
+                    cycle=cycle,
+                    house=house,
+                    raw_rel=artifact.provenance_ref,
+                )
             ok += 1
             print(f"  [{i}/{len(ids)}] {parsed.name} ({parsed.party}) "
                   f"assets={parsed.total_assets:,} cases={len(parsed.criminal_cases)}")
@@ -70,7 +79,14 @@ def _scalar(s, sql: str, **params):
     return s.execute(text(sql), params).scalar()
 
 
-def _persist_candidate(s, c: ParsedCandidate, *, cycle: str, house: str, raw_rel: str) -> None:
+def _persist_candidate(
+    s,
+    c: ParsedCandidate,
+    *,
+    cycle: str,
+    house: str,
+    raw_rel: str | None,
+) -> None:
     house_id = _scalar(s, "SELECT id FROM house WHERE code = :code", code=house.upper())
     if house_id is None:
         raise RuntimeError(f"house {house!r} not seeded")

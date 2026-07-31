@@ -22,10 +22,16 @@ import re
 from dataclasses import dataclass
 from datetime import date, datetime
 
-from neta_core.http import client as http
-from neta_core.provenance import cache_raw
+from neta_core.pipeline import (
+    ExtractionContext,
+    HttpExtractionRequest,
+    HttpSourceAdapter,
+    RawArtifact,
+    SourceAdapter,
+)
 
 BASE = "https://prsindia.org"
+SOURCE_ID = "prs.parliamentary_record"
 
 # house code -> (listing path, profile path segment)
 _HOUSE = {
@@ -44,6 +50,7 @@ def _clean(html: str) -> str:
 
 @dataclass(slots=True)
 class PrsMember:
+    house: str
     slug: str
     name: str
     state: str | None
@@ -51,10 +58,10 @@ class PrsMember:
     questions: int | None = None       # cumulative activity counts from the listing card
     debates: int | None = None
     private_member_bills: int | None = None
-    raw_ref: str | None = None         # cache_raw snapshot of the listing page these counts came from
+    raw_ref: str | None = None         # raw listing-page snapshot these counts came from
 
 
-def _row_parser(segment: str):
+def _row_parser(segment: str, house: str):
     anchor = re.compile(
         rf'<a href="/mptrack/{segment}/([a-z0-9-]+)"[^>]*>\s*([^<]+?)\s*</a>'
     )
@@ -72,6 +79,7 @@ def _row_parser(segment: str):
         slug = a.group(1)
         c = _COUNTS.search(_clean(row))
         return PrsMember(
+            house=house,
             slug=slug, name=name, state=state_txt or None,
             profile_url=f"{BASE}/mptrack/{segment}/{slug}",
             debates=int(c.group(1)) if c else None,
@@ -85,25 +93,57 @@ def _row_parser(segment: str):
 def parse_listing(html: str, house: str) -> list[PrsMember]:
     """Parse one mptrack listing page's cards into PrsMembers (pure; shared by fetch_roster + tests)."""
     _, segment = _HOUSE[house]
-    parse = _row_parser(segment)
+    parse = _row_parser(segment, house)
     rows = re.split(r'<div[^>]*class="[^"]*views-row', html)[1:]
     return [m for row in rows if (m := parse(row))]
 
 
-def fetch_roster(house: str) -> list[PrsMember]:
-    """Paginate the mptrack listing -> every sitting member (slug, name, state, counts, profile_url)."""
+def extract_roster_page(
+    house: str,
+    page: int,
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> RawArtifact:
     listing_path, _ = _HOUSE[house]
+    extractor = adapter if adapter is not None else HttpSourceAdapter()
+    return extractor.extract(
+        HttpExtractionRequest(
+            source_id=SOURCE_ID,
+            native_id=f"{house}:roster:page:{page}",
+            url=f"{BASE}{listing_path}",
+            default_content_type="text/html",
+            params={"page": page},
+        ),
+        context=context,
+    )
+
+
+def parse_roster_page_artifact(artifact: RawArtifact, house: str) -> list[PrsMember]:
+    members = parse_listing(artifact.text(), house)
+    for member in members:
+        member.raw_ref = artifact.provenance_ref
+    return members
+
+
+def fetch_roster(
+    house: str,
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> list[PrsMember]:
+    """Paginate the mptrack listing -> every sitting member (slug, name, state, counts, profile_url)."""
+    _HOUSE[house]  # validate the house before starting a paginated run
     members: dict[str, PrsMember] = {}
     # PRS's pager is 1-indexed: page=0 clamps to page 1 (so 0 and 1 are identical), and paging past
     # the last page repeats it. Start at 1 and stop once a page adds no new members (the end clamp).
     page = 1
     while page < 200:  # safety bound (LS ~61 pages, RS ~28)
-        resp = http.get(f"{BASE}{listing_path}?page={page}")
-        raw_ref = cache_raw(resp.content, suffix=f"_prs_p{page}.html")
+        artifact = extract_roster_page(house, page, context=context, adapter=adapter)
+        page_members = parse_roster_page_artifact(artifact, house)
         before = len(members)
-        for m in parse_listing(resp.text, house):
+        for m in page_members:
             if m.slug not in members:
-                m.raw_ref = raw_ref     # snapshot of the listing page these counts were read from
                 members[m.slug] = m
         if len(members) == before:  # page produced no new members -> past the last page
             break
@@ -127,11 +167,36 @@ def parse_attendance(html: str) -> float | None:
     return float(m.group(1)) if m else None
 
 
-def fetch_attendance(member: PrsMember) -> tuple[float | None, str]:
-    """Fetch + parse one member's profile. Returns (attendance_pct_or_None, raw_cache_relpath)."""
-    resp = http.get(member.profile_url)
-    rel = cache_raw(resp.content, suffix=f"_prs_{member.slug}.html")
-    return parse_attendance(resp.text), rel
+def extract_profile(
+    member: PrsMember,
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> RawArtifact:
+    extractor = adapter if adapter is not None else HttpSourceAdapter()
+    return extractor.extract(
+        HttpExtractionRequest(
+            source_id=SOURCE_ID,
+            native_id=f"{member.house}:member:{member.slug}:profile",
+            url=member.profile_url,
+            default_content_type="text/html",
+        ),
+        context=context,
+    )
+
+
+def parse_attendance_artifact(artifact: RawArtifact) -> float | None:
+    return parse_attendance(artifact.text())
+
+
+def fetch_attendance(
+    member: PrsMember,
+    *,
+    context: ExtractionContext,
+) -> tuple[float | None, str | None]:
+    """Fetch one profile and return its attendance percentage plus raw provenance pointer."""
+    artifact = extract_profile(member, context=context)
+    return parse_attendance_artifact(artifact), artifact.provenance_ref
 
 
 # The term-wide reporting window PRS stamps on every profile:
@@ -147,13 +212,21 @@ def parse_report_period(html: str) -> tuple[date, date] | None:
     return d[0], d[1]
 
 
-def fetch_report_period(house: str) -> tuple[date, date] | None:
+def parse_report_period_artifact(artifact: RawArtifact) -> tuple[date, date] | None:
+    return parse_report_period(artifact.text())
+
+
+def fetch_report_period(
+    house: str,
+    *,
+    context: ExtractionContext,
+    roster: list[PrsMember] | None = None,
+) -> tuple[date, date] | None:
     """One profile fetch to read the house's term-wide PRS reporting window (same for all members)."""
-    roster = fetch_roster(house)
-    if not roster:
+    members = roster if roster is not None else fetch_roster(house, context=context)
+    if not members:
         return None
-    resp = http.get(roster[0].profile_url)
-    return parse_report_period(resp.text)
+    return parse_report_period_artifact(extract_profile(members[0], context=context))
 
 
 # --- Individual questions + debates (the content behind the 0024 scorecard counts) -----------------
@@ -261,8 +334,17 @@ def parse_debates(html: str) -> list[PrsDebate]:
     return out
 
 
-def fetch_record(member: PrsMember) -> tuple[list[PrsQuestion], list[PrsDebate], str]:
-    """One profile fetch -> (questions, debates, raw_cache_relpath). Cheaper than fetching per-table."""
-    resp = http.get(member.profile_url)
-    rel = cache_raw(resp.content, suffix=f"_prs_{member.slug}.html")
-    return parse_questions(resp.text), parse_debates(resp.text), rel
+def parse_record_artifact(artifact: RawArtifact) -> tuple[list[PrsQuestion], list[PrsDebate]]:
+    html = artifact.text()
+    return parse_questions(html), parse_debates(html)
+
+
+def fetch_record(
+    member: PrsMember,
+    *,
+    context: ExtractionContext,
+) -> tuple[list[PrsQuestion], list[PrsDebate], str | None]:
+    """One profile fetch -> questions, debates, and raw provenance pointer."""
+    artifact = extract_profile(member, context=context)
+    questions, debates = parse_record_artifact(artifact)
+    return questions, debates, artifact.provenance_ref

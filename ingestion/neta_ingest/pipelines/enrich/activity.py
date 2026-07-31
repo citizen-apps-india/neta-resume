@@ -10,7 +10,8 @@ Attendance-% is handled separately (see `attendance.py`) and stays on office_ter
 the three activity counts + the PRS reporting window. Peer context (house median/percentile) is computed
 at read time by the API, so nothing but raw counts is stored here.
 
-Idempotent: upserts on (person_id, term_cycle_id). PRS MP Track is CC-BY 4.0 — attribute in the UI.
+Idempotent: upserts on (person_id, term_cycle_id). PRS is registered as non-commercial; attribute every
+displayed value and retain its source snapshot.
 """
 
 from __future__ import annotations
@@ -20,6 +21,7 @@ from sqlalchemy import text
 from neta_core.db.engine import session_scope
 from neta_core.provenance import record_source_ref
 from neta_core.transform.names import normalize_name
+from neta_ingest.extraction import source_extraction_context
 from neta_ingest.pipelines.identity.affidavit_attach import best_match
 from neta_sources.prs import client as prs
 
@@ -68,8 +70,9 @@ def run(house: str = "ls") -> None:
         raise ValueError(f"house must be 'ls' or 'rs', got {house!r}")
     house_code, cycle_where = _CYCLE[house]
 
-    roster = prs.fetch_roster(house)
-    period = prs.fetch_report_period(house)
+    extraction_context = source_extraction_context(prs.SOURCE_ID)
+    roster = prs.fetch_roster(house, context=extraction_context)
+    period = prs.fetch_report_period(house, context=extraction_context, roster=roster)
     ps, pe = period if period else (None, None)
     print(f"[activity] PRS {house_code} roster: {len(roster)} members; period {ps}..{pe}")
 

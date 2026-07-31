@@ -12,25 +12,27 @@ from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
 from neta_core.provenance import record_source_ref
+from neta_ingest.extraction import source_extraction_context
 from neta_sources.sansad import client as sansad
 
 
 def run(house: str | None = None) -> None:
-    members: list[tuple[str, str, str, str, str | None, str | None, str]] = []
-    # (house_prefix, mpsno, name, profile_url, official_email, office_phone, phone_label)
+    extraction_context = source_extraction_context(sansad.SOURCE_ID)
+    members: list[tuple[str, str, str, str, str | None, str | None, str, str | None]] = []
+    # (house_prefix, mpsno, name, profile_url, official_email, office_phone, phone_label, raw_ref)
     if house in (None, "ls"):
-        for m in sansad.fetch_ls_sitting_members():
+        for m in sansad.fetch_ls_sitting_members(context=extraction_context):
             members.append(("ls", m.member_id, m.name, m.profile_url, m.official_email, m.office_phone,
-                            "Parliament office (Delhi)"))
+                            "Parliament office (Delhi)", m.raw_ref))
     if house in (None, "rs"):
-        for m in sansad.fetch_rs_sitting_members():
+        for m in sansad.fetch_rs_sitting_members(context=extraction_context):
             members.append(("rs", m.member_id, m.name, m.profile_url, m.official_email, m.office_phone,
-                            "Office"))
+                            "Office", m.raw_ref))
     print(f"[contacts] {len(members)} sitting members fetched from sansad …")
 
     attached = channels = missing = 0
     with session_scope() as s:
-        for prefix, mpsno, name, profile_url, email, phone, phone_label in members:
+        for prefix, mpsno, name, profile_url, email, phone, phone_label, raw_ref in members:
             pid = s.execute(
                 text(
                     "SELECT sr.person_id FROM source_ref sr JOIN source so ON so.id = sr.source_id "
@@ -43,7 +45,7 @@ def run(house: str | None = None) -> None:
                 continue
             sref = record_source_ref(
                 s, source_code="sansad", native_id=f"{prefix}-{mpsno}-contact",
-                native_url=profile_url, raw_name=name,
+                native_url=profile_url, raw_name=name, raw_payload_ref=raw_ref,
             )
             s.execute(text("DELETE FROM contact WHERE source_ref_id = :sr"), {"sr": sref})
             rows = [("website", profile_url, "Official profile")]

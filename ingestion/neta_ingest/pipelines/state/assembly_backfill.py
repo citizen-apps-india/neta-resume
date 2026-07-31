@@ -12,12 +12,14 @@ from __future__ import annotations
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
+from neta_ingest.extraction import source_extraction_context
 from neta_ingest.pipelines.identity import myneta as myneta_pipeline
 from neta_sources.myneta import client as myneta
 
 
 def run(house: str = "mh_vs", cycle: str = "MH_VS2024") -> None:
-    const_map = myneta.fetch_constituency_map(cycle)
+    extraction_context = source_extraction_context(myneta.SOURCE_ID)
+    const_map = myneta.fetch_constituency_map(cycle, context=extraction_context)
     print(f"[fill-assembly] {cycle} MyNeta constituency index: {len(const_map)} entries")
 
     # Candidate_ids already ingested for this cycle (native_id is "{cycle}:{candidate_id}").
@@ -49,7 +51,11 @@ def run(house: str = "mh_vs", cycle: str = "MH_VS2024") -> None:
             continue  # future/standalone byelections aren't part of the sitting assembly
         if norm in have_consts:
             continue  # already have this seat
-        winner = myneta.fetch_constituency_winner(cons_id, cycle)
+        winner = myneta.fetch_constituency_winner(
+            cons_id,
+            cycle,
+            context=extraction_context,
+        )
         if not winner:
             unresolved += 1
             print(f"  [{raw_name}] no Winner marker found (constituency_id={cons_id})")

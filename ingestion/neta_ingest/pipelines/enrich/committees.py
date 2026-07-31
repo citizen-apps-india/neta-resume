@@ -14,14 +14,12 @@ over recall — never attach the wrong person's role), the same discipline as th
 
 from __future__ import annotations
 
-import json
-from dataclasses import asdict
-
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
-from neta_core.provenance import cache_raw, record_source_ref
+from neta_core.provenance import record_source_ref
 from neta_core.transform.names import normalize_name
+from neta_ingest.extraction import source_extraction_context
 from neta_ingest.pipelines.identity.affidavit_attach import name_tokens
 from neta_sources.sansad import committees as sansad_committees
 
@@ -43,7 +41,11 @@ def _match_person(persons: list, name: str) -> int | None:
 
 def run(loksabha: int = 18, limit: int | None = None) -> None:
     """Ingest committee memberships for `loksabha`. `limit` caps the number of committees fetched (testing)."""
-    committees = sansad_committees.fetch_committees(loksabha)
+    extraction_context = source_extraction_context(sansad_committees.SOURCE_ID)
+    committees = sansad_committees.fetch_committees(
+        loksabha,
+        context=extraction_context,
+    )
     if limit is not None:
         committees = committees[:limit]
     print(f"[committees] {len(committees)} committees from sansad (LS {loksabha}) …")
@@ -53,20 +55,23 @@ def run(loksabha: int = 18, limit: int | None = None) -> None:
         persons = s.execute(text("SELECT id, display_name FROM person")).all()
         ls_house_id = s.execute(text("SELECT id FROM house WHERE code = 'LS'")).scalar()
         for c in committees:
-            members = sansad_committees.fetch_committee_members(c.code, loksabha)
-            if not members:
-                continue
-            # One source_ref per committee; snapshot its raw roster as the provenance archive.
-            raw = json.dumps([asdict(m) for m in members], ensure_ascii=False).encode("utf-8")
-            payload_ref = cache_raw(raw, suffix=".json")
+            artifact = sansad_committees.extract_committee_members(
+                c.code,
+                loksabha,
+                context=extraction_context,
+            )
+            members = sansad_committees.parse_committee_members_artifact(artifact, c.code)
             sref = record_source_ref(
                 s, source_code="sansad",
                 native_id=f"ls-committee-{loksabha}-{c.code}",
-                native_url="https://sansad.in/ls/committee",
-                raw_name=c.name, raw_payload_ref=payload_ref,
+                native_url=str(artifact.envelope.source_uri),
+                raw_name=c.name, raw_payload_ref=artifact.provenance_ref,
             )
             # Idempotent: clear this committee's previously-written roles, then reinsert the current roster.
             s.execute(text("DELETE FROM role WHERE source_ref_id = :sr"), {"sr": sref})
+            if not members:
+                committees_done += 1
+                continue
             for m in members:
                 pid = _match_person(persons, m.member_name)
                 if pid is None:

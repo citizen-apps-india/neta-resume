@@ -24,10 +24,11 @@ from sqlalchemy import text
 
 from neta_core.config import settings
 from neta_core.db.engine import session_scope
+from neta_core.transform.parties import resolve_or_create_party_id
+from neta_ingest.extraction import source_extraction_context
 from neta_ingest.pipelines.identity import affidavit_attach as aa
 from neta_sources.myneta import client as myneta
 from neta_sources.myneta.parser import parse_candidate
-from neta_core.transform.parties import resolve_or_create_party_id
 
 CACHE = Path(settings.raw_cache_dir)
 QDIR = Path("data/hist_index")
@@ -36,7 +37,14 @@ AGE_TOL = 3
 
 
 def main():
-    winners = {c: {w.candidate_id for w in myneta.fetch_winners(c)} for c in PAST}
+    extraction_context = source_extraction_context(myneta.SOURCE_ID)
+    winners = {
+        cycle: {
+            winner.candidate_id
+            for winner in myneta.fetch_winners(cycle, context=extraction_context)
+        }
+        for cycle in PAST
+    }
     print({c: len(v) for c, v in winners.items()})
 
     with session_scope() as s:
@@ -65,7 +73,11 @@ def main():
             # seat's affidavit gives the same wealth, and Part B records one term for the cycle.
             chosen = None
             for c in winner_cands:
-                parsed, raw_rel = myneta.fetch_candidate(c["candidate_id"], cycle)
+                parsed, raw_rel = myneta.fetch_candidate(
+                    c["candidate_id"],
+                    cycle,
+                    context=extraction_context,
+                )
                 if birth_year and parsed.age and abs((aa.cycle_year(cycle) - parsed.age) - birth_year) > AGE_TOL:
                     continue  # namesake winner
                 chosen = (c, parsed, raw_rel)
