@@ -1,0 +1,274 @@
+global:
+  postgresqlSecretName: dagster-postgresql
+
+rbacEnabled: true
+
+serviceAccount:
+  create: true
+  name: neta-dagster
+  annotations: {}
+
+postgresql:
+  enabled: false
+  postgresqlHost: neta-postgresql.neta-production.svc.cluster.local
+  postgresqlUsername: neta_dagster
+  postgresqlDatabase: dagster
+  postgresqlParams:
+    sslmode: require
+
+generatePostgresqlPasswordSecret: false
+generateCeleryConfigSecret: false
+
+dagsterWebserver:
+  replicaCount: 1
+  nodeSelector:
+    neta.dev/workload-tier: application
+  image:
+    repository: docker.io/dagster/dagster-k8s
+    tag: 1.13.16
+    pullPolicy: IfNotPresent
+  service:
+    type: ClusterIP
+  podSecurityContext: &podSecurityContext
+    runAsNonRoot: true
+    runAsUser: 10001
+    runAsGroup: 10001
+    fsGroup: 10001
+    seccompProfile:
+      type: RuntimeDefault
+  securityContext: &containerSecurityContext
+    allowPrivilegeEscalation: false
+    readOnlyRootFilesystem: true
+    capabilities:
+      drop:
+        - ALL
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: 500m
+      memory: 768Mi
+  initContainerResources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+  volumes:
+    - name: tmp
+      emptyDir:
+        sizeLimit: 256Mi
+  volumeMounts:
+    - name: tmp
+      mountPath: /tmp
+
+dagsterDaemon:
+  enabled: true
+  nodeSelector:
+    neta.dev/workload-tier: application
+  image:
+    repository: docker.io/dagster/dagster-k8s
+    tag: 1.13.16
+    pullPolicy: IfNotPresent
+  runCoordinator:
+    enabled: true
+    type: QueuedRunCoordinator
+    config:
+      queuedRunCoordinator:
+        maxConcurrentRuns: 4
+        dequeueUseThreads: true
+        dequeueNumWorkers: 2
+  runMonitoring:
+    enabled: true
+    startTimeoutSeconds: 300
+    pollIntervalSeconds: 60
+    maxResumeRunAttempts: 0
+    freeSlotsAfterRunEndSeconds: 0
+  runRetries:
+    enabled: false
+    maxRetries: 0
+  sensors:
+    useThreads: true
+    numWorkers: 2
+  schedules:
+    useThreads: true
+    numWorkers: 1
+  podSecurityContext: *podSecurityContext
+  securityContext: *containerSecurityContext
+  resources:
+    requests:
+      cpu: 100m
+      memory: 256Mi
+    limits:
+      cpu: "1"
+      memory: 1Gi
+  initContainerResources:
+    requests:
+      cpu: 25m
+      memory: 32Mi
+    limits:
+      cpu: 100m
+      memory: 128Mi
+  volumes:
+    - name: tmp
+      emptyDir:
+        sizeLimit: 512Mi
+  volumeMounts:
+    - name: tmp
+      mountPath: /tmp
+
+dagster-user-deployments:
+  enabled: true
+  enableSubchart: true
+  rbacEnabled: false
+  serviceAccount:
+    create: true
+    name: neta-ingestion
+    annotations: {}
+  deployments:
+    - name: neta-ingestion
+      image:
+        repository: ghcr.io/citizen-apps-india/neta-resume-orchestration
+        tag: SET_BY_IMAGE_PROMOTION
+        pullPolicy: IfNotPresent
+      dagsterApiGrpcArgs:
+        - -m
+        - neta_orchestration.definitions
+      port: 3030
+      replicaCount: 1
+      nodeSelector:
+        neta.dev/workload-tier: application
+      includeConfigInLaunchedRuns:
+        enabled: true
+      env:
+        - name: NETA_RAW_STORE_BACKEND
+          value: s3
+        - name: NETA_RAW_S3_BUCKET
+          valueFrom:
+            configMapKeyRef:
+              name: neta-platform
+              key: NETA_RAW_S3_BUCKET
+        - name: NETA_RAW_S3_PREFIX
+          value: production/raw
+        - name: NETA_RAW_S3_REGION
+          value: ap-south-1
+        - name: NETA_GIT_COMMIT_SHA
+          value: SET_BY_IMAGE_PROMOTION
+      envSecrets:
+        - name: neta-runtime
+      labels:
+        app.kubernetes.io/part-of: neta-resume
+        app.kubernetes.io/component: ingestion-runner
+      podSecurityContext: *podSecurityContext
+      securityContext: *containerSecurityContext
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: "1"
+          memory: 1Gi
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 1Gi
+      volumeMounts:
+        - name: tmp
+          mountPath: /tmp
+      readinessProbe:
+        enabled: true
+        periodSeconds: 10
+        timeoutSeconds: 3
+        failureThreshold: 6
+      startupProbe:
+        enabled: true
+        periodSeconds: 5
+        timeoutSeconds: 3
+        failureThreshold: 60
+      livenessProbe:
+        enabled: true
+        periodSeconds: 20
+        timeoutSeconds: 3
+        failureThreshold: 3
+
+runLauncher:
+  type: K8sRunLauncher
+  config:
+    k8sRunLauncher:
+      imagePullPolicy: IfNotPresent
+      jobNamespace: neta-production
+      loadInclusterConfig: true
+      envSecrets:
+        - name: neta-runtime
+      labels:
+        app.kubernetes.io/part-of: neta-resume
+        app.kubernetes.io/component: ingestion-runner
+      resources:
+        requests:
+          cpu: 100m
+          memory: 256Mi
+        limits:
+          cpu: "2"
+          memory: 2Gi
+      failPodOnRunFailure: true
+      securityContext: *containerSecurityContext
+      runK8sConfig:
+        containerConfig:
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+        podTemplateSpecMetadata:
+          labels:
+            app.kubernetes.io/part-of: neta-resume
+            app.kubernetes.io/component: ingestion-runner
+        podSpecConfig:
+          automountServiceAccountToken: true
+          nodeSelector:
+            neta.dev/workload-tier: application
+          securityContext: *podSecurityContext
+          volumes:
+            - name: tmp
+              emptyDir:
+                sizeLimit: 2Gi
+        jobSpecConfig:
+          backoffLimit: 0
+          ttlSecondsAfterFinished: 86400
+
+computeLogManager:
+  type: NoOpComputeLogManager
+  config: {}
+
+ingress:
+  enabled: false
+
+flower:
+  enabled: false
+
+rabbitmq:
+  enabled: false
+
+redis:
+  enabled: false
+  internal: false
+
+telemetry:
+  enabled: false
+
+retention:
+  enabled: true
+  schedule:
+    purgeAfterDays: 30
+  sensor:
+    purgeAfterDays:
+      failure: 30
+      skipped: 7
+      started: 30
+      success: 30
+  autoMaterialize:
+    purgeAfterDays:
+      failure: 30
+      skipped: 7
+      started: 30
+      success: 30

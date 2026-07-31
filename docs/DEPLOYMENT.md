@@ -1,11 +1,17 @@
 # Deployment (current stack)
 
+> **Target production foundation:** production-only Pulumi/EKS infrastructure, AWS-managed Argo CD,
+> Karpenter, EKS Pod Identity, and gated application manifests now live under `infra/` and `deploy/`.
+> They are not deployed and do not replace the current stack below. See
+> [`deploy/README.md`](../deploy/README.md) for prerequisites, promotion markers, identity boundaries,
+> validation, and cutover gates.
+
 Near-$0/month footprint. Four layers, four services — the data layer is **independent of any laptop**:
 schema + data reach the DB through GitHub Actions, not a local sync.
 
 | Layer | Service | Notes |
 |---|---|---|
-| `web/` | **Vercel** | Next.js 15 SSR. Builds from the repo; `NETA_API_BASE` → the api. |
+| `web/` | **Vercel** | Next.js 16 SSR. Builds from the repo; `NETA_API_BASE` → the api. |
 | `api/` | **Render** | FastAPI, read-only. `NETA_DATABASE_URL` = read role. |
 | `db/`  | **Neon Postgres** (free tier) | Serverless; supports branches (use one as backfill staging). |
 | `ingestion/` | **GitHub Actions** — `migrate.yml` (schema/seeds) + `ingest.yml` (pipelines) + `news.yml` | No extra compute; free runner minutes. |

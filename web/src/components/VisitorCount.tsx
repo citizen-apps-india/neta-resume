@@ -1,7 +1,7 @@
 import { headers } from "next/headers";
 import { bumpVisits, getVisits } from "@/lib/api";
 
-/** Homepage lifetime unique-visitor caption. Increments once per new browser (flagged by middleware). */
+/** Homepage lifetime unique-visitor caption. Increments once per new browser (flagged by proxy). */
 export async function VisitorCount() {
   let count = 0;
   try {

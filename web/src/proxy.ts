@@ -1,9 +1,9 @@
 import { NextResponse, type NextRequest } from "next/server";
 
 // Mark a first-time browser so the homepage counts it once (unique visitors). A server component can't
-// set cookies during render, so middleware sets the cookie + forwards an `x-nr-new` request header that
+// set cookies during render, so the proxy sets the cookie + forwards an `x-nr-new` request header that
 // the page reads to decide whether to increment. Only real document loads from non-bots count.
-export function middleware(req: NextRequest) {
+export function proxy(req: NextRequest) {
   const seen = req.cookies.get("nr_uv");
   const accept = req.headers.get("accept") ?? "";
   const ua = req.headers.get("user-agent") ?? "";

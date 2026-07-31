@@ -9,23 +9,23 @@
 
 ```
                 ┌──────────────────────────────────────────────────────────┐
-                │  ingestion/  (Python 3.12 + uv)                           │
+                │  ingestion/  (Python 3.14 + uv)                           │
   sources ─────▶│  fetch → transform (normalize) → resolve (entity) → upsert│──┐
   (sansad,      │  idempotent, scheduled via GitHub Actions cron            │  │
    myneta,      └──────────────────────────────────────────────────────────┘  │
    courts,                                                                       ▼
    tcpd, …)                                                            ┌──────────────────┐
-                                                                       │   Postgres 16    │
+                                                                       │   Postgres 18    │
                                                                        │  facts + every   │
                                                                        │  fact's source   │
                                                                        └────────┬─────────┘
                 ┌──────────────────────────────────────────────────────────┐   │
-   browser  ◀───│  web/  (Next.js 15, React 19, TS strict)                  │   │
+   browser  ◀───│  web/  (Next.js 16, React 19, TS strict)                  │   │
                 │  server components → API; SourceBadge on every fact       │   │
                 └───────────────────────────┬──────────────────────────────┘   │
                                             │ typed client (codegen from OpenAPI)│
                                 ┌───────────▼──────────────────────────────────▼─┐
-                                │  api/  (FastAPI, Python 3.12)                    │
+                                │  api/  (FastAPI, Python 3.14)                    │
                                 │  read-only aggregate: /persons/{id} = full resume│
                                 │  standalone (excluded from the uv workspace)     │
                                 └─────────────────────────────────────────────────┘
@@ -79,11 +79,14 @@ idempotent source pipelines.
 
 Every write is an upsert keyed on a natural key (`source_ref(source_id,native_id)`,
 `affidavit(person_id,election_cycle,source_ref_id)`, …). Re-running a pipeline never duplicates. Raw fetched
-HTML/PDF/JSON is content-hashed into `ingestion/data/raw_cache/` (gitignored) as a permanent provenance archive.
+HTML/PDF/JSON is content-hashed into `ingestion/data/raw_cache/` for local runs or an S3-compatible
+evidence bucket for Kubernetes Jobs. Both stores use the same immutable hash key and replay verification;
+the Kubernetes store uses workload identity rather than static access keys.
 
 ## Scheduling
 
 Dagster assets, retries, durable run keys, status reconciliation, and database-driven scheduling are now
-implemented. The deployed scheduler is still GitHub Actions until the Kubernetes/GitOps step proves
-parity; equivalent cron workflows must not be retired before that cutover. Argo CD remains deployment
-GitOps and does not orchestrate data jobs.
+implemented. A production-only EKS/Pulumi foundation and namespace-scoped GitOps manifests exist under
+`infra/` and `deploy/`, but have not been applied. AWS-managed Argo CD reconciles deployments while
+Dagster orchestrates data jobs. Existing GitHub Actions schedules remain authoritative until a manually
+gated production sync proves parity and the cutover is separately approved.

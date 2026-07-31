@@ -1,0 +1,25 @@
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: neta-production
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "-4"
+spec:
+  description: Production control plane, ingestion workloads, and data pipeline services.
+  sourceNamespaces:
+    - argocd
+  sourceRepos:
+    - https://dagster-io.github.io/helm
+    - https://github.com/citizen-apps-india/neta-resume.git
+  destinations:
+    - namespace: neta-production
+      name: neta-production
+  clusterResourceBlacklist:
+    - group: "*"
+      kind: "*"
+  namespaceResourceWhitelist:
+    - group: "*"
+      kind: "*"
+  orphanedResources:
+    warn: true

@@ -3,10 +3,10 @@
 ###############################################################################
 # Builder: resolve and install dependencies into a self-contained .venv
 ###############################################################################
-FROM python:3.12-slim AS builder
+FROM python:3.14.6-slim-bookworm AS builder
 
 # Install uv (static binary) from the official image.
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.12.0 /uv /uvx /bin/
 
 ENV UV_COMPILE_BYTECODE=1 \
     UV_LINK_MODE=copy \
@@ -27,7 +27,7 @@ RUN --mount=type=cache,target=/root/.cache/uv \
 ###############################################################################
 # Runtime: slim image carrying just the venv + app
 ###############################################################################
-FROM python:3.12-slim AS runtime
+FROM python:3.14.6-slim-bookworm AS runtime
 
 WORKDIR /app
 

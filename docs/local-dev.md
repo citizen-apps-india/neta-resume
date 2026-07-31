@@ -51,7 +51,7 @@ uv run neta seed
 
 The SQL runner is frozen at the legacy `0030` baseline. Alembic owns every new schema revision.
 
-## 3. Ingestion (Python 3.12 + uv)
+## 3. Ingestion (Python 3.14 + uv)
 
 ```bash
 cd ingestion

@@ -12,9 +12,12 @@ from collections.abc import Callable, Mapping
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Protocol, TypeVar
+from typing import Any, Protocol, TypeVar, cast
+from urllib.parse import urlparse
 
+import boto3
 import httpx
+from botocore.exceptions import ClientError
 
 from neta_core.config import settings
 from neta_core.http import client as http
@@ -43,7 +46,7 @@ class StoredRawObject:
 
 
 class RawObjectStore(Protocol):
-    """Storage boundary; an S3 implementation can replace the local store without client changes."""
+    """Storage boundary shared by local and S3-compatible evidence archives."""
 
     def put(self, payload: bytes, *, content_type: str) -> StoredRawObject:
         """Persist bytes by content hash and return their stable address."""
@@ -60,10 +63,7 @@ class FileRawObjectStore:
     uri_prefix: str = "raw-cache://"
 
     def put(self, payload: bytes, *, content_type: str) -> StoredRawObject:
-        digest = hashlib.sha256(payload).hexdigest()
-        media_type = content_type.partition(";")[0].strip().lower()
-        extension = _CONTENT_TYPE_EXTENSIONS.get(media_type, ".bin")
-        provenance_ref = f"{digest[:2]}/{digest}{extension}"
+        digest, provenance_ref = _object_identity(payload, content_type)
         destination = Path(self.root) / provenance_ref
         destination.parent.mkdir(parents=True, exist_ok=True)
 
@@ -95,8 +95,137 @@ class FileRawObjectStore:
         return source.read_bytes()
 
 
+class S3Body(Protocol):
+    def read(self) -> bytes: ...
+
+
+class S3Client(Protocol):
+    def head_object(self, **kwargs: Any) -> Mapping[str, Any]: ...
+
+    def put_object(self, **kwargs: Any) -> Mapping[str, Any]: ...
+
+    def get_object(self, **kwargs: Any) -> Mapping[str, Any]: ...
+
+
+@dataclass(slots=True)
+class S3RawObjectStore:
+    """Content-addressed evidence storage for AWS S3 and compatible object stores."""
+
+    bucket: str
+    prefix: str = "raw"
+    region_name: str | None = None
+    endpoint_url: str | None = None
+    client: S3Client | None = field(default=None, repr=False)
+
+    def __post_init__(self) -> None:
+        self.bucket = self.bucket.strip()
+        self.prefix = self.prefix.strip("/")
+        if not self.bucket:
+            raise ValueError("S3 raw object bucket cannot be empty")
+        if self.client is None:
+            self.client = cast(
+                S3Client,
+                boto3.client(
+                    "s3",
+                    region_name=self.region_name,
+                    endpoint_url=self.endpoint_url,
+                ),
+            )
+
+    def put(self, payload: bytes, *, content_type: str) -> StoredRawObject:
+        digest, provenance_ref = _object_identity(payload, content_type)
+        key = self._key(provenance_ref)
+        client = self._client()
+        try:
+            existing = client.head_object(Bucket=self.bucket, Key=key)
+        except ClientError as error:
+            code = str(error.response.get("Error", {}).get("Code", ""))
+            if code not in {"404", "NoSuchKey", "NotFound"}:
+                raise
+        else:
+            metadata = existing.get("Metadata", {})
+            existing_hash = metadata.get("sha256") if isinstance(metadata, Mapping) else None
+            if existing_hash is None:
+                existing_hash = hashlib.sha256(self._read_key(key)).hexdigest()
+            if existing_hash != digest:
+                raise OSError(f"raw object hash mismatch at s3://{self.bucket}/{key}")
+            return self._stored(digest, provenance_ref, len(payload))
+
+        client.put_object(
+            Bucket=self.bucket,
+            Key=key,
+            Body=payload,
+            ContentType=content_type,
+            Metadata={"sha256": digest},
+        )
+        return self._stored(digest, provenance_ref, len(payload))
+
+    def read(self, object_uri: str) -> bytes:
+        parsed = urlparse(object_uri)
+        if parsed.scheme != "s3" or parsed.netloc != self.bucket:
+            raise ValueError(f"object URI {object_uri!r} does not belong to s3://{self.bucket}")
+        key = parsed.path.lstrip("/")
+        expected_prefix = f"{self.prefix}/" if self.prefix else ""
+        if not key.startswith(expected_prefix):
+            raise ValueError(f"object URI {object_uri!r} escapes prefix {self.prefix!r}")
+        payload = self._read_key(key)
+        filename = key.rsplit("/", 1)[-1]
+        expected_hash = filename.partition(".")[0]
+        if len(expected_hash) != 64 or hashlib.sha256(payload).hexdigest() != expected_hash:
+            raise OSError(f"raw object hash mismatch at {object_uri}")
+        return payload
+
+    def _client(self) -> S3Client:
+        if self.client is None:  # pragma: no cover - guarded by __post_init__
+            raise RuntimeError("S3 client is not configured")
+        return self.client
+
+    def _key(self, provenance_ref: str) -> str:
+        return f"{self.prefix}/{provenance_ref}" if self.prefix else provenance_ref
+
+    def _read_key(self, key: str) -> bytes:
+        response = self._client().get_object(Bucket=self.bucket, Key=key)
+        body = response.get("Body")
+        if body is None or not hasattr(body, "read"):
+            raise OSError(f"S3 object body is missing for s3://{self.bucket}/{key}")
+        return cast(S3Body, body).read()
+
+    def _stored(
+        self,
+        digest: str,
+        provenance_ref: str,
+        size_bytes: int,
+    ) -> StoredRawObject:
+        key = self._key(provenance_ref)
+        return StoredRawObject(
+            content_hash=digest,
+            object_uri=f"s3://{self.bucket}/{key}",
+            provenance_ref=provenance_ref,
+            size_bytes=size_bytes,
+        )
+
+
+def configured_raw_object_store() -> RawObjectStore:
+    """Build the environment-selected evidence store without exposing it to source clients."""
+    if settings.raw_store_backend == "s3":
+        return S3RawObjectStore(
+            bucket=settings.raw_s3_bucket,
+            prefix=settings.raw_s3_prefix,
+            region_name=settings.raw_s3_region,
+            endpoint_url=settings.raw_s3_endpoint_url,
+        )
+    return FileRawObjectStore()
+
+
 def _utcnow() -> datetime:
     return datetime.now(UTC)
+
+
+def _object_identity(payload: bytes, content_type: str) -> tuple[str, str]:
+    digest = hashlib.sha256(payload).hexdigest()
+    media_type = content_type.partition(";")[0].strip().lower()
+    extension = _CONTENT_TYPE_EXTENSIONS.get(media_type, ".bin")
+    return digest, f"{digest[:2]}/{digest}{extension}"
 
 
 @dataclass(frozen=True, slots=True)

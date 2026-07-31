@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import type { PersonResume, ParliamentaryQuestion, ThemeFocus } from "@/lib/api";
+import type { PersonResume, ParliamentaryQuestion } from "@/lib/api";
 import { docSrc } from "@/lib/api";
-import { THEME_COLORS, themeColor } from "@/lib/themes";
+import { themeColor } from "@/lib/themes";
 import { SegmentedBar, ThemeChip } from "@/components/resume/policy-focus";
 import { rupees, severityMeta, year, pretty } from "@/lib/format";
 import { CaseTimeline, Donut, WealthLine } from "@/components/resume/charts";

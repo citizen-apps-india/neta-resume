@@ -140,16 +140,17 @@ export async function HomePreview() {
 
   // Add the MLA panel only when we resolved one for the visitor's point.
   if (featured.mla) {
+    let mlaResume: PersonResume | null = null;
     try {
-      const mlaResume = await getPersonResume(featured.mla.id);
-      if (mlaResume) {
-        panels.push({
-          key: "mla", tab: "State MLA", lead: "Your area’s MLA", place: featured.mla.place,
-          url: `neta-resume.app/person/${mlaResume.id}`, card: <PreviewCard resume={mlaResume} />,
-        });
-      }
+      mlaResume = await getPersonResume(featured.mla.id);
     } catch {
       /* MLA resume unavailable — keep the widget MP-only */
+    }
+    if (mlaResume) {
+      panels.push({
+        key: "mla", tab: "State MLA", lead: "Your area’s MLA", place: featured.mla.place,
+        url: `neta-resume.app/person/${mlaResume.id}`, card: <PreviewCard resume={mlaResume} />,
+      });
     }
   }
 

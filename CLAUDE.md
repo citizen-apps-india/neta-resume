@@ -6,7 +6,7 @@ one-screen map for coding agents. Skim it, then dive into `docs/` for depth.
 ## Architecture (data, control, read, and presentation layers)
 
 ```
-ingestion (Python 3.12 + uv)  ──writes──▶  Postgres 16  ──reads──▶  api (FastAPI)  ──HTTP──▶  web (Next.js 15 / React 19)
+ingestion (Python 3.14 + uv)  ──writes──▶  Postgres 18  ──reads──▶  api (FastAPI)  ──HTTP──▶  web (Next.js 16 / React 19)
   scrapers + entity resolution             facts + every          read-only resume          server-rendered pages
   + severity + provenance                  fact's source_ref      aggregate + OpenAPI        provenance badge per fact
 ```

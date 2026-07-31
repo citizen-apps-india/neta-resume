@@ -11,7 +11,7 @@ runs itself on GitHub Actions (no server). All free-tier.
 | Piece | Where | Why | Cost |
 |------|-------|-----|------|
 | **Database** | **Neon** (neon.tech) | Serverless Postgres, public SSL endpoint → the API reaches it with zero networking setup. Free tier, DB branching. | **$0** |
-| **API** (FastAPI) | **Render** (render.com) | Deploys from GitHub, native Python 3.12 build, health checks. | Free (or ~$7/mo) |
+| **API** (FastAPI) | **Render** (render.com) | Deploys from GitHub, native Python 3.14 build, health checks. | Free (or ~$7/mo) |
 | **Website** (Next.js) | **Vercel** (vercel.com) | Native Next.js, deploys from GitHub on every push. | **$0** |
 | **Schema + data** | **GitHub Actions** | `migrate.yml` applies schema on merge; the `ingest` workflow runs pipelines directly on Neon. | **$0** |
 
@@ -36,7 +36,7 @@ runs itself on GitHub Actions (no server). All free-tier.
 ## Stage 1 — Create the database (Neon) (~5 min)
 
 1. **neon.tech** → sign up (GitHub login is fine) → **Create project** → name `neta-resume`, region closest
-   to you, Postgres 16.
+   to you, Postgres 18.
 2. On the dashboard open **Connect** and copy the connection string. It looks like:
    ```
    postgresql://neondb_owner:XXXX@ep-cool-name-123456.<region>.aws.neon.tech/neondb?sslmode=require
@@ -83,7 +83,7 @@ NETA_MIGRATE_DATABASE_URL="postgresql+psycopg://neondb_owner:XXXX@ep-...neon.tec
 1. **render.com** → sign up (GitHub) → **New** → **Web Service** → connect the `neta-resume` repo.
 2. Configure:
    - **Root Directory**: `api`
-   - **Runtime**: Python 3 (3.12)
+   - **Runtime**: Python 3 (3.14)
    - **Build Command**: `uv sync --frozen` (or `pip install -r requirements.txt` — both are in the repo)
    - **Start Command**: `uvicorn neta_api.main:app --host 0.0.0.0 --port $PORT`
    - **Health Check Path**: `/health`

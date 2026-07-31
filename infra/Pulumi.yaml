@@ -1,0 +1,6 @@
+name: neta-resume-infra
+runtime:
+  name: python
+  options:
+    virtualenv: .venv
+description: Production-only AWS infrastructure; Kubernetes applications remain Argo CD-owned.
