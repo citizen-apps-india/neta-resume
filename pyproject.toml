@@ -2,5 +2,8 @@
 # The `api` project is intentionally EXCLUDED — it shares no code and stays an independent project
 # (its own lockfile + Render build, untouched by the workspace). `web` is a separate npm workspace.
 [tool.uv.workspace]
-members = ["packages/neta-core", "packages/neta-sources", "ingestion"]
+members = ["packages/neta-core", "packages/neta-sources", "ingestion", "backend", "orchestration"]
 exclude = ["api", "web"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
