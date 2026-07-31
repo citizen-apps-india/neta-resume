@@ -131,7 +131,9 @@ def create_cluster(
         ),
         labels={
             "neta.dev/workload-tier": "system",
-            "app.kubernetes.io/part-of": "neta-resume",
+            # Kubelets cannot self-assign arbitrary labels in the reserved
+            # kubernetes.io namespace. Keep node identity under our domain.
+            "neta.dev/part-of": "neta-resume",
         },
         tags=settings.common_tags,
         opts=pulumi.ResourceOptions(depends_on=[vpc_cni, kube_proxy]),

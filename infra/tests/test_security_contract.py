@@ -63,6 +63,8 @@ def test_production_data_stores_have_deletion_guards() -> None:
     assert "force_destroy=False" in data
     assert 'engine_version="18.4"' in data
     assert 'family="postgres18"' in data
+    assert 'value="receipt,authentication,authorization"' in data
+    assert 'name="log_connections", value="1"' not in data
     assert "BucketV2" not in data
     assert "BucketVersioningV2" not in data
     assert "BucketServerSideEncryptionConfigurationV2" not in data
@@ -94,7 +96,8 @@ def test_prod_network_uses_two_nat_gateways_and_an_s3_endpoint() -> None:
 
     assert "NatGatewayStrategy.ONE_PER_AZ" in network
     assert "VpcEndpointStrategy.AUTO" in network
-    assert 'service_name="s3"' in network
+    assert 'service_name=f"com.amazonaws.{settings.region}.s3"' in network
+    assert 'service_name="s3"' not in network
     assert "SubnetType.ISOLATED" in network
 
 
@@ -118,6 +121,8 @@ def test_eks_uses_api_access_entries_without_legacy_aws_auth_or_irsa() -> None:
     addons = _read("infra/neta_infra/addons.py")
 
     assert "authentication_mode=eks.AuthenticationMode.API" in cluster
+    assert '"neta.dev/part-of": "neta-resume"' in cluster
+    assert '"app.kubernetes.io/part-of": "neta-resume"' not in cluster
     assert "API_AND_CONFIG_MAP" not in cluster
     assert "instance_roles=" not in cluster
     assert "create_oidc_provider=False" in cluster
@@ -139,10 +144,34 @@ def test_argocd_uses_the_eks_managed_capability_with_identity_center() -> None:
     assert 'chart="argo-cd"' not in gitops
     assert "argocdChartVersion" not in stack
     assert "AmazonEKSClusterAdminPolicy" not in gitops
-    assert "rbac_role_mappings" not in gitops
+    assert "rbac_role_mappings=[" in gitops
+    assert 'role="VIEWER"' in gitops
+    assert 'role="ADMIN"' not in gitops
+    assert 'role="EDITOR"' not in gitops
+    assert 'type="SSO_GROUP"' in gitops
+    assert "id=settings.argocd_platform_admin_group_id" in gitops
+    assert 'require("argocdPlatformAdminGroupId")' in _read("infra/neta_infra/settings.py")
+    assert "argocdPlatformAdminGroupId:" not in stack
     assert "AmazonEKSViewPolicy" in gitops
     assert "AmazonEKSAdminPolicy" in gitops
     assert 'namespaces=["neta-production"]' in gitops
+
+
+def test_argocd_project_grants_only_bounded_platform_operations() -> None:
+    gitops = _read("infra/neta_infra/gitops.py")
+
+    assert 'kind="AppProject"' in gitops
+    assert '"sourceNamespaces": ["argocd"]' in gitops
+    assert '"clusterResourceBlacklist": [{"group": "*", "kind": "*"}]' in gitops
+    assert '"name": "platform-operator"' in gitops
+    assert "applications, get" in gitops
+    assert "applications, sync" in gitops
+    assert "logs, get" in gitops
+    assert "clusters, get" in gitops
+    assert "applications, delete" not in gitops
+    assert "applications, update" not in gitops
+    assert "applications, action" not in gitops
+    assert "exec, " not in gitops
 
 
 def test_managed_argocd_registers_the_local_cluster_by_arn() -> None:
@@ -159,8 +188,9 @@ def test_cluster_operators_are_pulumi_owned_and_version_pinned() -> None:
     settings = _read("infra/neta_infra/settings.py")
 
     assert 'chart="external-secrets"' in addons
-    assert 'chart="karpenter-crd"' in addons
-    assert 'chart="karpenter"' in addons
+    assert 'chart="oci://public.ecr.aws/karpenter/karpenter-crd"' in addons
+    assert 'chart="oci://public.ecr.aws/karpenter/karpenter"' in addons
+    assert 'repo="oci://public.ecr.aws/karpenter"' not in addons
     assert "skip_crds=True" in addons
     assert 'kind="EC2NodeClass"' in addons
     assert 'kind="NodePool"' in addons
