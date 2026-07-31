@@ -63,6 +63,8 @@ def test_production_data_stores_have_deletion_guards() -> None:
     assert "force_destroy=False" in data
     assert 'engine_version="18.4"' in data
     assert 'family="postgres18"' in data
+    assert 'value="receipt,authentication,authorization"' in data
+    assert 'name="log_connections", value="1"' not in data
     assert "BucketV2" not in data
     assert "BucketVersioningV2" not in data
     assert "BucketServerSideEncryptionConfigurationV2" not in data

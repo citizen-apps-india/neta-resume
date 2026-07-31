@@ -137,7 +137,10 @@ def create_data_layer(
         family="postgres18",
         parameters=[
             aws.rds.ParameterGroupParameterArgs(name="rds.force_ssl", value="1"),
-            aws.rds.ParameterGroupParameterArgs(name="log_connections", value="1"),
+            aws.rds.ParameterGroupParameterArgs(
+                name="log_connections",
+                value="receipt,authentication,authorization",
+            ),
             aws.rds.ParameterGroupParameterArgs(name="log_disconnections", value="1"),
         ],
         tags=settings.common_tags,
