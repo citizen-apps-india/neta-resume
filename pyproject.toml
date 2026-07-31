@@ -7,3 +7,4 @@ exclude = ["api", "web"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
+testpaths = ["backend/tests", "ingestion/tests", "orchestration/tests", "tests"]

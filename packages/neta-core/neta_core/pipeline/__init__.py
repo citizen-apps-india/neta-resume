@@ -21,9 +21,11 @@ from neta_core.pipeline.extraction import (
     HttpSourceAdapter,
     RawArtifact,
     RawObjectStore,
+    S3RawObjectStore,
     SourceAdapter,
     StoredRawObject,
     capture_raw,
+    configured_raw_object_store,
 )
 
 __all__ = [
@@ -38,6 +40,7 @@ __all__ = [
     "RawHistoryMode",
     "RawArtifact",
     "RawObjectStore",
+    "S3RawObjectStore",
     "SourceConfigRevision",
     "SourceAdapter",
     "SourceManifest",
@@ -45,6 +48,7 @@ __all__ = [
     "StoredRawObject",
     "apply_runtime_patch",
     "capture_raw",
+    "configured_raw_object_store",
     "effective_runtime_config",
     "load_source_manifest",
     "load_source_manifests",

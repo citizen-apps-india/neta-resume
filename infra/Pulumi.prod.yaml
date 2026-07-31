@@ -1,0 +1,23 @@
+config:
+  aws:region: ap-south-1
+  neta-resume-infra:clusterName: neta-prod
+  neta-resume-infra:kubernetesVersion: "1.36"
+  neta-resume-infra:vpcCidr: 10.42.0.0/16
+  neta-resume-infra:availabilityZoneCount: 2
+  neta-resume-infra:systemNodeInstanceTypes:
+    - t4g.medium
+  neta-resume-infra:systemNodeCount: 2
+  # Intentionally omitted: clusterPublicAccessCidrs must be set to trusted operator/VPN CIDRs before
+  # preview or apply. The program rejects 0.0.0.0/0 and ::/0.
+  neta-resume-infra:databaseInstanceClass: db.t4g.medium
+  neta-resume-infra:databaseAllocatedStorageGb: 100
+  neta-resume-infra:databaseMaxStorageGb: 1000
+  neta-resume-infra:databaseBackupRetentionDays: 14
+  # Required before preview/apply: the existing AWS IAM Identity Center instance ARN and home
+  # region. Keep account-specific identity IDs out of this public repository.
+  neta-resume-infra:externalOperatorChartVersion: 2.8.0
+  neta-resume-infra:karpenterChartVersion: 1.14.0
+  # Required before preview/apply: pin the AL2023 EKS AMI release selected after reviewing the
+  # current Karpenter compatibility matrix. `@latest` is deliberately rejected in production.
+  neta-resume-infra:repositoryUrl: https://github.com/citizen-apps-india/neta-resume.git
+  neta-resume-infra:protectData: true

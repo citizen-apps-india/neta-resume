@@ -1,6 +1,6 @@
 services:
   db:
-    image: postgres:16
+    image: postgres:18.4-bookworm
     container_name: neta_db
     environment:
       POSTGRES_USER: neta
@@ -9,7 +9,9 @@ services:
     ports:
       - "5432:5432"
     volumes:
-      - neta_pgdata:/var/lib/postgresql/data
+      # PostgreSQL 18 changed the official image's volume root. Keep the old `neta_pgdata`
+      # volume untouched so an existing local PostgreSQL 16 database remains recoverable.
+      - neta_pgdata18:/var/lib/postgresql
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U neta"]
       interval: 5s
@@ -77,3 +79,4 @@ services:
 
 volumes:
   neta_pgdata:
+  neta_pgdata18:

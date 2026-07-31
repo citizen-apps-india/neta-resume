@@ -1,0 +1,21 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - configmap.yaml
+  - control-deployment.yaml
+  - control-service.yaml
+  - control-pdb.yaml
+  - migration-job.yaml
+  - serviceaccounts.yaml
+  - resourcequota.yaml
+  - limitrange.yaml
+  - network-default-deny.yaml
+  - network-allow-dns.yaml
+  - network-allow-namespace.yaml
+  - network-allow-postgres.yaml
+  - network-allow-ingestion-egress.yaml
+labels:
+  - pairs:
+      app.kubernetes.io/part-of: neta-resume
+      app.kubernetes.io/managed-by: argocd
+    includeSelectors: false

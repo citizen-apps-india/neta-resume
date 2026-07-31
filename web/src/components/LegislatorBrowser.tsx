@@ -72,7 +72,11 @@ export function LegislatorBrowser({
 
   // Search: controlled locally, debounced into the URL so we don't navigate on every keystroke.
   const [q, setQ] = useState(filters.q);
-  useEffect(() => setQ(filters.q), [filters.q]);
+  const [lastUrlQuery, setLastUrlQuery] = useState(filters.q);
+  if (filters.q !== lastUrlQuery) {
+    setLastUrlQuery(filters.q);
+    setQ(filters.q);
+  }
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
   function onSearch(v: string) {
     setQ(v);

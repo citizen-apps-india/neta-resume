@@ -11,10 +11,10 @@ from uuid import uuid4
 
 from neta_core.pipeline import (
     ExtractionContext,
-    FileRawObjectStore,
     RawObjectStore,
     RawArtifact,
     SourceManifest,
+    configured_raw_object_store,
     load_source_manifests,
 )
 
@@ -59,7 +59,7 @@ def source_extraction_context(
             or _orchestrated_run_id.get()
             or new_pipeline_run_id(source_id)
         ),
-        object_store=object_store if object_store is not None else FileRawObjectStore(),
+        object_store=object_store if object_store is not None else configured_raw_object_store(),
         artifact_observer=artifact_observer or _artifact_observer.get(),
     )
 

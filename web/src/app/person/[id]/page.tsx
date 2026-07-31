@@ -177,7 +177,7 @@ export default async function PersonPage({ params }: { params: Promise<{ id: str
         <div style={{ display: "flex", gap: 9, alignItems: "flex-start", fontSize: 11.5, color: "var(--muted)", lineHeight: 1.5, marginTop: 20, maxWidth: "80ch" }}>
           <span className="mono" style={{ color: "var(--accent)", flexShrink: 0 }}>i</span>
           <span>
-            Criminal cases are as declared in the candidate's own ECI affidavit and are mostly <strong style={{ color: "var(--ink2)" }}>pending and unproven</strong>.
+            Criminal cases are as declared in the candidate&apos;s own ECI affidavit and are mostly <strong style={{ color: "var(--ink2)" }}>pending and unproven</strong>.
             This file asserts no guilt. Every figure links to its source.
           </span>
         </div>

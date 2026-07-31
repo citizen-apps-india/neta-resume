@@ -1,0 +1,29 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: neta-production-dagster
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+spec:
+  project: neta-production
+  sources:
+    - repoURL: https://dagster-io.github.io/helm
+      chart: dagster
+      targetRevision: 1.13.16
+      helm:
+        releaseName: neta-dagster
+        valueFiles:
+          - $values/deploy/argocd/values/dagster-production.yaml
+    - repoURL: https://github.com/citizen-apps-india/neta-resume.git
+      targetRevision: main
+      ref: values
+  destination:
+    name: neta-production
+    namespace: neta-production
+  revisionHistoryLimit: 5
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+      - ApplyOutOfSyncOnly=true
+      - PruneLast=true

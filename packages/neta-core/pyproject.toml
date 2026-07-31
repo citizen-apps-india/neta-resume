@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Neta-Resume core: config, DB, provenance, polite HTTP, transforms, entity-resolution — the Directory of Indian Politicians foundation."
 requires-python = ">=3.12"
 dependencies = [
+    "boto3>=1.40",          # S3-compatible raw evidence storage via workload identity
     "httpx>=0.27",          # polite HTTP client w/ retries
     "tenacity>=8.2",        # backoff/retry
     "sqlalchemy>=2.0",      # engine + upsert

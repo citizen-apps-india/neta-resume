@@ -1,0 +1,12 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: neta-production
+resources:
+  - ../../base
+patches:
+  - path: network-postgres-patch.yaml
+images:
+  - name: ghcr.io/citizen-apps-india/neta-resume-control
+    newTag: SET_BY_IMAGE_PROMOTION
+  - name: ghcr.io/citizen-apps-india/neta-resume-orchestration
+    newTag: SET_BY_IMAGE_PROMOTION

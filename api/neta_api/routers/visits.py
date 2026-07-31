@@ -1,6 +1,6 @@
 """/visits routes — the homepage lifetime unique-visitor counter.
 
-The web layer decides *when* a visitor is new (a first-visit cookie set in Next middleware) and calls
+The web layer decides *when* a visitor is new (a first-visit cookie set in the Next.js proxy) and calls
 POST /visits/hit exactly once per new browser; GET /visits just reads the running total for display.
 """
 

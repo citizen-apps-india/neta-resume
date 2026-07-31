@@ -3,7 +3,7 @@
 ###############################################################################
 # Builder: install deps and produce the Next.js standalone build
 ###############################################################################
-FROM node:22-slim AS builder
+FROM node:24.18.0-slim-bookworm AS builder
 
 WORKDIR /app
 
@@ -23,7 +23,7 @@ RUN npm run build
 ###############################################################################
 # Runner: minimal image serving the standalone server
 ###############################################################################
-FROM node:22-slim AS runner
+FROM node:24.18.0-slim-bookworm AS runner
 
 WORKDIR /app
 

@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: neta-production-root
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/citizen-apps-india/neta-resume.git
+    targetRevision: main
+    path: deploy/argocd/production
+  destination:
+    name: neta-production
+    namespace: argocd
+  revisionHistoryLimit: 5
+  syncPolicy:
+    syncOptions:
+      - ServerSideApply=true
+      - ApplyOutOfSyncOnly=true
+      - PruneLast=true

@@ -32,7 +32,6 @@ export function ReportDiscrepancyButton({
 
   useEffect(() => {
     if (!open) return;
-    setFormLoaded(false); // show the spinner until the embedded form finishes loading
     const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
     document.addEventListener("keydown", onKey);
     document.body.style.overflow = "hidden";
@@ -41,6 +40,11 @@ export function ReportDiscrepancyButton({
       document.body.style.overflow = "";
     };
   }, [open]);
+
+  function openForm() {
+    setFormLoaded(false);
+    setOpen(true);
+  }
 
   const triggerStyle: React.CSSProperties =
     variant === "dark"
@@ -61,7 +65,7 @@ export function ReportDiscrepancyButton({
         type="button"
         className={variant === "dark" ? "btnDark" : "btnGhost"}
         style={triggerStyle}
-        onClick={() => setOpen(true)}
+        onClick={openForm}
       >
         {label}
       </button>
