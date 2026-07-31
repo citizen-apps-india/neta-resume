@@ -1,5 +1,10 @@
 # Architecture
 
+> **Ingestion migration:** ADR 0001 defines the portable orchestration, source-manifest, and admin-control
+> direction. The Dagster/dlt execution foundation now exists in `orchestration/`; production scheduling
+> remains on GitHub Actions until Kubernetes parity and cutover. See
+> [`adr/0001-portable-ingestion-control-plane.md`](adr/0001-portable-ingestion-control-plane.md).
+
 ## Components
 
 ```
@@ -39,7 +44,19 @@
 - **Provenance discipline.** A single read layer guarantees every emitted fact carries its `source_ref`.
 
 Next.js renders **server components** that call FastAPI server-side (fast, SEO-friendly, no DB creds in the
-browser). Postgres credentials live only in `api/` and `ingestion/`.
+browser). Postgres credentials live only in `api/`, `ingestion/`, and the private `backend/` control service.
+
+The target adds `backend/`, a private async FastAPI control plane on port 8001. It owns Alembic-managed
+operational tables and SQLAlchemy services for pause/resume, frequency, quarantine, and run requests.
+It does not replace the public read-only `api/` or edit canonical facts directly.
+
+`orchestration/` implements the execution plane. Its manifest-driven Dagster component builds one asset
+job per executable source. A 30-second sensor consults the effective PostgreSQL runtime state and emits
+stable run keys for due schedules and operator requests. Every dispatch first creates a `pipeline_run`
+snapshot containing the manifest hash, Git commit, admin revision, converter/contract, runtime settings,
+parameters, retry limit, and lifecycle timestamps. dlt merges the resulting `RawEnvelope` metadata into
+the separate `ingestion_history.raw_envelopes` ledger; canonical facts still land through the existing
+idempotent source pipelines.
 
 ## Data flow invariant
 
@@ -66,5 +83,7 @@ HTML/PDF/JSON is content-hashed into `ingestion/data/raw_cache/` (gitignored) as
 
 ## Scheduling
 
-GitHub Actions cron (one workflow per pipeline + `workflow_dispatch` for manual/backfill). No server to host;
-free at this cadence for a private repo. Move to Prefect only if/when stateful retries + a run UI are needed.
+Dagster assets, retries, durable run keys, status reconciliation, and database-driven scheduling are now
+implemented. The deployed scheduler is still GitHub Actions until the Kubernetes/GitOps step proves
+parity; equivalent cron workflows must not be retired before that cutover. Argo CD remains deployment
+GitOps and does not orchestrate data jobs.

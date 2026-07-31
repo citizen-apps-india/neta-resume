@@ -5,11 +5,11 @@ machine uses a Homebrew Postgres instead — either works, the DSN is the same.)
 
 ## Quick start: full stack via Docker Compose
 
-`docker compose up` now brings up the whole stack — the **db**, **api**, and **web** services — so you
+`docker compose up` now brings up the whole stack — **db**, public **api**, private **control**, and **web** — so you
 can run everything without installing uv/Node locally:
 
 ```bash
-docker compose up            # db + api + web
+docker compose up            # db + api + private control + web
 docker compose up -d db      # just Postgres (run api/web with uv/npm as below)
 ```
 
@@ -41,13 +41,15 @@ Default DSN (override with `NETA_DATABASE_URL`):
 ## 2. Schema + seeds
 
 ```bash
-export PGPASSWORD=neta
-for f in db/migrations/0*.sql; do psql -h localhost -U neta -d neta -v ON_ERROR_STOP=1 -f "$f"; done
-for f in db/seeds/houses.sql db/seeds/sources.sql db/seeds/parties.sql \
-         db/seeds/ipc_bns_sections.sql db/seeds/severity_rules.sql; do
-  psql -h localhost -U neta -d neta -v ON_ERROR_STOP=1 -f "$f"
-done
+export NETA_DATABASE_URL="postgresql+psycopg://neta:neta@localhost:5432/neta"
+export NETA_MIGRATE_DATABASE_URL="$NETA_DATABASE_URL"
+export NETA_BACKEND_DATABASE_URL="postgresql+asyncpg://neta:neta@localhost:5432/neta"
+uv run neta migrate
+uv run alembic -c backend/database/alembic.ini upgrade head
+uv run neta seed
 ```
+
+The SQL runner is frozen at the legacy `0030` baseline. Alembic owns every new schema revision.
 
 ## 3. Ingestion (Python 3.12 + uv)
 
@@ -76,13 +78,21 @@ curl localhost:8000/persons/1                  # full resume aggregate (provenan
 curl "localhost:8000/search?q=godam"           # trigram name search
 ```
 
+The private control backend is separate from the public read API:
+
+```bash
+cd backend
+uv run fastapi dev neta_backend/main.py --port 8001  # http://localhost:8001/docs
+```
+
 ## Milestone snapshot (Phase 1 vertical slice — DONE)
 
 > Historical note: this captured the first end-to-end slice. The project has since shipped Phases 2–5 (full
 > 18th-LS + sitting-RS rosters, parliamentary-activity module, state houses, GitHub-Actions data platform);
-> the schema is now **29 tables**. See the README build-phases and `db/migrations/` for the current shape.
+> the legacy fact schema reached 29 tables; the Alembic-managed control plane adds five operational
+> tables. See the ERD and both migration locations for the current shape.
 
-- Postgres schema (29 tables today; 18 at the Phase-1 slice) + reference seeds (houses, sources, parties, IPC/BNS severity catalog).
+- Postgres fact schema (29 legacy tables; 18 at the Phase-1 slice) + five control-plane tables + reference seeds.
 - Real MyNeta ingestion: winners list + candidate pages → person, office_term, party_affiliation,
   affidavit (assets/liabilities), criminal_case + case_charge with **derived severity**.
 - Table-based criminal-case parser (robust to MyNeta's varied FIR/section formats), validated by tests.
