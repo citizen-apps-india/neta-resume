@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: neta-control-config
+data:
+  NETA_BACKEND_ENVIRONMENT: production
+  NETA_BACKEND_ADMIN_AUTH_MODE: disabled
+  NETA_BACKEND_ADMIN_COOKIE_SECURE: "true"
+  NETA_BACKEND_ADMIN_ACTOR: cluster-operator

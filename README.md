@@ -16,7 +16,7 @@ Each politician page shows:
 ## Architecture
 
 ```
-ingestion (Python 3.12 + uv)  ──>  Postgres  ──>  api (FastAPI)  ──>  web (Next.js 15 / React 19)
+ingestion (Python 3.14 + uv)  ──>  Postgres 18  ──>  api (FastAPI)  ──>  web (Next.js 16 / React 19)
    scrapers + entity resolution      facts +        read aggregate       server-rendered
    + severity + provenance           provenance      "resume" contract    resume pages
 ```
@@ -25,6 +25,8 @@ ingestion (Python 3.12 + uv)  ──>  Postgres  ──>  api (FastAPI)  ──>
 - **`backend/`** — private async FastAPI control plane, SQLAlchemy models, and Alembic migrations for pipeline administration. Not publicly deployed yet.
 - **`orchestration/`** — Dagster OSS assets and sensors generated from source manifests, plus dlt-backed
   raw-envelope history. Implemented locally; the Kubernetes cutover is not deployed yet.
+- **`infra/` + `deploy/`** — production-only Pulumi/EKS foundation, EKS Managed Argo CD, Karpenter,
+  EKS Pod Identity, and namespace-scoped GitOps manifests. Defined and tested, not applied to AWS yet.
 - **`api/`** — FastAPI read layer. Assembles the resume aggregate and emits an OpenAPI contract the frontend codegens its types from. Holds the only DB credentials besides ingestion.
 - **`web/`** — Next.js app. Server components call the API; every fact renders a provenance badge.
 - **`db/`** — frozen legacy SQL migrations through `0030` + reference seeds. New migrations live under `backend/database/migrations/`.

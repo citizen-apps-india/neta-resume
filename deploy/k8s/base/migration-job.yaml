@@ -1,0 +1,77 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: neta-reconcile-deployment
+  labels:
+    app.kubernetes.io/name: neta-reconcile-deployment
+    app.kubernetes.io/component: deployment-reconciler
+  annotations:
+    argocd.argoproj.io/hook: PreSync
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation,HookSucceeded
+spec:
+  backoffLimit: 2
+  activeDeadlineSeconds: 900
+  ttlSecondsAfterFinished: 3600
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: neta-reconcile-deployment
+        app.kubernetes.io/component: deployment-reconciler
+    spec:
+      nodeSelector:
+        neta.dev/workload-tier: application
+      restartPolicy: Never
+      serviceAccountName: neta-reconciler
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 10001
+        runAsGroup: 10001
+        fsGroup: 10001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: reconcile
+          image: ghcr.io/citizen-apps-india/neta-resume-orchestration:SET_BY_IMAGE_PROMOTION
+          imagePullPolicy: IfNotPresent
+          command:
+            - sh
+            - orchestration/docker/reconcile-deployment.sh
+          env:
+            - name: NETA_GIT_COMMIT_SHA
+              value: SET_BY_IMAGE_PROMOTION
+            - name: NETA_MIGRATE_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: neta-runtime
+                  key: NETA_MIGRATE_DATABASE_URL
+            - name: NETA_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: neta-runtime
+                  key: NETA_DATABASE_URL
+            - name: NETA_BACKEND_DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: neta-runtime
+                  key: NETA_BACKEND_DATABASE_URL
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: "1"
+              memory: 1Gi
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: tmp
+              mountPath: /tmp
+      volumes:
+        - name: tmp
+          emptyDir:
+            sizeLimit: 512Mi

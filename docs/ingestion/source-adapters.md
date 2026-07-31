@@ -30,7 +30,7 @@ and replay a stored response without coupling those operations to a parser or da
 - `SourceAdapter[Request]`: the executable `extract(request, context=...)` protocol;
 - `ExtractionContext`: the validated `SourceManifest`, durable run ID, clock, and raw object store;
 - `HttpSourceAdapter`: the shared transport for API, crawl, and feed GET resources;
-- `RawObjectStore`: the storage port for local files now and S3-compatible object storage later;
+- `RawObjectStore`: the storage port implemented by the local cache and S3-compatible evidence store;
 - `RawArtifact`: raw bytes, a `RawEnvelope`, and the optional compatibility pointer stored in
   `source_ref.raw_payload_ref`.
 
@@ -83,7 +83,10 @@ boundary or stores a prohibited response body.
 6. Register the manifest-backed asset with the orchestrator after the source works locally. Scheduling,
    pause/resume, frequency, retries, and backfills come from the control plane, not source code.
 
-The local store writes `raw-cache://<sha-prefix>/<sha>.<ext>` objects while retaining a relative
-`provenance_ref` for the current schema. A production object-store implementation must preserve the same
-SHA-256 identity, support reads for replay, and return its durable object URI; source clients should not
-need to change.
+The local store writes `raw-cache://<sha-prefix>/<sha>.<ext>` objects. Kubernetes selects
+`S3RawObjectStore` with `NETA_RAW_STORE_BACKEND=s3`; it writes
+`s3://<bucket>/<prefix>/<sha-prefix>/<sha>.<ext>`, records the SHA-256 as object metadata, verifies existing
+objects before reuse, and revalidates the payload when replayed. Both retain the same relative
+`provenance_ref`, so source clients and canonical writers do not change. AWS S3 authentication uses the
+pod's workload identity; `NETA_RAW_S3_ENDPOINT_URL` allows the same contract to target a compatible
+open-source object store.

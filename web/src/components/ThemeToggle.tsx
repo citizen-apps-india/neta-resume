@@ -1,23 +1,31 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 type Theme = "light" | "dark";
 
 // Shared across both ThemeToggle instances (desktop + mobile menu) — they toggle the same <html>.
 let themingTimer: ReturnType<typeof setTimeout> | undefined;
 
+function currentTheme(): Theme {
+  return (document.documentElement.getAttribute("data-theme") as Theme) || "light";
+}
+
+function subscribeToTheme(onChange: () => void): () => void {
+  const observer = new MutationObserver(onChange);
+  observer.observe(document.documentElement, {
+    attributes: true,
+    attributeFilter: ["data-theme"],
+  });
+  return () => observer.disconnect();
+}
+
 /**
  * Icon-only theme switch: one button showing a sun (light) or moon (dark); clicking toggles.
  * The visible icon is driven by html[data-theme] in CSS, so it is correct even before hydration.
  */
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<Theme>("light");
-
-  useEffect(() => {
-    const saved = (document.documentElement.getAttribute("data-theme") as Theme) || "light";
-    setTheme(saved);
-  }, []);
+  const theme = useSyncExternalStore(subscribeToTheme, currentTheme, () => "light");
 
   function toggle() {
     const next: Theme = theme === "light" ? "dark" : "light";
@@ -27,7 +35,6 @@ export function ThemeToggle() {
     root.classList.add("theming");
     clearTimeout(themingTimer);
     themingTimer = setTimeout(() => root.classList.remove("theming"), 400);
-    setTheme(next);
     root.setAttribute("data-theme", next);
     try {
       localStorage.setItem("nr-theme", next);

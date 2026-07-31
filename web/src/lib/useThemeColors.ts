@@ -21,7 +21,6 @@ function read(): ThemeColors {
 export function useThemeColors(): ThemeColors {
   const [colors, setColors] = useState<ThemeColors>(read);
   useEffect(() => {
-    setColors(read());
     const obs = new MutationObserver(() => setColors(read()));
     obs.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
     return () => obs.disconnect();

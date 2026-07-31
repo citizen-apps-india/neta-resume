@@ -1,0 +1,6 @@
+config:
+  aws:region: ap-south-1
+  neta-resume-bootstrap:githubRepository: citizen-apps-india/neta-resume
+  neta-resume-bootstrap:githubEnvironment: production
+secretsprovider: awskms://alias/neta-resume-pulumi-state?region=ap-south-1
+encryptedkey: AQICAHhttGlflVIg1PR/FvTNKFGNUQvMJ2KLFessgS7YwkEz5gGScuUZ/17vJw4IiKfXPc40AAAAfjB8BgkqhkiG9w0BBwagbzBtAgEAMGgGCSqGSIb3DQEHATAeBglghkgBZQMEAS4wEQQMGdKJP4ENAwLtI04VAgEQgDvi25JKJs8YFc+DZ7pbXIvHYq9vF3lLcxBjL7fB4p2W+jvwgtxiDTxiKmkNcAthcagGa3GFlfmW8Gq+EQ==

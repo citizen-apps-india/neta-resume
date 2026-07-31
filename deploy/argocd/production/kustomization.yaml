@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - projects.yaml
+  - neta-secrets-application.yaml
+  - neta-workloads-application.yaml
+  - dagster-application.yaml

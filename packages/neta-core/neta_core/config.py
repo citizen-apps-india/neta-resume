@@ -5,6 +5,9 @@ Reads from environment (prefix NETA_). See .env.example.
 
 from __future__ import annotations
 
+from typing import Literal
+
+from pydantic import model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -24,6 +27,11 @@ class Settings(BaseSettings):
 
     # Where raw fetched HTML/PDF/JSON snapshots are cached (provenance archive; gitignored).
     raw_cache_dir: str = "data/raw_cache"
+    raw_store_backend: Literal["file", "s3"] = "file"
+    raw_s3_bucket: str = ""
+    raw_s3_prefix: str = "raw"
+    raw_s3_region: str | None = None
+    raw_s3_endpoint_url: str | None = None
 
     # data.gov.in (OGD) resource API key — free, register at api.data.gov.in. Read from
     # NETA_DATAGOVIN_API_KEY. Empty by default: the OGD fetch path no-ops (curated seeds still land).
@@ -35,6 +43,12 @@ class Settings(BaseSettings):
 
     # Severity rubric version stamped onto classified cases.
     severity_rule_version: str = "adr-v1"
+
+    @model_validator(mode="after")
+    def validate_raw_store(self) -> Settings:
+        if self.raw_store_backend == "s3" and not self.raw_s3_bucket.strip():
+            raise ValueError("NETA_RAW_S3_BUCKET is required when NETA_RAW_STORE_BACKEND=s3")
+        return self
 
 
 settings = Settings()

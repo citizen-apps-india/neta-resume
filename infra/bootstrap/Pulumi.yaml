@@ -1,0 +1,6 @@
+name: neta-resume-bootstrap
+runtime:
+  name: python
+  options:
+    virtualenv: ../.venv
+description: One-time Pulumi state and GitHub OIDC bootstrap for the production infrastructure stack.
