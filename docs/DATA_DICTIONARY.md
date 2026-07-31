@@ -1,7 +1,8 @@
 # Data dictionary
 
-Per-table, per-column reference for the core tables. **Source of truth is `db/migrations/*.sql`**
-(this doc tracks them; `db/schema.dbml` is the ERD). Enums below are the literal `CHECK`-constraint values.
+Per-table, per-column reference for the core tables. The legacy schema through `0030` is in
+`db/migrations/*.sql`; new changes are Alembic revisions in `backend/database/migrations/`. SQLAlchemy
+models live in `backend/neta_backend/database/models/`; `db/schema.dbml` is the combined ERD.
 
 > **Provenance:** every *fact* table carries a `source_ref_id` (FK → `source_ref`) — the pointer back to
 > the source record + cached snapshot. "No fact without a source."
@@ -325,3 +326,78 @@ plus the data.gov.in OGD subset). Adding an indicator = one seed row + a pipelin
 PK `(indicator_code, country_code, year)` — the upsert key for `neta macro-indicators` (idempotent re-runs
 refresh in place). Sparse series (Gini, poverty — survey years only) stay sparse; the UI charts actual points
 and labels every latest value with the year it is "as of".
+
+---
+
+## Ingestion control and execution plane
+
+Alembic revisions: `pipeline_control_0001` and `pipeline_execution_0002`.
+
+These tables control execution; they are not canonical political facts and therefore do not use
+`source_ref_id` provenance. They have their own actor/reason audit chain. Writes go through the private
+async `PipelineControlService` transaction boundary.
+
+### `pipeline_source_state` — current effective scheduler state
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | int PK | internal relationship key |
+| `source_key` | text UNIQUE | Git manifest ID, e.g. `digital_sansad.members` |
+| `source_id` | smallint FK→source | nullable link to the publisher-level source registry |
+| `manifest_hash` / `git_commit_sha` | text | exact definition version accepted by the controller |
+| `admin_overrides` | jsonb | accumulated fields explicitly pinned by admins; `{}` after reset |
+| `effective_config` | jsonb | full validated runtime snapshot; source of truth for reconstruction |
+| `enabled` / `paused` | boolean | denormalised scheduler filters from the snapshot |
+| `frequency_seconds` | int nullable | NULL for manual sources; minimum 30 when present |
+| `concurrency_limit` / `rate_limit_per_minute` / `retry_limit` | int | effective operating limits |
+| `active_revision` | bigint | latest accepted admin revision; 0 means Git defaults only |
+| `next_run_at` | timestamptz nullable | indexed claim/reconciliation time; NULL when not schedulable |
+| `last_run_at` / `last_success_at` / `last_failure_at` | timestamptz | execution health timestamps |
+| `consecutive_failures` | int | non-negative scheduler health counter |
+| `quarantined_at` / `quarantined_by` / `quarantined_reason` | mixed | independent safety stop with attribution |
+| `created_at` / `updated_at` | timestamptz | operational record timestamps |
+
+### `pipeline_source_config_revision` — immutable admin configuration history
+
+UNIQUE `(source_state_id, revision)`. `operation` is `patch` or `reset`; reset rows carry `{}` as their patch.
+`effective_config` is the complete result after applying the operation. `changed_by`, `change_reason`, `created_at`,
+`manifest_hash`, and `git_commit_sha` make every accepted setting reproducible and attributable.
+
+### `pipeline_run_request` — idempotent execution commands
+
+| Column | Type | Notes |
+|---|---|---|
+| `request_type` | text CHECK | `run_now` \| `retry` \| `replay` \| `backfill` |
+| `status` | text CHECK | `pending` \| `accepted` \| `running` \| `succeeded` \| `failed` \| `cancelled` |
+| `parameters` | jsonb | partition, cursor, run ID, or other command-specific selectors |
+| `idempotency_key` | text | UNIQUE with `source_state_id`; safe client retry boundary |
+| `requested_by` / `request_reason` / `requested_at` | mixed | command attribution |
+| `accepted_at` / `started_at` / `completed_at` / `error_message` | mixed | executor lifecycle |
+
+### `pipeline_run` — durable orchestration execution
+
+One row exists for every scheduled or operator-requested Dagster execution. `run_key` is globally unique
+and is the sensor/Dagster retry boundary. `run_request_id` is nullable and unique because scheduled runs
+do not originate from an admin command.
+
+| Column | Type | Notes |
+|---|---|---|
+| `source_state_id` | int FK | owning manifest runtime state |
+| `run_request_id` | int FK nullable/unique | run-now, retry, replay, or backfill command |
+| `run_key` / `orchestrator_run_id` | text | stable control key and eventual Dagster run ID |
+| `trigger` | enum | `scheduled` \| `run_now` \| `retry` \| `replay` \| `backfill` |
+| `status` | enum | `pending` \| `running` \| `succeeded` \| `failed` \| `cancelled` |
+| `manifest_hash` / `git_commit_sha` | text | exact Git definition accepted for the run |
+| `config_revision` / `runtime_config` | bigint/jsonb | exact effective admin configuration snapshot |
+| `converter` / `contract_version` | text | transformation and output contract captured at claim time |
+| `parameters` | jsonb | validated source runner/backfill selectors |
+| `retry_limit` / `attempt_count` | int | run-specific retry policy and observed attempts |
+| `scheduled_for` / `started_at` / `completed_at` | timestamptz | execution lifecycle |
+| `error_message` | text nullable | bounded latest/final error detail |
+| `created_at` / `updated_at` | timestamptz | operational timestamps |
+
+### `pipeline_audit_event` — application audit trail
+
+Append-only-by-service event rows containing `source_state_id`, actor, action, entity type/ID, JSON payload,
+and occurrence time. Config revision and run-request rows remain the domain records; this table provides a
+single review timeline across deployments and admin commands.

@@ -1,0 +1,8 @@
+Alembic owns all new database changes after the frozen legacy SQL baseline (db/migrations/0001-0030).
+
+Run from the repository root:
+
+    uv run alembic -c backend/database/alembic.ini upgrade head
+
+For a new database, apply the legacy SQL baseline first. Existing databases can run `upgrade head`
+directly: the first Alembic revision records the no-op legacy baseline before applying new revisions.
