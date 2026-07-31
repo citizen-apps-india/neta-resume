@@ -121,6 +121,8 @@ def test_eks_uses_api_access_entries_without_legacy_aws_auth_or_irsa() -> None:
     addons = _read("infra/neta_infra/addons.py")
 
     assert "authentication_mode=eks.AuthenticationMode.API" in cluster
+    assert '"neta.dev/part-of": "neta-resume"' in cluster
+    assert '"app.kubernetes.io/part-of": "neta-resume"' not in cluster
     assert "API_AND_CONFIG_MAP" not in cluster
     assert "instance_roles=" not in cluster
     assert "create_oidc_provider=False" in cluster
