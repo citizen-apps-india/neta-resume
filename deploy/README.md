@@ -10,6 +10,7 @@ approved.
 Pulumi owns resources that require account-specific values or cluster-wide privileges:
 
 - the EKS Managed Argo CD Capability and its minimal capability role;
+- the production AppProject because its role contains an account-specific Identity Center group ID;
 - the protected `neta-production` namespace and Pod Security labels;
 - the Karpenter and External Secrets Operator Helm releases and CRDs;
 - the Karpenter `EC2NodeClass` and bounded, consolidating `NodePool`;
@@ -62,8 +63,12 @@ still-running GitHub Actions schedule.
 - Karpenter uses a service-account-scoped Pod Identity role and tag-scoped EC2/IAM permissions.
 - `neta-dagster` has namespaced Kubernetes permissions to launch Jobs but no AWS data role.
 - `neta-control` and the deployment reconciler do not receive Kubernetes API tokens.
-- The managed Argo capability has no human role mapping by default. Adding Identity Center access is a
-  separate reviewed authorization change.
+- The Identity Center `platform-admins` group receives only global Argo CD `VIEWER` access. Its
+  `platform-operator` project role can inspect and sync `neta-production` Applications, read their
+  logs, and resolve the registered cluster name; it cannot edit or delete Application definitions,
+  invoke resource actions, access pod shells, administer Argo CD, or target another project.
+- The group ID is supplied through the private Pulumi stack configuration as
+  `argocdPlatformAdminGroupId`. It must never be committed to this public repository.
 
 No secret value, static AWS access key, kubeconfig, OIDC token, or account-specific role ARN belongs in
 Git.

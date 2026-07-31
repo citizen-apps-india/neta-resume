@@ -43,6 +43,9 @@ def _set_access_cidrs(*cidrs: str) -> None:
                 "arn:aws:sso:::instance/ssoins-1234567890abcdef"
             ),
             "neta-resume-infra:argocdIdentityCenterRegion": "ap-south-1",
+            "neta-resume-infra:argocdPlatformAdminGroupId": (
+                "1234567890-12345678-1234-1234-1234-123456789abc"
+            ),
             "neta-resume-infra:karpenterAmiAlias": "al2023@v20260715",
         }
     )
@@ -61,6 +64,29 @@ def test_settings_require_identity_center_for_managed_argocd() -> None:
     )
 
     with pytest.raises(Exception, match="argocdIdentityCenterInstanceArn"):
+        InfraSettings.load()
+
+
+def test_settings_require_platform_admin_group_for_managed_argocd() -> None:
+    runtime.set_all_config(
+        {
+            "neta-resume-infra:clusterPublicAccessCidrs": json.dumps(["203.0.113.7/32"]),
+            "neta-resume-infra:argocdIdentityCenterInstanceArn": (
+                "arn:aws:sso:::instance/ssoins-1234567890abcdef"
+            ),
+            "neta-resume-infra:argocdIdentityCenterRegion": "ap-south-1",
+        }
+    )
+
+    with pytest.raises(Exception, match="argocdPlatformAdminGroupId"):
+        InfraSettings.load()
+
+
+def test_settings_reject_invalid_identity_center_group_id() -> None:
+    _set_access_cidrs("203.0.113.7/32")
+    runtime.set_config("neta-resume-infra:argocdPlatformAdminGroupId", "platform-admins")
+
+    with pytest.raises(ValueError, match="IAM Identity Center group ID"):
         InfraSettings.load()
 
 
@@ -85,6 +111,7 @@ def test_settings_normalize_trusted_eks_access_cidrs() -> None:
     assert settings.kubernetes_version == "1.36"
     assert settings.argocd_identity_center_instance_arn.endswith("ssoins-1234567890abcdef")
     assert settings.argocd_identity_center_region == "ap-south-1"
+    assert settings.argocd_platform_admin_group_id.startswith("1234567890-")
     assert settings.external_operator_chart_version == "2.8.0"
     assert settings.karpenter_chart_version == "1.14.0"
     assert settings.karpenter_ami_alias == "al2023@v20260715"

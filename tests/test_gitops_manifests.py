@@ -165,13 +165,11 @@ def test_argo_children_are_pinned_scoped_and_bootstrap_gated() -> None:
         for application in children
     )
 
-    project = next(
-        document
+    # The AppProject contains an account-specific Identity Center group ID and is Pulumi-owned.
+    assert not any(
+        document.get("kind") == "AppProject"
         for document in _yaml_documents(DEPLOY / "argocd" / "production")
-        if document.get("kind") == "AppProject"
     )
-    assert project["spec"]["sourceNamespaces"] == ["argocd"]
-    assert project["spec"]["clusterResourceBlacklist"] == [{"group": "*", "kind": "*"}]
 
 
 def test_dagster_chart_matches_runtime_and_uses_kubernetes_jobs() -> None:

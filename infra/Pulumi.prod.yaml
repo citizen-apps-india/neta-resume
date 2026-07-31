@@ -13,8 +13,10 @@ config:
   neta-resume-infra:databaseAllocatedStorageGb: 100
   neta-resume-infra:databaseMaxStorageGb: 1000
   neta-resume-infra:databaseBackupRetentionDays: 14
-  # Required before preview/apply: the existing AWS IAM Identity Center instance ARN and home
-  # region. Keep account-specific identity IDs out of this public repository.
+  # Required before preview/apply: the existing AWS IAM Identity Center instance ARN, home region,
+  # and platform-admins group ID. Keep these account-specific identity values in the private stack
+  # config; argocdIdentityCenterInstanceArn, argocdIdentityCenterRegion, and
+  # argocdPlatformAdminGroupId are intentionally omitted here.
   neta-resume-infra:externalOperatorChartVersion: 2.8.0
   neta-resume-infra:karpenterChartVersion: 1.14.0
   # Required before preview/apply: pin the AL2023 EKS AMI release selected after reviewing the

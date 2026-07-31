@@ -139,10 +139,34 @@ def test_argocd_uses_the_eks_managed_capability_with_identity_center() -> None:
     assert 'chart="argo-cd"' not in gitops
     assert "argocdChartVersion" not in stack
     assert "AmazonEKSClusterAdminPolicy" not in gitops
-    assert "rbac_role_mappings" not in gitops
+    assert "rbac_role_mappings=[" in gitops
+    assert 'role="VIEWER"' in gitops
+    assert 'role="ADMIN"' not in gitops
+    assert 'role="EDITOR"' not in gitops
+    assert 'type="SSO_GROUP"' in gitops
+    assert "id=settings.argocd_platform_admin_group_id" in gitops
+    assert 'require("argocdPlatformAdminGroupId")' in _read("infra/neta_infra/settings.py")
+    assert "argocdPlatformAdminGroupId:" not in stack
     assert "AmazonEKSViewPolicy" in gitops
     assert "AmazonEKSAdminPolicy" in gitops
     assert 'namespaces=["neta-production"]' in gitops
+
+
+def test_argocd_project_grants_only_bounded_platform_operations() -> None:
+    gitops = _read("infra/neta_infra/gitops.py")
+
+    assert 'kind="AppProject"' in gitops
+    assert '"sourceNamespaces": ["argocd"]' in gitops
+    assert '"clusterResourceBlacklist": [{"group": "*", "kind": "*"}]' in gitops
+    assert '"name": "platform-operator"' in gitops
+    assert "applications, get" in gitops
+    assert "applications, sync" in gitops
+    assert "logs, get" in gitops
+    assert "clusters, get" in gitops
+    assert "applications, delete" not in gitops
+    assert "applications, update" not in gitops
+    assert "applications, action" not in gitops
+    assert "exec, " not in gitops
 
 
 def test_managed_argocd_registers_the_local_cluster_by_arn() -> None:

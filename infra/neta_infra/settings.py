@@ -26,6 +26,7 @@ class InfraSettings:
     database_backup_retention_days: int
     argocd_identity_center_instance_arn: str
     argocd_identity_center_region: str
+    argocd_platform_admin_group_id: str
     external_operator_chart_version: str
     karpenter_chart_version: str
     karpenter_ami_alias: str
@@ -68,6 +69,7 @@ class InfraSettings:
             database_backup_retention_days=config.get_int("databaseBackupRetentionDays") or 14,
             argocd_identity_center_instance_arn=_identity_center_instance_arn(config),
             argocd_identity_center_region=_identity_center_region(config),
+            argocd_platform_admin_group_id=_identity_center_group_id(config),
             external_operator_chart_version=(config.get("externalOperatorChartVersion") or "2.8.0"),
             karpenter_chart_version=config.get("karpenterChartVersion") or "1.14.0",
             karpenter_ami_alias=_karpenter_ami_alias(config),
@@ -100,6 +102,17 @@ def _identity_center_region(config: pulumi.Config) -> str:
     if not re.fullmatch(r"[a-z]{2}(?:-gov)?-[a-z]+-\d", region):
         raise ValueError("argocdIdentityCenterRegion must be an AWS region")
     return region
+
+
+def _identity_center_group_id(config: pulumi.Config) -> str:
+    group_id = config.require("argocdPlatformAdminGroupId")
+    identity_store_group_id = (
+        r"(?:[0-9a-f]{10}-)?[A-Fa-f0-9]{8}-[A-Fa-f0-9]{4}-"
+        r"[A-Fa-f0-9]{4}-[A-Fa-f0-9]{4}-[A-Fa-f0-9]{12}"
+    )
+    if not re.fullmatch(identity_store_group_id, group_id):
+        raise ValueError("argocdPlatformAdminGroupId must be an IAM Identity Center group ID")
+    return group_id
 
 
 def _karpenter_ami_alias(config: pulumi.Config) -> str:
