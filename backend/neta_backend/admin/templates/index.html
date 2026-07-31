@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Ingestion desk · Neta</title>
+    <link rel="stylesheet" href="/admin/static/admin.css">
+  </head>
+  <body>
+    <header class="masthead">
+      <div class="mast-brand">
+        <div class="brand-mark" aria-hidden="true"><span>N</span><i></i></div>
+        <div>
+          <p class="eyebrow">Neta operations</p>
+          <h1>Ingestion desk</h1>
+        </div>
+      </div>
+      <div class="operator-block">
+        <div>
+          <span class="operator-label">Signed in as</span>
+          <strong>{{ actor }}</strong>
+        </div>
+        <button class="text-button" id="logout-button" type="button">Sign out</button>
+      </div>
+    </header>
+
+    <main>
+      <section class="local-notice" aria-label="Environment notice">
+        <span class="notice-pulse" aria-hidden="true"></span>
+        <strong>Local control plane</strong>
+        <span>Execution dispatch is separate. Requested runs stay queued until an orchestrator is running.</span>
+      </section>
+
+      <section class="schedule-section" aria-labelledby="schedule-heading">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Next 24 hours</p>
+            <h2 id="schedule-heading">Schedule tape</h2>
+          </div>
+          <p id="schedule-caption">Reading registered source clocks…</p>
+        </div>
+        <div class="schedule-tape" id="schedule-tape" aria-label="Upcoming source runs">
+          <div class="tape-axis" aria-hidden="true">
+            <span>Now</span><span>+6h</span><span>+12h</span><span>+18h</span><span>+24h</span>
+          </div>
+          <div class="tape-track" id="tape-track"></div>
+        </div>
+      </section>
+
+      <section class="summary-strip" aria-label="Pipeline summary">
+        <article><span>Registered</span><strong id="summary-registered">—</strong></article>
+        <article><span>Running normally</span><strong id="summary-active">—</strong></article>
+        <article><span>Held</span><strong id="summary-held">—</strong></article>
+        <article><span>Needs attention</span><strong id="summary-attention">—</strong></article>
+      </section>
+
+      <section class="execution-section" aria-labelledby="execution-journal-heading">
+        <div class="section-heading execution-heading">
+          <div>
+            <p class="eyebrow">Request / dispatch / result</p>
+            <h2 id="execution-journal-heading">Execution journal</h2>
+          </div>
+          <div class="execution-counts" aria-label="Execution totals">
+            <span><strong id="activity-queued">—</strong> queued</span>
+            <span><strong id="activity-active">—</strong> active</span>
+            <span><strong id="activity-complete">—</strong> completed</span>
+          </div>
+        </div>
+        <div class="execution-journal" id="execution-journal" role="region" aria-live="polite" aria-label="Run requests and pipeline executions">
+          <div class="loading-row"><span></span><span></span><span></span></div>
+        </div>
+      </section>
+
+      <section class="source-section" aria-labelledby="sources-heading">
+        <div class="section-heading ledger-heading">
+          <div>
+            <p class="eyebrow">Definition / runtime / evidence</p>
+            <h2 id="sources-heading">Source ledger</h2>
+          </div>
+          <div class="ledger-tools">
+            <label class="search-field" for="source-search">
+              <span>Filter sources</span>
+              <input id="source-search" type="search" placeholder="Name, publisher, key…">
+            </label>
+            <button id="refresh-button" type="button" class="button button-secondary">Refresh</button>
+          </div>
+        </div>
+
+        <div class="source-ledger" role="region" aria-live="polite" aria-label="Ingestion sources">
+          <div class="ledger-columns" aria-hidden="true">
+            <span>Source</span><span>Authority</span><span>Runtime</span><span>Next activity</span><span>Last execution</span>
+          </div>
+          <div id="source-list" class="source-list">
+            <div class="loading-row"><span></span><span></span><span></span></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="drawer-scrim" id="drawer-scrim" hidden></div>
+    <aside class="source-drawer" id="source-drawer" aria-labelledby="drawer-title" aria-hidden="true">
+      <div class="drawer-header">
+        <div>
+          <p class="eyebrow" id="drawer-key">Source</p>
+          <h2 id="drawer-title">Source controls</h2>
+          <p id="drawer-publisher"></p>
+        </div>
+        <button class="icon-button" id="drawer-close" type="button" aria-label="Close source controls">×</button>
+      </div>
+
+      <div class="drawer-body">
+        <section class="drawer-status" id="drawer-status"></section>
+
+        <section class="control-section" aria-labelledby="runtime-heading">
+          <div class="control-heading">
+            <div>
+              <p class="step-label">01 / runtime</p>
+              <h3 id="runtime-heading">Schedule and limits</h3>
+            </div>
+            <button id="pause-button" type="button" class="button button-secondary">Pause source</button>
+          </div>
+          <form id="runtime-form">
+            <div class="switch-row">
+              <div><strong>Source enabled</strong><span>Disabled sources cannot be scheduled.</span></div>
+              <label class="switch"><input id="runtime-enabled" type="checkbox"><span></span></label>
+            </div>
+            <div class="field-grid">
+              <label>Frequency <span>seconds</span><input id="runtime-frequency" type="number" min="30"></label>
+              <label>Concurrency <span>workers</span><input id="runtime-concurrency" type="number" min="1"></label>
+              <label>Rate limit <span>per minute</span><input id="runtime-rate" type="number" min="1"></label>
+              <label>Retry limit <span>attempts</span><input id="runtime-retries" type="number" min="0"></label>
+            </div>
+            <p class="guardrail-note" id="guardrail-note"></p>
+            <label class="reason-field">Reason for change <span>Required; stored in the audit history.</span>
+              <textarea id="runtime-reason" rows="2" minlength="3" maxlength="500" required></textarea>
+            </label>
+            <div class="form-actions">
+              <button type="submit" class="button button-primary">Save runtime</button>
+              <button id="reset-button" type="button" class="text-button danger-text">Reset to Git defaults</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="control-section" aria-labelledby="execution-heading">
+          <div class="control-heading">
+            <div>
+              <p class="step-label">02 / execution</p>
+              <h3 id="execution-heading">Request a pipeline run</h3>
+            </div>
+          </div>
+          <form id="run-form">
+            <div class="field-grid two-fields">
+              <label>Request type
+                <select id="run-type">
+                  <option value="run_now">Run now</option>
+                  <option value="retry">Retry</option>
+                  <option value="replay">Replay</option>
+                  <option value="backfill">Backfill</option>
+                </select>
+              </label>
+              <label>Reason <input id="run-reason" type="text" minlength="3" maxlength="500" required></label>
+            </div>
+            <label>Parameters <span>JSON object; leave empty for a standard run.</span>
+              <textarea id="run-parameters" class="code-input" rows="3" spellcheck="false" placeholder='{"from": "2026-07-01"}'></textarea>
+            </label>
+            <button type="submit" class="button button-primary">Queue request</button>
+          </form>
+        </section>
+
+        <section class="control-section safety-section" aria-labelledby="safety-heading">
+          <div>
+            <p class="step-label">03 / safety</p>
+            <h3 id="safety-heading">Source quarantine</h3>
+            <p>Stops new schedules and operator runs while preserving definitions and history.</p>
+          </div>
+          <button id="quarantine-button" type="button" class="button button-danger">Quarantine source</button>
+        </section>
+
+        <section class="history-section" aria-labelledby="history-heading">
+          <div class="control-heading">
+            <div>
+              <p class="step-label">04 / evidence</p>
+              <h3 id="history-heading">Recent activity</h3>
+            </div>
+            <div class="history-tabs" role="tablist">
+              <button class="active" id="runs-tab" type="button" role="tab">Runs</button>
+              <button id="revisions-tab" type="button" role="tab">Config history</button>
+            </div>
+          </div>
+          <div id="history-list" class="history-list"></div>
+        </section>
+      </div>
+    </aside>
+
+    <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+    <script src="/admin/static/admin.js" defer></script>
+  </body>
+</html>
