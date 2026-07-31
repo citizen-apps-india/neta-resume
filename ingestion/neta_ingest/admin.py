@@ -1,9 +1,9 @@
-"""Schema migrations + reference seeds — the SQL-first, version-tracked runner.
+"""Frozen legacy schema migrations + reference seeds.
 
 `neta migrate` applies pending `db/migrations/*.sql` (lexical order), each in its own transaction, and
 records it in a `schema_migrations` table; `neta seed` (re-)applies the idempotent `db/seeds/*.sql`. This is
-the independent path to schema/reference data: CI's migrate workflow runs it against Neon on merge, so the
-laptop full-replace is no longer how schema reaches production.
+the bootstrap path for the schema through `0030`. New changes are SQLAlchemy models and Alembic revisions
+under `backend/`; CI runs Alembic after this legacy baseline.
 
 Files are applied with `psql` (robust for multi-statement DDL — the same tool every other doc/script uses;
 preinstalled on CI runners). DDL needs owner privileges, so migrate uses `NETA_MIGRATE_DATABASE_URL` when

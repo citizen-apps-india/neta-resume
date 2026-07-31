@@ -1,0 +1,48 @@
+schema_version: 1
+id: ecourts.case_status
+source_code: bharat_courts
+display_name: eCourts case status verification
+publisher: eCommittee, Supreme Court of India
+lifecycle: blocked
+authority:
+  role: verification
+  trust_tier: 1
+  jurisdiction: India
+rights:
+  license: public-official
+  commercial_use: review
+  redistribution: review
+  store_raw: true
+  notes: Never bypass CAPTCHA or access controls; enable only for an authorised integration.
+ingestion:
+  adapter: gated
+  base_url: https://services.ecourts.gov.in/
+  trigger:
+    mode: manual
+    profile: manual-authorised
+  change_detection: [manual, content_hash]
+  defaults:
+    enabled: false
+    paused: true
+    frequency_seconds: null
+    concurrency_limit: 1
+    rate_limit_per_minute: 2
+    retry_limit: 1
+  guardrails:
+    min_frequency_seconds: null
+    max_frequency_seconds: null
+    max_concurrency: 1
+    max_rate_limit_per_minute: 5
+    max_retry_limit: 2
+  secret_refs: []
+conversion:
+  converter: neta_ingest.converters.ecourts:convert_case_status
+  contract: court_case_status_evidence.v1
+  produces: [court_case_status_observation]
+quality:
+  freshness_slo_seconds: null
+  minimum_records: 0
+  required_fields: [cnr_number, status, checked_at]
+verification:
+  corroborate_with: [myneta.candidates]
+  human_review_required: true

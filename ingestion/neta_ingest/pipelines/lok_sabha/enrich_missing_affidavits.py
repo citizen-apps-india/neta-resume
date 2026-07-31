@@ -14,6 +14,7 @@ from __future__ import annotations
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
+from neta_ingest.extraction import source_extraction_context
 from neta_ingest.pipelines.identity import affidavit_attach as aa
 from neta_sources.myneta import client as myneta
 
@@ -27,8 +28,9 @@ OVERRIDES_LS2024 = {
 
 
 def run(cycle: str = "LS2024") -> None:
+    extraction_context = source_extraction_context(myneta.SOURCE_ID)
     overrides = OVERRIDES_LS2024 if cycle == "LS2024" else {}
-    const_map = myneta.fetch_constituency_map(cycle)
+    const_map = myneta.fetch_constituency_map(cycle, context=extraction_context)
     stripped = {aa.strip_const(k): v for k, v in const_map.items()}
     print(f"[missing] {cycle} MyNeta constituency map: {len(const_map)} constituencies")
 
@@ -67,14 +69,22 @@ def run(cycle: str = "LS2024") -> None:
             if not cons_id:
                 unresolved.append(f"{person.display_name} ({person.constituency}) — constituency not on MyNeta")
                 continue
-            cands = myneta.fetch_constituency_candidates(cons_id, cycle)
+            cands = myneta.fetch_constituency_candidates(
+                cons_id,
+                cycle,
+                context=extraction_context,
+            )
             candidate_id, _score, _amb = aa.best_match(
                 cands, person.display_name, person.normalized_name, threshold=0.80
             )
         if not candidate_id:
             unresolved.append(f"{person.display_name} ({person.constituency}) — no name match among candidates")
             continue
-        parsed, raw_rel = myneta.fetch_candidate(candidate_id, cycle)
+        parsed, raw_rel = myneta.fetch_candidate(
+            candidate_id,
+            cycle,
+            context=extraction_context,
+        )
         with session_scope() as s:
             aa.write_affidavit(s, parsed, person.id, candidate_id, raw_rel,
                                house_id=house_id, term_cycle_id=term_cycle_id, cycle=cycle)

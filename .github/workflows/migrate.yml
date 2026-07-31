@@ -1,8 +1,8 @@
 name: migrate
 
-# Schema + reference seeds reach Neon HERE (version-tracked), not via the laptop full-replace.
-# Runs on merge to main when db/ changes (or manually). `neta migrate` applies only pending migrations
-# (tracked in schema_migrations); `neta seed` re-applies the idempotent reference seeds.
+# Schema + reference seeds reach Postgres HERE, not via a laptop full-replace. The frozen SQL baseline is
+# tracked in schema_migrations; new SQLAlchemy-backed revisions are tracked by Alembic; seeds remain
+# idempotent. Runs on relevant merges to main or manual dispatch.
 #
 # ONE-TIME ADOPTION on the already-populated Neon: dispatch this once after setting the secret, but first
 # run `neta migrate --baseline` against it (the early ALTER migrations are not re-runnable). See OPERATIONS.
@@ -13,6 +13,7 @@ on:
     paths:
       - "db/migrations/**"
       - "db/seeds/**"
+      - "backend/database/migrations/**"
   workflow_dispatch:
 
 concurrency:
@@ -23,11 +24,14 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NETA_MIGRATE_DATABASE_URL: ${{ secrets.NETA_MIGRATE_DATABASE_URL }}   # Neon owner DSN (DDL)
+      NETA_BACKEND_DATABASE_URL: ${{ secrets.NETA_BACKEND_DATABASE_URL }}   # asyncpg owner DSN
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v3
       - run: uv sync
-      - name: Apply pending migrations
+      - name: Apply frozen legacy SQL migrations
         run: uv run neta migrate
+      - name: Apply Alembic migrations
+        run: uv run alembic -c backend/database/alembic.ini upgrade head
       - name: Apply reference seeds
         run: uv run neta seed

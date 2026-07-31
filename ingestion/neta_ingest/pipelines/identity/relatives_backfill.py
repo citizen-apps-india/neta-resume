@@ -15,6 +15,7 @@ import time
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
+from neta_ingest.extraction import source_extraction_context
 from neta_sources.myneta import client as myneta
 
 
@@ -37,6 +38,7 @@ def _pending(s, cycle: str | None) -> list[tuple[int, str]]:
 
 
 def run(cycle: str | None = None, minutes: float | None = None, limit: int = 0) -> None:
+    extraction_context = source_extraction_context(myneta.SOURCE_ID)
     deadline = time.monotonic() + minutes * 60 if minutes else None
     with session_scope() as s:
         pending = _pending(s, cycle)
@@ -54,7 +56,7 @@ def run(cycle: str | None = None, minutes: float | None = None, limit: int = 0) 
         if not cid:
             continue
         try:
-            parsed, _raw = myneta.fetch_candidate(cid, cyc)
+            parsed, _raw = myneta.fetch_candidate(cid, cyc, context=extraction_context)
             with session_scope() as s:
                 s.execute(
                     text(

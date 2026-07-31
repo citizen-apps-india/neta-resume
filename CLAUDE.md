@@ -3,7 +3,7 @@
 A sourced public record of every Indian legislator. **No fact without a source.** This file is the
 one-screen map for coding agents. Skim it, then dive into `docs/` for depth.
 
-## Architecture (four layers, no cross-imports)
+## Architecture (data, control, read, and presentation layers)
 
 ```
 ingestion (Python 3.12 + uv)  ──writes──▶  Postgres 16  ──reads──▶  api (FastAPI)  ──HTTP──▶  web (Next.js 15 / React 19)
@@ -11,15 +11,21 @@ ingestion (Python 3.12 + uv)  ──writes──▶  Postgres 16  ──reads─
   + severity + provenance                  fact's source_ref      aggregate + OpenAPI        provenance badge per fact
 ```
 
-- **`db/`** — SQL migrations (`db/migrations/*.sql`, version-tracked via `neta migrate`) + reference seeds (`db/seeds/*.sql`). Source of truth for the schema; `db/schema.dbml` is a hand-kept ERD.
-- **`ingestion/`** — Typer CLI (`neta`) of idempotent pipelines + the migration runner. **Writes** Postgres. Holds a write DB role. A uv workspace: `packages/neta-core` + `packages/neta-sources` + the `neta_ingest` runner.
+- **`db/`** — frozen legacy SQL migrations through `0030` + reference seeds. New revisions are Alembic migrations under `backend/database/migrations/`; `db/schema.dbml` is the combined ERD.
+- **`ingestion/`** — Typer CLI (`neta`) of idempotent pipelines + the legacy migration runner. **Writes** Postgres. Holds a write DB role.
+- **`backend/`** — private async FastAPI control plane. SQLAlchemy declarative models, Alembic migrations, and `AsyncSession` services for scheduling/admin state. It is part of the root uv workspace.
+- **`orchestration/`** — Dagster OSS execution plane. A manifest-driven `SourceComponent` builds one
+  asset job per executable source; a control-plane sensor dispatches durable `pipeline_run` rows. dlt
+  maintains the raw-envelope metadata ledger in its own PostgreSQL schema.
 - **`api/`** — FastAPI **read** layer. Assembles the resume aggregate, emits OpenAPI. Holds a read DB role. **Standalone** project (excluded from the workspace); reads pre-computed facts.
 - **`web/`** — Next.js. Server components call `api` **over HTTP only** (no DB creds in the browser).
 
-**Layering rules:** `web → api` over HTTP; `ingestion` writes, `api` reads; neither web nor api opens a
-scraper. Postgres credentials live only in `ingestion/` and `api/`.
+**Layering rules:** `web → api` over HTTP; ingestion and the private backend write, the public API reads;
+neither web nor API opens a scraper. The authenticated admin UI is served by `backend` and calls its
+same-origin private API; it never calls source adapters directly.
 
-**DSN env:** `NETA_DATABASE_URL` (ingestion + api). **Web → api base:** `NETA_API_BASE`.
+**DSN env:** `NETA_DATABASE_URL` (ingestion + api), `NETA_BACKEND_DATABASE_URL` (async backend).
+**Web → api base:** `NETA_API_BASE`.
 
 ## Run each layer locally
 
@@ -31,6 +37,8 @@ Default DSN: `postgresql+psycopg://neta:neta@localhost:5432/neta`. See `docs/loc
 cd ingestion && uv sync && cd ..
 export NETA_DATABASE_URL="postgresql+psycopg://neta:neta@localhost:5432/neta"
 uv run neta migrate      # applies pending db/migrations/*.sql
+export NETA_BACKEND_DATABASE_URL="postgresql+asyncpg://neta:neta@localhost:5432/neta"
+uv run alembic -c backend/database/alembic.ini upgrade head
 uv run neta seed         # idempotent reference seeds (houses, sources, parties, …)
 
 # ingestion
@@ -42,6 +50,19 @@ uv run neta --help
 cd api && uv sync
 export NETA_DATABASE_URL="postgresql+psycopg://neta:neta@localhost:5432/neta"
 uv run uvicorn neta_api.main:app --reload
+
+# private control backend → http://localhost:8001/docs · GET /health
+cd ../backend
+export NETA_BACKEND_ADMIN_AUTH_MODE="local_token"
+export NETA_BACKEND_ADMIN_TOKEN="replace-with-at-least-24-characters"
+export NETA_BACKEND_ADMIN_SESSION_SECRET="replace-with-at-least-32-characters"
+export NETA_BACKEND_ADMIN_COOKIE_SECURE="false"
+uv run fastapi dev neta_backend/main.py --port 8001
+
+# orchestration (after migrations + seeds)
+cd ..
+uv run neta-orchestrator register-manifests
+uv run dagster dev -p 3002 -m neta_orchestration.definitions
 
 # web  →  http://localhost:3000   (NETA_API_BASE defaults to http://localhost:8000)
 cd web && npm install && npm run dev
@@ -58,7 +79,7 @@ Every command is a thin wrapper over a pipeline in `ingestion/neta_ingest/pipeli
 | `neta seed` | (re-)apply idempotent reference seeds |
 | `neta myneta --cycle LS2024 --limit N` | MyNeta candidate page → person + affidavit + criminal_case (one pass). `--candidate ID` for one. |
 | `neta affidavits` / `neta criminal` | aliases of `myneta` (MyNeta serves wealth + criminal on one page) |
-| `neta roster --house ls --cycle 18` | sansad.in roster scaffold → office_term + source_ref |
+| `neta roster --house ls --cycle 18` | route to the production Digital Sansad LS roster pipeline (`--house rs --cycle current` for RS) |
 | `neta ls-roster` | complete the LS roster + official photos from sansad.in (fill + add missing) |
 | `neta rajya-sabha` | sitting RS roster from sansad.in (roster + photo; **no** affidavit data) |
 | `neta enrich-missing` | backfill affidavits for LS seats MyNeta omitted (per-constituency) |
@@ -80,8 +101,10 @@ lives in `merge-cycles` today; `party-switch` is a stub. See `docs/OPERATIONS.md
 
 - **Every fact row carries a `source_ref_id`** (a `source_ref(source_id, native_id)` row) with a
   `raw_payload_ref` snapshot in `ingestion/data/raw_cache/` (content-addressed, gitignored).
-- `provenance.record_source_ref(...)` upserts the source_ref; `provenance.cache_raw(...)` writes the
-  content-hashed snapshot. Use these — don't hand-roll provenance.
+- `neta_core.pipeline` adapters store new raw payloads and emit `RawEnvelope`; their
+  `RawArtifact.provenance_ref` remains compatible with `source_ref.raw_payload_ref`.
+  `provenance.cache_raw(...)` is the legacy path for clients not migrated yet. Use these boundaries —
+  don't hand-roll provenance. See `docs/ingestion/source-adapters.md`.
 - **trust_tier:** 1 = official (sansad/ECI/courts/data.gov.in), 2 = ADR/TCPD/PRS, 3 = reported/news/Wikidata.
 - **Idempotency:** writes upsert on natural keys (`source_ref(source_id,native_id)`,
   `affidavit(person_id,election_cycle,source_ref_id)`, …). Several pipelines "delete this source_ref's
@@ -90,8 +113,8 @@ lives in `merge-cycles` today; `party-switch` is a stub. See `docs/OPERATIONS.md
 ## Testing / lint
 
 ```bash
-uv run pytest                      # 30 tests (parsers + transforms + migrate runner, no network)
-uv run ruff check packages ingestion
+uv run pytest
+uv run ruff check packages ingestion backend orchestration
 cd api       && uv run ruff check .
 cd web       && npm run typecheck  # tsc --noEmit
 ```
@@ -128,6 +151,7 @@ CI (`.github/workflows/ci.yml`) runs all of the above per push/PR.
 
 ## Boundaries
 
-Touch only the layer you're working in. Schema changes go through a new `db/migrations/00NN_*.sql` (+ keep
-`db/schema.dbml` and `docs/DATA_DICTIONARY.md` in sync). The web client's TS types are codegen'd from the
+Touch only the layer you're working in. New schema changes go through Alembic under
+`backend/database/migrations/` and matching SQLAlchemy models (+ keep `db/schema.dbml` and
+`docs/DATA_DICTIONARY.md` in sync). The legacy SQL chain ends at `0030`. The web client's TS types are codegen'd from the
 API's OpenAPI (`npm run codegen` with the API up) — don't hand-edit generated shapes.

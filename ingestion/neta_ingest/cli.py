@@ -21,7 +21,7 @@ app = typer.Typer(help="Neta-Resume ingestion pipelines", no_args_is_help=True)
 def migrate(dir: str = "db/migrations",
             baseline: bool = typer.Option(False, help="record existing files as applied WITHOUT running "
                                           "them (one-time adoption on an already-populated DB)")) -> None:
-    """Apply pending schema migrations (version-tracked in schema_migrations). Uses the owner DSN."""
+    """Apply the frozen legacy SQL baseline. New schema changes use backend Alembic."""
     from neta_ingest import admin
 
     admin.run_migrate(dir=dir, baseline=baseline)

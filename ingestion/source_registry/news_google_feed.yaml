@@ -1,0 +1,51 @@
+schema_version: 1
+id: news.google_feed
+source_code: news
+display_name: Google News discovery feed
+publisher: Google News and originating publishers
+lifecycle: active
+authority:
+  role: reported
+  trust_tier: 3
+  jurisdiction: India
+rights:
+  license: reported
+  commercial_use: review
+  redistribution: prohibited
+  store_raw: true
+  notes: Store feed metadata and citations only; do not archive full article bodies without rights.
+ingestion:
+  adapter: feed
+  base_url: https://news.google.com/
+  trigger:
+    mode: scheduled
+    profile: news-near-real-time
+  change_detection: [event_id, content_hash]
+  defaults:
+    enabled: true
+    paused: false
+    frequency_seconds: 900
+    concurrency_limit: 4
+    rate_limit_per_minute: 30
+    retry_limit: 4
+  guardrails:
+    min_frequency_seconds: 300
+    max_frequency_seconds: 86400
+    max_concurrency: 8
+    max_rate_limit_per_minute: 60
+    max_retry_limit: 6
+  secret_refs: []
+conversion:
+  converter: neta_ingest.converters.news:convert_feed_item
+  contract: reported_news_item.v1
+  produces: [news_item_observation]
+quality:
+  freshness_slo_seconds: 1800
+  minimum_records: 0
+  required_fields: [canonical_url, headline, publisher, published_at]
+orchestration:
+  runner: neta_ingest.runners:run_news_feed
+  raw_history: dlt
+verification:
+  corroborate_with: []
+  human_review_required: true

@@ -1,0 +1,51 @@
+schema_version: 1
+id: prs.parliamentary_record
+source_code: prs
+display_name: PRS MP Track parliamentary record
+publisher: PRS Legislative Research
+lifecycle: active
+authority:
+  role: secondary
+  trust_tier: 2
+  jurisdiction: India
+rights:
+  license: non-commercial
+  commercial_use: prohibited
+  redistribution: review
+  store_raw: true
+  notes: Preserve missing attendance values; ministers and specified officers may be exempt.
+ingestion:
+  adapter: crawl
+  base_url: https://prsindia.org/
+  trigger:
+    mode: scheduled
+    profile: parliament-session
+  change_detection: [last_modified, content_hash]
+  defaults:
+    enabled: true
+    paused: false
+    frequency_seconds: 21600
+    concurrency_limit: 2
+    rate_limit_per_minute: 30
+    retry_limit: 4
+  guardrails:
+    min_frequency_seconds: 900
+    max_frequency_seconds: 604800
+    max_concurrency: 4
+    max_rate_limit_per_minute: 60
+    max_retry_limit: 6
+  secret_refs: []
+conversion:
+  converter: neta_ingest.converters.prs:convert_parliamentary_record
+  contract: parliamentary_record.v1
+  produces: [attendance_observation, question_observation, debate_observation]
+quality:
+  freshness_slo_seconds: 43200
+  minimum_records: 1
+  required_fields: [member_name, house, report_period]
+orchestration:
+  runner: neta_ingest.runners:run_prs_parliamentary_record
+  raw_history: dlt
+verification:
+  corroborate_with: [digital_sansad.members]
+  human_review_required: false

@@ -1,5 +1,9 @@
 # Data Sources & Ingestion Pipeline Index
 
+> Machine-validated pilot definitions now live in `ingestion/source_registry/`. The registry will absorb
+> this complete inventory source by source as adapters reach parity; this document remains the human
+> licensing, ethics, and coverage index. See `docs/ingestion/source-manifests.md`.
+
 > Per-source index for Neta-Resume ingestion. Goal: **pipelines that fetch updatable data**, not a
 > static dump. Confidence tags come from a 3-vote adversarial verification pass
 > (✓ = confirmed; ⚠ = open question / unverified).

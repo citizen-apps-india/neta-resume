@@ -15,8 +15,8 @@ schema + data reach the DB through GitHub Actions, not a local sync.
 
 ## How data reaches the DB (independent of a laptop)
 
-- **Schema/seeds** → `.github/workflows/migrate.yml` on merge to `main` (paths `db/**`) or manual dispatch:
-  runs `neta migrate` (version-tracked in `schema_migrations`) + `neta seed`. Uses the **owner** DSN.
+- **Schema/seeds** → `.github/workflows/migrate.yml` on merge to `main` or manual dispatch: applies the
+  frozen SQL baseline, runs `alembic upgrade head`, then runs `neta seed`. Uses the **owner** DSN.
 - **Data** → `.github/workflows/ingest.yml`: `workflow_dispatch` with free-form `args` runs any `neta`
   pipeline directly on Neon (idempotent), plus scheduled roster/attendance refreshes. Uses the **ingest**
   write-role DSN.
@@ -28,8 +28,10 @@ The live DB already has the schema. Before the first `migrate.yml` run, baseline
 non-re-runnable ALTERs aren't replayed:
 
 ```bash
-NETA_MIGRATE_DATABASE_URL="postgresql+psycopg://OWNER:PASS@HOST/neondb?sslmode=require" \
-  uv run neta migrate --baseline    # records all current migrations as applied, executes nothing
+export NETA_MIGRATE_DATABASE_URL="postgresql+psycopg://OWNER:PASS@HOST/neondb?sslmode=require"
+export NETA_BACKEND_DATABASE_URL="postgresql+asyncpg://OWNER:PASS@HOST/neondb?ssl=require"
+uv run neta migrate --baseline    # records all current SQL migrations without executing them
+uv run alembic -c backend/database/alembic.ini upgrade head
 ```
 
 (Ideally run against a Neon **branch** first to confirm, then the main DB.) After this, `migrate.yml`
@@ -55,6 +57,7 @@ this workflow is now the single source of truth; leaving both on just means a ha
 | Var | Where | Value |
 |---|---|---|
 | `NETA_MIGRATE_DATABASE_URL` | GitHub secret (migrate.yml) | Neon **owner** DSN (DDL) |
+| `NETA_BACKEND_DATABASE_URL` | migrate job / control backend | async SQLAlchemy owner/runtime DSN |
 | `NETA_DATABASE_URL` | GitHub secret (ingest.yml/news.yml) | **ingest write-role** DSN |
 | `RENDER_DEPLOY_HOOK` | GitHub secret (deploy.yml) | Render api service deploy-hook URL |
 | `VERCEL_DEPLOY_HOOK` | GitHub secret (deploy.yml) | Vercel web project deploy-hook URL |
@@ -104,7 +107,7 @@ TARGET_DSN="postgresql://neondb_owner:PASS@<neon-host>/neondb?sslmode=require" \
   ./scripts/load_remote_db.sh
 ```
 
-Or bring the schema up with `neta migrate` + `neta seed`, then run the pipelines against Neon via the
+Or bring the schema up with `neta migrate`, `alembic upgrade head`, and `neta seed`, then run the pipelines against Neon via the
 `ingest` workflow's `workflow_dispatch`. See `docs/OPERATIONS.md`.
 
 ## Health checks

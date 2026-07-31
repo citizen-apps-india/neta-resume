@@ -11,13 +11,15 @@ from __future__ import annotations
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
-from neta_sources.sansad import client as sansad
 from neta_core.transform.names import normalize_name
 from neta_core.transform.parties import resolve_or_create_party_id
+from neta_ingest.extraction import source_extraction_context
+from neta_sources.sansad import client as sansad
 
 
 def run() -> None:
-    members = sansad.fetch_rs_sitting_members()
+    extraction_context = source_extraction_context(sansad.SOURCE_ID)
+    members = sansad.fetch_rs_sitting_members(context=extraction_context)
     print(f"[rs] fetched {len(members)} sitting Rajya Sabha members from sansad.in")
     ok = 0
     with session_scope() as s:
@@ -37,14 +39,21 @@ def _persist(s, m: sansad.RsMember, *, source_id: int, house_id: int, term_cycle
     row = s.execute(
         text(
             """
-            INSERT INTO source_ref (source_id, native_id, native_url, raw_name)
-            VALUES (:sid, :nid, :url, :name)
+            INSERT INTO source_ref (source_id, native_id, native_url, raw_name, raw_payload_ref)
+            VALUES (:sid, :nid, :url, :name, :raw)
             ON CONFLICT (source_id, native_id) DO UPDATE
-              SET native_url = EXCLUDED.native_url, raw_name = EXCLUDED.raw_name, fetched_at = now()
+              SET native_url = EXCLUDED.native_url, raw_name = EXCLUDED.raw_name,
+                  raw_payload_ref = EXCLUDED.raw_payload_ref, fetched_at = now()
             RETURNING id, person_id
             """
         ),
-        {"sid": source_id, "nid": f"rs-{m.member_id}", "url": m.profile_url, "name": m.name},
+        {
+            "sid": source_id,
+            "nid": f"rs-{m.member_id}",
+            "url": m.profile_url,
+            "name": m.name,
+            "raw": m.raw_ref,
+        },
     ).one()
     source_ref_id, person_id = row.id, row.person_id
 

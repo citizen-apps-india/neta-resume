@@ -1,0 +1,51 @@
+schema_version: 1
+id: myneta.candidates
+source_code: myneta
+display_name: MyNeta candidate affidavits
+publisher: Association for Democratic Reforms
+lifecycle: active
+authority:
+  role: secondary
+  trust_tier: 2
+  jurisdiction: India
+rights:
+  license: non-commercial
+  commercial_use: prohibited
+  redistribution: review
+  store_raw: true
+  notes: Derived transcription; verify legally sensitive values against the ECI affidavit PDF.
+ingestion:
+  adapter: crawl
+  base_url: https://www.myneta.info/
+  trigger:
+    mode: scheduled
+    profile: election-window
+  change_detection: [content_hash]
+  defaults:
+    enabled: true
+    paused: false
+    frequency_seconds: 21600
+    concurrency_limit: 1
+    rate_limit_per_minute: 20
+    retry_limit: 4
+  guardrails:
+    min_frequency_seconds: 1800
+    max_frequency_seconds: 604800
+    max_concurrency: 2
+    max_rate_limit_per_minute: 30
+    max_retry_limit: 6
+  secret_refs: []
+conversion:
+  converter: neta_ingest.converters.myneta:convert_candidate
+  contract: candidate_affidavit.v1
+  produces: [person_observation, affidavit_observation, criminal_case_observation]
+quality:
+  freshness_slo_seconds: 86400
+  minimum_records: 1
+  required_fields: [candidate_id, name, election_cycle]
+orchestration:
+  runner: neta_ingest.runners:run_myneta_candidates
+  raw_history: dlt
+verification:
+  corroborate_with: [eci.affidavit_pdfs]
+  human_review_required: true

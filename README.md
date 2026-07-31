@@ -22,9 +22,12 @@ ingestion (Python 3.12 + uv)  ──>  Postgres  ──>  api (FastAPI)  ──>
 ```
 
 - **`ingestion/`** — scheduled Python pipelines that fetch updatable data from each source, normalize it, resolve entities to a canonical person, and upsert into Postgres. Pipelines are idempotent.
+- **`backend/`** — private async FastAPI control plane, SQLAlchemy models, and Alembic migrations for pipeline administration. Not publicly deployed yet.
+- **`orchestration/`** — Dagster OSS assets and sensors generated from source manifests, plus dlt-backed
+  raw-envelope history. Implemented locally; the Kubernetes cutover is not deployed yet.
 - **`api/`** — FastAPI read layer. Assembles the resume aggregate and emits an OpenAPI contract the frontend codegens its types from. Holds the only DB credentials besides ingestion.
 - **`web/`** — Next.js app. Server components call the API; every fact renders a provenance badge.
-- **`db/`** — SQL migrations + reference seeds (houses, parties, IPC/BNS section catalog, severity rules).
+- **`db/`** — frozen legacy SQL migrations through `0030` + reference seeds. New migrations live under `backend/database/migrations/`.
 - **`docs/`** — data-source matrix, schema, severity rubric, entity-resolution design, data-license.
 
 ## Data sources (verified)
@@ -70,11 +73,18 @@ export NETA_DATABASE_URL="postgresql+psycopg://neta:neta@localhost:5432/neta"
 
 # 2. Schema + seeds — version-tracked (the same commands CI runs against Neon)
 cd ingestion && uv sync && cd ..
-uv run neta migrate      # applies db/migrations/*.sql
+uv run neta migrate      # applies the frozen SQL baseline through 0030
+uv run alembic -c backend/database/alembic.ini upgrade head
 uv run neta seed         # reference seeds (houses, sources, parties, …)
 
 # 3. Ingestion (Python)
 cd ingestion && uv sync && uv run neta --help
+
+# Optional: manifest-driven Dagster execution plane
+cd ..
+export NETA_BACKEND_DATABASE_URL="postgresql+asyncpg://neta:neta@localhost:5432/neta"
+uv run neta-orchestrator register-manifests
+uv run dagster dev -p 3002 -m neta_orchestration.definitions
 
 # 4. API
 cd api && uv sync && uv run uvicorn neta_api.main:app --reload

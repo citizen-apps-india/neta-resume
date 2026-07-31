@@ -6,14 +6,42 @@ on:
   pull_request:
 
 jobs:
-  # Python workspace: neta-core + neta-sources + the ingestion runner (api is a separate, independent job).
+  # Python workspace: core, sources, ingestion, control backend, and orchestration.
+  # The public api is a separate, independent job.
   ingestion:
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_USER: neta
+          POSTGRES_PASSWORD: neta
+          POSTGRES_DB: neta_test
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U neta -d neta_test"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    env:
+      NETA_DATABASE_URL: postgresql+psycopg://neta:neta@localhost:5432/neta_test
+      NETA_MIGRATE_DATABASE_URL: postgresql://neta:neta@localhost:5432/neta_test
+      NETA_BACKEND_DATABASE_URL: postgresql+asyncpg://neta:neta@localhost:5432/neta_test
+      NETA_TEST_DATABASE_URL: postgresql+asyncpg://neta:neta@localhost:5432/neta_test
     steps:
       - uses: actions/checkout@v4
       - uses: astral-sh/setup-uv@v3
       - run: uv sync --dev
-      - run: uv run ruff check packages ingestion
+      - name: Apply frozen legacy SQL baseline
+        run: uv run neta migrate
+      - name: Apply Alembic migrations
+        run: uv run alembic -c backend/database/alembic.ini upgrade head
+      - name: Verify SQLAlchemy metadata has no Alembic drift
+        run: uv run alembic -c backend/database/alembic.ini check
+      - name: Seed source registry
+        run: psql "$NETA_MIGRATE_DATABASE_URL" -v ON_ERROR_STOP=1 -f db/seeds/sources.sql
+      - run: uv run ruff check packages ingestion backend orchestration
       - run: uv run pytest -q
 
   api:

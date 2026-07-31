@@ -1,6 +1,7 @@
 # Database Schema
 
-Source of truth: SQL in `db/migrations/`. ERD: `db/schema.dbml` (paste into dbdiagram.io).
+Source of truth: legacy SQL through `db/migrations/0030_*`, then Alembic revisions plus SQLAlchemy models
+under `backend/`. ERD: `db/schema.dbml` (paste into dbdiagram.io).
 
 **Design principle:** a fact table never stores a value without a provenance pointer. Every domain row
 carries a `source_ref_id` and date-of-observation, so any datapoint links back to its source.
@@ -29,6 +30,9 @@ carries a `source_ref_id` and date-of-observation, so any datapoint links back t
 | `parliamentary_question` | individual questions asked (subject, ministry, type, date, PDF) | `source_ref_id` (PRS) |
 | `parliamentary_debate` | debates participated in (title, type, date, PDF) | `source_ref_id` (PRS) |
 | `ministry_theme` | curated ministry → policy-theme map (read-time "policy focus") | seed |
+| `pipeline_source_state` / `pipeline_source_config_revision` | effective runtime settings + immutable admin revisions | operational audit |
+| `pipeline_run_request` / `pipeline_run` | idempotent admin commands + durable Dagster executions | manifest/config snapshot |
+| `pipeline_audit_event` | append-only control and execution timeline | actor + payload |
 
 Identity/ER working tables (`person_name_variant` above, plus `person_identity_signals`,
 `person_merge_candidate`, `person_phonetic_key`, `affidavit_relatives`) and the parliamentary set are

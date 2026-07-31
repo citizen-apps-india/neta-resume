@@ -1,0 +1,51 @@
+schema_version: 1
+id: digital_sansad.committees
+source_code: sansad
+display_name: Digital Sansad committee directory
+publisher: Parliament of India
+lifecycle: active
+authority:
+  role: primary
+  trust_tier: 1
+  jurisdiction: India
+rights:
+  license: public-official
+  commercial_use: review
+  redistribution: review
+  store_raw: true
+  notes: Preserve committee codes, formation dates, roles, and the official roster response.
+ingestion:
+  adapter: api
+  base_url: https://sansad.in/
+  trigger:
+    mode: scheduled
+    profile: parliament-session
+  change_detection: [etag, last_modified, content_hash]
+  defaults:
+    enabled: true
+    paused: false
+    frequency_seconds: 21600
+    concurrency_limit: 2
+    rate_limit_per_minute: 30
+    retry_limit: 4
+  guardrails:
+    min_frequency_seconds: 900
+    max_frequency_seconds: 604800
+    max_concurrency: 4
+    max_rate_limit_per_minute: 60
+    max_retry_limit: 6
+  secret_refs: []
+conversion:
+  converter: neta_ingest.converters.sansad:convert_committees
+  contract: legislature_committee_membership.v1
+  produces: [committee_observation, committee_membership_observation]
+quality:
+  freshness_slo_seconds: 43200
+  minimum_records: 1
+  required_fields: [committee_code, committee_name, member_name, member_role]
+orchestration:
+  runner: neta_ingest.runners:run_digital_sansad_committees
+  raw_history: dlt
+verification:
+  corroborate_with: [prs.parliamentary_record]
+  human_review_required: false

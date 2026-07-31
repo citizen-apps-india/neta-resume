@@ -1,0 +1,51 @@
+schema_version: 1
+id: digital_sansad.members
+source_code: sansad
+display_name: Digital Sansad member directory
+publisher: Parliament of India
+lifecycle: active
+authority:
+  role: primary
+  trust_tier: 1
+  jurisdiction: India
+rights:
+  license: public-official
+  commercial_use: review
+  redistribution: review
+  store_raw: true
+  notes: Preserve the official member URL and identifiers with every observation.
+ingestion:
+  adapter: api
+  base_url: https://sansad.in/
+  trigger:
+    mode: scheduled
+    profile: parliament-session
+  change_detection: [etag, last_modified, content_hash]
+  defaults:
+    enabled: true
+    paused: false
+    frequency_seconds: 1800
+    concurrency_limit: 2
+    rate_limit_per_minute: 30
+    retry_limit: 4
+  guardrails:
+    min_frequency_seconds: 300
+    max_frequency_seconds: 86400
+    max_concurrency: 4
+    max_rate_limit_per_minute: 60
+    max_retry_limit: 6
+  secret_refs: []
+conversion:
+  converter: neta_ingest.converters.sansad:convert_members
+  contract: legislature_member.v1
+  produces: [person_observation, office_term_observation, contact_observation]
+quality:
+  freshness_slo_seconds: 3600
+  minimum_records: 500
+  required_fields: [native_member_id, name, house]
+orchestration:
+  runner: neta_ingest.runners:run_digital_sansad_members
+  raw_history: dlt
+verification:
+  corroborate_with: [prs.members, opensanctions.in_sansad]
+  human_review_required: false

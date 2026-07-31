@@ -1,0 +1,48 @@
+schema_version: 1
+id: tcpd.surf_bulk
+source_code: tcpd_surf
+display_name: TCPD SURF and LokDhaba historical data
+publisher: Trivedi Centre for Political Data, Ashoka University
+lifecycle: reference_only
+authority:
+  role: reference
+  trust_tier: 2
+  jurisdiction: India
+rights:
+  license: academic
+  commercial_use: review
+  redistribution: review
+  store_raw: true
+  notes: Pin each import to a published release or immutable content hash.
+ingestion:
+  adapter: bulk
+  base_url: https://tcpd.ashoka.edu.in/
+  trigger:
+    mode: manual
+    profile: bulk-backfill
+  change_detection: [release, content_hash]
+  defaults:
+    enabled: false
+    paused: false
+    frequency_seconds: null
+    concurrency_limit: 2
+    rate_limit_per_minute: 10
+    retry_limit: 3
+  guardrails:
+    min_frequency_seconds: null
+    max_frequency_seconds: null
+    max_concurrency: 4
+    max_rate_limit_per_minute: 30
+    max_retry_limit: 6
+  secret_refs: []
+conversion:
+  converter: neta_ingest.converters.tcpd:convert_person_history
+  contract: political_person_history.v1
+  produces: [person_identity_observation, office_term_observation]
+quality:
+  freshness_slo_seconds: null
+  minimum_records: 1
+  required_fields: [source_person_id, name, election_cycle]
+verification:
+  corroborate_with: [digital_sansad.members, myneta.candidates]
+  human_review_required: true

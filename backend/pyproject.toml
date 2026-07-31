@@ -1,0 +1,41 @@
+[project]
+name = "neta-backend"
+version = "0.1.0"
+description = "Private FastAPI control plane for Neta-Resume ingestion and administration."
+requires-python = ">=3.12"
+dependencies = [
+    "alembic>=1.16",
+    "asyncpg>=0.30",
+    "fastapi[standard]>=0.115",
+    "jinja2>=3.1",
+    "neta-core",
+    "pydantic-settings>=2.3",
+    "sqlalchemy[asyncio]>=2.0",
+]
+
+[tool.uv.sources]
+neta-core = { workspace = true }
+
+[dependency-groups]
+dev = [
+    "aiosqlite>=0.21",
+    "httpx>=0.28",
+    "pytest>=8.0",
+    "pytest-asyncio>=1.0",
+    "ruff>=0.5",
+]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["neta_backend"]

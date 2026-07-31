@@ -5,15 +5,21 @@ URL scheme is election-partitioned, e.g. base = https://www.myneta.info/LokSabha
   winners list : {base}/index.php?action=show_winners&sort=default
   candidate    : {base}/candidate.php?candidate_id={id}
 
-Raw HTML is cached via provenance.cache_raw so every fact has a snapshot it was derived from.
+Every discovery and candidate response is captured through the manifest-backed raw-envelope adapter
+before parsing, so every fact retains the exact snapshot it was derived from.
 """
 
 from __future__ import annotations
 
 import re
 
-from neta_core.http import client as http
-from neta_core.provenance import cache_raw
+from neta_core.pipeline import (
+    ExtractionContext,
+    HttpExtractionRequest,
+    HttpSourceAdapter,
+    RawArtifact,
+    SourceAdapter,
+)
 from neta_sources.myneta.parser import (
     ParsedCandidate,
     WinnerRow,
@@ -46,6 +52,8 @@ from neta_sources.myneta import elections as _elections  # noqa: E402  (no impor
 
 ELECTION_BASE.update(_elections.election_base())
 
+SOURCE_ID = "myneta.candidates"
+
 
 def base_url(cycle: str) -> str:
     try:
@@ -64,21 +72,76 @@ def native_id(cycle: str, candidate_id: str) -> str:
     return f"{cycle}:{candidate_id}"
 
 
-def fetch_winners(cycle: str = "LS2024") -> list[WinnerRow]:
+def extract_winners(
+    cycle: str = "LS2024",
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> RawArtifact:
+    """Fetch the election winners index as one raw artifact."""
     base = base_url(cycle)
-    resp = http.get(f"{base}/index.php?action=show_winners&sort=default")
-    cache_raw(resp.content, suffix=f"_{cycle}_winners.html")
-    return parse_winners(resp.text, base_url=base)
+    extractor = adapter if adapter is not None else HttpSourceAdapter()
+    return extractor.extract(
+        HttpExtractionRequest(
+            source_id=SOURCE_ID,
+            native_id=f"{cycle}:winners",
+            url=f"{base}/index.php",
+            default_content_type="text/html",
+            params={"action": "show_winners", "sort": "default"},
+        ),
+        context=context,
+    )
 
 
-def fetch_candidate(candidate_id: str, cycle: str = "LS2024") -> tuple[ParsedCandidate, str]:
-    """Fetch + parse one candidate page. Returns (parsed, raw_cache_relpath)."""
+def parse_winners_artifact(artifact: RawArtifact, cycle: str = "LS2024") -> list[WinnerRow]:
+    return parse_winners(artifact.text(), base_url=base_url(cycle))
+
+
+def fetch_winners(
+    cycle: str = "LS2024",
+    *,
+    context: ExtractionContext,
+) -> list[WinnerRow]:
+    return parse_winners_artifact(extract_winners(cycle, context=context), cycle)
+
+
+def extract_candidate(
+    candidate_id: str,
+    cycle: str = "LS2024",
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> RawArtifact:
+    """Fetch one candidate page as a raw envelope, without parsing or canonical writes."""
     base = base_url(cycle)
     url = f"{base}/candidate.php?candidate_id={candidate_id}"
-    resp = http.get(url)
-    rel = cache_raw(resp.content, suffix=f"_{cycle}_cand_{candidate_id}.html")
-    parsed = parse_candidate(resp.text, candidate_id=candidate_id)
-    return parsed, rel
+    extractor = adapter if adapter is not None else HttpSourceAdapter()
+    return extractor.extract(
+        HttpExtractionRequest(
+            source_id=SOURCE_ID,
+            native_id=native_id(cycle, candidate_id),
+            url=url,
+            default_content_type="text/html",
+        ),
+        context=context,
+    )
+
+
+def parse_candidate_artifact(artifact: RawArtifact, candidate_id: str) -> ParsedCandidate:
+    """Convert a stored candidate response with the existing affidavit parser."""
+    html = artifact.text()
+    return parse_candidate(html, candidate_id=candidate_id)
+
+
+def fetch_candidate(
+    candidate_id: str,
+    cycle: str = "LS2024",
+    *,
+    context: ExtractionContext,
+) -> tuple[ParsedCandidate, str | None]:
+    """Fetch + parse one candidate page. Returns the parsed record and raw provenance pointer."""
+    artifact = extract_candidate(candidate_id, cycle, context=context)
+    return parse_candidate_artifact(artifact, candidate_id), artifact.provenance_ref
 
 
 def candidate_url(candidate_id: str, cycle: str = "LS2024") -> str:
@@ -91,13 +154,34 @@ def _norm_const(name: str) -> str:
     return re.sub(r"\s+", " ", name).strip().upper()
 
 
-def fetch_constituency_map(cycle: str = "LS2024") -> dict[str, str]:
-    """Map normalized constituency name -> MyNeta constituency_id (from the election index page)."""
-    resp = http.get(f"{base_url(cycle)}/")
+def extract_constituency_index(
+    cycle: str = "LS2024",
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> RawArtifact:
+    """Fetch the election landing page containing constituency identifiers."""
+    extractor = adapter if adapter is not None else HttpSourceAdapter()
+    return extractor.extract(
+        HttpExtractionRequest(
+            source_id=SOURCE_ID,
+            native_id=f"{cycle}:constituency-index",
+            url=f"{base_url(cycle)}/",
+            default_content_type="text/html",
+        ),
+        context=context,
+    )
+
+
+def parse_constituency_map_artifact(artifact: RawArtifact) -> dict[str, str]:
+    return _parse_constituency_map(artifact.text())
+
+
+def _parse_constituency_map(html: str) -> dict[str, str]:
     out: dict[str, str] = {}
     for m in re.finditer(
         r'href=["\']?[^"\'>]*action=show_candidates&constituency_id=(\d+)[^"\'>]*["\']?[^>]*>(.*?)</a>',
-        resp.text, re.S,
+        html, re.S,
     ):
         cid = m.group(1)
         name = _norm_const(re.sub(r"<[^>]+>", " ", m.group(2)))
@@ -106,27 +190,92 @@ def fetch_constituency_map(cycle: str = "LS2024") -> dict[str, str]:
     return out
 
 
-def fetch_constituency_candidates(constituency_id: str, cycle: str = "LS2024") -> list[tuple[str, str]]:
-    """Return [(candidate_id, name), ...] for every candidate in a constituency."""
-    resp = http.get(f"{base_url(cycle)}/index.php?action=show_candidates&constituency_id={constituency_id}")
+def fetch_constituency_map(
+    cycle: str = "LS2024",
+    *,
+    context: ExtractionContext,
+) -> dict[str, str]:
+    """Map normalized constituency name -> MyNeta constituency_id (from the election index page)."""
+    return parse_constituency_map_artifact(extract_constituency_index(cycle, context=context))
+
+
+def extract_constituency_candidates(
+    constituency_id: str,
+    cycle: str = "LS2024",
+    *,
+    context: ExtractionContext,
+    adapter: SourceAdapter[HttpExtractionRequest] | None = None,
+) -> RawArtifact:
+    """Fetch one constituency's complete candidate listing as a raw artifact."""
+    extractor = adapter if adapter is not None else HttpSourceAdapter()
+    return extractor.extract(
+        HttpExtractionRequest(
+            source_id=SOURCE_ID,
+            native_id=f"{cycle}:constituency:{constituency_id}",
+            url=f"{base_url(cycle)}/index.php",
+            default_content_type="text/html",
+            params={"action": "show_candidates", "constituency_id": constituency_id},
+        ),
+        context=context,
+    )
+
+
+def parse_constituency_candidates_artifact(artifact: RawArtifact) -> list[tuple[str, str]]:
+    return _parse_constituency_candidates(artifact.text())
+
+
+def _parse_constituency_candidates(html: str) -> list[tuple[str, str]]:
     seen: dict[str, str] = {}
-    for m in re.finditer(r'candidate\.php\?candidate_id=(\d+)[^>]*>([^<]+)', resp.text):
+    for m in re.finditer(r'candidate\.php\?candidate_id=(\d+)[^>]*>([^<]+)', html):
         cid, name = m.group(1), re.sub(r"\s+", " ", m.group(2)).strip()
         if name and not name.isdigit():
             seen[cid] = name
     return list(seen.items())
 
 
-def fetch_constituency_winner(constituency_id: str, cycle: str = "LS2024") -> str | None:
+def fetch_constituency_candidates(
+    constituency_id: str,
+    cycle: str = "LS2024",
+    *,
+    context: ExtractionContext,
+) -> list[tuple[str, str]]:
+    """Return [(candidate_id, name), ...] for every candidate in a constituency."""
+    artifact = extract_constituency_candidates(
+        constituency_id,
+        cycle,
+        context=context,
+    )
+    return parse_constituency_candidates_artifact(artifact)
+
+
+def parse_constituency_winner_artifact(artifact: RawArtifact) -> str | None:
+    return _parse_constituency_winner(artifact.text())
+
+
+def _parse_constituency_winner(html: str) -> str | None:
+    m = re.search(
+        r"candidate\.php\?candidate_id=(\d+)[^>]*>(?:(?!candidate\.php).){0,200}?Winner",
+        html,
+        re.S | re.I,
+    )
+    return m.group(1) if m else None
+
+
+def fetch_constituency_winner(
+    constituency_id: str,
+    cycle: str = "LS2024",
+    *,
+    context: ExtractionContext,
+) -> str | None:
     """Return the winning candidate_id for a constituency, read from its show_candidates page.
 
     The winner's row carries a "Winner" marker right after the candidate link, e.g.
     `candidate.php?candidate_id=931>Gaikwad Sanjay Rambhau &nbsp&nbsp Winner`. Used to recover winners
     MyNeta omits from its aggregate show_winners list (esp. state-assembly elections).
     """
-    resp = http.get(f"{base_url(cycle)}/index.php?action=show_candidates&constituency_id={constituency_id}")
-    cache_raw(resp.content, suffix=f"_{cycle}_const_{constituency_id}.html")
-    # The candidate link nearest before the "Winner" marker (allow markup/whitespace between them).
-    m = re.search(r'candidate\.php\?candidate_id=(\d+)[^>]*>(?:(?!candidate\.php).){0,200}?Winner',
-                  resp.text, re.S | re.I)
-    return m.group(1) if m else None
+    artifact = extract_constituency_candidates(
+        constituency_id,
+        cycle,
+        context=context,
+    )
+    return parse_constituency_winner_artifact(artifact)

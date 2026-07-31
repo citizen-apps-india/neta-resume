@@ -20,6 +20,8 @@ import os
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
+from neta_core.pipeline import ExtractionContext
+from neta_ingest.extraction import source_extraction_context
 from neta_ingest.pipelines.identity import affidavit_attach as aa
 from neta_sources.myneta import client as myneta
 
@@ -35,7 +37,12 @@ def _index_path(cycle: str) -> str:
     return os.path.join(_INDEX_DIR, f"candidates_{cycle}.json")
 
 
-def build_index(cycle: str, refresh: bool = False) -> dict[str, list[list[str]]]:
+def build_index(
+    cycle: str,
+    refresh: bool = False,
+    *,
+    extraction_context: ExtractionContext | None = None,
+) -> dict[str, list[list[str]]]:
     """{constituency_norm: [[candidate_id, name], ...]} for an entire cycle. Cached to disk.
 
     One fetch per constituency (~540), so it is crawled once and reused by every matching run.
@@ -46,12 +53,13 @@ def build_index(cycle: str, refresh: bool = False) -> dict[str, list[list[str]]]
             return json.load(f)
 
     os.makedirs(_INDEX_DIR, exist_ok=True)
-    const_map = myneta.fetch_constituency_map(cycle)
+    context = extraction_context or source_extraction_context(myneta.SOURCE_ID)
+    const_map = myneta.fetch_constituency_map(cycle, context=context)
     print(f"[hist:{cycle}] building candidate index over {len(const_map)} constituencies (one-time crawl)…")
     index: dict[str, list[list[str]]] = {}
     for i, (const_norm, cons_id) in enumerate(sorted(const_map.items()), 1):
         try:
-            cands = myneta.fetch_constituency_candidates(cons_id, cycle)
+            cands = myneta.fetch_constituency_candidates(cons_id, cycle, context=context)
             index[const_norm] = [[cid, name] for cid, name in cands]
         except Exception as e:  # noqa: BLE001 - skip a bad constituency page, keep crawling
             print(f"  [{i}/{len(const_map)}] {const_norm}: FAILED {type(e).__name__}: {e}")
@@ -98,7 +106,12 @@ def run(cycle: str, current_cycle: str = "LS2024", house: str = "ls",
         limit: int | None = None, refresh_index: bool = False) -> None:
     if cycle == current_cycle:
         raise ValueError(f"historical-lookup is for PAST cycles; {current_cycle} is the current roster")
-    index = build_index(cycle, refresh=refresh_index)
+    extraction_context = source_extraction_context(myneta.SOURCE_ID)
+    index = build_index(
+        cycle,
+        refresh=refresh_index,
+        extraction_context=extraction_context,
+    )
 
     with session_scope() as s:
         house_id = s.execute(text("SELECT id FROM house WHERE code=:c"), {"c": house.upper()}).scalar()
@@ -125,10 +138,13 @@ def run(cycle: str, current_cycle: str = "LS2024", house: str = "ls",
             {"c": cycle, "cur": current_cycle},
         ).all()
 
-    const_map = myneta.fetch_constituency_map(cycle)
+    const_map = myneta.fetch_constituency_map(cycle, context=extraction_context)
     stripped = {aa.strip_const(k): v for k, v in const_map.items()}
     token_index = _build_token_index(index)
-    winners = {w.candidate_id for w in myneta.fetch_winners(cycle)}
+    winners = {
+        winner.candidate_id
+        for winner in myneta.fetch_winners(cycle, context=extraction_context)
+    }
     if limit:
         rows = rows[:limit]
     print(f"[hist:{cycle}] {len(rows)} sitting MPs missing a {cycle} affidavit to search for")
@@ -147,7 +163,11 @@ def run(cycle: str, current_cycle: str = "LS2024", house: str = "ls",
                                "candidates": evidence})
             continue
 
-        parsed, raw_rel = myneta.fetch_candidate(cand_id, cycle)
+        parsed, raw_rel = myneta.fetch_candidate(
+            cand_id,
+            cycle,
+            context=extraction_context,
+        )
         # Age corroboration for every sourced match (when both ages are known). Guards same-name-
         # different-person attaches — including dynastic relatives who share a surname AND a seat, which
         # Jaro-Winkler's prefix weighting can now lift over the same-const gate. A genuine age mismatch

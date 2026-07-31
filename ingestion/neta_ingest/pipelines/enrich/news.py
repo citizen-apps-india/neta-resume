@@ -10,8 +10,9 @@ from __future__ import annotations
 from sqlalchemy import text
 
 from neta_core.db.engine import session_scope
-from neta_ingest.pipelines.identity.affidavit_attach import name_tokens
 from neta_core.provenance import record_source_ref
+from neta_ingest.extraction import source_extraction_context
+from neta_ingest.pipelines.identity.affidavit_attach import name_tokens
 from neta_sources.google_news import client as gn
 
 KEEP = 15  # most-recent articles to store per legislator
@@ -49,10 +50,19 @@ def run(house: str | None = None, limit: int | None = None) -> None:
         rows = rows[:limit]
     print(f"[news] fetching news for {len(rows)} legislators …")
 
+    extraction_context = source_extraction_context(gn.SOURCE_ID)
     ok = stored = failed = 0
     for r in rows:
         try:
-            arts, raw_rel = gn.fetch_news(r.display_name, r.party, r.constituency, slug=str(r.id))
+            artifact = gn.extract_news(
+                r.display_name,
+                r.party,
+                r.constituency,
+                slug=str(r.id),
+                context=extraction_context,
+            )
+            arts = gn.parse_news_artifact(artifact)
+            raw_rel = artifact.provenance_ref
         except Exception as e:  # noqa: BLE001 — log + skip a bad feed, keep the batch going
             failed += 1
             print(f"  [{r.id}] {r.display_name}: FAILED {type(e).__name__}: {e}")
