@@ -96,7 +96,8 @@ def test_prod_network_uses_two_nat_gateways_and_an_s3_endpoint() -> None:
 
     assert "NatGatewayStrategy.ONE_PER_AZ" in network
     assert "VpcEndpointStrategy.AUTO" in network
-    assert 'service_name="s3"' in network
+    assert 'service_name=f"com.amazonaws.{settings.region}.s3"' in network
+    assert 'service_name="s3"' not in network
     assert "SubnetType.ISOLATED" in network
 
 

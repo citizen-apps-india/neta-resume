@@ -49,7 +49,7 @@ def create_network(settings: InfraSettings) -> Network:
         ),
         vpc_endpoint_specs=[
             awsx.ec2.VpcEndpointSpecArgs(
-                service_name="s3",
+                service_name=f"com.amazonaws.{settings.region}.s3",
                 vpc_endpoint_type="Gateway",
             )
         ],
