@@ -186,8 +186,9 @@ def test_cluster_operators_are_pulumi_owned_and_version_pinned() -> None:
     settings = _read("infra/neta_infra/settings.py")
 
     assert 'chart="external-secrets"' in addons
-    assert 'chart="karpenter-crd"' in addons
-    assert 'chart="karpenter"' in addons
+    assert 'chart="oci://public.ecr.aws/karpenter/karpenter-crd"' in addons
+    assert 'chart="oci://public.ecr.aws/karpenter/karpenter"' in addons
+    assert 'repo="oci://public.ecr.aws/karpenter"' not in addons
     assert "skip_crds=True" in addons
     assert 'kind="EC2NodeClass"' in addons
     assert 'kind="NodePool"' in addons

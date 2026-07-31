@@ -159,16 +159,12 @@ def create_platform_addons(
         ),
     )
 
-    karpenter_repository = k8s.helm.v3.RepositoryOptsArgs(
-        repo="oci://public.ecr.aws/karpenter",
-    )
     karpenter_crds = k8s.helm.v3.Release(
         "karpenter-crds",
         name="karpenter-crd",
         namespace="kube-system",
-        chart="karpenter-crd",
+        chart="oci://public.ecr.aws/karpenter/karpenter-crd",
         version=settings.karpenter_chart_version,
-        repository_opts=karpenter_repository,
         atomic=True,
         cleanup_on_fail=True,
         max_history=5,
@@ -179,9 +175,8 @@ def create_platform_addons(
         "karpenter",
         name="karpenter",
         namespace="kube-system",
-        chart="karpenter",
+        chart="oci://public.ecr.aws/karpenter/karpenter",
         version=settings.karpenter_chart_version,
-        repository_opts=karpenter_repository,
         skip_crds=True,
         atomic=True,
         cleanup_on_fail=True,
