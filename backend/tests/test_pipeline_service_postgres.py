@@ -45,6 +45,23 @@ pytestmark = pytest.mark.skipif(
 # checked what the cron actually fires). So no test here may duplicate a manifest number: an
 # expectation is either derived from the manifest at runtime, or pinned by the test itself through
 # an admin override whose value is derived from that manifest's guardrails.
+#
+# The same applies to operational state, not just numbers. The scheduled manifests ship `paused: true`
+# so that registering them in production cannot arm every source at once (`_initial_next_run` sets
+# next_run_at to *now*, not now+frequency). These tests are about claiming and execution, so they load
+# the manifest through `_schedulable()` below and state that requirement explicitly, rather than
+# inheriting whatever pause state the repository happens to want this week.
+
+
+def _schedulable(manifest: SourceManifest) -> SourceManifest:
+    """The manifest as a claimable source, whatever its repository pause default currently is.
+
+    Returns a copy: the caller's manifest is untouched.
+    """
+    copy = manifest.model_copy(deep=True)
+    copy.ingestion.defaults.enabled = True
+    copy.ingestion.defaults.paused = False
+    return copy
 
 
 def _scheduled_interval(manifest: SourceManifest) -> timedelta:
@@ -107,7 +124,7 @@ async def test_async_service_revisions_rebase_commands_and_quarantine() -> None:
 
     try:
         async with session_factory() as session:
-            manifest = load_source_manifest(MANIFEST)
+            manifest = _schedulable(load_source_manifest(MANIFEST))
             service = PipelineControlService(session)
             started_at = datetime(2026, 7, 31, 9, 0, tzinfo=UTC)
 
@@ -240,7 +257,7 @@ async def test_scheduler_claims_idempotent_runs_and_records_execution_lifecycle(
 
     try:
         async with session_factory() as session:
-            manifest = load_source_manifest(MANIFEST)
+            manifest = _schedulable(load_source_manifest(MANIFEST))
             service = PipelineControlService(session)
             started_at = datetime(2026, 7, 31, 10, 0, tzinfo=UTC)
             await service.register_manifest(
@@ -318,7 +335,7 @@ async def test_claimed_runs_carry_the_operator_effective_runtime_configuration()
 
     try:
         async with session_factory() as session:
-            manifest = load_source_manifest(MANIFEST)
+            manifest = _schedulable(load_source_manifest(MANIFEST))
             service = PipelineControlService(session)
             at = datetime(2026, 8, 1, 9, 0, tzinfo=UTC)
             await service.register_manifest(manifest, git_commit_sha="d" * 40, occurred_at=at)
@@ -365,7 +382,7 @@ async def test_stale_runs_are_cancelled_and_release_their_source() -> None:
 
     try:
         async with session_factory() as session:
-            manifest = load_source_manifest(MANIFEST)
+            manifest = _schedulable(load_source_manifest(MANIFEST))
             service = PipelineControlService(session)
             at = datetime(2026, 8, 2, 9, 0, tzinfo=UTC)
             stale_after = timedelta(hours=6)
