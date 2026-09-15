@@ -4,10 +4,56 @@ Running, backfilling, and debugging the ingestion pipelines. Everything here ass
 `NETA_DATABASE_URL` is exported and you're in `ingestion/` (`uv sync` once). All pipelines are
 **idempotent** (upsert on natural keys), so any step is safe to re-run.
 
-## Dagster execution-plane preview
+## The scheduler: `neta register-manifests` + `neta dispatch`
 
-The manifest-driven Dagster/dlt foundation is available locally. Production remains on the GitHub
-Actions schedules described below until the Kubernetes cutover is approved.
+The manifest-driven scheduler runs as a plain CLI command — no Dagster deployment required. Both
+commands talk to the **control plane** (`NETA_BACKEND_DATABASE_URL`); the pipelines they launch write
+facts through `NETA_DATABASE_URL` as usual.
+
+```bash
+export NETA_BACKEND_DATABASE_URL="postgresql+asyncpg://neta:neta@localhost:5432/neta"
+
+uv run neta register-manifests          # Git manifests → pipeline_source_state (idempotent)
+uv run neta dispatch --dry-run          # what would run; claims nothing, writes nothing
+uv run neta dispatch                    # one real tick
+```
+
+`register-manifests` must run on the deployed commit before a tick: `claim_dispatches` refuses any
+source whose stored `manifest_hash` disagrees with the checkout. It stamps the commit from
+`NETA_GIT_COMMIT_SHA`, then `GITHUB_SHA`, then local `HEAD`.
+
+One tick, in order:
+
+1. **Reconcile abandoned runs.** A killed job (cancelled workflow, the 6h runner ceiling) leaves its
+   `pipeline_run` in `RUNNING` forever, and a `RUNNING` row counts against the source's
+   `concurrency_limit` — so on a single-slot source such as `myneta.candidates` one abandoned run
+   silently blocks the source for good. Every tick first cancels runs older than
+   `--stale-after-minutes` (default **360**, the ceiling GitHub itself enforces, so it can never
+   cancel a run that is still executing) and records a `run.cancelled` audit event with actor
+   `dispatch-reconciler`. Raise the flag for long local runs; never lower it.
+2. **Claim** due schedules and audited admin run requests (advisory-locked, idempotent run keys).
+3. **Execute** each claim's manifest runner in-process, under the *effective* rate limit and
+   concurrency limit the run was claimed with — admin overrides included, not the repository
+   defaults. `rate_limit_per_minute` becomes a minimum delay between requests to that host.
+4. **Record** every attempt. A `pydantic.ValidationError` is a contract failure and is never retried;
+   anything else retries up to the source's `retry_limit` with `min(60, 2**retry)` backoff, each
+   retry written to the audit log. The tick exits non-zero if any dispatch failed.
+
+Scheduled runs live in `.github/workflows/dispatch.yml`. It ships **manual-only**: the `schedule:`
+block is commented out so merging it cannot start scheduling while the Dagster fallback is still
+enabled. Two schedulers must never claim at once.
+
+```sql
+-- what the scheduler thinks of each source
+SELECT source_key, enabled, paused, quarantined_at, next_run_at, last_success_at,
+       consecutive_failures, rate_limit_per_minute, concurrency_limit
+FROM pipeline_source_state ORDER BY source_key;
+```
+
+## Dagster execution-plane preview (fallback)
+
+The manifest-driven Dagster/dlt foundation is available locally and stays in place as the fallback
+until the `neta dispatch` cutover above is proven. Run one or the other, never both.
 
 ```bash
 export NETA_BACKEND_DATABASE_URL="postgresql+asyncpg://neta:neta@localhost:5432/neta"

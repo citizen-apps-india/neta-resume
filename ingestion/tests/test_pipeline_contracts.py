@@ -72,7 +72,7 @@ def test_admin_can_pause_resume_and_change_frequency(
 
     paused = effective_runtime_config(manifest, AdminRuntimePatch(paused=True))
     assert paused.paused is True
-    assert paused.frequency_seconds == 1800
+    assert paused.frequency_seconds == 604800
 
     resumed_at_new_frequency = effective_runtime_config(
         manifest,
@@ -118,7 +118,7 @@ def test_admin_frequency_change_must_respect_git_guardrails(
         effective_runtime_config(manifest, AdminRuntimePatch(frequency_seconds=120))
 
     with pytest.raises(ValueError, match="allowed maximum"):
-        effective_runtime_config(manifest, AdminRuntimePatch(frequency_seconds=172800))
+        effective_runtime_config(manifest, AdminRuntimePatch(frequency_seconds=1209600))
 
 
 def test_manual_sources_cannot_be_scheduled_by_normal_operator_patch(

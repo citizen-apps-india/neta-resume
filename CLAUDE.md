@@ -16,7 +16,10 @@ ingestion (Python 3.14 + uv)  ──writes──▶  Postgres 18  ──reads─
 - **`backend/`** — private async FastAPI control plane. SQLAlchemy declarative models, Alembic migrations, and `AsyncSession` services for scheduling/admin state. It is part of the root uv workspace.
 - **`orchestration/`** — Dagster OSS execution plane. A manifest-driven `SourceComponent` builds one
   asset job per executable source; a control-plane sensor dispatches durable `pipeline_run` rows. dlt
-  maintains the raw-envelope metadata ledger in its own PostgreSQL schema.
+  maintains the raw-envelope metadata ledger in its own PostgreSQL schema. Scheduling is moving off
+  this Kubernetes-shaped execution plane onto a `neta dispatch` command driven by the Postgres control
+  plane, run from GitHub Actions; `orchestration/` stays in place as the fallback during that parallel-run
+  soak.
 - **`api/`** — FastAPI **read** layer. Assembles the resume aggregate, emits OpenAPI. Holds a read DB role. **Standalone** project (excluded from the workspace); reads pre-computed facts.
 - **`web/`** — Next.js. Server components call `api` **over HTTP only** (no DB creds in the browser).
 
@@ -91,6 +94,8 @@ Every command is a thin wrapper over a pipeline in `ingestion/neta_ingest/pipeli
 | `neta native-names` | backfill Devanagari names from Wikidata (18th LS) |
 | `neta attendance --house ls\|rs` | attach cumulative PRS attendance % to current-term office_terms |
 | `neta macro-indicators` | India Dashboard: fetch catalogued World Bank macro series → `macro_indicator_value` |
+| `neta register-manifests` | validate `ingestion/source_registry/*.yaml` and reconcile them into scheduler state (idempotent). Uses the control-plane DSN `NETA_BACKEND_DATABASE_URL` |
+| `neta dispatch [--dry-run]` | one scheduler tick: cancel abandoned runs, claim what is due (schedules + admin run requests), run each source's manifest runner under its effective rate/concurrency limit, record every attempt. `--dry-run` prints the plan and writes nothing. See `docs/OPERATIONS.md` |
 
 **Typical full run order:** seeds → `ls-roster` / `rajya-sabha` → `myneta` (affidavits/criminal) →
 `enrich-missing` → `resolve` / `merge-cycles` → `canon-parties` → `party-switch` → `enrich-switches` →

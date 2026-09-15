@@ -93,3 +93,12 @@ measurable operational, reliability, or cost advantage.
    projections.
 7. Migrate the remaining source inventory, deploy the Kubernetes/GitOps platform, and retire equivalent
    cron workflows after parity.
+
+## Amendment (2026-09-15)
+
+The three-plane decision above still stands. The **execution plane** implementation changes: the
+Kubernetes/GitOps platform from step 7 (Pulumi/EKS, AWS-managed Argo CD, Karpenter) was built, never
+applied, and is being torn down rather than deployed. In its place, execution moves to a `neta dispatch`
+CLI command driven by the same Postgres control plane, run from GitHub Actions — no Kubernetes cluster.
+`orchestration/` (the Dagster asset/sensor layer built for step 4) stays in the tree as a fallback during
+the parallel-run soak and is retired only after the new dispatcher proves out.

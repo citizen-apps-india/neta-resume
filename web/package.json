@@ -11,7 +11,7 @@
     "codegen": "openapi-typescript http://localhost:8000/openapi.json -o src/types/api.ts"
   },
   "dependencies": {
-    "next": "16.2.12",
+    "next": "16.3.5",
     "react": "19.2.8",
     "react-dom": "19.2.8",
     "recharts": "3.10.1"
@@ -21,7 +21,7 @@
     "@types/react": "19.2.18",
     "@types/react-dom": "19.2.4",
     "eslint": "9.39.5",
-    "eslint-config-next": "16.2.12",
+    "eslint-config-next": "16.3.5",
     "openapi-typescript": "7.13.0",
     "playwright-core": "1.62.1",
     "typescript": "5.9.3"
@@ -30,7 +30,6 @@
     "brace-expansion": "5.0.9",
     "js-yaml": "4.3.0",
     "minimatch": "10.2.6",
-    "postcss": "8.5.25",
-    "sharp": "0.35.3"
+    "postcss": "8.5.25"
   }
 }

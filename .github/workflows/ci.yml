@@ -6,18 +6,6 @@ on:
   pull_request:
 
 jobs:
-  gitops:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - name: Install pinned GitOps validation tools
-        run: |
-          mkdir -p "$RUNNER_TEMP/gitops-bin"
-          scripts/install-gitops-tools.sh "$RUNNER_TEMP/gitops-bin"
-          echo "$RUNNER_TEMP/gitops-bin" >> "$GITHUB_PATH"
-      - name: Render Helm and Kustomize configuration
-        run: scripts/validate-gitops.sh
-
   # Python workspace: core, sources, ingestion, control backend, and orchestration.
   # The public api is a separate, independent job.
   ingestion:
@@ -57,23 +45,7 @@ jobs:
       - name: Seed source registry
         run: psql "$NETA_MIGRATE_DATABASE_URL" -v ON_ERROR_STOP=1 -f db/seeds/sources.sql
       - run: uv run ruff check packages ingestion backend orchestration
-      - run: uv run pytest -q backend/tests ingestion/tests orchestration/tests tests
-
-  infra:
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: infra
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
-        with:
-          python-version: 3.14.6
-          version: 0.12.0
-      - run: uv sync --dev
-      - run: uv run ruff check .
-      - run: uv run ruff format --check .
-      - run: uv run pytest -q
+      - run: uv run pytest -q backend/tests ingestion/tests orchestration/tests
 
   api:
     runs-on: ubuntu-latest

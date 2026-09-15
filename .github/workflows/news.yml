@@ -2,6 +2,11 @@ name: news
 
 # Weekly press-coverage refresh for sitting legislators (free Google News RSS).
 # Idempotent: each person's news_item rows are replaced per run. DB via the NETA_DATABASE_URL secret.
+#
+# The pipeline bounds itself to a ~3h30m wall-clock budget and always processes the least-recently
+# covered legislators first (see ingestion/neta_ingest/pipelines/enrich/news.py), so a run that runs out
+# of budget stops cleanly and next week's run picks up the tail. timeout-minutes below is a hard backstop
+# comfortably under GitHub's own 360-minute ceiling, in case that self-bound ever fails to trip.
 
 on:
   workflow_dispatch:
@@ -21,6 +26,7 @@ on:
 jobs:
   run:
     runs-on: ubuntu-latest
+    timeout-minutes: 240
     defaults:
       run:
         working-directory: ingestion

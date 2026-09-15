@@ -24,13 +24,16 @@ ingestion:
   defaults:
     enabled: true
     paused: false
-    frequency_seconds: 1800
+    frequency_seconds: 604800
     concurrency_limit: 2
     rate_limit_per_minute: 30
     retry_limit: 4
   guardrails:
     min_frequency_seconds: 300
-    max_frequency_seconds: 86400
+    # Widened 2026-09-15 to match the actual GitHub Actions cadence (ingest.yml's
+    # weekly roster cron, Mondays). The old 86400 ceiling encoded a freshness
+    # target (roster could go stale after 1 day) this project has never met.
+    max_frequency_seconds: 604800
     max_concurrency: 4
     max_rate_limit_per_minute: 60
     max_retry_limit: 6
