@@ -10,9 +10,9 @@ Async FastAPI service for ingestion administration. Its structure follows the Hu
 
 The public read API remains in `api/`. The backend serves an authenticated operator console at
 `/admin` and its same-origin JSON API at `/admin/api`. The local-token mode exists only for local
-review and is rejected when `NETA_BACKEND_ENVIRONMENT=production`; production deployment remains
-private until the OIDC step is configured. Alembic revision `pipeline_execution_0002` adds the durable
-`pipeline_run` record used to claim schedules and reconcile Dagster execution status.
+review and is rejected when `NETA_BACKEND_ENVIRONMENT=production`; production uses `github_oidc`
+instead — see `docs/ingestion/admin-console.md`. Alembic revision `pipeline_execution_0002` adds the
+durable `pipeline_run` record used to claim schedules and reconcile execution status.
 
 ## Local run
 
