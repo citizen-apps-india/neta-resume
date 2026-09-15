@@ -8,6 +8,25 @@ name: keep-warm
 # Notes: GitHub may delay scheduled runs under load, so 10 min leaves headroom under the 15-min sleep
 # threshold; and the ping itself wakes a sleeping dyno (the retry loop waits out a cold start). No secrets —
 # the API URL is public. Update API_URL below if the Render service URL ever changes.
+#
+# 2026-09 Neon CU-hour audit (cutover/w6-neon-compute): this ping never touched Postgres — /health does not
+# call get_db (see api/neta_api/main.py) — so keep-warm was never itself opening a Neon connection. But
+# before this branch's deps.py fix (default QueuePool -> NullPool), the FIRST real request after a deploy
+# would open a pooled Neon connection that then stayed open for the life of the Render process; keeping
+# that process alive 24/7 is what kept Neon's compute from ever autosuspending, and this workflow's whole
+# job is keeping that process alive. So keep-warm was an indirect but real contributor to the Neon
+# compute bill. With NullPool now closing every connection at the end of each request, that chain is
+# broken — keeping Render warm no longer keeps a Neon connection open, so this workflow no longer has a
+# Neon-cost side effect.
+#
+# Its original Render-side job (avoid a cold dyno on first hit) is also weaker than it looks: GitHub
+# throttles free-tier scheduled workflows hard, and in practice this "*/10" cron has been observed firing
+# roughly every ~73 min, not 10 — well past Render's ~15-min spin-down threshold. So most of the time the
+# dyno has already gone to sleep before the next ping arrives; keep-warm is mostly just an early,
+# unconditional wake-up call (via its own retry-on-cold-start loop) rather than something that actually
+# prevents the sleep it's named for. Recommendation: leave it running (it's now cost-neutral on Neon and
+# still shaves some cold starts), but don't expect it to reliably keep the dyno warm, and don't treat it as
+# something worth tuning further — a tighter cron won't fire any more often than GitHub allows.
 
 on:
   schedule:
