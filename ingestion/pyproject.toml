@@ -4,6 +4,7 @@ version = "0.1.0"
 description = "Neta-Resume ingestion runner: the Typer CLI + pipelines. Depends on neta-core + neta-sources."
 requires-python = ">=3.12"
 dependencies = [
+    "neta-backend",         # `neta dispatch` drives the control plane's PipelineControlService directly
     "neta-core",
     "neta-sources",
     "sqlalchemy>=2.0",      # pipelines issue raw SQL via text()
@@ -14,6 +15,7 @@ dependencies = [
 ]
 
 [tool.uv.sources]
+neta-backend = { workspace = true }
 neta-core = { workspace = true }
 neta-sources = { workspace = true }
 

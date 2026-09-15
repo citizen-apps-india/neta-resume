@@ -373,5 +373,51 @@ def party_switch() -> None:
     p.run()
 
 
+# --- manifest-driven scheduler (the plain-CLI replacement for the Dagster control plane) -------
+# `dispatch` is one scheduler tick: claim what the control plane says is due, run it here, write the
+# audit trail back. It talks to NETA_BACKEND_DATABASE_URL (the control plane), not NETA_DATABASE_URL.
+# The Dagster code location under orchestration/ stays as the fallback until this is proven.
+
+
+@app.command(name="dispatch")
+def dispatch(dry_run: bool = typer.Option(False, "--dry-run", help="print the due set and exit; "
+                                          "claims nothing and writes nothing"),
+             limit: int = typer.Option(100, help="max dispatches claimed in one tick"),
+             stale_after_minutes: int = typer.Option(360, help="cancel runs still RUNNING after "
+                                                     "this long — their job was killed. Must stay "
+                                                     "above any real run time (default 360 = the "
+                                                     "GitHub job ceiling); raise it, never lower "
+                                                     "it, for long local runs")) -> None:
+    """One ingestion scheduler tick: reconcile abandoned runs, claim due sources + admin run
+    requests, run them, record them.
+
+    Each source runs its manifest-declared runner under the *effective* rate limit and concurrency
+    limit the run was claimed with (admin overrides included). A pydantic contract failure is never
+    retried; operational failures retry up to the source's retry_limit with min(60, 2**retry)
+    backoff. Exits non-zero if any dispatch failed."""
+    from neta_ingest import dispatch as d
+
+    try:
+        d.run(dry_run=dry_run, limit=limit, stale_after_minutes=stale_after_minutes,
+              emit=typer.echo)
+    except d.DispatchError as error:
+        typer.echo(f"error: {error}", err=True)
+        raise typer.Exit(code=1) from error
+
+
+@app.command(name="register-manifests")
+def register_manifests(git_commit: str = typer.Option(None, help="exact deployed Git commit; "
+                                                      "defaults to NETA_GIT_COMMIT_SHA, GITHUB_SHA, "
+                                                      "then local HEAD"),
+                       actor: str = typer.Option("deployment-controller",
+                                                 help="deployment actor recorded in the audit log")
+                       ) -> None:
+    """Validate ingestion/source_registry/*.yaml and reconcile them into scheduler state (idempotent)."""
+    from neta_ingest import dispatch as d
+
+    count, commit = d.register_manifests(git_commit_sha=git_commit, actor=actor)
+    typer.echo(f"Registered {count} source manifests at {commit}")
+
+
 if __name__ == "__main__":
     app()

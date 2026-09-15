@@ -94,6 +94,8 @@ Every command is a thin wrapper over a pipeline in `ingestion/neta_ingest/pipeli
 | `neta native-names` | backfill Devanagari names from Wikidata (18th LS) |
 | `neta attendance --house ls\|rs` | attach cumulative PRS attendance % to current-term office_terms |
 | `neta macro-indicators` | India Dashboard: fetch catalogued World Bank macro series → `macro_indicator_value` |
+| `neta register-manifests` | validate `ingestion/source_registry/*.yaml` and reconcile them into scheduler state (idempotent). Uses the control-plane DSN `NETA_BACKEND_DATABASE_URL` |
+| `neta dispatch [--dry-run]` | one scheduler tick: cancel abandoned runs, claim what is due (schedules + admin run requests), run each source's manifest runner under its effective rate/concurrency limit, record every attempt. `--dry-run` prints the plan and writes nothing. See `docs/OPERATIONS.md` |
 
 **Typical full run order:** seeds → `ls-roster` / `rajya-sabha` → `myneta` (affidavits/criminal) →
 `enrich-missing` → `resolve` / `merge-cycles` → `canon-parties` → `party-switch` → `enrich-switches` →
