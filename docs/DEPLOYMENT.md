@@ -1,11 +1,5 @@
 # Deployment (current stack)
 
-> **Target production foundation:** production-only Pulumi/EKS infrastructure, AWS-managed Argo CD,
-> Karpenter, EKS Pod Identity, and gated application manifests now live under `infra/` and `deploy/`.
-> They are not deployed and do not replace the current stack below. See
-> [`deploy/README.md`](../deploy/README.md) for prerequisites, promotion markers, identity boundaries,
-> validation, and cutover gates.
-
 Near-$0/month footprint. Four layers, four services — the data layer is **independent of any laptop**:
 schema + data reach the DB through GitHub Actions, not a local sync.
 

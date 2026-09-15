@@ -16,7 +16,10 @@ ingestion (Python 3.14 + uv)  ──writes──▶  Postgres 18  ──reads─
 - **`backend/`** — private async FastAPI control plane. SQLAlchemy declarative models, Alembic migrations, and `AsyncSession` services for scheduling/admin state. It is part of the root uv workspace.
 - **`orchestration/`** — Dagster OSS execution plane. A manifest-driven `SourceComponent` builds one
   asset job per executable source; a control-plane sensor dispatches durable `pipeline_run` rows. dlt
-  maintains the raw-envelope metadata ledger in its own PostgreSQL schema.
+  maintains the raw-envelope metadata ledger in its own PostgreSQL schema. Scheduling is moving off
+  this Kubernetes-shaped execution plane onto a `neta dispatch` command driven by the Postgres control
+  plane, run from GitHub Actions; `orchestration/` stays in place as the fallback during that parallel-run
+  soak.
 - **`api/`** — FastAPI **read** layer. Assembles the resume aggregate, emits OpenAPI. Holds a read DB role. **Standalone** project (excluded from the workspace); reads pre-computed facts.
 - **`web/`** — Next.js. Server components call `api` **over HTTP only** (no DB creds in the browser).
 

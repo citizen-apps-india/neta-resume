@@ -85,8 +85,10 @@ the Kubernetes store uses workload identity rather than static access keys.
 
 ## Scheduling
 
-Dagster assets, retries, durable run keys, status reconciliation, and database-driven scheduling are now
-implemented. A production-only EKS/Pulumi foundation and namespace-scoped GitOps manifests exist under
-`infra/` and `deploy/`, but have not been applied. AWS-managed Argo CD reconciles deployments while
-Dagster orchestrates data jobs. Existing GitHub Actions schedules remain authoritative until a manually
-gated production sync proves parity and the cutover is separately approved.
+Source manifests in Git define each source's default frequency and retry policy; the Postgres control
+plane holds the live schedule, pause/resume state, and retry/backfill overrides on top of those defaults.
+Scheduling is moving to a `neta dispatch` command, invoked from a GitHub Actions cron, that asks the
+control plane what run is due and executes it directly — no Kubernetes cluster. That dispatcher is not
+yet built or merged. `orchestration/` (the Dagster asset/sensor layer) remains in the tree as a fallback
+until the new dispatcher has been through a parallel-run soak and the cutover is separately approved;
+existing GitHub Actions schedules stay authoritative in the meantime.
