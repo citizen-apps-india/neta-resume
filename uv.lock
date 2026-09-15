@@ -1355,6 +1355,7 @@ version = "0.1.0"
 source = { editable = "ingestion" }
 dependencies = [
     { name = "jellyfish" },
+    { name = "neta-backend" },
     { name = "neta-core" },
     { name = "neta-sources" },
     { name = "playwright" },
@@ -1372,6 +1373,7 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "jellyfish", specifier = ">=1.0" },
+    { name = "neta-backend", editable = "backend" },
     { name = "neta-core", editable = "packages/neta-core" },
     { name = "neta-sources", editable = "packages/neta-sources" },
     { name = "playwright", specifier = ">=1.60" },

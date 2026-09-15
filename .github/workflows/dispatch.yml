@@ -1,0 +1,78 @@
+name: dispatch
+
+# The manifest-driven ingestion scheduler, without Dagster. One tick of `neta dispatch`:
+#   claim what the control plane says is due (schedules + audited admin run requests)
+#   -> run each source's manifest-declared runner here, under that manifest's rate limit
+#   -> record every attempt, retry, and terminal status back into the control plane.
+#
+# Sources decide their own cadence in ingestion/source_registry/*.yaml (frequency_seconds); this
+# cron is only the heartbeat that asks "anything due?". A source that is paused, quarantined, or
+# not yet due costs one no-op query.
+#
+# PHASE 1 (now): manual only. The `schedule:` block below is intentionally commented out so that
+# merging this workflow cannot start scheduling anything on its own — the Dagster code location
+# under orchestration/ is still the fallback, and two schedulers claiming the same pipeline_run
+# rows is exactly the overlap we do not want. Verify with `--dry-run` first (workflow_dispatch),
+# then run it for real by hand a few times.
+#
+# PHASE 2 (deliberate, separate PR): stop the Dagster dispatch sensor, then uncomment `schedule:`.
+
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: "Plan only: print the due set, claim nothing, write nothing"
+        type: boolean
+        required: false
+        default: true
+      limit:
+        description: "Max dispatches claimed in one tick"
+        required: false
+        default: "100"
+  # PHASE 2 ONLY — do not uncomment until the Dagster dispatch sensor is stopped.
+  # schedule:
+  #   - cron: "17 * * * *"   # hourly, off the hour (GitHub's :00 is the busiest, most-delayed slot)
+
+concurrency:
+  # Never let two ticks overlap: claim_dispatches is advisory-locked, but two concurrent ticks
+  # would still run the same source twice in parallel and break its concurrency/rate limits.
+  # Separate from the `ingest` group so a long manual backfill does not stall the scheduler —
+  # per-source overlap is prevented by the control plane's own concurrency_limit.
+  group: dispatch
+  cancel-in-progress: false
+
+jobs:
+  tick:
+    runs-on: ubuntu-latest
+    # Well under GitHub's 6h job cap: a tick that has not finished in 2h is stuck, and killing it
+    # early keeps the next tick's claim window clean.
+    timeout-minutes: 120
+    env:
+      # The control plane (pipeline_run / pipeline_source_state) lives behind the async backend DSN.
+      NETA_BACKEND_DATABASE_URL: ${{ secrets.NETA_BACKEND_DATABASE_URL }}
+      # The pipelines themselves write facts through the ingestion write-role DSN.
+      NETA_DATABASE_URL: ${{ secrets.NETA_DATABASE_URL }}
+      NETA_GIT_COMMIT_SHA: ${{ github.sha }}
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
+        with:
+          python-version: 3.14.6
+          version: 0.12.0
+      - run: uv sync
+
+      # Git owns the manifests; the control plane must agree with this commit before a tick runs,
+      # or claim_dispatches will refuse every source whose manifest_hash has drifted.
+      - name: Reconcile source manifests into scheduler state
+        run: uv run neta register-manifests --actor github-actions
+
+      - name: Plan the tick (claims nothing, writes nothing)
+        run: uv run neta dispatch --dry-run --limit "$LIMIT"
+        env:
+          LIMIT: ${{ inputs.limit || '100' }}
+
+      - name: Run the tick
+        if: github.event_name == 'schedule' || inputs.dry_run == false
+        run: uv run neta dispatch --limit "$LIMIT"
+        env:
+          LIMIT: ${{ inputs.limit || '100' }}
