@@ -8,7 +8,11 @@ import pytest
 from sqlalchemy import delete, func, select
 from sqlalchemy.ext.asyncio import async_sessionmaker, create_async_engine
 
-from neta_core.pipeline.contracts import AdminRuntimePatch, SourceManifest
+from neta_core.pipeline.contracts import (
+    AdminRuntimePatch,
+    SourceManifest,
+    effective_runtime_config,
+)
 from neta_core.pipeline.loader import load_source_manifest
 
 from neta_backend.database.models.pipeline import (
@@ -34,6 +38,55 @@ pytestmark = pytest.mark.skipif(
     DATABASE_URL is None,
     reason="NETA_TEST_DATABASE_URL is required for PostgreSQL integration tests",
 )
+
+
+# These tests run against a real source manifest, whose cadence and limits are production
+# configuration that changes (the roster went from a 30-minute default to weekly once someone
+# checked what the cron actually fires). So no test here may duplicate a manifest number: an
+# expectation is either derived from the manifest at runtime, or pinned by the test itself through
+# an admin override whose value is derived from that manifest's guardrails.
+
+
+def _scheduled_interval(manifest: SourceManifest) -> timedelta:
+    """The cadence this manifest currently declares, read at runtime."""
+    frequency = effective_runtime_config(manifest).frequency_seconds
+    assert frequency is not None, "this fixture requires a scheduled source manifest"
+    return timedelta(seconds=frequency)
+
+
+def _fastest_permitted_interval(manifest: SourceManifest) -> timedelta:
+    """The quickest cadence the manifest's own guardrails allow.
+
+    A test that needs a source to fall due again inside the window it simulates pins the cadence
+    itself rather than riding on whatever production cadence is current.  Deriving the value from
+    the guardrails keeps that override legal if the guardrails are themselves retuned.
+    """
+    return timedelta(seconds=manifest.ingestion.guardrails.min_frequency_seconds or 30)
+
+
+def _slowest_permitted_interval(manifest: SourceManifest) -> int:
+    """A legal repository default that is distinct from :func:`_fastest_permitted_interval`."""
+    guardrails = manifest.ingestion.guardrails
+    return guardrails.max_frequency_seconds or (guardrails.min_frequency_seconds or 30) * 2
+
+
+def _retry_limit_distinct_from_default(manifest: SourceManifest) -> int:
+    """A legal retry limit guaranteed to differ from the repository default."""
+    default = manifest.ingestion.defaults.retry_limit
+    maximum = manifest.ingestion.guardrails.max_retry_limit
+    return default + 1 if default < maximum else max(0, default - 1)
+
+
+def _rate_limit_distinct_from_default(manifest: SourceManifest) -> int:
+    """A legal rate limit guaranteed to differ from the repository default.
+
+    Asserting against a hardcoded number would pass for the wrong reason the day the manifest's
+    own default happens to equal it.
+    """
+    default = manifest.ingestion.defaults.rate_limit_per_minute
+    if default != 1:
+        return 1
+    return min(2, manifest.ingestion.guardrails.max_rate_limit_per_minute)
 
 
 async def _clear_control_tables(session_factory: async_sessionmaker) -> None:
@@ -66,11 +119,18 @@ async def test_async_service_revisions_rebase_commands_and_quarantine() -> None:
             assert state.active_revision == 0
             assert state.next_run_at == started_at
 
+            # Both cadences are derived from the manifest's own guardrails so they stay legal —
+            # and stay distinct from each other — however the repository retunes this source.
+            operator_interval = int(_fastest_permitted_interval(manifest).total_seconds())
+            repository_interval = _slowest_permitted_interval(manifest)
+            rebased_retry_limit = _retry_limit_distinct_from_default(manifest)
+            assert operator_interval != repository_interval
+
             frequency_revision = await service.change_runtime(
                 manifest,
-                AdminRuntimePatch(frequency_seconds=3600),
+                AdminRuntimePatch(frequency_seconds=operator_interval),
                 changed_by="operator@example.org",
-                change_reason="Pin an approved hourly operator cadence",
+                change_reason="Pin an approved operator cadence",
                 occurred_at=started_at + timedelta(minutes=1),
             )
             pause_revision = await service.change_runtime(
@@ -82,23 +142,25 @@ async def test_async_service_revisions_rebase_commands_and_quarantine() -> None:
             )
             assert frequency_revision.revision == 1
             assert pause_revision.revision == 2
-            assert pause_revision.effective_config["frequency_seconds"] == 3600
+            assert pause_revision.effective_config["frequency_seconds"] == operator_interval
             assert pause_revision.effective_config["paused"] is True
 
             changed_data = manifest.model_dump(mode="json")
-            changed_data["ingestion"]["defaults"]["frequency_seconds"] = 7200
-            changed_data["ingestion"]["defaults"]["retry_limit"] = 4
+            changed_data["ingestion"]["defaults"]["frequency_seconds"] = repository_interval
+            changed_data["ingestion"]["defaults"]["retry_limit"] = rebased_retry_limit
             changed_manifest = SourceManifest.model_validate(changed_data)
             rebased = await service.register_manifest(
                 changed_manifest,
                 git_commit_sha="b" * 40,
                 occurred_at=started_at + timedelta(minutes=3),
             )
-            assert rebased.effective_config["frequency_seconds"] == 3600
-            assert rebased.effective_config["retry_limit"] == 4
+            # The operator's cadence survives the manifest rebase; the un-overridden retry limit
+            # adopts the repository's new value.
+            assert rebased.effective_config["frequency_seconds"] == operator_interval
+            assert rebased.effective_config["retry_limit"] == rebased_retry_limit
             assert rebased.effective_config["paused"] is True
             assert rebased.admin_overrides == {
-                "frequency_seconds": 3600,
+                "frequency_seconds": operator_interval,
                 "paused": True,
             }
 
@@ -110,7 +172,7 @@ async def test_async_service_revisions_rebase_commands_and_quarantine() -> None:
             )
             assert reset_revision.operation.value == "reset"
             assert reset_revision.patch == {}
-            assert reset_revision.effective_config["frequency_seconds"] == 7200
+            assert reset_revision.effective_config["frequency_seconds"] == repository_interval
 
             request, created = await service.request_run(
                 changed_manifest.id,
@@ -239,7 +301,9 @@ async def test_scheduler_claims_idempotent_runs_and_records_execution_lifecycle(
             )
             assert state is not None
             assert state.last_success_at == started_at + timedelta(seconds=50)
-            assert state.next_run_at == started_at + timedelta(minutes=30)
+            # The claim advanced the schedule by exactly one of this source's own intervals —
+            # derived from the manifest, so retuning the cadence cannot make this assertion lie.
+            assert state.next_run_at == started_at + _scheduled_interval(manifest)
     finally:
         await _clear_control_tables(session_factory)
         await engine.dispose()
@@ -258,20 +322,25 @@ async def test_claimed_runs_carry_the_operator_effective_runtime_configuration()
             service = PipelineControlService(session)
             at = datetime(2026, 8, 1, 9, 0, tzinfo=UTC)
             await service.register_manifest(manifest, git_commit_sha="d" * 40, occurred_at=at)
+            # Derived, not hardcoded: the point is that the claimed run carries a value the
+            # repository does NOT declare, whatever the repository currently declares.
+            slowed = _rate_limit_distinct_from_default(manifest)
+            assert slowed != manifest.ingestion.defaults.rate_limit_per_minute
             await service.change_runtime(
                 manifest,
-                AdminRuntimePatch(rate_limit_per_minute=3, concurrency_limit=1),
+                AdminRuntimePatch(rate_limit_per_minute=slowed, concurrency_limit=1),
                 changed_by="operator@example.org",
                 change_reason="Slow this source down while upstream is fragile",
                 occurred_at=at + timedelta(minutes=1),
             )
 
+            # Registration made the source due immediately, and a rate-limit patch does not move
+            # next_run_at, so this claim does not depend on the source's cadence.
             dispatches = await service.claim_dispatches(
                 {manifest.id: manifest}, occurred_at=at + timedelta(minutes=2)
             )
             assert len(dispatches) == 1
-            assert manifest.ingestion.defaults.rate_limit_per_minute == 30  # the Git default
-            assert dispatches[0].runtime_config.rate_limit_per_minute == 3  # the operator's
+            assert dispatches[0].runtime_config.rate_limit_per_minute == slowed
 
             snapshot = await service.start_pipeline_run(
                 dispatches[0].pipeline_run_id,
@@ -279,7 +348,7 @@ async def test_claimed_runs_carry_the_operator_effective_runtime_configuration()
                 attempt_number=1,
                 occurred_at=at + timedelta(minutes=3),
             )
-            assert snapshot.runtime_config.rate_limit_per_minute == 3
+            assert snapshot.runtime_config.rate_limit_per_minute == slowed
             assert snapshot.runtime_config.concurrency_limit == 1
             assert snapshot.retry_limit == snapshot.runtime_config.retry_limit
     finally:
@@ -299,14 +368,24 @@ async def test_stale_runs_are_cancelled_and_release_their_source() -> None:
             manifest = load_source_manifest(MANIFEST)
             service = PipelineControlService(session)
             at = datetime(2026, 8, 2, 9, 0, tzinfo=UTC)
+            stale_after = timedelta(hours=6)
             await service.register_manifest(manifest, git_commit_sha="e" * 40, occurred_at=at)
-            # Single-slot sources (myneta.candidates is one) are the ones an abandoned run kills
-            # outright, so pin the concurrency limit to 1 for this scenario.
+
+            # This test is about reconciliation releasing a blocked source, which has nothing to do
+            # with how often the source is scheduled — so it pins both inputs it depends on rather
+            # than inheriting them. Single-slot sources are the ones an abandoned run kills
+            # outright, and the cadence has to be short enough that the source falls due again
+            # inside the window simulated below.
+            interval = _fastest_permitted_interval(manifest)
+            assert interval < stale_after, "the guardrails must allow a cadence inside this window"
             await service.change_runtime(
                 manifest,
-                AdminRuntimePatch(concurrency_limit=1),
+                AdminRuntimePatch(
+                    concurrency_limit=1,
+                    frequency_seconds=int(interval.total_seconds()),
+                ),
                 changed_by="operator@example.org",
-                change_reason="Run this source one execution at a time",
+                change_reason="Run this source one execution at a time, frequently",
                 occurred_at=at,
             )
 
@@ -321,15 +400,21 @@ async def test_stale_runs_are_cancelled_and_release_their_source() -> None:
 
             # The job is killed here: nothing ever reports a terminal status. The source is now
             # blocked, because a RUNNING run counts against concurrency_limit.
+            blocked_at = at + stale_after + timedelta(hours=1)
+            blocked_state = await service.source_state(manifest.id)
+            assert blocked_state.next_run_at is not None
+            # Blocked, not merely "not due yet" — without this the assertion below could pass for
+            # entirely the wrong reason.
+            assert blocked_state.next_run_at <= blocked_at
             blocked = await service.claim_dispatches(
-                {manifest.id: manifest}, occurred_at=at + timedelta(hours=7)
+                {manifest.id: manifest}, occurred_at=blocked_at
             )
             assert blocked == []
 
             # A run younger than the cutoff is left strictly alone.
             untouched = await service.reconcile_stale_runs(
-                stale_after=timedelta(hours=6),
-                occurred_at=at + timedelta(hours=5, minutes=59),
+                stale_after=stale_after,
+                occurred_at=at + stale_after - timedelta(minutes=1),
             )
             assert untouched == []
             still_running = await session.get(PipelineRun, claimed[0].pipeline_run_id)
@@ -337,8 +422,8 @@ async def test_stale_runs_are_cancelled_and_release_their_source() -> None:
             assert still_running.status is PipelineRunStatus.RUNNING
 
             reconciled = await service.reconcile_stale_runs(
-                stale_after=timedelta(hours=6),
-                occurred_at=at + timedelta(hours=7),
+                stale_after=stale_after,
+                occurred_at=blocked_at,
             )
             assert [entry.pipeline_run_id for entry in reconciled] == [
                 claimed[0].pipeline_run_id
@@ -349,7 +434,7 @@ async def test_stale_runs_are_cancelled_and_release_their_source() -> None:
             cancelled = await session.get(PipelineRun, claimed[0].pipeline_run_id)
             assert cancelled is not None
             assert cancelled.status is PipelineRunStatus.CANCELLED
-            assert cancelled.completed_at == at + timedelta(hours=7)
+            assert cancelled.completed_at == blocked_at
             assert "stopped reporting" in (cancelled.error_message or "")
 
             # The cancellation is its own audit event, not a failure.
@@ -366,11 +451,13 @@ async def test_stale_runs_are_cancelled_and_release_their_source() -> None:
             cancellation = next(event for event in events if event.action == "run.cancelled")
             assert cancellation.actor == "dispatch-reconciler"
             assert cancellation.payload["reason"] == "stale_orchestrator_run"
-            assert cancellation.payload["stale_after_seconds"] == 21600
+            assert cancellation.payload["stale_after_seconds"] == int(stale_after.total_seconds())
 
-            # …and the source is claimable again, with no human involved.
+            # …and the source is claimable again, with no human involved. The source was already
+            # overdue before reconciliation (asserted above), so a claim one second later can only
+            # succeed because the blocking run was released.
             released = await service.claim_dispatches(
-                {manifest.id: manifest}, occurred_at=at + timedelta(hours=7, seconds=1)
+                {manifest.id: manifest}, occurred_at=blocked_at + timedelta(seconds=1)
             )
             assert len(released) == 1
             assert released[0].pipeline_run_id != claimed[0].pipeline_run_id
@@ -378,8 +465,8 @@ async def test_stale_runs_are_cancelled_and_release_their_source() -> None:
             # Reconciliation is idempotent: the cancelled run is no longer a candidate.
             assert (
                 await service.reconcile_stale_runs(
-                    stale_after=timedelta(hours=6),
-                    occurred_at=at + timedelta(hours=8),
+                    stale_after=stale_after,
+                    occurred_at=blocked_at + timedelta(hours=1),
                 )
                 == []
             )
