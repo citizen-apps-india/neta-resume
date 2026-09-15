@@ -13,8 +13,11 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from neta_core.pipeline.contracts import SourceManifest
 
 from neta_backend.admin.auth import (
+    OAUTH_STATE_COOKIE,
     AdminPrincipal,
+    build_github_login_redirect,
     clear_session_cookies,
+    complete_github_login,
     require_admin,
     set_session_cookies,
     verify_login_token,
@@ -59,9 +62,10 @@ Principal = Annotated[AdminPrincipal, Depends(require_admin)]
 
 @admin_page_router.get("/admin/login", response_class=HTMLResponse)
 async def login_page(request: Request) -> HTMLResponse:
-    if request.app.state.settings.admin_auth_mode == "disabled":
+    mode = request.app.state.settings.admin_auth_mode
+    if mode == "disabled":
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Not found")
-    return templates.TemplateResponse(request=request, name="login.html", context={})
+    return templates.TemplateResponse(request=request, name="login.html", context={"mode": mode})
 
 
 @admin_page_router.post("/admin/login", response_class=HTMLResponse)
@@ -74,11 +78,63 @@ async def login(request: Request, token: Annotated[str, Form()]) -> HTMLResponse
         return templates.TemplateResponse(
             request=request,
             name="login.html",
-            context={"error": "That access token was not accepted."},
+            context={
+                "mode": request.app.state.settings.admin_auth_mode,
+                "error": "That access token was not accepted.",
+            },
             status_code=status.HTTP_401_UNAUTHORIZED,
         )
     response = RedirectResponse("/admin", status_code=status.HTTP_303_SEE_OTHER)
     set_session_cookies(response, request.app.state.settings)
+    return response
+
+
+@admin_page_router.get("/admin/login/github")
+async def start_github_login(request: Request) -> RedirectResponse:
+    return build_github_login_redirect(request)
+
+
+@admin_page_router.get(
+    "/admin/login/github/callback",
+    name="admin_github_callback",
+    response_model=None,
+)
+async def github_login_callback(
+    request: Request,
+    code: str = "",
+    state: str = "",
+    error: str = "",
+) -> HTMLResponse | RedirectResponse:
+    if error or not code or not state:
+        return templates.TemplateResponse(
+            request=request,
+            name="login.html",
+            context={
+                "mode": request.app.state.settings.admin_auth_mode,
+                "error": "GitHub sign-in did not complete. Please try again.",
+            },
+            status_code=status.HTTP_401_UNAUTHORIZED,
+        )
+    try:
+        principal = await complete_github_login(request, code=code, state=state)
+    except HTTPException as login_error:
+        if login_error.status_code == status.HTTP_404_NOT_FOUND:
+            raise
+        detail = login_error.detail if isinstance(login_error.detail, str) else "Sign-in failed."
+        return templates.TemplateResponse(
+            request=request,
+            name="login.html",
+            context={"mode": request.app.state.settings.admin_auth_mode, "error": detail},
+            status_code=login_error.status_code,
+        )
+    response = RedirectResponse("/admin", status_code=status.HTTP_303_SEE_OTHER)
+    set_session_cookies(
+        response,
+        request.app.state.settings,
+        actor=principal.actor,
+        authentication="github_oidc",
+    )
+    response.delete_cookie(OAUTH_STATE_COOKIE, path="/admin")
     return response
 
 
