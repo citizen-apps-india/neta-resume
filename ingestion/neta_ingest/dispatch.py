@@ -37,8 +37,8 @@ import os
 import time
 from collections.abc import Awaitable, Callable, Iterator, Mapping, Sequence
 from contextlib import contextmanager
-from dataclasses import dataclass
-from datetime import UTC, datetime
+from dataclasses import dataclass, field
+from datetime import UTC, datetime, timedelta
 from pathlib import Path
 from typing import Any, Protocol, TypeVar, cast
 from uuid import uuid4
@@ -54,15 +54,14 @@ from neta_backend.pipeline.service import (
     PipelineControlService,
     PipelineDispatch,
     PipelineExecutionSnapshot,
+    StaleRunReconciliation,
 )
 from neta_core.config import settings as core_settings
 from neta_core.pipeline import (
     SourceManifest,
-    effective_runtime_config,
     load_source_manifests,
     source_manifest_hash,
 )
-from neta_core.pipeline.contracts import RuntimeConfig
 from neta_ingest.extraction import SOURCE_REGISTRY, pipeline_execution_scope
 
 SourceRunner = Callable[[Mapping[str, Any]], None]
@@ -71,6 +70,21 @@ ResultT = TypeVar("ResultT")
 MAX_BACKOFF_SECONDS = 60
 DEFAULT_DISPATCH_LIMIT = 100
 ERROR_MESSAGE_LIMIT = 8000
+
+# How long a run may sit in RUNNING before a later tick treats it as abandoned and cancels it.
+#
+# GitHub Actions kills any job at its hard 6-hour ceiling, so a run whose start is older than six
+# hours cannot still be executing in any runner — that holds even if someone raises this
+# workflow's `timeout-minutes: 120`, and even if the `concurrency: dispatch` group ever fails to
+# hold and two ticks overlap. Six hours is three times our own job timeout, so the margin is
+# generous in the only direction that matters: cancelling a run that is still legitimately
+# executing would corrupt the audit trail and let the same source run twice.
+#
+# The cost of the conservative choice is bounded and visible: a source blocked by an abandoned run
+# stays blocked for at most one cutoff window, and the next tick reports what it reconciled.
+# A dispatcher driven from somewhere without a 6h job ceiling (a laptop, a long backfill) should
+# raise this with --stale-after-minutes rather than lower it.
+DEFAULT_STALE_AFTER_MINUTES = 360
 
 
 class DispatchError(RuntimeError):
@@ -193,7 +207,11 @@ def is_retryable_error(error: BaseException) -> bool:
 
 
 class ControlPlaneProtocol(Protocol):
-    """The four control-plane calls one execution makes (a test may substitute a fake)."""
+    """The control-plane calls a tick makes (a test may substitute a fake)."""
+
+    def reconcile_stale_runs(
+        self, *, stale_after: timedelta
+    ) -> list[StaleRunReconciliation]: ...
 
     def claim_dispatches(
         self, manifests: Mapping[str, SourceManifest]
@@ -248,6 +266,14 @@ class ControlPlane:
             return len(manifests)
 
         return self._call(register)
+
+    def reconcile_stale_runs(self, *, stale_after: timedelta) -> list[StaleRunReconciliation]:
+        return self._call(
+            lambda service: service.reconcile_stale_runs(
+                stale_after=stale_after,
+                limit=self._dispatch_limit,
+            )
+        )
 
     def claim_dispatches(
         self, manifests: Mapping[str, SourceManifest]
@@ -306,6 +332,11 @@ class ControlPlane:
             runs = await service.list_pipeline_runs(limit=min(500, max(limit, 1)))
             return ControlPlaneSurvey(
                 states=list(states),
+                running_runs=[
+                    (run, source_key)
+                    for run, source_key in runs
+                    if run.status is PipelineRunStatus.RUNNING
+                ],
                 pending_requests=[
                     (request, source_key)
                     for request, source_key in requests
@@ -372,7 +403,6 @@ def execute_dispatch(
     runner: SourceRunner,
     *,
     orchestrator_run_id: str,
-    runtime: RuntimeConfig | None = None,
     sleep: Callable[[float], None] = time.sleep,
     emit: Callable[[str], None] = print,
 ) -> DispatchOutcome:
@@ -381,8 +411,11 @@ def execute_dispatch(
     This is the port of the Dagster asset body.  ``attempt_number`` is 1-based (what the control
     plane records); ``retry_number = attempt_number - 1`` is Dagster's 0-based retry counter, which
     drives both the retry-limit comparison and the backoff.
+
+    Every runtime knob — retry limit, rate limit — comes from ``snapshot.runtime_config``, the
+    effective configuration this run was claimed under, so an operator's admin override is obeyed
+    rather than the repository default.
     """
-    runtime = runtime or effective_runtime_config(manifest)
     attempt_number = 1
     while True:
         snapshot = control.start_pipeline_run(
@@ -396,6 +429,7 @@ def execute_dispatch(
                 f"not {manifest.id}"
             )
 
+        runtime = snapshot.runtime_config
         try:
             with source_rate_limit(runtime.rate_limit_per_minute) as min_delay:
                 emit(
@@ -474,6 +508,7 @@ def run_dispatch_cycle(
     manifests: Mapping[str, SourceManifest],
     *,
     tick_id: str | None = None,
+    stale_after: timedelta | None = None,
     runner_factory: Callable[[SourceManifest], SourceRunner] | None = None,
     sleep: Callable[[float], None] = time.sleep,
     emit: Callable[[str], None] = print,
@@ -482,6 +517,20 @@ def run_dispatch_cycle(
     tick_id = tick_id or current_tick_id()
     # Resolved here, not as a default argument, so the runner factory stays substitutable.
     runner_factory = runner_factory or manifest_runner
+
+    # Clean up after a previously killed job BEFORE claiming: an abandoned RUNNING row counts
+    # against its source's concurrency_limit, so until it is reconciled that source can never be
+    # claimed again. Jobs do get killed here (workflow cancellations, the 6h ceiling), so this has
+    # to happen on every tick with nobody in the loop.
+    for stale in control.reconcile_stale_runs(
+        stale_after=stale_after or timedelta(minutes=DEFAULT_STALE_AFTER_MINUTES)
+    ):
+        emit(
+            f"reconciled stale run {stale.run_key} for {stale.source_key}: orchestrator "
+            f"{stale.orchestrator_run_id} never reported after {stale.started_at.isoformat()}; "
+            "marked cancelled and the source is claimable again"
+        )
+
     dispatches = control.claim_dispatches(manifests)
     if not dispatches:
         emit("no due sources or pending run requests")
@@ -496,12 +545,14 @@ def run_dispatch_cycle(
             # deployment does not. Leave the run PENDING rather than failing someone else's work.
             emit(f"ERROR no runner is registered for {dispatch.source_key}; leaving it pending")
             continue
-        runtime = effective_runtime_config(manifest)
-        with ledger.slot(dispatch.source_key, runtime.concurrency_limit) as admitted:
+        # The claimed run carries the operator-effective configuration, so the gate obeys an
+        # admin override rather than the manifest default.
+        concurrency_limit = dispatch.runtime_config.concurrency_limit
+        with ledger.slot(dispatch.source_key, concurrency_limit) as admitted:
             if not admitted:
                 emit(
                     f"deferring {dispatch.run_key}: {dispatch.source_key} already has "
-                    f"{runtime.concurrency_limit} execution(s) in flight"
+                    f"{concurrency_limit} execution(s) in flight"
                 )
                 continue
             outcomes.append(
@@ -509,7 +560,6 @@ def run_dispatch_cycle(
                     control,
                     dispatch,
                     manifest,
-                    runtime=runtime,
                     tick_id=tick_id,
                     runner_factory=runner_factory,
                     sleep=sleep,
@@ -524,7 +574,6 @@ def _execute_guarded(
     dispatch: PipelineDispatch,
     manifest: SourceManifest,
     *,
-    runtime: RuntimeConfig,
     tick_id: str,
     runner_factory: Callable[[SourceManifest], SourceRunner],
     sleep: Callable[[float], None],
@@ -546,7 +595,6 @@ def _execute_guarded(
             orchestrator_run_id=new_orchestrator_run_id(
                 dispatch.pipeline_run_id, tick_id=tick_id
             ),
-            runtime=runtime,
             sleep=sleep,
             emit=emit,
         )
@@ -609,6 +657,7 @@ class PipelineRunLike(Protocol):
     run_key: str
     manifest_hash: str
     status: PipelineRunStatus
+    started_at: datetime | None
 
 
 @dataclass(frozen=True, slots=True)
@@ -619,6 +668,7 @@ class ControlPlaneSurvey:
     pending_requests: list[tuple[RunRequestLike, str]]
     pending_runs: list[tuple[PipelineRunLike, str]]
     active_runs: dict[str, int]
+    running_runs: list[tuple[PipelineRunLike, str]] = field(default_factory=list)
 
 
 @dataclass(frozen=True, slots=True)
@@ -639,6 +689,22 @@ class DuePlan:
             f"rate={self.rate_limit_per_minute}/min concurrency={self.concurrency_limit} "
             f"retries={self.retry_limit}\t{self.detail}"
         )
+
+
+def plan_stale_runs(
+    survey: ControlPlaneSurvey,
+    *,
+    stale_after: timedelta,
+    now: datetime | None = None,
+) -> list[tuple[str, str]]:
+    """The (source_key, run_key) pairs a real tick would cancel.  Read-only."""
+    at = now or datetime.now(UTC)
+    cutoff = at - stale_after
+    return [
+        (source_key, run.run_key)
+        for run, source_key in survey.running_runs
+        if run.started_at is not None and run.started_at < cutoff
+    ]
 
 
 def plan_due_set(
@@ -768,6 +834,7 @@ def run(
     *,
     dry_run: bool = False,
     limit: int = DEFAULT_DISPATCH_LIMIT,
+    stale_after_minutes: int = DEFAULT_STALE_AFTER_MINUTES,
     registry: str | Path = SOURCE_REGISTRY,
     database_url: str | None = None,
     emit: Callable[[str], None] = print,
@@ -777,17 +844,27 @@ def run(
     Raises :class:`DispatchError` if any executed dispatch ended in a non-success terminal state,
     so a scheduled job turns red instead of failing silently.
     """
+    if stale_after_minutes < 1:
+        raise ValueError("stale_after_minutes must be at least 1")
+    stale_after = timedelta(minutes=stale_after_minutes)
     manifests = executable_manifests(registry)
     control = ControlPlane(database_url or backend_database_url(), dispatch_limit=limit)
 
     if dry_run:
-        plans = plan_due_set(manifests, control.survey(limit=limit), limit=limit)
-        emit(f"dry run: {len(plans)} execution(s) would start; nothing was claimed or written")
+        survey = control.survey(limit=limit)
+        stale = plan_stale_runs(survey, stale_after=stale_after)
+        plans = plan_due_set(manifests, survey, limit=limit)
+        emit(
+            f"dry run: {len(stale)} stale run(s) would be reconciled and "
+            f"{len(plans)} execution(s) would start; nothing was claimed or written"
+        )
+        for source_key, run_key in stale:
+            emit(f"{source_key}\tstale\t{run_key}\twould be cancelled (orchestrator is gone)")
         for plan in plans:
             emit(plan.render())
         return []
 
-    outcomes = run_dispatch_cycle(control, manifests, emit=emit)
+    outcomes = run_dispatch_cycle(control, manifests, stale_after=stale_after, emit=emit)
     failures = [outcome for outcome in outcomes if not outcome.succeeded]
     emit(
         f"dispatch tick finished: {len(outcomes) - len(failures)} succeeded, "

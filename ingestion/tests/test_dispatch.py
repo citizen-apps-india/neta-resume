@@ -16,9 +16,14 @@ import pytest
 from pydantic import BaseModel, ConfigDict, ValidationError
 
 from neta_backend.database.models.pipeline import PipelineRunStatus
-from neta_backend.pipeline.service import PipelineDispatch, PipelineExecutionSnapshot
+from neta_backend.pipeline.service import (
+    PipelineDispatch,
+    PipelineExecutionSnapshot,
+    StaleRunReconciliation,
+)
 from neta_core.config import settings as core_settings
-from neta_core.pipeline import source_manifest_hash
+from neta_core.pipeline import effective_runtime_config, source_manifest_hash
+from neta_core.pipeline.contracts import RuntimeConfig
 from neta_ingest import dispatch as d
 
 SOURCE_KEY = "myneta.candidates"
@@ -44,19 +49,30 @@ class FakeControl:
         *,
         snapshot: PipelineExecutionSnapshot,
         claims: list[PipelineDispatch] | None = None,
+        stale: list[StaleRunReconciliation] | None = None,
     ) -> None:
         self.snapshot = snapshot
         self.claims = claims or []
+        self.stale = stale or []
         self.claim_calls = 0
+        self.calls: list[str] = []
+        self.stale_after: list[Any] = []
         self.started: list[dict[str, Any]] = []
         self.retries: list[dict[str, Any]] = []
         self.completions: list[dict[str, Any]] = []
 
+    def reconcile_stale_runs(self, *, stale_after):
+        self.calls.append("reconcile_stale_runs")
+        self.stale_after.append(stale_after)
+        return list(self.stale)
+
     def claim_dispatches(self, manifests):
+        self.calls.append("claim_dispatches")
         self.claim_calls += 1
         return list(self.claims)
 
     def start_pipeline_run(self, pipeline_run_id, *, orchestrator_run_id, attempt_number):
+        self.calls.append("start_pipeline_run")
         self.started.append(
             {
                 "pipeline_run_id": pipeline_run_id,
@@ -85,18 +101,39 @@ class FakeControl:
         )
 
 
-def snapshot(*, retry_limit: int = 3, source_key: str = SOURCE_KEY) -> PipelineExecutionSnapshot:
+# The control plane hands the executor the effective config the run was claimed under: repository
+# defaults with the operator's admin overlay already applied.
+MYNETA_EFFECTIVE = RuntimeConfig(
+    frequency_seconds=21600,
+    concurrency_limit=1,
+    rate_limit_per_minute=20,
+    retry_limit=4,
+)
+
+
+def snapshot(
+    *,
+    retry_limit: int = 3,
+    source_key: str = SOURCE_KEY,
+    runtime_config: RuntimeConfig | None = None,
+) -> PipelineExecutionSnapshot:
     return PipelineExecutionSnapshot(
         pipeline_run_id=41,
         source_key=source_key,
         run_key=RUN_KEY,
         parameters={"cycle": "LS2024", "limit": 5},
         retry_limit=retry_limit,
+        runtime_config=runtime_config or MYNETA_EFFECTIVE,
     )
 
 
-def dispatch_row() -> PipelineDispatch:
-    return PipelineDispatch(pipeline_run_id=41, source_key=SOURCE_KEY, run_key=RUN_KEY)
+def dispatch_row(runtime_config: RuntimeConfig | None = None) -> PipelineDispatch:
+    return PipelineDispatch(
+        pipeline_run_id=41,
+        source_key=SOURCE_KEY,
+        run_key=RUN_KEY,
+        runtime_config=runtime_config or MYNETA_EFFECTIVE,
+    )
 
 
 def a_validation_error() -> ValidationError:
@@ -291,7 +328,7 @@ def test_source_key_mismatch_never_runs_the_runner(manifest) -> None:
 
 def test_manifest_rate_limit_is_applied_while_the_runner_runs(manifest) -> None:
     # myneta.candidates declares 20 requests/minute => at least 3s between requests to that host.
-    assert d.effective_runtime_config(manifest).rate_limit_per_minute == 20
+    assert effective_runtime_config(manifest).rate_limit_per_minute == 20
     before = core_settings.http_min_delay_seconds
     control = FakeControl(snapshot=snapshot())
     observed: list[float] = []
@@ -329,9 +366,44 @@ def test_rate_limit_never_becomes_less_polite_than_the_global_default() -> None:
             pass
 
 
+def test_the_executor_obeys_an_operator_override_not_the_manifest_default(manifest) -> None:
+    # An operator slowed MyNeta from 20/min to 4/min through the admin console. The claimed run
+    # carries that; the manifest still says 20. The executor must use the operator's number.
+    slowed = MYNETA_EFFECTIVE.model_copy(update={"rate_limit_per_minute": 4})
+    assert effective_runtime_config(manifest).rate_limit_per_minute == 20
+    control = FakeControl(snapshot=snapshot(runtime_config=slowed))
+    observed: list[float] = []
+
+    run_execution(
+        control, manifest, lambda _: observed.append(core_settings.http_min_delay_seconds), []
+    )
+
+    assert observed == [15.0]  # 60 / 4, not 60 / 20
+
+
+def test_the_concurrency_gate_obeys_an_operator_override(manifest) -> None:
+    # The operator raised concurrency to 2, so a second claim for the same source still runs.
+    widened = MYNETA_EFFECTIVE.model_copy(update={"concurrency_limit": 2})
+    control = FakeControl(
+        snapshot=snapshot(runtime_config=widened),
+        claims=[dispatch_row(widened), dispatch_row(widened)],
+    )
+    ledger = d.ConcurrencyLedger()
+    ledger.admit(SOURCE_KEY, 2)  # one slot of two already taken
+
+    outcomes = d.run_dispatch_cycle(
+        control,
+        {SOURCE_KEY: manifest},
+        runner_factory=lambda _: (lambda parameters: None),
+        emit=lambda message: None,
+    )
+
+    assert len(outcomes) == 2
+
+
 def test_every_registry_rate_limit_stays_within_its_manifest_guardrail(manifests) -> None:
     for manifest in manifests.values():
-        runtime = d.effective_runtime_config(manifest)
+        runtime = effective_runtime_config(manifest)
         guardrails = manifest.ingestion.guardrails
         assert runtime.rate_limit_per_minute <= guardrails.max_rate_limit_per_minute
         assert runtime.concurrency_limit <= guardrails.max_concurrency
@@ -359,7 +431,7 @@ def test_concurrency_ledger_slot_releases_on_failure() -> None:
 
 
 def test_dispatch_cycle_defers_work_beyond_the_concurrency_limit(manifest, monkeypatch) -> None:
-    # myneta.candidates allows one execution at a time; simulate a slot already taken.
+    # The claimed run allows one execution at a time; simulate a slot already taken.
     control = FakeControl(snapshot=snapshot(), claims=[dispatch_row()])
     ledger = d.ConcurrencyLedger()
     ledger.admit(SOURCE_KEY, 1)
@@ -416,7 +488,14 @@ def test_dispatch_cycle_reconciles_a_failure_outside_the_runner(manifest) -> Non
 def test_dispatch_cycle_leaves_unknown_sources_pending(manifest) -> None:
     control = FakeControl(
         snapshot=snapshot(),
-        claims=[PipelineDispatch(pipeline_run_id=7, source_key="ghost.source", run_key="k")],
+        claims=[
+            PipelineDispatch(
+                pipeline_run_id=7,
+                source_key="ghost.source",
+                run_key="k",
+                runtime_config=MYNETA_EFFECTIVE,
+            )
+        ],
     )
     messages: list[str] = []
     outcomes = d.run_dispatch_cycle(
@@ -426,6 +505,109 @@ def test_dispatch_cycle_leaves_unknown_sources_pending(manifest) -> None:
     assert outcomes == []
     assert control.completions == []  # somebody else's source is never marked failed
     assert any("no runner is registered" in message for message in messages)
+
+
+# --- stale-run reconciliation -----------------------------------------------------------------
+
+
+def stale_run(source_key: str = SOURCE_KEY) -> StaleRunReconciliation:
+    return StaleRunReconciliation(
+        pipeline_run_id=8,
+        source_key=source_key,
+        run_key=f"schedule:{source_key}:2026-09-14T00:00:00+00:00",
+        started_at=NOW - timedelta(hours=9),
+        orchestrator_run_id="gha-123.1:8",
+    )
+
+
+def test_a_tick_reconciles_abandoned_runs_before_it_claims(manifest) -> None:
+    # Ordering is the whole point: an abandoned RUNNING row counts against concurrency_limit, so
+    # reconciling after the claim would leave the source blocked for another tick.
+    control = FakeControl(
+        snapshot=snapshot(), claims=[dispatch_row()], stale=[stale_run()]
+    )
+    messages: list[str] = []
+
+    d.run_dispatch_cycle(
+        control,
+        {SOURCE_KEY: manifest},
+        runner_factory=lambda _: (lambda parameters: None),
+        emit=messages.append,
+    )
+
+    assert control.calls[:2] == ["reconcile_stale_runs", "claim_dispatches"]
+    assert any("reconciled stale run" in message for message in messages)
+
+
+def test_the_tick_uses_the_conservative_cutoff_by_default(manifest) -> None:
+    control = FakeControl(snapshot=snapshot())
+    d.run_dispatch_cycle(control, {SOURCE_KEY: manifest}, emit=lambda message: None)
+
+    assert control.stale_after == [timedelta(minutes=d.DEFAULT_STALE_AFTER_MINUTES)]
+    # Comfortably above the workflow's timeout-minutes: 120, and equal to the hard ceiling
+    # GitHub itself enforces, so it can never cancel a run that is still executing.
+    assert d.DEFAULT_STALE_AFTER_MINUTES == 360
+    assert timedelta(minutes=d.DEFAULT_STALE_AFTER_MINUTES) >= 3 * timedelta(minutes=120)
+
+
+def test_the_cutoff_is_configurable(manifest) -> None:
+    control = FakeControl(snapshot=snapshot())
+    d.run_dispatch_cycle(
+        control,
+        {SOURCE_KEY: manifest},
+        stale_after=timedelta(minutes=720),
+        emit=lambda message: None,
+    )
+    assert control.stale_after == [timedelta(minutes=720)]
+
+
+def test_reconciliation_still_runs_when_nothing_is_due(manifest) -> None:
+    control = FakeControl(snapshot=snapshot(), claims=[], stale=[stale_run()])
+    messages: list[str] = []
+
+    outcomes = d.run_dispatch_cycle(control, {SOURCE_KEY: manifest}, emit=messages.append)
+
+    assert outcomes == []
+    assert control.calls == ["reconcile_stale_runs", "claim_dispatches"]
+    assert any("reconciled stale run" in message for message in messages)
+
+
+def test_dry_run_reports_stale_runs_without_cancelling_them(manifest, manifests) -> None:
+    running = StubRun(
+        run_key=RUN_KEY,
+        manifest_hash=source_manifest_hash(manifest),
+        status=PipelineRunStatus.RUNNING,
+        started_at=NOW - timedelta(hours=9),
+    )
+    fresh = StubRun(
+        run_key="schedule:news.google_feed:2026-09-15T11:00:00+00:00",
+        manifest_hash="irrelevant",
+        status=PipelineRunStatus.RUNNING,
+        started_at=NOW - timedelta(minutes=30),
+    )
+    plan = d.plan_stale_runs(
+        survey(running_runs=[(running, SOURCE_KEY), (fresh, "news.google_feed")]),
+        stale_after=timedelta(minutes=d.DEFAULT_STALE_AFTER_MINUTES),
+        now=NOW,
+    )
+
+    assert plan == [(SOURCE_KEY, RUN_KEY)]
+
+
+def test_a_run_just_under_the_cutoff_is_not_reported_stale(manifest) -> None:
+    cutoff = timedelta(minutes=d.DEFAULT_STALE_AFTER_MINUTES)
+    just_inside = StubRun(
+        run_key=RUN_KEY,
+        manifest_hash="x",
+        status=PipelineRunStatus.RUNNING,
+        started_at=NOW - cutoff + timedelta(minutes=1),
+    )
+    assert (
+        d.plan_stale_runs(
+            survey(running_runs=[(just_inside, SOURCE_KEY)]), stale_after=cutoff, now=NOW
+        )
+        == []
+    )
 
 
 def test_orchestrator_run_ids_are_unique_per_pipeline_run() -> None:
@@ -475,16 +657,18 @@ class StubRun:
     run_key: str
     manifest_hash: str
     status: PipelineRunStatus = PipelineRunStatus.PENDING
+    started_at: datetime | None = None
 
 
 def survey(
-    states=(), pending_requests=(), pending_runs=(), active_runs=None
+    states=(), pending_requests=(), pending_runs=(), active_runs=None, running_runs=()
 ) -> d.ControlPlaneSurvey:
     return d.ControlPlaneSurvey(
         states=list(states),
         pending_requests=list(pending_requests),
         pending_runs=list(pending_runs),
         active_runs=dict(active_runs or {}),
+        running_runs=list(running_runs),
     )
 
 

@@ -46,6 +46,12 @@ jobs:
     runs-on: ubuntu-latest
     # Well under GitHub's 6h job cap: a tick that has not finished in 2h is stuck, and killing it
     # early keeps the next tick's claim window clean.
+    #
+    # A killed tick leaves its pipeline_run in RUNNING, which counts against that source's
+    # concurrency_limit and would block it forever — so every tick first cancels runs older than
+    # `neta dispatch --stale-after-minutes` (default 360). That cutoff must stay comfortably ABOVE
+    # this timeout: raising this number without raising the cutoff would let one tick cancel a run
+    # another tick is still executing.
     timeout-minutes: 120
     env:
       # The control plane (pipeline_run / pipeline_source_state) lives behind the async backend DSN.

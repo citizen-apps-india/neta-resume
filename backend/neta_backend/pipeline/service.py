@@ -34,6 +34,9 @@ from neta_backend.database.models.pipeline import (
 )
 
 
+STALE_RUN_RECONCILER = "dispatch-reconciler"
+
+
 class ControlPlaneError(RuntimeError):
     pass
 
@@ -64,11 +67,12 @@ class PipelineRunNotFound(ControlPlaneError):
 
 @dataclass(frozen=True, slots=True)
 class PipelineDispatch:
-    """A durable pending execution that a Dagster sensor may safely emit repeatedly."""
+    """A durable pending execution an orchestrator may safely emit repeatedly."""
 
     pipeline_run_id: int
     source_key: str
     run_key: str
+    runtime_config: RuntimeConfig
 
 
 @dataclass(frozen=True, slots=True)
@@ -78,6 +82,22 @@ class PipelineExecutionSnapshot:
     run_key: str
     parameters: dict[str, Any]
     retry_limit: int
+    # The *effective* runtime configuration this run was claimed under: Git defaults with the
+    # operator's admin overrides already applied. An executor must read its rate limit and
+    # concurrency limit from here, never from the manifest defaults, or an operator who slows a
+    # source down through the admin console is silently ignored.
+    runtime_config: RuntimeConfig
+
+
+@dataclass(frozen=True, slots=True)
+class StaleRunReconciliation:
+    """A run whose orchestrator died without reporting a terminal status."""
+
+    pipeline_run_id: int
+    source_key: str
+    run_key: str
+    started_at: datetime
+    orchestrator_run_id: str | None
 
 
 class PipelineControlService:
@@ -556,6 +576,7 @@ class PipelineControlService:
                 pipeline_run_id=run.id,
                 source_key=state.source_key,
                 run_key=run.run_key,
+                runtime_config=_run_runtime_config(run),
             )
             for run, state in pending
             if (
@@ -703,6 +724,101 @@ class PipelineControlService:
             )
         )
         await self._db_session.commit()
+
+    async def reconcile_stale_runs(
+        self,
+        *,
+        stale_after: timedelta,
+        occurred_at: datetime | None = None,
+        limit: int = 100,
+    ) -> list[StaleRunReconciliation]:
+        """Cancel runs whose orchestrator died without reporting a terminal status.
+
+        A killed job (a cancelled workflow, a runner timeout, a lost pod) leaves its
+        ``pipeline_run`` in RUNNING forever.  Because ``claim_dispatches`` counts RUNNING rows
+        against ``concurrency_limit``, one abandoned run permanently blocks its source: nothing
+        fails, nothing alerts, the source just stops.  This is the replacement for the Dagster
+        run-status sensor that used to reconcile those runs.
+
+        ``stale_after`` must be longer than any legitimate execution, because a run still
+        executing elsewhere would otherwise be cancelled out from under itself.  Callers own that
+        choice; see ``neta dispatch --stale-after-minutes``.
+        """
+        at = _aware_timestamp(occurred_at)
+        if stale_after <= timedelta(0):
+            raise ValueError("stale_after must be a positive interval")
+        if limit < 1 or limit > 500:
+            raise ValueError("stale-run limit must be between 1 and 500")
+        cutoff = at - stale_after
+
+        rows = (
+            await self._db_session.execute(
+                select(PipelineRun, PipelineSourceState)
+                .join(
+                    PipelineSourceState,
+                    PipelineSourceState.id == PipelineRun.source_state_id,
+                )
+                .where(
+                    PipelineRun.status == PipelineRunStatus.RUNNING,
+                    PipelineRun.started_at.is_not(None),
+                    PipelineRun.started_at < cutoff,
+                )
+                .order_by(PipelineRun.started_at, PipelineRun.id)
+                .limit(limit)
+                .with_for_update(skip_locked=True)
+            )
+        ).all()
+
+        reconciled: list[StaleRunReconciliation] = []
+        for run, state in rows:
+            assert run.started_at is not None
+            message = (
+                f"orchestrator run {run.orchestrator_run_id!r} stopped reporting; running since "
+                f"{run.started_at.isoformat()} with no terminal status after "
+                f"{int(stale_after.total_seconds())}s"
+            )
+            run.status = PipelineRunStatus.CANCELLED
+            run.completed_at = at
+            run.error_message = message
+            # Same source bookkeeping as any other non-success completion: an abandoned run is a
+            # run that did not deliver data, and the health counters must say so.
+            state.last_failure_at = at
+            state.consecutive_failures += 1
+            if run.run_request_id is not None:
+                request = await self._db_session.get(PipelineRunRequest, run.run_request_id)
+                if request is not None:
+                    request.status = PipelineRunRequestStatus.CANCELLED
+                    request.completed_at = at
+                    request.error_message = message
+            self._db_session.add(
+                PipelineAuditEvent(
+                    source_state_id=state.id,
+                    actor=STALE_RUN_RECONCILER,
+                    action="run.cancelled",
+                    entity_type="pipeline_run",
+                    entity_id=str(run.id),
+                    payload={
+                        "run_key": run.run_key,
+                        "orchestrator_run_id": run.orchestrator_run_id,
+                        "attempt_count": run.attempt_count,
+                        "reason": "stale_orchestrator_run",
+                        "started_at": run.started_at.isoformat(),
+                        "stale_after_seconds": int(stale_after.total_seconds()),
+                    },
+                    occurred_at=at,
+                )
+            )
+            reconciled.append(
+                StaleRunReconciliation(
+                    pipeline_run_id=run.id,
+                    source_key=state.source_key,
+                    run_key=run.run_key,
+                    started_at=run.started_at,
+                    orchestrator_run_id=run.orchestrator_run_id,
+                )
+            )
+        await self._db_session.commit()
+        return reconciled
 
     async def _append_config_revision(
         self,
@@ -910,7 +1026,19 @@ def _execution_snapshot(
         run_key=pipeline_run.run_key,
         parameters=dict(pipeline_run.parameters),
         retry_limit=pipeline_run.retry_limit,
+        runtime_config=_run_runtime_config(pipeline_run),
     )
+
+
+def _run_runtime_config(pipeline_run: PipelineRun) -> RuntimeConfig:
+    """The effective configuration frozen onto the run when it was claimed.
+
+    ``pipeline_run.runtime_config`` is written from ``state.effective_config`` in
+    :func:`_new_pipeline_run`, so it already carries the operator's admin overlay.  Reading it back
+    here — rather than re-deriving from the manifest — is what keeps an executor honest about a
+    rate limit an operator lowered, and keeps the run auditable against the revision it ran under.
+    """
+    return RuntimeConfig.model_validate(pipeline_run.runtime_config)
 
 
 def _runtime_columns(runtime: RuntimeConfig) -> dict[str, Any]:

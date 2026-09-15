@@ -382,16 +382,24 @@ def party_switch() -> None:
 @app.command(name="dispatch")
 def dispatch(dry_run: bool = typer.Option(False, "--dry-run", help="print the due set and exit; "
                                           "claims nothing and writes nothing"),
-             limit: int = typer.Option(100, help="max dispatches claimed in one tick")) -> None:
-    """One ingestion scheduler tick: claim due sources + admin run requests, run them, record them.
+             limit: int = typer.Option(100, help="max dispatches claimed in one tick"),
+             stale_after_minutes: int = typer.Option(360, help="cancel runs still RUNNING after "
+                                                     "this long — their job was killed. Must stay "
+                                                     "above any real run time (default 360 = the "
+                                                     "GitHub job ceiling); raise it, never lower "
+                                                     "it, for long local runs")) -> None:
+    """One ingestion scheduler tick: reconcile abandoned runs, claim due sources + admin run
+    requests, run them, record them.
 
-    Each source runs its manifest-declared runner under that manifest's rate limit and concurrency
-    limit. A pydantic contract failure is never retried; operational failures retry up to the
-    source's retry_limit with min(60, 2**retry) backoff. Exits non-zero if any dispatch failed."""
+    Each source runs its manifest-declared runner under the *effective* rate limit and concurrency
+    limit the run was claimed with (admin overrides included). A pydantic contract failure is never
+    retried; operational failures retry up to the source's retry_limit with min(60, 2**retry)
+    backoff. Exits non-zero if any dispatch failed."""
     from neta_ingest import dispatch as d
 
     try:
-        d.run(dry_run=dry_run, limit=limit, emit=typer.echo)
+        d.run(dry_run=dry_run, limit=limit, stale_after_minutes=stale_after_minutes,
+              emit=typer.echo)
     except d.DispatchError as error:
         typer.echo(f"error: {error}", err=True)
         raise typer.Exit(code=1) from error
