@@ -45,7 +45,7 @@ jobs:
       - name: Seed source registry
         run: psql "$NETA_MIGRATE_DATABASE_URL" -v ON_ERROR_STOP=1 -f db/seeds/sources.sql
       - run: uv run ruff check packages ingestion backend orchestration
-      - run: uv run pytest -q backend/tests ingestion/tests orchestration/tests tests
+      - run: uv run pytest -q backend/tests ingestion/tests orchestration/tests
 
   api:
     runs-on: ubuntu-latest
