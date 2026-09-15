@@ -18,13 +18,12 @@ ingestion:
   adapter: api
   base_url: https://sansad.in/
   trigger:
-    mode: scheduled
+    mode: manual
     profile: parliament-session
   change_detection: [etag, last_modified, content_hash]
   defaults:
     enabled: true
     paused: false
-    frequency_seconds: 21600
     concurrency_limit: 2
     rate_limit_per_minute: 30
     retry_limit: 4

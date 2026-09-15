@@ -18,13 +18,12 @@ ingestion:
   adapter: crawl
   base_url: https://www.myneta.info/
   trigger:
-    mode: scheduled
+    mode: manual
     profile: election-window
   change_detection: [content_hash]
   defaults:
     enabled: true
     paused: false
-    frequency_seconds: 21600
     concurrency_limit: 1
     rate_limit_per_minute: 20
     retry_limit: 4
