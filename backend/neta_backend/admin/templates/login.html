@@ -14,11 +14,16 @@
       <h1>Ingestion desk</h1>
       <p class="login-copy">
         Sign in to manage source cadence, execution requests, and safety controls.
-        This local access mode is not available in production.
+        {% if mode == "local_token" %}This local access mode is not available in production.{% endif %}
       </p>
       {% if error %}
       <p class="form-error" role="alert">{{ error }}</p>
       {% endif %}
+      {% if mode == "github_oidc" %}
+      <a href="/admin/login/github" class="button button-primary login-github">
+        Sign in with GitHub
+      </a>
+      {% else %}
       <form method="post" action="/admin/login" class="login-form">
         <label for="token">Local access token</label>
         <input
@@ -32,6 +37,7 @@
         >
         <button type="submit" class="button button-primary">Enter the desk</button>
       </form>
+      {% endif %}
       <p class="login-footnote">Session cookies are signed, HTTP-only, and restricted to this admin path.</p>
     </main>
   </body>

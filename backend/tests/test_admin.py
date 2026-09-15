@@ -5,12 +5,14 @@ from datetime import UTC, datetime
 from types import SimpleNamespace
 
 import pytest
+from fastapi import HTTPException, status
 from httpx import ASGITransport, AsyncClient
 from pydantic import SecretStr, ValidationError
 
 from neta_core.pipeline.contracts import ConfigRevisionOperation
 
-from neta_backend.admin.auth import CSRF_COOKIE, CSRF_HEADER
+from neta_backend.admin import auth as admin_auth
+from neta_backend.admin.auth import CSRF_COOKIE, CSRF_HEADER, OAUTH_STATE_COOKIE
 from neta_backend.config import BackendSettings
 from neta_backend.database.session import get_db_session
 from neta_backend.main import create_app
@@ -18,6 +20,9 @@ from neta_backend.pipeline.service import PipelineControlService
 
 ADMIN_TOKEN = "local-preview-token-with-24-chars"
 SESSION_SECRET = "local-preview-session-secret-with-more-than-32-chars"
+GITHUB_CLIENT_ID = "test-github-client-id"
+GITHUB_CLIENT_SECRET = "test-github-client-secret-value"
+GITHUB_REDIRECT_URI = "http://test/admin/login/github/callback"
 
 
 def admin_settings() -> BackendSettings:
@@ -32,8 +37,25 @@ def admin_settings() -> BackendSettings:
     )
 
 
-def admin_app():
-    application = create_app(admin_settings())
+def admin_settings_github(**overrides: object) -> BackendSettings:
+    fields: dict[str, object] = dict(
+        database_url="sqlite+aiosqlite:///:memory:",
+        environment="test",
+        admin_auth_mode="github_oidc",
+        admin_session_secret=SecretStr(SESSION_SECRET),
+        admin_actor="test-operator",
+        admin_cookie_secure=False,
+        admin_github_client_id=GITHUB_CLIENT_ID,
+        admin_github_client_secret=SecretStr(GITHUB_CLIENT_SECRET),
+        admin_github_redirect_uri=GITHUB_REDIRECT_URI,
+        admin_github_allowed_logins="octocat,ana-dev",
+    )
+    fields.update(overrides)
+    return BackendSettings(**fields)
+
+
+def admin_app(settings: BackendSettings | None = None):
+    application = create_app(settings or admin_settings())
 
     async def fake_session() -> AsyncIterator[object]:
         yield object()
@@ -179,3 +201,132 @@ def test_local_token_authentication_is_rejected_in_production() -> None:
             admin_token=SecretStr(ADMIN_TOKEN),
             admin_session_secret=SecretStr(SESSION_SECRET),
         )
+
+
+def test_github_oidc_authentication_is_permitted_in_production() -> None:
+    settings = BackendSettings(
+        environment="production",
+        admin_auth_mode="github_oidc",
+        admin_session_secret=SecretStr(SESSION_SECRET),
+        admin_github_client_id=GITHUB_CLIENT_ID,
+        admin_github_client_secret=SecretStr(GITHUB_CLIENT_SECRET),
+        admin_github_redirect_uri="https://admin.example.com/admin/login/github/callback",
+        admin_github_allowed_logins="octocat",
+    )
+    assert settings.admin_auth_mode == "github_oidc"
+
+
+def test_github_oidc_requires_an_allowlist() -> None:
+    with pytest.raises(ValidationError, match="ALLOWED_LOGINS"):
+        BackendSettings(
+            environment="test",
+            admin_auth_mode="github_oidc",
+            admin_session_secret=SecretStr(SESSION_SECRET),
+            admin_github_client_id=GITHUB_CLIENT_ID,
+            admin_github_client_secret=SecretStr(GITHUB_CLIENT_SECRET),
+            admin_github_redirect_uri=GITHUB_REDIRECT_URI,
+        )
+
+
+async def test_github_oidc_happy_path_allows_allowlisted_login(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    async def fake_identity(settings: BackendSettings, code: str) -> str:
+        assert settings.admin_auth_mode == "github_oidc"
+        assert code == "good-code"
+        return "octocat"
+
+    monkeypatch.setattr(admin_auth, "_verify_github_identity", fake_identity)
+
+    observed: dict[str, object] = {}
+
+    async def change_runtime(
+        self: PipelineControlService,
+        manifest: object,
+        patch: object,
+        *,
+        changed_by: str,
+        change_reason: str,
+        **kwargs: object,
+    ) -> object:
+        observed.update(changed_by=changed_by)
+        now = datetime.now(UTC)
+        return SimpleNamespace(
+            id=1,
+            revision=1,
+            operation=ConfigRevisionOperation.PATCH,
+            patch=patch.model_dump(exclude_unset=True),
+            effective_config={"paused": True},
+            manifest_hash="a" * 64,
+            git_commit_sha="test-sha",
+            changed_by=changed_by,
+            change_reason=change_reason,
+            created_at=now,
+        )
+
+    monkeypatch.setattr(PipelineControlService, "change_runtime", change_runtime)
+    application = admin_app(admin_settings_github())
+
+    async with AsyncClient(
+        transport=ASGITransport(app=application),
+        base_url="http://test",
+        follow_redirects=False,
+    ) as client:
+        start = await client.get("/admin/login/github")
+        assert start.status_code == status.HTTP_302_FOUND
+        oauth_state = client.cookies.get(OAUTH_STATE_COOKIE)
+        assert oauth_state
+
+        callback = await client.get(
+            "/admin/login/github/callback",
+            params={"code": "good-code", "state": oauth_state},
+        )
+        assert callback.status_code == status.HTTP_303_SEE_OTHER
+        assert callback.headers["location"] == "/admin"
+
+        admin_page = await client.get("/admin")
+        assert admin_page.status_code == 200
+
+        csrf = client.cookies.get(CSRF_COOKIE)
+        runtime_change = await client.patch(
+            "/admin/api/sources/myneta.candidates/runtime",
+            json={"patch": {"paused": True}, "reason": "rotate"},
+            headers={CSRF_HEADER: csrf},
+        )
+
+    assert runtime_change.status_code == 200
+    assert observed["changed_by"] == "octocat"
+
+
+async def test_github_oidc_rejects_non_allowlisted_login(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    async def fake_identity(settings: BackendSettings, code: str) -> str:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="This GitHub account is not permitted to access the admin console.",
+        )
+
+    monkeypatch.setattr(admin_auth, "_verify_github_identity", fake_identity)
+    application = admin_app(admin_settings_github())
+
+    async with AsyncClient(
+        transport=ASGITransport(app=application),
+        base_url="http://test",
+        follow_redirects=False,
+    ) as client:
+        await client.get("/admin/login/github")
+        oauth_state = client.cookies.get(OAUTH_STATE_COOKIE)
+        assert oauth_state
+
+        callback = await client.get(
+            "/admin/login/github/callback",
+            params={"code": "someone-elses-code", "state": oauth_state},
+        )
+        assert callback.status_code == status.HTTP_403_FORBIDDEN
+        assert "not permitted" in callback.text
+
+        after = await client.get("/admin")
+
+    assert after.status_code == status.HTTP_303_SEE_OTHER
+    assert after.headers["location"] == "/admin/login"
