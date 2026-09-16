@@ -23,11 +23,10 @@ ingestion:
   change_detection: [content_hash]
   defaults:
     enabled: true
-    # Paused on registration (2026-09-15). `_initial_next_run` sets next_run_at to NOW, not
-    # now+frequency, so registering unpaused would make this source due immediately and the
-    # first tick would run it regardless of when the cron last did. Un-paused per source, in
-    # the same change that removes its cron - see docs/OPERATIONS.md.
-    paused: true
+    # Un-paused 2026-09-16, in the same change that removed its macro-indicators cron from
+    # ingest.yml. The scheduler now owns this source; nothing else runs `neta macro-indicators`
+    # on a schedule. First source migrated - ~25 World Bank API calls, so the lowest-risk one.
+    paused: false
     frequency_seconds: 2592000
     concurrency_limit: 2
     rate_limit_per_minute: 30
