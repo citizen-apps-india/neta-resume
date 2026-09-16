@@ -1,17 +1,52 @@
 # Deployment (current stack)
 
-Near-$0/month footprint. Four layers, four services — the data layer is **independent of any laptop**:
-schema + data reach the DB through GitHub Actions, not a local sync.
+Near-$0/month footprint. Five layers — the data layer is **independent of any laptop**: schema + data
+reach the DB through GitHub Actions, not a local sync.
 
 | Layer | Service | Notes |
 |---|---|---|
 | `web/` | **Vercel** | Next.js 16 SSR. Builds from the repo; `NETA_API_BASE` → the api. |
 | `api/` | **Render** | FastAPI, read-only. `NETA_DATABASE_URL` = read role. |
+| `backend/` | **Render** (second service) | The operator console at `/admin`. See below. |
 | `db/`  | **Neon Postgres** (free tier) | Serverless; supports branches (use one as backfill staging). |
-| `ingestion/` | **GitHub Actions** — `migrate.yml` (schema/seeds) + `ingest.yml` (pipelines) + `news.yml` | No extra compute; free runner minutes. |
+| `ingestion/` | **GitHub Actions** — `migrate.yml` (schema/seeds) + `ingest.yml` (pipelines) + `news.yml` + `dispatch.yml` (the control-plane scheduler) | No extra compute; free runner minutes. |
 
 > Note: earlier revisions of this doc described an AWS-hosted shape. The live stack is Vercel + Render +
 > Neon + GitHub Actions, documented below.
+
+## The operator console (`backend/`)
+
+A second Render service, separate from `api/`. It serves the authenticated ingestion console at
+`/admin` — sources, pause/resume, frequency, quarantine, run-now and run history.
+
+| Setting | Value |
+|---|---|
+| Root Directory | *(blank — the repo root)* |
+| Runtime | Python 3.14 (native, not the Dockerfile) |
+| Build | `uv sync --frozen --no-dev --package neta-backend` |
+| Start | `uv run --package neta-backend uvicorn neta_backend.main:app --host 0.0.0.0 --port $PORT` |
+| Health Check Path | `/health` |
+
+Three things about this are easy to get wrong:
+
+- **Root Directory must be the repo root, not `backend/`.** `backend` is a uv *workspace member*: it has
+  no lockfile of its own and its `neta-core` dependency resolves through `workspace = true`, which needs
+  the workspace root present. Pointing Render at `backend/` cannot resolve.
+- **`--package neta-backend` is load-bearing.** A plain root `uv sync` installs every workspace member,
+  including `neta-ingest` (playwright) and `neta-orchestration` (dagster, dlt) — hundreds of megabytes
+  and a likely free-tier build timeout. The console depends on neither.
+- **The install must stay editable.** `backend/neta_backend/pipeline/registry.py` reads the source
+  manifests by walking up to the repository root (`Path(__file__).parents[3] / "ingestion" /
+  "source_registry"`). A non-editable/wheel install relocates `__file__` into `site-packages` and that
+  path breaks — and it breaks on the first `/admin/api/sources` request, not at startup, so the health
+  check stays green while the console is broken. uv's workspace sync is editable by default; never pass
+  `--no-editable`.
+
+`backend/docker/start-api.sh` hardcodes port 8001 and cannot be used on Render, which requires `$PORT`.
+
+Auth variables are documented in [`docs/ingestion/admin-console.md`](ingestion/admin-console.md).
+`.github/workflows/deploy.yml` redeploys it on every push to `main` via the
+`RENDER_BACKEND_DEPLOY_HOOK` secret.
 
 ## How data reaches the DB (independent of a laptop)
 

@@ -6,8 +6,9 @@ name: deploy
 # running api + web stayed on an old build — see docs/DEPLOYMENT.md.)
 #
 # One-time setup — add these repo secrets (Settings → Secrets and variables → Actions):
-#   RENDER_DEPLOY_HOOK  — Render → the api service → Settings → "Deploy Hook" URL
-#   VERCEL_DEPLOY_HOOK  — Vercel → the web project → Settings → Git → "Deploy Hooks" → create one for `main`
+#   RENDER_DEPLOY_HOOK          — Render → the api service → Settings → "Deploy Hook" URL
+#   RENDER_BACKEND_DEPLOY_HOOK  — Render → the admin console service → Settings → "Deploy Hook" URL
+#   VERCEL_DEPLOY_HOOK          — Vercel → the web project → Settings → Git → "Deploy Hooks" → create one for `main`
 # A missing secret is skipped (not failed), so you can wire one before the other. Trigger the first deploy
 # by pushing to main or running this workflow manually (Actions → deploy → Run workflow).
 
@@ -36,6 +37,22 @@ jobs:
           code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$HOOK")
           echo "Render deploy hook → HTTP $code"
           case "$code" in 2*) echo "api deploy triggered ✓";; *) echo "::warning::Render hook returned $code";; esac
+
+  console:
+    name: Deploy admin console (Render)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Ping Render backend deploy hook
+        env:
+          HOOK: ${{ secrets.RENDER_BACKEND_DEPLOY_HOOK }}
+        run: |
+          if [ -z "$HOOK" ]; then
+            echo "::notice::RENDER_BACKEND_DEPLOY_HOOK not set — skipping admin console deploy."
+            exit 0
+          fi
+          code=$(curl -sS -o /dev/null -w "%{http_code}" -X POST "$HOOK")
+          echo "Render backend deploy hook → HTTP $code"
+          case "$code" in 2*) echo "console deploy triggered ✓";; *) echo "::warning::Render backend hook returned $code";; esac
 
   web:
     name: Deploy web (Vercel)

@@ -23,7 +23,11 @@ ingestion:
   change_detection: [etag, last_modified, content_hash]
   defaults:
     enabled: true
-    paused: false
+    # Paused on registration (2026-09-15). `_initial_next_run` sets next_run_at to NOW, not
+    # now+frequency, so registering unpaused would make this source due immediately and the
+    # first tick would run it regardless of when the cron last did. Un-paused per source, in
+    # the same change that removes its cron - see docs/OPERATIONS.md.
+    paused: true
     frequency_seconds: 604800
     concurrency_limit: 2
     rate_limit_per_minute: 30
