@@ -29,16 +29,27 @@ on:
         description: "Max dispatches claimed in one tick"
         required: false
         default: "100"
-  # PHASE 2 ONLY — do not uncomment until the Dagster dispatch sensor is stopped.
-  # schedule:
-  #   - cron: "17 * * * *"   # hourly, off the hour (GitHub's :00 is the busiest, most-delayed slot)
+  # Enabled 2026-09-16. Safe to run while every scheduled source ships `paused: true`: the tick
+  # reconciles stale runs and claims nothing. Sources are un-paused one at a time, each in the same
+  # change that removes its old cron, so no source ever has two schedulers competing for it.
+  # (The Dagster sensor under orchestration/ was never deployed; the real overlap risk is the cron
+  # workflows, which call `neta` directly and are invisible to the control plane's advisory lock.)
+  schedule:
+    - cron: "17 * * * *"   # hourly, off the hour (GitHub's :00 is the busiest, most-delayed slot)
 
 concurrency:
   # Never let two ticks overlap: claim_dispatches is advisory-locked, but two concurrent ticks
   # would still run the same source twice in parallel and break its concurrency/rate limits.
-  # Separate from the `ingest` group so a long manual backfill does not stall the scheduler —
-  # per-source overlap is prevented by the control plane's own concurrency_limit.
-  group: dispatch
+  #
+  # `ingest` rather than a group of its own FOR THE DURATION OF THE MIGRATION. The cron workflows
+  # (ingest/news/stitch/relatives/onboard-driver) call `neta` directly, create no pipeline_run row,
+  # and are therefore invisible to the control plane's concurrency accounting. Most pipelines
+  # delete-then-reinsert, which is safe to re-run serially but races under concurrency — with a
+  # window where facts are transiently absent from the live API. Sharing the group serialises every
+  # writer. The cost is that a long relatives.yml run can delay a tick, which is harmless: a tick
+  # asks what is *overdue*, so a late one catches up. Restore a dedicated group once the last cron
+  # is gone.
+  group: ingest
   cancel-in-progress: false
 
 jobs:

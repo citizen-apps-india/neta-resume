@@ -23,6 +23,13 @@ on:
     # Monday 03:00 UTC, after the roster refresh.
     - cron: "0 3 * * 1"
 
+concurrency:
+  # Shares the `ingest` group so the news crawl can never run alongside another pipeline that
+  # touches the same rows. news.yml had no group at all, which meant it could overlap ingest.yml
+  # as well as the scheduler.
+  group: ingest
+  cancel-in-progress: false
+
 jobs:
   run:
     runs-on: ubuntu-latest
