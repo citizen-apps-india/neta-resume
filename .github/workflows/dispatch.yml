@@ -63,7 +63,11 @@ jobs:
     # `neta dispatch --stale-after-minutes` (default 360). That cutoff must stay comfortably ABOVE
     # this timeout: raising this number without raising the cutoff would let one tick cancel a run
     # another tick is still executing.
-    timeout-minutes: 120
+    #
+    # Raised 120 -> 180 on 2026-09-16 when prs.parliamentary_record was migrated: it runs three
+    # operations across both houses (~780 members at 30 req/min, roughly 80 minutes), and 120 left
+    # too little headroom. Still half the 360-minute stale cutoff, so the invariant above holds.
+    timeout-minutes: 180
     env:
       # The control plane (pipeline_run / pipeline_source_state) lives behind the async backend DSN.
       NETA_BACKEND_DATABASE_URL: ${{ secrets.NETA_BACKEND_DATABASE_URL }}
