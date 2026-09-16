@@ -3,6 +3,11 @@ name: ingest
 # Independent, idempotent ingestion against the hosted Postgres (NETA_DATABASE_URL = ingest write-role).
 # Pipelines upsert on natural keys, so re-runs never duplicate. This is the path that replaces the old
 # laptop "run locally → load_remote_db.sh full-replace": any pipeline now runs here, directly on Neon.
+#
+# MANUAL ONLY as of 2026-09-16. Every schedule this file used to carry (weekly roster, monthly
+# attendance, monthly macro-indicators) has migrated to the control plane: the sources are defined in
+# ingestion/source_registry/, their cadence lives in Postgres, and dispatch.yml runs them. This
+# workflow remains for ad-hoc backfills and one-off commands, which is what `args` is for.
 
 on:
   workflow_dispatch:
@@ -14,8 +19,6 @@ on:
           "myneta --cycle LS2024 --limit 600"
         required: true
         default: ls-roster
-  schedule:
-    - cron: "0 4 1 * *"   # monthly: attendance refresh (1st, 04:00 UTC)
 
 concurrency:
   group: ingest          # never let two ingest runs write Neon at once
@@ -38,21 +41,3 @@ jobs:
         env:
           ARGS: ${{ inputs.args }}   # via env (not inline ${{ }}): no script injection; $ARGS only word-splits
         run: uv run neta $ARGS
-
-  scheduled:
-    if: github.event_name == 'schedule'
-    runs-on: ubuntu-latest
-    env:
-      NETA_DATABASE_URL: ${{ secrets.NETA_DATABASE_URL }}
-    steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-      - uses: astral-sh/setup-uv@c771a70e6277c0a99b617c7a806ffedaca235ff9 # v9.0.0
-        with:
-          python-version: 3.14.6
-          version: 0.12.0
-      - run: uv sync
-      - name: Monthly attendance refresh
-        if: github.event.schedule == '0 4 1 * *'
-        run: |
-          uv run neta attendance --house ls
-          uv run neta attendance --house rs

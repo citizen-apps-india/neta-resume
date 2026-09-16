@@ -23,11 +23,14 @@ ingestion:
   change_detection: [last_modified, content_hash]
   defaults:
     enabled: true
-    # Paused on registration (2026-09-15). `_initial_next_run` sets next_run_at to NOW, not
-    # now+frequency, so registering unpaused would make this source due immediately and the
-    # first tick would run it regardless of when the cron last did. Un-paused per source, in
-    # the same change that removes its cron - see docs/OPERATIONS.md.
-    paused: true
+    # Un-paused 2026-09-16, in the same change that removed its attendance cron from ingest.yml.
+    #
+    # NOTE this is a deliberate scope increase, not a like-for-like swap. The cron ran only
+    # `attendance` for both houses; the runner defaults to all three operations (attendance,
+    # activity, record) across both houses, and OrchestrationSpec has no way to pin parameters.
+    # Accepted knowingly: activity and record have never been scheduled before, so this is new
+    # monthly load on PRS. Roughly 780 members x 3 operations at 30 req/min is ~80 minutes.
+    paused: false
     frequency_seconds: 2592000
     concurrency_limit: 2
     rate_limit_per_minute: 30
