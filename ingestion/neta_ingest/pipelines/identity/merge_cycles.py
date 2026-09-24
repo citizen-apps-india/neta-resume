@@ -26,7 +26,7 @@ from neta_core.db.engine import session_scope
 _PERSON_TABLES = (
     "person_name_variant", "source_ref", "office_term", "cabinet_post", "role",
     "party_affiliation", "party_switch_event", "affidavit", "criminal_case",
-    "news_item", "contact",
+    "contact",
 )
 
 
@@ -153,7 +153,6 @@ def _merge(s, remap: dict[int, int]) -> int:
     # (cycle, constituency) winner, and merging both onto the survivor would duplicate (cycle, constituency).
     _dedup(s, "person_name_variant", "k.variant = o.variant AND k.source_id IS NOT DISTINCT FROM o.source_id")
     _dedup(s, "contact", "k.channel_type = o.channel_type AND k.value = o.value")
-    _dedup(s, "news_item", "k.url = o.url")
     _dedup(s, "office_term",
            "k.term_cycle_id = o.term_cycle_id AND k.constituency IS NOT DISTINCT FROM o.constituency")
     _dedup(s, "affidavit", "k.election_cycle = o.election_cycle AND k.source_ref_id = o.source_ref_id")
@@ -262,7 +261,7 @@ def _prune_non_current(s) -> int:
         return 0
     # criminal_case -> case_charge and affidavit -> line_item cascade on delete.
     for tbl in ("criminal_case", "affidavit", "office_term", "cabinet_post", "role",
-                "party_affiliation", "party_switch_event", "news_item", "contact",
+                "party_affiliation", "party_switch_event", "contact",
                 "person_name_variant", "source_ref"):
         s.execute(text(f"DELETE FROM {tbl} WHERE person_id = ANY(:ids)"), {"ids": ids})
     s.execute(text("DELETE FROM person WHERE id = ANY(:ids)"), {"ids": ids})

@@ -327,6 +327,9 @@ PK `(indicator_code, country_code, year)` — the upsert key for `neta macro-ind
 refresh in place). Sparse series (Gini, poverty — survey years only) stay sparse; the UI charts actual points
 and labels every latest value with the year it is "as of".
 
+`news_item` (added in 0012) was dropped by Alembic revision `drop_news_item_0003` when the In The News
+tab was retired, together with the `google-news:` provenance rows only it used.
+
 ---
 
 ## Ingestion control and execution plane
