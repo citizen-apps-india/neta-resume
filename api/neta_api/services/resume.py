@@ -20,7 +20,6 @@ from neta_api.schemas import (
     Facets,
     FacetCount,
     FirstOffice,
-    NewsItem,
     OfficeTerm,
     ParliamentaryActivity,
     ParliamentaryDebate,
@@ -538,32 +537,6 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
         )
     ]
 
-    news = [
-        NewsItem(
-            title=r.title,
-            snippet=r.snippet,
-            url=r.url,
-            publisher=r.publisher,
-            published_at=r.published_at,
-            source=_source(r),
-        )
-        for r in db.execute(
-            text(
-                """
-                SELECT n.title, n.snippet, n.url, n.publisher, n.published_at,
-                       s.code AS source_code, s.name AS source_name, s.trust_tier, sr.native_url
-                FROM news_item n
-                JOIN source_ref sr ON sr.id = n.source_ref_id
-                JOIN source s ON s.id = sr.source_id
-                WHERE n.person_id = :pid
-                ORDER BY n.published_at DESC NULLS LAST, n.fetched_at DESC
-                LIMIT 15
-                """
-            ),
-            {"pid": person_id},
-        )
-    ]
-
     return PersonResume(
         id=person.id,
         display_name=person.display_name,
@@ -583,7 +556,6 @@ def build_resume(db: Session, person_id: int) -> PersonResume | None:
         criminal_cases=criminal_cases,
         activity=_build_activity(db, person_id),
         parliamentary_record=_build_parliamentary_record(db, person_id),
-        news=news,
     )
 
 

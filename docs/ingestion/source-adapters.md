@@ -59,7 +59,6 @@ The existing canonical parsers and writes are unchanged. These live paths now ma
 | API | Digital Sansad committees | committee index or one committee roster | membership parser |
 | Crawl | MyNeta | winners, constituency discovery, or candidate page | affidavit/criminal parser |
 | Crawl | PRS MP Track | one listing page or member profile | activity/attendance/record parsers |
-| Feed | Google News | legislator query feed | citation metadata parser |
 
 All repository call sites for MyNeta, Digital Sansad, and PRS provide a manifest-backed execution
 context; their clients no longer expose a direct-fetch fallback. Other source families such as

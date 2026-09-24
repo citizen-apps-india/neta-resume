@@ -9,7 +9,7 @@ reach the DB through GitHub Actions, not a local sync.
 | `api/` | **Render** | FastAPI, read-only. `NETA_DATABASE_URL` = read role. |
 | `backend/` | **Render** (second service) | The operator console at `/admin`. See below. |
 | `db/`  | **Neon Postgres** (free tier) | Serverless; supports branches (use one as backfill staging). |
-| `ingestion/` | **GitHub Actions** — `migrate.yml` (schema/seeds) + `ingest.yml` (pipelines) + `news.yml` + `dispatch.yml` (the control-plane scheduler) | No extra compute; free runner minutes. |
+| `ingestion/` | **GitHub Actions** — `migrate.yml` (schema/seeds) + `ingest.yml` (pipelines) + `dispatch.yml` (the control-plane scheduler) | No extra compute; free runner minutes. |
 
 > Note: earlier revisions of this doc described an AWS-hosted shape. The live stack is Vercel + Render +
 > Neon + GitHub Actions, documented below.
@@ -93,7 +93,7 @@ this workflow is now the single source of truth; leaving both on just means a ha
 |---|---|---|
 | `NETA_MIGRATE_DATABASE_URL` | GitHub secret (migrate.yml) | Neon **owner** DSN (DDL) |
 | `NETA_BACKEND_DATABASE_URL` | migrate job / control backend | async SQLAlchemy owner/runtime DSN |
-| `NETA_DATABASE_URL` | GitHub secret (ingest.yml/news.yml) | **ingest write-role** DSN |
+| `NETA_DATABASE_URL` | GitHub secret (ingest.yml/dispatch.yml) | **ingest write-role** DSN |
 | `RENDER_DEPLOY_HOOK` | GitHub secret (deploy.yml) | Render api service deploy-hook URL |
 | `VERCEL_DEPLOY_HOOK` | GitHub secret (deploy.yml) | Vercel web project deploy-hook URL |
 | `NETA_DATABASE_URL` | Render (api) | **read-only** role DSN |

@@ -16,7 +16,6 @@ from neta_core.pipeline import (
     capture_raw,
 )
 from neta_ingest.extraction import pipeline_execution_scope, source_extraction_context
-from neta_sources.google_news import client as google_news
 from neta_sources.myneta import client as myneta
 from neta_sources.prs import client as prs
 from neta_sources.sansad import client as sansad
@@ -322,46 +321,12 @@ def test_roster_compatibility_command_routes_to_live_sansad_pipelines(monkeypatc
         roster.run("ls", "17")
 
 
-def test_google_news_feed_adapter_keeps_only_feed_metadata(tmp_path: Path) -> None:
-    payload = b"""<?xml version="1.0" encoding="UTF-8"?>
-    <rss><channel><item>
-      <title>Member addresses Parliament - Example News</title>
-      <link>https://example.test/story-1</link>
-      <source>Example News</source>
-      <pubDate>Thu, 30 Jul 2026 12:00:00 GMT</pubDate>
-      <description>&lt;p&gt;Member addresses Parliament&lt;/p&gt;</description>
-    </item></channel></rss>"""
-    adapter, calls = _http_adapter(payload, "application/rss+xml")
-    context = _context(google_news.SOURCE_ID, tmp_path, "news-run-1")
-
-    artifact = google_news.extract_news(
-        "Example Member",
-        party="Example Party",
-        slug="person-7",
-        context=context,
-        adapter=adapter,
-    )
-    articles = google_news.parse_news_artifact(artifact)
-
-    assert artifact.envelope.native_id == "legislator:person-7"
-    assert artifact.provenance_ref.endswith(".xml")
-    assert len(articles) == 1
-    assert articles[0].title == "Member addresses Parliament"
-    assert articles[0].publisher == "Example News"
-    assert articles[0].url == "https://example.test/story-1"
-    assert calls[0][1]["headers"] == {"User-Agent": google_news._UA}
-
-
 def test_adapter_rejects_a_manifest_from_another_source(tmp_path: Path) -> None:
     adapter, _calls = _http_adapter(b"{}", "application/json")
     wrong_context = _context(worldbank.SOURCE_ID, tmp_path)
 
     try:
-        google_news.extract_news(
-            "Example Member",
-            context=wrong_context,
-            adapter=adapter,
-        )
+        myneta.extract_winners(context=wrong_context, adapter=adapter)
     except ValueError as error:
         assert "does not match manifest" in str(error)
     else:
@@ -376,7 +341,7 @@ def test_raw_retention_policy_is_enforced_before_storage(tmp_path: Path) -> None
         def read(self, object_uri: str) -> bytes:
             raise AssertionError("there is no durable object to read")
 
-    registered = _context(google_news.SOURCE_ID, tmp_path)
+    registered = _context(worldbank.SOURCE_ID, tmp_path)
     no_retention_manifest = registered.manifest.model_copy(
         update={
             "rights": registered.manifest.rights.model_copy(update={"store_raw": False}),
@@ -390,15 +355,15 @@ def test_raw_retention_policy_is_enforced_before_storage(tmp_path: Path) -> None
 
     artifact = capture_raw(
         context=context,
-        source_id=google_news.SOURCE_ID,
-        native_id="legislator:7",
-        source_uri="https://news.google.com/rss/search?q=example",
-        payload=b"feed metadata",
-        content_type="application/rss+xml",
+        source_id=worldbank.SOURCE_ID,
+        native_id="indicator:example",
+        source_uri="https://api.worldbank.org/v2/country/IND/indicator/example",
+        payload=b"{}",
+        content_type="application/json",
     )
 
     assert artifact.provenance_ref is None
-    assert artifact.envelope.object_uri.startswith("transient://news.google_feed/")
+    assert artifact.envelope.object_uri.startswith("transient://worldbank.india_indicators/")
     assert json.loads(artifact.envelope.license_snapshot)["store_raw"] is False
 
 

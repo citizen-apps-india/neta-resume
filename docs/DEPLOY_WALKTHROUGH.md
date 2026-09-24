@@ -123,13 +123,13 @@ Give GitHub Actions the two database DSNs so schema + data flow without your lap
 
 1. **GitHub** → repo **Settings → Secrets and variables → Actions** → add:
    - `NETA_MIGRATE_DATABASE_URL` = Neon **owner** DSN (`+psycopg` form) — used by `migrate.yml`.
-   - `NETA_DATABASE_URL` = ingest DSN (`+psycopg` form) — used by `ingest.yml` / `news.yml`.
+   - `NETA_DATABASE_URL` = ingest DSN (`+psycopg` form) — used by `ingest.yml` / `dispatch.yml`.
    (Set these in the GitHub UI so the password never lands in a terminal history/chat.)
 2. From now on:
    - **Schema** — add a `db/migrations/00NN_*.sql`, merge to `main` → `migrate.yml` applies just the new one.
    - **Data** — **Actions → ingest → Run workflow** → `args` = any command, e.g. `attendance --house rs`,
      `myneta --cycle LS2024 --limit 600`, `historical-lookup DL_MCD2012 --house dl_mcd --current-cycle DL_MCD2022`.
-   - Scheduled roster/attendance/news refreshes run on their crons automatically.
+   - Scheduled roster/attendance refreshes run automatically from `dispatch.yml`.
 
 `scripts/load_remote_db.sh` is now **restore-only** — you won't full-replace Neon in normal operation.
 

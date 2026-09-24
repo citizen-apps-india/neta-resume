@@ -3,7 +3,9 @@ id: news.google_feed
 source_code: news
 display_name: Google News discovery feed
 publisher: Google News and originating publishers
-lifecycle: active
+# Retired 2026-09-24: the In The News tab was removed from the product and the collector deleted.
+# Kept registered (disabled) so the admin console shows it as switched off rather than dropping it.
+lifecycle: blocked
 authority:
   role: reported
   trust_tier: 3
@@ -18,41 +20,31 @@ ingestion:
   adapter: feed
   base_url: https://news.google.com/
   trigger:
-    mode: scheduled
-    profile: news-near-real-time
+    mode: manual
+    profile: retired
   change_detection: [event_id, content_hash]
   defaults:
-    enabled: true
-    # Paused on registration (2026-09-15). `_initial_next_run` sets next_run_at to NOW, not
-    # now+frequency, so registering unpaused would make this source due immediately and the
-    # first tick would run it regardless of when the cron last did. Un-paused per source, in
-    # the same change that removes its cron - see docs/OPERATIONS.md.
+    enabled: false
     paused: true
-    frequency_seconds: 604800
-    concurrency_limit: 4
-    rate_limit_per_minute: 30
-    retry_limit: 4
+    frequency_seconds: null
+    concurrency_limit: 1
+    rate_limit_per_minute: 1
+    retry_limit: 0
   guardrails:
-    min_frequency_seconds: 300
-    # Widened 2026-09-15 to match the actual GitHub Actions cadence (news.yml's
-    # weekly cron, Mondays). The old 86400 ceiling encoded a freshness target
-    # (news could go stale after 1 day) this project has never met.
-    max_frequency_seconds: 604800
-    max_concurrency: 8
-    max_rate_limit_per_minute: 60
-    max_retry_limit: 6
+    min_frequency_seconds: null
+    max_frequency_seconds: null
+    max_concurrency: 1
+    max_rate_limit_per_minute: 1
+    max_retry_limit: 0
   secret_refs: []
 conversion:
   converter: neta_ingest.converters.news:convert_feed_item
   contract: reported_news_item.v1
   produces: [news_item_observation]
 quality:
-  freshness_slo_seconds: 1800
+  freshness_slo_seconds: null
   minimum_records: 0
   required_fields: [canonical_url, headline, publisher, published_at]
-orchestration:
-  runner: neta_ingest.runners:run_news_feed
-  raw_history: dlt
 verification:
   corroborate_with: []
   human_review_required: true

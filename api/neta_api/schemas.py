@@ -197,15 +197,6 @@ class ParliamentaryRecord(BaseModel):
     source: Source                     # PRS provenance (per-item official doc links live on each row)
 
 
-class NewsItem(BaseModel):
-    title: str
-    snippet: str | None = None
-    url: str
-    publisher: str | None = None
-    published_at: date | None = None
-    source: Source                     # trust_tier 3 (reported); links to the publisher
-
-
 class PersonResume(BaseModel):
     id: int
     display_name: str
@@ -225,7 +216,6 @@ class PersonResume(BaseModel):
     criminal_cases: list[CriminalCase]
     activity: ParliamentaryActivity | None = None   # PRS scorecard: questions/debates/bills + peer context
     parliamentary_record: ParliamentaryRecord | None = None  # individual questions + debates (PRS profiles)
-    news: list[NewsItem] = []          # recent press coverage (Google News), newest first
 
 
 class VisitCount(BaseModel):

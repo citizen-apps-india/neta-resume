@@ -39,7 +39,6 @@ def test_source_component_builds_loadable_assets_jobs_and_sensors(monkeypatch) -
         "ingestion/canonical__digital_sansad__committees",
         "ingestion/canonical__digital_sansad__members",
         "ingestion/canonical__myneta__candidates",
-        "ingestion/canonical__news__google_feed",
         "ingestion/canonical__prs__parliamentary_record",
         "ingestion/canonical__worldbank__india_indicators",
     }

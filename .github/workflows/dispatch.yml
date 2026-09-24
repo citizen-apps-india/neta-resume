@@ -42,7 +42,7 @@ concurrency:
   # would still run the same source twice in parallel and break its concurrency/rate limits.
   #
   # `ingest` rather than a group of its own FOR THE DURATION OF THE MIGRATION. The cron workflows
-  # (ingest/news/stitch/relatives/onboard-driver) call `neta` directly, create no pipeline_run row,
+  # (ingest/stitch/relatives/onboard-driver) call `neta` directly, create no pipeline_run row,
   # and are therefore invisible to the control plane's concurrency accounting. Most pipelines
   # delete-then-reinsert, which is safe to re-run serially but races under concurrency — with a
   # window where facts are transiently absent from the live API. Sharing the group serialises every
