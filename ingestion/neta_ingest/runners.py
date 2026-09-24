@@ -12,7 +12,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from neta_ingest.pipelines.enrich import activity, attendance, committees, news
+from neta_ingest.pipelines.enrich import activity, attendance, committees
 from neta_ingest.pipelines.enrich import parliamentary_record as record
 from neta_ingest.pipelines.identity import myneta
 from neta_ingest.pipelines.lok_sabha import ls_roster
@@ -40,11 +40,6 @@ class MyNetaParameters(RunnerParameters):
     house: str = Field(default="ls", min_length=1)
     limit: int = 0
     candidate_ids: list[str] | None = None
-
-
-class NewsParameters(RunnerParameters):
-    house: Literal["ls", "rs"] | None = None
-    limit: int | None = Field(default=None, ge=1)
 
 
 class PrsParameters(RunnerParameters):
@@ -79,11 +74,6 @@ def run_myneta_candidates(parameters: Mapping[str, Any]) -> None:
         limit=parsed.limit,
         candidate_ids=parsed.candidate_ids,
     )
-
-
-def run_news_feed(parameters: Mapping[str, Any]) -> None:
-    parsed = NewsParameters.model_validate(parameters)
-    news.run(house=parsed.house, limit=parsed.limit)
 
 
 def run_prs_parliamentary_record(parameters: Mapping[str, Any]) -> None:

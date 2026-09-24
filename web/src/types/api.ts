@@ -601,20 +601,6 @@ export interface components {
             /** Top Theme */
             top_theme?: string | null;
         };
-        /** NewsItem */
-        NewsItem: {
-            /** Title */
-            title: string;
-            /** Snippet */
-            snippet?: string | null;
-            /** Url */
-            url: string;
-            /** Publisher */
-            publisher?: string | null;
-            /** Published At */
-            published_at?: string | null;
-            source: components["schemas"]["Source"];
-        };
         /** OfficeTerm */
         OfficeTerm: {
             /** House */
@@ -804,11 +790,6 @@ export interface components {
             criminal_cases: components["schemas"]["CriminalCase"][];
             activity?: components["schemas"]["ParliamentaryActivity"] | null;
             parliamentary_record?: components["schemas"]["ParliamentaryRecord"] | null;
-            /**
-             * News
-             * @default []
-             */
-            news: components["schemas"]["NewsItem"][];
         };
         /** PersonSummary */
         PersonSummary: {

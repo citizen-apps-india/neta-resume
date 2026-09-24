@@ -278,15 +278,6 @@ def merge_cycles() -> None:
     p.run()
 
 
-@app.command(name="news")
-def news(house: str = typer.Option(None, help="ls|rs (default: both)"),
-         limit: int = typer.Option(None, help="cap legislators processed (testing)")) -> None:
-    """Scrape recent Google News coverage for sitting legislators -> news_item."""
-    from neta_ingest.pipelines.enrich import news as p
-
-    p.run(house=house, limit=limit)
-
-
 @app.command(name="contacts")
 def contacts(house: str = typer.Option(None, help="ls|rs (default: both)")) -> None:
     """Attach official contact channels (email/office phone/profile) to sitting MPs from sansad.in."""

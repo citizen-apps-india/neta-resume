@@ -1,7 +1,7 @@
 [project]
 name = "neta-sources"
 version = "0.1.0"
-description = "Neta-Resume source clients (MyNeta, sansad, PRS, courts, data.gov.in, Google News, TCPD) — depend only on neta-core."
+description = "Neta-Resume source clients (MyNeta, sansad, PRS, courts, data.gov.in, TCPD) — depend only on neta-core."
 requires-python = ">=3.12"
 dependencies = [
     "neta-core",

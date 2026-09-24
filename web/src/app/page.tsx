@@ -18,7 +18,7 @@ const FEATURES = [
   { icon: "¶", title: "In Parliament", body: "Questions asked, debates joined and attendance — each measured against the House median, from PRS." },
   { icon: "⇄", title: "Parties switched", body: "Every party held over a career, with when each stint began and ended — by the public record." },
   { icon: "⌂", title: "Offices held", body: "The full posting history across the Lok Sabha, Rajya Sabha and state legislatures, over time." },
-  { icon: "⌕", title: "In the news", body: "Recent headlines that mention the legislator, auto-gathered from public news and linked to the publisher." },
+  { icon: "✉", title: "How to reach them", body: "Official channels only — the parliamentary office, the @sansad.in email and the official profile, each sourced." },
 ];
 
 export default async function Home() {

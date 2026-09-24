@@ -182,7 +182,7 @@ Schema and data reach the hosted Postgres **without a laptop**:
     `historical-lookup DL_MCD2012 --house dl_mcd --current-cycle DL_MCD2022`,
     `myneta --cycle LS2024 --limit 600`. (Any `neta` command — not a fixed wrapper.)
   - **Scheduled:** weekly roster refresh (`ls-roster` + `rajya-sabha`, Mon 02:00 UTC); monthly attendance
-    (1st, 04:00 UTC). News has its own `news.yml`. Heavy/one-off backfills: dispatch manually.
+    (1st, 04:00 UTC). Heavy/one-off backfills: dispatch manually.
   - A `concurrency: ingest` group prevents overlapping writes.
 
 `scripts/load_remote_db.sh` (full-replace from a local copy) is now **disaster-restore / one-time
