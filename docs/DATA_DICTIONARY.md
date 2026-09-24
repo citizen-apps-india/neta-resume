@@ -328,7 +328,7 @@ refresh in place). Sparse series (Gini, poverty — survey years only) stay spar
 and labels every latest value with the year it is "as of".
 
 `news_item` (added in 0012) was dropped by Alembic revision `drop_news_item_0003` when the In The News
-tab was retired, together with the `google-news:` provenance rows only it used.
+tab was retired. Its `google-news:` `source_ref` rows remain, unreferenced.
 
 ---
 

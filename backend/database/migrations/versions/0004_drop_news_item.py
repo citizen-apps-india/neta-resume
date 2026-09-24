@@ -1,4 +1,4 @@
-"""Drop the retired In The News headlines and their provenance rows.
+"""Drop the retired In The News headlines table.
 
 Revision ID: drop_news_item_0003
 Revises: pipeline_execution_0002
@@ -16,19 +16,13 @@ depends_on: Union[str, Sequence[str], None] = None
 
 
 def upgrade() -> None:
+    # Dropping news_item takes ACCESS EXCLUSIVE on person and source_ref (its FK targets), which
+    # queues every public profile read behind it. Fail fast rather than wait on a lock holder.
+    op.execute("SET LOCAL lock_timeout = '5s'")
     op.execute("DROP TABLE IF EXISTS news_item")
-    # Only the Google News collector minted 'google-news:' refs. The source row itself stays: the
-    # curated party-switch narratives still cite 'news' (trust tier 3) with 'switch-' refs.
-    op.execute(
-        """
-        DELETE FROM source_ref sr
-        USING source s
-        WHERE sr.source_id = s.id
-          AND s.code = 'news'
-          AND sr.native_id LIKE 'google-news:%'
-          AND NOT EXISTS (SELECT 1 FROM fact_source fs WHERE fs.source_ref_id = sr.id)
-        """
-    )
+    # The 'google-news:' source_ref rows are left in place, unreferenced. Deleting them runs an FK
+    # check against ~16 unindexed referencing columns per row while the lock above is held: on
+    # 2026-09-24 that stalled profile reads for 12 minutes before the run was cancelled.
 
 
 def downgrade() -> None:
