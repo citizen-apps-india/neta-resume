@@ -145,6 +145,36 @@ export function DashboardBodySkeleton() {
   );
 }
 
+/** Inline fallback for the ECI Files front page body (streamed in below the static SectionHero). Header-less. */
+export function EciFrontSkeleton() {
+  return (
+    <div>
+      <div className="nr-statgrid" style={{ marginBottom: 28 }}>
+        {Array.from({ length: 4 }).map((_, i) => <S key={i} h={118} r={14} />)}
+      </div>
+      <S w={140} h={11} r={4} style={{ marginBottom: 12 }} />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 28 }}>
+        {Array.from({ length: 6 }).map((_, i) => <S key={i} h={80} r={12} />)}
+      </div>
+      <S w={140} h={11} r={4} style={{ marginBottom: 12 }} />
+      <div style={{ display: "flex", gap: 12 }}>
+        {Array.from({ length: 4 }).map((_, i) => <S key={i} w={220} h={96} r={12} />)}
+      </div>
+    </div>
+  );
+}
+
+/** Inline fallback for the ECI Files lane timeline body (streamed in below the static SectionHero). */
+export function EciTimelineSkeleton() {
+  return (
+    <div>
+      <S h={56} r={8} style={{ marginBottom: 22 }} />
+      <S h={30} r={20} style={{ marginBottom: 20, maxWidth: 420 }} />
+      <S h={220} r={12} />
+    </div>
+  );
+}
+
 /** Generic placeholder for other pages (home / elections). */
 export function PageSkeleton() {
   return (

@@ -17,6 +17,9 @@
   --sev3:#6B7280;--sev3-bg:#EEF0F2;--ok:#2EA76A;--ok-bg:#E4F3EB;
   --warn-bg:#EEF0F2;--shadow:rgba(18,20,24,0.28);--photo-a:#EAECEF;--photo-b:#F5F6F7;--gridline:#E8EAED;
   --glow1:rgba(18,165,148,0.10);--glow2:rgba(18,165,148,0.05);
+  /* ECI Files role tokens (docs/eci-files/REDESIGN-SPEC.md §"Identity") — the section's own accent plus
+     the four trust colours (status: documented/reported/claim/response). Used nowhere outside eci-files/. */
+  --eci-ink:#6D3FA0;--eci-doc:#2a78d6;--eci-report:#eb6834;--eci-claim:#1baf7a;--eci-response:#eda100;
 }
 
 [data-theme="dark"] {
@@ -30,6 +33,7 @@
   --sev3:#A9ADB8;--sev3-bg:#23262E;--ok:#4FC68A;--ok-bg:#14271D;
   --warn-bg:#1C1E24;--shadow:rgba(0,0,0,0.55);--photo-a:#24262E;--photo-b:#141519;--gridline:#1C2027;
   --glow1:rgba(18,165,148,0.18);--glow2:rgba(18,165,148,0.10);
+  --eci-ink:#B38DDE;--eci-doc:#3987e5;--eci-report:#d95926;--eci-claim:#199e70;--eci-response:#c98500;
 }
 
 * { box-sizing: border-box; }
@@ -394,4 +398,66 @@ html { scroll-behavior: smooth; }
     radial-gradient(farthest-side at 0 50%, var(--shadow), transparent) 0 0 / 14px 100% no-repeat,
     radial-gradient(farthest-side at 100% 50%, var(--shadow), transparent) 100% 0 / 14px 100% no-repeat;
   background-attachment: local, local, scroll, scroll;
+}
+
+/* ---------- ECI Files (docs/eci-files/REDESIGN-SPEC.md §"Phase 2") ---------- */
+
+/* front page: headline stat tiles + "start here" cards reuse .nr-statgrid/.nr-navgrid's auto-fit mechanics;
+   this is the section's own accent wash on top. */
+.eci-hero-tile { border: 1px solid var(--rule); background: var(--card); padding: 16px 17px 13px; min-width: 0; }
+.eci-hero-tile .eci-hero-value { font-weight: 700; color: var(--eci-ink); line-height: 1.05; }
+
+.eci-moments { scroll-snap-type: x proximity; }
+.eci-moments > * { scroll-snap-align: start; }
+
+/* overview density strip: each month is a real <button> (keyboard/AT-focusable) containing one hand-drawn
+   SVG bar — see components/eci-files/DensityStrip.tsx. The selected window is a plain highlight div behind
+   the bars, not per-bar state, so brushing never has to touch every button's style. */
+.eci-density-wrap { position: relative; }
+.eci-density-select {
+  position: absolute; top: 0; bottom: 0; background: color-mix(in srgb, var(--eci-ink) 14%, transparent);
+  border-left: 1.5px solid var(--eci-ink); border-right: 1.5px solid var(--eci-ink); pointer-events: none;
+}
+.eci-density-track { display: flex; align-items: flex-end; gap: 1px; position: relative; z-index: 1; touch-action: pan-y; }
+.eci-density-bar { flex: 1 1 0; min-width: 3px; background: none; border: 0; padding: 0; cursor: pointer; display: block; }
+.eci-density-bar:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; border-radius: 2px; }
+.eci-density-bar svg { display: block; width: 100%; overflow: visible; }
+
+/* lane timeline: five horizontal tracks (desktop/tablet) with dots positioned at their real date. */
+.eci-lanes-desktop { display: flex; flex-direction: column; }
+.eci-lanes-mobile { display: none; }
+.eci-lane-row { position: relative; height: 40px; border-top: 1px solid var(--rule2); }
+.eci-lane-row:first-child { border-top: none; }
+.eci-dot { position: absolute; top: 50%; width: 22px; height: 22px; transform: translate(-50%, -50%); background: none; border: 0; padding: 0; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.eci-dot:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
+@media (hover: hover) { .eci-dot:hover { transform: translate(-50%, -50%) scale(1.25); } }
+@media (max-width: 640px) {
+  .eci-lanes-desktop { display: none; }
+  .eci-lanes-mobile { display: flex; flex-direction: column; gap: 8px; }
+}
+
+.eci-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.eci-legend-item { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--ink2); }
+
+/* drawer: side panel on desktop, bottom sheet under 640px (same component, CSS repositions it). */
+.eci-drawer-backdrop { position: fixed; inset: 0; background: rgba(10, 11, 14, 0.5); z-index: 40; }
+.eci-drawer-panel {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(480px, 100vw); z-index: 41; overflow-y: auto;
+  background: var(--panel); border-left: 1px solid var(--rule); box-shadow: -24px 0 60px -32px var(--shadow);
+}
+@media (max-width: 640px) {
+  .eci-drawer-panel {
+    top: auto; left: 0; right: 0; width: auto; max-height: 86vh;
+    border-left: none; border-top: 1px solid var(--rule); border-radius: 16px 16px 0 0;
+    box-shadow: 0 -24px 60px -32px var(--shadow);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .eci-drawer-backdrop { animation: nrFadeIn 0.18s ease both; }
+  .eci-drawer-panel { animation: nrDrawerIn 0.22s ease both; }
+}
+@keyframes nrFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes nrDrawerIn { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
+@media (max-width: 640px) {
+  @keyframes nrDrawerIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
 }

@@ -62,8 +62,8 @@ export default async function EciFilesPeoplePage() {
           </>
         )}
         <div style={{ marginTop: 22 }}>
-          <Link href="/eci-files" className="mono" style={{ fontSize: 12, color: "var(--accent-2)", textDecoration: "none" }}>
-            ← Full timeline
+          <Link href="/eci-files/entries" className="mono" style={{ fontSize: 12, color: "var(--accent-2)", textDecoration: "none" }}>
+            ← Every entry
           </Link>
         </div>
       </main>
