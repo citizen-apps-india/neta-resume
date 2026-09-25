@@ -1,7 +1,8 @@
 import Link from "next/link";
-import type { EciTopicCount, EciPersonCount } from "@/types/eci-files";
+import type { EciTopicCount, EciPersonCount, EciLaneCount } from "@/types/eci-files";
+import { eciLaneLabel } from "@/lib/eci-files";
 
-function buildHref(base: string, cur: { topic?: string; person?: string }, patch: Record<string, string | undefined>) {
+function buildHref(base: string, cur: Record<string, string | undefined>, patch: Record<string, string | undefined>) {
   const merged = { ...cur, ...patch };
   const p = new URLSearchParams();
   for (const [k, v] of Object.entries(merged)) if (v) p.set(k, v);
@@ -27,20 +28,37 @@ function Pill({ label, active, href }: { label: string; active: boolean; href: s
   );
 }
 
-/** Topic and person filter pills for the timeline. Plain links (no client JS) — the current selection
- *  is server-rendered from `searchParams`. */
+/** Lane, topic and person filter pills. Plain links (no client JS) — the current selection is
+ *  server-rendered from `searchParams`. `preserve` carries any params a filter change must not drop
+ *  (the timeline's `from`/`to` window — REDESIGN-SPEC §"Filters": "without losing the current window"). */
 export function Filters({
-  basePath, topics, people, topic, person,
+  basePath, lanes, topics, people, lane, topic, person, preserve,
 }: {
   basePath: string;
+  lanes?: EciLaneCount[];
   topics: EciTopicCount[];
   people: EciPersonCount[];
+  lane?: string;
   topic?: string;
   person?: string;
+  preserve?: Record<string, string | undefined>;
 }) {
-  const cur = { topic, person };
+  const cur = { ...preserve, lane, topic, person };
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
+      {lanes && lanes.length > 0 && (
+        <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
+          <Pill label="All lanes" active={!lane} href={buildHref(basePath, cur, { lane: undefined })} />
+          {lanes.map((l) => (
+            <Pill
+              key={l.lane}
+              label={`${eciLaneLabel(l.lane)} (${l.count})`}
+              active={lane === l.lane}
+              href={buildHref(basePath, cur, { lane: l.lane })}
+            />
+          ))}
+        </div>
+      )}
       {topics.length > 0 && (
         <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
           <Pill label="All topics" active={!topic} href={buildHref(basePath, cur, { topic: undefined })} />

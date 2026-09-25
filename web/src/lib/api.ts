@@ -6,6 +6,9 @@
 import type { components } from "@/types/api";
 import type {
   EciTimeline,
+  EciCompactTimeline,
+  EciSummary,
+  EciDensity,
   EciPersonSummary,
   EciPersonPage,
   EciEntry,
@@ -195,26 +198,52 @@ export function docSrc(kind: "question" | "debate", id: number): string {
   return `${API_BASE}/${kind}s/${id}/document`;
 }
 
-// ECI Files: the sourced ECI record (see docs/eci-files/SPEC.md §6-7). Gated behind noindex pages until
-// launch — see the `robots` metadata on each `eci-files` route.
+// ECI Files: the sourced ECI record (see docs/eci-files/SPEC.md §6-7, docs/eci-files/REDESIGN-SPEC.md
+// §"Phase 2"). Gated behind noindex pages until launch — see the `robots` metadata on each `eci-files` route.
 export type {
-  EciEntry, EciEntryKind, EciEntryStatus, EciDatePrecision, EciCheckStatus, EciFigure,
+  EciEntry, EciEntryKind, EciEntryStatus, EciDatePrecision, EciCheckStatus, EciFigure, EciFilesLane,
   EciEntryPerson, EciResponseRef, EciCitation, EciTopicCount, EciPersonCount, EciTimelineCounts,
-  EciTimeline, EciPersonSummary, EciPersonPage,
+  EciLaneCount, EciCompactEntry, EciTimeline, EciCompactTimeline, EciHeadlineStat, EciSummaryCounts,
+  EciSummary, EciDensityBucket, EciDensity, EciPersonSummary, EciPersonPage,
 } from "@/types/eci-files";
 
 export type EciTimelineOpts = {
-  topic?: string; person?: string; status?: string; from?: string; to?: string; revalidate?: number;
+  topic?: string; person?: string; status?: string; lane?: string; from?: string; to?: string; revalidate?: number;
 };
+/** The full-detail timeline (`/eci-files/entries`, a person's profile) — every field, including citations. */
 export function getEciTimeline(opts: EciTimelineOpts = {}): Promise<EciTimeline> {
+  return getJSON<EciTimeline>(`/eci-files/timeline${eciTimelineQuery(opts)}`, opts.revalidate ?? 3600);
+}
+
+/** The `fields=compact` timeline (the lane view's dots) — small enough that the first paint never pulls
+ *  the whole record. The drawer fetches one full {@link EciEntry} on demand via `getEciEntry`. */
+export function getEciTimelineCompact(opts: EciTimelineOpts = {}): Promise<EciCompactTimeline> {
+  const qs = eciTimelineQuery(opts);
+  const sep = qs ? "&" : "?";
+  return getJSON<EciCompactTimeline>(`/eci-files/timeline${qs}${sep}fields=compact`, opts.revalidate ?? 900);
+}
+
+function eciTimelineQuery(opts: EciTimelineOpts): string {
   const q = new URLSearchParams();
   if (opts.topic) q.set("topic", opts.topic);
   if (opts.person) q.set("person", opts.person);
   if (opts.status) q.set("status", opts.status);
+  if (opts.lane) q.set("lane", opts.lane);
   if (opts.from) q.set("from", opts.from);
   if (opts.to) q.set("to", opts.to);
   const qs = q.toString();
-  return getJSON<EciTimeline>(`/eci-files/timeline${qs ? `?${qs}` : ""}`, opts.revalidate ?? 3600);
+  return qs ? `?${qs}` : "";
+}
+
+/** The `/eci-files` front page's payload: headline stats, key moments, record-wide counts, freshness. */
+export function getEciSummary(): Promise<EciSummary> {
+  return getJSON<EciSummary>("/eci-files/summary", 900);
+}
+
+/** Monthly entry counts by lane, 2019 to today — the timeline's overview strip. Changes only when the
+ *  record reloads, so it's cached longer than the (filterable) timeline itself. */
+export function getEciDensity(): Promise<EciDensity> {
+  return getJSON<EciDensity>("/eci-files/density", 3600);
 }
 
 export function getEciPeople(): Promise<EciPersonSummary[]> {
