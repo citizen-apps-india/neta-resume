@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { EciTopicCount, EciPersonCount, EciLaneCount } from "@/types/eci-files";
 import { eciLaneLabel } from "@/lib/eci-files";
+import { FilterSelect } from "@/components/eci-files/FilterSelect";
 
 function buildHref(base: string, cur: Record<string, string | undefined>, patch: Record<string, string | undefined>) {
   const merged = { ...cur, ...patch };
@@ -86,19 +87,29 @@ export function Filters({
           visible={lanes.length}
         />
       )}
-      {topics.length > 0 && (
-        <PillRow
-          all={{ key: "all", label: "All topics", active: !topic, href: buildHref(basePath, cur, { topic: undefined }) }}
-          items={topics.map((t) => ({ key: t.topic, label: `${TOPIC_LABELS[t.topic] ?? t.topic} (${t.count})`, active: topic === t.topic, href: buildHref(basePath, cur, { topic: t.topic }) }))}
-          visible={6}
-        />
-      )}
-      {people.length > 0 && (
-        <PillRow
-          all={{ key: "all", label: "All people", active: !person, href: buildHref(basePath, cur, { person: undefined }) }}
-          items={people.map((p) => ({ key: p.slug, label: `${p.name} (${p.count})`, active: person === p.slug, href: buildHref(basePath, cur, { person: p.slug }) }))}
-          visible={6}
-        />
+      {(topics.length > 0 || people.length > 0) && (
+        <div style={{ display: "flex", gap: "10px 20px", flexWrap: "wrap", alignItems: "center" }}>
+          {topics.length > 0 && (
+            <FilterSelect
+              id="eci-filter-topic"
+              label="Topic"
+              param="topic"
+              value={topic}
+              allLabel="All topics"
+              options={topics.map((t) => ({ value: t.topic, label: `${TOPIC_LABELS[t.topic] ?? t.topic} (${t.count})` }))}
+            />
+          )}
+          {people.length > 0 && (
+            <FilterSelect
+              id="eci-filter-person"
+              label="Person"
+              param="person"
+              value={person}
+              allLabel="All people"
+              options={people.map((p) => ({ value: p.slug, label: `${p.name} (${p.count})` }))}
+            />
+          )}
+        </div>
       )}
     </div>
   );
