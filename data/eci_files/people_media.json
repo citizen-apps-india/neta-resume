@@ -1,0 +1,238 @@
+{
+  "about": "Official photos of Election Commissioners for ECI Files profiles (docs/eci-files/PHASE4-SPEC.md section 4). Every file is on Wikimedia Commons under the Government Open Data License - India, which grants a worldwide, royalty-free licence to use, adapt and publish, commercially or not, on condition that the provider, source and licence are acknowledged. licence_review \"reviewed\" means a Commons reviewer or bot confirmed the licence against the PIB source; \"uploader_asserted\" means the uploader tagged an eci.gov.in image GODL-India and no review is recorded. Images taken directly from eci.gov.in (marked (c) Election Commission of India, no open licence published) are not used. People not listed here get initials.",
+  "checked_on": "2026-09-25",
+  "crop_convention": "cx, cy are the centre of a square crop as fractions of the original width and height; size is the square side as a fraction of the shorter edge.",
+  "people": [
+    {
+      "slug": "sunil-arora",
+      "name": "Sunil Arora",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/43/Media_address_by_Chief_Election_Commissioner_of_India%2C_Shri_Sunil_Arora_on_2nd_December_2018_%28cropped%29.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Media_address_by_Chief_Election_Commissioner_of_India,_Shri_Sunil_Arora_on_2nd_December_2018_(cropped).jpg",
+      "original_source": "https://eci.gov.in/gallery/image/1163-sunil-arora-addressing-media-after-assuming-charge-as-the-23rd-chief-election-commissioner-of-india/",
+      "original_publisher": "Election Commission of India",
+      "caption": "Addressing the media after taking charge as CEC, 2 Dec 2018",
+      "photo_date": "2018-12-02",
+      "licence": "GODL-India",
+      "licence_url": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+      "licence_review": "uploader_asserted",
+      "attribution": "Photo: Election Commission of India, via Wikimedia Commons. Government Open Data License – India (GODL).",
+      "self_host": true,
+      "local_path": "/eci-files/people/sunil-arora.jpg",
+      "crop": {
+        "cx": 0.52,
+        "cy": 0.47,
+        "size": 0.6
+      },
+      "original_size": [
+        2463,
+        2286
+      ]
+    },
+    {
+      "slug": "ashok-lavasa",
+      "name": "Ashok Lavasa",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Shri_Ashok_Lavasa_taking_charge_as_the_New_Election_Commissioner_of_India%2C_in_New_Delhi_on_January_23%2C_2018.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Shri_Ashok_Lavasa_taking_charge_as_the_New_Election_Commissioner_of_India,_in_New_Delhi_on_January_23,_2018.jpg",
+      "original_source": "http://pib.nic.in/newsite/photo.aspx?photoid=120886",
+      "original_publisher": "Press Information Bureau (Election Commission)",
+      "caption": "Taking charge as Election Commissioner, 23 Jan 2018",
+      "photo_date": "2018-01-23",
+      "licence": "GODL-India",
+      "licence_url": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+      "licence_review": "reviewed",
+      "attribution": "Photo: Press Information Bureau / Election Commission of India, via Wikimedia Commons. Government Open Data License – India (GODL).",
+      "self_host": true,
+      "local_path": "/eci-files/people/ashok-lavasa.jpg",
+      "crop": {
+        "cx": 0.63,
+        "cy": 0.47,
+        "size": 0.42
+      },
+      "original_size": [
+        2200,
+        1920
+      ]
+    },
+    {
+      "slug": "sushil-chandra",
+      "name": "Sushil Chandra",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/e/ec/Sushil_Chandra%2C_Election_Commissioner_of_India_%28cropped%29.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Sushil_Chandra,_Election_Commissioner_of_India_(cropped).jpg",
+      "original_source": "https://eci.gov.in/uploads/swiperslider_images/EC-SC-banner.jpg.3f590bf0b0f1defbbc44866bb054cd41.jpg",
+      "original_publisher": "Election Commission of India",
+      "caption": "ECI website banner on his appointment as Election Commissioner, Feb 2019",
+      "photo_date": "2019-02-15",
+      "licence": "GODL-India",
+      "licence_url": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+      "licence_review": "uploader_asserted",
+      "attribution": "Photo: Election Commission of India, via Wikimedia Commons. Government Open Data License – India (GODL).",
+      "self_host": true,
+      "local_path": "/eci-files/people/sushil-chandra.jpg",
+      "crop": {
+        "cx": 0.5,
+        "cy": 0.45,
+        "size": 1.0
+      },
+      "original_size": [
+        311,
+        350
+      ]
+    },
+    {
+      "slug": "rajiv-kumar",
+      "name": "Rajiv Kumar",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Chief_Election_Commissioner_of_India_Rajiv_Kumar_%28cropped%29.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Chief_Election_Commissioner_of_India_Rajiv_Kumar_(cropped).jpg",
+      "original_source": "https://static.pib.gov.in/WriteReadData/Gallery/PhotoGallery/2024/Feb/H20240226154850.JPG",
+      "original_publisher": "Press Information Bureau (Election Commission)",
+      "caption": "At an ECI MoU signing, New Delhi, 26 Feb 2024",
+      "photo_date": "2024-02-26",
+      "licence": "GODL-India",
+      "licence_url": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+      "licence_review": "reviewed",
+      "attribution": "Photo: Press Information Bureau / Election Commission of India, via Wikimedia Commons. Government Open Data License – India (GODL).",
+      "self_host": true,
+      "local_path": "/eci-files/people/rajiv-kumar.jpg",
+      "crop": {
+        "cx": 0.5,
+        "cy": 0.4,
+        "size": 1.0
+      },
+      "original_size": [
+        447,
+        559
+      ]
+    },
+    {
+      "slug": "anup-chandra-pandey",
+      "name": "Anup Chandra Pandey",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/d/df/Shri_Anup_Chandra_Pandey.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Shri_Anup_Chandra_Pandey.jpg",
+      "original_source": "https://eci.gov.in/honble-commission/shri-anup-chandra-pandey-r15/",
+      "original_publisher": "Election Commission of India",
+      "caption": "ECI official profile photo",
+      "photo_date": null,
+      "licence": "GODL-India",
+      "licence_url": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+      "licence_review": "uploader_asserted",
+      "attribution": "Photo: Election Commission of India, via Wikimedia Commons. Government Open Data License – India (GODL).",
+      "self_host": true,
+      "local_path": "/eci-files/people/anup-chandra-pandey.jpg",
+      "crop": {
+        "cx": 0.5,
+        "cy": 0.5,
+        "size": 1.0
+      },
+      "original_size": [
+        200,
+        200
+      ]
+    },
+    {
+      "slug": "arun-goel",
+      "name": "Arun Goel",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/8/88/Election_Commissioner_Arun_Goel.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Election_Commissioner_Arun_Goel.jpg",
+      "original_source": "https://static.pib.gov.in/WriteReadData/Gallery/PhotoGallery/2024/Feb/H20240226154852.JPG",
+      "original_publisher": "Press Information Bureau (Election Commission)",
+      "caption": "At an ECI MoU signing, New Delhi, 26 Feb 2024",
+      "photo_date": "2024-02-26",
+      "licence": "GODL-India",
+      "licence_url": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+      "licence_review": "reviewed",
+      "attribution": "Photo: Press Information Bureau / Election Commission of India, via Wikimedia Commons. Government Open Data License – India (GODL).",
+      "self_host": true,
+      "local_path": "/eci-files/people/arun-goel.jpg",
+      "crop": {
+        "cx": 0.5,
+        "cy": 0.4,
+        "size": 0.78
+      },
+      "original_size": [
+        1156,
+        1346
+      ]
+    },
+    {
+      "slug": "gyanesh-kumar",
+      "name": "Gyanesh Kumar",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/5/5f/The_Chief_Election_Commissioner_of_India%2C_Sh._Gyanesh_Kumar.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:The_Chief_Election_Commissioner_of_India,_Sh._Gyanesh_Kumar.jpg",
+      "original_source": "https://static.pib.gov.in/WriteReadData/Gallery/PhotoGallery/2025/Jun/H20250625186266.JPG",
+      "original_publisher": "Press Information Bureau (Election Commission)",
+      "caption": "Speaking at an ECI event, New Delhi, 25 Jun 2025",
+      "photo_date": "2025-06-25",
+      "licence": "GODL-India",
+      "licence_url": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+      "licence_review": "reviewed",
+      "attribution": "Photo: Press Information Bureau / Election Commission of India, via Wikimedia Commons. Government Open Data License – India (GODL).",
+      "self_host": true,
+      "local_path": "/eci-files/people/gyanesh-kumar.jpg",
+      "crop": {
+        "cx": 0.55,
+        "cy": 0.36,
+        "size": 0.7
+      },
+      "original_size": [
+        869,
+        840
+      ]
+    },
+    {
+      "slug": "sukhbir-singh-sandhu",
+      "name": "Sukhbir Singh Sandhu",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/a/ac/Election_Commissioner_Shri_Sukhbir_Singh_Sandhu.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Election_Commissioner_Shri_Sukhbir_Singh_Sandhu.jpg",
+      "original_source": "https://static.pib.gov.in/WriteReadData/Gallery/PhotoGallery/2024/Apr/H20240422157812.JPG",
+      "original_publisher": "Press Information Bureau (Election Commission)",
+      "caption": "At an ECI meeting, New Delhi, 22 Apr 2024 (crop of a group photo)",
+      "photo_date": "2024-04-22",
+      "licence": "GODL-India",
+      "licence_url": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+      "licence_review": "reviewed",
+      "attribution": "Photo: Press Information Bureau / Election Commission of India, via Wikimedia Commons. Government Open Data License – India (GODL).",
+      "self_host": true,
+      "local_path": "/eci-files/people/sukhbir-singh-sandhu.jpg",
+      "crop": {
+        "cx": 0.5,
+        "cy": 0.45,
+        "size": 1.0
+      },
+      "original_size": [
+        352,
+        373
+      ]
+    },
+    {
+      "slug": "vivek-joshi",
+      "name": "Vivek Joshi",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/4/4f/Vivek_Joshi_IAS_CEC.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Vivek_Joshi_IAS_CEC.jpg",
+      "original_source": "https://www.eci.gov.in/ec-dr-vivek-joshi",
+      "original_publisher": "Election Commission of India",
+      "caption": "ECI official profile photo",
+      "photo_date": "2025",
+      "licence": "GODL-India",
+      "licence_url": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+      "licence_review": "uploader_asserted",
+      "attribution": "Photo: Election Commission of India, via Wikimedia Commons. Government Open Data License – India (GODL).",
+      "self_host": true,
+      "local_path": "/eci-files/people/vivek-joshi.jpg",
+      "crop": {
+        "cx": 0.5,
+        "cy": 0.5,
+        "size": 1.0
+      },
+      "original_size": [
+        524,
+        400
+      ]
+    }
+  ],
+  "not_found": [
+    {
+      "group": "Senior ECI officials and state Chief Electoral Officers",
+      "result": "No openly licensed photo found on Wikimedia Commons for Maneesh Garg, Seema Khanna, Gyanesh Bharti, Dharmendra Sharma, Nitesh Kumar Vyas, Navdeep Rinwa, S. Chockalingam, Archana Patnaik, Pawan Kumar Sharma, Manoj Kumar Agarwal, Rathan U. Kelkar, Vinod Singh Gunjiyal, Subrata Gupta or Pramod Kumar Sharma. They render initials."
+    }
+  ]
+}

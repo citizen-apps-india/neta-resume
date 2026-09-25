@@ -1,0 +1,226 @@
+{
+  "about": "Who selected whom for the Election Commission, 2019-2025. Written from data/eci_files/entries/*.json only: every regime, selection, member and departure cites loaded (non-excluded) entry ids. Names appear only where a cited entry names the person; otherwise the member is recorded by role with name null. Loaded by the ECI Files loader into eci_file_selection / eci_file_selection_member (docs/eci-files/PHASE4-SPEC.md section 5).",
+  "written_on": "2026-09-25",
+  "regimes": [
+    {
+      "key": "convention",
+      "label": "Executive convention",
+      "from": null,
+      "to": "2023-03-01",
+      "rule": "No statute on selection. The President appointed on the Union government's advice, usually a serving or retired Secretary-rank officer; the senior-most Election Commissioner was normally elevated to Chief Election Commissioner.",
+      "panel": ["Prime Minister (advises the President)"],
+      "entry_ids": ["selection-law-rajiv-kumar-joins-2020", "selection-law-rule-1991-predecessor"]
+    },
+    {
+      "key": "baranwal",
+      "label": "Supreme Court's interim committee",
+      "from": "2023-03-02",
+      "to": "2024-01-01",
+      "rule": "Until Parliament legislated, the President was to appoint on the advice of the Prime Minister, the Leader of Opposition in the Lok Sabha (or leader of the largest opposition party) and the Chief Justice of India.",
+      "panel": ["Prime Minister", "Leader of Opposition in the Lok Sabha (or leader of the largest opposition party)", "Chief Justice of India"],
+      "entry_ids": ["selection-law-anoop-baranwal-judgment"],
+      "notes": "No appointment is recorded in the entries while this rule was in force: the last convention appointment was 18 Nov 2022 and the next appointment was 14 Mar 2024."
+    },
+    {
+      "key": "act_2023",
+      "label": "2023 Act",
+      "from": "2024-01-02",
+      "to": null,
+      "rule": "Section 7: a selection committee of the Prime Minister (chair), the Leader of Opposition in the Lok Sabha (or leader of the largest opposition party) and a Union Cabinet Minister nominated by the Prime Minister. Section 6: a search committee headed by the Law Minister prepares a panel of five; Section 8 lets the committee choose outside it.",
+      "panel": ["Prime Minister (chair)", "Union Cabinet Minister nominated by the Prime Minister", "Leader of Opposition in the Lok Sabha (or leader of the largest opposition party)"],
+      "entry_ids": ["selection-law-rule-selection-committee", "selection-law-rule-search-committee", "selection-law-act-commenced", "selection-law-act-assent"]
+    }
+  ],
+  "selections": [
+    {
+      "id": "sel-2019-02-sushil-chandra-ec",
+      "date": "2019-02-15",
+      "date_precision": "day",
+      "date_meaning": "took charge; the appointment notification was not located",
+      "regime": "convention",
+      "method": "executive_appointment",
+      "appointed": [
+        {"person_slug": "sushil-chandra", "name": "Sushil Chandra", "office": "Election Commissioner", "took_charge": "2019-02-15"}
+      ],
+      "members": [],
+      "search": null,
+      "dissent": [],
+      "entry_ids": ["commissioners-event-2019-02-15-sushil-chandra-ec"],
+      "notes": "The entries record only that he took charge; the Gazette notification was not located."
+    },
+    {
+      "id": "sel-2020-08-rajiv-kumar-ec",
+      "date": "2020-08-21",
+      "date_precision": "day",
+      "date_meaning": "Law Ministry notification",
+      "regime": "convention",
+      "method": "executive_appointment",
+      "appointed": [
+        {"person_slug": "rajiv-kumar", "name": "Rajiv Kumar", "office": "Election Commissioner", "took_charge": "2020-09-01", "replaced": "ashok-lavasa"}
+      ],
+      "members": [],
+      "search": null,
+      "dissent": [],
+      "entry_ids": ["commissioners-event-2020-08-21-rajiv-kumar-appointed-ec", "selection-law-rajiv-kumar-joins-2020"]
+    },
+    {
+      "id": "sel-2021-04-sushil-chandra-cec",
+      "date": "2021-04-12",
+      "date_precision": "day",
+      "date_meaning": "Legislative Department notification, effective 13 Apr 2021",
+      "regime": "convention",
+      "method": "elevation_of_senior_ec",
+      "appointed": [
+        {"person_slug": "sushil-chandra", "name": "Sushil Chandra", "office": "Chief Election Commissioner", "took_charge": "2021-04-13", "replaced": "sunil-arora"}
+      ],
+      "members": [],
+      "search": null,
+      "dissent": [],
+      "entry_ids": ["commissioners-event-2021-04-13-sushil-chandra-cec"]
+    },
+    {
+      "id": "sel-2021-06-anup-chandra-pandey-ec",
+      "date": "2021-06-08",
+      "date_precision": "day",
+      "date_meaning": "Legislative Department notification",
+      "regime": "convention",
+      "method": "executive_appointment",
+      "appointed": [
+        {"person_slug": "anup-chandra-pandey", "name": "Anup Chandra Pandey", "office": "Election Commissioner", "took_charge": "2021-06-09"}
+      ],
+      "members": [],
+      "search": null,
+      "dissent": [],
+      "entry_ids": ["commissioners-event-2021-06-09-pandey-ec", "selection-law-anup-pandey-joins-2021"]
+    },
+    {
+      "id": "sel-2022-05-rajiv-kumar-cec",
+      "date": "2022-05-12",
+      "date_precision": "day",
+      "date_meaning": "Law Ministry Gazette notification",
+      "regime": "convention",
+      "method": "elevation_of_senior_ec",
+      "appointed": [
+        {"person_slug": "rajiv-kumar", "name": "Rajiv Kumar", "office": "Chief Election Commissioner", "took_charge": "2022-05-15", "replaced": "sushil-chandra"}
+      ],
+      "members": [],
+      "search": null,
+      "dissent": [],
+      "entry_ids": ["commissioners-event-2022-05-15-rajiv-kumar-cec", "selection-law-rajiv-kumar-cec-2022"],
+      "notes": "His elevation left an Election Commissioner seat vacant from 15 May to 18 Nov 2022."
+    },
+    {
+      "id": "sel-2022-11-arun-goel-ec",
+      "date": "2022-11-18",
+      "date_precision": "day",
+      "date_meaning": "panel drawn, recommendation made, voluntary retirement accepted and appointment notified the same day",
+      "regime": "convention",
+      "method": "executive_appointment",
+      "appointed": [
+        {"person_slug": "arun-goel", "name": "Arun Goel", "office": "Election Commissioner", "took_charge": "2022-11-21"}
+      ],
+      "members": [
+        {"person_slug": null, "name": null, "role": "Prime Minister", "part": "recommended", "entry_ids": ["commissioners-event-2022-11-18-goel-appointed"]}
+      ],
+      "search": {
+        "by": "Law Ministry",
+        "shortlist_size": 4,
+        "shortlist": null,
+        "entry_ids": ["commissioners-event-2022-11-18-goel-appointed"]
+      },
+      "dissent": [],
+      "entry_ids": ["commissioners-event-2022-11-18-goel-appointed", "commissioners-event-2023-03-02-sc-on-goel-appointment", "selection-law-baranwal-on-goel-appointment", "selection-law-court-questions-goel-speed", "selection-law-govt-defends-goel-appointment", "selection-law-adr-goel-plea-dismissed"],
+      "notes": "The kept entry says 'the PM recommended Arun Goel' without naming him, so the member is recorded by role. The Supreme Court examined the file and said its remarks were not an assessment of the appointee; a challenge to the appointment was dismissed on 4 Aug 2023."
+    },
+    {
+      "id": "sel-2024-03-gyanesh-kumar-sukhbir-singh-sandhu-ec",
+      "date": "2024-03-14",
+      "date_precision": "day",
+      "date_meaning": "committee met, recommended, and the appointments were notified the same day",
+      "regime": "act_2023",
+      "method": "selection_committee",
+      "appointed": [
+        {"person_slug": "gyanesh-kumar", "name": "Gyanesh Kumar", "office": "Election Commissioner", "took_charge": "2024-03-15"},
+        {"person_slug": "sukhbir-singh-sandhu", "name": "Sukhbir Singh Sandhu", "office": "Election Commissioner", "took_charge": "2024-03-15"}
+      ],
+      "members": [
+        {"person_slug": "narendra-modi", "name": "Narendra Modi", "role": "Prime Minister (chair)", "part": "voted_with_majority", "entry_ids": ["commissioners-event-2024-03-14-gyanesh-sandhu-selected", "selection-law-committees-constituted-feb-2024"]},
+        {"person_slug": "amit-shah", "name": "Amit Shah", "role": "Union Home Minister (nominated Cabinet Minister)", "part": "proposed", "entry_ids": ["commissioners-event-2024-03-14-gyanesh-sandhu-selected", "commissioners-person-gyanesh-kumar", "selection-law-committees-constituted-feb-2024"]},
+        {"person_slug": "adhir-ranjan-chowdhury", "name": "Adhir Ranjan Chowdhury", "role": "Leader of the largest opposition party in the Lok Sabha", "part": "dissented", "entry_ids": ["commissioners-event-2024-03-14-gyanesh-sandhu-selected", "commissioners-event-2024-03-14-chowdhury-dissent", "selection-law-committees-constituted-feb-2024"]}
+      ],
+      "search": {
+        "by": "Search committee headed by Law Minister Arjun Ram Meghwal",
+        "chair_slug": "arjun-ram-meghwal",
+        "shortlist_size": 6,
+        "shortlist": ["Utpal Kumar Singh", "Pradip Kumar Tripathi", "Gyanesh Kumar", "Indevar Pandey", "Sukhbir Singh Sandhu", "Sudhir Kumar Gangadhar Rahate"],
+        "shortlist_source": "Adhir Ranjan Chowdhury's account to The Indian Express; the committee's minutes are not public",
+        "entry_ids": ["commissioners-event-2024-03-14-gyanesh-sandhu-selected", "selection-law-adhir-asks-bio-profiles"]
+      },
+      "dissent": [
+        {
+          "person_slug": "adhir-ranjan-chowdhury",
+          "name": "Adhir Ranjan Chowdhury",
+          "summary": "Recorded dissent on procedure: 212 names sent the night before and a six-name shortlist eight to ten minutes before the meeting. He said he had nothing against the two appointees.",
+          "note_public": false,
+          "status": "claim",
+          "entry_ids": ["commissioners-event-2024-03-14-chowdhury-dissent"],
+          "response_entry_ids": ["selection-law-union-reply-march-2024"]
+        }
+      ],
+      "entry_ids": ["commissioners-event-2024-03-14-gyanesh-sandhu-selected", "commissioners-event-2024-03-14-chowdhury-dissent", "selection-law-committees-constituted-feb-2024", "selection-law-adhir-asks-bio-profiles", "selection-law-union-reply-march-2024", "selection-law-sc-refuses-stay-march-2024", "selection-law-court-on-ec-speed-may-2026"],
+      "notes": "The first selection under the 2023 Act. Two seats were vacant: Anup Chandra Pandey retired on 14 Feb 2024 and Arun Goel resigned on 9 Mar 2024. The Supreme Court refused to stay the appointments on 21 Mar 2024. Who proposed the two names comes only from Chowdhury's account."
+    },
+    {
+      "id": "sel-2025-02-gyanesh-kumar-cec-vivek-joshi-ec",
+      "date": "2025-02-17",
+      "date_precision": "day",
+      "date_meaning": "committee met; the Law Ministry notification came late the same night",
+      "regime": "act_2023",
+      "method": "selection_committee",
+      "appointed": [
+        {"person_slug": "gyanesh-kumar", "name": "Gyanesh Kumar", "office": "Chief Election Commissioner", "took_charge": "2025-02-19", "replaced": "rajiv-kumar"},
+        {"person_slug": "vivek-joshi", "name": "Vivek Joshi", "office": "Election Commissioner", "took_charge": "2025-02-19"}
+      ],
+      "members": [
+        {"person_slug": "narendra-modi", "name": "Narendra Modi", "role": "Prime Minister (chair)", "part": "voted_with_majority", "entry_ids": ["commissioners-person-gyanesh-kumar", "selection-law-rahul-dissent-note"]},
+        {"person_slug": "amit-shah", "name": "Amit Shah", "role": "Union Home Minister (nominated Cabinet Minister)", "part": "voted_with_majority", "entry_ids": ["commissioners-person-gyanesh-kumar", "selection-law-rahul-dissent-note"]},
+        {"person_slug": "rahul-gandhi", "name": "Rahul Gandhi", "role": "Leader of Opposition in the Lok Sabha", "part": "dissented", "entry_ids": ["commissioners-event-2025-02-17-selection-rahul-dissent", "statements-reporting-rahul-dissent-cec-selection", "selection-law-rahul-dissent-note"]}
+      ],
+      "search": {
+        "by": "Search committee headed by Law Minister Arjun Ram Meghwal, with the Finance and DoPT Secretaries",
+        "chair_slug": "arjun-ram-meghwal",
+        "shortlist_size": null,
+        "shortlist": null,
+        "shortlist_source": "The search committee's shortlist for this selection was not found",
+        "entry_ids": ["selection-law-search-committee-cec-2025"]
+      },
+      "dissent": [
+        {
+          "person_slug": "rahul-gandhi",
+          "name": "Rahul Gandhi",
+          "summary": "Asked that the decision wait for the Supreme Court hearing two days later, objected to the Chief Justice's removal from the panel in a dissent note, and did not take part in further proceedings. He published the note the next day.",
+          "note_public": true,
+          "status": "claim",
+          "entry_ids": ["commissioners-event-2025-02-17-selection-rahul-dissent", "statements-reporting-rahul-dissent-cec-selection", "selection-law-rahul-dissent-note"],
+          "response_entry_ids": ["selection-law-bjp-on-rahul-dissent"]
+        }
+      ],
+      "entry_ids": ["commissioners-event-2025-02-17-gyanesh-cec-joshi-ec", "commissioners-event-2025-02-17-selection-rahul-dissent", "statements-reporting-rahul-dissent-cec-selection", "selection-law-rahul-dissent-note", "selection-law-bjp-on-rahul-dissent", "selection-law-rahul-two-to-one", "selection-law-search-committee-cec-2025", "selection-law-sc-feb-12-2025"],
+      "notes": "The first Chief Election Commissioner chosen under the 2023 Act; until then the senior-most Election Commissioner was usually elevated. Vivek Joshi was Haryana Chief Secretary when chosen. No government response to the dissent note itself was found; the BJP's response is recorded."
+    }
+  ],
+  "departures": [
+    {"date": "2020-08-31", "person_slug": "ashok-lavasa", "office": "Election Commissioner", "how": "resigned", "entry_ids": ["commissioners-event-2020-08-18-lavasa-resigns", "selection-law-lavasa-resignation-2020"]},
+    {"date": "2021-04-12", "person_slug": "sunil-arora", "office": "Chief Election Commissioner", "how": "tenure_ended", "entry_ids": ["commissioners-event-2021-04-12-arora-retires"]},
+    {"date": "2022-05-14", "person_slug": "sushil-chandra", "office": "Chief Election Commissioner", "how": "tenure_ended", "entry_ids": ["commissioners-event-2022-05-14-sushil-chandra-retires"]},
+    {"date": "2024-02-14", "person_slug": "anup-chandra-pandey", "office": "Election Commissioner", "how": "tenure_ended", "entry_ids": ["commissioners-event-2024-02-14-pandey-retires", "selection-law-anup-pandey-retires"]},
+    {"date": "2024-03-09", "person_slug": "arun-goel", "office": "Election Commissioner", "how": "resigned", "entry_ids": ["commissioners-event-2024-03-09-goel-resigns"], "notes": "Left Chief Election Commissioner Rajiv Kumar as the only member until 15 Mar 2024. No reason was given officially."},
+    {"date": "2025-02-18", "person_slug": "rajiv-kumar", "office": "Chief Election Commissioner", "how": "tenure_ended", "entry_ids": ["commissioners-event-2025-02-18-rajiv-kumar-retires"]}
+  ],
+  "gaps": [
+    "Appointment notifications for Sushil Chandra (2019) were not located; only the assumption of charge is documented.",
+    "Before 2023 the entries name no individual adviser for any appointment except Goel's, where the Prime Minister's recommendation is recorded by office.",
+    "The 2025 search committee's shortlist and the minutes of both 2023-Act committee meetings are not public.",
+    "Adhir Ranjan Chowdhury's 2024 dissent note has not been published; its content is from his own account."
+  ]
+}
