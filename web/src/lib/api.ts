@@ -4,6 +4,12 @@
 // (with the API running) to refresh src/types/api.ts; these aliases then pick the changes up.
 
 import type { components } from "@/types/api";
+import type {
+  EciTimeline,
+  EciPersonSummary,
+  EciPersonPage,
+  EciEntry,
+} from "@/types/eci-files";
 
 const API_BASE = process.env.NETA_API_BASE ?? "http://localhost:8000";
 
@@ -187,4 +193,44 @@ export function photoSrc(id: number, hasPhoto: string | null | undefined): strin
  * fetch + cache server-side and degrade gracefully instead of dumping users into a redirect loop. */
 export function docSrc(kind: "question" | "debate", id: number): string {
   return `${API_BASE}/${kind}s/${id}/document`;
+}
+
+// ECI Files: the sourced ECI record (see docs/eci-files/SPEC.md §6-7). Gated behind noindex pages until
+// launch — see the `robots` metadata on each `eci-files` route.
+export type {
+  EciEntry, EciEntryKind, EciEntryStatus, EciDatePrecision, EciCheckStatus, EciFigure,
+  EciEntryPerson, EciResponseRef, EciCitation, EciTopicCount, EciPersonCount, EciTimelineCounts,
+  EciTimeline, EciPersonSummary, EciPersonPage,
+} from "@/types/eci-files";
+
+export type EciTimelineOpts = {
+  topic?: string; person?: string; status?: string; from?: string; to?: string; revalidate?: number;
+};
+export function getEciTimeline(opts: EciTimelineOpts = {}): Promise<EciTimeline> {
+  const q = new URLSearchParams();
+  if (opts.topic) q.set("topic", opts.topic);
+  if (opts.person) q.set("person", opts.person);
+  if (opts.status) q.set("status", opts.status);
+  if (opts.from) q.set("from", opts.from);
+  if (opts.to) q.set("to", opts.to);
+  const qs = q.toString();
+  return getJSON<EciTimeline>(`/eci-files/timeline${qs ? `?${qs}` : ""}`, opts.revalidate ?? 3600);
+}
+
+export function getEciPeople(): Promise<EciPersonSummary[]> {
+  return getJSON<EciPersonSummary[]>("/eci-files/people", 3600);
+}
+
+export async function getEciPerson(slug: string): Promise<EciPersonPage | null> {
+  const res = await fetch(`${API_BASE}/eci-files/people/${encodeURIComponent(slug)}`, { next: { revalidate: 3600 } });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`API ${res.status} for /eci-files/people/${slug}`);
+  return res.json();
+}
+
+export async function getEciEntry(id: string): Promise<EciEntry | null> {
+  const res = await fetch(`${API_BASE}/eci-files/entries/${encodeURIComponent(id)}`, { next: { revalidate: 3600 } });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`API ${res.status} for /eci-files/entries/${id}`);
+  return res.json();
 }
