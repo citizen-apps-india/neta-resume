@@ -15,6 +15,7 @@ from neta_api.deps import settings
 from neta_api.ratelimit import RateLimitMiddleware
 from neta_api.routers import (
     aggregate,
+    eci_files,
     elections,
     indicators,
     parliament,
@@ -57,6 +58,7 @@ app.include_router(stats.router)
 app.include_router(visits.router)
 app.include_router(elections.router)
 app.include_router(indicators.router)
+app.include_router(eci_files.router)
 
 
 @app.get("/health")
