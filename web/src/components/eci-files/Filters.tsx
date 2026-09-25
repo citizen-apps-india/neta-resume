@@ -28,9 +28,42 @@ function Pill({ label, active, href }: { label: string; active: boolean; href: s
   );
 }
 
-/** Lane, topic and person filter pills. Plain links (no client JS) — the current selection is
- *  server-rendered from `searchParams`. `preserve` carries any params a filter change must not drop
- *  (the timeline's `from`/`to` window — REDESIGN-SPEC §"Filters": "without losing the current window"). */
+const TOPIC_LABELS: Record<string, string> = {
+  sir: "SIR", rolls: "Voter rolls", appointments: "Appointments", statements: "Statements", courts: "Courts",
+  numbers: "Numbers", "it-systems": "IT systems", dissent: "Dissent", "elections-2024": "2024 election",
+  "elections-2019": "2019 election", forms: "Forms", mcc: "Model Code", "turnout-data": "Turnout data",
+  "evm-vvpat": "EVM & VVPAT", rules: "Rules",
+};
+
+type PillItem = { key: string; label: string; href: string; active: boolean };
+
+/** One filter row: the busiest few as pills, the rest folded behind "More" (no client JS). The active
+ *  choice always stays visible, even when it would otherwise be folded. */
+function PillRow({ all, items, visible }: { all: PillItem; items: PillItem[]; visible: number }) {
+  const shown = items.slice(0, visible);
+  const rest = items.slice(visible);
+  const activeHidden = rest.find((i) => i.active);
+  return (
+    <div style={{ display: "flex", gap: 7, flexWrap: "wrap", alignItems: "center" }}>
+      <Pill label={all.label} active={all.active} href={all.href} />
+      {shown.map((i) => <Pill key={i.key} label={i.label} active={i.active} href={i.href} />)}
+      {activeHidden && <Pill label={activeHidden.label} active href={activeHidden.href} />}
+      {rest.length > 0 && (
+        <details className="eci-more">
+          <summary className="mono" style={{ fontSize: 11.5, color: "var(--accent-2)", cursor: "pointer", padding: "5px 6px", listStyle: "none" }}>
+            + {rest.length} more
+          </summary>
+          <div style={{ display: "flex", gap: 7, flexWrap: "wrap", marginTop: 8 }}>
+            {rest.filter((i) => !i.active).map((i) => <Pill key={i.key} label={i.label} active={false} href={i.href} />)}
+          </div>
+        </details>
+      )}
+    </div>
+  );
+}
+
+/** Lane, topic and person filters. Plain links: the selection is server-rendered from `searchParams`.
+ *  `preserve` carries params a filter change must not drop (the timeline's `from`/`to` window). */
 export function Filters({
   basePath, lanes, topics, people, lane, topic, person, preserve,
 }: {
@@ -47,43 +80,25 @@ export function Filters({
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
       {lanes && lanes.length > 0 && (
-        <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
-          <Pill label="All lanes" active={!lane} href={buildHref(basePath, cur, { lane: undefined })} />
-          {lanes.map((l) => (
-            <Pill
-              key={l.lane}
-              label={`${eciLaneLabel(l.lane)} (${l.count})`}
-              active={lane === l.lane}
-              href={buildHref(basePath, cur, { lane: l.lane })}
-            />
-          ))}
-        </div>
+        <PillRow
+          all={{ key: "all", label: "All lanes", active: !lane, href: buildHref(basePath, cur, { lane: undefined }) }}
+          items={lanes.map((l) => ({ key: l.lane, label: `${eciLaneLabel(l.lane)} (${l.count})`, active: lane === l.lane, href: buildHref(basePath, cur, { lane: l.lane }) }))}
+          visible={lanes.length}
+        />
       )}
       {topics.length > 0 && (
-        <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
-          <Pill label="All topics" active={!topic} href={buildHref(basePath, cur, { topic: undefined })} />
-          {topics.map((t) => (
-            <Pill
-              key={t.topic}
-              label={`${t.topic} (${t.count})`}
-              active={topic === t.topic}
-              href={buildHref(basePath, cur, { topic: t.topic })}
-            />
-          ))}
-        </div>
+        <PillRow
+          all={{ key: "all", label: "All topics", active: !topic, href: buildHref(basePath, cur, { topic: undefined }) }}
+          items={topics.map((t) => ({ key: t.topic, label: `${TOPIC_LABELS[t.topic] ?? t.topic} (${t.count})`, active: topic === t.topic, href: buildHref(basePath, cur, { topic: t.topic }) }))}
+          visible={6}
+        />
       )}
       {people.length > 0 && (
-        <div style={{ display: "flex", gap: 7, flexWrap: "wrap" }}>
-          <Pill label="All people" active={!person} href={buildHref(basePath, cur, { person: undefined })} />
-          {people.map((p) => (
-            <Pill
-              key={p.slug}
-              label={`${p.name} (${p.count})`}
-              active={person === p.slug}
-              href={buildHref(basePath, cur, { person: p.slug })}
-            />
-          ))}
-        </div>
+        <PillRow
+          all={{ key: "all", label: "All people", active: !person, href: buildHref(basePath, cur, { person: undefined }) }}
+          items={people.map((p) => ({ key: p.slug, label: `${p.name} (${p.count})`, active: person === p.slug, href: buildHref(basePath, cur, { person: p.slug }) }))}
+          visible={6}
+        />
       )}
     </div>
   );

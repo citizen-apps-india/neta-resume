@@ -6,6 +6,23 @@ import { ECI_LANE_ORDER, ECI_STATUS_META, dateFraction, eciLaneLabel, eciStatusM
 
 /** One dot's hand-drawn SVG: solid when checked, hollow (stroke-only, background-fill centre) when not —
  *  REDESIGN-SPEC §"Lanes": "A checked entry has a solid dot; an unchecked one is hollow." */
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/** Month starts inside the window, thinned to at most ~8 labels; January carries the year. */
+function monthTicks(from: string, to: string): { iso: string; label: string }[] {
+  const start = new Date(`${from.slice(0, 7)}-01T00:00:00Z`);
+  const end = new Date(`${to}T00:00:00Z`);
+  const all: { iso: string; label: string }[] = [];
+  for (let d = new Date(start); d <= end; d.setUTCMonth(d.getUTCMonth() + 1)) {
+    const iso = d.toISOString().slice(0, 10);
+    if (iso < from) continue;
+    const m = d.getUTCMonth();
+    all.push({ iso, label: m === 0 || all.length === 0 ? `${MONTHS[m]} ${d.getUTCFullYear()}` : MONTHS[m] });
+  }
+  const step = Math.max(1, Math.ceil(all.length / 8));
+  return all.filter((_, i) => i % step === 0);
+}
+
 function DotMark({ entry }: { entry: EciCompactEntry }) {
   const meta = eciStatusMeta(entry.status);
   const checked = entry.check_status === "checked";
@@ -110,6 +127,20 @@ export function LaneTimeline({
             </div>
           );
         })}
+        <div style={{ display: "flex", borderTop: "1px solid var(--rule2)", marginTop: 2 }}>
+          <div style={{ width: 108, flexShrink: 0 }} />
+          <div style={{ position: "relative", flex: 1, height: 22 }} aria-hidden="true">
+            {monthTicks(from, to).map((t) => (
+              <span
+                key={t.iso}
+                className="mono"
+                style={{ position: "absolute", left: `${dateFraction(t.iso, from, to) * 100}%`, top: 6, transform: "translateX(-50%)", fontSize: 10, color: "var(--faint)", whiteSpace: "nowrap" }}
+              >
+                {t.label}
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* phones: vertical card stream, same window + drawer */}
