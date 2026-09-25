@@ -227,6 +227,15 @@ def macro_indicators(only: list[str] = typer.Option(None, help="specific indicat
     p.run(only=only or None)
 
 
+@app.command(name="eci-files")
+def eci_files(path: str = typer.Option(None, "--path", help="entries directory "
+                                       "(default: data/eci_files/entries)")) -> None:
+    """Load reviewed ECI Files data files -> eci_file_entry/person/citation (full replace, idempotent)."""
+    from neta_ingest.pipelines.curated import eci_files as p
+
+    p.run(path=path)
+
+
 @app.command(name="institution-stats")
 def institution_stats(only: list[str] = typer.Option(None, help="specific indicator code(s); default all curated")) -> None:
     """Write verified public-institution counts (schools, hospitals, colleges, police, …) -> macro_indicator_value.

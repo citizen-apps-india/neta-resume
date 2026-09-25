@@ -39,6 +39,7 @@ def test_representative_source_families_are_validated(
         "digital_sansad.members",
         "ecourts.case_status",
         "eci.affidavit_pdfs",
+        "eci_files.curated",
         "myneta.candidates",
         "news.google_feed",
         "prs.parliamentary_record",

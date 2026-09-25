@@ -50,6 +50,22 @@ SELECT source_key, enabled, paused, quarantined_at, next_run_at, last_success_at
 FROM pipeline_source_state ORDER BY source_key;
 ```
 
+## ECI Files: loading the curated record
+
+`eci_files.curated` is a source like any other, except its input is reviewed data files in the repo
+(`data/eci_files/entries/*.json`), not a remote site — nothing scrapes at load time. To publish a
+change: edit the data files, open a PR, and after it merges either press Run on `eci_files.curated`
+in the admin console, or run it directly:
+
+```bash
+uv run neta eci-files
+```
+
+The load is a full replace (idempotent): every `eci_file_*` row is deleted and re-inserted from
+what's currently in the data files, so an entry removed from a file disappears from the site too. A
+bad entry (missing source, unknown status, bad date, duplicate id, an over-length quote) fails the
+whole load with every error reported at once — nothing partial is written.
+
 ## Dagster execution-plane preview (fallback)
 
 The manifest-driven Dagster/dlt foundation is available locally and stays in place as the fallback

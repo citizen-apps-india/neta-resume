@@ -12,6 +12,7 @@ from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from neta_ingest.pipelines.curated import eci_files
 from neta_ingest.pipelines.enrich import activity, attendance, committees
 from neta_ingest.pipelines.enrich import parliamentary_record as record
 from neta_ingest.pipelines.identity import myneta
@@ -53,6 +54,10 @@ class WorldBankParameters(RunnerParameters):
     indicators: list[str] | None = None
 
 
+class EciFilesParameters(RunnerParameters):
+    pass
+
+
 def run_digital_sansad_members(parameters: Mapping[str, Any]) -> None:
     parsed = DigitalSansadMemberParameters.model_validate(parameters)
     if parsed.house in {"ls", "all"}:
@@ -90,3 +95,8 @@ def run_prs_parliamentary_record(parameters: Mapping[str, Any]) -> None:
 def run_worldbank_indicators(parameters: Mapping[str, Any]) -> None:
     parsed = WorldBankParameters.model_validate(parameters)
     indicators.run(only=parsed.indicators)
+
+
+def run_eci_files(parameters: Mapping[str, Any]) -> None:
+    EciFilesParameters.model_validate(parameters)
+    eci_files.run()

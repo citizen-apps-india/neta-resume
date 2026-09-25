@@ -19,5 +19,9 @@ INSERT INTO source (code, name, base_url, license, trust_tier) VALUES
     ('bprd',          'Bureau of Police Research & Development', 'https://bprd.nic.in/',           'public-official', 1),
     ('indiapost',     'Department of Posts (India Post)',   'https://www.indiapost.gov.in/',      'public-official', 1),
     ('rbi',           'Reserve Bank of India',              'https://www.rbi.org.in/',            'public-official', 1),
-    ('indianrail',    'Indian Railways',                    'https://indianrailways.gov.in/',     'public-official', 1)
+    ('indianrail',    'Indian Railways',                    'https://indianrailways.gov.in/',     'public-official', 1),
+    -- ECI Files: one code per citation tier, so each citation's source_ref carries its own trust level.
+    ('eci_files_primary',  'ECI Files: official documents',          NULL, 'public-official', 1),
+    ('eci_files_research', 'ECI Files: research bodies and filings', NULL, 'reported',         2),
+    ('eci_files_press',    'ECI Files: press reports',               NULL, 'reported',         3)
 ON CONFLICT (code) DO NOTHING;

@@ -45,3 +45,14 @@ def test_prs_runner_has_explicit_house_and_operation_controls(monkeypatch) -> No
 def test_runner_parameters_reject_unknown_operator_input() -> None:
     with pytest.raises(ValidationError, match="frequesncy"):
         runners.run_worldbank_indicators({"frequesncy": 60})
+
+
+def test_eci_files_runner_takes_no_parameters(monkeypatch) -> None:
+    calls: list[bool] = []
+    monkeypatch.setattr(runners.eci_files, "run", lambda: calls.append(True))
+
+    runners.run_eci_files({})
+
+    assert calls == [True]
+    with pytest.raises(ValidationError, match="path"):
+        runners.run_eci_files({"path": "data/eci_files/entries"})

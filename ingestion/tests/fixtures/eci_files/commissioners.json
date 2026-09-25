@@ -1,0 +1,147 @@
+{
+  "area": "commissioners",
+  "researched_on": "2026-09-25",
+  "entries": [
+    {
+      "id": "commissioners-kumar-cec",
+      "kind": "person",
+      "date": "2025-02-19",
+      "date_precision": "day",
+      "title": "Gyanesh Kumar, Chief Election Commissioner",
+      "summary": "Gyanesh Kumar took charge as Chief Election Commissioner.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": ["Gyanesh Kumar"],
+      "states": [],
+      "topics": ["appointments"],
+      "figures": [],
+      "details": {
+        "role": "Chief Election Commissioner",
+        "tenure": [{"office": "Chief Election Commissioner", "from": "2025-02-19", "to": null}],
+        "service": "IAS, Kerala cadre, 1988 batch"
+      },
+      "sources": [
+        {
+          "url": "https://eci.gov.in/notice-1",
+          "publisher": "Election Commission of India",
+          "title": "Notification of appointment",
+          "published": "2025-02-19",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "checked"
+    },
+    {
+      "id": "commissioners-kumar-appointment",
+      "kind": "event",
+      "date": "2025-02-17",
+      "date_precision": "day",
+      "title": "Selection committee picks Gyanesh Kumar as CEC",
+      "summary": "The selection committee met and recommended Gyanesh Kumar for Chief Election Commissioner.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": ["Gyanesh Kumar"],
+      "states": [],
+      "topics": ["appointments"],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://eci.gov.in/notice-2",
+          "publisher": "Election Commission of India",
+          "title": "Selection committee minutes",
+          "published": "2025-02-17",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://prsindia.org/report-selection",
+          "publisher": "PRS Legislative Research",
+          "title": "Note on the CEC selection process",
+          "published": "2025-02-18",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "checked"
+    },
+    {
+      "id": "commissioners-opposition-claim",
+      "kind": "statement",
+      "date": "2025-02-18",
+      "date_precision": "day",
+      "title": "Opposition calls the selection process opaque",
+      "summary": "The Congress said the new selection law sidelines the Chief Justice of India.",
+      "status": "claim",
+      "attributed_to": "Indian National Congress",
+      "people": [],
+      "states": [],
+      "topics": ["appointments", "dissent"],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article-1",
+          "publisher": "Indian Express",
+          "title": "Congress slams CEC selection",
+          "published": "2025-02-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "a complete departure from convention"
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "commissioners-eci-response",
+      "kind": "statement",
+      "date": "2025-02-20",
+      "date_precision": "day",
+      "title": "ECI defends the selection process",
+      "summary": "The Commission said the process followed the 2023 selection law in full.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [],
+      "states": [],
+      "topics": ["appointments"],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://eci.gov.in/press-1",
+          "publisher": "Election Commission of India",
+          "title": "Press note",
+          "published": "2025-02-20",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "commissioners-opposition-claim",
+      "notes": null,
+      "check": "checked"
+    },
+    {
+      "id": "commissioners-excluded-draft",
+      "kind": "event",
+      "exclude": true,
+      "date_precision": "year",
+      "title": "Draft not yet reviewed",
+      "summary": "placeholder",
+      "status": "claim",
+      "sources": [],
+      "check": "unchecked"
+    }
+  ],
+  "gaps": []
+}
