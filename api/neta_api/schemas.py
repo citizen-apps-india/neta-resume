@@ -6,9 +6,9 @@ Every fact-bearing model carries a `source` (provenance) so the UI can render a 
 from __future__ import annotations
 
 from datetime import date
-from typing import Literal
+from typing import Any, Literal
 
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 
 Severity = Literal["heinous", "serious", "minor"]
 
@@ -388,3 +388,94 @@ class IndiaDashboard(BaseModel):
     country: str                             # 'India'
     categories: list[IndicatorCategory]      # in curated display order
     total_indicators: int
+
+
+# --- ECI Files: a sourced, dated record of the Election Commission of India (2019-today) -----------------
+class EciPersonRef(BaseModel):
+    slug: str
+    name: str
+
+
+class EciResponseRef(BaseModel):
+    """One entry that answers another (`response_to` points back at the charge it responds to)."""
+
+    id: str
+    title: str
+    date: _Date | None = None
+
+
+class EciCitation(BaseModel):
+    position: int
+    url: str | None = None          # source_ref.native_url for this citation
+    publisher: str | None = None
+    title: str | None = None
+    published: date | None = None
+    tier: int                       # 1 official, 2 research/filing, 3 reported
+    archive_url: str | None = None
+    quote: str | None = None        # <= 200 chars, optional exact wording
+
+
+class EciEntry(BaseModel):
+    id: str
+    area: str
+    kind: str                       # event | person | rule | figure | case | statement
+    date: _Date | None = None
+    date_precision: str             # day | month | year
+    title: str
+    summary: str
+    status: str                     # documented | reported | claim | response
+    attributed_to: str | None = None
+    topics: list[str] = []
+    states: list[str] = []
+    figures: list[Any] = Field(default_factory=list)
+    details: dict[str, Any] = Field(default_factory=dict)
+    notes: str | None = None
+    check_status: str               # checked | unchecked
+    people: list[EciPersonRef] = []
+    response_to: str | None = None
+    responses: list[EciResponseRef] = []   # entries whose response_to == this entry's id
+    citations: list[EciCitation] = []
+
+
+class EciTopicCount(BaseModel):
+    topic: str
+    count: int
+
+
+class EciPersonCount(BaseModel):
+    slug: str
+    name: str
+    count: int
+
+
+class EciCheckCounts(BaseModel):
+    checked: int
+    unchecked: int
+
+
+class EciTimeline(BaseModel):
+    """The filtered ECI Files timeline — entries plus facets scoped to the same filter."""
+
+    entries: list[EciEntry]
+    topics: list[EciTopicCount]
+    people: list[EciPersonCount]
+    counts: EciCheckCounts
+
+
+class EciPersonSummary(BaseModel):
+    slug: str
+    name: str
+    role: str | None = None         # profile entry's details.role
+    tenure: list[Any] = Field(default_factory=list)  # profile entry's details.tenure (office/from/to spans)
+    entry_count: int
+
+
+class EciPersonDetail(BaseModel):
+    slug: str
+    name: str
+    profile: EciEntry | None = None  # the kind='person' entry, if one was linked
+
+
+class EciPersonPage(BaseModel):
+    person: EciPersonDetail
+    entries: list[EciEntry]
