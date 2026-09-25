@@ -1,0 +1,3153 @@
+{
+  "area": "sir-rules",
+  "entries": [
+    {
+      "id": "sir-rules-ecinet-announced",
+      "kind": "event",
+      "date": "2025-05-04",
+      "date_precision": "day",
+      "title": "Commission announces ECINET, one platform to replace 40 election apps",
+      "summary": "The Commission announced it would build ECINET, a single platform subsuming about 40 of its existing web and mobile applications. Some modules were first used in five Assembly bye-elections in June 2025, and a trial version was used during the Bihar SIR and elections.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Election Commission of India (press notes)",
+        "what_changed": "Start of a unified IT platform later used for SIR enumeration, notices and roll management."
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTqdXj7y4XEu54AgUpFYqlgareEGw3Q90ylqYSWtU9PRjsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/234/2025: ECINET Operations started in Bye-polls",
+          "published": "2025-06-25",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAbtM6rXxtdng%2BxruvkyMVOdVeDKLvYeY9xxZTAFzKdwlA%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/358/2025: ECI Invites Suggestions to Make ECINet Digital Platform More User-friendly",
+          "published": "2025-11-29",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The 4 May 2025 press note itself (ECI/PN/207/2025) is listed on eci.gov.in but its download returned 'Access denied' when fetched on 2026-09-25; the date is taken from two later ECI press notes that cite it.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTqdXj7y4XEu54AgUpFYqlgareEGw3Q90ylqYSWtU9PRjsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "note": "PN/234/2025 (25.06.2025) states ECINET was announced on 4 May integrating 40+ apps and first used in bye-polls in five ACs; PN/358/2025 confirms the trial version was used in the Bihar elections and bye-elections and the 04.05.2025 announcement date."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-annexure-d-declaration",
+      "kind": "rule",
+      "date": "2025-06-24",
+      "date_precision": "day",
+      "title": "New electors must file an extra Declaration Form (Annexure D) with Form 6",
+      "summary": "From 24 June 2025, anyone in Bihar applying to be a new elector on Form 6, or shifting in from another state on Form 8, also had to file a Declaration Form (Annexure D) stating their birth-date tier and attaching documents from the SIR list. The requirement was written into the SIR order and guidelines, not into the Registration of Electors Rules, 1960, where Form 6 is prescribed. Pending Form 6 applications also had to be supplemented with the declaration.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "forms"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Order No.23/ERS/2025 para 15 and Guidelines para 5(d)-(e); signed by Sanjay Kumar (DEC) and Pawan Diwan (Secretary).",
+        "legal_basis_claimed": "Article 324 and Section 21 RPA 1950 (the SIR order). No amendment to Form 6 in the Registration of Electors Rules, 1960 was notified (per Indian Express review of the Gazette, July 2026).",
+        "carried_forward_in": [
+          "Order of 27.10.2025 (12 states/UTs), Annexure IV",
+          "Order of 14.05.2026 (19 states/UTs), Annexure IV"
+        ],
+        "recorded_objection": "None reported for this order. The later objection by two Commissioners (May and August 2026) concerned inserting SIR questions into the online statutory Form 6 itself; see sir-rules-form6-online-sir-declaration."
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpSBy2rLSWcB8ZqM9aI5KyrxL4EAnNdah6vWMkIUyW8NsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "No.23/2025-ERS (Vol.II): Special Intensive Revision w.r.t. 01.07.2025 as the qualifying date (with Annexures A-D)",
+          "published": "2025-06-24",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "alongwith Form 6/Form 8, an additional Declaration Form (Annexure D)"
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "publisher": "Supreme Court of India (copy published by the Election Commission of India)",
+          "title": "Association for Democratic Reforms & Ors. v. Election Commission of India & Ors., WP(C) 640 of 2025, 2026 INSC 564 (judgment)",
+          "published": "2026-05-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Supreme Court judgment of 27.05.2026 records the Annexure D requirement among the features of the order it upheld (para 45(f)).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpSBy2rLSWcB8ZqM9aI5KyrxL4EAnNdah6vWMkIUyW8NsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "note": "Order para 15 and Guidelines para 5(c)-(e) verified; quote exact. SC judgment para 45(f) records the Annexure D requirement. IE (12.07.2026) reports no Gazette amendment to Form 6."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-bihar-eligibility-documents",
+      "kind": "rule",
+      "date": "2025-06-24",
+      "date_precision": "day",
+      "title": "SIR sets birth-date tiers and an 11-document list for proving eligibility",
+      "summary": "The Bihar SIR forms set out what an elector not on the 2003 roll had to prove, by date of birth: born before 1 July 1987, a document for self; born 1 July 1987 to 2 December 2004, documents for self and one parent; born after 2 December 2004, documents for self and both parents. An 'indicative (not exhaustive)' list of 11 documents was attached. Aadhaar appeared only as an optional field on the enumeration form and was not in the document list; the voter ID card (EPIC) and ration card were also not listed.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "forms"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Annexures C (Enumeration Form) and D (Declaration Form) to ECI letter No.23/2025-ERS (Vol.II), signed by Pawan Diwan, Secretary.",
+        "legal_basis_claimed": "Article 326; Sections 16, 19 and 23 RPA 1950 (per the order and the press note of 24.06.2025).",
+        "documents_list_2025_06_24": [
+          "Identity card or pension payment order of a regular Central/State Government or PSU employee or pensioner",
+          "Any identity card, certificate or document issued in India by Government, local authorities, banks, Post Office, LIC or PSUs before 01.07.1987",
+          "Birth certificate issued by the competent authority",
+          "Passport",
+          "Matriculation or educational certificate from recognised boards/universities",
+          "Permanent residence certificate issued by the competent State authority",
+          "Forest right certificate",
+          "OBC/SC/ST or any caste certificate",
+          "National Register of Citizens (wherever it exists)",
+          "Family register prepared by State/local authorities",
+          "Any land or house allotment certificate by Government"
+        ],
+        "changes_later": [
+          "2025-08-14: claims may be filed with Aadhaar (Supreme Court order, conveyed by ECI letter of 14.08.2025)",
+          "2025-09-09: Aadhaar made the 12th document, as proof of identity only (ECI letter on Supreme Court order of 08.09.2025)",
+          "2025-10-27: phase 2 list adds Aadhaar (per the 09.09.2025 letter) and an extract of the Bihar SIR roll as items 12 and 13"
+        ],
+        "birth_tiers": {
+          "before_1987_07_01": "self",
+          "1987_07_01_to_2004_12_02": "self + father or mother",
+          "after_2004_12_02": "self + father + mother (passport and visa if a parent is not Indian)"
+        }
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpSBy2rLSWcB8ZqM9aI5KyrxL4EAnNdah6vWMkIUyW8NsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "No.23/2025-ERS (Vol.II): Special Intensive Revision w.r.t. 01.07.2025 as the qualifying date (with Annexures A-D)",
+          "published": "2025-06-24",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6rhSqOoHOq%2BjQLuh3T7JM4rQsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/240/2025: ECI meets representatives of political parties; Decodes the Bihar SIR 2025 process",
+          "published": "2025-07-03",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpSBy2rLSWcB8ZqM9aI5KyrxL4EAnNdah6vWMkIUyW8NsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "note": "Annexure C/D birth-date tiers, the 11-item indicative list and Aadhaar as an optional field on the enumeration form verified from the order; PN/240/2025 restates the tiers."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-bihar-sir-order",
+      "kind": "rule",
+      "date": "2025-06-24",
+      "date_precision": "day",
+      "title": "Commission orders Special Intensive Revision of Bihar rolls, qualifying date 1 July 2025",
+      "summary": "The Commission ordered a Special Intensive Revision (SIR) of the electoral rolls of Bihar, with enumeration forms for every existing elector and a fresh draft roll limited to those who returned a form. The accompanying order said the Commission had decided to begin SIR in the entire country, starting with Bihar because its Assembly election was due. It set a schedule ending in final publication on 30 September 2025.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Pawan Diwan",
+        "Sanjay Kumar"
+      ],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors on Bihar roll when SIR began",
+          "value": 78969844,
+          "unit": "electors",
+          "as_of": "2025-06-24"
+        }
+      ],
+      "details": {
+        "issued_by": "Letter No.23/2025-ERS (Vol.II) signed by Pawan Diwan, Secretary, ECI, to the CEO Bihar; enclosed Order No.23/ERS/2025 (Annexure A) signed 'By Order' by Sanjay Kumar, Deputy Election Commissioner.",
+        "legal_basis_claimed": "Article 324 of the Constitution; Section 21 of the Representation of the People Act, 1950 'along with other applicable provisions'; Article 326 and Sections 16 and 19 RPA 1950 on eligibility. The order cites Section 21 without naming sub-section (3); the Supreme Court later held the exercise traceable to Section 21(3) read with Article 324.",
+        "reasons_recorded": [
+          "urbanisation and migration causing repeated entries over 20 years",
+          "constitutional duty to enrol only citizens (Article 326)"
+        ],
+        "key_rules": [
+          "Every existing elector as on 24.06.2025 gets a pre-filled Enumeration Form (Annexure C); names of those who do not return it by 25.07.2025 are left out of the draft roll.",
+          "The 2003 Bihar roll (qualifying date 01.01.2003) is treated as probative evidence of eligibility, including presumption of citizenship; those on it need only attach the roll extract.",
+          "Persons not on the 2003 roll must submit eligibility documents from a prescribed list.",
+          "No entry may be deleted from the draft roll without inquiry and a fair opportunity to the person.",
+          "Appeals: first to the District Magistrate under Section 24(a) RPA 1950 read with Rule 27 RER 1960; second to the CEO within 30 days under Section 24(b).",
+          "New electors and those shifting from outside the state must file Form 6/Form 8 with an additional Declaration Form (Annexure D).",
+          "No polling station to exceed 1,200 electors without Commission approval.",
+          "Chief Secretary to keep DEO/ERO/AERO posts filled; no transfers without Commission approval during SIR."
+        ],
+        "schedule": {
+          "enumeration": "25.06.2025-26.07.2025",
+          "draft_roll": "01.08.2025",
+          "claims_objections": "01.08.2025-01.09.2025",
+          "disposal_by": "25.09.2025",
+          "final_roll": "30.09.2025"
+        },
+        "recorded_objection": "None reported at the time. On 23-24 September 2026 the Commission said this order was a unanimous decision of all three Commissioners (see the response entries)."
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpSBy2rLSWcB8ZqM9aI5KyrxL4EAnNdah6vWMkIUyW8NsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "No.23/2025-ERS (Vol.II): Special Intensive Revision w.r.t. 01.07.2025 as the qualifying date (with Annexures A-D)",
+          "published": "2025-06-24",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "Commission has now decided to begin the Special Intensive Revision in the entire country"
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTqdXj7y4XEu54AgUpFYqlgb%2F9owy3xJkkWNyeb7x3GfQsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/233/2025: ECI to begin Special Intensive Revision of Electoral Rolls in Bihar",
+          "published": "2025-06-24",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTqdXj7y4XEu54AgUpFYqlgZlMpSDZeTSvW02QSRvQX38sXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/236/2025: Special Intensive Revision in Bihar has already started",
+          "published": "2025-06-28",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Order text read from the scanned 19-page PDF on eci.gov.in. The press note of 24.06.2025 adds 'inclusion of the names of foreign illegal immigrants' among the reasons; the order itself does not use that phrase.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpSBy2rLSWcB8ZqM9aI5KyrxL4EAnNdah6vWMkIUyW8NsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "note": "Read all 19 scanned pages: letter signed by Pawan Diwan, Order No.23/ERS/2025 signed by Sanjay Kumar (DEC); Article 324/Section 21 basis, 2003 roll as probative evidence incl. presumption of citizenship, no deletion without inquiry, appeals under s.24(a)/(b), 1,200-elector cap, transfer bar and schedule all match. Quote is exact (14 words). Elector count matches PN/236 and PN/244."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-bihar-2003-roll-online",
+      "kind": "rule",
+      "date": "2025-06-30",
+      "date_precision": "day",
+      "title": "2003 Bihar roll put online; 4.96 crore electors told no documents needed",
+      "summary": "The Commission uploaded the 2003 Bihar electoral roll (4.96 crore electors) and said those on it only had to verify their entry and return the enumeration form. It added that a person not on the 2003 roll could use a parent's 2003 entry instead of documents for that parent.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors on the 2003 Bihar roll",
+          "value": 49600000,
+          "unit": "electors",
+          "as_of": "2025-06-30"
+        }
+      ],
+      "details": {
+        "issued_by": "ECI/PN/237/2025 (not openable); substance confirmed by ECI/PN/236/2025 and ECI/PN/240/2025",
+        "legal_basis_claimed": "Para 5 of the SIR instructions of 24.06.2025; Section 21(2)(a) RPA 1950 and Rule 25 RER 1960 cited for the need for revisions."
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTqdXj7y4XEu54AgUpFYqlgbwQemoodobDSySsFjnh3q0sXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/237/2025: Bihar SIR: 2003 Electoral Rolls Uploaded on ECI Website",
+          "published": "2025-06-30",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTqdXj7y4XEu54AgUpFYqlgZlMpSDZeTSvW02QSRvQX38sXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/236/2025: Special Intensive Revision in Bihar has already started",
+          "published": "2025-06-28",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6rhSqOoHOq%2BjQLuh3T7JM4rQsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/240/2025: ECI meets representatives of political parties; Decodes the Bihar SIR 2025 process",
+          "published": "2025-07-03",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Fact-check 25.09.2026: the PN/237 download returns \"Access denied\" and has no Wayback copy. The 4.96 crore figure and the no-documents rule are confirmed by PN/236 (28.06.2025); the 2003 database being online and the parent-entry rule are confirmed by PN/240 (03.07.2025). The exact 30.06.2025 upload date rests only on the PN/237 listing title.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTqdXj7y4XEu54AgUpFYqlgZlMpSDZeTSvW02QSRvQX38sXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "note": "PN/237 could not be opened (Access denied, no archive). Added PN/236 and PN/240 as sources, which confirm the 4.96 crore figure, the 2003 roll online and the parent-entry rule; the 30 June date itself is unverified."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-bihar-no-change-clarification",
+      "kind": "rule",
+      "date": "2025-07-06",
+      "date_precision": "day",
+      "title": "Commission says SIR rules unchanged; missing documents can come later",
+      "summary": "Amid reports that the process had been relaxed, the Commission said it was following the 24 June instructions without change. It said documents could be submitted any time before 25 July, and that EROs could collect deficient documents from those on the draft roll during the claims and objections period.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "forms"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI/PN/244/2025, press note",
+        "what_changed": "Clarified that missing documents do not keep a returned form out of the draft roll."
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6rgl%2Bwo7lfsaf3xf3n4DUTX%2FsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/244/2025: Initial Phase of Bihar SIR Completed; No changes made in SIR as being rumoured",
+          "published": "2025-07-06",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "there is no change in the instructions"
+        }
+      ],
+      "response_to": null,
+      "notes": "The press note does not identify the rumours it was answering.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6rgl%2Bwo7lfsaf3xf3n4DUTX%2FsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "note": "PN/244/2025 says instructions of 24.06.2025 unchanged, documents may be submitted before 25 July and deficient documents collected during claims; quote exact."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-sc-suggests-aadhaar-epic-ration",
+      "kind": "case",
+      "date": "2025-07-10",
+      "date_precision": "day",
+      "title": "Supreme Court asks Commission to consider Aadhaar, voter ID and ration card",
+      "summary": "While issuing notice on petitions against the Bihar SIR, the Supreme Court said the Commission should also consider accepting Aadhaar, the EPIC voter card and ration cards in addition to the 11 listed documents. The judgment's account of this order records no stay of the exercise.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "courts",
+        "forms"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Supreme Court of India, order of 10.07.2025 in WP(C) 640/2025 (as recorded in the judgment of 27.05.2026)",
+        "effect": "No ECI instruction adding these documents followed at the time; Aadhaar was added only after the order of 08.09.2025."
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "publisher": "Supreme Court of India (copy published by the Election Commission of India)",
+          "title": "Association for Democratic Reforms & Ors. v. Election Commission of India & Ors., WP(C) 640 of 2025, 2026 INSC 564 (judgment)",
+          "published": "2026-05-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "also consider accepting (a) Aadhaar Card; (b) Electors Photo Identity Card"
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+        "note": "Judgment para 10.8 confirms the suggestion and the quote (the quote is the judgment's paraphrase of the order, not the order text). The original line \"It did not stay the exercise\" is not stated in the source opened; reworded to what the judgment records."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-bihar-lists-shared-bla-forms",
+      "kind": "rule",
+      "date": "2025-07-18",
+      "date_precision": "day",
+      "title": "Lists of 'probably dead, shifted, duplicate' electors to be shared with parties",
+      "summary": "The Commission said booth-wise lists of electors marked probably deceased, permanently shifted, enrolled at multiple places or not returning forms were being shared with party district presidents and their booth agents before the enumeration deadline. It restated that each booth agent could submit up to 50 certified forms a day.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors not found at their addresses",
+          "value": 3686971,
+          "unit": "electors",
+          "as_of": "2025-07-18"
+        }
+      ],
+      "details": {
+        "issued_by": "ECI/PN/258/2025",
+        "legal_basis_claimed": "SIR order of 24.06.2025"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6riZHsyaiNLNo1sIUYIzLh9HsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/258/2025: Bihar SIR: 94.68% Electors covered; List of Forms which could not be collected being shared with political parties",
+          "published": "2025-07-18",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6riZHsyaiNLNo1sIUYIzLh9HsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "note": "PN/258/2025 confirms list-sharing with district presidents/BLAs, 50 certified forms a day and 36,86,971 electors not found."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-bihar-draft-roll",
+      "kind": "event",
+      "date": "2025-08-01",
+      "date_precision": "day",
+      "title": "Bihar draft roll published with 7.24 crore names, about 65 lakh fewer",
+      "summary": "The Bihar draft roll was published and shared booth-wise with parties, opening a one-month claims and objections window. The Commission said no name would be deleted from the draft by an ERO/AERO without a hearing and a written order appealable to the DM and CEO, and asked those missing to file Form 6 with the Declaration Form.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in Bihar draft roll",
+          "value": 72400000,
+          "unit": "electors",
+          "as_of": "2025-08-01"
+        },
+        {
+          "label": "electors left out of the draft roll",
+          "value": 6500000,
+          "unit": "electors",
+          "as_of": "2025-08-01"
+        }
+      ],
+      "details": {
+        "issued_by": "ECI/PN/278/2025"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2Fzznw5Qtyss%2B8ILdni0Z0RBAkwVPAdy67ySd4dS2SdwaNNq0p8WWXDoViUeHPyzG9HgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/278/2025: Draft Electoral Roll issued in Bihar today",
+          "published": "2025-08-01",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/313/2025: SIR of Electoral Rolls in Bihar Successfully Completed",
+          "published": "2025-09-30",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Figures are the Commission's rounded numbers (7.24 crore in draft; 65 lakh removed).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2Fzznw5Qtyss%2B8ILdni0Z0RBAkwVPAdy67ySd4dS2SdwaNNq0p8WWXDoViUeHPyzG9HgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+        "note": "PN/278/2025 confirms publication on 01.08.2025, 7.24 crore electors, no deletion without hearing and written order, Form 6 with Declaration; 65 lakh figure from PN/313/2025."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-blo-remuneration",
+      "kind": "rule",
+      "date": "2025-08-02",
+      "date_precision": "day",
+      "title": "Booth Level Officer pay doubled; first honorarium for EROs and AEROs",
+      "summary": "The Commission doubled the annual remuneration of Booth Level Officers from Rs 6,000 to Rs 12,000 and raised BLO supervisors' pay, and gave EROs and AEROs an honorarium for the first time. It also noted a special Rs 6,000 SIR incentive for BLOs.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "BLO annual remuneration (revised)",
+          "value": 12000,
+          "unit": "INR",
+          "as_of": "2025-08-02"
+        },
+        {
+          "label": "ERO honorarium (new)",
+          "value": 30000,
+          "unit": "INR",
+          "as_of": "2025-08-02"
+        },
+        {
+          "label": "AERO honorarium (new)",
+          "value": 25000,
+          "unit": "INR",
+          "as_of": "2025-08-02"
+        }
+      ],
+      "details": {
+        "issued_by": "ECI/PN/279/2025; instruction No.23/BLO/2025-ERS dated 02.08.2025"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2Fzznw5Qtyss%2B8ILdni0Z0RBAkwVPAdy67ySd4dS2SdwaNCbeG3CD6hd2TvMxhuG564gKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/279/2025: Election Commission doubles the remuneration for Booth Level Officers",
+          "published": "2025-08-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2Fzznw5Qtyss%2B8ILdni0Z0RBAkwVPAdy67ySd4dS2SdwaNCbeG3CD6hd2TvMxhuG564gKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+        "note": "PN/279/2025 confirms BLO Rs 6,000 to 12,000, supervisors Rs 12,000 to 18,000, AERO Rs 25,000 and ERO Rs 30,000 honoraria (first time) and the Rs 6,000 SIR incentive. The instruction number in issued_by is not in the press note and was not verified."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-sc-deleted-list-aadhaar-claims",
+      "kind": "rule",
+      "date": "2025-08-14",
+      "date_precision": "day",
+      "title": "On court order, excluded Bihar voters may claim with Aadhaar; list published",
+      "summary": "The Supreme Court directed the Commission to publish the roughly 65 lakh names left out of the Bihar draft roll with reasons, and allowed those excluded to file claims with a copy of their Aadhaar card. The Commission conveyed the direction to the CEO Bihar by a letter of the same date.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "courts",
+        "forms"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Supreme Court order of 14.08.2025; ECI letter No.23/2025-ERS/Vol.II dated 14.08.2025 (cited in ECI letter of 09.09.2025)",
+        "on_whose_direction": "Supreme Court of India",
+        "legal_basis_claimed": "Court order"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "publisher": "Supreme Court of India (copy published by the Election Commission of India)",
+          "title": "Association for Democratic Reforms & Ors. v. Election Commission of India & Ors., WP(C) 640 of 2025, 2026 INSC 564 (judgment)",
+          "published": "2026-05-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e%2B7gOOlUZXPW%2BNP40Y7lTYFOwY1tfrOT2D3RbDx4E5EzO4jyvJqQIR5ZMChqCiQwfQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "No.23/2025-ERS (Vol.II): SIR of Electoral Roll w.r.t. 01.01.2026 as the qualifying date - for 12 States (with Annexures I-V)",
+          "published": "2025-10-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The 14.08.2025 ECI letter itself was not found on eci.gov.in; its existence and purpose are stated in para 2 of the ECI letter of 09.09.2025 (Annexure II of the 27.10.2025 order).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+        "note": "Judgment para 10.10 records the 14.08.2025 order (publish ~65 lakh names with reasons; claims with Aadhaar). The 09.09.2025 letter (Annexure II of the 27.10.2025 order, read from the scan) confirms the ECI letter of 14.08.2025."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-sc-parties-aadhaar-claims",
+      "kind": "rule",
+      "date": "2025-08-22",
+      "date_precision": "day",
+      "title": "Court tells 12 parties to help excluded voters claim with Aadhaar",
+      "summary": "The Supreme Court impleaded 12 recognised parties and told them to instruct their booth agents to help excluded voters file claims with any of the 11 documents or Aadhaar. The Commission conveyed this to the CEO Bihar by letter dated 23 August 2025.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "courts",
+        "forms"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Supreme Court order of 22.08.2025; ECI letter No.23/2025-ERS/Vol.II dated 23.08.2025 (cited in ECI letter of 09.09.2025)",
+        "on_whose_direction": "Supreme Court of India"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "publisher": "Supreme Court of India (copy published by the Election Commission of India)",
+          "title": "Association for Democratic Reforms & Ors. v. Election Commission of India & Ors., WP(C) 640 of 2025, 2026 INSC 564 (judgment)",
+          "published": "2026-05-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e%2B7gOOlUZXPW%2BNP40Y7lTYFOwY1tfrOT2D3RbDx4E5EzO4jyvJqQIR5ZMChqCiQwfQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "No.23/2025-ERS (Vol.II): SIR of Electoral Roll w.r.t. 01.01.2026 as the qualifying date - for 12 States (with Annexures I-V)",
+          "published": "2025-10-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The ECI letter of 09.09.2025 refers to Supreme Court directions of '14.08.2025 and 22.09.2025'; 22.09.2025 is after the letter's own date and appears to be a typing error for 22.08.2025.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+        "note": "Judgment para 10.11 confirms 12 parties impleaded and BLAs to assist with 11 documents or Aadhaar; the 09.09.2025 letter confirms the ECI letter of 23.08.2025 and the \"22.09.2025\" typo."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-claims-after-deadline",
+      "kind": "rule",
+      "date": "2025-09-01",
+      "date_precision": "day",
+      "title": "Commission tells court claims can be filed after 1 September deadline",
+      "summary": "Before the Supreme Court, the Commission stated that claims, objections and corrections could still be filed after 1 September 2025 and would be considered until the last date of nominations, with all changes integrated into the final roll. The court then directed legal services authorities to deploy para-legal volunteers to help voters file online.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "courts",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI stand recorded in Supreme Court proceedings of 01.09.2025",
+        "legal_basis_claimed": "Continuous updation until the last date of nominations"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "publisher": "Supreme Court of India (copy published by the Election Commission of India)",
+          "title": "Association for Democratic Reforms & Ors. v. Election Commission of India & Ors., WP(C) 640 of 2025, 2026 INSC 564 (judgment)",
+          "published": "2026-05-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/313/2025: SIR of Electoral Rolls in Bihar Successfully Completed",
+          "published": "2025-09-30",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+        "note": "Judgment para 10.12 records the Commission's stand of 01.09.2025 and the para-legal volunteers direction."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-aadhaar-12th-document",
+      "kind": "rule",
+      "date": "2025-09-09",
+      "date_precision": "day",
+      "title": "Aadhaar accepted as 12th SIR document, for identity only, on Supreme Court order",
+      "summary": "A day after the Supreme Court's order, the Commission told the CEO Bihar that Aadhaar must be accepted as the 12th document alongside the 11 listed, as proof of identity but not of citizenship. It warned that refusal to accept Aadhaar would be treated with the utmost seriousness. Authorities could still verify an Aadhaar card's genuineness.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Pawan Diwan"
+      ],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "forms",
+        "courts"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI letter No.23/2025-ERS/Vol.II dated 09.09.2025, signed by Pawan Diwan, Secretary",
+        "on_whose_direction": "Supreme Court order dated 08.09.2025 in WP(C) 640/2025, which directed instructions by 09.09.2025",
+        "legal_basis_claimed": "Section 23(4) RPA 1950 (Aadhaar as an identity document); Section 9 of the Aadhaar Act (not proof of citizenship)",
+        "applied_later_to": "Phase 2 (27.10.2025) and phase 3 (14.05.2026) orders adopt this letter as Annexure II"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e%2B7gOOlUZXPW%2BNP40Y7lTYFOwY1tfrOT2D3RbDx4E5EzO4jyvJqQIR5ZMChqCiQwfQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "No.23/2025-ERS (Vol.II): SIR of Electoral Roll w.r.t. 01.01.2026 as the qualifying date - for 12 States (with Annexures I-V)",
+          "published": "2025-10-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "The Aadhaar Card shall be treated as the 12th document"
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "publisher": "Supreme Court of India (copy published by the Election Commission of India)",
+          "title": "Association for Democratic Reforms & Ors. v. Election Commission of India & Ors., WP(C) 640 of 2025, 2026 INSC 564 (judgment)",
+          "published": "2026-05-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The standalone copy is listed on eci.gov.in (document id 18256) but returned 'Access denied' when fetched, so it is not cited; the full text was read from Annexure II of the 27.10.2025 order. The letter names the Aadhaar Act as '2026'; the Act is of 2016. The Commission did not add Aadhaar before the court's direction, despite the court's suggestion of 10.07.2025.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e%2B7gOOlUZXPW%2BNP40Y7lTYFOwY1tfrOT2D3RbDx4E5EzO4jyvJqQIR5ZMChqCiQwfQ%3D%3D",
+        "note": "Read the scanned 09.09.2025 letter (Annexure II, pp.23-24): 12th document, identity not citizenship, \"utmost seriousness\", Section 23(4), Aadhaar Act misdated 2026, signed Pawan Diwan. Quote exact."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-ceo-conference-mapping",
+      "kind": "event",
+      "date": "2025-09-10",
+      "date_precision": "day",
+      "title": "States told to map current electors to their last intensive revision rolls",
+      "summary": "At a conference of all state Chief Electoral Officers, the Commission reviewed how far each state had mapped its current electors to the roll of its last intensive revision, and CEOs proposed documents for the nationwide SIR. A second conference on 22-23 October reviewed progress on the mapping directions.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI/PN/302/2025 and ECI/PN/339/2025",
+        "why_it_matters": "Under the later SIR orders (27.10.2025, 14.05.2026), electors who could not be linked to these last-revision rolls, or whose linking showed a discrepancy, were sent notices after the draft roll."
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw5azY48VZtfysLQlDKrLOQj7qWTt298vFvaPYpZHu6vnw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/302/2025: ECI holds conference of Chief Electoral Officers of all States/UTs to assess preparedness for nationwide SIR",
+          "published": "2025-09-10",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e6jbGk1CRYxaGzABkOgdfk8Ml7I6N5nqOb%2Bf%2FTT9XLRT%2FY08xwhnNl843g%2FYtyROkg%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/339/2025: ECI's two-day Conference of CEOs on SIR preparedness concludes",
+          "published": "2025-10-23",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw5azY48VZtfysLQlDKrLOQj7qWTt298vFvaPYpZHu6vnw%3D%3D",
+        "note": "PN/302/2025 (mapping status reviewed; CEOs suggested documents) and PN/339/2025 (two-day conference ending 23.10.2025 assessed progress on mapping directions) match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-form7-no-online-deletion",
+      "kind": "rule",
+      "date": "2025-09-19",
+      "date_precision": "day",
+      "title": "Commission: filing Form 7 online cannot by itself delete a voter",
+      "summary": "The Commission said that although any elector of a constituency may file Form 7 online to seek deletion of an entry, submission does not delete it; under the 1960 Rules no name is deleted without notice and a hearing. It cited Aland (Karnataka), where 5,994 of 6,018 online deletion requests were rejected, and Rajura (Maharashtra), where 6,861 of 7,792 addition requests were rejected.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Karnataka",
+        "Maharashtra"
+      ],
+      "topics": [
+        "rolls",
+        "forms"
+      ],
+      "figures": [
+        {
+          "label": "Form 7 deletion requests in Aland found incorrect",
+          "value": 5994,
+          "unit": "applications",
+          "as_of": "2025-09-19"
+        }
+      ],
+      "details": {
+        "issued_by": "ECI/PN/308/2025",
+        "legal_basis_claimed": "Registration of Electors Rules, 1960 (notice and hearing before deletion)"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw6B53AzTABhjGO4vUsaC2NyCtWRFZ5jFqzdV%2FfIJr%2FV9w%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/308/2025: No Deletion of any vote can be done online by any member of the public",
+          "published": "2025-09-19",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw6B53AzTABhjGO4vUsaC2NyCtWRFZ5jFqzdV%2FfIJr%2FV9w%3D%3D",
+        "note": "PN/308/2025 figures for Aland (6,018 / 5,994) and Rajura (7,792 / 6,861) match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-bihar-final-roll",
+      "kind": "event",
+      "date": "2025-09-30",
+      "date_precision": "day",
+      "title": "Bihar final roll published with about 7.42 crore electors",
+      "summary": "The Commission published Bihar's final roll: about 7.42 crore electors, after removing about 65 lakh at draft stage and 3.66 lakh more afterwards, and adding 21.53 lakh through Form 6. It said anyone left out could still apply until ten days before the last date of nominations, and appeals lay to the DM and then the CEO.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in Bihar final roll",
+          "value": 74200000,
+          "unit": "electors",
+          "as_of": "2025-09-30"
+        },
+        {
+          "label": "removed from draft roll as ineligible",
+          "value": 366000,
+          "unit": "electors",
+          "as_of": "2025-09-30"
+        },
+        {
+          "label": "added to draft roll through Form 6",
+          "value": 2153000,
+          "unit": "electors",
+          "as_of": "2025-09-30"
+        }
+      ],
+      "details": {
+        "issued_by": "ECI/PN/313/2025"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/313/2025: SIR of Electoral Rolls in Bihar Successfully Completed",
+          "published": "2025-09-30",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAYCxQSwErm054LraiPGlBSWYP5beHYo2ouO%2BqGjFKA7nw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/353/2025: Successful conduct of Bihar Elections: Zero Repolls, Zero Appeals during SIR in Bihar",
+          "published": "2025-11-13",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "On 13.11.2025, according to the title of ECI/PN/353/2025, the Commission reported zero appeals during the Bihar SIR; the figure of 7,45,26,858 electors and the statement that the 12 recognised parties filed no appeals are attributed to that press note, which returned \"Access denied\" on 25.09.2026 and has no Wayback copy, so they are unverified.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
+        "note": "PN/313/2025 confirms ~7.42 crore, 65 lakh draft removals, 3.66 lakh removed, 21.53 lakh added, applications until ten days before last date of nominations, appeals to DM and CEO. PN/353/2025 could not be opened; notes reworded to mark its figures unverified."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-phase2-forms-last-sir-linkage",
+      "kind": "rule",
+      "date": "2025-10-27",
+      "date_precision": "day",
+      "title": "Phase 2 forms ask electors to trace themselves or kin in last SIR",
+      "summary": "The phase 2 enumeration and declaration forms added a block for the elector's own entry, or a relative's entry, in the roll of the last intensive revision (constituency, part and serial number), with a BLO undertaking that it had been verified. The document list grew to 13 items: the 11 original documents, Aadhaar under the 9 September 2025 letter, and an extract of the Bihar SIR roll.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Pawan Diwan"
+      ],
+      "states": [
+        "Andaman and Nicobar Islands",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Kerala",
+        "Lakshadweep",
+        "Madhya Pradesh",
+        "Puducherry",
+        "Rajasthan",
+        "Tamil Nadu",
+        "Uttar Pradesh",
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "forms"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Annexures III and IV of ECI letter No.23/2025-ERS (Vol.II) dated 27.10.2025",
+        "legal_basis_claimed": "As for the phase 2 order",
+        "documents_added": [
+          "12. Aadhaar, per letter of 09.09.2025",
+          "13. Extract of the Bihar SIR electoral roll with reference to 01.07.2025"
+        ],
+        "rule_for_unlinked": "ERO issues notice to those whose last-SIR details are unavailable or do not match the database; they must then produce documents by birth-date tier."
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e%2B7gOOlUZXPW%2BNP40Y7lTYFOwY1tfrOT2D3RbDx4E5EzO4jyvJqQIR5ZMChqCiQwfQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "No.23/2025-ERS (Vol.II): SIR of Electoral Roll w.r.t. 01.01.2026 as the qualifying date - for 12 States (with Annexures I-V)",
+          "published": "2025-10-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "I have verified the above details from the electoral roll(s) of the last SIR"
+        }
+      ],
+      "response_to": null,
+      "notes": "These are SIR-specific, non-statutory forms. The later dispute (2026) is over inserting a similar last-SIR question into the statutory online Form 6.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e%2B7gOOlUZXPW%2BNP40Y7lTYFOwY1tfrOT2D3RbDx4E5EzO4jyvJqQIR5ZMChqCiQwfQ%3D%3D",
+        "note": "Annexures III/IV: last-SIR blocks for elector and relative, BLO undertaking (quote exact), 13-item list including Aadhaar and the Bihar SIR extract."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-phase2-order",
+      "kind": "rule",
+      "date": "2025-10-27",
+      "date_precision": "day",
+      "title": "SIR phase 2 ordered in 12 states and UTs, qualifying date 1.1.2026",
+      "summary": "The Commission extended the SIR to 12 states and UTs covering about 51 crore electors, citing its 24 June 2025 order as having ordered SIR 'in all the States/UTs'. It kept the Bihar guidelines with changes: no documents at enumeration, electors to link themselves to the last intensive revision roll, and notices after the draft only to those who could not be linked. Final rolls were due on 7 February 2026.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Pawan Diwan"
+      ],
+      "states": [
+        "Andaman and Nicobar Islands",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Kerala",
+        "Lakshadweep",
+        "Madhya Pradesh",
+        "Puducherry",
+        "Rajasthan",
+        "Tamil Nadu",
+        "Uttar Pradesh",
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors covered by phase 2",
+          "value": 510000000,
+          "unit": "electors",
+          "as_of": "2025-11-04"
+        }
+      ],
+      "details": {
+        "issued_by": "ECI letter No.23/2025-ERS (Vol.II) dated 27.10.2025, signed by Pawan Diwan, Secretary",
+        "legal_basis_claimed": "Article 324; Section 21 and other provisions of RPA 1950; relevant provisions of the Registration of Electors Rules, 1960",
+        "modifications": [
+          "BLOs note a probable reason (absent/shifted/dead/duplicate) for forms not returned; booth-wise lists of those left out displayed at panchayat and local body offices and on CEO websites",
+          "Aadhaar accepted per the letter of 09.09.2025",
+          "Modified Enumeration Form (Annexure III) and Declaration Form (Annexure IV) with fields for the elector's or relative's entry in the last SIR roll",
+          "No document collected during enumeration",
+          "ERO issues notice, only after draft publication, to electors who could not be linked with previous SIR rolls",
+          "Last intensive revision years per state listed in Annexure V (2002-2005 for most states)",
+          "BLOs to carry at least 30 blank Form 6 with Declaration Forms",
+          "Advance applications invited for 1 April, 1 July and 1 October 2026"
+        ],
+        "schedule": {
+          "enumeration": "04.11.2025-04.12.2025",
+          "draft_roll": "09.12.2025",
+          "claims_objections": "09.12.2025-08.01.2026",
+          "notice_phase": "09.12.2025-31.01.2026",
+          "final_roll": "07.02.2026"
+        },
+        "recorded_objection": "None reported for this order. The Commission said on 24.09.2026 that it was a unanimous decision (reported)."
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e%2B7gOOlUZXPW%2BNP40Y7lTYFOwY1tfrOT2D3RbDx4E5EzO4jyvJqQIR5ZMChqCiQwfQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "No.23/2025-ERS (Vol.II): SIR of Electoral Roll w.r.t. 01.01.2026 as the qualifying date - for 12 States (with Annexures I-V)",
+          "published": "2025-10-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAaRX2o6veifpDhCjDTVA%2FVMQDbiNcXHdpjdC4NGIujanw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/348/2025: SIR Phase-II begins in 9 States and 3 UTs",
+          "published": "2025-11-04",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Assam, due for an election in 2026, was left out of phase 2 and given a separate 'Special Revision' on 17.11.2025.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e%2B7gOOlUZXPW%2BNP40Y7lTYFOwY1tfrOT2D3RbDx4E5EzO4jyvJqQIR5ZMChqCiQwfQ%3D%3D",
+        "note": "Order text: refers to 24.06.2025 order as ordering SIR \"in all the States/UTs\", modifications (a)-(h) and schedule match; PN/348/2025 gives ~51 crore electors."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-ero-statutory-functions-note",
+      "kind": "rule",
+      "date": "2025-11-04",
+      "date_precision": "day",
+      "title": "Internal note: only EROs, DEOs, CEOs may exercise roll powers; IT must comply",
+      "summary": "The Indian Express reports that on Election Commissioner Sukhbir Singh Sandhu's direction, Deputy Election Commissioner Sanjay Kumar wrote to the Director General (IT) and senior officers that the statutory functions of EROs, DEOs and CEOs were to be exercised by them alone, and that IT systems must comply strictly with the law. ERONet was then the roll-management system.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Sanjay Kumar",
+        "Seema Khanna"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Sanjay Kumar, Deputy Election Commissioner (at Sandhu's direction), per report",
+        "legal_basis_claimed": "RPA 1950 and RER 1960 (statutory authorities for the roll)"
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The note is not public; the newspaper says it has seen it.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "IE (23.09.2026) reports the 04.11.2025 note by Sanjay Kumar on Sandhu's direction to Khanna and senior officers; quoted wording matches. Status \"reported\" is correct."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-bla-criteria",
+      "kind": "rule",
+      "date": "2025-11-11",
+      "date_precision": "day",
+      "title": "Booth agents may now come from anywhere in the constituency",
+      "summary": "The Commission changed its booth level agent rule: a party's agent for a roll part should normally be an elector of that part, but if none is available the party may appoint any elector of the same Assembly constituency. Agents are expected to check the draft roll for dead or shifted entries. The Manual on Electoral Rolls 2023 was amended to match.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Pawan Diwan"
+      ],
+      "states": [],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI letter No.23/BLA/2025-ERS dated 11.11.2025, signed by Pawan Diwan, Secretary",
+        "amends": "Para 3(iv) of instruction No.23/BLA/2023-ERS dated 09.08.2023; para 25.2.1(iii) of the Manual on Electoral Rolls 2023"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zbziMWVM9RdSa49qKKjiLLDp2fL91x8WJD8z4bsSBzYzRksBuGtq%2FnkizzWozTOH3A%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "No.23/BLA/2025-ERS: Modification in Booth Level Agent (BLA) appointment criteria",
+          "published": "2025-11-11",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zbziMWVM9RdSa49qKKjiLLDp2fL91x8WJD8z4bsSBzYzRksBuGtq%2FnkizzWozTOH3A%3D%3D",
+        "note": "Scanned letter No.23/BLA/2025-ERS of 11.11.2025 read: modifies para 3(iv) of the 09.08.2023 instruction and para 25.2.1(iii) of the 2023 Manual; signed Pawan Diwan."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-assam-special-revision",
+      "kind": "rule",
+      "date": "2025-11-17",
+      "date_precision": "day",
+      "title": "Assam gets a 'Special Revision', not an SIR, before its 2026 election",
+      "summary": "The Commission directed a Special Revision of Assam's rolls with 1 January 2026 as the qualifying date, based on house-to-house verification by BLOs rather than SIR enumeration forms. The integrated draft roll was due on 27 December 2025 and the final roll on 10 February 2026.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Pawan Diwan"
+      ],
+      "states": [
+        "Assam"
+      ],
+      "topics": [
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI letter No.23/2025-ERS (Vol. II) dated 17.11.2025 to the CEO Assam",
+        "legal_basis_claimed": "Section 21 RPA 1950",
+        "schedule": {
+          "house_to_house": "22.11.2025-20.12.2025",
+          "draft_roll": "27.12.2025",
+          "claims_objections": "27.12.2025-22.01.2026",
+          "final_roll": "10.02.2026"
+        }
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zbziMWVM9RdSa49qKKjiLLB89jibkl1a92oJcVYOy6ledOY1eDHK5HFjLVW883MhIw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "No.23/2025-ERS (Vol. II): Special Revision w.r.t. 01.01.2026 as the qualifying date in the State of Assam",
+          "published": "2025-11-17",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/explained/election-commission-new-voter-registration-sir-form6-10782904/",
+          "publisher": "The Indian Express",
+          "title": "What the Election Commission's new online registration requirement means for voters",
+          "published": "2026-07-12",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260802193110/https://indianexpress.com/article/explained/election-commission-new-voter-registration-sir-form6-10782904/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Indian Express reports that the Commission decided not to hold an SIR in Assam until the National Register of Citizens exercise is completed; no ECI document stating that reason was found.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zbziMWVM9RdSa49qKKjiLLB89jibkl1a92oJcVYOy6ledOY1eDHK5HFjLVW883MhIw%3D%3D",
+        "note": "Scanned letter of 17.11.2025 read (pp.1-3): Special Revision u/s 21, H2H verification 22.11-20.12.2025, draft 27.12.2025, claims to 22.01.2026, final 10.02.2026. IE explainer confirms the NRC reason is reported, not stated by ECI."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-phase2-schedule-extended",
+      "kind": "rule",
+      "date": "2025-11-30",
+      "date_precision": "day",
+      "title": "Phase 2 SIR schedule extended by one week in all 12 states/UTs",
+      "summary": "The Commission pushed every phase 2 date back a week: enumeration to 11 December, draft rolls on 16 December 2025, claims to 15 January, notices and hearings to 7 February, and final rolls on 14 February 2026.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Andaman and Nicobar Islands",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Kerala",
+        "Lakshadweep",
+        "Madhya Pradesh",
+        "Puducherry",
+        "Rajasthan",
+        "Tamil Nadu",
+        "Uttar Pradesh",
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI/PN/359/2025",
+        "schedule": {
+          "enumeration": "by 11.12.2025",
+          "draft_roll": "16.12.2025",
+          "claims_objections": "16.12.2025-15.01.2026",
+          "notice_phase": "16.12.2025-07.02.2026",
+          "final_roll": "14.02.2026"
+        }
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAY%2FlNfHhCNmkamD4tYgD1vkZhdXAWTuAWd47JJFkivjUQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/359/2025: Election Commission of India Revises Schedule for SIR by extending the dates by one week",
+          "published": "2025-11-30",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The press note gives no reason for the extension.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAY%2FlNfHhCNmkamD4tYgD1vkZhdXAWTuAWd47JJFkivjUQ%3D%3D",
+        "note": "PN/359/2025 dates match; no reason is given in the press note."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-asd-lists-phase2",
+      "kind": "rule",
+      "date": "2025-12-10",
+      "date_precision": "day",
+      "title": "Absent/shifted/dead lists to be given to party agents before draft rolls",
+      "summary": "The Commission directed CEOs of the 12 phase 2 states/UTs to hand booth-wise lists of electors marked absent, shifted or dead/duplicate (ASD) to party booth agents before draft publication, and to post them on CEO and DEO websites in EPIC-searchable form after the draft.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Andaman and Nicobar Islands",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Kerala",
+        "Lakshadweep",
+        "Madhya Pradesh",
+        "Puducherry",
+        "Rajasthan",
+        "Tamil Nadu",
+        "Uttar Pradesh",
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI/PN/363/2025"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAaGfeKFKORUPQ6qM8mFPCD1TFpuxmVeFYPazQnENuvHVw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/363/2025: CEOs of all 12 SIR ongoing States/UTs to ensure sharing of Booth-Wise ASD Lists with BLAs",
+          "published": "2025-12-10",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAaGfeKFKORUPQ6qM8mFPCD1TFpuxmVeFYPazQnENuvHVw%3D%3D",
+        "note": "PN/363/2025 matches."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-phase2-schedule-six-states",
+      "kind": "rule",
+      "date": "2025-12-11",
+      "date_precision": "day",
+      "title": "Enumeration extended again in six states/UTs; UP draft moved to 31 December",
+      "summary": "On requests from their CEOs, the Commission extended enumeration in Tamil Nadu and Gujarat (draft 19 December), Madhya Pradesh, Chhattisgarh and Andaman & Nicobar (draft 23 December) and Uttar Pradesh (draft 31 December 2025). Kerala's schedule had already been moved to a 23 December draft. Goa, Puducherry, Lakshadweep, Rajasthan and West Bengal kept the 16 December draft date.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Tamil Nadu",
+        "Gujarat",
+        "Madhya Pradesh",
+        "Chhattisgarh",
+        "Andaman and Nicobar Islands",
+        "Uttar Pradesh",
+        "Kerala"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI/PN/364/2025"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAZH8NWm%2FEhSj06A8WFtmUvPItdYg6yfdEV6qFhUBaAfEQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/364/2025: ECI Revises Schedule for SIR of Electoral Rolls in 6 States/UT",
+          "published": "2025-12-11",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The earlier Kerala revision is referred to but no separate ECI document for it was found.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAZH8NWm%2FEhSj06A8WFtmUvPItdYg6yfdEV6qFhUBaAfEQ%3D%3D",
+        "note": "PN/364/2025 dates and the earlier Kerala revision (draft 23.12.2025) match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-special-roll-observers",
+      "kind": "rule",
+      "date": "2025-12-12",
+      "date_precision": "day",
+      "title": "Special Roll Observers appointed for SIR in eight large states",
+      "summary": "The Commission appointed Special Roll Observers for the SIR in eight states, to be present two days a week until final rolls in February 2026 and to meet parties, CEOs and DEOs.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal",
+        "Tamil Nadu",
+        "Uttar Pradesh",
+        "Gujarat",
+        "Kerala",
+        "Madhya Pradesh",
+        "Chhattisgarh",
+        "Rajasthan"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI/PN/365/2025"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbcW7GUZb3L8%2FKZaNTp8wElprG6rCIqlG5war%2FU4SQnHA%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/365/2025: ECI deploys Special Roll Observers for SIR",
+          "published": "2025-12-12",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbcW7GUZb3L8%2FKZaNTp8wElprG6rCIqlG5war%2FU4SQnHA%3D%3D",
+        "note": "PN/365/2025 matches (eight states, two days a week to February 2026)."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-wb-draft-roll",
+      "kind": "event",
+      "date": "2025-12-16",
+      "date_precision": "day",
+      "title": "West Bengal draft roll drops 58 lakh; 31 lakh unmapped sent to hearings",
+      "summary": "West Bengal's SIR draft roll was published, with more than 58 lakh names removed as absent, shifted, dead or duplicate, and about 31.4 lakh electors who could not be mapped to the last intensive revision marked for notices and hearings.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "names removed at WB draft stage",
+          "value": 5820000,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "WB electors unmapped and sent for hearing",
+          "value": 3138374,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/west-bengal-draft-voters-list-published-under-sir-2026",
+          "publisher": "All India Radio News (newsonair.gov.in)",
+          "title": "West Bengal draft voters list published under SIR",
+          "published": "2025-12-16",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20251219142418/https://www.newsonair.gov.in/west-bengal-draft-voters-list-published-under-sir-2026/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+          "publisher": "The Indian Express",
+          "title": "Missing in Election Commission affidavit: Break-up of Bengal SIR appeals for inclusion, exclusion of names",
+          "published": "2026-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Indian Express gives the WB draft date as 17 December 2025 in one report and uses 58.20 lakh for draft-stage deletions; All India Radio reported publication on 16 December, the date in the ECI schedule.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.newsonair.gov.in/west-bengal-draft-voters-list-published-under-sir-2026",
+        "note": "AIR (16.12.2025) confirms publication that day, >58 lakh deleted as ASD and 31,38,374 unmapped called for hearing; IE 18.09.2026 gives the draft date as 17 December in one place and 16 December in another, as noted."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-it-discretion-note",
+      "kind": "rule",
+      "date": "2026-01-02",
+      "date_precision": "day",
+      "title": "Internal note asks IT division not to restrict EROs' discretion in notices module",
+      "summary": "As EROs were moved onto a new ECINET/ERONet module for issuing SIR notices and holding hearings, Deputy Election Commissioner Sanjay Kumar reportedly asked DG (IT) Seema Khanna to ensure the system did not restrict an ERO's discretion to act.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sanjay Kumar",
+        "Seema Khanna"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Sanjay Kumar, Deputy Election Commissioner, per report"
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Not public; reported by The Indian Express, which says it has seen the note.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "IE reports the 02.01.2026 note by Sanjay Kumar to Khanna; quoted wording matches."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-up-draft-roll",
+      "kind": "event",
+      "date": "2026-01-06",
+      "date_precision": "day",
+      "title": "Uttar Pradesh draft roll published, 2.89 crore fewer names",
+      "summary": "Uttar Pradesh's SIR draft roll was released on 6 January 2026, later than the 31 December date set in December. It listed about 12.56 crore electors against 15.44 crore before the SIR; claims were open to 6 February and the final roll was set for 6 March.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Uttar Pradesh"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "UP electors before SIR",
+          "value": 154430092,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "UP electors in draft roll",
+          "value": 125556025,
+          "unit": "electors",
+          "as_of": "2026-01-06"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/eci-to-release-draft-voter-list-for-uttar-pradesh-today-after-sir-process/",
+          "publisher": "All India Radio News (newsonair.gov.in)",
+          "title": "ECI to release draft voter list for Uttar Pradesh today after SIR process",
+          "published": "2026-01-06",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260106024857/https://www.newsonair.gov.in/eci-to-release-draft-voter-list-for-uttar-pradesh-today-after-sir-process/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No ECI press note for the move from 31.12.2025 to 06.01.2026 was found on eci.gov.in.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.newsonair.gov.in/eci-to-release-draft-voter-list-for-uttar-pradesh-today-after-sir-process/",
+        "note": "AIR (06.01.2026): 12,55,56,025 in draft vs 15,44,30,092; claims 6 Jan-6 Feb; final 6 March."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-form7-bulk-clarification",
+      "kind": "rule",
+      "date": "2026-01-17",
+      "date_precision": "day",
+      "title": "Commission clarifies any elector may file multiple Form 7 objections",
+      "summary": "Amid a TMC-BJP dispute in West Bengal over deletion requests, the Commission reportedly clarified that any registered elector of a constituency could submit any number of Form 7 objections, and that more than five from one person triggers mandatory ERO scrutiny.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "forms",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/eci-issues-clarification-on-form-7-procedure-amid-tmc-bjp-controversy",
+          "publisher": "All India Radio News (newsonair.gov.in)",
+          "title": "ECI issues clarification on Form 7 procedure amid TMC-BJP controversy",
+          "published": "2026-01-17",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260117084308/https://www.newsonair.gov.in/eci-issues-clarification-on-form-7-procedure-amid-tmc-bjp-controversy/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Primary text of the clarification not found on eci.gov.in.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.newsonair.gov.in/eci-issues-clarification-on-form-7-procedure-amid-tmc-bjp-controversy",
+        "note": "AIR (17.01.2026) matches: no limit on Form 7 filings; more than five triggers mandatory ERO review."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-ecinet-launch",
+      "kind": "event",
+      "date": "2026-01-22",
+      "date_precision": "day",
+      "title": "ECINET formally launched; Commission says it complies with election law",
+      "summary": "The Commission formally launched ECINET, integrating more than 40 apps and portals, and said it had been built in full compliance with the Constitution, the RP Acts and the election rules. It said the platform had processed over 10 crore registration forms and digitised over 150 crore SIR documents. The roll-management system ERONet sits within it.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "Seema Khanna"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems"
+      ],
+      "figures": [
+        {
+          "label": "documents digitised on ECINET during SIR",
+          "value": 1500000000,
+          "unit": "documents",
+          "as_of": "2026-01-22"
+        }
+      ],
+      "details": {
+        "issued_by": "ECI/PN/008/2026",
+        "legal_basis_claimed": "Constitution; RPA 1950 and 1951; RER 1960; Conduct of Election Rules 1961"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzGjJMI0%2FjETs7fjrM8lYn4n%2Fg7yrAAgYNiN2nc9Wg99XpfL5Ojw2H3182VkcyCdub56VRYj06iIsFTelbq233Uw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/008/2026: ECINET Digital Platform launched at IICDEM-2026",
+          "published": "2026-01-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Indian Express reports that in the months after launch, statutory roll officers in several states said their access to the roll on ECINET/ERONet was restricted by the IT division in Delhi (see 2026-08-14 entry). PN/008/2026 also says ECINET was \"envisaged by\" the CEC along with Election Commissioners Sandhu and Joshi, and records Sandhu speaking in its favour at the launch.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzGjJMI0%2FjETs7fjrM8lYn4n%2Fg7yrAAgYNiN2nc9Wg99XpfL5Ojw2H3182VkcyCdub56VRYj06iIsFTelbq233Uw%3D%3D",
+        "note": "PN/008/2026 confirms the launch, 40+ apps, full-compliance claim, 10 crore forms and 150 crore documents; IE confirms the ERONet relationship."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-sc-logical-discrepancy-hearing",
+      "kind": "case",
+      "date": "2026-01-29",
+      "date_precision": "day",
+      "title": "Court orders 'logical discrepancy' lists displayed and 10 days to respond",
+      "summary": "The Supreme Court ordered that electors flagged for 'logical discrepancies' be listed with brief reasons at panchayat, taluka, sub-division and ward offices, and be given ten days to submit documents or objections and be heard. The order arose from Tamil Nadu but the court expected compliance in every state where SIR was under way.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Tamil Nadu"
+      ],
+      "topics": [
+        "sir",
+        "courts",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Supreme Court bench of CJI Surya Kant and Justice Joymalya Bagchi, per report",
+        "definition_reported": "A mismatch ECINET flags when linking an elector to a parent or grandparent in the last SIR roll: name mismatch, parent-child age gap under 15 or over 50 years, age not progressing correctly, or no document or only Aadhaar submitted."
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+          "publisher": "The Indian Express",
+          "title": "8 emails in 7 days, but valid Goa voters still left out: EC's flawed system",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The order text was not opened for this entry; the courts research area should attach it.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+        "note": "IE (24.09.2026) reports the 29.01.2026 order by CJI Surya Kant and Justice Bagchi, display with brief reasons, ten days, and all-states compliance; definition of logical discrepancy matches. Order text not opened."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-logical-discrepancy-letter",
+      "kind": "rule",
+      "date": "2026-01-31",
+      "date_precision": "day",
+      "title": "Commission issues letter implementing court's logical-discrepancy procedure",
+      "summary": "The Commission issued a letter on 31 January 2026 to implement the Supreme Court's 29 January directions on electors flagged for logical discrepancies. In Goa, lists were displayed and 649 electors responded; EROs found 97 eligible, but ECINET had no function to reverse the earlier flag before the final roll.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Goa"
+      ],
+      "topics": [
+        "sir",
+        "rolls",
+        "it-systems"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Election Commission of India (letter of 31.01.2026, per report)",
+        "on_whose_direction": "Supreme Court order of 29.01.2026"
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+          "publisher": "The Indian Express",
+          "title": "8 emails in 7 days, but valid Goa voters still left out: EC's flawed system",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The letter is not on eci.gov.in's public document index. The Commission's own criteria for 'logical discrepancy' (for example the 15/50-year age-gap rule) have not been found in any public ECI document.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+        "note": "IE reports the 31.01.2026 letter, 649 Goa electors responding and 97 found eligible with no rollback function."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-up-claims-extended",
+      "kind": "rule",
+      "date": "2026-02-06",
+      "date_precision": "day",
+      "title": "Uttar Pradesh claims window extended; final roll moved to 10 April",
+      "summary": "After a request from parties at a 27 January meeting, the Commission reportedly extended Uttar Pradesh's claims and objections period by a month to 6 March 2026, with disposal by 27 March and the final roll on 10 April 2026.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Uttar Pradesh"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "schedule": {
+          "claims_objections": "to 06.03.2026",
+          "disposal": "by 27.03.2026",
+          "final_roll": "10.04.2026"
+        }
+      },
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/ec-extends-deadline-for-filing-claims-objections-under-sir-of-electoral-rolls-in-uttar-pradesh",
+          "publisher": "All India Radio News (newsonair.gov.in)",
+          "title": "EC extends deadline for filing claims, objections under SIR of electoral rolls in Uttar Pradesh",
+          "published": "2026-02-06",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260206114759/https://www.newsonair.gov.in/ec-extends-deadline-for-filing-claims-objections-under-sir-of-electoral-rolls-in-uttar-pradesh/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Stated by UP CEO Navdeep Rinwa per the report; no ECI press note found.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.newsonair.gov.in/ec-extends-deadline-for-filing-claims-objections-under-sir-of-electoral-rolls-in-uttar-pradesh",
+        "note": "AIR (06.02.2026): extension to 6 March after the 27 January party meeting, disposal by 27 March, final roll 10 April, per UP CEO Navdeep Rinwa."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-wb-judicial-adjudication",
+      "kind": "case",
+      "date": "2026-02-20",
+      "date_precision": "day",
+      "title": "Court hands West Bengal's flagged voters to judicial officers for decision",
+      "summary": "Citing a trust deficit between the state government and the Commission, the Supreme Court ordered that the eligibility of West Bengal electors flagged by the Commission's logical-discrepancy check be decided by judicial officers. About 700 judicial officers from West Bengal, Jharkhand and Odisha decided 60.06 lakh cases, ordering 27.16 lakh deletions.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "courts",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "WB electors referred to judicial officers",
+          "value": 6006000,
+          "unit": "electors",
+          "as_of": "2026-02-28"
+        },
+        {
+          "label": "WB electors deleted by judicial officers",
+          "value": 2716393,
+          "unit": "electors",
+          "as_of": "2026-04-06"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "publisher": "The Indian Express",
+          "title": "Of 27 lakh deleted West Bengal voters, 22 lakh have filed appeals: Election Commission to Supreme Court",
+          "published": "2026-09-19",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260920041032/https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/bengal-voters-deleted-adjudication-election-rolls-assembly-polls-10624203/",
+          "publisher": "The Indian Express",
+          "title": "Of 27.16 lakh Bengal voters deleted after adjudication, doors shut for more than half",
+          "published": "2026-04-07",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260419145836/https://indianexpress.com/article/political-pulse/bengal-voters-deleted-adjudication-election-rolls-assembly-polls-10624203/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Court order not opened for this entry. The IE main report dates the order to February 2026 without a day; the 19 Sep report gives 20 February.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+        "note": "IE 19.09.2026 confirms the 20.02.2026 order, trust deficit, ~700 judicial officers, 60.06 lakh cases and 27.16 lakh deletions; IE 07.04.2026 gives exact 27,16,393 and 705 officers."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-goa-final-roll-97",
+      "kind": "event",
+      "date": "2026-02-21",
+      "date_precision": "day",
+      "title": "Goa final roll published without 97 voters EROs had found eligible",
+      "summary": "Goa's final SIR roll was published on 21 February 2026 without 97 electors whom EROs had found eligible after hearings under the court-ordered procedure. The Goa CEO's office wrote eight times between 11 and 17 February to the Commission, addressed to Senior Deputy Election Commissioner Gyanesh Bharti and copied to DG (IT) Seema Khanna, asking for a rollback function in ECINET. On 18 February Deputy Election Commissioner Sanjay Kumar wrote to the DG (IT) that the IT system could not block action required by the Supreme Court's directions.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Bharti",
+        "Seema Khanna",
+        "Sanjay Goel",
+        "Sanjay Kumar"
+      ],
+      "states": [
+        "Goa"
+      ],
+      "topics": [
+        "sir",
+        "rolls",
+        "it-systems"
+      ],
+      "figures": [
+        {
+          "label": "eligible Goa voters left off final roll",
+          "value": 97,
+          "unit": "electors",
+          "as_of": "2026-09-20"
+        },
+        {
+          "label": "net deletion in Goa after SIR",
+          "value": 127000,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+          "publisher": "The Indian Express",
+          "title": "8 emails in 7 days, but valid Goa voters still left out: EC's flawed system",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/goa-97-voters-electoral-roll-sir-row-election-commission-10892902/",
+          "publisher": "The Indian Express",
+          "title": "After Express report, Goa CEO says cases of 97 voters 'processed separately'",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "DG (IT) Seema Khanna did not respond to The Indian Express's questionnaire. See the Goa CEO's response entry. The 1.27 lakh net deletion figure is from IE 25.09.2026 (added as a source). No reply from Senior DEC Gyanesh Bharti is reported, and IE does not say whether it sought his comment.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+        "note": "IE 24.09.2026 confirms the eight emails (11-17 Feb; one on 14 Feb was a formal letter), 97 names, publication on 21 Feb and the 18 Feb note. Named the 18 Feb author (Sanjay Kumar) and added him to people; added the IE 25.09.2026 source for the 1.27 lakh figure; noted that no response from Bharti is reported."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-wb-final-roll",
+      "kind": "event",
+      "date": "2026-02-28",
+      "date_precision": "day",
+      "title": "West Bengal final roll published with 60 lakh names 'under adjudication'",
+      "summary": "West Bengal's final SIR roll, originally due on 14 February, was published on 28 February 2026 with 7.04 crore electors, including 60.06 lakh flagged for adjudication by judicial officers. After adjudication and supplementary lists the roll fell to 6.77 crore by 6 April.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "WB electors in final roll (incl. under adjudication)",
+          "value": 70400000,
+          "unit": "electors",
+          "as_of": "2026-02-28"
+        },
+        {
+          "label": "WB electors after adjudication supplementary list",
+          "value": 67700000,
+          "unit": "electors",
+          "as_of": "2026-04-06"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/political-pulse/bengal-voters-deleted-adjudication-election-rolls-assembly-polls-10624203/",
+          "publisher": "The Indian Express",
+          "title": "Of 27.16 lakh Bengal voters deleted after adjudication, doors shut for more than half",
+          "published": "2026-04-07",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260419145836/https://indianexpress.com/article/political-pulse/bengal-voters-deleted-adjudication-election-rolls-assembly-polls-10624203/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+          "publisher": "The Indian Express",
+          "title": "Missing in Election Commission affidavit: Break-up of Bengal SIR appeals for inclusion, exclusion of names",
+          "published": "2026-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No ECI press note for the WB schedule change was found on eci.gov.in.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/political-pulse/bengal-voters-deleted-adjudication-election-rolls-assembly-polls-10624203/",
+        "note": "IE 07.04.2026: final roll 28 Feb at 7.04 crore incl. 60.06 lakh under adjudication; final supplementary list on Monday 6 April took the roll to 6.77 crore. The original 14 Feb date is from PN/359/2025."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-wb-appellate-tribunals",
+      "kind": "rule",
+      "date": "2026-03-20",
+      "date_precision": "day",
+      "title": "Commission notifies 19 appellate tribunals for West Bengal SIR appeals",
+      "summary": "Following a Supreme Court order of 10 March 2026, the Commission notified 19 appellate tribunals, each a single retired High Court judge, to hear appeals against judicial officers' decisions. They began work on 13 April, days before the 23 and 29 April polls, and restored 1,607 electors in time to vote.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "courts",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "appeals filed before WB tribunals",
+          "value": 3831000,
+          "unit": "appeals",
+          "as_of": "2026-09-18"
+        },
+        {
+          "label": "electors restored by tribunals before polling",
+          "value": 1607,
+          "unit": "electors",
+          "as_of": "2026-04-29"
+        }
+      ],
+      "details": {
+        "issued_by": "Election Commission of India (notification of 20.03.2026, per report)",
+        "on_whose_direction": "Supreme Court order of 10.03.2026"
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+          "publisher": "The Indian Express",
+          "title": "Missing in Election Commission affidavit: Break-up of Bengal SIR appeals for inclusion, exclusion of names",
+          "published": "2026-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "publisher": "The Indian Express",
+          "title": "Of 27 lakh deleted West Bengal voters, 22 lakh have filed appeals: Election Commission to Supreme Court",
+          "published": "2026-09-19",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260920041032/https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Notification text not found on eci.gov.in. IE 18.09.2026 gives 38,20,683 appeals from the counter-affidavit; IE 19.09.2026 gives 38.31 lakh from a later filing. IE 07.04.2026 describes the tribunals as set up by the Calcutta High Court under Supreme Court supervision, while IE 18.09.2026 says the EC notified them on 20.03.2026.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+        "note": "IE 18.09.2026 confirms the 10 March order, EC notification of 19 single-judge tribunals on 20 March and start on 13 April; IE 19.09.2026 confirms 1,607 restored before the 23/29 April polls. Conflicting counts and descriptions added to notes."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-commission-approval-communications",
+      "kind": "rule",
+      "date": "2026-04-16",
+      "date_precision": "day",
+      "title": "Two Commissioners direct that no communication issue without Commission approval",
+      "summary": "On 16 April 2026 Election Commissioner Sukhbir Singh Sandhu told senior officers that many communications were going out in the Commission's name without its approval and that all must now have it, citing the 2023 Act; the same day he recorded that the IT division had built new modules without informing him. On 24 April Vivek Joshi issued a similar direction citing Article 324 and the Act.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "it-systems"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Sukhbir Singh Sandhu (16.04.2026) and Vivek Joshi (24.04.2026), notes to senior officers, per report",
+        "legal_basis_claimed": "Article 324; Section 18 of the CEC and Other ECs (Appointment, Conditions of Service and Term of Office) Act, 2023 (business to be transacted unanimously as far as possible, else by majority)"
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Notes not public; The Indian Express says it has seen them.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+        "note": "IE main report quotes Sandhu (16 April) and Joshi (eight days later, i.e. 24 April); the companion IE report confirms Sandhu's 16 April note on IT modules. Response: ECI/PN/119/2026 para 2 says all orders follow the 2023 Act, but does not address these notes directly."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-phase3-helpdesks",
+      "kind": "rule",
+      "date": "2026-05-14",
+      "date_precision": "day",
+      "title": "District SIR helpdesks ordered in all states for phase 3",
+      "summary": "The Commission told all CEOs to set up district helpdesks for the phase 3 SIR to explain timelines and documents, help electors find and link their last-SIR entries and fill forms, and assist migrants, the elderly and persons with disabilities. The letter said SIR had already been completed in 13 states/UTs.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Pawan Diwan"
+      ],
+      "states": [],
+      "topics": [
+        "sir"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI letter No.23/2025/ERS-Vol.II dated 14.05.2026 (posted 15.05.2026), signed by Pawan Diwan, Secretary"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2FXIGEVivLkwVQ85T3PXRW3nBuYooe6JZDQ2DWhhmEiwndOFtn933icz0MOeiesxvsQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "23/2025/ERS-V: Setting up of Helpdesk in all 19 States/UTs for SIR",
+          "published": "2026-05-14",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2FXIGEVivLkwVQ85T3PXRW3nBuYooe6JZDQ2DWhhmEiwndOFtn933icz0MOeiesxvsQ%3D%3D",
+        "note": "Scanned letter of 14.05.2026 read: district helpdesks, 13 States/UTs already completed; signed Pawan Diwan. The \"posted 15.05.2026\" detail was not verified."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-phase3-order",
+      "kind": "rule",
+      "date": "2026-05-14",
+      "date_precision": "day",
+      "title": "SIR phase 3 ordered in 19 states and UTs, running to December 2026",
+      "summary": "The Commission ordered the third SIR phase in 19 states and UTs, again on the basis of the 24 June 2025 order, with qualifying dates of 1 July or 1 October 2026 and final rolls from 6 September to 23 December 2026. The order let people link themselves through their own or a relative's entry in the last intensive revision roll, and told EROs to issue notices after the draft to anyone who could not be linked or whose linking showed a discrepancy.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Pawan Diwan"
+      ],
+      "states": [
+        "Andhra Pradesh",
+        "Arunachal Pradesh",
+        "Chandigarh",
+        "Dadra and Nagar Haveli and Daman and Diu",
+        "Haryana",
+        "Jharkhand",
+        "Karnataka",
+        "Maharashtra",
+        "Manipur",
+        "Meghalaya",
+        "Mizoram",
+        "Nagaland",
+        "NCT of Delhi",
+        "Odisha",
+        "Punjab",
+        "Sikkim",
+        "Telangana",
+        "Tripura",
+        "Uttarakhand"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "ECI letter No.23/2025-ERS (Vol.II) dated 14.05.2026, signed by Pawan Diwan, Secretary",
+        "legal_basis_claimed": "Article 324; Section 21 and other provisions of RPA 1950; Registration of Electors Rules, 1960",
+        "new_rules": [
+          "Para 2(e): any person may link to own or relative's entry in the last intensive revision roll (Annexure V)",
+          "Para 2(f): notices after draft to those 'not linked or there is discrepancy in their linking', with lists published at local offices",
+          "Forms and Aadhaar rules as in phase 2"
+        ],
+        "schedule_extremes": {
+          "first_final_roll": "06.09.2026 (Odisha, Mizoram, Sikkim, Manipur)",
+          "last_final_roll": "23.12.2026 (Tripura)",
+          "delhi_original": "draft 05.08.2026, final 07.10.2026"
+        },
+        "not_covered": "Himachal Pradesh, Jammu and Kashmir, Ladakh (not yet scheduled) and Assam (no SIR until NRC), per reporting"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2FXIGEVivLkwVQ85T3PXRW3kywtCOyYVgrQT1c%2Bno6H1ldOFtn933icz0MOeiesxvsQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "No.23/2025-ERS (Vol.II): Special Intensive Revision (SIR) Phase III in 19 State/UTs",
+          "published": "2026-05-14",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "there is discrepancy in their linking"
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2Ff9ehkivZ9M0LYA0Mx7TMHPF8lTJJNtD8SeE0kK%2B10IFdOFtn933icz0MOeiesxvsQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/96/2026: SIR Phase III Enumeration Phase has started for Odisha, Mizoram, Sikkim and Manipur",
+          "published": "2026-05-31",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/election-commission-sir-draft-rolls-13-crore-deletions-delhi-leads-10857760/",
+          "publisher": "The Indian Express",
+          "title": "SIR draft rolls see over 13 crore deletions so far, Delhi leads with 33% left out",
+          "published": "2026-09-01",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260902063644/https://indianexpress.com/article/india/election-commission-sir-draft-rolls-13-crore-deletions-delhi-leads-10857760/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/explained/election-commission-new-voter-registration-sir-form6-10782904/",
+          "publisher": "The Indian Express",
+          "title": "What the Election Commission's new online registration requirement means for voters",
+          "published": "2026-07-12",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260802193110/https://indianexpress.com/article/explained/election-commission-new-voter-registration-sir-form6-10782904/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The phase 3 press note of 14.05.2026 (ECI PN-86) is listed on eci.gov.in but returned 'Access denied' on download. The Commission later said this order, too, was unanimous (reported, 24.09.2026). Reasons for leaving out Himachal Pradesh and J&K (Census work and weather) and Assam are from The Indian Express, not an ECI document.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2FXIGEVivLkwVQ85T3PXRW3kywtCOyYVgrQT1c%2Bno6H1ldOFtn933icz0MOeiesxvsQ%3D%3D",
+        "note": "Order text: paras 2(e)/(f) (quote exact), 19 States/UTs, qualifying dates 01.07/01.10.2026, Annexure VI final rolls 06.09.2026 (first group) to 23.12.2026 (Tripura), Delhi draft 05.08.2026 and final 07.10.2026. IE 01.09.2026 gives the reasons for leaving out HP and J&K."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-sc-sir-judgment",
+      "kind": "case",
+      "date": "2026-05-27",
+      "date_precision": "day",
+      "title": "Supreme Court upholds Bihar SIR, traces power to Section 21(3)",
+      "summary": "The Supreme Court disposed of the petitions against the Bihar SIR, holding the exercise traceable to Section 21(3) of the RP Act, 1950 read with Article 324, proportionate, and consistent with the 1960 Rules. It upheld the document regime as within the Commission's discretion (Aadhaar having been added by its 8 September 2025 order) and said the Commission may make a limited, electoral-only inquiry into citizenship. It directed that people deleted as non-citizens be referred within four weeks to the competent authority under the Citizenship Act.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "courts"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Supreme Court of India, 2026 INSC 564",
+        "section_21_3": "Section 21(3) lets the Commission order a special revision 'at any time', for reasons recorded, 'in such manner as it may think fit'; the court held the absence of rules under Section 28 does not limit that power.",
+        "form6_holding": "Form 6 in the 1960 Rules is tailored to Section 21(2) revisions; the Commission retains 'residual authority' to set a documentation framework for an SIR, which is 'not unbounded'.",
+        "directions": [
+          "refer to the competent authority under the Citizenship Act, within 4 weeks, persons deleted on the Commission's opinion that they are not citizens (direction h)",
+          "persons domiciled in Bihar wrongly deleted as absent/dead/shifted/duplicate may seek judicial review"
+        ]
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "publisher": "Supreme Court of India (copy published by the Election Commission of India)",
+          "title": "Association for Democratic Reforms & Ors. v. Election Commission of India & Ors., WP(C) 640 of 2025, 2026 INSC 564 (judgment)",
+          "published": "2026-05-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "an exercise traceable to Section 21(3) of the RP Act"
+        },
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2025/07/Association-for-Democratic-Reforms-v-Union-of-India-Bihar-SIR-judgement.pdf",
+          "publisher": "Supreme Court of India (copy hosted by Supreme Court Observer)",
+          "title": "ADR v. ECI, WP(C) 640 of 2025, judgment dated 27.05.2026",
+          "published": "2026-05-27",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20260615182418/https://www.scobserver.in/wp-content/uploads/2025/07/Association-for-Democratic-Reforms-v-Union-of-India-Bihar-SIR-judgement.pdf",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Relevant to the Form 6 dispute: the judgment discusses the Commission's power to design SIR documentation, not whether the statutory Form 6 in the Rules may be altered without a Government notification. No ECI instruction on the four-week referral direction was found.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpBwRy5Fyp4iZ657WxL8D4P%2F29IfmrxIIKY7KuUlZCgAgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+        "note": "Operative directions (a)-(h) read: Section 21(3) with Article 324, proportionality, documentation regime within discretion, limited citizenship inquiry, 4-week referral (direction h). Residual authority/\"not unbounded\" passage verified. Quote exact. Directions list tightened to the judgment's wording."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-roll-database-audit-proposal",
+      "kind": "statement",
+      "date": "2026-05-29",
+      "date_precision": "day",
+      "title": "Election Commissioner Joshi proposes audit of who can change the voter database",
+      "summary": "Election Commissioner Vivek Joshi wrote to the CEC, Sandhu and Deputy Election Commissioner Sanjay Kumar about the 'gradual centralisation' of the roll database and proposed two committees, including an outside IIT expert, to certify that only statutory authorities hold credentials to change it and to vet ERONet/ECINet changes. Sandhu endorsed it on 13 July; on 14 August he recorded that he knew of no action taken.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Vivek Joshi",
+        "Sukhbir Singh Sandhu",
+        "Gyanesh Kumar",
+        "Sanjay Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {
+        "recorded_objection": "Proposal pending; no Commission decision reported."
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Note not public; reported by The Indian Express.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "IE reports Joshi's 29 May note, two committees with an IIT expert, Sandhu's endorsement on 13 July and his 14 August note; quotes match. No specific ECI response; PN/119/2026 para 7 describes ECINET security and audit controls in general terms."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-phase3-enumeration-first-group",
+      "kind": "event",
+      "date": "2026-05-30",
+      "date_precision": "day",
+      "title": "Phase 3 enumeration begins in Odisha, Mizoram, Sikkim and Manipur",
+      "summary": "Enumeration for phase 3 began on 30 May 2026 in four states, with forms due by 28 June. Those who missed it could apply on Form 6 with the Declaration Form during claims; BLOs were to carry blank Form 6 and declarations, and booth agents could hand in up to 50 forms a day.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Odisha",
+        "Mizoram",
+        "Sikkim",
+        "Manipur"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "Odisha electors at start of SIR",
+          "value": 33414856,
+          "unit": "electors",
+          "as_of": "2026-05-31"
+        }
+      ],
+      "details": {
+        "issued_by": "ECI/PN/96/2026"
+      },
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2Ff9ehkivZ9M0LYA0Mx7TMHPF8lTJJNtD8SeE0kK%2B10IFdOFtn933icz0MOeiesxvsQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/96/2026: SIR Phase III Enumeration Phase has started for Odisha, Mizoram, Sikkim and Manipur",
+          "published": "2026-05-31",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2Ff9ehkivZ9M0LYA0Mx7TMHPF8lTJJNtD8SeE0kK%2B10IFdOFtn933icz0MOeiesxvsQ%3D%3D",
+        "note": "PN/96/2026 dated 31.05.2026 confirms start on 30.05.2026, forms by 28.06.2026, 30 blank Form 6, 50 forms a day, Odisha 3,34,14,856."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-form6-online-sir-declaration",
+      "kind": "rule",
+      "date": "2026-07",
+      "date_precision": "month",
+      "title": "Online Form 6 on ECINET adds 'last SIR' question without rule change",
+      "summary": "By 11 July 2026 the online Form 6 on ECINET, the statutory form for new voters, carried an inserted 'declaration form' section asking whether the applicant's own name or a parent's or grandparent's name was in the last SIR roll, with booth and serial numbers. It was not marked mandatory but the form could not be submitted without answering. The downloadable paper Form 6 did not include it, and no amendment to the Registration of Electors Rules, 1960 had been notified. It applied in all SIR states except Bihar, and not in Assam.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Vivek Joshi",
+        "Sukhbir Singh Sandhu",
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "forms",
+        "sir",
+        "it-systems",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Not stated; the change appeared on the ECINET portal (the Commission did not respond to questions on who approved it or when).",
+        "legal_basis_claimed": "The Commission's position (24.09.2026, reported): the Declaration Form requirement was part of three unanimous SIR orders (24.06.2025, 27.10.2025, 14.05.2026) and was upheld by the Supreme Court on 27.05.2026.",
+        "statutory_position_reported": "Form 6 is prescribed in the Registration of Electors Rules, 1960, made by the Central Government under Section 28 RPA 1950 after consulting the Commission; the last Form 6 change (Aadhaar, 2022) was notified by the Law Ministry on 17.06.2022.",
+        "objections": [
+          {
+            "date": "2026-05-16",
+            "by": "Vivek Joshi",
+            "what": "Recorded that SIR under Section 21(3) is a one-time measure with non-statutory forms; Form 6 and Form 8 are statutory and cannot be altered without amending the 1960 Rules; proposed sending the change to the Government.",
+            "source_url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/"
+          },
+          {
+            "date": "2026-05-19",
+            "by": "Sukhbir Singh Sandhu",
+            "what": "Concurred with Joshi on file.",
+            "source_url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/"
+          },
+          {
+            "date": "2026-08-13",
+            "by": "Sukhbir Singh Sandhu",
+            "what": "Wrote to the DEC and DG (IT), copying the CEC and Joshi, that the change was 'unauthorised/illegal' and must be removed immediately.",
+            "source_url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/"
+          }
+        ],
+        "status_as_of_2026_09_21": "Still on the portal as of the morning of 21 September 2026, per The Indian Express."
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/election-commission-changes-form-6-for-new-voters-inserts-section-asking-them-about-parents-in-sir-10782435/",
+          "publisher": "The Indian Express",
+          "title": "EC changes Form 6 for new voters without amendment to rules; seeks SIR details of parents",
+          "published": "2026-07-12",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260719214346/https://indianexpress.com/article/india/election-commission-changes-form-6-for-new-voters-inserts-section-asking-them-about-parents-in-sir-10782435/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/explained/election-commission-new-voter-registration-sir-form6-10782904/",
+          "publisher": "The Indian Express",
+          "title": "What the Election Commission's new online registration requirement means for voters",
+          "published": "2026-07-12",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260802193110/https://indianexpress.com/article/explained/election-commission-new-voter-registration-sir-form6-10782904/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/",
+          "publisher": "The Indian Express",
+          "title": "'Illegal, unauthorised': Election Commissioners objected to Form 6 change",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Exact date of rollout on ECINET is not known; first reported on 12 July 2026 from the portal as accessed on 11 July. The Commission did not respond to The Indian Express before publication in July or September; its later response is recorded separately. Law Ministry Legislative Department Secretary Rajiv Mani could not be reached (July report).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/",
+        "note": "IE 23.09.2026 confirms Joshi's 16 May note, Sandhu's 19 May concurrence and 13 August note; IE 12.07.2026 confirms portal as accessed Saturday 11 July, not-mandatory-but-blocking, paper form unchanged, all SIR states except Bihar and Assam, no Gazette amendment, Rajiv Mani unreachable. Paired with sir-rules-eci-annexure-d-response."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-work-allocation-garg-order",
+      "kind": "rule",
+      "date": "2026-07-28",
+      "date_precision": "day",
+      "title": "Work allocation changed to remove DEC's oversight of the IT division",
+      "summary": "On 28 July 2026 Senior Deputy Election Commissioner Maneesh Garg, given additional charge of administration while the regular officer was on leave, reportedly changed the Secretariat's work allocation without consulting the Commission, removing Deputy Election Commissioner Sanjay Kumar from oversight of the DG (IT). On 29 July Sandhu and Joshi each wrote to Cabinet Secretary T V Somanathan calling it a 'clear violation' of the law governing the Commission and seeking 'appropriate action' against Garg.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Maneesh Garg",
+        "Sanjay Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "T V Somanathan",
+        "Seema Khanna"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Maneesh Garg, Senior DEC (additional charge, administration), per report",
+        "legal_basis_claimed": "Not reported",
+        "recorded_objection": "Sandhu and Joshi letters to the Cabinet Secretary, 29.07.2026 (reported)."
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "This concerns allocation of work among officers, not among the three Commissioners. The 2023 Act (Section 18, as quoted by The Indian Express) lets the Commission divide its work only by unanimous decision. No response from Maneesh Garg or the Cabinet Secretary is reported; IE does not say whether Garg was asked for comment.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "IE confirms the 28 July order, the removal of Sanjay Kumar's oversight and the 29 July letters. Added the reported context that Garg held the charge while the regular officer was on leave, and noted that no response from Garg is reported."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-work-allocation-set-aside",
+      "kind": "rule",
+      "date": "2026-07-30",
+      "date_precision": "day",
+      "title": "Two Commissioners jointly set aside the 28 July work allocation order",
+      "summary": "Sandhu and Joshi jointly set aside Garg's order as made without reason or justification, directing that the previous work allocation continue until the Commission reached consensus. The note went to Garg and was copied to the CEC. The three Commissioners then met on 9 September, their first full meeting in four months.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "Maneesh Garg",
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Sukhbir Singh Sandhu and Vivek Joshi, joint note, per report",
+        "legal_basis_claimed": "Majority and unanimity provisions of the 2023 Act, per report"
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Whether the CEC accepted the set-aside is not reported.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "IE confirms the 30 July joint note (\"without any reason and justification\"), copy to CEC; the main report confirms the 9 September meeting, the first full meeting in four months."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-wb-eci-appeals-against-inclusions",
+      "kind": "rule",
+      "date": "2026-08",
+      "date_precision": "month",
+      "title": "Sandhu asks who authorised appeals filed against WB inclusions",
+      "summary": "Of 38.31 lakh appeals before the West Bengal tribunals, 16.10 lakh sought deletion of electors whom judicial officers had kept on the roll; the Commission did not say who filed them. In August 2026 Election Commissioner Sandhu wrote asking who had authorised and who had actually filed appeals on the Commission's behalf, recording that neither he, Joshi nor the current West Bengal CEO had been told.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "courts",
+        "dissent"
+      ],
+      "figures": [
+        {
+          "label": "WB appeals seeking deletion of included electors",
+          "value": 1610000,
+          "unit": "appeals",
+          "as_of": "2026-09-18"
+        },
+        {
+          "label": "WB appeals by deleted electors seeking inclusion",
+          "value": 2221000,
+          "unit": "appeals",
+          "as_of": "2026-09-18"
+        }
+      ],
+      "details": {
+        "issued_by": "No instruction authorising ECI appeals has been made public",
+        "recorded_objection": "Sandhu note, August 2026 (reported)"
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "publisher": "The Indian Express",
+          "title": "Of 27 lakh deleted West Bengal voters, 22 lakh have filed appeals: Election Commission to Supreme Court",
+          "published": "2026-09-19",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260920041032/https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Day of Sandhu's note not reported. The Commission's filing to the Supreme Court (reported 19.09.2026) did not identify who filed the 16.10 lakh appeals. No response from the Commission to this specific question is reported; ECI/PN/119/2026 does not address it.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+        "note": "IE main report confirms the 16.10 lakh / 22.21 lakh split, that the Commission did not say who filed them, and Sandhu's August questions (quoted). IE 19.09.2026 confirms 38.31 lakh."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-eronet-access-direction",
+      "kind": "rule",
+      "date": "2026-08-14",
+      "date_precision": "day",
+      "title": "Sandhu directs full ERONet access for statutory roll officers",
+      "summary": "Recording that many CEOs, DEOs and EROs said they lacked 'proper and complete access' to ERONet because access control had been centralised at DG (IT) level, Election Commissioner Sandhu wrote that the DG (IT) had no legal authority to restrict them, directed full access immediately, and asked her to certify, on CEOs' confirmation, that all statutory authorities had it.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Seema Khanna"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {
+        "issued_by": "Sukhbir Singh Sandhu, note, per report",
+        "legal_basis_claimed": "RPA 1950 and RER 1960 vest roll preparation in EROs, DEOs and CEOs"
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Compliance is not reported. IE says DG (IT) Seema Khanna did not answer its questionnaire on the Goa rollback facility; the IE report on the ECINET notes says the Commission and the two Commissioners did not respond.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "IE confirms the 14 August note and quoted wording. Corrected the note on Khanna's non-response: IE records it for the Goa questionnaire, not for this note. Paired with sir-rules-eci-ecinet-access-response."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-delhi-maharashtra-draft",
+      "kind": "event",
+      "date": "2026-08-31",
+      "date_precision": "day",
+      "title": "Delhi and Maharashtra draft rolls cut 32.8% and 21.1% of electors",
+      "summary": "Delhi and Maharashtra published SIR draft rolls on 31 August 2026, later than the 5 August date in the phase 3 schedule. Delhi fell from 1.45 crore to 97.53 lakh electors. In Delhi, ECINET then generated 31.6 lakh notices to electors unmapped to the last SIR or with logical discrepancies; Election Commissioner Sandhu's entry was among those flagged, and the ERO said it had been verified and kept for the final roll. Notices were to be disposed of by 29 October and the final roll published on 4 November.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [
+        "NCT of Delhi",
+        "Maharashtra"
+      ],
+      "topics": [
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "Delhi electors in draft roll",
+          "value": 9753000,
+          "unit": "electors",
+          "as_of": "2026-08-31"
+        },
+        {
+          "label": "Delhi SIR notices generated",
+          "value": 3163930,
+          "unit": "notices",
+          "as_of": "2026-09-19"
+        },
+        {
+          "label": "draft-roll deletions across all SIR phases",
+          "value": 133700000,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/election-commission-sir-draft-rolls-13-crore-deletions-delhi-leads-10857760/",
+          "publisher": "The Indian Express",
+          "title": "SIR draft rolls see over 13 crore deletions so far, Delhi leads with 33% left out",
+          "published": "2026-09-01",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260902063644/https://indianexpress.com/article/india/election-commission-sir-draft-rolls-13-crore-deletions-delhi-leads-10857760/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/election-commissioner-s-s-sandhu-other-top-officials-get-notices-under-sir-10886206/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioner S S Sandhu, CBI director, top bureaucrats face SIR notice",
+          "published": "2026-09-20",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260921061236/https://indianexpress.com/article/india/election-commissioner-s-s-sandhu-other-top-officials-get-notices-under-sir-10886206/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No ECI document revising the Delhi/Maharashtra schedule was found. The Delhi CEO said notices were system-generated and did not mean deletion; Sandhu's entry was validated by the ERO, per the report.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://indianexpress.com/article/india/election-commission-sir-draft-rolls-13-crore-deletions-delhi-leads-10857760/",
+        "note": "IE 01.09.2026 confirms Monday 31 Aug publication, 32.8%/21.1% cuts, 1.45 crore to 97.53 lakh and 13.37 crore total; IE 20.09.2026 confirms 31,63,930 notices, disposal by 29.10.2026 and final roll 4 Nov. Moved the ERO's validation of Sandhu's entry into the summary so the entry does not imply doubt about his eligibility."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-eci-pn-119-response",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Commission: differing notes are normal; all SIR decisions were unanimous",
+      "summary": "The Commission said written notes and differing views among its members are standard deliberation before decisions, that Commissioners' suggestions were for improving processes, and that all its decisions over the past year, including the SIR, were unanimous decisions of the full Commission. It said ECINET runs under strict security and audit controls and that EROs and DEOs exercise their statutory powers of registration and deletion.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "P. Pawan"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "statements",
+        "it-systems"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw5X96rA5UeVutBBjNjpWsQKkksp0Ehw44uIKynkR1%2BLxQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/119/2026: Press Note",
+          "published": "2026-09-23",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "All these decisions are an outcome of the unanimous decisions"
+        }
+      ],
+      "response_to": "sir-rules-ie-14-objections-report",
+      "notes": "Signed by P. Pawan, Deputy Director. The note does not deal with the specific objections on Form 6, ERONet access, the 28 July work allocation order or the West Bengal appeals.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw5X96rA5UeVutBBjNjpWsQKkksp0Ehw44uIKynkR1%2BLxQ%3D%3D",
+        "note": "Read PN/119/2026 of 23.09.2026, signed P. Pawan: paras 3-5 and 7 match; quote exact."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-ie-14-objections-report",
+      "kind": "event",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Report: two Commissioners objected on record 14 times in 10 months",
+      "summary": "The Indian Express reported that Election Commissioners Sandhu and Joshi formally objected at least 14 times over ten months to decisions and orders they said were taken without their knowledge, on new-voter registration, deletions and restorations, West Bengal appeals and custody of the roll database, copying CEC Gyanesh Kumar. The Commission and both Commissioners did not respond to questions sent on 21 September.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "sir",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-gyanesh-kumar-sukhbir-sandhu-vivek-joshi-electoral-roll-control-systems-10889773/",
+          "publisher": "The Indian Express",
+          "title": "What Election Commission rift reveals: Cloud over its conduct",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Not all 14 objections are itemised in the published reports; the rule-related ones are recorded in this file with their own entries.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+        "note": "Opened the article (archive copy recorded): at least 14 objections over 10 months, copied to the CEC, questionnaire of 21 September unanswered. Paired with sir-rules-eci-pn-119-response."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-eci-annexure-d-response",
+      "kind": "statement",
+      "date": "2026-09-24",
+      "date_precision": "day",
+      "title": "Commission says Form 6 declaration was in three unanimous SIR orders",
+      "summary": "Responding to the Form 6 reports, the Commission said the requirement of a Declaration Form (Annexure D) with Form 6 or Form 8 had been part of the Bihar order of 24 June 2025, the 12-state order of 27 October 2025 and the 19-state order of 14 May 2026, all decided unanimously by the three Commissioners, and that the Supreme Court upheld it on 27 May 2026. It said applicants filing the declaration need not submit any other documents.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "forms",
+        "sir",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.thehansindia.com/news/cities/new-delhi/no-documents-were-required-for-additional-declaration-form-reiterates-eci-on-sir-guidelines-1125329",
+          "publisher": "The Hans India",
+          "title": "No documents were required for additional declaration form, reiterates ECI on SIR guidelines",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.indiatvnews.com/news/india/sir-row-election-commission-says-only-designated-officials-can-perform-statutory-duties-2026-09-25-1055219",
+          "publisher": "India TV News",
+          "title": "SIR Row: Election Commission says only designated officials can perform statutory duties",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.outlookindia.com/national/form-6-controversy-eci-faces-questions-over-new-declaration-for-first-time-voters",
+          "publisher": "Outlook India",
+          "title": "Form 6 Controversy: ECI Faces Questions Over New Declaration For First-Time Voters",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "sir-rules-form6-online-sir-declaration",
+      "notes": "Primary text of this statement was not found on eci.gov.in (last indexed press note: PN-119 of 23.09.2026). The response does not address the Commissioners' specific objection, which concerned inserting the question into the statutory online Form 6 rather than the separate SIR Declaration Form. The published 2025 and 2026 orders do state that no documents are collected at enumeration, while the declaration's own information sheet says documents are required on receipt of an ERO notice.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.thehansindia.com/news/cities/new-delhi/no-documents-were-required-for-additional-declaration-form-reiterates-eci-on-sir-guidelines-1125329",
+        "note": "Hans India (published 24.09.2026 21:11 IST) and India TV report the statement of Thursday 24 Sep: Annexure D in three unanimous orders, SC upheld on 27.05.2026, no other documents needed. The Outlook source covers only the PN/119 response and adds nothing on this statement."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-eci-ecinet-access-response",
+      "kind": "statement",
+      "date": "2026-09-24",
+      "date_precision": "day",
+      "title": "Commission says only designated officers can act on ECINET, with own IDs",
+      "summary": "The Commission said statutory officers from BLOs to CEOs perform their functions on ECINET with unique IDs and passwords, that no other person, including any other Commission official, can perform those functions for them, and that the system is decentralised as the RP Acts require.",
+      "status": "response",
+      "attributed_to": "Election Commission of India (Hans India attributes the ECINET remarks to unnamed \"sources at the ECI\"; India TV attributes them to the Commission)",
+      "people": [],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.thehansindia.com/news/cities/new-delhi/no-documents-were-required-for-additional-declaration-form-reiterates-eci-on-sir-guidelines-1125329",
+          "publisher": "The Hans India",
+          "title": "No documents were required for additional declaration form, reiterates ECI on SIR guidelines",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.indiatvnews.com/news/india/sir-row-election-commission-says-only-designated-officials-can-perform-statutory-duties-2026-09-25-1055219",
+          "publisher": "India TV News",
+          "title": "SIR Row: Election Commission says only designated officials can perform statutory duties",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "sir-rules-eronet-access-direction",
+      "notes": "India TV's report was published at 00:00 IST on 25.09.2026, but both reports describe a statement made on Thursday 24.09.2026. Hans India attributes the ECINET part to unnamed ECI sources, so this is not confirmed as an on-record statement of the Commission. The statement was not found on eci.gov.in. It does not address specific cases such as the Goa rollback requests.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.indiatvnews.com/news/india/sir-row-election-commission-says-only-designated-officials-can-perform-statutory-duties-2026-09-25-1055219",
+        "note": "Date corrected from 25 to 24 September 2026 (the statement was made on Thursday 24 Sep). Added Hans India, which attributes the ECINET remarks to unnamed \"sources at the ECI\", and qualified attributed_to."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-goa-ceo-response",
+      "kind": "statement",
+      "date": "2026-09-24",
+      "date_precision": "day",
+      "title": "Goa CEO says many of the 97 since enrolled through Form 6",
+      "summary": "The Goa CEO's office said the 97 cases left out of the February final roll were processed separately through BLO house visits to complete Form 6, that many had since been enrolled and the rest were being processed. CEO Sanjay Goel said the office had flagged the list to the Commission in February and that the call not to include them was the Commission's.",
+      "status": "response",
+      "attributed_to": "Office of the Chief Electoral Officer, Goa",
+      "people": [
+        "Sanjay Goel"
+      ],
+      "states": [
+        "Goa"
+      ],
+      "topics": [
+        "sir",
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/goa-97-voters-electoral-roll-sir-row-election-commission-10892902/",
+          "publisher": "The Indian Express",
+          "title": "After Express report, Goa CEO says cases of 97 voters 'processed separately'",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+          "publisher": "The Indian Express",
+          "title": "8 emails in 7 days, but valid Goa voters still left out: EC's flawed system",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "sir-rules-goa-final-roll-97",
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/goa-97-voters-electoral-roll-sir-row-election-commission-10892902/",
+        "note": "IE 25.09.2026 quotes the Goa CEO statement of Thursday 24 Sep and Goel; \"the call was theirs\" is quoted in IE 24.09.2026."
+      },
+      "check": "checked"
+    }
+  ],
+  "gaps": [
+    "The 14 May 2026 phase 3 press note (ECI PN-86), the 4 May 2025 ECINET press note (ECI/PN/207/2025) and the standalone 9 Sep 2025 Aadhaar letter are listed on eci.gov.in but returned 'Access denied' on 2026-09-25; retry, or check Wayback and PIB.",
+    "No public ECI document defines 'logical discrepancy' (the reported age-gap under 15 or over 50 years and name-mismatch rules) or the 'unmapped' category; look for the ECINET notice-module instructions to CEOs (Dec 2025-Jan 2026) and the ECI letter of 31 Jan 2026 in Supreme Court filings in the Tamil Nadu and West Bengal SIR matters.",
+    "Who approved the July 2026 SIR question in the online Form 6, and when it went live, is not public; RTI to ECI (ERS and IT divisions) and the Law Ministry Legislative Department (any proposal to amend Form 6 in the Registration of Electors Rules, 1960) would settle it.",
+    "No document shows who authorised the Commission's 16.10 lakh appeals against inclusions in West Bengal; check the ECI affidavit of 18 Sep 2026 and the tribunals' cause lists.",
+    "Texts of the Supreme Court orders of 14 Aug 2025, 22 Aug 2025, 8 Sep 2025, 29 Jan 2026, 20 Feb 2026 and 10 Mar 2026 were not opened for this area (they are summarised from the 27 May 2026 judgment or from reporting); the courts area should attach sci.gov.in copies.",
+    "ECI letters of 14.08.2025 and 23.08.2025 conveying Supreme Court directions on Aadhaar are cited in the 9 Sep 2025 letter but not published; CEO Bihar's website may have them.",
+    "No ECI document found for: the Kerala phase 2 schedule change, the West Bengal final-roll move to 28 Feb 2026, the Uttar Pradesh draft move to 6 Jan 2026 and claims extension, final-roll dates for the other phase 2 states, and the Delhi/Maharashtra phase 3 schedule revision.",
+    "No ECI instruction found implementing the Supreme Court's 27 May 2026 direction to refer citizenship-based deletions within four weeks to the Citizenship Act authority.",
+    "No record found of any change in the allocation of work among the three Commissioners themselves (as opposed to the officers' work allocation of 28 July 2026); also not public is whether the CEC accepted the 30 July set-aside.",
+    "Any e-sign or OTP rule for online Form 6/7/8 on ECINET introduced during the SIR period was not found in the ECI document index; worth checking ECI press notes of September 2025.",
+    "The Commission's 24-25 Sep 2026 statements on Annexure D and ECINET access are sourced only to press reports; the primary text (press note or X post) should be located.",
+    "Fact-check 25.09.2026: no response was found from Senior DEC Maneesh Garg (28 July work allocation order), Senior DEC Gyanesh Bharti (Goa rollback emails) or the Commission on who filed the 16.10 lakh West Bengal appeals. Web search quota was exhausted during checking, so a fresh search for their responses (and for the texts of ECI/PN/237/2025 and ECI/PN/353/2025) is still needed."
+  ]
+}

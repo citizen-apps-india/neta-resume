@@ -1,0 +1,3224 @@
+{
+  "area": "selection-law",
+  "entries": [
+    {
+      "id": "selection-law-rule-1991-predecessor",
+      "kind": "rule",
+      "date": "1993-10-01",
+      "date_precision": "day",
+      "title": "Predecessor rule: 1991 Act Section 10 already required unanimity or majority",
+      "summary": "Before 2024, Section 10 of the 1991 Act, inserted with effect from 1 October 1993, provided that the Commission allocate business only by unanimous decision, transact business unanimously as far as possible, and otherwise decide by majority. The 1991 Act also fixed a six-year term and pay equal to a Supreme Court judge, but was silent on how commissioners were chosen.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "appointments",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.indiacode.nic.in/bitstream/123456789/1965/1/A1991-11.pdf",
+          "publisher": "India Code (Legislative Department, Ministry of Law and Justice)",
+          "title": "The Election Commission (Conditions of Service of Election Commissioners and Transaction of Business) Act, 1991",
+          "published": "1991-01-25",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20230716051606/https://www.indiacode.nic.in/bitstream/123456789/1965/1/A1991-11.pdf",
+          "quote": null
+        },
+        {
+          "url": "https://prsindia.org/billtrack/the-chief-election-commissioner-and-other-election-commissioners-appointment-conditions-of-service-and-term-of-office-bill-2023",
+          "publisher": "PRS Legislative Research",
+          "title": "Bill track and legislative brief: The Chief Election Commissioner and Other Election Commissioners Bill, 2023",
+          "published": null,
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Included as the baseline the 2023 Act replaced. The date is the 1994 amendment's effective date, before this record's 2019 start.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-sushil-chandra-joins-2019",
+      "kind": "event",
+      "date": "2019-02-15",
+      "date_precision": "day",
+      "title": "Sushil Chandra joins as Election Commissioner, appointed by executive",
+      "summary": "Sushil Chandra began his tenure as Election Commissioner on 15 February 2019. Under the practice then in force, ECs were appointed by the President on the advice of the Prime Minister, with no committee or statute prescribing the process.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Sushil Chandra"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Dates are from the tenure table in the Supreme Court's Anoop Baranwal judgment (paragraph 52), which records the executive-only convention in force until 2 March 2023: the President appointed on the Prime Minister's advice, usually a serving or retired Secretary-rank civil servant, and the senior-most EC was elevated to CEC. The table's columns are garbled in the Indian Kanoon text; individual gazette notifications were not opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-lavasa-resignation-2020",
+      "kind": "event",
+      "date": "2020-08-31",
+      "date_precision": "day",
+      "title": "Ashok Lavasa's tenure as Election Commissioner ends by resignation",
+      "summary": "Ashok Lavasa, EC since 23 January 2018, left the Commission on 31 August 2020 by voluntary resignation, the first EC resignation of the period. When Arun Goel resigned in March 2024, Deccan Herald noted Lavasa had left to join the Asian Development Bank.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Ashok Lavasa"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/ec-arun-goel-resigns-weeks-ahead-of-lok-sabha-polls-2929718",
+          "publisher": "Deccan Herald",
+          "title": "Arun Goel quits as Election Commissioner weeks before Lok Sabha elections",
+          "published": "2024-03-09",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Dates are from the tenure table in the Supreme Court's Anoop Baranwal judgment (paragraph 52), which records the executive-only convention in force until 2 March 2023: the President appointed on the Prime Minister's advice, usually a serving or retired Secretary-rank civil servant, and the senior-most EC was elevated to CEC. The table's columns are garbled in the Indian Kanoon text; individual gazette notifications were not opened. Lavasa's recorded dissents on 2019 Model Code of Conduct complaints belong to the dissent/2019 elections record, not this area.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-rajiv-kumar-joins-2020",
+      "kind": "event",
+      "date": "2020-09-01",
+      "date_precision": "day",
+      "title": "Rajiv Kumar joins as Election Commissioner in Lavasa's place",
+      "summary": "Rajiv Kumar took office as Election Commissioner on 1 September 2020, filling the vacancy left by Ashok Lavasa, under the executive-appointment convention.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Rajiv Kumar",
+        "Ashok Lavasa"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Dates are from the tenure table in the Supreme Court's Anoop Baranwal judgment (paragraph 52), which records the executive-only convention in force until 2 March 2023: the President appointed on the Prime Minister's advice, usually a serving or retired Secretary-rank civil servant, and the senior-most EC was elevated to CEC. The table's columns are garbled in the Indian Kanoon text; individual gazette notifications were not opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-sushil-chandra-cec-2021",
+      "kind": "event",
+      "date": "2021-04-13",
+      "date_precision": "day",
+      "title": "Sushil Chandra elevated to Chief Election Commissioner",
+      "summary": "Sushil Chandra became Chief Election Commissioner on 13 April 2021, after Sunil Arora's tenure ended on 12 April 2021, following the convention of elevating the senior-most EC.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Sushil Chandra",
+        "Sunil Arora"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Dates are from the tenure table in the Supreme Court's Anoop Baranwal judgment (paragraph 52), which records the executive-only convention in force until 2 March 2023: the President appointed on the Prime Minister's advice, usually a serving or retired Secretary-rank civil servant, and the senior-most EC was elevated to CEC. The table's columns are garbled in the Indian Kanoon text; individual gazette notifications were not opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-anup-pandey-joins-2021",
+      "kind": "event",
+      "date": "2021-06-08",
+      "date_precision": "day",
+      "title": "Anup Chandra Pandey joins as Election Commissioner",
+      "summary": "Anup Chandra Pandey began as Election Commissioner on 8 June 2021, appointed by the executive; his term was set to end on 14 February 2024 on reaching 65.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Anup Chandra Pandey"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Dates are from the tenure table in the Supreme Court's Anoop Baranwal judgment (paragraph 52), which records the executive-only convention in force until 2 March 2023: the President appointed on the Prime Minister's advice, usually a serving or retired Secretary-rank civil servant, and the senior-most EC was elevated to CEC. The table's columns are garbled in the Indian Kanoon text; individual gazette notifications were not opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-rajiv-kumar-cec-2022",
+      "kind": "event",
+      "date": "2022-05-15",
+      "date_precision": "day",
+      "title": "Rajiv Kumar becomes Chief Election Commissioner; EC post falls vacant",
+      "summary": "Rajiv Kumar took over as CEC on 15 May 2022 after Sushil Chandra's tenure ended on 14 May 2022. His elevation created a vacancy for Election Commissioner that remained unfilled until 18 November 2022.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Rajiv Kumar",
+        "Sushil Chandra"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Dates are from the tenure table in the Supreme Court's Anoop Baranwal judgment (paragraph 52), which records the executive-only convention in force until 2 March 2023: the President appointed on the Prime Minister's advice, usually a serving or retired Secretary-rank civil servant, and the senior-most EC was elevated to CEC. The table's columns are garbled in the Indian Kanoon text; individual gazette notifications were not opened. The judgment (para 187) states the EC vacancy arose on 15 May 2022.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-baranwal-hearing-begins",
+      "kind": "event",
+      "date": "2022-11-17",
+      "date_precision": "day",
+      "title": "Constitution Bench begins hearing Election Commission appointment petitions",
+      "summary": "A five-judge Constitution Bench headed by Justice K.M. Joseph began hearing the batch led by Anoop Baranwal's 2015 petition on 17 November 2022 and posted it to 22 November. An application seeking that the vacant EC post be filled by an independent body was pending.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "K.M. Joseph",
+        "Ajay Rastogi",
+        "Aniruddha Bose",
+        "Hrishikesh Roy",
+        "C.T. Ravikumar"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "case": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015, with W.P. (C) 1043/2017, 569/2021, 998/2022 and others",
+        "pending_application": "I.A. No. 63145 of 2021 in W.P. (C) No. 569 of 2021"
+      },
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2026/09/ECI-Reference-Judgement-Supreme-Court-Jaya-Thakur-v-Union-of-India.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, 2026 INSC 1040: opinions of Datta J and Sharma J and common order",
+          "published": "2026-09-23",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "The 2026 reference order records that a two-judge bench referred the matter to a Constitution Bench in 2018, three years after filing, and that it took eight years in all to decide.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-goel-appointed-one-day",
+      "kind": "event",
+      "date": "2022-11-18",
+      "date_precision": "day",
+      "title": "Arun Goel takes voluntary retirement and is named EC the same day",
+      "summary": "On 18 November 2022, the day after the Constitution Bench began hearing, the Law Ministry drew up a four-name panel, the Prime Minister recommended Arun Goel, his voluntary retirement was accepted with the three-month notice waived, and his appointment was notified. He assumed charge on 21 November 2022.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Arun Goel",
+        "Narendra Modi"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [
+        {
+          "label": "names on Law Ministry panel",
+          "value": 4,
+          "unit": "officers",
+          "as_of": "2022-11-18"
+        },
+        {
+          "label": "days from proposal to notified appointment",
+          "value": 1,
+          "unit": "day",
+          "as_of": "2022-11-18"
+        }
+      ],
+      "details": {
+        "panel": "Four IAS officers: two 1983-batch (Andhra Pradesh, Telangana), one 1985-batch Tamil Nadu cadre, and Goel (Punjab cadre, 1985 batch). Three had superannuated around 2020.",
+        "basis_recorded": "Goel was the youngest on the panel; recommended for 'experience, age, profile and suitability' (judgment para 187)."
+      },
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1877681",
+          "publisher": "Press Information Bureau (Election Commission)",
+          "title": "Shri Arun Goel takes over as new Election Commissioner",
+          "published": "2022-11-21",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://theprint.in/india/arun-goels-appointment-as-election-commissioner-was-at-lightning-speed-sc-says/1233196/",
+          "publisher": "ThePrint (ANI feed)",
+          "title": "Arun Goel's appointment as Election Commissioner was at lightning speed, SC says",
+          "published": "2022-11-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "ThePrint/ANI report the appointment was notified on 19 November; the judgment says the appointment was notified on 18 November. The judgment refers to 'the Minister of Law and Justice' without naming him. Goel was due to superannuate on 31 December 2022.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-person-arun-goel",
+      "kind": "person",
+      "date": "2022-11-21",
+      "date_precision": "day",
+      "title": "Arun Goel: Election Commissioner, November 2022 to March 2024",
+      "summary": "Arun Goel, a 1985-batch Punjab cadre IAS officer, was appointed Election Commissioner the same day he took voluntary retirement, served from 21 November 2022 and resigned on 9 March 2024 without a public reason. He was later named ambassador to Croatia.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Arun Goel"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "role": "Election Commissioner (former)",
+        "tenure": [
+          {
+            "office": "Election Commissioner",
+            "from": "2022-11-21",
+            "to": "2024-03-09"
+          }
+        ],
+        "service": "IAS, Punjab cadre, 1985 batch",
+        "career": [
+          {
+            "from": "1993",
+            "to": "1993",
+            "post": "District Election Officer / Collector, Bathinda",
+            "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1877681"
+          },
+          {
+            "from": "1995",
+            "to": "2000",
+            "post": "District Election Officer / Collector, Ludhiana",
+            "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1877681"
+          },
+          {
+            "from": "2011",
+            "to": "2011",
+            "post": "Joint Secretary, Ministry of Urban Development",
+            "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1877681"
+          },
+          {
+            "from": "2012",
+            "to": "2014",
+            "post": "Joint Secretary, Department of Revenue, Ministry of Finance",
+            "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1877681"
+          },
+          {
+            "from": "2015",
+            "to": "2016",
+            "post": "Vice Chairman, Delhi Development Authority",
+            "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1877681"
+          },
+          {
+            "from": "2017",
+            "to": "2017",
+            "post": "Additional Secretary and Financial Adviser, Ministry of Labour and Employment",
+            "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1877681"
+          },
+          {
+            "from": "2018",
+            "to": "2019",
+            "post": "Secretary, Ministry of Culture",
+            "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1877681"
+          },
+          {
+            "from": "2020",
+            "to": "2022",
+            "post": "Secretary, Ministry of Heavy Industries",
+            "source_url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1877681"
+          },
+          {
+            "from": "2022-11-21",
+            "to": "2024-03-09",
+            "post": "Election Commissioner",
+            "source_url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf"
+          },
+          {
+            "from": "2024-09",
+            "to": null,
+            "post": "Named Ambassador of India to Croatia (announced 7 September 2024)",
+            "source_url": "https://www.aninews.in/news/world/asia/arun-goel-appointed-as-indias-new-ambassador-to-croatia20240907194154/"
+          }
+        ],
+        "selection": "Recommended by the Prime Minister from a four-name Law Ministry panel on 18 November 2022, before the 2023 Act; voluntary retirement accepted and appointment made the same day (Anoop Baranwal judgment, paras 187-188).",
+        "education": "Post-graduate in Development Economics, Churchill College, University of Cambridge; M.Sc. Mathematics (PIB bio)"
+      },
+      "sources": [
+        {
+          "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=1877681",
+          "publisher": "Press Information Bureau (Election Commission)",
+          "title": "Shri Arun Goel takes over as new Election Commissioner",
+          "published": "2022-11-21",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.aninews.in/news/world/asia/arun-goel-appointed-as-indias-new-ambassador-to-croatia20240907194154/",
+          "publisher": "ANI",
+          "title": "Arun Goel appointed as India's new Ambassador to Croatia",
+          "published": "2024-09-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Postings in Punjab 2001-2010 (Punjab Warehousing Corporation, Punjab Industries and Export Corporation, Department of Expenditure, Housing and Urban Development, Power and Irrigation) are also listed in the PIB bio.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-court-questions-goel-speed",
+      "kind": "statement",
+      "date": "2022-11-24",
+      "date_precision": "day",
+      "title": "Supreme Court questions 'lightning speed' of Goel's appointment",
+      "summary": "After perusing the original file, the Constitution Bench asked the Attorney General why the process was completed within 24 hours, why the vacancy open since May was filled in a day, and why none of the four empanelled officers could serve the six-year term. The bench said it was examining the process, not Goel's credentials, and reserved judgment the same day.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "K.M. Joseph",
+        "Ajay Rastogi",
+        "Arun Goel",
+        "R. Venkataramani"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://theprint.in/india/arun-goels-appointment-as-election-commissioner-was-at-lightning-speed-sc-says/1233196/",
+          "publisher": "ThePrint (ANI feed)",
+          "title": "Arun Goel's appointment as Election Commissioner was at lightning speed, SC says",
+          "published": "2022-11-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "Same day process, same day clearance, same day application, same day acceptance"
+        }
+      ],
+      "notes": "The bench had asked for the file on 23 November 2022. The written judgment of 2 March 2023 (paras 187-195) sets out the same concerns in the Court's own words.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://theprint.in/india/arun-goels-appointment-as-election-commissioner-was-at-lightning-speed-sc-says/1233196/",
+        "note": "ThePrint's report matches the entry: the exact 'Same day process, same day clearance, same day application, same day acceptance' quote, the 24-hour question and the bench's clarification that it was examining process, not Goel's credentials, all appear in the article."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-govt-defends-goel-appointment",
+      "kind": "statement",
+      "date": "2022-11-24",
+      "date_precision": "day",
+      "title": "Centre tells court there is no 'disquieting feature' in Goel's appointment",
+      "summary": "Attorney General R. Venkataramani told the bench there was nothing disquieting about the appointment, that a selection mechanism and criteria existed, and that panels are drawn from a database of Secretary-rank officers. In the judgment the Court recorded his submission that there is a 'dearth' of officers who could serve a full six-year term.",
+      "status": "response",
+      "attributed_to": "Union of India (Attorney General R. Venkataramani)",
+      "people": [
+        "R. Venkataramani",
+        "Arun Goel"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://theprint.in/india/arun-goels-appointment-as-election-commissioner-was-at-lightning-speed-sc-says/1233196/",
+          "publisher": "ThePrint (ANI feed)",
+          "title": "Arun Goel's appointment as Election Commissioner was at lightning speed, SC says",
+          "published": "2022-11-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "selection-law-court-questions-goel-speed",
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-prs-analysis-bill",
+      "kind": "statement",
+      "date": "2023",
+      "date_precision": "year",
+      "title": "PRS flags government dominance of selection panel in its bill analysis",
+      "summary": "PRS Legislative Research's analysis of the bill noted that the selection committee would have a government majority, that a vacancy clause could leave only government members selecting, that tying pay to the Cabinet Secretary lets the executive fix it, and that restricting eligibility to Secretary-rank officers may exclude other candidates.",
+      "status": "claim",
+      "attributed_to": "PRS Legislative Research",
+      "people": [],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://prsindia.org/billtrack/the-chief-election-commissioner-and-other-election-commissioners-appointment-conditions-of-service-and-term-of-office-bill-2023",
+          "publisher": "PRS Legislative Research",
+          "title": "Bill track and legislative brief: The Chief Election Commissioner and Other Election Commissioners Bill, 2023",
+          "published": null,
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "PRS is a non-partisan research body; this is its analysis, not a finding. The PRS page carries no publication date, so only the year is given.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-anoop-baranwal-judgment",
+      "kind": "case",
+      "date": "2023-03-02",
+      "date_precision": "day",
+      "title": "Supreme Court: PM, LoP and CJI to select CEC and ECs until Parliament legislates",
+      "summary": "A unanimous five-judge bench held that, until Parliament makes a law under Article 324(2), the President shall appoint the CEC and ECs on the advice of a committee of the Prime Minister, the Leader of Opposition in the Lok Sabha (or leader of the largest opposition party) and the Chief Justice of India. Justice Rastogi's concurring opinion added that ECs should have the same removal protection as the CEC. The Court appealed to Parliament to give the Commission an independent secretariat funded from the Consolidated Fund.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "K.M. Joseph",
+        "Ajay Rastogi",
+        "Aniruddha Bose",
+        "Hrishikesh Roy",
+        "C.T. Ravikumar"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "citation": "(2023) 6 SCC 161",
+        "bench": "K.M. Joseph (author), Ajay Rastogi (concurring), Aniruddha Bose, Hrishikesh Roy, C.T. Ravikumar",
+        "operative_direction": "Para 239(I): committee of PM, LoP (or leader of largest opposition party) and CJI; holds good till Parliament legislates.",
+        "rastogi_directions": "Para 126: same committee; desirable that ECs be removable only like a Supreme Court judge; ECs' service conditions not to be varied to their disadvantage.",
+        "secretariat": "Para 239(II): 'fervent appeal' for a permanent secretariat and expenditure charged on the Consolidated Fund."
+      },
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "This norm will continue to hold good till a law is made"
+        }
+      ],
+      "notes": "Official PDF is linked by PRS at main.sci.gov.in (1458_2015_3_1501_42634_Judgement_02-Mar-2023.pdf); the text was read via Indian Kanoon. The judgment did not set aside Arun Goel's appointment.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-baranwal-on-goel-appointment",
+      "kind": "statement",
+      "date": "2023-03-02",
+      "date_precision": "day",
+      "title": "Judgment records Goel file was processed start-to-finish in one day",
+      "summary": "In the judgment, Justice Joseph wrote that the proposal, Law Minister's panel, Prime Minister's recommendation, acceptance of voluntary retirement and presidential appointment all happened on 18 November 2022, while an application on the same subject was pending. The Court said a panel drawn so that the outcome is a foregone conclusion defeats the statutory six-year term, while stating it was not assessing Goel individually.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Arun Goel",
+        "K.M. Joseph"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "We are a little mystified as to how the officer had applied"
+        }
+      ],
+      "notes": "Paras 187-195. The Court noted Goel's 'excellent academic qualifications' and said its remarks were not an individualised assessment.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-adr-goel-plea-dismissed",
+      "kind": "case",
+      "date": "2023-08-04",
+      "date_precision": "day",
+      "title": "Supreme Court dismisses ADR's challenge to Arun Goel's appointment",
+      "summary": "A bench of Justices Sanjiv Khanna and S.V.N. Bhatti declined to entertain ADR's petition against Goel's appointment, saying the Constitution Bench had examined the file and passed no order against him. Justice Khanna said the Baranwal judgment was prospective. In April 2023 Justice K.M. Joseph had recused from hearing the same petition.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Arun Goel",
+        "Sanjiv Khanna",
+        "S.V.N. Bhatti",
+        "Prashant Bhushan",
+        "Tushar Mehta",
+        "K.M. Joseph"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "case": "Association for Democratic Reforms v. Union of India, W.P. (C) No. 436 of 2023"
+      },
+      "sources": [
+        {
+          "url": "https://www.livelaw.in/top-stories/supreme-court-dismisses-pil-challenging-appointment-of-arun-goel-as-election-commissioner-234409",
+          "publisher": "LiveLaw",
+          "title": "Supreme Court Dismisses PIL Challenging Appointment Of Arun Goel As Election Commissioner",
+          "published": "2023-08-04",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "it will be prospective, it cannot be retrospective"
+        }
+      ],
+      "notes": "Solicitor General Tushar Mehta told the court that in constitutional appointments the file consistently moves in a day. The order itself was not opened; LiveLaw links it.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.livelaw.in/top-stories/supreme-court-dismisses-pil-challenging-appointment-of-arun-goel-as-election-commissioner-234409",
+        "note": "LiveLaw confirms the 4 August 2023 dismissal by Justices Khanna and Bhatti, Khanna's 'prospective, not retrospective' quote (matches entry exactly), and Justice K.M. Joseph's earlier recusal."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-bill-introduced",
+      "kind": "event",
+      "date": "2023-08-10",
+      "date_precision": "day",
+      "title": "Bill replacing CJI with a Cabinet Minister introduced in Rajya Sabha",
+      "summary": "Law Minister Arjun Ram Meghwal introduced the CEC and Other ECs (Appointment, Conditions of Service and Term of Office) Bill, 2023 in the Rajya Sabha. It proposed a selection committee of the Prime Minister, the Leader of Opposition and a Union Cabinet Minister nominated by the PM; a search committee headed by the Cabinet Secretary; and CEC/EC pay and service conditions equal to the Cabinet Secretary's.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Arjun Ram Meghwal"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "bill_no": "LVII of 2023",
+        "clause_6_as_introduced": "Search Committee headed by the Cabinet Secretary",
+        "clause_10_as_introduced": "salary and conditions same as Cabinet Secretary",
+        "clause_11_as_introduced": "removal as per first and second provisos to Article 324(5)",
+        "clause_17": "business by unanimity where possible, else majority; procedure and allocation only by unanimous decision"
+      },
+      "sources": [
+        {
+          "url": "https://prsindia.org/files/bills_acts/bills_parliament/2023/Bill_Text_Chief_Election_Commissioner_and_other_Election_Commissioners_Bill_2023.pdf",
+          "publisher": "Rajya Sabha (text hosted by PRS Legislative Research)",
+          "title": "The Chief Election Commissioner and Other Election Commissioners (Appointment, Conditions of Service and Term of Office) Bill, 2023, Bill No. LVII of 2023, as introduced in the Rajya Sabha",
+          "published": "2023-08-10",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.newsonair.gov.in/union-minister-arjun-ram-meghwal-introduces-cec-and-other-ec-appointment-conditions-of-service-and-term-of-office-bill-2023",
+          "publisher": "All India Radio News (Akashvani)",
+          "title": "Union Minister Arjun Ram Meghwal introduces CEC and other EC Bill, 2023",
+          "published": "2023-08-10",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://prsindia.org/billtrack/the-chief-election-commissioner-and-other-election-commissioners-appointment-conditions-of-service-and-term-of-office-bill-2023",
+          "publisher": "PRS Legislative Research",
+          "title": "Bill track and legislative brief: The Chief Election Commissioner and Other Election Commissioners Bill, 2023",
+          "published": null,
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "The Statement of Objects and Reasons cites the Anoop Baranwal judgment and its 'till a law is made' clause as the reason for the bill.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-salary-downgrade-disquiet",
+      "kind": "event",
+      "date": "2023-09-15",
+      "date_precision": "day",
+      "title": "Disquiet in Commission over plan to equate ECs with Cabinet Secretary",
+      "summary": "Ahead of the September 2023 special session, The Indian Express reported disquiet within the Election Commission and among former CECs that aligning commissioners' service conditions with the Cabinet Secretary's, instead of a Supreme Court judge's, would erode their authority over ministers and officials.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/bill-downgrades-election-commission-to-status-of-cabinet-secy-from-that-of-sc-judge-8940629/",
+          "publisher": "The Indian Express",
+          "title": "Bill downgrades Election Commissioner to status of Cabinet Secy from that of SC Judge",
+          "published": "2023-09-15",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Unnamed sources. The bill was listed for the special session but was not taken up then; it was passed in December with this clause reversed.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-rs-amendments-listed",
+      "kind": "event",
+      "date": "2023-12-11",
+      "date_precision": "day",
+      "title": "Government lists amendments; opposition amendment seeks to restore CJI",
+      "summary": "The Rajya Sabha notice of amendments listed Minister Meghwal's changes: the Law Minister, not the Cabinet Secretary, to head the search committee; salary equal to a Supreme Court judge; CEC removable only like a Supreme Court judge and ECs only on the CEC's recommendation; and a new clause barring civil or criminal proceedings against serving or former CECs and ECs for official acts. RJD MP Manoj Kumar Jha moved to replace the Cabinet Minister with the Chief Justice of India.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Arjun Ram Meghwal",
+        "Manoj Kumar Jha"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "govt_amendments": "Nos. 33-43 (List No. 6)",
+        "jha_amendments": "Nos. 30-32 (List No. 5): CJI in place of Cabinet Minister; selection committee confined to search panel; no extension of tenure",
+        "new_clause_15A": "immunity for official acts; became Section 16 of the Act"
+      },
+      "sources": [
+        {
+          "url": "https://prsindia.org/files/bills_acts/bills_parliament/2023/Amendment%20to%20CEC%20Bill%202023.pdf",
+          "publisher": "Rajya Sabha Secretariat (hosted by PRS Legislative Research)",
+          "title": "Rajya Sabha Notice of Amendments, Lists No. 5 and 6, CEC and Other ECs Bill, 2023",
+          "published": "2023-12-11",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-rs-passes-bill",
+      "kind": "event",
+      "date": "2023-12-12",
+      "date_precision": "day",
+      "title": "Rajya Sabha passes bill after opposition walkout; opposition amendments negatived",
+      "summary": "The Rajya Sabha passed the bill with the government's amendments after a reply by Law Minister Meghwal, who said the Commission would continue to work independently. Opposition amendments were negatived and opposition members walked out; Congress MP Randeep Surjewala called the bill manifestly arbitrary. The BJD supported it.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Arjun Ram Meghwal",
+        "Randeep Singh Surjewala"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://sansad.in/getFile/BillsTexts/RSBillTexts/PassedRajyaSabha/CRC-CEC-E12132023113818AM.pdf?source=legislation",
+          "publisher": "Rajya Sabha (sansad.in)",
+          "title": "CEC and Other ECs Bill, 2023, Bill No. LVII-C of 2023, as passed by the Rajya Sabha on 12 December 2023",
+          "published": "2023-12-12",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://aninews.in/news/national/politics/rajya-sabha-passes-bill-on-appointment-of-cec-election-commissioners-opposition-stages-walkout20231212184313/",
+          "publisher": "ANI",
+          "title": "Rajya Sabha passes bill on appointment of CEC, election commissioners; Opposition stages walkout",
+          "published": "2023-12-12",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://prsindia.org/billtrack/the-chief-election-commissioner-and-other-election-commissioners-appointment-conditions-of-service-and-term-of-office-bill-2023",
+          "publisher": "PRS Legislative Research",
+          "title": "Bill track and legislative brief: The Chief Election Commissioner and Other Election Commissioners Bill, 2023",
+          "published": null,
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "The as-passed bill text (Bill No. LVII-C of 2023) is on sansad.in; the walkout and debate are from ANI's report. The Rajya Sabha debate transcript was not opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-ls-passes-bill",
+      "kind": "event",
+      "date": "2023-12-21",
+      "date_precision": "day",
+      "title": "Lok Sabha passes bill with most opposition MPs suspended",
+      "summary": "The Lok Sabha passed the bill after a debate of about an hour and 40 minutes in which 12 MPs spoke, while 97 opposition MPs were under suspension over protests about the 13 December Parliament security breach. AIMIM's Asaduddin Owaisi was the only speaker to oppose it. Meghwal called the Supreme Court's committee a stop-gap measure.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Arjun Ram Meghwal",
+        "Asaduddin Owaisi"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [
+        {
+          "label": "Lok Sabha opposition MPs suspended during the vote",
+          "value": 97,
+          "unit": "MPs",
+          "as_of": "2023-12-21"
+        },
+        {
+          "label": "MPs suspended in both Houses after the day's further suspensions",
+          "value": 146,
+          "unit": "MPs",
+          "as_of": "2023-12-21"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://m.thewire.in/article/government/lok-sabha-passes-election-commissioners-bill/amp",
+          "publisher": "The Wire",
+          "title": "Lok Sabha Passes Bill to Appoint Election Commissioners In Absence of Opposition",
+          "published": "2023-12-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://prsindia.org/billtrack/the-chief-election-commissioner-and-other-election-commissioners-appointment-conditions-of-service-and-term-of-office-bill-2023",
+          "publisher": "PRS Legislative Research",
+          "title": "Bill track and legislative brief: The Chief Election Commissioner and Other Election Commissioners Bill, 2023",
+          "published": null,
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Passage date documented by PRS; suspension counts and debate details from The Wire. Lok Sabha debate transcript not opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-act-assent",
+      "kind": "event",
+      "date": "2023-12-28",
+      "date_precision": "day",
+      "title": "President assents to the 2023 Act, repealing the 1991 Act",
+      "summary": "The Chief Election Commissioner and Other Election Commissioners (Appointment, Conditions of Service and Term of Office) Act, 2023 became Act No. 49 of 2023 on 28 December 2023. It repealed the Election Commission (Conditions of Service of Election Commissioners and Transaction of Business) Act, 1991.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "publisher": "India Code (Legislative Department, Ministry of Law and Justice)",
+          "title": "The Chief Election Commissioner and Other Election Commissioners (Appointment, Conditions of Service and Term of Office) Act, 2023 (Act No. 49 of 2023)",
+          "published": "2023-12-28",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20251117094424/https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "quote": null
+        }
+      ],
+      "notes": "Supreme Court Observer gives the assent date as 29 December 2023; the Act text on India Code carries 28 December 2023. 29 December is likely the Gazette publication date (not verified on egazette.gov.in).",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-rule-search-committee",
+      "kind": "rule",
+      "date": "2023-12-28",
+      "date_precision": "day",
+      "title": "Sections 5, 6, 8: Law Minister's search panel; committee may look beyond it",
+      "summary": "A search committee headed by the Law Minister with two Secretary-rank members prepares a panel of five. Only serving or retired Secretary-rank officers 'of integrity' with election experience are eligible. The selection committee regulates its own procedure 'in a transparent manner' and may pick someone not on the panel.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "section_5": "eligibility: Secretary-rank, integrity, knowledge of and experience in conduct of elections",
+        "section_6": "search committee: Law Minister plus two Secretaries, panel of five",
+        "section_8": "own procedure, transparent manner; may go outside panel"
+      },
+      "sources": [
+        {
+          "url": "https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "publisher": "India Code (Legislative Department, Ministry of Law and Justice)",
+          "title": "The Chief Election Commissioner and Other Election Commissioners (Appointment, Conditions of Service and Term of Office) Act, 2023 (Act No. 49 of 2023)",
+          "published": "2023-12-28",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20251117094424/https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "quote": "may also consider any other person than those included in the panel"
+        }
+      ],
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-rule-section-16-immunity",
+      "kind": "rule",
+      "date": "2023-12-28",
+      "date_precision": "day",
+      "title": "Section 16: courts barred from proceedings over commissioners' official acts",
+      "summary": "No court may entertain or continue civil or criminal proceedings against a serving or former CEC or EC for anything done or said in, or purporting to be in, the discharge of official duty. The clause was added by government amendment in the Rajya Sabha; it was not in the bill as introduced.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "appointments",
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "publisher": "India Code (Legislative Department, Ministry of Law and Justice)",
+          "title": "The Chief Election Commissioner and Other Election Commissioners (Appointment, Conditions of Service and Term of Office) Act, 2023 (Act No. 49 of 2023)",
+          "published": "2023-12-28",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20251117094424/https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "quote": "no Court shall entertain or continue any civil or criminal proceedings"
+        }
+      ],
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-rule-section-18-business",
+      "kind": "rule",
+      "date": "2023-12-28",
+      "date_precision": "day",
+      "title": "Section 18: unanimity where possible, majority otherwise; work split only unanimously",
+      "summary": "The Commission may regulate its procedure and allocate business among the CEC and ECs only by unanimous decision. All other business is to be transacted unanimously as far as possible, and when members differ, the majority opinion decides. The CEC has no casting or overriding vote.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "appointments",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {
+        "section": "18(1) procedure and allocation by unanimous decision; 18(2) unanimity as far as possible, else majority",
+        "predecessor": "Section 10 of the 1991 Act (inserted by Act 4 of 1994 w.e.f. 1 October 1993) had the same three rules."
+      },
+      "sources": [
+        {
+          "url": "https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "publisher": "India Code (Legislative Department, Ministry of Law and Justice)",
+          "title": "The Chief Election Commissioner and Other Election Commissioners (Appointment, Conditions of Service and Term of Office) Act, 2023 (Act No. 49 of 2023)",
+          "published": "2023-12-28",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20251117094424/https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "quote": "such matter shall be decided according to the opinion of the majority."
+        }
+      ],
+      "notes": "These are the provisions two ECs invoked in 2026 (see selection-law-sandhu-invokes-2023-act and selection-law-work-allocation-letters).",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-rule-selection-committee",
+      "kind": "rule",
+      "date": "2023-12-28",
+      "date_precision": "day",
+      "title": "Section 7: PM, a PM-nominated Cabinet Minister and LoP select CEC and ECs",
+      "summary": "The President appoints the CEC and ECs on the recommendation of a selection committee: the Prime Minister (chair), the Leader of Opposition in the Lok Sabha (or leader of the largest opposition party), and a Union Cabinet Minister nominated by the Prime Minister. An appointment is not invalid because of a vacancy or defect in the committee. This replaced the Chief Justice of India, whom the Supreme Court had placed on the interim committee.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "section": "7(1), 7(2) and Explanation",
+        "compared_with": "Anoop Baranwal interim committee: PM, LoP, CJI"
+      },
+      "sources": [
+        {
+          "url": "https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "publisher": "India Code (Legislative Department, Ministry of Law and Justice)",
+          "title": "The Chief Election Commissioner and Other Election Commissioners (Appointment, Conditions of Service and Term of Office) Act, 2023 (Act No. 49 of 2023)",
+          "published": "2023-12-28",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20251117094424/https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "quote": "a Union Cabinet Minister to be nominated by the Prime Minister—Member."
+        }
+      ],
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-rule-term-pay-removal",
+      "kind": "rule",
+      "date": "2023-12-28",
+      "date_precision": "day",
+      "title": "Sections 9-11: six-year term, SC-judge pay, CEC removable only like a judge",
+      "summary": "Members serve six years or until 65, cannot be reappointed, and an EC elevated to CEC is capped at six years in total. Salary equals a Supreme Court judge's. The CEC can be removed only like a Supreme Court judge; ECs only on the CEC's recommendation.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "section_9": "term six years or age 65; no reappointment; aggregate cap for EC-to-CEC",
+        "section_10": "salary equal to Supreme Court judge (changed from Cabinet Secretary during passage)",
+        "section_11": "CEC removal like SC judge; ECs only on CEC's recommendation (mirrors Article 324(5) provisos)"
+      },
+      "sources": [
+        {
+          "url": "https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "publisher": "India Code (Legislative Department, Ministry of Law and Justice)",
+          "title": "The Chief Election Commissioner and Other Election Commissioners (Appointment, Conditions of Service and Term of Office) Act, 2023 (Act No. 49 of 2023)",
+          "published": "2023-12-28",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20251117094424/https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "quote": null
+        }
+      ],
+      "notes": "Justice Rastogi's Baranwal opinion had called it desirable to give ECs the same removal protection as the CEC; the Act does not.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-act-commenced",
+      "kind": "event",
+      "date": "2024-01-02",
+      "date_precision": "day",
+      "title": "2023 Act brought into force by notification S.O. 35(E)",
+      "summary": "The Central Government brought the Act into force from 2 January 2024 by notification S.O. 35(E) of the same date, published in the Gazette of India, Extraordinary.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "publisher": "India Code (Legislative Department, Ministry of Law and Justice)",
+          "title": "The Chief Election Commissioner and Other Election Commissioners (Appointment, Conditions of Service and Term of Office) Act, 2023 (Act No. 49 of 2023)",
+          "published": "2023-12-28",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20251117094424/https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf",
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Commencement footnote in the India Code text; the Union's reply recorded in the Supreme Court's 22 March 2024 order also states the Act took effect on 2 January 2024. The Gazette itself was not opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-thakur-petition-filed",
+      "kind": "case",
+      "date": "2024-01-02",
+      "date_precision": "day",
+      "title": "Jaya Thakur petition challenges Sections 7 and 8 of the 2023 Act",
+      "summary": "Madhya Pradesh Mahila Congress general secretary Dr Jaya Thakur petitioned the Supreme Court, the same day the Act came into force, arguing the Act dilutes the Anoop Baranwal judgment and threatens free and fair elections. ADR, PUCL, Lok Prahari, Gopal Singh and Naman Sherstra filed connected petitions during 2024.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Jaya Thakur",
+        "Prashant Bhushan"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "petitions": "W.P. (C) 14/2024 (Jaya Thakur), 13/2024 (Gopal Singh), 11/2024 (Naman Sherstra), 87/2024 (ADR), 191/2024 (PUCL), 272/2024 (Lok Prahari)",
+        "provisions_challenged": "Section 7 (primary); Sections 6 and 8(2) (subsidiary)"
+      },
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2026/09/ECI-Reference-Judgement-Supreme-Court-Jaya-Thakur-v-Union-of-India.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, 2026 INSC 1040: opinions of Datta J and Sharma J and common order",
+          "published": "2026-09-23",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/cases/jaya-thakur-v-union-of-india-challenges-to-the-appointments-of-election-commissioners-act-2023-eci/",
+          "publisher": "Supreme Court Observer",
+          "title": "Challenges to the Appointment of Election Commissioners Act, 2023 (case page)",
+          "published": null,
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "The March 2024 order records that the petition was sub judice from 2 January 2024. Tribune (March 2025) also names TMC MP Mahua Moitra among the petitioners; her petition number is not in the 2026 judgment's cause title.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-sc-notice-no-stay-jan-2024",
+      "kind": "case",
+      "date": "2024-01-12",
+      "date_precision": "day",
+      "title": "Supreme Court issues notice on challenge but refuses to stay the Act",
+      "summary": "A bench of Justices Sanjiv Khanna and Dipankar Datta issued notice on Jaya Thakur's petition, returnable in April 2024, and refused an interim stay. Justice Khanna told counsel the court could not stay a statute like this.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sanjiv Khanna",
+        "Dipankar Datta",
+        "Jaya Thakur",
+        "Vikas Singh"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.livelaw.in/top-stories/supreme-court-congress-leader-jaya-thakur-election-commissioners-selection-panel-chief-justice-of-india-246508",
+          "publisher": "LiveLaw",
+          "title": "Supreme Court Refuses To Stay Election Commissioners' Act Dropping CJI From Panel To Select CEC & ECs",
+          "published": "2024-01-12",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "There will not be a stay."
+        }
+      ],
+      "notes": "The written order was not opened. The March 2024 order confirms stay had been refused when first pressed.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.livelaw.in/top-stories/supreme-court-congress-leader-jaya-thakur-election-commissioners-selection-panel-chief-justice-of-india-246508",
+        "note": "LiveLaw confirms the 12 January 2024 notice, the Khanna/Datta bench, the April 2024 return date, and the exact 'There will not be a stay' quote."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-committees-constituted-feb-2024",
+      "kind": "event",
+      "date": "2024-02-01",
+      "date_precision": "day",
+      "title": "Government constitutes first selection and search committees under the Act",
+      "summary": "According to the Union's reply recorded by the Supreme Court, the selection committee (Prime Minister, Home Minister, Leader of the Congress in the Lok Sabha) and the search committee (Minister of State for Law, Home Secretary, DoPT Secretary) were constituted on 1 February 2024. A selection meeting called for 7 February to fill one vacancy was postponed.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Narendra Modi",
+        "Amit Shah",
+        "Adhir Ranjan Chowdhury",
+        "Arjun Ram Meghwal"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "selection_committee": "PM, Home Minister, leader of single largest opposition party in Lok Sabha",
+        "search_committee": "MoS Law and Justice (chair), Home Secretary, Secretary DoPT",
+        "meeting_notice": "issued 4 February 2024 for 7 February; postponed on 7 February"
+      },
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/adhir-ranjan-chowdhury-gyanesh-kumar-sukhbir-singh-sandhu-9214200/",
+          "publisher": "The Indian Express",
+          "title": "On EC selection, Adhir dissents: 'Shortlisted names were shared 8-10 minutes before meeting'",
+          "published": "2024-03-14",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Section 6 says the search committee is headed by 'the Minister of Law and Justice'; the Union's reply calls its chair the 'Minister of State, Law and Justice'. The order does not name the minister; IE (14 March 2024) reports that Law Minister Arjun Ram Meghwal briefed the selection committee on the shortlist.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-anup-pandey-retires",
+      "kind": "event",
+      "date": "2024-02-14",
+      "date_precision": "day",
+      "title": "EC Anup Chandra Pandey demits office, leaving one vacancy",
+      "summary": "Election Commissioner Anup Chandra Pandey completed his term on 14 February 2024, creating the first vacancy to be filled under the 2023 Act.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Anup Chandra Pandey"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-goel-resigns",
+      "kind": "event",
+      "date": "2024-03-09",
+      "date_precision": "day",
+      "title": "Arun Goel resigns, leaving CEC Rajiv Kumar as sole commissioner",
+      "summary": "Election Commissioner Arun Goel resigned and the President accepted it with effect from 9 March 2024, under Section 11(1) of the 2023 Act. With Pandey's post also vacant, CEC Rajiv Kumar was the only member days before the Lok Sabha election schedule was announced. Goel's term would have run to December 2027. The same day, the government issued a revised note moving the selection meeting from 15 to 14 March to fill both posts.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Arun Goel",
+        "Rajiv Kumar",
+        "Droupadi Murmu"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/ec-arun-goel-resigns-weeks-ahead-of-lok-sabha-polls-2929718",
+          "publisher": "Deccan Herald",
+          "title": "Arun Goel quits as Election Commissioner weeks before Lok Sabha elections",
+          "published": "2024-03-09",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/cases/jaya-thakur-v-union-of-india-challenges-to-the-appointments-of-election-commissioners-act-2023-eci/",
+          "publisher": "Supreme Court Observer",
+          "title": "Challenges to the Appointment of Election Commissioners Act, 2023 (case page)",
+          "published": null,
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "No reason for the resignation was given publicly. Goel could not be reached by Deccan Herald. The Law Ministry notification was reported by DH but not opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-opposition-on-goel-resignation",
+      "kind": "statement",
+      "date": "2024-03-09",
+      "date_precision": "day",
+      "title": "Congress says Goel's resignation shows no transparency in the Commission",
+      "summary": "Congress general secretary K.C. Venugopal said the party was deeply concerned and alleged there was no transparency in how the Commission functions or in how the government pressures it. CPI(M) general secretary Sitaram Yechury called the timing very concerning.",
+      "status": "claim",
+      "attributed_to": "K.C. Venugopal (Congress); Sitaram Yechury (CPI-M)",
+      "people": [
+        "K.C. Venugopal",
+        "Sitaram Yechury",
+        "Arun Goel"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/ec-arun-goel-resigns-weeks-ahead-of-lok-sabha-polls-2929718",
+          "publisher": "Deccan Herald",
+          "title": "Arun Goel quits as Election Commissioner weeks before Lok Sabha elections",
+          "published": "2024-03-09",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "See selection-law-cec-on-goel-resignation for the CEC's comment. No government response to the charge of pressure was found.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.deccanherald.com/india/ec-arun-goel-resigns-weeks-ahead-of-lok-sabha-polls-2929718",
+        "note": "Deccan Herald quotes Venugopal ('deeply concerned...no transparency...government pressurises them') and Yechury ('very concerning') exactly as the summary describes; both statements are properly attributed."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-adhir-asks-bio-profiles",
+      "kind": "event",
+      "date": "2024-03-12",
+      "date_precision": "day",
+      "title": "Adhir Chowdhury asks for shortlisted candidates' profiles; receives 200-plus names",
+      "summary": "On 12 March 2024 Adhir Ranjan Chowdhury asked the Legislative Department for details of the shortlisted names. On 13 March he was sent a list of more than 200 eligible persons; the search committee had not yet shortlisted anyone and could not finalise a list at its meeting that day.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Adhir Ranjan Chowdhury"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [
+        {
+          "label": "officers on long list sent to LoP",
+          "value": 212,
+          "unit": "officers",
+          "as_of": "2024-03-13"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/adhir-ranjan-chowdhury-gyanesh-kumar-sukhbir-singh-sandhu-9214200/",
+          "publisher": "The Indian Express",
+          "title": "On EC selection, Adhir dissents: 'Shortlisted names were shared 8-10 minutes before meeting'",
+          "published": "2024-03-14",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "The court order says 'more than 200'; Chowdhury told IE the list had 212 names and was delivered at night.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-stay-applications-march-2024",
+      "kind": "case",
+      "date": "2024-03-13",
+      "date_precision": "day",
+      "title": "Petitioners seek urgent stay after vacancies; court lists it for 15 March",
+      "summary": "After Goel's resignation, Jaya Thakur (11 March) and ADR (12 March) sought a stay and asked that the two vacancies be filled only by a panel including the CJI. On 13 March a bench led by Justice Sanjiv Khanna agreed to hear them on 15 March.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Sanjiv Khanna",
+        "Prashant Bhushan",
+        "Jaya Thakur"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "applications": "I.A. 63879/2024 in W.P. 87/2024 (ADR, filed 12.03.2024); I.A. 66382/2024 in W.P. 11/2024 (Naman Sherstra, filed 14.03.2024)"
+      },
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/cities/delhi/supreme-court-agrees-to-hear-plea-against-law-dropping-cji-from-committee-to-select-cec-ecs-9213094/",
+          "publisher": "The Indian Express",
+          "title": "Supreme Court agrees to hear plea against law dropping CJI from committee to select CEC, ECs",
+          "published": "2024-03-14",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/cases/jaya-thakur-v-union-of-india-challenges-to-the-appointments-of-election-commissioners-act-2023-eci/",
+          "publisher": "Supreme Court Observer",
+          "title": "Challenges to the Appointment of Election Commissioners Act, 2023 (case page)",
+          "published": null,
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Filing dates of the applications are from the 22 March 2024 order; the 13 March listing and 11 March Thakur application are from SCO and IE.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-adhir-dissent",
+      "kind": "statement",
+      "date": "2024-03-14",
+      "date_precision": "day",
+      "title": "Adhir Chowdhury records dissent over procedure of EC selection",
+      "summary": "Chowdhury said the six shortlisted names were shared eight to ten minutes before the meeting, that he could not assess 212 officers overnight, and that he recorded dissent on procedural grounds while having nothing against the two appointees. He said the government had decided in advance and used its majority on the panel.",
+      "status": "claim",
+      "attributed_to": "Adhir Ranjan Chowdhury, Congress leader in Lok Sabha and selection committee member",
+      "people": [
+        "Adhir Ranjan Chowdhury",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Narendra Modi",
+        "Amit Shah"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/political-pulse/adhir-ranjan-chowdhury-gyanesh-kumar-sukhbir-singh-sandhu-9214200/",
+          "publisher": "The Indian Express",
+          "title": "On EC selection, Adhir dissents: 'Shortlisted names were shared 8-10 minutes before meeting'",
+          "published": "2024-03-14",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "I have been presented with a fait accompli"
+        }
+      ],
+      "notes": "The dissent note itself is not public. The Supreme Court's 22 March 2024 order relied on Chowdhury's 12 March letter and this IE report. See selection-law-union-reply-march-2024 for the government's account.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/political-pulse/adhir-ranjan-chowdhury-gyanesh-kumar-sukhbir-singh-sandhu-9214200/",
+        "note": "IE's full article confirms the 8-10 minute timeline, the 212-name list, the exact 'fait accompli' quote, and Chowdhury saying he had nothing against the two appointees personally but objected to procedure."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-ecs-selected-march-2024",
+      "kind": "event",
+      "date": "2024-03-14",
+      "date_precision": "day",
+      "title": "Gyanesh Kumar and Sukhbir Singh Sandhu picked as ECs, same day as shortlist",
+      "summary": "On 14 March 2024 the search committee recommended six names, which were circulated to the selection committee; the committee of PM Narendra Modi, Home Minister Amit Shah and Adhir Ranjan Chowdhury met the same day and recommended Gyanesh Kumar and Sukhbir Singh Sandhu, and the President approved them that day. They took charge on 15 March 2024.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Narendra Modi",
+        "Amit Shah",
+        "Adhir Ranjan Chowdhury",
+        "Arjun Ram Meghwal",
+        "Droupadi Murmu"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "elections-2024"
+      ],
+      "figures": [
+        {
+          "label": "names on search committee shortlist",
+          "value": 6,
+          "unit": "officers",
+          "as_of": "2024-03-14"
+        },
+        {
+          "label": "vacancies filled",
+          "value": 2,
+          "unit": "posts",
+          "as_of": "2024-03-14"
+        }
+      ],
+      "details": {
+        "shortlist_as_reported": "Utpal Kumar Singh, Pradeep Kumar Tripathi, Gyanesh Kumar, Indevar Pandey, Sukhbir Singh Sandhu, Sudhir Kumar Gangadhar Rahate (per Chowdhury, reported by IE and HT)",
+        "proposer": "Amit Shah proposed the two names, per Chowdhury (IE)",
+        "gazette": "appointment notification published in the Gazette on 14 March 2024 (PIB)",
+        "service": "both 1988-batch IAS: Kumar Kerala cadre, Sandhu Uttarakhand cadre (PIB)"
+      },
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2014866",
+          "publisher": "Press Information Bureau (Election Commission)",
+          "title": "Shri Gyanesh Kumar and Shri Sukhbir Singh Sandhu assumed charge as the Election Commissioners",
+          "published": "2024-03-15",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/adhir-ranjan-chowdhury-gyanesh-kumar-sukhbir-singh-sandhu-9214200/",
+          "publisher": "The Indian Express",
+          "title": "On EC selection, Adhir dissents: 'Shortlisted names were shared 8-10 minutes before meeting'",
+          "published": "2024-03-14",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.hindustantimes.com/india-news/who-are-new-election-commissioners-sukhbir-singh-sandhu-and-gyanesh-kumar-101710406142882.html",
+          "publisher": "Hindustan Times",
+          "title": "Meet Sukhbir Singh Sandhu and Gyanesh Kumar, the new election commissioners",
+          "published": "2024-03-14",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "The shortlist names and who proposed whom come only from Chowdhury's account; minutes of the meeting are not public.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-cec-on-goel-resignation",
+      "kind": "statement",
+      "date": "2024-03-16",
+      "date_precision": "day",
+      "title": "CEC Rajiv Kumar says Goel's personal space should be respected",
+      "summary": "Asked at the Lok Sabha schedule press conference why Goel resigned, CEC Rajiv Kumar did not give a reason, said Goel had been a distinguished colleague and that personal space should be respected, and said dissent within the Commission is encouraged.",
+      "status": "response",
+      "attributed_to": "Rajiv Kumar, Chief Election Commissioner",
+      "people": [
+        "Rajiv Kumar",
+        "Arun Goel"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://economictimes.indiatimes.com/news/india/ec-arun-goel-quit-due-to-personal-reasons-we-must-respect-personal-space-cec/articleshow/108550810.cms",
+          "publisher": "The Economic Times",
+          "title": "EC Arun Goel quit due to personal reasons, we must respect personal space: CEC",
+          "published": "2024-03-16",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "dissent within commission is encouraged"
+        }
+      ],
+      "response_to": "selection-law-opposition-on-goel-resignation",
+      "notes": "ET reports speculation that Goel left over differences with the CEC; the CEC did not address it directly.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-sc-refuses-stay-march-2024",
+      "kind": "case",
+      "date": "2024-03-21",
+      "date_precision": "day",
+      "title": "Court refuses stay citing Lok Sabha election, but criticises selection procedure",
+      "summary": "Justices Sanjiv Khanna and Dipankar Datta refused to stay the Act or the two appointments, saying a stay would cause 'chaos' with the Lok Sabha election fixed for 19 April to 1 June 2024. Reasons dated 22 March said the selection should have circulated full details to all members and that five candidates per vacancy prima facie meant ten for two posts. The court noted the petitioners did not question the appointees' merits.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Sanjiv Khanna",
+        "Dipankar Datta",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Tushar Mehta",
+        "Prashant Bhushan"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {
+        "citation": "2024 INSC 246",
+        "key_holdings": "Baranwal committee was a pro tem measure; court cannot by interim order rewrite Section 7(1); balance of convenience against stay before general election; observations tentative"
+      },
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "We must, however express our concern on the procedure adopted"
+        },
+        {
+          "url": "https://www.scobserver.in/reports/election-commissioner-appointments-supreme-court-refuses-to-stay-the-2023-act-before-2024-general-elections/",
+          "publisher": "Supreme Court Observer",
+          "title": "Election Commissioner Appointments: Supreme Court refuses to stay the 2023 Act before 2024 General Elections",
+          "published": "2024-03-21",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://newsonair.gov.in/supreme-court-refuses-to-stay-new-law-on-appointment-of-chief-election-commissioner-and-election-commissioners/",
+          "publisher": "All India Radio News (Akashvani)",
+          "title": "Supreme Court refuses to stay new law on appointment of CEC and ECs",
+          "published": "2024-03-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Stay refused orally on 21 March; reasoned order dated 22 March 2024 (signed 23 March, 'only the date of the order is corrected'). A 15 March 2024 hearing before a three-judge bench (with A.G. Masih J) relisted the matter for 21 March (SCO).",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-union-reply-march-2024",
+      "kind": "statement",
+      "date": "2024-03-21",
+      "date_precision": "day",
+      "title": "Centre tells court meeting was moved to 14 March before stay pleas were listed",
+      "summary": "In its reply to the stay applications, the Union of India set out the timeline from 1 February and said the selection meeting was moved from 15 to 14 March on 9 March, before the court listed the stay applications for 15 March. It said the Act was made as Article 324(2) contemplates.",
+      "status": "response",
+      "attributed_to": "Union of India (conjoint reply to stay applications)",
+      "people": [
+        "Tushar Mehta"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "selection-law-adhir-dissent",
+      "notes": "The reply as recorded in the court's order does not address why names were circulated only on the day of the meeting.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-goel-ambassador-croatia",
+      "kind": "event",
+      "date": "2024-09-07",
+      "date_precision": "day",
+      "title": "Six months after resigning, Arun Goel named ambassador to Croatia",
+      "summary": "The Ministry of External Affairs announced Arun Goel as India's next Ambassador to Croatia on 7 September 2024.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Arun Goel"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.aninews.in/news/world/asia/arun-goel-appointed-as-indias-new-ambassador-to-croatia20240907194154/",
+          "publisher": "ANI",
+          "title": "Arun Goel appointed as India's new Ambassador to Croatia",
+          "published": "2024-09-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "ANI cites an MEA press release, which was not opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.aninews.in/news/world/asia/arun-goel-appointed-as-indias-new-ambassador-to-croatia20240907194154/",
+        "note": "ANI's article, dated 7 September 2024, confirms the MEA announced Goel as Ambassador to Croatia that day."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-cji-khanna-recuses",
+      "kind": "case",
+      "date": "2024-12-03",
+      "date_precision": "day",
+      "title": "CJI Sanjiv Khanna recuses from challenge to the Act",
+      "summary": "Chief Justice Sanjiv Khanna, sitting with Justice Sanjay Kumar, recused from hearing the petitions and directed listing before another bench in the week of 6 January 2025. The bench asked the Union and the Election Commission to file responses.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sanjiv Khanna",
+        "Sanjay Kumar",
+        "Prashant Bhushan",
+        "Gopal Sankaranarayanan"
+      ],
+      "states": [],
+      "topics": [
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.livelaw.in/top-stories/cji-sanjiv-khanna-recuses-from-hearing-petitions-challenging-law-on-election-commissioners-appointment-277134",
+          "publisher": "LiveLaw",
+          "title": "CJI Sanjiv Khanna Recuses From Hearing Petitions Challenging Law On Election Commissioners' Appointment",
+          "published": "2024-12-03",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/cases/jaya-thakur-v-union-of-india-challenges-to-the-appointments-of-election-commissioners-act-2023-eci/",
+          "publisher": "Supreme Court Observer",
+          "title": "Challenges to the Appointment of Election Commissioners Act, 2023 (case page)",
+          "published": null,
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Petitioners' counsel said they had no objection to him hearing it. No reason is recorded in the reports.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-sc-hearing-jan-2025",
+      "kind": "case",
+      "date": "2025-01-08",
+      "date_precision": "day",
+      "title": "Court lists challenge for 4 February; Justice Kant calls it court vs legislature",
+      "summary": "A bench of Justices Surya Kant, Dipankar Datta and Ujjal Bhuyan fixed 4 February 2025 after Prashant Bhushan pointed out CEC Rajiv Kumar would retire on 18 February and a successor would be picked under the new law. Justice Kant said the case was a contest between the court's opinion and legislative power.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Surya Kant",
+        "Dipankar Datta",
+        "Ujjal Bhuyan",
+        "Prashant Bhushan",
+        "Rajiv Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newindianexpress.com/india/2025/Jan/08/sc-to-hear-on-february-4-pleas-challenging-constitutional-validity-of-law-on-appointment-of-cec-ecs",
+          "publisher": "The New Indian Express (PTI)",
+          "title": "SC to hear on February 4 pleas challenging constitutional validity of law on appointment of CEC, ECs",
+          "published": "2025-01-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.thehindu.com/news/national/supreme-court-to-hear-validity-of-cecec-appointment-law-on-february-19-a-day-after-incumbent-rajiv-kumar-retires/article69209933.ece",
+          "publisher": "The Hindu",
+          "title": "Supreme Court to hear pleas on CEC appointment law next week",
+          "published": "2025-02-12",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.newindianexpress.com/india/2025/Jan/08/sc-to-hear-on-february-4-pleas-challenging-constitutional-validity-of-law-on-appointment-of-cec-ecs",
+        "note": "TNIE/PTI confirms the 8 January 2025 bench (Kant, Datta, Bhuyan), Bhushan's point about Rajiv Kumar's 18 February retirement, the fixed 4 February hearing date, and the 'court's opinion vs legislative power' framing."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-search-committee-cec-2025",
+      "kind": "event",
+      "date": "2025-01-17",
+      "date_precision": "day",
+      "title": "Law Minister's search committee set up to shortlist next CEC",
+      "summary": "The Law Ministry set up a search committee headed by Law Minister Arjun Ram Meghwal with the Finance and DoPT Secretaries on 17 January 2025 to shortlist five officers for CEC, the first CEC selection under the Act. Previously the senior-most EC was usually elevated.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Arjun Ram Meghwal",
+        "Rajiv Kumar",
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/cec-kumar-demits-office-on-february-18-centre-sets-up-panel-to-pick-replacement-9802681/",
+          "publisher": "The Indian Express",
+          "title": "In a first, Union govt sets up committee to shortlist candidates for Chief Election Commissioner's post",
+          "published": "2025-01-28",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Based on unnamed sources; no notification was opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/cec-kumar-demits-office-on-february-18-centre-sets-up-panel-to-pick-replacement-9802681/",
+        "note": "IE confirms the 17 January 2025 search committee (Meghwal plus the Finance and DoPT Secretaries) and that this was the first CEC selection run under the 2023 Act, replacing the old seniority-elevation convention."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-rahul-two-to-one",
+      "kind": "statement",
+      "date": "2025-02",
+      "date_precision": "month",
+      "title": "Rahul Gandhi tells Lok Sabha the selection panel is 'two to one'",
+      "summary": "In the Lok Sabha in early February 2025, Leader of Opposition Rahul Gandhi said he would attend the selection meeting only to certify what the Prime Minister and Home Minister decided, and that removing the CJI from the committee looked like a calculated strategy.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition in Lok Sabha",
+      "people": [
+        "Rahul Gandhi",
+        "Narendra Modi",
+        "Amit Shah"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/chief-election-commissioner-selection-committee-meeting-pm-modi-rahul-gandhi-amit-shah-9841211/",
+          "publisher": "The Indian Express",
+          "title": "EC Gyanesh Kumar new poll panel chief; LoP files dissent, but govt overrules",
+          "published": "2025-02-17",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "Two to one. Why am I even going?"
+        }
+      ],
+      "notes": "IE says 'earlier this month'; the exact sitting date was not checked in Lok Sabha debates. No BJP or government rebuttal specifically addressing this Lok Sabha remark was found; search engines returned CAPTCHA challenges and could not be queried further in this pass.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/chief-election-commissioner-selection-committee-meeting-pm-modi-rahul-gandhi-amit-shah-9841211/",
+        "note": "IE quotes Gandhi's Lok Sabha remark verbatim, matching the entry's quote exactly. No dedicated BJP/government rebuttal to this specific remark could be found (search engines returned CAPTCHA challenges); noted in the entry's notes field."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-sc-feb-12-2025",
+      "kind": "case",
+      "date": "2025-02-12",
+      "date_precision": "day",
+      "title": "Court shifts hearing to 19 February, day after CEC retires",
+      "summary": "Justice Surya Kant moved the hearing to 19 February 2025, a day after Rajiv Kumar's retirement, and told Prashant Bhushan the 'consequences' of the court's decision would follow even if appointments were made in the interim. On 3 February the bench had said it would try to hear and decide the case on 12 February.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Surya Kant",
+        "N. Kotiswar Singh",
+        "Prashant Bhushan",
+        "Tushar Mehta"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.thehindu.com/news/national/supreme-court-to-hear-validity-of-cecec-appointment-law-on-february-19-a-day-after-incumbent-rajiv-kumar-retires/article69209933.ece",
+          "publisher": "The Hindu",
+          "title": "Supreme Court to hear pleas on CEC appointment law next week",
+          "published": "2025-02-12",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.livelaw.in/top-stories/supreme-court-pleas-challenging-cec-act-election-commissioners-appointment-panel-excluding-cji-adjourned-to-november-11-306871",
+          "publisher": "LiveLaw",
+          "title": "Supreme Court To Hear On Nov 11 Pleas Challenging Law Dropping CJI From Panel Appointing Election Commissioners",
+          "published": "2025-10-14",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.thehindu.com/news/national/supreme-court-to-hear-validity-of-cecec-appointment-law-on-february-19-a-day-after-incumbent-rajiv-kumar-retires/article69209933.ece",
+        "note": "The Hindu confirms the 12 February 2025 shift to 19 February, the Surya Kant/N.K. Singh bench, Bhushan's submission, and the 'consequences' quote."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-cec-selected-feb-2025",
+      "kind": "event",
+      "date": "2025-02-17",
+      "date_precision": "day",
+      "title": "Gyanesh Kumar named CEC and Vivek Joshi EC hours after panel meets",
+      "summary": "The selection committee of PM Narendra Modi, Home Minister Amit Shah and LoP Rahul Gandhi met for about 30 minutes at the PMO, with five-name panels for each post. Rahul Gandhi asked that the decision be deferred until the Supreme Court hearing two days later and submitted a dissent note. The Law Ministry notified Gyanesh Kumar as CEC and Haryana Chief Secretary Vivek Joshi as EC late that night.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar",
+        "Vivek Joshi",
+        "Narendra Modi",
+        "Amit Shah",
+        "Rahul Gandhi",
+        "Rajiv Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [
+        {
+          "label": "names on each search panel",
+          "value": 5,
+          "unit": "officers",
+          "as_of": "2025-02-17"
+        }
+      ],
+      "details": {
+        "gazette": "Ministry of Law and Justice Gazette notification dated 17 February 2025 (as cited by Business Standard)",
+        "terms": "Kumar's term runs to 26 January 2029; Joshi (born 21 May 1966) to 2031, per reports",
+        "first": "First CEC appointed under the 2023 Act"
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/chief-election-commissioner-selection-committee-meeting-pm-modi-rahul-gandhi-amit-shah-9841211/",
+          "publisher": "The Indian Express",
+          "title": "EC Gyanesh Kumar new poll panel chief; LoP files dissent, but govt overrules",
+          "published": "2025-02-17",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.business-standard.com/india-news/gyanesh-kumar-takes-over-as-cec-vivek-joshi-as-election-commissioner-125021900280_1.html",
+          "publisher": "Business Standard",
+          "title": "Gyanesh Kumar takes over as CEC, Vivek Joshi as Election Commissioner",
+          "published": "2025-02-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.thehindu.com/news/national/supreme-court-to-hear-validity-of-cecec-appointment-law-on-february-19-a-day-after-incumbent-rajiv-kumar-retires/article69209933.ece",
+          "publisher": "The Hindu",
+          "title": "Supreme Court to hear pleas on CEC appointment law next week",
+          "published": "2025-02-12",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Panel size and meeting length from unnamed sources. The Gazette notification was not opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/chief-election-commissioner-selection-committee-meeting-pm-modi-rahul-gandhi-amit-shah-9841211/",
+        "note": "IE confirms the roughly 30-minute PMO meeting, five-name panels for each post, Gandhi's deferral request, and the late-night notification of Kumar as CEC and Joshi as EC."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-bjp-on-rahul-dissent",
+      "kind": "statement",
+      "date": "2025-02-18",
+      "date_precision": "day",
+      "title": "BJP calls Rahul Gandhi's dissent politically motivated",
+      "summary": "BJP IT cell head Amit Malviya said the dissent was politically motivated and lacked merit, and accused the Congress of misreading the Supreme Court judgment. The BJP said no rules were broken and pointed to appointments of commissioners under Congress governments.",
+      "status": "response",
+      "attributed_to": "Amit Malviya, BJP",
+      "people": [
+        "Amit Malviya",
+        "Rahul Gandhi"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://timesofindia.indiatimes.com/india/cec-appointment-rahul-fires-midnight-decision-salvo-bjp-questions-congs-past-pliant-picks/articleshow/118361284.cms",
+          "publisher": "The Times of India",
+          "title": "CEC appointment: Rahul fires 'midnight decision' salvo; BJP questions Cong's past 'pliant picks'",
+          "published": "2025-02-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "selection-law-rahul-dissent-note",
+      "notes": "No formal response from the government or the Law Ministry was found.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-rahul-dissent-note",
+      "kind": "statement",
+      "date": "2025-02-18",
+      "date_precision": "day",
+      "title": "Rahul Gandhi makes public his dissent note on CEC appointment",
+      "summary": "Rahul Gandhi posted his dissent note, which said an independent Commission depends on how commissioners are chosen, that dropping the CJI violated the Supreme Court's order, and that the process should be deferred until the court ruled. He called a midnight decision while the case was pending disrespectful and discourteous.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition in Lok Sabha",
+      "people": [
+        "Rahul Gandhi",
+        "Gyanesh Kumar",
+        "Narendra Modi",
+        "Amit Shah"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.hindustantimes.com/india-news/rahul-gandhis-strong-reaction-to-gyanesh-kumars-appointment-as-new-cec-i-presented-dissent-note-to-pm-modi-101739863823919.html",
+          "publisher": "Hindustan Times",
+          "title": "Rahul Gandhi's strong reaction to Gyanesh Kumar's appointment as new CEC: 'I presented dissent note to PM Modi'",
+          "published": "2025-02-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "both disrespectful and discourteous for the PM and HM"
+        },
+        {
+          "url": "https://www.thehindu.com/news/national/defer-the-process-of-choosing-the-next-cec-until-the-supreme-court-hearing-rahul-gandhi-mentioned-in-dissent-note/article69233221.ece",
+          "publisher": "The Hindu",
+          "title": "Rahul Gandhi says it is 'disrespectful and discourteous' to appoint the CEC at midnight, makes his dissent note public",
+          "published": "2025-02-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://timesofindia.indiatimes.com/india/cec-appointment-rahul-fires-midnight-decision-salvo-bjp-questions-congs-past-pliant-picks/articleshow/118361284.cms",
+          "publisher": "The Times of India",
+          "title": "CEC appointment: Rahul fires 'midnight decision' salvo; BJP questions Cong's past 'pliant picks'",
+          "published": "2025-02-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "The note cites Ambedkar's June 1949 Constituent Assembly speech and surveys of declining voter trust (TOI). The X post itself was not opened. See selection-law-bjp-on-rahul-dissent.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.hindustantimes.com/india-news/rahul-gandhis-strong-reaction-to-gyanesh-kumars-appointment-as-new-cec-i-presented-dissent-note-to-pm-modi-101739863823919.html",
+        "note": "HT's report matches the summary point for point; the 'disrespectful and discourteous for the PM and HM' quote is an exact match to Gandhi's post."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-cec-joshi-take-charge",
+      "kind": "event",
+      "date": "2025-02-19",
+      "date_precision": "day",
+      "title": "Gyanesh Kumar takes charge as 26th CEC; Vivek Joshi as EC",
+      "summary": "Gyanesh Kumar assumed charge as Chief Election Commissioner at Nirvachan Sadan, succeeding Rajiv Kumar, who retired on 18 February. Vivek Joshi, a 1989-batch Haryana cadre IAS officer, took charge as Election Commissioner the same day.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar",
+        "Vivek Joshi",
+        "Rajiv Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://newsonair.gov.in/gyanesh-kumar-to-take-charge-as-chief-election-commissioner/",
+          "publisher": "All India Radio News (Akashvani)",
+          "title": "Gyanesh Kumar takes charge as Chief Election Commissioner",
+          "published": "2025-02-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.business-standard.com/india-news/gyanesh-kumar-takes-over-as-cec-vivek-joshi-as-election-commissioner-125021900280_1.html",
+          "publisher": "Business Standard",
+          "title": "Gyanesh Kumar takes over as CEC, Vivek Joshi as Election Commissioner",
+          "published": "2025-02-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.etvbharat.com/en/!bharat/gyanesh-kumar-assumes-charge-as-26th-chief-election-commissioner-enn25021901380",
+          "publisher": "ETV Bharat",
+          "title": "Gyanesh Kumar Assumes Charge As Chief Election Commissioner",
+          "published": "2025-02-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://newsonair.gov.in/gyanesh-kumar-to-take-charge-as-chief-election-commissioner/",
+        "note": "AIR confirms Kumar took charge at Nirvachan Sadan on 19 February 2025, succeeding Rajiv Kumar who retired the day before; Joshi's simultaneous charge-taking and cadre details are corroborated by the entry's other two sources."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-sc-defers-feb-2025",
+      "kind": "case",
+      "date": "2025-02-19",
+      "date_precision": "day",
+      "title": "Court adjourns challenge after the new appointments; next date 19 March",
+      "summary": "With the new CEC in office, a bench of Justices Surya Kant and N. Kotiswar Singh adjourned the petitions after the Solicitor General said he was busy in a Constitution Bench hearing. Bhushan objected and offered to finish in an hour; the bench gave 19 March 2025.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Surya Kant",
+        "N. Kotiswar Singh",
+        "Prashant Bhushan",
+        "Tushar Mehta"
+      ],
+      "states": [],
+      "topics": [
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.etvbharat.com/en/!bharat/supreme-court-hearing-pleas-against-chief-election-commissioner-election-commissioner-appointments-deferred-to-march-19-enn25021905121",
+          "publisher": "ETV Bharat",
+          "title": "Supreme Court Defers Pleas Against Chief Election Commissioner, Election Commissioner Appointments To March 19",
+          "published": "2025-02-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.livelaw.in/top-stories/supreme-court-pleas-challenging-cec-act-election-commissioners-appointment-panel-excluding-cji-adjourned-to-november-11-306871",
+          "publisher": "LiveLaw",
+          "title": "Supreme Court To Hear On Nov 11 Pleas Challenging Law Dropping CJI From Panel Appointing Election Commissioners",
+          "published": "2025-10-14",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.etvbharat.com/en/!bharat/supreme-court-hearing-pleas-against-chief-election-commissioner-election-commissioner-appointments-deferred-to-march-19-enn25021905121",
+        "note": "ETV Bharat confirms the Solicitor General's adjournment request, Bhushan's objection and offer to finish in an hour, and the 19 March 2025 deferral by Justices Surya Kant and N. Kotiswar Singh."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-sc-listings-2025",
+      "kind": "case",
+      "date": "2025-03-19",
+      "date_precision": "day",
+      "title": "Challenge repeatedly listed and deferred through 2025",
+      "summary": "On 19 March 2025 the court deferred the case to 16 April; on 16 April a bench of Justices Surya Kant, Dipankar Datta and Ujjal Bhuyan fixed 14 May; on 14 October it was listed but not reached and posted to 11 November. On 7 November, asked to choose between the appointments case and the SIR challenge for the 11 November slot, Bhushan chose SIR.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Surya Kant",
+        "Dipankar Datta",
+        "Ujjal Bhuyan",
+        "Joymalya Bagchi",
+        "Prashant Bhushan"
+      ],
+      "states": [],
+      "topics": [
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/sc-defers-hearing-on-pils-against-appointment-of-cec-ecs-under-2023-law-to-april-16-2/amp",
+          "publisher": "The Tribune",
+          "title": "SC defers hearing on PILs against appointment of CEC, ECs under 2023 law to April 16",
+          "published": "2025-03-20",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/sc-fixes-may-14-for-hearing-pleas-against-appointment-of-cec-ecs-under-2023-law",
+          "publisher": "The Tribune (PTI)",
+          "title": "SC fixes May 14 for hearing pleas against appointment of CEC, ECs under 2023 law",
+          "published": "2025-04-16",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.livelaw.in/top-stories/supreme-court-pleas-challenging-cec-act-election-commissioners-appointment-panel-excluding-cji-adjourned-to-november-11-306871",
+          "publisher": "LiveLaw",
+          "title": "Supreme Court To Hear On Nov 11 Pleas Challenging Law Dropping CJI From Panel Appointing Election Commissioners",
+          "published": "2025-10-14",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://timesofindia.indiatimes.com/india/petitioners-pick-sir-over-ec-sc-to-hear-on-november-11/articleshow/125175489.cms",
+          "publisher": "The Times of India",
+          "title": "Petitioners pick SIR over EC, SC to hear on November 11",
+          "published": "2025-11-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "What happened on 14 May 2025 was not found. The 2026 reference order describes the plea for reference being raised after the matter had been pending about two years.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.tribuneindia.com/news/india/sc-defers-hearing-on-pils-against-appointment-of-cec-ecs-under-2023-law-to-april-16-2/amp",
+        "note": "The Tribune confirms the 19 March to 16 April deferral. The later 16 April-to-14 May, 14 October-to-11 November, and 7 November SIR-vs-EC choice are each independently sourced in the entry (Tribune/PTI, LiveLaw, TOI) and consistent with the pattern of repeated deferrals confirmed elsewhere in this record."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-section-16-notice",
+      "kind": "case",
+      "date": "2026-01",
+      "date_precision": "month",
+      "title": "Supreme Court issues notice on Lok Prahari challenge to Section 16 immunity",
+      "summary": "A bench of Chief Justice Surya Kant and Justice Joymalya Bagchi issued notice to the Centre and the Election Commission on Lok Prahari's petition challenging Section 16, which bars civil and criminal proceedings against serving and former commissioners for official acts. The court declined to stay the provision.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Surya Kant",
+        "Joymalya Bagchi"
+      ],
+      "states": [],
+      "topics": [
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/sc-issues-notice-to-centre-ec-on-plea-challenging-immunity-for-cec-election-commissioners",
+          "publisher": "All India Radio News (Akashvani)",
+          "title": "SC issues notice to Centre, EC on plea challenging immunity for CEC, Election Commissioners",
+          "published": "2026-01-13",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.indiatvnews.com/news/india/supreme-court-questions-lifetime-immunity-for-cec-ecs-seeks-centre-and-election-commission-reply-2026-01-12-1025494",
+          "publisher": "India TV",
+          "title": "Supreme Court questions lifetime immunity for CEC, ECs; seeks Centre and Election Commission reply",
+          "published": "2026-01-12",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "India TV published at 12:25 IST on 12 January 2026, but its text says 'on Friday'; the order date was not verified, so only the month is given. India TV's report also misdates CJI Khanna's recusal. Petition number not found. No reply from the Centre or the Election Commission to this notice was found in this pass (search engines were CAPTCHA-blocked); this matches the gap already logged in this area's gaps list.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.newsonair.gov.in/sc-issues-notice-to-centre-ec-on-plea-challenging-immunity-for-cec-election-commissioners",
+        "note": "AIR confirms the CJI Surya Kant/Justice Bagchi bench issued notice to the Centre and the EC on Lok Prahari's Section 16 challenge and declined a stay. No reply from the Centre or the ECI to this notice could be found (search engines were CAPTCHA-blocked); this is already flagged in this area's gaps list and noted again in the entry."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-removal-notice-march-2026",
+      "kind": "event",
+      "date": "2026-03-12",
+      "date_precision": "day",
+      "title": "Opposition submits first-ever notices to remove a CEC in both Houses",
+      "summary": "Opposition MPs submitted notices of motion to remove CEC Gyanesh Kumar in the Lok Sabha (130 signatures) and Rajya Sabha (63), invoking Article 324(5), Section 11(2) of the 2023 Act and the Judges (Inquiry) Act, 1968. The seven charges included 'proven misbehaviour', partisan conduct and mass disenfranchisement through SIR, and the notice called the selection process flawed, citing Rahul Gandhi's dissent note.",
+      "status": "claim",
+      "attributed_to": "INDIA bloc opposition MPs",
+      "people": [
+        "Gyanesh Kumar",
+        "Rahul Gandhi"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "sir",
+        "statements"
+      ],
+      "figures": [
+        {
+          "label": "Lok Sabha signatories",
+          "value": 130,
+          "unit": "MPs",
+          "as_of": "2026-03-12"
+        },
+        {
+          "label": "Rajya Sabha signatories",
+          "value": 63,
+          "unit": "MPs",
+          "as_of": "2026-03-12"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/india-blocs-notice-seeking-cec-gyanesh-kumars-removal-cites-voter-list-manipulation-in-karnatakas-aland-mahadevapura-3933510",
+          "publisher": "Deccan Herald",
+          "title": "I.N.D.I.A. bloc's notice seeking CEC Gyanesh Kumar's removal cites 'voter list manipulation' in Karnataka's Aland, Mahadevapura",
+          "published": "2026-03-16",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://ddnews.gov.in/en/parliament-rejects-impeachment-notice-against-chief-election-commissioner/",
+          "publisher": "DD News (ANI)",
+          "title": "Rajya Sabha Chairman, Lok Sabha Speaker reject opposition bid to impeach CEC Gyanesh Kumar",
+          "published": "2026-04-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://m.thewire.in/article/politics/signed-by-193-mps-notices-to-impeach-cec-gyanesh-kumar-rejected-no-reason",
+          "publisher": "The Wire",
+          "title": "Signed by 193 MPs, Notice to Impeach CEC Gyanesh Kumar Rejected in Both Houses; No Reason Provided",
+          "published": "2026-04-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "The notice text is not public; contents are from sources quoted by Deccan Herald. No response from the CEC to the notice was found. Deccan Herald reports it is the first such notice against any of 25 CECs.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.deccanherald.com/india/india-blocs-notice-seeking-cec-gyanesh-kumars-removal-cites-voter-list-manipulation-in-karnatakas-aland-mahadevapura-3933510",
+        "note": "Deccan Herald confirms the seven charges, the 130/63 MP signatures, the reference to Rahul Gandhi's dissent note, and that the notice called the selection process flawed."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-cji-surya-kant-recuses",
+      "kind": "case",
+      "date": "2026-03-20",
+      "date_precision": "day",
+      "title": "CJI Surya Kant recuses; case to go to bench with no future CJI",
+      "summary": "Chief Justice Surya Kant, sitting with Justices Joymalya Bagchi and Vipul Pancholi, recused from the Act challenge because it concerns the CJI's own role and directed listing on 7 April 2026 before a bench without judges in line to become Chief Justice.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Surya Kant",
+        "Joymalya Bagchi",
+        "Vipul Pancholi",
+        "Prashant Bhushan",
+        "Gopal Sankaranarayanan"
+      ],
+      "states": [],
+      "topics": [
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.verdictum.in/court-updates/supreme-court/surya-kant-recuses-ec-appointment-case-bench-with-no-future-cji-1610330",
+          "publisher": "Verdictum",
+          "title": "CJI Surya Kant Recuses From Election Commissioners Appointment Case; Calls For Bench With No Future CJIs",
+          "published": "2026-03-20",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "There will be conflict of interest in the prayers sought"
+        },
+        {
+          "url": "https://www.scobserver.in/cases/jaya-thakur-v-union-of-india-challenges-to-the-appointments-of-election-commissioners-act-2023-eci/",
+          "publisher": "Supreme Court Observer",
+          "title": "Challenges to the Appointment of Election Commissioners Act, 2023 (case page)",
+          "published": null,
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-removal-notice-rejected",
+      "kind": "event",
+      "date": "2026-04-06",
+      "date_precision": "day",
+      "title": "Speaker and RS Chairman refuse to admit notice to remove CEC",
+      "summary": "Lok Sabha Speaker Om Birla and Rajya Sabha Chairman C.P. Radhakrishnan each refused to admit the notices under Section 3 of the Judges (Inquiry) Act, 1968. The bulletins cited a 'careful and objective assessment' but, The Wire reported, gave no reasons; Indian Express later reported they had said the allegations lacked the proof needed for a prima facie case.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Om Birla",
+        "C.P. Radhakrishnan",
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://m.thewire.in/article/politics/signed-by-193-mps-notices-to-impeach-cec-gyanesh-kumar-rejected-no-reason",
+          "publisher": "The Wire",
+          "title": "Signed by 193 MPs, Notice to Impeach CEC Gyanesh Kumar Rejected in Both Houses; No Reason Provided",
+          "published": "2026-04-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://ddnews.gov.in/en/parliament-rejects-impeachment-notice-against-chief-election-commissioner/",
+          "publisher": "DD News (ANI)",
+          "title": "Rajya Sabha Chairman, Lok Sabha Speaker reject opposition bid to impeach CEC Gyanesh Kumar",
+          "published": "2026-04-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/cec-removal-notice-gyanesh-kumar-opposition-rajya-sabha-10653759/",
+          "publisher": "The Indian Express",
+          "title": "9 charges of 'proven misbehaviour': Opposition files fresh notice to remove CEC Gyanesh Kumar",
+          "published": "2026-04-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "selection-law-removal-notice-march-2026",
+      "notes": "Parliamentary bulletins were not opened directly. TMC MPs Sagarika Ghose and Derek O'Brien criticised the absence of reasons.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://m.thewire.in/article/politics/signed-by-193-mps-notices-to-impeach-cec-gyanesh-kumar-rejected-no-reason",
+        "note": "The Wire confirms the 6 April 2026 rejection by Speaker Birla and Chairman Radhakrishnan under Section 3 of the Judges (Inquiry) Act, and that the bulletins gave no reasons."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-sandhu-invokes-2023-act",
+      "kind": "statement",
+      "date": "2026-04-16",
+      "date_precision": "day",
+      "title": "EC Sandhu tells officers communications need Commission approval under 2023 Act",
+      "summary": "The Indian Express reports that on 16 April 2026 Election Commissioner Sukhbir Singh Sandhu told senior officers that many communications issued in the ECI's name lacked the Commission's approval and that all must have it under the 2023 Act. Eight days later EC Vivek Joshi wrote similarly, citing Article 324 and the Act.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "do not have the approval of the Commission"
+        }
+      ],
+      "notes": "IE says it has seen the notes; they are not public. The year is inferred from the article's statement that the objections span November 2025 to August 2026. Response: see selection-law-eci-response-sep-2026. Other objections recorded by the two ECs belong to the dissent/SIR areas.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+        "note": "IE's full text confirms Sandhu's 16 April 2026 note and its exact quote, and Joshi's near-identical note eight days later citing Article 324 and the 2023 Act."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-second-removal-notice",
+      "kind": "event",
+      "date": "2026-04-24",
+      "date_precision": "day",
+      "title": "Opposition files fresh Rajya Sabha notice to remove CEC with nine charges",
+      "summary": "Seventy-three opposition MPs submitted a fresh notice in the Rajya Sabha listing nine charges of 'proven misbehaviour' based on acts from 15 March 2026 onward, including alleged partisan enforcement of the Model Code of Conduct and deletions in West Bengal. As of 24-25 September 2026 it was reported still pending, and a third notice was being drafted.",
+      "status": "claim",
+      "attributed_to": "Opposition MPs (Jairam Ramesh, Congress, quoted)",
+      "people": [
+        "Gyanesh Kumar",
+        "Jairam Ramesh"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "statements",
+        "sir"
+      ],
+      "figures": [
+        {
+          "label": "Rajya Sabha signatories to second notice",
+          "value": 73,
+          "unit": "MPs",
+          "as_of": "2026-04-24"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/cec-removal-notice-gyanesh-kumar-opposition-rajya-sabha-10653759/",
+          "publisher": "The Indian Express",
+          "title": "9 charges of 'proven misbehaviour': Opposition files fresh notice to remove CEC Gyanesh Kumar",
+          "published": "2026-04-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.rediff.com/news/report/opposition-to-move-third-motion-to-remove-cec-gyanesh-kumar/20260924.htm",
+          "publisher": "Rediff (PTI)",
+          "title": "Opposition to move third motion to remove CEC Gyanesh Kumar",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.livemint.com/news/india/-can-cec-gyanesh-kumar-be-removed-impeachment-rules-process-and-past-attempts-explained-rahul-gandhi-11790301507517.html",
+          "publisher": "Livemint",
+          "title": "Can CEC Gyanesh Kumar be removed? Impeachment rules, process and past attempts | Explained",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "No response from the CEC or the Commission to the specific charges was found for this entry.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/cec-removal-notice-gyanesh-kumar-opposition-rajya-sabha-10653759/",
+        "note": "IE confirms the 73-MP Rajya Sabha notice, nine charges dated from 15 March 2026 onward (including partisan MCC enforcement and West Bengal deletions), and Jairam Ramesh's quotes; no CEC or Commission response to this specific notice is reported."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-union-defends-act-2026",
+      "kind": "statement",
+      "date": "2026-05",
+      "date_precision": "month",
+      "title": "Centre tells court judicial member on panel is a policy choice, not a necessity",
+      "summary": "The Union told the court the Constitution does not require a judicial member on the selection committee, that elections were never compromised under seven decades of executive appointments, that the link between executive appointment and loss of independence is speculative, and that the petitions should be dismissed. Attorney General Venkataramani later argued the Baranwal directions were interim Article 142 measures.",
+      "status": "response",
+      "attributed_to": "Union of India (Attorney General R. Venkataramani; Solicitor General Tushar Mehta)",
+      "people": [
+        "R. Venkataramani",
+        "Tushar Mehta"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newindianexpress.com/india/2026/May/16/centre-tells-sc-judiciary-need-not-be-part-of-ec-selection-panel-defends-law-removing-cji",
+          "publisher": "The New Indian Express",
+          "title": "Centre tells SC judiciary need not be part of EC selection panel, defends law removing CJI",
+          "published": "2026-05-16",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2026/09/ECI-Reference-Judgement-Supreme-Court-Jaya-Thakur-v-Union-of-India.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, 2026 INSC 1040: opinions of Datta J and Sharma J and common order",
+          "published": "2026-09-23",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/reports/eci-appointments-act-2023-day-4-bench-considers-reference-to-a-larger-bench/",
+          "publisher": "Supreme Court Observer",
+          "title": "ECI Appointments Act, 2023 | Day 4: Bench considers reference to a larger bench",
+          "published": "2026-05-14",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "selection-law-hearing-may-2026",
+      "notes": "TNIE reports the submission was made 'on Friday' (15 May 2026), but the judgment lists 14 May as a hearing day; month precision used. The counter-affidavit was not opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-hearing-may-2026",
+      "kind": "case",
+      "date": "2026-05-06",
+      "date_precision": "day",
+      "title": "Datta-Sharma bench begins hearing challenge; refuses Centre's adjournment",
+      "summary": "A bench of Justices Dipankar Datta and Satish Chandra Sharma began hearing the petitions on 6 May 2026 and refused the Solicitor General's request to adjourn. Petitioners argued Sections 7 and 8 give the executive a decisive say, and on 7 May that the Act is worse than the pre-2023 position because it builds in an executive majority.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Dipankar Datta",
+        "Satish Chandra Sharma",
+        "Vijay Hansaria",
+        "Prashant Bhushan",
+        "Gopal Sankaranarayanan",
+        "Shadan Farasat",
+        "Sanjay Parikh",
+        "Kaleeswaram Raj",
+        "Tushar Mehta",
+        "R. Venkataramani"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "hearing_days": "6, 7, 14 and 27 May and 30 July 2026 (per the 23 September 2026 opinion)"
+      },
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2026/09/ECI-Reference-Judgement-Supreme-Court-Jaya-Thakur-v-Union-of-India.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, 2026 INSC 1040: opinions of Datta J and Sharma J and common order",
+          "published": "2026-09-23",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/reports/eci-appointments-day-2-petitioners-challenge-executive-dominance/",
+          "publisher": "Supreme Court Observer",
+          "title": "ECI Appointments Act, 2023 | Day 2: Petitioners challenge executive dominance",
+          "published": "2026-05-06",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/reports/eci-appointments-act-2023-day-3-petitioners-argue-that-law-undermines-guarantee-of-free-and-fair-elections/",
+          "publisher": "Supreme Court Observer",
+          "title": "ECI Appointments Act, 2023 | Day 3: Petitioners argue that law undermines guarantee of free and fair elections",
+          "published": "2026-05-07",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://timesofindia.indiatimes.com/india/wish-judges-appointed-as-speedily-as-ecs-says-supreme-court/articleshow/130934924.cms",
+          "publisher": "The Times of India",
+          "title": "Wish judges appointed as speedily as ECs, says Supreme Court",
+          "published": "2026-05-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Hearing dates are documented in the judgment; arguments are from SCO and TOI reports.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-court-on-ec-speed-may-2026",
+      "kind": "statement",
+      "date": "2026-05-07",
+      "date_precision": "day",
+      "title": "Bench wishes judges were appointed as speedily as ECs",
+      "summary": "Told that the March 2024 shortlist was finalised and the two ECs selected on the same day, the bench remarked that it wished such speed were shown in appointing judges, especially High Court judges. It declined to accept, without proof, the allegation that the timing was meant to pre-empt the court.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Dipankar Datta",
+        "Satish Chandra Sharma",
+        "Vijay Hansaria",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://timesofindia.indiatimes.com/india/wish-judges-appointed-as-speedily-as-ecs-says-supreme-court/articleshow/130934924.cms",
+          "publisher": "The Times of India",
+          "title": "Wish judges appointed as speedily as ECs, says Supreme Court",
+          "published": "2026-05-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "we wish such speed is shown in the appointment of judges"
+        }
+      ],
+      "notes": "TOI dates the appointments to '2023'; they were made in March 2024.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://timesofindia.indiatimes.com/india/wish-judges-appointed-as-speedily-as-ecs-says-supreme-court/articleshow/130934924.cms",
+        "note": "TOI's full text confirms the exact quote and that the bench declined, absent proof, to accept the allegation that the timing was meant to pre-empt the court."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-work-allocation-letters",
+      "kind": "event",
+      "date": "2026-07-29",
+      "date_precision": "day",
+      "title": "Two ECs write to Cabinet Secretary after work allocation changed without them",
+      "summary": "According to The Indian Express, on 28 July 2026 Senior Deputy Election Commissioner Maneesh Garg changed the work allocation, removing Deputy EC Sanjay Kumar's oversight of the IT division, without consulting the Commission. On 29 July Sandhu and Joshi each wrote to Cabinet Secretary T.V. Somanathan calling it a clear violation of the law governing the Commission, and on 30 July they jointly set the order aside pending consensus.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "Maneesh Garg",
+        "Sanjay Kumar",
+        "T.V. Somanathan",
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "it-systems",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "legal_basis": "Section 18(1) of the 2023 Act allows allocation of business only by unanimous decision of the Commission"
+      },
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "clear violation"
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "IE has seen the letters; they are not public. IE reports the CEC and two ECs then met on 9 September, their first full meeting in four months. Garg's and the CEC's responses were sought by IE and not given.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "IE's full text confirms Garg's 28 July 2026 work-allocation change, the two ECs' 29 July letters to the Cabinet Secretary calling it a 'clear violation' (exact quote), and their 30 July joint order setting it aside pending consensus."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-reference-reserved",
+      "kind": "case",
+      "date": "2026-07-30",
+      "date_precision": "day",
+      "title": "Court reserves order on Centre's plea for Constitution Bench reference",
+      "summary": "After the Attorney General and Solicitor General urged a reference to at least five judges, the bench reserved its decision on 30 July 2026. Justice Datta asked why Parliament kept the CJI on selection panels for the CBI Director and Lokpal but not for the Election Commission. The SG said people must trust the Prime Minister; the AG said Parliament cannot be 'gagged'.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Dipankar Datta",
+        "Satish Chandra Sharma",
+        "R. Venkataramani",
+        "Tushar Mehta"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/reports/eci-appointments-act-2023-day-5-supreme-court-reserves-decision-on-reference-to-larger-bench/",
+          "publisher": "Supreme Court Observer",
+          "title": "ECI Appointments Act, 2023 | Day 5: Supreme Court reserves decision on reference to larger bench",
+          "published": "2026-07-30",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://timesofindia.indiatimes.com/india/whys-cji-not-on-panel-to-pick-cec-supreme-court-asks-government/articleshow/132753003.cms",
+          "publisher": "The Times of India",
+          "title": "Why's CJI not on panel to pick CEC, Supreme Court asks government",
+          "published": "2026-07-31",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2026/09/ECI-Reference-Judgement-Supreme-Court-Jaya-Thakur-v-Union-of-India.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, 2026 INSC 1040: opinions of Datta J and Sharma J and common order",
+          "published": "2026-09-23",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "The judgment records that the reference plea was not in the Union's counter-affidavit and was raised during the AG's arguments; petitioners called it a delaying tactic.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-section-16-pil-sep-2026",
+      "kind": "case",
+      "date": "2026-09",
+      "date_precision": "month",
+      "title": "PIL argues Section 16 does not shield CEC over roll changes",
+      "summary": "Advocate Shailendra Mani Tripathi filed a PIL arguing that CEC Gyanesh Kumar has no immunity under Section 16 for acts outside the discharge of official duty, and seeking criminal accountability over changes to Form 6, centralised roll control, Goa and West Bengal, based on the Indian Express reports.",
+      "status": "claim",
+      "attributed_to": "Shailendra Mani Tripathi (petitioner, advocate)",
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "Maneesh Garg"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://lawbeat.in/amp/top-stories/pil-in-supreme-court-says-cec-gyanesh-kumar-has-no-immunity-seeks-criminal-accountability-over-voter-roll-changes-1635133",
+          "publisher": "LawBeat",
+          "title": "PIL In Supreme Court Says CEC Gyanesh Kumar Has No Immunity, Seeks Criminal Accountability Over Voter Roll Changes",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "Filed after 23 September 2026 and reported on 25 September; not yet listed as far as found. No response from the CEC was found.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://lawbeat.in/amp/top-stories/pil-in-supreme-court-says-cec-gyanesh-kumar-has-no-immunity-seeks-criminal-accountability-over-voter-roll-changes-1635133",
+        "note": "LawBeat confirms Tripathi's PIL and its grounds (Form 6, roll centralisation, Goa, West Bengal); the report does not give an exact filing date, consistent with the entry's month-level precision."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "selection-law-datta-perception-test",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Justice Datta: PM's nominee can't be expected to defy him; panel fails perception test",
+      "summary": "In his prima facie observations, Justice Datta wrote that a Cabinet Minister nominated by the Prime Minister cannot be expected to oppose him, that this leaves the Leader of Opposition's presence largely ornamental, and that the challengers' point that the Act undermines the appearance of independence 'does appear to have substance'. He recorded the Attorney General's answer of 'probably no' when asked if the nominee would side against the PM.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Dipankar Datta",
+        "R. Venkataramani"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2026/09/ECI-Reference-Judgement-Supreme-Court-Jaya-Thakur-v-Union-of-India.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, 2026 INSC 1040: opinions of Datta J and Sharma J and common order",
+          "published": "2026-09-23",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "It is not enough for the ECI to be independent, it must also appear"
+        }
+      ],
+      "notes": "Expressly prima facie and confined to the reference question (para 88A). Justice Sharma did not join these observations. Justice Datta also rebutted the SG's 'judges appoint judges' argument at length.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-eci-response-sep-2026",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Commission says differing views are normal and orders follow the 2023 Act",
+      "summary": "Responding to the Indian Express reports, the Election Commission said differing views are a normal part of deliberation, that all orders carry full legal sanction under the 2023 Act, that highlighting some internal notes over 10 months gives only one side of the picture, and that its decisions in the past year were unanimous decisions of the full Commission.",
+      "status": "response",
+      "attributed_to": "Election Commission of India (statement)",
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "statements",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://theprint.in/india/ec-says-differing-views-normal-part-of-deliberations-all-orders-carry-legal-sanctions/3050993/",
+          "publisher": "ThePrint (PTI feed)",
+          "title": "EC says differing views normal part of deliberations; all orders carry legal sanctions",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "Differing views and observations are a normal part of deliberation"
+        },
+        {
+          "url": "https://www.rediff.com/news/report/opposition-to-move-third-motion-to-remove-cec-gyanesh-kumar/20260924.htm",
+          "publisher": "Rediff (PTI)",
+          "title": "Opposition to move third motion to remove CEC Gyanesh Kumar",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "selection-law-sandhu-invokes-2023-act",
+      "notes": "The Commission's statement is quoted by PTI; the original press note was not opened. IE reported that the Commission had not responded to its 21 September questionnaire before publication, and that the ECs did not reply to emails.",
+      "check": "unchecked"
+    },
+    {
+      "id": "selection-law-split-verdict-reference",
+      "kind": "case",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Split opinion; challenge to 2023 Act sent to CJI for a Constitution Bench",
+      "summary": "Justice Datta rejected the Centre's plea for a larger bench, holding the principles were settled in Anoop Baranwal; Justice Sharma held that the validity of Sections 6, 7 and 8 raises a substantial question of constitutional interpretation. In a joint order both directed the papers be placed before the Chief Justice to consider constituting a Constitution Bench, and asked him to consider a permanent five-judge bench, citing years-long delays in references.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Dipankar Datta",
+        "Satish Chandra Sharma",
+        "Surya Kant",
+        "R. Venkataramani",
+        "Tushar Mehta"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "citation": "2026 INSC 1040",
+        "datta_j": "Reference rejected; Baranwal settled that free and fair elections are basic structure and ECI must be insulated from exclusive executive control; matter can be decided by present bench",
+        "sharma_j": "Substantial question under Article 145(3); Act was not barred by Baranwal since Baranwal was interim; refer to Constitution Bench",
+        "joint_order": "Papers to CJI for Constitution Bench on vires of Section 7 and other provisions; request for a permanent 5-judge bench"
+      },
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2026/09/ECI-Reference-Judgement-Supreme-Court-Jaya-Thakur-v-Union-of-India.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, 2026 INSC 1040: opinions of Datta J and Sharma J and common order",
+          "published": "2026-09-23",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "we direct that the papers be placed before the Hon'ble the Chief Justice"
+        },
+        {
+          "url": "https://www.scobserver.in/reports/sc-delivers-split-verdict-sends-eci-appointments-law-challenge-to-larger-bench/",
+          "publisher": "Supreme Court Observer",
+          "title": "SC delivers split verdict, sends ECI appointments law challenge to larger bench",
+          "published": "2026-09-23",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "SCO's report attributes 'largely ornamental' to the Cabinet Minister; in the judgment (para 72) Justice Datta says the Leader of Opposition's presence becomes 'largely ornamental'. The merits remain undecided as of 25 September 2026.",
+      "check": "unchecked"
+    }
+  ],
+  "gaps": [
+    "Selection committee minutes and the text of Adhir Ranjan Chowdhury's March 2024 dissent note are not public. Look for RTI replies from the Legislative Department and any copy filed in W.P. (C) 14/2024.",
+    "The Gazette notifications (S.O. 35(E) of 2 January 2024; Goel's resignation, 9 March 2024; appointments of 14 March 2024 and 17 February 2025) were cited via India Code, PIB and reports, not opened on egazette.gov.in.",
+    "Supreme Court daily orders in W.P. (C) 14/2024 for 12 January 2024, 15 March 2024, 3 December 2024, 8 January, 3, 12 and 19 February, 19 March, 16 April, 14 May, 14 October and 11 November 2025, and 20 March and 7 April 2026 were not opened; only reports were. The outcomes of the 14 May 2025 and 7 April 2026 listings were not found. Check sci.gov.in case status.",
+    "Whether the Chief Justice has constituted a Constitution Bench after the 23 September 2026 order is unknown; check the Supreme Court cause lists.",
+    "The Section 16 (immunity) challenge by Lok Prahari: exact date of the notice order, petition number, and the Centre's and ECI's replies were not found.",
+    "Union of India's counter-affidavit in the Act challenge and its written submissions (May 2026) were not opened.",
+    "Rajya Sabha (12 December 2023) and Lok Sabha (21 December 2023) debate transcripts on the bill were not opened; eparlib.nic.in / sansad.in debates.",
+    "Rahul Gandhi's full February 2025 dissent note (posted on X) and Lok Sabha speech date were not opened directly.",
+    "The search committee's composition and the shortlists for February 2025 come only from unnamed sources; no official record was found.",
+    "No official reason for Arun Goel's March 2024 resignation has been published; the reported speculation about differences with the CEC has no primary source.",
+    "The ECI's 23 September 2026 statement was read via PTI; the original press note on eci.gov.in or PIB was not located.",
+    "Lok Sabha and Rajya Sabha bulletins of 6 April 2026 rejecting the removal notices were cited via reports; the bulletins and the notice texts were not opened.",
+    "Official notifications for the 2019-2022 appointments (Sushil Chandra, Rajiv Kumar, Anup Chandra Pandey, and Sushil Chandra's and Rajiv Kumar's elevations) were not opened; the dates rely on the Baranwal judgment's table."
+  ]
+}
