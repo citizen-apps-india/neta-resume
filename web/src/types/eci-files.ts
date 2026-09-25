@@ -1,8 +1,7 @@
 /**
- * Hand-written types for the ECI Files API (see docs/eci-files/SPEC.md §6). These mirror
- * `api/neta_api/schemas.py` exactly and exist because that API is being built in parallel — once it
- * lands, regenerate `src/types/api.ts` via `npm run codegen` and fold these into that generated file
- * the way the rest of the client does, retiring this one.
+ * Narrowed types for the ECI Files API (`api/neta_api/schemas.py`, generated as `components["schemas"]["Eci*"]`
+ * in `src/types/api.ts`). The generated types leave every defaulted field optional and every enum a plain
+ * string; these narrow them. Keep them in step with the generated file when the API changes.
  */
 
 export type EciEntryKind = "event" | "person" | "rule" | "figure" | "case" | "statement";
@@ -85,11 +84,24 @@ export interface EciTimeline {
   counts: EciTimelineCounts;
 }
 
+export interface EciTenure {
+  office?: string | null;
+  from?: string | null;
+  to?: string | null;
+}
+
+export interface EciCareerLine {
+  from?: string | null;
+  to?: string | null;
+  post?: string | null;
+  source_url?: string | null;
+}
+
 export interface EciPersonSummary {
   slug: string;
   name: string;
   role: string | null;
-  tenure: string | null;
+  tenure: EciTenure[];
   entry_count: number;
 }
 

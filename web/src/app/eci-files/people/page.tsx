@@ -6,7 +6,7 @@ import { PersonCard } from "@/components/eci-files/PersonCard";
 import { getEciPeople, type EciPersonSummary } from "@/lib/api";
 
 export const metadata: Metadata = {
-  title: "People · ECI Files · Neta·Resume",
+  title: "People · ECI Files",
   description: "Commissioners and officials named in the ECI Files record.",
   robots: { index: false, follow: false },
 };
@@ -38,11 +38,28 @@ export default async function EciFilesPeoplePage() {
         ) : people.length === 0 ? (
           <p style={{ color: "var(--muted)", padding: "24px 4px" }}>No one on record yet.</p>
         ) : (
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(240px, 100%), 1fr))", gap: 14 }}>
-            {people.map((p) => (
-              <PersonCard key={p.slug} p={p} />
-            ))}
-          </div>
+          <>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(240px, 100%), 1fr))", gap: 14 }}>
+              {people.filter((p) => p.role).map((p) => (
+                <PersonCard key={p.slug} p={p} />
+              ))}
+            </div>
+            {people.some((p) => !p.role) && (
+              <section style={{ marginTop: 30 }}>
+                <h2 className="serif" style={{ fontSize: 16, fontWeight: 600, margin: "0 0 10px" }}>Also named in the record</h2>
+                <p style={{ fontSize: 12.5, color: "var(--muted)", margin: "0 0 10px" }}>
+                  People who appear in entries but hold no Commission post covered here: judges, lawyers, ministers, party leaders.
+                </p>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "6px 14px" }}>
+                  {people.filter((p) => !p.role).map((p) => (
+                    <Link key={p.slug} href={`/eci-files/people/${p.slug}`} style={{ fontSize: 13, color: "var(--accent)", textDecoration: "none" }}>
+                      {p.name} <span className="mono" style={{ fontSize: 10.5, color: "var(--faint)" }}>{p.entry_count}</span>
+                    </Link>
+                  ))}
+                </div>
+              </section>
+            )}
+          </>
         )}
         <div style={{ marginTop: 22 }}>
           <Link href="/eci-files" className="mono" style={{ fontSize: 12, color: "var(--accent-2)", textDecoration: "none" }}>

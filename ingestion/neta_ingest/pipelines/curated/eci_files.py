@@ -27,11 +27,19 @@ DEFAULT_PATH = REPO_ROOT / "data" / "eci_files" / "entries"
 
 _TIER_TO_SOURCE_CODE = {1: "eci_files_primary", 2: "eci_files_research", 3: "eci_files_press"}
 _SLUG_RE = re.compile(r"[^a-z0-9]+")
+_PROFILE_AREAS = frozenset({"commissioners", "officials"})
 
 
 def _slugify(name: str) -> str:
     slug = _SLUG_RE.sub("-", name.strip().lower()).strip("-")
     return slug or "unknown"
+
+
+def _partial_date(v: Any) -> Any:
+    """'2026-07' -> 2026-07-01 and '2019' -> 2019-01-01; date_precision records how much was known."""
+    if isinstance(v, str) and re.fullmatch(r"\d{4}(-\d{2})?", v):
+        return f"{v}-01-01" if len(v) == 4 else f"{v}-01"
+    return v
 
 
 class EntryCitation(BaseModel):
@@ -44,6 +52,8 @@ class EntryCitation(BaseModel):
     tier: int = Field(ge=1, le=3)
     archive_url: str | None = None
     quote: str | None = None
+
+    _published = field_validator("published", mode="before")(lambda v: _partial_date(v))
 
     @field_validator("quote")
     @classmethod
@@ -74,6 +84,8 @@ class Entry(BaseModel):
     notes: str | None = None
     check: str = Field(pattern=r"^(checked|unchecked)$")
     exclude: bool = False
+
+    _date = field_validator("date", mode="before")(lambda v: _partial_date(v))
 
 
 class LoadedEntry(NamedTuple):
@@ -126,7 +138,8 @@ def _load_entries(path: Path) -> tuple[list[LoadedEntry], list[str]]:
 
 
 def _profile_name(entry: Entry) -> str:
-    return entry.people[0] if entry.people else entry.title
+    """A person entry's subject: its first named person, else the title up to "Name: role"'s colon."""
+    return entry.people[0] if entry.people else entry.title.split(":", 1)[0].strip()
 
 
 def _replace_all(loaded: list[LoadedEntry]) -> None:
@@ -169,36 +182,41 @@ def _replace_all(loaded: list[LoadedEntry]) -> None:
                 },
             )
 
-        person_names: set[str] = set()
-        profile_entry_by_name: dict[str, str] = {}
-        for _, entry in loaded:
-            person_names.update(entry.people)
+        # Spellings that slug alike ("P. Pawan", "P Pawan") are one person; a profile's own name wins.
+        names_by_slug: dict[str, str] = {}
+        profile_by_slug: dict[str, str] = {}
+        # Several areas may profile one person; a checked profile from the people areas wins.
+        profile_rank: dict[str, tuple[bool, bool]] = {}
+        for area, entry in loaded:
+            for name in entry.people:
+                slug = _slugify(name)
+                if len(name) > len(names_by_slug.get(slug, "")):
+                    names_by_slug[slug] = name
             if entry.kind == "person":
-                name = _profile_name(entry)
-                person_names.add(name)
-                profile_entry_by_name[name] = entry.id
+                name, slug = _profile_name(entry), _slugify(_profile_name(entry))
+                rank = (entry.check == "checked", area in _PROFILE_AREAS)
+                if slug not in profile_rank or rank > profile_rank[slug]:
+                    names_by_slug[slug] = name
+                    profile_by_slug[slug] = entry.id
+                    profile_rank[slug] = rank
 
-        for name in sorted(person_names):
+        for slug, name in sorted(names_by_slug.items()):
             s.execute(
                 text("""
                     INSERT INTO eci_file_person (slug, name, profile_entry_id)
                     VALUES (:slug, :name, :profile_entry_id)
                 """),
-                {
-                    "slug": _slugify(name),
-                    "name": name,
-                    "profile_entry_id": profile_entry_by_name.get(name),
-                },
+                {"slug": slug, "name": name, "profile_entry_id": profile_by_slug.get(slug)},
             )
 
         for _, entry in loaded:
-            for name in dict.fromkeys(entry.people):
+            for slug in dict.fromkeys(_slugify(name) for name in entry.people):
                 s.execute(
                     text("""
                         INSERT INTO eci_file_entry_person (entry_id, person_slug)
                         VALUES (:entry_id, :person_slug)
                     """),
-                    {"entry_id": entry.id, "person_slug": _slugify(name)},
+                    {"entry_id": entry.id, "person_slug": slug},
                 )
 
         for _, entry in loaded:

@@ -2,7 +2,7 @@
 // for the timeline. Kept separate from lib/format.ts because this vocabulary (documented/reported/
 // claim/response, day/month/year precision) belongs to this one source.
 
-import type { EciEntry, EciEntryStatus } from "@/types/eci-files";
+import type { EciCareerLine, EciEntry, EciEntryStatus, EciTenure } from "@/types/eci-files";
 
 /** Format a date honouring its recorded precision: "24 Jun 2025" (day), "Jul 2026" (month), "2019" (year).
  *  Missing or unparsable dates render "—", per house rule. */
@@ -110,6 +110,31 @@ export interface EciDetailLine {
  *  left out — their shape isn't part of the public contract, only the scalar facts are. */
 export function detailLines(details: Record<string, unknown>): EciDetailLine[] {
   return Object.entries(details)
-    .filter(([, v]) => v !== null && v !== undefined && (typeof v === "string" || typeof v === "number" || typeof v === "boolean"))
+    .filter(([k, v]) => !k.endsWith("url") && v !== null && v !== undefined && (typeof v === "string" || typeof v === "number" || typeof v === "boolean"))
     .map(([k, v]) => ({ label: humanizeKey(k), value: String(v) }));
+}
+
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+/** "2024-03-15" -> "Mar 2024", "2019" -> "2019"; anything unparseable is shown as given. */
+export function formatLooseDate(value?: string | null): string {
+  if (!value) return "—";
+  const m = /^(\d{4})(?:-(\d{2}))?/.exec(value);
+  if (!m) return value;
+  return m[2] ? `${MONTHS[Number(m[2]) - 1] ?? ""} ${m[1]}`.trim() : m[1];
+}
+
+/** One line per office held: "Election Commissioner, Mar 2024 – Feb 2025". */
+export function formatTenure(tenure: EciTenure[] | undefined | null): string[] {
+  return (tenure ?? []).map((t) => {
+    const span = `${formatLooseDate(t.from)} – ${t.to ? formatLooseDate(t.to) : "present"}`;
+    return t.office ? `${t.office}, ${span}` : span;
+  });
+}
+
+/** The career lines of a person entry's `details.career`, dropping anything malformed. */
+export function careerLines(details: Record<string, unknown>): EciCareerLine[] {
+  const raw = details.career;
+  if (!Array.isArray(raw)) return [];
+  return raw.filter((c): c is EciCareerLine => typeof c === "object" && c !== null && typeof (c as EciCareerLine).post === "string");
 }

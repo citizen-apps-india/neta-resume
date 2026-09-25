@@ -339,6 +339,84 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/eci-files/timeline": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Timeline
+         * @description Entries matching the filter (date ascending, then id), plus topic/people facets and checked/unchecked
+         *     counts scoped to that same filtered set.
+         */
+        get: operations["timeline_eci_files_timeline_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/eci-files/people": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * People
+         * @description Every person on record, with role/tenure from their profile entry and a linked-entry count.
+         */
+        get: operations["people_eci_files_people_get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/eci-files/people/{slug}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Person Page
+         * @description One person's profile (if linked) plus their full timeline.
+         */
+        get: operations["person_page_eci_files_people__slug__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/eci-files/entries/{entry_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /** Get Entry */
+        get: operations["get_entry_eci_files_entries__entry_id__get"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/health": {
         parameters: {
             query?: never;
@@ -439,6 +517,165 @@ export interface components {
             /** Description */
             description: string | null;
             source: components["schemas"]["Source"];
+        };
+        /** EciCheckCounts */
+        EciCheckCounts: {
+            /** Checked */
+            checked: number;
+            /** Unchecked */
+            unchecked: number;
+        };
+        /** EciCitation */
+        EciCitation: {
+            /** Position */
+            position: number;
+            /** Url */
+            url?: string | null;
+            /** Publisher */
+            publisher?: string | null;
+            /** Title */
+            title?: string | null;
+            /** Published */
+            published?: string | null;
+            /** Tier */
+            tier: number;
+            /** Archive Url */
+            archive_url?: string | null;
+            /** Quote */
+            quote?: string | null;
+        };
+        /** EciEntry */
+        EciEntry: {
+            /** Id */
+            id: string;
+            /** Area */
+            area: string;
+            /** Kind */
+            kind: string;
+            /** Date */
+            date?: string | null;
+            /** Date Precision */
+            date_precision: string;
+            /** Title */
+            title: string;
+            /** Summary */
+            summary: string;
+            /** Status */
+            status: string;
+            /** Attributed To */
+            attributed_to?: string | null;
+            /**
+             * Topics
+             * @default []
+             */
+            topics: string[];
+            /**
+             * States
+             * @default []
+             */
+            states: string[];
+            /** Figures */
+            figures?: unknown[];
+            /** Details */
+            details?: {
+                [key: string]: unknown;
+            };
+            /** Notes */
+            notes?: string | null;
+            /** Check Status */
+            check_status: string;
+            /**
+             * People
+             * @default []
+             */
+            people: components["schemas"]["EciPersonRef"][];
+            /** Response To */
+            response_to?: string | null;
+            /**
+             * Responses
+             * @default []
+             */
+            responses: components["schemas"]["EciResponseRef"][];
+            /**
+             * Citations
+             * @default []
+             */
+            citations: components["schemas"]["EciCitation"][];
+        };
+        /** EciPersonCount */
+        EciPersonCount: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /** Count */
+            count: number;
+        };
+        /** EciPersonDetail */
+        EciPersonDetail: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            profile?: components["schemas"]["EciEntry"] | null;
+        };
+        /** EciPersonPage */
+        EciPersonPage: {
+            person: components["schemas"]["EciPersonDetail"];
+            /** Entries */
+            entries: components["schemas"]["EciEntry"][];
+        };
+        /** EciPersonRef */
+        EciPersonRef: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+        };
+        /** EciPersonSummary */
+        EciPersonSummary: {
+            /** Slug */
+            slug: string;
+            /** Name */
+            name: string;
+            /** Role */
+            role?: string | null;
+            /** Tenure */
+            tenure?: unknown[];
+            /** Entry Count */
+            entry_count: number;
+        };
+        /**
+         * EciResponseRef
+         * @description One entry that answers another (`response_to` points back at the charge it responds to).
+         */
+        EciResponseRef: {
+            /** Id */
+            id: string;
+            /** Title */
+            title: string;
+            /** Date */
+            date?: string | null;
+        };
+        /**
+         * EciTimeline
+         * @description The filtered ECI Files timeline — entries plus facets scoped to the same filter.
+         */
+        EciTimeline: {
+            /** Entries */
+            entries: components["schemas"]["EciEntry"][];
+            /** Topics */
+            topics: components["schemas"]["EciTopicCount"][];
+            /** People */
+            people: components["schemas"]["EciPersonCount"][];
+            counts: components["schemas"]["EciCheckCounts"];
+        };
+        /** EciTopicCount */
+        EciTopicCount: {
+            /** Topic */
+            topic: string;
+            /** Count */
+            count: number;
         };
         /** Election */
         Election: {
@@ -1493,6 +1730,123 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["IndiaDashboard"];
+                };
+            };
+        };
+    };
+    timeline_eci_files_timeline_get: {
+        parameters: {
+            query?: {
+                topic?: string | null;
+                person?: string | null;
+                status?: string | null;
+                from?: string | null;
+                to?: string | null;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EciTimeline"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    people_eci_files_people_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EciPersonSummary"][];
+                };
+            };
+        };
+    };
+    person_page_eci_files_people__slug__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                slug: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EciPersonPage"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    get_entry_eci_files_entries__entry_id__get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                entry_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EciEntry"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
                 };
             };
         };

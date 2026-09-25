@@ -8,7 +8,7 @@ import { getEciTimeline, type EciTimeline } from "@/lib/api";
 // Hidden until the owner approves: noindex/nofollow, unlinked, kept out of sitemap.ts. See
 // docs/eci-files/SPEC.md — "Launch is gated."
 export const metadata: Metadata = {
-  title: "ECI Files · Neta·Resume",
+  title: "ECI Files",
   description: "A sourced, dated record of the Election Commission of India, 2019 to today.",
   robots: { index: false, follow: false },
 };

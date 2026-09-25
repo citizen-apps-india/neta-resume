@@ -128,7 +128,7 @@ def _filtered_entry_ids(
 ) -> list[str]:
     params: dict = {}
     join = ""
-    conds: list[str] = []
+    conds: list[str] = ["e.kind <> 'person'"]
     if person:
         join = "JOIN eci_file_entry_person ep ON ep.entry_id = e.id AND ep.person_slug = :person"
         params["person"] = person
@@ -161,38 +161,36 @@ def timeline(
     date_from: date | None = None,
     date_to: date | None = None,
 ) -> dict:
-    """The filtered timeline: entries (date asc, then id) plus topic/people facets and checked/unchecked
-    counts, all scoped to the same filter — so the UI's chips describe exactly what's on screen."""
+    """The filtered timeline (date asc, then id) with checked/unchecked counts for that view. The topic
+    and people facets cover the whole record, so picking one filter never hides the other choices."""
     ids = _filtered_entry_ids(db, topic=topic, person=person, status=status, date_from=date_from, date_to=date_to)
     entries = _load_entries(db, ids)
-
-    topic_counts: dict[str, int] = defaultdict(int)
-    person_counts: dict[str, list] = {}
-    checked = unchecked = 0
-    for e in entries:
-        for t in e["topics"]:
-            topic_counts[t] += 1
-        for p in e["people"]:
-            slot = person_counts.setdefault(p["slug"], [p["name"], 0])
-            slot[1] += 1
-        if e["check_status"] == "checked":
-            checked += 1
-        else:
-            unchecked += 1
+    checked = sum(1 for e in entries if e["check_status"] == "checked")
 
     topics = [
-        {"topic": t, "count": n}
-        for t, n in sorted(topic_counts.items(), key=lambda kv: (-kv[1], kv[0]))
+        {"topic": r.topic, "count": r.n}
+        for r in db.execute(
+            text(
+                "SELECT t AS topic, count(*) AS n FROM eci_file_entry, unnest(topics) AS t "
+                "GROUP BY t ORDER BY n DESC, t"
+            )
+        )
     ]
     people = [
-        {"slug": slug, "name": name, "count": n}
-        for slug, (name, n) in sorted(person_counts.items(), key=lambda kv: (-kv[1][1], kv[1][0]))
+        {"slug": r.slug, "name": r.name, "count": r.n}
+        for r in db.execute(
+            text(
+                "SELECT p.slug, p.name, count(ep.entry_id) AS n FROM eci_file_person p "
+                "JOIN eci_file_entry_person ep ON ep.person_slug = p.slug "
+                "GROUP BY p.slug, p.name ORDER BY n DESC, p.name"
+            )
+        )
     ]
     return {
         "entries": entries,
         "topics": topics,
         "people": people,
-        "counts": {"checked": checked, "unchecked": unchecked},
+        "counts": {"checked": checked, "unchecked": len(entries) - checked},
     }
 
 

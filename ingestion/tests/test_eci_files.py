@@ -171,3 +171,46 @@ def test_person_linking_matches_profile_and_mentions() -> None:
     assert person.name == "Gyanesh Kumar"
     assert person.profile_entry_id == "commissioners-kumar-cec"
     assert mentions == ["commissioners-kumar-appointment", "commissioners-kumar-cec"]
+
+
+def test_month_and_year_dates_load_as_the_first_day_of_the_period(tmp_path: Path) -> None:
+    loaded, errors = eci_files._load_entries(_write(tmp_path, [
+        _entry(id="a-month", date="2026-07", date_precision="month"),
+        _entry(id="a-year", date="2019", date_precision="year"),
+    ]))
+    assert errors == []
+    dates = {e.id: e.date.isoformat() for _, e in loaded}
+    assert dates == {"a-month": "2026-07-01", "a-year": "2019-01-01"}
+
+
+def _person(entry_id: str, name: str, *, check: str = "checked") -> dict:
+    return _entry(id=entry_id, kind="person", title=f"{name}: Election Commissioner", people=[name], check=check)
+
+
+@pytestmark_pg
+def test_spellings_that_slug_alike_are_one_person(tmp_path: Path) -> None:
+    from neta_core.db.engine import session_scope
+
+    eci_files.run(path=_write(tmp_path, [
+        _entry(id="a-one", people=["P. Pawan"]),
+        _entry(id="a-two", people=["P Pawan", "P. Pawan"]),
+    ]))
+    with session_scope() as s:
+        people = s.execute(text("SELECT slug FROM eci_file_person")).scalars().all()
+        links = s.execute(text("SELECT count(*) FROM eci_file_entry_person")).scalar_one()
+    assert people == ["p-pawan"]
+    assert links == 2
+
+
+@pytestmark_pg
+def test_a_checked_profile_from_a_people_area_wins(tmp_path: Path) -> None:
+    from neta_core.db.engine import session_scope
+
+    (tmp_path / "a.json").write_text(json.dumps({"area": "commissioners", "entries": [_person("c-goel", "Arun Goel")]}))
+    (tmp_path / "z.json").write_text(json.dumps(
+        {"area": "selection-law", "entries": [_person("s-goel", "Arun Goel", check="unchecked")]}))
+    eci_files.run(path=tmp_path)
+    with session_scope() as s:
+        profile = s.execute(
+            text("SELECT profile_entry_id FROM eci_file_person WHERE slug = 'arun-goel'")).scalar_one()
+    assert profile == "c-goel"

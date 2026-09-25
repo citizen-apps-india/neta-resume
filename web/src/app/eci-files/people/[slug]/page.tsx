@@ -5,14 +5,14 @@ import { SectionHero } from "@/components/parliament/SectionHero";
 import { Timeline } from "@/components/eci-files/Timeline";
 import { CitationList } from "@/components/eci-files/CitationList";
 import { getEciPerson, getEciPeople } from "@/lib/api";
-import { detailLines } from "@/lib/eci-files";
+import { careerLines, detailLines, formatLooseDate, formatTenure } from "@/lib/eci-files";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
   const page = await getEciPerson(slug).catch(() => null);
   const name = page?.person.name ?? "Person not found";
   return {
-    title: `${name} · ECI Files · Neta·Resume`,
+    title: `${name} · ECI Files`,
     description: `Sourced ECI Files record for ${name}.`,
     robots: { index: false, follow: false },
   };
@@ -27,6 +27,8 @@ export default async function EciFilesPersonPage({ params }: { params: Promise<{
   const summary = people.find((p) => p.slug === slug);
   const profile = page.person.profile;
   const lines = profile ? detailLines(profile.details) : [];
+  const career = profile ? careerLines(profile.details) : [];
+  const tenure = formatTenure(summary?.tenure);
 
   return (
     <>
@@ -37,8 +39,7 @@ export default async function EciFilesPersonPage({ params }: { params: Promise<{
           title={page.person.name}
           subtitle={
             <>
-              {summary?.role ?? "—"}
-              {summary?.tenure ? ` · ${summary.tenure}` : ""}
+              {tenure.length > 0 ? tenure.join(" · ") : (summary?.role ?? "—")}
             </>
           }
           backHref="/eci-files/people"
@@ -59,6 +60,29 @@ export default async function EciFilesPersonPage({ params }: { params: Promise<{
                   </div>
                 ))}
               </dl>
+            )}
+            {career.length > 0 && (
+              <div style={{ margin: "0 0 16px" }}>
+                <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.06em", color: "var(--faint)", marginBottom: 6 }}>CAREER</div>
+                <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 8 }}>
+                  {career.map((c, i) => (
+                    <li key={i} style={{ display: "grid", gridTemplateColumns: "minmax(0, 150px) 1fr", gap: "2px 14px", fontSize: 13 }}>
+                      <span className="mono" style={{ fontSize: 11.5, color: "var(--muted)", fontVariantNumeric: "tabular-nums" }}>
+                        {c.from || c.to ? `${formatLooseDate(c.from)} – ${c.to ? formatLooseDate(c.to) : "—"}` : "—"}
+                      </span>
+                      <span style={{ color: "var(--ink)" }}>
+                        {c.post}
+                        {c.source_url && (
+                          <>
+                            {" "}
+                            <a href={c.source_url} target="_blank" rel="noopener noreferrer" className="mono" style={{ fontSize: 10.5, color: "var(--accent)" }}>source ↗</a>
+                          </>
+                        )}
+                      </span>
+                    </li>
+                  ))}
+                </ol>
+              </div>
             )}
             <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.06em", color: "var(--faint)", marginBottom: 6 }}>SOURCES</div>
             <CitationList citations={profile.citations} />
