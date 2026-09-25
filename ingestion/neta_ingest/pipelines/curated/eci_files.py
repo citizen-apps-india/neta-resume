@@ -1,4 +1,5 @@
-"""ECI Files — load reviewed data files -> eci_file_entry/person/citation.
+"""ECI Files — load reviewed data files -> eci_file_entry/person/citation (+ lanes, state figures,
+headline).
 
 The input is data/eci_files/entries/*.json, hand-researched and fact-checked (BRIEF.md format,
 each file adding an `area`, each entry adding a `check` field). Nothing is fetched here: this
@@ -6,6 +7,13 @@ pipeline only reads files already in the repo. Idempotent by full replace — th
 truth, so an entry removed from the files disappears on the next load. Each citation gets a
 source_ref filed under the source code matching that citation's tier (db/seeds/sources.sql:
 eci_files_primary/research/press).
+
+Two more, optional, curated files feed the same full replace: `data/eci_files/states.json` (per-state
+SIR stage figures -> eci_file_state_stage) and `data/eci_files/headline.json` (the front page's four
+headline stats -> eci_file_headline, plus the key-moments entry ids -> eci_file_key_moment). Both are
+loaded only when `run()` is called with no explicit `path` (the real, production entries directory) —
+a caller that points `path` at a fixture or test directory gets neither, so tests never depend on the
+real files. Either can also be pointed at explicitly via `states_path`/`headline_path`.
 """
 
 from __future__ import annotations
@@ -24,10 +32,14 @@ from neta_core.provenance import record_source_ref
 
 REPO_ROOT = Path(__file__).parents[4]
 DEFAULT_PATH = REPO_ROOT / "data" / "eci_files" / "entries"
+DEFAULT_STATES_PATH = REPO_ROOT / "data" / "eci_files" / "states.json"
+DEFAULT_HEADLINE_PATH = REPO_ROOT / "data" / "eci_files" / "headline.json"
 
 _TIER_TO_SOURCE_CODE = {1: "eci_files_primary", 2: "eci_files_research", 3: "eci_files_press"}
 _SLUG_RE = re.compile(r"[^a-z0-9]+")
 _PROFILE_AREAS = frozenset({"commissioners", "officials"})
+_LANES = ("responses", "claims", "courts", "inside", "commission")
+_STAGES = ("before", "draft", "final", "appeals_filed", "appeals_pending", "restored")
 
 
 def _slugify(name: str) -> str:
@@ -88,6 +100,53 @@ class Entry(BaseModel):
     _date = field_validator("date", mode="before")(lambda v: _partial_date(v))
 
 
+def _derive_lane(entry: Entry) -> str:
+    """Deterministic lane assignment; the first matching rule wins (redesign spec 1a)."""
+    if entry.status == "response":
+        return "responses"
+    if entry.status == "claim":
+        return "claims"
+    if "courts" in entry.topics or entry.kind == "case":
+        return "courts"
+    if "dissent" in entry.topics:
+        return "inside"
+    return "commission"
+
+
+class EciStateStage(BaseModel):
+    """One state's figure at one SIR stage, flattened from states.json's per-state `stages` list."""
+
+    model_config = ConfigDict(extra="ignore")
+
+    state: str = Field(min_length=1)
+    stage: str = Field(pattern=r"^(before|draft|final|appeals_filed|appeals_pending|restored)$")
+    electors: int = Field(ge=0)
+    as_of: date_type
+    computed: bool = False
+    source_entry: str = Field(min_length=1)
+    url: str = Field(min_length=1)
+    tier: int = Field(ge=1, le=3)
+
+    _as_of = field_validator("as_of", mode="before")(lambda v: _partial_date(v))
+
+
+class HeadlineStat(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    value: str = Field(min_length=1)
+    label: str = Field(min_length=1)
+    source_label: str = Field(min_length=1)
+    source_url: str = Field(min_length=1)
+    entry_id: str = Field(min_length=1)
+
+
+class HeadlineFile(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    headline: list[HeadlineStat] = Field(default_factory=list)
+    key_moments: list[str] = Field(default_factory=list)
+
+
 class LoadedEntry(NamedTuple):
     area: str
     entry: Entry
@@ -137,13 +196,55 @@ def _load_entries(path: Path) -> tuple[list[LoadedEntry], list[str]]:
     return loaded, errors
 
 
+def _load_state_stages(path: Path | None) -> tuple[list[EciStateStage], list[str]]:
+    """states.json is optional: `[]` with no errors when absent, per "if the file exists"."""
+    if path is None or not path.exists():
+        return [], []
+    try:
+        payload = json.loads(path.read_text())
+    except json.JSONDecodeError as e:
+        return [], [f"{path.name}: invalid JSON: {e}"]
+
+    stages: list[EciStateStage] = []
+    errors: list[str] = []
+    for i, raw_state in enumerate(payload.get("states", [])):
+        state_name = raw_state.get("state") or f"states[{i}]"
+        for j, raw_stage in enumerate(raw_state.get("stages", [])):
+            try:
+                stages.append(EciStateStage.model_validate({**raw_stage, "state": raw_state.get("state")}))
+            except ValidationError as e:
+                errors.append(f"{path.name}: {state_name}.stages[{j}]: {e}")
+    return stages, errors
+
+
+def _load_headline(path: Path | None) -> tuple[HeadlineFile | None, list[str]]:
+    """headline.json is optional: `None` with no errors when absent, per "if the file exists"."""
+    if path is None or not path.exists():
+        return None, []
+    try:
+        payload = json.loads(path.read_text())
+    except json.JSONDecodeError as e:
+        return None, [f"{path.name}: invalid JSON: {e}"]
+    try:
+        return HeadlineFile.model_validate(payload), []
+    except ValidationError as e:
+        return None, [f"{path.name}: {e}"]
+
+
 def _profile_name(entry: Entry) -> str:
     """A person entry's subject: its first named person, else the title up to "Name: role"'s colon."""
     return entry.people[0] if entry.people else entry.title.split(":", 1)[0].strip()
 
 
-def _replace_all(loaded: list[LoadedEntry]) -> None:
+def _replace_all(
+    loaded: list[LoadedEntry],
+    state_stages: list[EciStateStage],
+    headline: HeadlineFile | None,
+) -> None:
     with session_scope() as s:
+        s.execute(text("DELETE FROM eci_file_key_moment"))
+        s.execute(text("DELETE FROM eci_file_headline"))
+        s.execute(text("DELETE FROM eci_file_state_stage"))
         s.execute(text("DELETE FROM eci_file_citation"))
         s.execute(text("DELETE FROM eci_file_entry_person"))
         s.execute(text("DELETE FROM eci_file_person"))
@@ -155,12 +256,12 @@ def _replace_all(loaded: list[LoadedEntry]) -> None:
                     INSERT INTO eci_file_entry
                         (id, area, kind, date, date_precision, title, summary, status,
                          attributed_to, topics, states, figures, details, response_to,
-                         notes, check_status)
+                         notes, check_status, lane)
                     VALUES
                         (:id, :area, :kind, :date, :date_precision, :title, :summary, :status,
                          :attributed_to, CAST(:topics AS text[]), CAST(:states AS text[]),
                          CAST(:figures AS jsonb), CAST(:details AS jsonb), :response_to,
-                         :notes, :check_status)
+                         :notes, :check_status, :lane)
                 """),
                 {
                     "id": entry.id,
@@ -179,6 +280,7 @@ def _replace_all(loaded: list[LoadedEntry]) -> None:
                     "response_to": entry.response_to,
                     "notes": entry.notes,
                     "check_status": entry.check,
+                    "lane": _derive_lane(entry),
                 },
             )
 
@@ -250,14 +352,70 @@ def _replace_all(loaded: list[LoadedEntry]) -> None:
                     },
                 )
 
+        for stage in state_stages:
+            s.execute(
+                text("""
+                    INSERT INTO eci_file_state_stage
+                        (state, stage, electors, as_of, computed, source_entry_id, url, tier)
+                    VALUES
+                        (:state, :stage, :electors, :as_of, :computed, :source_entry_id, :url, :tier)
+                """),
+                {
+                    "state": stage.state,
+                    "stage": stage.stage,
+                    "electors": stage.electors,
+                    "as_of": stage.as_of,
+                    "computed": stage.computed,
+                    "source_entry_id": stage.source_entry,
+                    "url": stage.url,
+                    "tier": stage.tier,
+                },
+            )
 
-def run(path: str | Path | None = None) -> None:
+        if headline is not None:
+            for position, stat in enumerate(headline.headline, start=1):
+                s.execute(
+                    text("""
+                        INSERT INTO eci_file_headline
+                            (position, value, label, source_label, source_url, entry_id)
+                        VALUES
+                            (:position, :value, :label, :source_label, :source_url, :entry_id)
+                    """),
+                    {"position": position, **stat.model_dump()},
+                )
+            for position, entry_id in enumerate(headline.key_moments, start=1):
+                s.execute(
+                    text("""
+                        INSERT INTO eci_file_key_moment (position, entry_id)
+                        VALUES (:position, :entry_id)
+                    """),
+                    {"position": position, "entry_id": entry_id},
+                )
+
+
+def run(
+    path: str | Path | None = None,
+    states_path: str | Path | None = None,
+    headline_path: str | Path | None = None,
+) -> None:
+    using_defaults = path is None
     src = Path(path) if path is not None else DEFAULT_PATH
     loaded, errors = _load_entries(src)
+
+    resolved_states = Path(states_path) if states_path is not None else (
+        DEFAULT_STATES_PATH if using_defaults else None
+    )
+    resolved_headline = Path(headline_path) if headline_path is not None else (
+        DEFAULT_HEADLINE_PATH if using_defaults else None
+    )
+    state_stages, state_errors = _load_state_stages(resolved_states)
+    headline, headline_errors = _load_headline(resolved_headline)
+
+    errors = errors + state_errors + headline_errors
     if errors:
         raise EciFilesValidationError(errors)
 
-    _replace_all(loaded)
+    _replace_all(loaded, state_stages, headline)
 
     entries = [entry for _, entry in loaded]
     people = {name for e in entries for name in e.people} | {
@@ -269,3 +427,9 @@ def run(path: str | Path | None = None) -> None:
         f"[eci-files] loaded {len(entries)} entries, {len(people)} people, {citations} citations "
         f"({checked} checked, {len(entries) - checked} unchecked)"
     )
+    if resolved_states is not None and resolved_states.exists():
+        print(f"[eci-files] loaded {len(state_stages)} state stages across "
+              f"{len({s.state for s in state_stages})} states")
+    if headline is not None:
+        print(f"[eci-files] loaded {len(headline.headline)} headline stats, "
+              f"{len(headline.key_moments)} key moments")

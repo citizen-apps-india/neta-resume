@@ -5,7 +5,7 @@ Every fact-bearing model carries a `source` (provenance) so the UI can render a 
 
 from __future__ import annotations
 
-from datetime import date
+from datetime import date, datetime
 from typing import Any, Literal
 
 from pydantic import BaseModel, Field
@@ -424,6 +424,7 @@ class EciEntry(BaseModel):
     title: str
     summary: str
     status: str                     # documented | reported | claim | response
+    lane: str                       # responses | claims | courts | inside | commission
     attributed_to: str | None = None
     topics: list[str] = []
     states: list[str] = []
@@ -437,6 +438,19 @@ class EciEntry(BaseModel):
     citations: list[EciCitation] = []
 
 
+class EciEntryCompact(BaseModel):
+    """`fields=compact` on `/eci-files/timeline` — just enough to draw a dot, no citations."""
+
+    id: str
+    date: _Date | None = None
+    date_precision: str
+    title: str
+    status: str
+    lane: str
+    check_status: str
+    people: list[EciPersonRef] = []
+
+
 class EciTopicCount(BaseModel):
     topic: str
     count: int
@@ -445,6 +459,11 @@ class EciTopicCount(BaseModel):
 class EciPersonCount(BaseModel):
     slug: str
     name: str
+    count: int
+
+
+class EciLaneCount(BaseModel):
+    lane: str
     count: int
 
 
@@ -459,7 +478,54 @@ class EciTimeline(BaseModel):
     entries: list[EciEntry]
     topics: list[EciTopicCount]
     people: list[EciPersonCount]
+    lanes: list[EciLaneCount]
     counts: EciCheckCounts
+
+
+class EciTimelineCompact(BaseModel):
+    """The `fields=compact` shape of `/eci-files/timeline`: same facets, slimmer entries."""
+
+    entries: list[EciEntryCompact]
+    topics: list[EciTopicCount]
+    people: list[EciPersonCount]
+    lanes: list[EciLaneCount]
+    counts: EciCheckCounts
+
+
+class EciHeadlineStat(BaseModel):
+    value: str
+    label: str
+    source_label: str
+    source_url: str
+    entry_id: str
+
+
+class EciSummaryCounts(BaseModel):
+    entries: int
+    checked: int
+    people: int
+    citations: int
+
+
+class EciSummary(BaseModel):
+    """`/eci-files/summary` — the front page's headline stats, key moments and record-wide counts."""
+
+    headline: list[EciHeadlineStat]
+    key_moments: list[EciEntry]
+    counts: EciSummaryCounts
+    last_loaded: datetime | None = None
+
+
+class EciDensityMonth(BaseModel):
+    month: str          # "2025-08"
+    lane: str
+    count: int
+
+
+class EciDensity(BaseModel):
+    """`/eci-files/density` — the overview strip's month x lane counts."""
+
+    months: list[EciDensityMonth]
 
 
 class EciPersonSummary(BaseModel):

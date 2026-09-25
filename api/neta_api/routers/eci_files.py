@@ -12,28 +12,52 @@ from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from neta_api.deps import get_db
-from neta_api.schemas import EciEntry, EciPersonPage, EciPersonSummary, EciTimeline
+from neta_api.schemas import (
+    EciDensity,
+    EciEntry,
+    EciPersonPage,
+    EciPersonSummary,
+    EciSummary,
+    EciTimeline,
+    EciTimelineCompact,
+)
 from neta_api.services import eci_files as eci_files_service
 
 router = APIRouter(prefix="/eci-files", tags=["eci-files"])
 
 
-@router.get("/timeline", response_model=EciTimeline)
+@router.get("/summary", response_model=EciSummary)
+def summary(db: Session = Depends(get_db)) -> EciSummary:
+    """The front page: the four headline stats, ~8 key moments, and record-wide counts."""
+    return EciSummary(**eci_files_service.summary(db))
+
+
+@router.get("/timeline", response_model=EciTimeline | EciTimelineCompact)
 def timeline(
     topic: str | None = None,
     person: str | None = None,
     status: str | None = None,
+    lane: str | None = None,
     from_: date | None = Query(None, alias="from"),
     to: date | None = None,
+    fields: str | None = None,
     db: Session = Depends(get_db),
-) -> EciTimeline:
-    """Entries matching the filter (date ascending, then id), plus topic/people facets and checked/unchecked
-    counts scoped to that same filtered set."""
-    return EciTimeline(
-        **eci_files_service.timeline(
-            db, topic=topic, person=person, status=status, date_from=from_, date_to=to
-        )
+) -> EciTimeline | EciTimelineCompact:
+    """Entries matching the filter (date ascending, then id), plus topic/people/lane facets and
+    checked/unchecked counts scoped to that same filtered set. `fields=compact` returns just enough
+    per entry to draw the lane timeline's dots (no citations)."""
+    result = eci_files_service.timeline(
+        db, topic=topic, person=person, status=status, lane=lane, date_from=from_, date_to=to, fields=fields
     )
+    if fields == "compact":
+        return EciTimelineCompact(**result)
+    return EciTimeline(**result)
+
+
+@router.get("/density", response_model=EciDensity)
+def density(db: Session = Depends(get_db)) -> EciDensity:
+    """Month x lane counts across the whole record, for the timeline overview strip."""
+    return EciDensity(**eci_files_service.density(db))
 
 
 @router.get("/people", response_model=list[EciPersonSummary])

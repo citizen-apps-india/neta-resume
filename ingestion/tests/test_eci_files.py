@@ -214,3 +214,149 @@ def test_a_checked_profile_from_a_people_area_wins(tmp_path: Path) -> None:
         profile = s.execute(
             text("SELECT profile_entry_id FROM eci_file_person WHERE slug = 'arun-goel'")).scalar_one()
     assert profile == "c-goel"
+
+
+# --- lanes: the first matching rule wins (redesign spec 1a) --------------------------------------
+
+
+def _lane_of(**overrides) -> str:
+    return eci_files._derive_lane(eci_files.Entry.model_validate(_entry(**overrides)))
+
+
+def test_lane_response_status_goes_to_responses() -> None:
+    assert _lane_of(status="response") == "responses"
+
+
+def test_lane_claim_status_goes_to_claims() -> None:
+    assert _lane_of(status="claim") == "claims"
+
+
+def test_lane_courts_topic_goes_to_courts() -> None:
+    assert _lane_of(status="documented", topics=["courts"]) == "courts"
+
+
+def test_lane_case_kind_goes_to_courts() -> None:
+    assert _lane_of(status="documented", kind="case") == "courts"
+
+
+def test_lane_dissent_topic_goes_to_inside() -> None:
+    assert _lane_of(status="documented", topics=["dissent"]) == "inside"
+
+
+def test_lane_everything_else_goes_to_commission() -> None:
+    assert _lane_of(status="documented", kind="event", topics=[]) == "commission"
+
+
+def test_lane_precedence_a_response_tagged_courts_goes_to_responses() -> None:
+    assert _lane_of(status="response", topics=["courts"], kind="case") == "responses"
+
+
+def test_lane_precedence_a_claim_tagged_dissent_goes_to_claims() -> None:
+    assert _lane_of(status="claim", topics=["dissent"]) == "claims"
+
+
+def test_lane_precedence_courts_beats_dissent() -> None:
+    assert _lane_of(status="documented", topics=["courts", "dissent"]) == "courts"
+
+
+@pytestmark_pg
+def test_lane_is_persisted_on_load() -> None:
+    from neta_core.db.engine import session_scope
+
+    eci_files.run(path=FIXTURES)
+    with session_scope() as s:
+        lane = s.execute(
+            text("SELECT lane FROM eci_file_entry WHERE id = 'commissioners-opposition-claim'")
+        ).scalar_one()
+    assert lane == "claims"
+
+
+# --- state figures: states.json is optional, validated, and loaded as a full replace -------------
+
+
+def test_state_stage_validation_rejects_unknown_stage(tmp_path: Path) -> None:
+    states_file = tmp_path / "states.json"
+    states_file.write_text(json.dumps({"states": [{"state": "Bihar", "stages": [{
+        "stage": "not-a-stage", "electors": 1, "as_of": "2025-01-01",
+        "source_entry": "x", "url": "https://example.com", "tier": 1,
+    }]}]}))
+    stages, errors = eci_files._load_state_stages(states_file)
+    assert stages == []
+    assert errors and "stage" in errors[0]
+
+
+def test_states_file_missing_is_not_an_error() -> None:
+    stages, errors = eci_files._load_state_stages(Path("/nonexistent/states.json"))
+    assert stages == []
+    assert errors == []
+
+
+def test_states_file_none_is_not_an_error() -> None:
+    stages, errors = eci_files._load_state_stages(None)
+    assert stages == []
+    assert errors == []
+
+
+@pytestmark_pg
+def test_running_with_an_explicit_entries_path_does_not_touch_states_or_headline() -> None:
+    """A fixture-pointed run must never depend on (or clear against) the real repo data files."""
+    from neta_core.db.engine import session_scope
+
+    eci_files.run(path=FIXTURES)
+    with session_scope() as s:
+        assert s.execute(text("SELECT count(*) FROM eci_file_state_stage")).scalar_one() == 0
+        assert s.execute(text("SELECT count(*) FROM eci_file_headline")).scalar_one() == 0
+        assert s.execute(text("SELECT count(*) FROM eci_file_key_moment")).scalar_one() == 0
+
+
+@pytestmark_pg
+def test_states_and_headline_load_when_explicitly_pointed_at_fixtures() -> None:
+    from neta_core.db.engine import session_scope
+
+    eci_files.run(
+        path=FIXTURES,
+        states_path=FIXTURES / "extra" / "states.json",
+        headline_path=FIXTURES / "extra" / "headline.json",
+    )
+    with session_scope() as s:
+        stage = s.execute(
+            text("SELECT state, stage, electors, computed, source_entry_id, tier "
+                 "FROM eci_file_state_stage WHERE stage = 'draft'")
+        ).one()
+        assert (stage.state, stage.electors, stage.computed) == ("Bihar", 72400000, False)
+        assert stage.source_entry_id == "sir-rules-2025-notification"
+
+        headline_rows = s.execute(
+            text("SELECT position, value, entry_id FROM eci_file_headline ORDER BY position")
+        ).all()
+        assert [r.position for r in headline_rows] == [1, 2]
+        assert headline_rows[0].entry_id == "commissioners-kumar-appointment"
+
+        key_moments = s.execute(
+            text("SELECT entry_id FROM eci_file_key_moment ORDER BY position")
+        ).scalars().all()
+        assert key_moments == ["commissioners-kumar-cec", "sir-rules-2025-notification"]
+
+    # Idempotent: running again leaves the same rows, not doubled.
+    eci_files.run(
+        path=FIXTURES,
+        states_path=FIXTURES / "extra" / "states.json",
+        headline_path=FIXTURES / "extra" / "headline.json",
+    )
+    with session_scope() as s:
+        assert s.execute(text("SELECT count(*) FROM eci_file_state_stage")).scalar_one() == 2
+        assert s.execute(text("SELECT count(*) FROM eci_file_headline")).scalar_one() == 2
+
+
+def test_headline_validation_rejects_missing_field(tmp_path: Path) -> None:
+    headline_file = tmp_path / "headline.json"
+    headline_file.write_text(json.dumps({"headline": [{"value": "1"}], "key_moments": []}))
+    headline, errors = eci_files._load_headline(headline_file)
+    assert headline is None
+    assert errors and "label" in errors[0]
+
+
+def test_headline_file_missing_is_not_an_error() -> None:
+    headline, errors = eci_files._load_headline(Path("/nonexistent/headline.json"))
+    assert headline is None
+    assert errors == []

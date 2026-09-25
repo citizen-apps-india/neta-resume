@@ -16,19 +16,23 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 _ENTRY_COLUMNS = """
-    id, area, kind, date, date_precision, title, summary, status, attributed_to,
+    id, area, kind, date, date_precision, title, summary, status, lane, attributed_to,
     topics, states, figures, details, response_to, notes, check_status
 """
 
+_COMPACT_COLUMNS = "id, date, date_precision, title, status, lane, check_status"
 
-def _load_entries(db: Session, ids: list[str]) -> list[dict]:
-    """Full EciEntry payloads for exactly these ids, in the given order (dedup, drops unknown ids)."""
+
+def _load_entries(db: Session, ids: list[str], *, compact: bool = False) -> list[dict]:
+    """EciEntry (or, compact, EciEntryCompact) payloads for exactly these ids, in the given order
+    (dedup, drops unknown ids). Compact skips the citations/responses queries entirely — the dots on
+    the lane timeline never need them."""
     ordered = list(dict.fromkeys(ids))
     if not ordered:
         return []
 
     base_rows = db.execute(
-        text(f"SELECT {_ENTRY_COLUMNS} FROM eci_file_entry WHERE id = ANY(:ids)"),
+        text(f"SELECT {_COMPACT_COLUMNS if compact else _ENTRY_COLUMNS} FROM eci_file_entry WHERE id = ANY(:ids)"),
         {"ids": ordered},
     ).all()
     by_id = {r.id: r for r in base_rows}
@@ -46,6 +50,26 @@ def _load_entries(db: Session, ids: list[str]) -> list[dict]:
         {"ids": ordered},
     ):
         people_by_entry[r.entry_id].append({"slug": r.slug, "name": r.name})
+
+    if compact:
+        out: list[dict] = []
+        for eid in ordered:
+            r = by_id.get(eid)
+            if r is None:
+                continue
+            out.append(
+                {
+                    "id": r.id,
+                    "date": r.date,
+                    "date_precision": r.date_precision,
+                    "title": r.title,
+                    "status": r.status,
+                    "lane": r.lane,
+                    "check_status": r.check_status,
+                    "people": people_by_entry.get(eid, []),
+                }
+            )
+        return out
 
     citations_by_entry: dict[str, list[dict]] = defaultdict(list)
     for r in db.execute(
@@ -86,7 +110,7 @@ def _load_entries(db: Session, ids: list[str]) -> list[dict]:
     ):
         responses_by_entry[r.response_to].append({"id": r.id, "title": r.title, "date": r.date})
 
-    out: list[dict] = []
+    out = []
     for eid in ordered:
         r = by_id.get(eid)
         if r is None:
@@ -101,6 +125,7 @@ def _load_entries(db: Session, ids: list[str]) -> list[dict]:
                 "title": r.title,
                 "summary": r.summary,
                 "status": r.status,
+                "lane": r.lane,
                 "attributed_to": r.attributed_to,
                 "topics": list(r.topics or []),
                 "states": list(r.states or []),
@@ -123,6 +148,7 @@ def _filtered_entry_ids(
     topic: str | None,
     person: str | None,
     status: str | None,
+    lane: str | None,
     date_from: date | None,
     date_to: date | None,
 ) -> list[str]:
@@ -138,6 +164,9 @@ def _filtered_entry_ids(
     if status:
         conds.append("e.status = :status")
         params["status"] = status
+    if lane:
+        conds.append("e.lane = :lane")
+        params["lane"] = lane
     if date_from:
         conds.append("e.date >= :date_from")
         params["date_from"] = date_from
@@ -158,13 +187,18 @@ def timeline(
     topic: str | None = None,
     person: str | None = None,
     status: str | None = None,
+    lane: str | None = None,
     date_from: date | None = None,
     date_to: date | None = None,
+    fields: str | None = None,
 ) -> dict:
-    """The filtered timeline (date asc, then id) with checked/unchecked counts for that view. The topic
-    and people facets cover the whole record, so picking one filter never hides the other choices."""
-    ids = _filtered_entry_ids(db, topic=topic, person=person, status=status, date_from=date_from, date_to=date_to)
-    entries = _load_entries(db, ids)
+    """The filtered timeline (date asc, then id) with checked/unchecked counts for that view. The topic,
+    people and lane facets cover the whole record, so picking one filter never hides the other choices.
+    `fields="compact"` skips citations/responses — just enough to draw the lane timeline's dots."""
+    ids = _filtered_entry_ids(
+        db, topic=topic, person=person, status=status, lane=lane, date_from=date_from, date_to=date_to
+    )
+    entries = _load_entries(db, ids, compact=fields == "compact")
     checked = sum(1 for e in entries if e["check_status"] == "checked")
 
     topics = [
@@ -186,10 +220,17 @@ def timeline(
             )
         )
     ]
+    lanes = [
+        {"lane": r.lane, "count": r.n}
+        for r in db.execute(
+            text("SELECT lane, count(*) AS n FROM eci_file_entry GROUP BY lane ORDER BY n DESC, lane")
+        )
+    ]
     return {
         "entries": entries,
         "topics": topics,
         "people": people,
+        "lanes": lanes,
         "counts": {"checked": checked, "unchecked": len(entries) - checked},
     }
 
@@ -261,3 +302,74 @@ def person_page(db: Session, slug: str) -> dict | None:
 def entry(db: Session, entry_id: str) -> dict | None:
     loaded = _load_entries(db, [entry_id])
     return loaded[0] if loaded else None
+
+
+def summary(db: Session) -> dict:
+    """The front page's headline stats (from the curated eci_file_headline table), key moments (the
+    full entries named in eci_file_key_moment) and record-wide counts."""
+    headline = [
+        {
+            "value": r.value,
+            "label": r.label,
+            "source_label": r.source_label,
+            "source_url": r.source_url,
+            "entry_id": r.entry_id,
+        }
+        for r in db.execute(
+            text(
+                "SELECT position, value, label, source_label, source_url, entry_id "
+                "FROM eci_file_headline ORDER BY position"
+            )
+        )
+    ]
+
+    key_moment_ids = [
+        r.entry_id
+        for r in db.execute(text("SELECT entry_id FROM eci_file_key_moment ORDER BY position"))
+    ]
+    key_moments = _load_entries(db, key_moment_ids)
+
+    counts_row = db.execute(
+        text(
+            """
+            SELECT
+                (SELECT count(*) FROM eci_file_entry) AS entries,
+                (SELECT count(*) FROM eci_file_entry WHERE check_status = 'checked') AS checked,
+                (SELECT count(*) FROM eci_file_person) AS people,
+                (SELECT count(*) FROM eci_file_citation) AS citations
+            """
+        )
+    ).one()
+    last_loaded = db.execute(text("SELECT max(loaded_at) FROM eci_file_entry")).scalar_one()
+
+    return {
+        "headline": headline,
+        "key_moments": key_moments,
+        "counts": {
+            "entries": counts_row.entries,
+            "checked": counts_row.checked,
+            "people": counts_row.people,
+            "citations": counts_row.citations,
+        },
+        "last_loaded": last_loaded,
+    }
+
+
+def density(db: Session) -> dict:
+    """Month x lane counts across the whole record, for the timeline's overview strip. Person-kind
+    entries are excluded, same as the timeline — they're profiles, not dated events."""
+    months = [
+        {"month": r.month, "lane": r.lane, "count": r.n}
+        for r in db.execute(
+            text(
+                """
+                SELECT to_char(date, 'YYYY-MM') AS month, lane, count(*) AS n
+                FROM eci_file_entry
+                WHERE kind <> 'person' AND date IS NOT NULL
+                GROUP BY month, lane
+                ORDER BY month, lane
+                """
+            )
+        )
+    ]
+    return {"months": months}

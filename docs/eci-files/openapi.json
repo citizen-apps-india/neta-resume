@@ -953,13 +953,35 @@
     }
    }
   },
+  "/eci-files/summary": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Summary",
+    "description": "The front page: the four headline stats, ~8 key moments, and record-wide counts.",
+    "operationId": "summary_eci_files_summary_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciSummary"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/eci-files/timeline": {
    "get": {
     "tags": [
      "eci-files"
     ],
     "summary": "Timeline",
-    "description": "Entries matching the filter (date ascending, then id), plus topic/people facets and checked/unchecked\ncounts scoped to that same filtered set.",
+    "description": "Entries matching the filter (date ascending, then id), plus topic/people/lane facets and\nchecked/unchecked counts scoped to that same filtered set. `fields=compact` returns just enough\nper entry to draw the lane timeline's dots (no citations).",
     "operationId": "timeline_eci_files_timeline_get",
     "parameters": [
      {
@@ -1011,6 +1033,22 @@
       }
      },
      {
+      "name": "lane",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Lane"
+      }
+     },
+     {
       "name": "from",
       "in": "query",
       "required": false,
@@ -1043,6 +1081,22 @@
        ],
        "title": "To"
       }
+     },
+     {
+      "name": "fields",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Fields"
+      }
      }
     ],
     "responses": {
@@ -1051,7 +1105,15 @@
       "content": {
        "application/json": {
         "schema": {
-         "$ref": "#/components/schemas/EciTimeline"
+         "anyOf": [
+          {
+           "$ref": "#/components/schemas/EciTimeline"
+          },
+          {
+           "$ref": "#/components/schemas/EciTimelineCompact"
+          }
+         ],
+         "title": "Response Timeline Eci Files Timeline Get"
         }
        }
       }
@@ -1062,6 +1124,28 @@
        "application/json": {
         "schema": {
          "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/density": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Density",
+    "description": "Month x lane counts across the whole record, for the timeline overview strip.",
+    "operationId": "density_eci_files_density_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciDensity"
         }
        }
       }
@@ -1611,6 +1695,46 @@
     ],
     "title": "EciCitation"
    },
+   "EciDensity": {
+    "properties": {
+     "months": {
+      "items": {
+       "$ref": "#/components/schemas/EciDensityMonth"
+      },
+      "type": "array",
+      "title": "Months"
+     }
+    },
+    "type": "object",
+    "required": [
+     "months"
+    ],
+    "title": "EciDensity",
+    "description": "`/eci-files/density` \u2014 the overview strip's month x lane counts."
+   },
+   "EciDensityMonth": {
+    "properties": {
+     "month": {
+      "type": "string",
+      "title": "Month"
+     },
+     "lane": {
+      "type": "string",
+      "title": "Lane"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "month",
+     "lane",
+     "count"
+    ],
+    "title": "EciDensityMonth"
+   },
    "EciEntry": {
     "properties": {
      "id": {
@@ -1652,6 +1776,10 @@
      "status": {
       "type": "string",
       "title": "Status"
+     },
+     "lane": {
+      "type": "string",
+      "title": "Lane"
      },
      "attributed_to": {
       "anyOf": [
@@ -1750,9 +1878,120 @@
      "title",
      "summary",
      "status",
+     "lane",
      "check_status"
     ],
     "title": "EciEntry"
+   },
+   "EciEntryCompact": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     },
+     "date_precision": {
+      "type": "string",
+      "title": "Date Precision"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "lane": {
+      "type": "string",
+      "title": "Lane"
+     },
+     "check_status": {
+      "type": "string",
+      "title": "Check Status"
+     },
+     "people": {
+      "items": {
+       "$ref": "#/components/schemas/EciPersonRef"
+      },
+      "type": "array",
+      "title": "People",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "date_precision",
+     "title",
+     "status",
+     "lane",
+     "check_status"
+    ],
+    "title": "EciEntryCompact",
+    "description": "`fields=compact` on `/eci-files/timeline` \u2014 just enough to draw a dot, no citations."
+   },
+   "EciHeadlineStat": {
+    "properties": {
+     "value": {
+      "type": "string",
+      "title": "Value"
+     },
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "source_label": {
+      "type": "string",
+      "title": "Source Label"
+     },
+     "source_url": {
+      "type": "string",
+      "title": "Source Url"
+     },
+     "entry_id": {
+      "type": "string",
+      "title": "Entry Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "value",
+     "label",
+     "source_label",
+     "source_url",
+     "entry_id"
+    ],
+    "title": "EciHeadlineStat"
+   },
+   "EciLaneCount": {
+    "properties": {
+     "lane": {
+      "type": "string",
+      "title": "Lane"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "lane",
+     "count"
+    ],
+    "title": "EciLaneCount"
    },
    "EciPersonCount": {
     "properties": {
@@ -1913,6 +2152,75 @@
     "title": "EciResponseRef",
     "description": "One entry that answers another (`response_to` points back at the charge it responds to)."
    },
+   "EciSummary": {
+    "properties": {
+     "headline": {
+      "items": {
+       "$ref": "#/components/schemas/EciHeadlineStat"
+      },
+      "type": "array",
+      "title": "Headline"
+     },
+     "key_moments": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntry"
+      },
+      "type": "array",
+      "title": "Key Moments"
+     },
+     "counts": {
+      "$ref": "#/components/schemas/EciSummaryCounts"
+     },
+     "last_loaded": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Loaded"
+     }
+    },
+    "type": "object",
+    "required": [
+     "headline",
+     "key_moments",
+     "counts"
+    ],
+    "title": "EciSummary",
+    "description": "`/eci-files/summary` \u2014 the front page's headline stats, key moments and record-wide counts."
+   },
+   "EciSummaryCounts": {
+    "properties": {
+     "entries": {
+      "type": "integer",
+      "title": "Entries"
+     },
+     "checked": {
+      "type": "integer",
+      "title": "Checked"
+     },
+     "people": {
+      "type": "integer",
+      "title": "People"
+     },
+     "citations": {
+      "type": "integer",
+      "title": "Citations"
+     }
+    },
+    "type": "object",
+    "required": [
+     "entries",
+     "checked",
+     "people",
+     "citations"
+    ],
+    "title": "EciSummaryCounts"
+   },
    "EciTimeline": {
     "properties": {
      "entries": {
@@ -1936,6 +2244,13 @@
       "type": "array",
       "title": "People"
      },
+     "lanes": {
+      "items": {
+       "$ref": "#/components/schemas/EciLaneCount"
+      },
+      "type": "array",
+      "title": "Lanes"
+     },
      "counts": {
       "$ref": "#/components/schemas/EciCheckCounts"
      }
@@ -1945,10 +2260,56 @@
      "entries",
      "topics",
      "people",
+     "lanes",
      "counts"
     ],
     "title": "EciTimeline",
     "description": "The filtered ECI Files timeline \u2014 entries plus facets scoped to the same filter."
+   },
+   "EciTimelineCompact": {
+    "properties": {
+     "entries": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryCompact"
+      },
+      "type": "array",
+      "title": "Entries"
+     },
+     "topics": {
+      "items": {
+       "$ref": "#/components/schemas/EciTopicCount"
+      },
+      "type": "array",
+      "title": "Topics"
+     },
+     "people": {
+      "items": {
+       "$ref": "#/components/schemas/EciPersonCount"
+      },
+      "type": "array",
+      "title": "People"
+     },
+     "lanes": {
+      "items": {
+       "$ref": "#/components/schemas/EciLaneCount"
+      },
+      "type": "array",
+      "title": "Lanes"
+     },
+     "counts": {
+      "$ref": "#/components/schemas/EciCheckCounts"
+     }
+    },
+    "type": "object",
+    "required": [
+     "entries",
+     "topics",
+     "people",
+     "lanes",
+     "counts"
+    ],
+    "title": "EciTimelineCompact",
+    "description": "The `fields=compact` shape of `/eci-files/timeline`: same facets, slimmer entries."
    },
    "EciTopicCount": {
     "properties": {

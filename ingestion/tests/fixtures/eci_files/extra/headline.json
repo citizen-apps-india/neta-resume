@@ -1,0 +1,22 @@
+{
+  "headline": [
+    {
+      "value": "2",
+      "label": "commissioners appointed under the 2023 Act",
+      "source_label": "Election Commission of India",
+      "source_url": "https://eci.gov.in/notice-2",
+      "entry_id": "commissioners-kumar-appointment"
+    },
+    {
+      "value": "1",
+      "label": "Special Intensive Revision ordered",
+      "source_label": "Election Commission of India",
+      "source_url": "https://eci.gov.in/sir-order",
+      "entry_id": "sir-rules-2025-notification"
+    }
+  ],
+  "key_moments": [
+    "commissioners-kumar-cec",
+    "sir-rules-2025-notification"
+  ]
+}
