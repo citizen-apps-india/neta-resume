@@ -35,7 +35,7 @@ def upgrade() -> None:
         sa.Column("state", sa.Text(), nullable=False),
         sa.Column("stage", sa.Text(), nullable=False),
         sa.Column("electors", sa.BigInteger(), nullable=False),
-        sa.Column("as_of", sa.Date(), nullable=False),
+        sa.Column("as_of", sa.Date(), nullable=True),
         sa.Column("computed", sa.Boolean(), server_default=sa.text("false"), nullable=False),
         sa.Column("source_entry_id", sa.Text(), nullable=False),
         sa.Column("url", sa.Text(), nullable=False),

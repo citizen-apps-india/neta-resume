@@ -537,7 +537,8 @@
         "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2Fzznw5Qtyss%2B8ILdni0Z0RBAkwVPAdy67ySd4dS2SdwaNNq0p8WWXDoViUeHPyzG9HgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
         "note": "PN/278/2025 confirms publication on 01.08.2025, 7.24 crore electors, no deletion without hearing and written order, Form 6 with Declaration; 65 lakh figure from PN/313/2025."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "sir-rules-blo-remuneration",
@@ -980,7 +981,8 @@
         "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
         "note": "PN/313/2025 confirms ~7.42 crore, 65 lakh draft removals, 3.66 lakh removed, 21.53 lakh added, applications until ten days before last date of nominations, appeals to DM and CEO. PN/353/2025 could not be opened; notes reworded to mark its figures unverified."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "sir-rules-phase2-forms-last-sir-linkage",
@@ -1173,7 +1175,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "IE (23.09.2026) reports the 04.11.2025 note by Sanjay Kumar on Sandhu's direction to Khanna and senior officers; quoted wording matches. Status \"reported\" is correct."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "sir-rules-bla-criteria",
@@ -1540,7 +1543,8 @@
         "checked_url": "https://www.newsonair.gov.in/west-bengal-draft-voters-list-published-under-sir-2026",
         "note": "AIR (16.12.2025) confirms publication that day, >58 lakh deleted as ASD and 31,38,374 unmapped called for hearing; IE 18.09.2026 gives the draft date as 17 December in one place and 16 December in another, as noted."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "sir-rules-it-discretion-note",
@@ -1634,7 +1638,8 @@
         "checked_url": "https://www.newsonair.gov.in/eci-to-release-draft-voter-list-for-uttar-pradesh-today-after-sir-process/",
         "note": "AIR (06.01.2026): 12,55,56,025 in draft vs 15,44,30,092; claims 6 Jan-6 Feb; final 6 March."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "sir-rules-form7-bulk-clarification",
@@ -2002,6 +2007,15 @@
           "tier": 3,
           "archive_url": null,
           "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/today-india-news-live-updates-andhra-bengal-weather-25-september-2026-cjp-gyanesh-kumar-goa-sir-opposition-bjp-10893068/",
+          "publisher": "The Indian Express",
+          "title": "India news LIVE updates, 25 September 2026",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "response_to": null,
@@ -2072,7 +2086,8 @@
         "checked_url": "https://indianexpress.com/article/political-pulse/bengal-voters-deleted-adjudication-election-rolls-assembly-polls-10624203/",
         "note": "IE 07.04.2026: final roll 28 Feb at 7.04 crore incl. 60.06 lakh under adjudication; final supplementary list on Monday 6 April took the roll to 6.77 crore. The original 14 Feb date is from PN/359/2025."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "sir-rules-wb-appellate-tribunals",
@@ -2438,7 +2453,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "IE reports Joshi's 29 May note, two committees with an IIT expert, Sandhu's endorsement on 13 July and his 14 August note; quotes match. No specific ECI response; PN/119/2026 para 7 describes ECINET security and audit controls in general terms."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "sir-rules-phase3-enumeration-first-group",
@@ -2641,7 +2657,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "IE confirms the 28 July order, the removal of Sanjay Kumar's oversight and the 29 July letters. Added the reported context that Garg held the charge while the regular officer was on leave, and noted that no response from Garg is reported."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "sir-rules-work-allocation-set-aside",
@@ -2815,7 +2832,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "IE confirms the 14 August note and quoted wording. Corrected the note on Khanna's non-response: IE records it for the Goa questionnaire, not for this note. Paired with sir-rules-eci-ecinet-access-response."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "sir-rules-delhi-maharashtra-draft",
@@ -2916,6 +2934,60 @@
           "tier": 1,
           "archive_url": null,
           "quote": "All these decisions are an outcome of the unanimous decisions"
+        },
+        {
+          "url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+          "publisher": "The Indian Express",
+          "title": "'Differing views' part of 'decision-making', says EC, does not address concerns two ECs red-flagged",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "Differing views and observations are a normal part of deliberation in any institution"
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/differing-views-normal-ec-amid-row/",
+          "publisher": "The Tribune",
+          "title": "Differing views normal: EC amid row",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "during the drafting stage are part of standard administrative practice"
+        },
+        {
+          "url": "https://scroll.in/latest/1095976/cec-gyanesh-kumar-should-resign-turn-approver-says-rahul-gandhi",
+          "publisher": "Scroll",
+          "title": "CEC Gyanesh Kumar should resign, turn approver, says Rahul Gandhi",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://thefederal.com/category/news/election-commission-sir-257435",
+          "publisher": "The Federal",
+          "title": "EC denies SIR dissent report; Oppn calls for CEC's removal, arrest, fresh polls",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://theprint.in/india/ec-says-differing-views-normal-part-of-deliberations-all-orders-carry-legal-sanctions/3050993/",
+          "publisher": "ThePrint (PTI feed)",
+          "title": "EC says differing views normal part of deliberations; all orders carry legal sanctions",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "Differing views and observations are a normal part of deliberation"
+        },
+        {
+          "url": "https://www.rediff.com/news/report/opposition-to-move-third-motion-to-remove-cec-gyanesh-kumar/20260924.htm",
+          "publisher": "Rediff (PTI)",
+          "title": "Opposition to move third motion to remove CEC Gyanesh Kumar",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "response_to": "sir-rules-ie-14-objections-report",
@@ -3133,7 +3205,8 @@
         "checked_url": "https://indianexpress.com/article/india/goa-97-voters-electoral-roll-sir-row-election-commission-10892902/",
         "note": "IE 25.09.2026 quotes the Goa CEO statement of Thursday 24 Sep and Goel; \"the call was theirs\" is quoted in IE 24.09.2026."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     }
   ],
   "gaps": [

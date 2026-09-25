@@ -71,7 +71,8 @@
         }
       ],
       "notes": "Dates are from the tenure table in the Supreme Court's Anoop Baranwal judgment (paragraph 52), which records the executive-only convention in force until 2 March 2023: the President appointed on the Prime Minister's advice, usually a serving or retired Secretary-rank civil servant, and the senior-most EC was elevated to CEC. The table's columns are garbled in the Indian Kanoon text; individual gazette notifications were not opened.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "selection-law-lavasa-resignation-2020",
@@ -178,7 +179,8 @@
         }
       ],
       "notes": "Dates are from the tenure table in the Supreme Court's Anoop Baranwal judgment (paragraph 52), which records the executive-only convention in force until 2 March 2023: the President appointed on the Prime Minister's advice, usually a serving or retired Secretary-rank civil servant, and the senior-most EC was elevated to CEC. The table's columns are garbled in the Indian Kanoon text; individual gazette notifications were not opened.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "selection-law-anup-pandey-joins-2021",
@@ -359,7 +361,8 @@
         }
       ],
       "notes": "ThePrint/ANI report the appointment was notified on 19 November; the judgment says the appointment was notified on 18 November. The judgment refers to 'the Minister of Law and Justice' without naming him. Goel was due to superannuate on 31 December 2022.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "selection-law-person-arun-goel",
@@ -492,7 +495,8 @@
         }
       ],
       "notes": "Postings in Punjab 2001-2010 (Punjab Warehousing Corporation, Punjab Industries and Export Corporation, Department of Expenditure, Housing and Urban Development, Power and Irrigation) are also listed in the PIB bio.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "selection-law-court-questions-goel-speed",
@@ -1431,7 +1435,8 @@
         }
       ],
       "notes": "No reason for the resignation was given publicly. Goel could not be reached by Deccan Herald. The Law Ministry notification was reported by DH but not opened.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "selection-law-opposition-on-goel-resignation",
@@ -1616,7 +1621,8 @@
         "checked_url": "https://indianexpress.com/article/political-pulse/adhir-ranjan-chowdhury-gyanesh-kumar-sukhbir-singh-sandhu-9214200/",
         "note": "IE's full article confirms the 8-10 minute timeline, the 212-name list, the exact 'fait accompli' quote, and Chowdhury saying he had nothing against the two appointees personally but objected to procedure."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "selection-law-ecs-selected-march-2024",
@@ -1700,7 +1706,8 @@
         }
       ],
       "notes": "The shortlist names and who proposed whom come only from Chowdhury's account; minutes of the meeting are not public.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "selection-law-cec-on-goel-resignation",
@@ -2161,7 +2168,8 @@
         "checked_url": "https://indianexpress.com/article/india/chief-election-commissioner-selection-committee-meeting-pm-modi-rahul-gandhi-amit-shah-9841211/",
         "note": "IE confirms the roughly 30-minute PMO meeting, five-name panels for each post, Gandhi's deferral request, and the late-night notification of Kumar as CEC and Joshi as EC."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "selection-law-bjp-on-rahul-dissent",
@@ -2539,6 +2547,42 @@
           "tier": 3,
           "archive_url": null,
           "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/rajya-sabha-chairman-cp-radhakrishnan-rejected-opposition-motion-remove-cec-gyanesh-kumar-10622419/",
+          "publisher": "The Indian Express",
+          "title": "Rajya Sabha Chairman, Lok Sabha Speaker reject Opposition move to impeach CEC Gyanesh Kumar",
+          "published": "2026-04-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.thequint.com/news/breaking-news/rajya-sabha-chairman-rejects-opposition-motion-cec",
+          "publisher": "The Quint",
+          "title": "Lok Sabha Speaker, Rajya Sabha Chairman Reject Opposition Motion To Remove CEC",
+          "published": "2026-04-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://thefederal.com/category/news/cec-removal-notices-cite-rahul-gandhi-dissent-voter-list-manipulation-claims-234494",
+          "publisher": "The Federal",
+          "title": "CEC removal notices cite Rahul Gandhi dissent, voter list manipulation claims",
+          "published": "2026-03-16",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.newsonair.gov.in/rs-chairman-cp-radhakrishnan-and-ls-speaker-om-bilra-reject-impeachment-notice-of-motion-against-cec-gyanesh-kumar",
+          "publisher": "All India Radio News (Akashvani)",
+          "title": "RS Chairman and LS Speaker reject notice of motion against CEC Gyanesh Kumar",
+          "published": "2026-04-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "notes": "The notice text is not public; contents are from sources quoted by Deccan Herald. No response from the CEC to the notice was found. Deccan Herald reports it is the first such notice against any of 25 CECs.",
@@ -2691,7 +2735,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
         "note": "IE's full text confirms Sandhu's 16 April 2026 note and its exact quote, and Joshi's near-identical note eight days later citing Article 324 and the 2023 Act."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "selection-law-second-removal-notice",
@@ -2745,6 +2790,42 @@
           "publisher": "Livemint",
           "title": "Can CEC Gyanesh Kumar be removed? Impeachment rules, process and past attempts | Explained",
           "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.newsgram.com/india/2026/04/25/cec-gyanesh-kumar-removal-opposition-motion-rajya-sabha",
+          "publisher": "NewsGram",
+          "title": "Opposition Moves Fresh Motion to Remove CEC Gyanesh Kumar Over 'Proven Misbehaviour'",
+          "published": "2026-04-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/opposition-to-submit-fresh-notice-in-ls-rs-for-motion-seeking-cecs-removal/",
+          "publisher": "The Tribune (PTI)",
+          "title": "Opposition once again to push for Chief Election Commissioner's removal: Sources",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://m.thewire.in/article/politics/with-nine-charges-73-opposition-mps-move-fresh-notice-in-rajya-sabha-to-remove-cec-gyanesh-kumar",
+          "publisher": "The Wire",
+          "title": "With Nine Charges, 73 Opposition MPs Move Fresh Notice in Rajya Sabha to Remove CEC Gyanesh Kumar",
+          "published": "2026-04-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://aninews.in/news/national/politics/why-are-you-troubling-mps-kiren-rijiju-hits-back-at-jairam-ramesh-after-opposition-mps-sign-notice-seeking-removal-of-cec-gyanesh-kumar20260424231925/",
+          "publisher": "ANI",
+          "title": "'Why are you troubling MPs?': Kiren Rijiju hits back at Jairam Ramesh",
+          "published": "2026-04-24",
           "tier": 3,
           "archive_url": null,
           "quote": null
@@ -2977,7 +3058,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "IE's full text confirms Garg's 28 July 2026 work-allocation change, the two ECs' 29 July letters to the Cabinet Secretary calling it a 'clear violation' (exact quote), and their 30 July joint order setting it aside pending consensus."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "selection-law-reference-reserved",
@@ -3152,7 +3234,8 @@
       ],
       "response_to": "selection-law-sandhu-invokes-2023-act",
       "notes": "The Commission's statement is quoted by PTI; the original press note was not opened. IE reported that the Commission had not responded to its 21 September questionnaire before publication, and that the ECs did not reply to emails.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "selection-law-split-verdict-reference",

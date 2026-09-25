@@ -1,0 +1,162 @@
+{
+  "objections": [
+    {
+      "n": 1,
+      "date": "2025-11-04",
+      "date_precision": "day",
+      "by": [
+        "Sukhbir Singh Sandhu"
+      ],
+      "concerns": "On Sandhu's direction, the Deputy Election Commissioner told the IT division that only EROs, DEOs and CEOs may exercise the statutory roll-management powers, and that IT systems must comply strictly with the law.",
+      "entry_ids": [
+        "officials-sanjay-kumar-note-nov-2025"
+      ],
+      "followed_by": null,
+      "public": false
+    },
+    {
+      "n": 2,
+      "date": "2026-04-16",
+      "date_precision": "day",
+      "by": [
+        "Sukhbir Singh Sandhu"
+      ],
+      "concerns": "Sandhu told senior officers that communications were going out in the Commission's name without its approval and that all future ones must have it, citing the 2023 Act.",
+      "entry_ids": [
+        "sir-rules-commission-approval-communications"
+      ],
+      "followed_by": "Vivek Joshi issued a similar direction on 24 April 2026 (objection 4).",
+      "public": false
+    },
+    {
+      "n": 3,
+      "date": "2026-04-16",
+      "date_precision": "day",
+      "by": [
+        "Sukhbir Singh Sandhu"
+      ],
+      "concerns": "The same day, Sandhu recorded that the IT division had built new modules and portals without bringing them to him or the Commission, and that he had learned of them from the media; he asked that the Director General (IT) be directed to brief all members and obtain approvals.",
+      "entry_ids": [
+        "officials-sandhu-note-it-modules"
+      ],
+      "followed_by": null,
+      "public": false
+    },
+    {
+      "n": 4,
+      "date": "2026-04-24",
+      "date_precision": "day",
+      "by": [
+        "Vivek Joshi"
+      ],
+      "concerns": "Eight days after Sandhu, Joshi told the same officers that several communications were being sent in the Commission's name without its approval, citing Article 324 and the 2023 Act.",
+      "entry_ids": [
+        "statements-reporting-joshi-note-communications-approval"
+      ],
+      "followed_by": null,
+      "public": false
+    },
+    {
+      "n": 5,
+      "date": "2026-05-16",
+      "date_precision": "day",
+      "by": [
+        "Vivek Joshi"
+      ],
+      "concerns": "On a proposal to change Form 6 through the SIR framework, Joshi recorded that Forms 6 and 8 are statutory and cannot be altered without amending the Registration of Electors Rules, 1960, and that the lawful course was to route the proposal through government rulemaking; Sandhu concurred on file three days later.",
+      "entry_ids": [
+        "statements-reporting-joshi-note-form6-rules"
+      ],
+      "followed_by": "Despite the note, the online Form 6 on ECINET carried the added SIR-linked declaration by July 2026 without a notified rule change (sir-rules-form6-online-sir-declaration), which drew Sandhu's 13 August objection (objection 10).",
+      "public": false
+    },
+    {
+      "n": 6,
+      "date": "2026-05-29",
+      "date_precision": "day",
+      "by": [
+        "Vivek Joshi"
+      ],
+      "concerns": "Joshi wrote to the CEC, Sandhu and the Deputy Election Commissioner about the 'gradual centralisation' of the electoral roll database and proposed two committees, including an outside IIT expert, to certify who holds credentials to change it and that ECINet complies with the law.",
+      "entry_ids": [
+        "statements-reporting-joshi-note-centralisation-audit"
+      ],
+      "followed_by": "Sandhu endorsed the proposal on 13 July 2026; on 14 August he recorded that he knew of no action taken on it.",
+      "public": false
+    },
+    {
+      "n": 7,
+      "date": "2026-07-29",
+      "date_precision": "day",
+      "by": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "concerns": "The two Election Commissioners wrote to the Cabinet Secretary seeking action against Senior Deputy Election Commissioner Maneesh Garg, whose 28 July work-allocation order had removed Deputy Election Commissioner Sanjay Kumar's oversight of the IT division without consulting them.",
+      "entry_ids": [
+        "officials-ecs-write-cabinet-secretary"
+      ],
+      "followed_by": "Sandhu and Joshi jointly set the work-allocation order aside the next day (objection 8).",
+      "public": false
+    },
+    {
+      "n": 8,
+      "date": "2026-07-30",
+      "date_precision": "day",
+      "by": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "concerns": "The two Commissioners jointly set aside Garg's 28 July work-allocation order as made without reason or justification, directing that the previous allocation continue until the Commission reached consensus.",
+      "entry_ids": [
+        "sir-rules-work-allocation-set-aside"
+      ],
+      "followed_by": "The CEC and both Election Commissioners held their first full meeting in four months on 9 September 2026.",
+      "public": false
+    },
+    {
+      "n": 9,
+      "date": "2026-08",
+      "date_precision": "month",
+      "by": [
+        "Sukhbir Singh Sandhu"
+      ],
+      "concerns": "Sandhu asked Commission officials who had authorised and who had actually filed appeals on the ECI's behalf against West Bengal voters that judicial officers had included on the roll, recording that neither he, Joshi nor the West Bengal CEO had been told.",
+      "entry_ids": [
+        "sir-rules-wb-eci-appeals-against-inclusions"
+      ],
+      "followed_by": "The ECI told the Supreme Court on 18 Sep 2026 that 16.10 lakh appeals sought deletion of included voters, without saying who had filed them.",
+      "public": false
+    },
+    {
+      "n": 10,
+      "date": "2026-08-13",
+      "date_precision": "day",
+      "by": [
+        "Sukhbir Singh Sandhu"
+      ],
+      "concerns": "Sandhu called the SIR-linked declaration added to online Form 6 'unauthorised and illegal' and directed the Deputy Election Commissioner and DG (IT) to remove it.",
+      "entry_ids": [
+        "officials-sandhu-form6-note"
+      ],
+      "followed_by": null,
+      "public": false
+    },
+    {
+      "n": 11,
+      "date": "2026-08-14",
+      "date_precision": "day",
+      "by": [
+        "Sukhbir Singh Sandhu"
+      ],
+      "concerns": "Sandhu recorded that the DG (IT) had no legal authority to restrict statutory roll officers' access to ERONet, and directed that full access be restored to them.",
+      "entry_ids": [
+        "officials-sandhu-dgit-access-charge"
+      ],
+      "followed_by": null,
+      "public": false
+    }
+  ],
+  "missing": 3,
+  "notes": "The Indian Express (23 Sep 2026, Ritika Chopra) reported at least 14 formal, on-record objections by Election Commissioners Sukhbir Singh Sandhu and Vivek Joshi between November 2025 and August/September 2026, including four on a single day, grouped around four subjects: the Form 6 change, centralised IT control of the roll software, appeals against restored West Bengal voters, and custody of the roll database. Its own reporting states 'not all 14 objections are itemised in the published reports' (sir-rules-ie-14-objections-report); this file lists only the 11 the entries independently document, each with its own dated note or letter. The record does not say which single day carried four objections, so none is guessed here; 16 April 2026 is the only date on which two distinct, separately-dated objections (entries 2 and 3) are both recorded."
+}

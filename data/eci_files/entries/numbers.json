@@ -413,6 +413,15 @@
           "tier": 1,
           "archive_url": null,
           "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAYCxQSwErm054LraiPGlBSWYP5beHYo2ouO%2BqGjFKA7nw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/353/2025: Successful conduct of Bihar Elections: Zero Repolls, Zero Appeals during SIR in Bihar",
+          "published": "2025-11-13",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "response_to": null,
@@ -1019,6 +1028,24 @@
           "tier": 1,
           "archive_url": "http://web.archive.org/web/20260504133538/https://ceowestbengal.wb.gov.in/Downloads/SIR2026/SIR_PressNote/CEO%20PN_36_16.12.2025.pdf",
           "quote": null
+        },
+        {
+          "url": "https://www.newsonair.gov.in/west-bengal-draft-voters-list-published-under-sir-2026",
+          "publisher": "All India Radio News (newsonair.gov.in)",
+          "title": "West Bengal draft voters list published under SIR",
+          "published": "2025-12-16",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20251219142418/https://www.newsonair.gov.in/west-bengal-draft-voters-list-published-under-sir-2026/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+          "publisher": "The Indian Express",
+          "title": "Missing in Election Commission affidavit: Break-up of Bengal SIR appeals for inclusion, exclusion of names",
+          "published": "2026-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "response_to": null,
@@ -1515,6 +1542,24 @@
           "url": "https://newsonair.gov.in/election-commission-publishes-draft-sir-electoral-roll-of-uttar-pradesh/",
           "publisher": "Akashvani News (All India Radio)",
           "title": "Names of 2.89 crore voters not found in draft electoral roll of Uttar Pradesh after SIR: ECI",
+          "published": "2026-01-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.newsonair.gov.in/eci-to-release-draft-voter-list-for-uttar-pradesh-today-after-sir-process/",
+          "publisher": "All India Radio News (newsonair.gov.in)",
+          "title": "ECI to release draft voter list for Uttar Pradesh today after SIR process",
+          "published": "2026-01-06",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260106024857/https://www.newsonair.gov.in/eci-to-release-draft-voter-list-for-uttar-pradesh-today-after-sir-process/",
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/uttar-pradesh/uttar-pradesh-sir-draft-voter-list-out-more-than-289-cr-voters-not-included-due-to-deaths-migrations-3853077",
+          "publisher": "Deccan Herald",
+          "title": "Uttar Pradesh SIR draft voter list out: More than 2.89 cr voters not included due to deaths, migrations",
           "published": "2026-01-06",
           "tier": 3,
           "archive_url": null,
@@ -2386,6 +2431,24 @@
           "title": "General Election to the Legislative Assemblies of Assam, Kerala, Tamil Nadu, West Bengal and Puducherry, 2026 (No. 464/PN/2026/EPS)",
           "published": "2026-03-15",
           "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/bengal-voters-deleted-adjudication-election-rolls-assembly-polls-10624203/",
+          "publisher": "The Indian Express",
+          "title": "Of 27.16 lakh Bengal voters deleted after adjudication, doors shut for more than half",
+          "published": "2026-04-07",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260419145836/https://indianexpress.com/article/political-pulse/bengal-voters-deleted-adjudication-election-rolls-assembly-polls-10624203/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+          "publisher": "The Indian Express",
+          "title": "Missing in Election Commission affidavit: Break-up of Bengal SIR appeals for inclusion, exclusion of names",
+          "published": "2026-09-18",
+          "tier": 3,
           "archive_url": null,
           "quote": null
         }
@@ -4321,6 +4384,15 @@
           "url": "https://globalgovernancenews.com/goa-ceo-says-many-of-97-omitted-voters-now-enrolled/",
           "publisher": "Global Governance News",
           "title": "Goa CEO Says Many of 97 Omitted Voters Now Enrolled",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/goa-97-voters-electoral-roll-sir-row-election-commission-10892902/",
+          "publisher": "The Indian Express",
+          "title": "After Express report, Goa CEO says cases of 97 voters 'processed separately'",
           "published": "2026-09-25",
           "tier": 3,
           "archive_url": null,

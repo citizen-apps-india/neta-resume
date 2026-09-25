@@ -827,7 +827,8 @@
         "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2Fzznw5Qtyss%2B8ILdni0Z0RBAkwVPAdy67ySd4dS2SdwaNNq0p8WWXDoViUeHPyzG9HgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
         "note": "PN-278/2025 (1 Aug 2025): 7.24 crore in draft, credits CEO, 38 DEOs, 243 EROs; PN-313 gives 65 lakh removed before draft."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-wb-suspension-order-2025",
@@ -1454,7 +1455,8 @@
         "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
         "note": "PN-313/2025 table matches all figures (7.89 cr, 7.24 cr, 3.66 lakh, 21.53 lakh, ~7.42 cr)."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-sanjay-kumar-note-nov-2025",
@@ -1540,6 +1542,24 @@
           "tier": 3,
           "archive_url": null,
           "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/baseless-why-no-objections-filed-ec-on-rahul-allegations",
+          "publisher": "The Tribune",
+          "title": "Baseless, why no objections filed: EC on Rahul allegations",
+          "published": "2025-11-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.india.com/news/india/zero-appeals-against-voter-rolls-ec-rebuts-rahul-gandhis-h-files-haryana-voter-fraud-allegations-asks-why-congress-didnt-file-appeals-in-bihar-sir-vote-chori-8168518/",
+          "publisher": "India.com",
+          "title": "'Zero appeals against...': EC rebuts Rahul Gandhi's 'H Files' Haryana voter fraud allegations",
+          "published": "2025-11-05",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "response_to": "officials-rahul-h-files",
@@ -1579,6 +1599,24 @@
           "publisher": "The Tribune",
           "title": "No appeal was filed after final electoral rolls: Haryana CEO",
           "published": "2025-11-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/amp/story/india%2Fbrazilian-model-voted-22-times-to-ec-rahul-gandhi-drops-h-bomb-on-haryana-3787432",
+          "publisher": "Deccan Herald",
+          "title": "'Brazilian model's photo used for 22 voters in Haryana: Rahul Gandhi drops new 'hydrogen bomb'",
+          "published": "2025-11-05",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.etvbharat.com/en/bharat/hydrogen-bomb-unleashed-rahul-gandhi-press-conference-on-the-h-files-vote-theft-in-haryana-polls-enn25110501907",
+          "publisher": "ETV Bharat",
+          "title": "'Hydrogen Bomb' Unleashed: Rahul Gandhi Alleges 'Sarkar Chori' In Haryana, Claims One In Eight Voters 'Fake'",
+          "published": "2025-11-05",
           "tier": 3,
           "archive_url": null,
           "quote": null
@@ -1764,7 +1802,8 @@
         "checked_url": "https://www.deccanherald.com/india/uttar-pradesh/uttar-pradesh-sir-draft-voter-list-out-more-than-289-cr-voters-not-included-due-to-deaths-migrations-3853077",
         "note": "Deccan Herald: 12,55,56,025 forms, 2.17 crore moved/missing/absent, 46.23 lakh dead, 25.46 lakh duplicates, 2.89 crore off."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-ecinet-launch-khanna",
@@ -1811,7 +1850,8 @@
         "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzGjJMI0%2FjETs7fjrM8lYn4n%2Fg7yrAAgYNiN2nc9Wg99XpfL5Ojw2H3182VkcyCdub56VRYj06iIsFTelbq233Uw%3D%3D",
         "note": "PN-008/2026 matches Khanna's remarks, 40+ apps and 10 crore forms. Added the note's own account of the ECs' role for balance."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-goa-rollback-emails",
@@ -2031,7 +2071,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
         "note": "IE 10891422 confirms the checks to 20 Sep, 65 from Taleigao and Form 6 advice. Added the IE live blog as a source because the 1.27 lakh figure comes from it, not the cited article."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-tn-final-roll",
@@ -2993,7 +3034,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "IE 10889738: 29 May note, IIT expert, two committees; Sandhu 13 Jul endorsement and 14 Aug note."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-garg-upgrade",
@@ -3058,6 +3100,15 @@
           "tier": 3,
           "archive_url": "http://web.archive.org/web/20260719214346/https://indianexpress.com/article/india/election-commission-changes-form-6-for-new-voters-inserts-section-asking-them-about-parents-in-sir-10782435/",
           "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/explained/election-commission-new-voter-registration-sir-form6-10782904/",
+          "publisher": "The Indian Express",
+          "title": "What the Election Commission's new online registration requirement means for voters",
+          "published": "2026-07-12",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "notes": "The ECI did not respond to the newspaper. Which officers ordered the change is not public. Context: the ECI's Bihar SIR order of 24 Jun 2025 already required an additional Declaration Form (Annexure D) with Form 6/Form 8 applications; IE reports the online Form 6 section was not shown for Bihar.",
@@ -3112,6 +3163,24 @@
           "url": "https://www.nationalheraldindia.com/politics/ecipress-note-silent-on-role-of-dg-itseema-khanna-flagged-by-election-commissioners",
           "publisher": "National Herald",
           "title": "ECI 'press note' silent on role of DG (IT) flagged by election commissioners",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+          "publisher": "The Indian Express",
+          "title": "'Differing views' part of 'decision-making', says EC, does not address concerns two ECs red-flagged",
           "published": "2026-09-23",
           "tier": 3,
           "archive_url": null,
@@ -3175,6 +3244,15 @@
           "tier": 3,
           "archive_url": null,
           "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+          "publisher": "The Indian Express",
+          "title": "'Differing views' part of 'decision-making', says EC, does not address concerns two ECs red-flagged",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "notes": "Letters seen by The Indian Express. No response from Garg, the Cabinet Secretary or the ECI on this was reported; the ECI and both ECs did not answer the newspaper.",
@@ -3224,7 +3302,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "IE 10889738: 30 Jul joint note, 'without any reason and justification', copied to CEC."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-bharti-repatriated",
@@ -3478,7 +3557,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
         "note": "IE 10889737 quotes Sandhu's questions; IE 10885130 gives 16.10 lakh. Fixed the filing date to 18 Sep 2026 (the Friday before the 19 Sep report)."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-sandhu-form6-note",
@@ -3567,6 +3647,24 @@
           "publisher": "The Indian Express",
           "title": "8 emails in 7 days, but valid Goa voters still left out: EC's flawed system",
           "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+          "publisher": "The Indian Express",
+          "title": "'Differing views' part of 'decision-making', says EC, does not address concerns two ECs red-flagged",
+          "published": "2026-09-23",
           "tier": 3,
           "archive_url": null,
           "quote": null
@@ -3885,6 +3983,15 @@
           "url": "https://indianexpress.com/article/india/today-india-news-live-updates-andhra-bengal-weather-25-september-2026-cjp-gyanesh-kumar-goa-sir-opposition-bjp-10893068/",
           "publisher": "The Indian Express",
           "title": "India news LIVE updates, 25 September 2026",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/goa-97-voters-electoral-roll-sir-row-election-commission-10892902/",
+          "publisher": "The Indian Express",
+          "title": "After Express report, Goa CEO says cases of 97 voters 'processed separately'",
           "published": "2026-09-25",
           "tier": 3,
           "archive_url": null,

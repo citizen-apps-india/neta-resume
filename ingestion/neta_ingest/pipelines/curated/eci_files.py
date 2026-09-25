@@ -121,7 +121,7 @@ class EciStateStage(BaseModel):
     state: str = Field(min_length=1)
     stage: str = Field(pattern=r"^(before|draft|final|appeals_filed|appeals_pending|restored)$")
     electors: int = Field(ge=0)
-    as_of: date_type
+    as_of: date_type | None = None
     computed: bool = False
     source_entry: str = Field(min_length=1)
     url: str = Field(min_length=1)

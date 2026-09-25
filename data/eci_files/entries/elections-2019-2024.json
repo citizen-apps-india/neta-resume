@@ -92,7 +92,8 @@
       ],
       "response_to": null,
       "notes": "Dates for pre-2018 postings are not given in the ADB release; DoPT civil list or Executive Record Sheet should be checked.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "elections-2019-2024-ls2019-schedule",
@@ -650,7 +651,8 @@
         "checked_url": "https://www.tribuneindia.com/news/archive/nation/ec-members-not-meant-to-be-clones-cec-on-lavasa-s-letter-774896",
         "note": "The Deccan Herald URL (primary source) is dead. Opened the Tribune source instead, which confirms Lavasa wrote a strongly-worded letter to CEC Arora saying he was being forced to stay away from full-Commission meetings because minority decisions were not being recorded, and references a 14 May commission meeting -- consistent with the entry. Further corroborated via Google News listings (Indian Express, Scroll.in, ThePrint, TheWire, SabrangIndia, New Indian Express) dated 17-29 May 2019 covering the same dissent/recusal episode. The specific list of four letter dates (4, 10, 14, 16 May) comes only from the dead-linked Deccan Herald source and was not independently re-verified line by line, though it is consistent with everything else found."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "elections-2019-2024-sc-dev-disposed",
@@ -725,7 +727,8 @@
       ],
       "response_to": "elections-2019-2024-lavasa-recusal-public",
       "notes": null,
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "elections-2019-2024-lavasa-recusal-public",
@@ -815,7 +818,8 @@
         "checked_url": "http://web.archive.org/web/20230321141436/https://theprint.in/india/ec-refuses-to-disclose-ashok-lavasas-dissent-note-cites-danger-to-life-of-individual/253986/",
         "note": "Opened via the Wayback Machine (the live ThePrint URL now also errors). The article confirms the 21 May 2019 full-Commission meeting -- CEC Arora and members Lavasa and Sushil Chandra -- decided dissent notes would remain in the record but not in the order, with Lavasa outvoted. Corrected: this is the Commission formally answering Lavasa's demand from elections-2019-2024-lavasa-letters, so status was changed from 'reported' to 'response', attributed_to set to 'Election Commission of India', and response_to linked to elections-2019-2024-lavasa-letters (it was previously unattributed and unlinked)."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "elections-2019-2024-lavasa-rti-refusal",
@@ -937,7 +941,8 @@
       ],
       "response_to": null,
       "notes": "adb.org blocks automated fetches; the Wayback copy was read. National Herald, citing Hindustan Times, notes that by convention he would have succeeded Sunil Arora as CEC, though no rule requires it, and that he was only the second Election Commissioner to leave before his term ended.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "elections-2019-2024-lavasa-resigns",
@@ -1176,7 +1181,8 @@
         "checked_url": "https://www.tribuneindia.com/news/india/election-commissioner-arun-goel-resigns-ahead-of-lok-sabha-election-598901",
         "note": "Opened directly and read in full. Confirms Goel's tenure ran to 5 December 2027, that he would have become CEC after Rajiv Kumar's retirement, that the President accepted his resignation the same day (Saturday, 9 March 2024), and that with Anup Chandra Pandey's February retirement the Commission was left with only CEC Rajiv Kumar, and that no reason was given -- matching the entry exactly."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "elections-2019-2024-sc-eb-mar11",
@@ -2793,7 +2799,8 @@
       ],
       "response_to": "elections-2019-2024-mh-rahul-stolen-claim",
       "notes": "The press conference mainly addressed the Karnataka (Mahadevapura) and Bihar SIR controversies, which belong to other areas. It is linked here because it is the Commission's collective answer to the roll allegations, including Maharashtra's.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "elections-2019-2024-haryana-h-files",
@@ -2834,7 +2841,8 @@
       ],
       "response_to": null,
       "notes": "Deccan Herald's text says 'Tuesday' but the report is dated 5 November 2025, a Wednesday; The Tribune dates the Commission's response to Wednesday. The date used is 5 November 2025.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "elections-2019-2024-haryana-h-files-response",
@@ -2892,7 +2900,8 @@
       ],
       "response_to": "elections-2019-2024-haryana-h-files",
       "notes": "The CEO also reposted his 9 August 2025 request that Gandhi submit a declaration under oath under Rule 20(3)(b) of the Registration of Electors Rules, 1960.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     }
   ],
   "gaps": [

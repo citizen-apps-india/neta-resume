@@ -734,6 +734,15 @@
           "tier": 3,
           "archive_url": null,
           "quote": null
+        },
+        {
+          "url": "https://economictimes.indiatimes.com/news/india/submit-affidavit-or-apologise-to-the-nation-cec-gyanesh-kumar-to-rahul-gandhi-over-his-voter-theft-allegations/articleshow/123345589.cms",
+          "publisher": "The Economic Times",
+          "title": "Submit affidavit or apologise to the nation: CEC Gyanesh Kumar to Rahul Gandhi over his 'voter theft' allegations",
+          "published": "2025-08-17",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "response_to": "statements-reporting-rahul-mahadevapura-presentation",
@@ -1145,7 +1154,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "Article quotes the Nov 4, 2025 note verbatim: 'statutory functions of ERO, DEO and CEO (were) to be strictly exercised by them and no one else' and 'IT systems must be in strict compliance with the law' -- matches the entry exactly, including that Sanjay Kumar acted on Sandhu's direction."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-eci-sources-h-files",
@@ -1179,7 +1189,8 @@
       ],
       "response_to": "statements-reporting-rahul-h-files-haryana",
       "notes": "Source-based, not an on-record Commission statement. The Haryana CEO's own post was not opened.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-rahul-h-files-haryana",
@@ -1232,7 +1243,8 @@
       ],
       "response_to": null,
       "notes": null,
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-eci-affidavit-dedup-scrapped",
@@ -1598,7 +1610,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
         "note": "Article gives the full email log (Feb 11, 13, 14x2+letter, 15, 16, 17) confirming 'his eighth time in seven days', addressed to Gyanesh Bharti with Khanna copied, and the exact figures of 97 eligible electors and 649 who came forward. Entry is accurate down to the figures."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-dec-it-cannot-block-sc",
@@ -1641,7 +1654,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
         "note": "Confirmed verbatim: Feb 18 note from Sanjay Kumar to Khanna states EROs/AEROs have powers under s.21/21A and 'IT system cannot block necessary action as per the directions of SC', asking her to facilitate publication -- matches the entry precisely."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-removal-notices-filed",
@@ -1694,7 +1708,8 @@
         "checked_url": "https://indianexpress.com/article/india/rajya-sabha-chairman-cp-radhakrishnan-rejected-opposition-motion-remove-cec-gyanesh-kumar-10622419/",
         "note": "Confirmed: TMC-led notices filed March 12 with 130 LS and 63 RS signatures (above the 100/50 threshold), citing 'partisan and discriminatory conduct' and 'obstruction of investigation into electoral fraud and SIR' -- matches the entry."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-removal-notices-rejected",
@@ -1782,7 +1797,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
         "note": "Confirmed against both the 14-objections piece (Apr 16 quote on communications going out without Commission approval) and the Cabinet Secretary piece, which separately confirms Sandhu's line that he learned of new IT modules 'from media only'."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-fresh-rs-removal-notice",
@@ -1843,7 +1859,8 @@
         "checked_url": "https://m.thewire.in/article/politics/with-nine-charges-73-opposition-mps-move-fresh-notice-in-rajya-sabha-to-remove-cec-gyanesh-kumar",
         "note": "The Wire and ANI both confirm 73 RS MPs, nine charges, 'proven misbehaviour' wording, and that Jairam Ramesh announced it -- but neither source, nor any other opened, names Sagarika Ghose as a co-mover. Removed that unverified detail from the summary; everything else checks out, including the four cited charges."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-joshi-note-communications-approval",
@@ -2107,7 +2124,8 @@
       ],
       "response_to": null,
       "notes": "The Commission did not respond to a request for comment; Legislative Department Secretary Rajiv Mani could not be reached, per the report. The change did not apply in Bihar or Assam.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-garg-work-allocation-order",
@@ -2158,7 +2176,8 @@
         "checked_url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
         "note": "Confirmed precisely, including the detail not in the main investigation piece: Joshi wrote the order was issued 'without discussing or informing the revised allocation of work with the Commission or the undersigned' and that when he asked for the file, 'it was not provided'. No response from Garg or the Cabinet Secretary was found in any source opened."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-ecs-write-cabinet-secretary",
@@ -2210,7 +2229,8 @@
         "checked_url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
         "note": "The ECI-response article quotes the letters as calling the order a 'clear violation of Section 18(1) and 18(2)' of the 2023 Act, confirming the entry's specific section citation, which the main investigation piece states only in general terms."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-ecs-set-aside-order",
@@ -2252,7 +2272,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "Confirmed verbatim: July 30 joint note called Garg's changes 'without any reason and justification', directed the prior allocation to continue until consensus, and was copied to the CEC."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-sandhu-note-bengal-appeals",
@@ -2295,7 +2316,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
         "note": "Confirmed: Sandhu's August note asked 'Who was authorised to file these appeals on behalf of ECI, and by whom?' and recorded that neither he, Joshi, nor the sitting Bengal CEO were informed -- matches the entry; month-only precision is appropriate since no exact day is given."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-sandhu-note-form6-illegal",
@@ -2345,7 +2367,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/",
         "note": "The quoted phrase 'unauthorised/ illegal changes in Form-6 on the portal' is an exact match to the source, well under 15 words, and the rest of the summary (Aug 13, copied to CEC and Joshi) is confirmed."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-sandhu-note-eronet-access",
@@ -2395,7 +2418,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "Confirmed verbatim: Aug 14 note that officers lacked 'proper and complete access' to ERONet and that DG(IT) 'doesn't have any legal authority to restrict' that access, with a direction for immediate full access certified by CEOs."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-commission-meets-sept-9",
@@ -2693,7 +2717,8 @@
       ],
       "response_to": "statements-reporting-ie-investigation-14-objections",
       "notes": "The note did not say who approved the Form 6 change, who authorised the Bengal appeals, what happened to the audit proposal, why the full Commission did not meet from May to August, or mention the 28 July order and the Cabinet Secretary letters, per The Indian Express. The Tribune notes it did not specifically deny the reports. The original note on eci.gov.in/PIB was not located.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-ie-analysis-cloud-over-conduct",
@@ -3368,7 +3393,8 @@
         "checked_url": "https://www.outlookindia.com/national/india-bloc-backs-fresh-impeachment-move-against-cec-gyanesh-kumar-reports",
         "note": "Both Outlook and The Tribune confirm a fresh notice being drafted for submission 'as early as next week'/'most likely by next week', and that seven of the 73 April signatories are reported by NDTV sources to have switched sides."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-ie-goa-97-story",
@@ -3626,7 +3652,8 @@
       ],
       "response_to": "statements-reporting-ie-goa-97-story",
       "notes": "The office did not give a number enrolled. The Commission headquarters and DG (IT) have not answered why the rollback was not enabled.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     }
   ],
   "gaps": [
