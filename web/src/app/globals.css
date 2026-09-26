@@ -17,6 +17,11 @@
   --sev3:#6B7280;--sev3-bg:#EEF0F2;--ok:#2EA76A;--ok-bg:#E4F3EB;
   --warn-bg:#EEF0F2;--shadow:rgba(18,20,24,0.28);--photo-a:#EAECEF;--photo-b:#F5F6F7;--gridline:#E8EAED;
   --glow1:rgba(18,165,148,0.10);--glow2:rgba(18,165,148,0.05);
+  /* ECI Files role tokens (docs/eci-files/REDESIGN-SPEC.md §"Identity") — the section's own accent plus
+     the four trust colours (status: documented/reported/claim/response). Used nowhere outside eci-files/. */
+  --eci-ink:#6D3FA0;--eci-doc:#2a78d6;--eci-report:#eb6834;--eci-claim:#1baf7a;--eci-response:#eda100;
+  /* ECI Files lane colours (the rework: colour means the lane; status is a word). */
+  --eci-lane-commission:#2a78d6;--eci-lane-inside:#6D3FA0;--eci-lane-courts:#4B4F59;--eci-lane-claims:#d4541f;--eci-lane-responses:#128a60;--eci-check:#1C7A4C;
 }
 
 [data-theme="dark"] {
@@ -30,6 +35,8 @@
   --sev3:#A9ADB8;--sev3-bg:#23262E;--ok:#4FC68A;--ok-bg:#14271D;
   --warn-bg:#1C1E24;--shadow:rgba(0,0,0,0.55);--photo-a:#24262E;--photo-b:#141519;--gridline:#1C2027;
   --glow1:rgba(18,165,148,0.18);--glow2:rgba(18,165,148,0.10);
+  --eci-ink:#B38DDE;--eci-doc:#3987e5;--eci-report:#d95926;--eci-claim:#199e70;--eci-response:#c98500;
+  --eci-lane-commission:#5a9cf0;--eci-lane-inside:#B38DDE;--eci-lane-courts:#A9ADB8;--eci-lane-claims:#ef8a5c;--eci-lane-responses:#4cc393;--eci-check:#6FCF9F;
 }
 
 * { box-sizing: border-box; }
@@ -395,3 +402,707 @@ html { scroll-behavior: smooth; }
     radial-gradient(farthest-side at 100% 50%, var(--shadow), transparent) 100% 0 / 14px 100% no-repeat;
   background-attachment: local, local, scroll, scroll;
 }
+
+/* ---------- ECI Files (docs/eci-files/REDESIGN-SPEC.md §"Phase 2") ---------- */
+
+/* front page: headline stat tiles + "start here" cards reuse .nr-statgrid/.nr-navgrid's auto-fit mechanics;
+   this is the section's own accent wash on top. */
+.eci-hero-tile { border: 1px solid var(--rule); background: var(--card); padding: 16px 17px 13px; min-width: 0; }
+.eci-hero-tile .eci-hero-value { font-weight: 700; color: var(--eci-ink); line-height: 1.05; }
+
+.eci-moments { scroll-snap-type: x proximity; }
+.eci-moments > * { scroll-snap-align: start; }
+
+/* overview density strip: each month is a real <button> (keyboard/AT-focusable) containing one hand-drawn
+   SVG bar — see components/eci-files/DensityStrip.tsx. The selected window is a plain highlight div behind
+   the bars, not per-bar state, so brushing never has to touch every button's style. */
+.eci-density-wrap { position: relative; }
+.eci-density-select {
+  position: absolute; top: 0; bottom: 0; background: color-mix(in srgb, var(--eci-ink) 14%, transparent);
+  border-left: 1.5px solid var(--eci-ink); border-right: 1.5px solid var(--eci-ink); pointer-events: none;
+}
+.eci-density-track { display: flex; align-items: flex-end; gap: 1px; position: relative; z-index: 1; touch-action: pan-y; }
+.eci-density-bar { flex: 1 1 0; min-width: 3px; background: none; border: 0; padding: 0; cursor: pointer; display: block; }
+.eci-density-bar:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; border-radius: 2px; }
+.eci-density-bar svg { display: block; width: 100%; overflow: visible; }
+
+/* lane timeline: five horizontal tracks (desktop/tablet) with dots positioned at their real date. */
+.eci-lanes-desktop { display: flex; flex-direction: column; }
+.eci-lanes-mobile { display: none; }
+.eci-lane-row { position: relative; height: 40px; border-top: 1px solid var(--rule2); }
+.eci-lane-row:first-child { border-top: none; }
+.eci-dot { position: absolute; top: 50%; width: 22px; height: 22px; transform: translate(-50%, -50%); background: none; border: 0; padding: 0; cursor: pointer; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+.eci-dot:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
+@media (hover: hover) { .eci-dot:hover { transform: translate(-50%, -50%) scale(1.25); } }
+@media (max-width: 640px) {
+  .eci-lanes-desktop { display: none; }
+  .eci-lanes-mobile { display: flex; flex-direction: column; gap: 8px; }
+}
+
+.eci-legend { display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.eci-legend-item { display: inline-flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--ink2); }
+
+/* drawer: side panel on desktop, bottom sheet under 640px (same component, CSS repositions it). */
+.eci-drawer-backdrop { position: fixed; inset: 0; background: rgba(10, 11, 14, 0.5); z-index: 40; }
+.eci-drawer-panel {
+  position: fixed; top: 0; right: 0; bottom: 0; width: min(480px, 100vw); z-index: 41; overflow-y: auto;
+  background: var(--panel); border-left: 1px solid var(--rule); box-shadow: -24px 0 60px -32px var(--shadow);
+}
+@media (max-width: 640px) {
+  .eci-drawer-panel {
+    top: auto; left: 0; right: 0; width: auto; max-height: 86vh;
+    border-left: none; border-top: 1px solid var(--rule); border-radius: 16px 16px 0 0;
+    box-shadow: 0 -24px 60px -32px var(--shadow);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .eci-drawer-backdrop { animation: nrFadeIn 0.18s ease both; }
+  .eci-drawer-panel { animation: nrDrawerIn 0.22s ease both; }
+}
+@keyframes nrFadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes nrDrawerIn { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
+@media (max-width: 640px) {
+  @keyframes nrDrawerIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+}
+
+.eci-more > summary::-webkit-details-marker { display: none; }
+.eci-more[open] { flex-basis: 100%; }
+.eci-select {
+  font: inherit; font-size: 12.5px; color: var(--ink); background: var(--card2);
+  border: 1px solid var(--rule); border-radius: 20px; padding: 6px 30px 6px 12px; max-width: min(320px, 70vw);
+  appearance: none; cursor: pointer;
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%; background-size: 5px 5px; background-repeat: no-repeat;
+}
+.eci-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* --- ECI Files phase 3 (numbers) --- */
+:root,
+[data-theme="light"] {
+  /* single-hue sequential violet ramp, 5 steps (PHASE3-SPEC.md §3.2) — order alone (lightness) carries
+     the signal, readable under protanopia/deuteranopia/tritanopia and in greyscale. */
+  --eci-seq-1:#F1ECF8; --eci-seq-fg-1:#121317;
+  --eci-seq-2:#D6C8EB; --eci-seq-fg-2:#121317;
+  --eci-seq-3:#B39BD8; --eci-seq-fg-3:#121317;
+  --eci-seq-4:#7A51B0; --eci-seq-fg-4:#FFFFFF;
+  --eci-seq-5:#4F2677; --eci-seq-fg-5:#FFFFFF;
+}
+[data-theme="dark"] {
+  /* higher values read brighter in dark mode (the dark-theme convention) */
+  --eci-seq-1:#2A2238; --eci-seq-fg-1:#F3F4F6;
+  --eci-seq-2:#46356A; --eci-seq-fg-2:#F3F4F6;
+  --eci-seq-3:#6B4F9E; --eci-seq-fg-3:#F3F4F6;
+  --eci-seq-4:#9674CC; --eci-seq-fg-4:#0C0D10;
+  --eci-seq-5:#C7A9EE; --eci-seq-fg-5:#0C0D10;
+}
+
+/* state tile grid: 9 cols, equal-size tiles placed roughly where the states sit — never a map
+   (PHASE3-SPEC.md §"Decisions": "That rules out any boundary drawing, shape file or projection"). */
+.eci-tiles { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px; max-width: 720px; margin: 0 auto; }
+.eci-tile {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1px; aspect-ratio: 1; border-radius: 8px; border: 1px solid var(--rule); text-decoration: none;
+  padding: 2px; overflow: hidden; color: var(--ink); text-align: center;
+}
+.eci-tile:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
+.eci-tile[data-band="1"] { background: var(--eci-seq-1); color: var(--eci-seq-fg-1); }
+.eci-tile[data-band="2"] { background: var(--eci-seq-2); color: var(--eci-seq-fg-2); }
+.eci-tile[data-band="3"] { background: var(--eci-seq-3); color: var(--eci-seq-fg-3); }
+.eci-tile[data-band="4"] { background: var(--eci-seq-4); color: var(--eci-seq-fg-4); }
+.eci-tile[data-band="5"] { background: var(--eci-seq-5); color: var(--eci-seq-fg-5); }
+.eci-tile--empty { background: var(--eci-tile-empty-bg, var(--sunken)); border-style: dashed; border-color: var(--border2); color: var(--ink2); }
+.eci-tile--nomeasure { background: var(--card); border-color: var(--rule); color: var(--muted); }
+.eci-tile--other { background: repeating-linear-gradient(45deg, var(--card) 0 5px, var(--rule) 5px 6px); color: var(--ink2); }
+.eci-tile-code { font-family: var(--font-mono), monospace; font-size: 10.5px; line-height: 1.1; }
+.eci-tile-value { font-family: var(--font-mono), monospace; font-size: 10px; line-height: 1.15; display: none; }
+.eci-tile-sub { font-size: 8.5px; line-height: 1.15; padding: 0 2px; display: none; }
+@media (min-width: 480px) { .eci-tile-value { display: block; } }
+@media (min-width: 640px) { .eci-tile-sub { display: block; } }
+@media (hover: hover) { .eci-tile:hover { transform: translateY(-1px); border-color: var(--eci-ink); } }
+@media (prefers-reduced-motion: no-preference) { .eci-tile { transition: transform .12s ease, border-color .12s ease; } }
+
+/* tiles/table toggle — `data-view` is set server-side from the `view` search param, so there's no
+   hydration flash (PHASE3-SPEC.md §3.3). Phone default is the table (PHASES-3-5-DECISIONS.md). */
+.eci-numbers-tiles, .eci-numbers-table { display: none; }
+.eci-numbers[data-view="tiles"] .eci-numbers-tiles { display: block; }
+.eci-numbers[data-view="table"] .eci-numbers-table { display: block; }
+.eci-numbers[data-view="auto"] .eci-numbers-tiles { display: block; }
+@media (max-width: 479px) {
+  .eci-numbers[data-view="auto"] .eci-numbers-tiles { display: none; }
+  .eci-numbers[data-view="auto"] .eci-numbers-table { display: block; }
+}
+
+/* state table: Before/Draft/Final columns hide under 480px (the state page carries them instead). */
+@media (max-width: 479px) { .eci-col-stage { display: none; } }
+
+/* state-page stage chart row: label / bar / value, stacking under 560px. */
+.eci-stage-row { display: grid; grid-template-columns: minmax(120px, 180px) 1fr minmax(90px, auto); align-items: center; gap: 10px; }
+@media (max-width: 560px) { .eci-stage-row { grid-template-columns: 1fr; gap: 4px; } }
+
+.eci-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+.eci-caveat { border: 1px solid var(--rule); border-left: 3px solid var(--eci-ink); border-radius: 10px; background: var(--card2); padding: 14px 16px; }
+/* --- end phase 3 --- */
+
+/* --- ECI Files phase 4 (people) --- */
+/* PersonAvatar (docs/eci-files/PHASE4-SPEC.md §"PersonAvatar"): a photo and its initials fallback render
+   at the same size and in the same circular frame, so a row of nine commissioners never reads as a
+   judgment about the four shown as initials. */
+.eci-avatar { border-radius: 50%; object-fit: cover; display: block; border: 1px solid var(--rule); background: var(--card2); }
+.eci-avatar-initials {
+  display: inline-flex; align-items: center; justify-content: center; border-radius: 50%;
+  background: color-mix(in srgb, var(--eci-ink) 13%, var(--card2)); color: var(--eci-ink); font-weight: 600;
+  border: 1px solid var(--rule);
+}
+
+.eci-section-nav { display: flex; flex-wrap: wrap; gap: 8px 10px; }
+.eci-section-nav a {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 12px; border-radius: 20px;
+  border: 1px solid var(--rule); color: var(--ink2); text-decoration: none; background: var(--card2);
+}
+@media (hover: hover) { .eci-section-nav a:hover { border-color: var(--eci-ink); color: var(--eci-ink); } }
+
+/* TenureBar / CommissionTenureChart segment fills — office is always named in text too (aria-label,
+   legend), so these are never the only carrier of "which office" (§7 "Colour is never the only carrier"). */
+/* `fill`/`stroke` paint the SVG rects; `background`/`box-shadow` paint the same classes on HTML spans. */
+.eci-tenure-ec { fill: color-mix(in srgb, var(--eci-ink) 32%, var(--card)); stroke: var(--eci-ink); stroke-width: 1; background: color-mix(in srgb, var(--eci-ink) 32%, var(--card)); box-shadow: inset 0 0 0 1px var(--eci-ink); }
+.eci-tenure-cec { fill: var(--eci-ink); background: var(--eci-ink); }
+.eci-tenure-other { fill: color-mix(in srgb, var(--ink2) 28%, var(--card)); background: color-mix(in srgb, var(--ink2) 28%, var(--card)); }
+.eci-tenure-bar-row a:focus-visible, .eci-diamond-link:focus-visible, .eci-node:focus-visible, .eci-edge-hit:focus-visible {
+  outline: 2px solid var(--eci-ink); outline-offset: 2px;
+}
+
+/* "Members in office" strip: a run's tooltip is CSS-generated content so it appears identically on hover
+   and on keyboard focus (§1.2 "Hovering or focusing a run shows …"). */
+.eci-strip-run { position: relative; }
+.eci-strip-run:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 1px; }
+.eci-strip-run[data-tip]:hover::after, .eci-strip-run[data-tip]:focus-visible::after {
+  content: attr(data-tip); position: absolute; bottom: 100%; left: 0; margin-bottom: 5px; white-space: nowrap;
+  font-size: 11px; background: var(--panel); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 4px 9px; z-index: 5; pointer-events: none;
+}
+
+/* CareerTimeline's rail: an "at the Commission" item gets the ink segment + dot, everything else --rule2
+   (§2.4). Each `<li>` draws its own rail segment so consecutive items can differ. */
+.eci-career { list-style: none; margin: 0; padding: 0; }
+.eci-career-item { position: relative; margin-left: 6px; padding: 0 0 16px 20px; border-left: 2px solid var(--rule2); }
+.eci-career-item:last-child { border-left-color: transparent; }
+.eci-career-item::before { content: ""; position: absolute; left: -5px; top: 3px; width: 8px; height: 8px; border-radius: 50%; background: var(--rule2); }
+.eci-career-item[data-commission="true"] { border-left-color: var(--eci-ink); }
+.eci-career-item[data-commission="true"]::before { background: var(--eci-ink); }
+
+.eci-keyfacts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media (max-width: 640px) { .eci-keyfacts { grid-template-columns: repeat(2, 1fr); } }
+
+/* The profile's main column + "Selected by" rail (§2.1): one `<section>` per direct grid child, in DOM
+   order Career, Selected-by, Timeline, the three entry sections, Sources. Under 960px that's also the
+   visual order (default grid auto-placement, one column). At ≥960px `.eci-rail` moves into column 2 and
+   spans every row, without rendering the block twice or duplicating its id. */
+.eci-profile-grid { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; }
+.eci-rail { grid-column: 1; }
+@media (min-width: 960px) {
+  .eci-profile-grid { grid-template-columns: 1fr 300px; }
+  .eci-rail { grid-column: 2; grid-row: 1 / -1; }
+}
+
+/* SelectionGraph: hidden under 720px per spec — the accessible list below carries everything there. */
+.eci-graph[data-focus] .eci-edge:not([data-on]) { opacity: .25; }
+@media (prefers-reduced-motion: reduce) { .eci-graph .eci-edge { opacity: 1 !important; } }
+@media (max-width: 719px) { .eci-graph { display: none; } }
+
+.eci-state-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.eci-state-table th { text-align: left; font-size: 10.5px; letter-spacing: 0.06em; color: var(--faint); font-weight: 500; padding: 7px 10px; border-bottom: 1px solid var(--rule); }
+.eci-state-table td { padding: 9px 10px; border-bottom: 1px solid var(--rule2); vertical-align: top; }
+@media (max-width: 640px) {
+  .eci-state-table thead { display: none; }
+  .eci-state-table, .eci-state-table tbody, .eci-state-table tr, .eci-state-table td { display: block; width: 100%; }
+  .eci-state-table tr { padding: 10px 0; border-bottom: 1px solid var(--rule2); }
+  .eci-state-table td { border-bottom: none; padding: 2px 0; }
+}
+
+.eci-named-list { columns: 3 200px; column-gap: 20px; }
+@media (max-width: 640px) { .eci-named-list { columns: 2 140px; } }
+.eci-named-list li { break-inside: avoid; padding: 3px 0; }
+
+/* Selection panel / dissent badges — the text always carries the meaning too, colour is a second signal. */
+.eci-badge {
+  display: inline-flex; align-items: center; font-size: 10.5px; font-weight: 600; letter-spacing: 0.03em;
+  padding: 2px 9px; border-radius: 20px; border: 1px solid var(--rule); color: var(--ink2); background: var(--card2); white-space: nowrap;
+}
+.eci-badge[data-part="dissented"] {
+  color: var(--eci-claim); border-color: color-mix(in srgb, var(--eci-claim) 40%, var(--rule));
+  background: color-mix(in srgb, var(--eci-claim) 12%, var(--card2));
+}
+.eci-badge[data-part="chair"], .eci-badge[data-part="proposed"] {
+  color: var(--eci-ink); border-color: color-mix(in srgb, var(--eci-ink) 40%, var(--rule));
+  background: color-mix(in srgb, var(--eci-ink) 10%, var(--card2));
+}
+
+.eci-seat-gov { fill: var(--eci-ink); }
+.eci-seat-hollow { fill: var(--card); stroke: var(--eci-ink); stroke-width: 1.5; }
+
+/* ProfileHeader's avatar: 112px desktop, 72px under 640px (§2.1, §7 "Mobile"). Two sized instances
+   toggled by display, the same pattern `LaneTimeline` uses for its desktop/phone views, rather than
+   fighting the inline pixel sizing `PersonAvatar` sets for its `<img>`/initials box. */
+.eci-avatar-lg { display: block; }
+.eci-avatar-sm { display: none; }
+@media (max-width: 640px) { .eci-avatar-lg { display: none; } .eci-avatar-sm { display: block; } }
+
+/* RegimeCompare (§3): three cards side by side, stacked under 720px. */
+.eci-regime-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 720px) { .eci-regime-grid { grid-template-columns: 1fr; } }
+
+/* CareerTimeline's date column (§2.4): 132px desktop, the date sits above the post under 640px. */
+.eci-career-row { display: flex; gap: 12px; }
+.eci-career-date { width: 132px; flex-shrink: 0; }
+@media (max-width: 640px) {
+  .eci-career-row { flex-direction: column; gap: 2px; }
+  .eci-career-date { width: auto; }
+}
+
+/* CommissionTenureChart: the name sits above the bar under 640px instead of in a fixed label column
+   (§1.2, §7 "Mobile"), and year ticks shorten so the chart still fits without horizontal scroll. Marker
+   labels live in the legend above the chart (never floated over it — see CommissionTenureChart.tsx). */
+.eci-tchart-row { display: flex; align-items: center; gap: 10px; }
+.eci-tchart-label { width: 148px; flex-shrink: 0; }
+.eci-tick-short { display: none; }
+@media (max-width: 640px) {
+  .eci-tchart-row { flex-direction: column; align-items: stretch; gap: 3px; }
+  .eci-tchart-label { width: auto; }
+  .eci-tick-full { display: none; }
+  .eci-tick-short { display: inline; }
+  /* The marker overlay assumes a fixed label-column offset that only holds once rows stop stacking. */
+  .eci-tchart-markers { display: none; }
+}
+/* --- end phase 4 --- */
+
+/* --- ECI Files phase 5 (views) --- */
+/* /objections, /answers, /rules(+diff), /courts(+case). New tokens + classes only; every colour a
+   component needs lives here, per house rule ("nothing outside globals.css names a colour"). */
+
+:root,
+[data-theme="light"] {
+  /* Federal-Register-style redline: blue for added, orange for removed — colour-blind safe, and never
+     the only cue (§6.4 also uses <del>/<ins>, strike/underline and hidden "Removed:"/"Added:"). */
+  --eci-diff-add-bg:#E6F0FB; --eci-diff-add-fg:#1B5FAE;
+  --eci-diff-del-bg:#FCEDE4; --eci-diff-del-fg:#A8471B;
+}
+[data-theme="dark"] {
+  --eci-diff-add-bg:#16263A; --eci-diff-add-fg:#8DBBF0;
+  --eci-diff-del-bg:#33211A; --eci-diff-del-fg:#F0A27A;
+}
+
+/* /objections ledger: a 2-col meta/body grid per slot, meta moving above body on phones. */
+.eci-ledger { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.eci-slot {
+  display: grid; grid-template-columns: 120px 1fr; gap: 16px; scroll-margin-top: 72px;
+  border: 1px solid var(--rule); border-radius: 12px; background: var(--card2); padding: clamp(14px,3vw,20px);
+}
+.eci-slot-empty {
+  border: 1.5px dashed var(--border2); border-radius: 12px; background: none; padding: clamp(14px,3vw,20px);
+  scroll-margin-top: 72px;
+}
+@media (max-width: 640px) {
+  .eci-slot { grid-template-columns: 1fr; gap: 8px; }
+}
+
+/* /answers rows: 3-col grid (charge / response / record) at >=960px, stacked below. */
+.eci-answer-head {
+  display: none; position: sticky; top: 0; z-index: 2; background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(6px); border-bottom: 1px solid var(--rule); padding: 10px 4px;
+}
+.eci-answer-row {
+  display: grid; grid-template-columns: 1fr; gap: 14px; padding: 18px 4px; border-bottom: 1px solid var(--rule2);
+  scroll-margin-top: 72px;
+}
+@media (min-width: 960px) {
+  .eci-answer-head { display: grid; grid-template-columns: 1.1fr 1fr 0.9fr; gap: 14px; }
+  .eci-answer-row { grid-template-columns: 1.1fr 1fr 0.9fr; }
+  .eci-answer-row .eci-cell-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+/* An empty "what the record shows" cell: blank (no dash) at >=960px so the 3-col grid still lines up;
+   dropped entirely below that, where a stacked layout would otherwise show a heading over nothing. */
+@media (max-width: 959px) { .eci-cell-empty { display: none; } }
+
+/* /rules/[diff]: split view >=640px, unified (single column, +/- gutter) below. Both render on the
+   server; CSS alone picks which one shows, so the diff needs no client JS. */
+.eci-diff-split {
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: 0; row-gap: 0;
+  border: 1px solid var(--rule); border-radius: 10px; overflow: hidden;
+}
+.eci-diff-split > * { min-width: 0; }
+.eci-diff-col-before { grid-column: 1; }
+.eci-diff-col-after { grid-column: 2; border-left: 1px solid var(--rule); }
+.eci-diff-unified { display: none; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.eci-diff-line { display: flex; gap: 10px; padding: 3px 12px; font-size: 12.5px; line-height: 1.6; overflow-wrap: anywhere; }
+.eci-diff-gutter { flex-shrink: 0; width: 2.4em; text-align: right; color: var(--faint); user-select: none; }
+.eci-diff-quoted { font-style: normal; }
+@media (max-width: 639px) {
+  .eci-diff-split { display: none; }
+  .eci-diff-unified { display: block; }
+}
+
+/* /courts index: 2-col case-card grid at >=760px. */
+.eci-case-card { display: flex; flex-direction: column; gap: 6px; border: 1px solid var(--rule); border-radius: 12px; background: var(--card2); padding: clamp(14px,3vw,20px); text-decoration: none; color: inherit; }
+.eci-courts-grid { display: flex; flex-direction: column; gap: 14px; }
+@media (min-width: 760px) {
+  .eci-courts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+}
+
+/* /courts/[case]: facts panel (2-col >=760px) + the ordered rail timeline. */
+.eci-case-facts { display: grid; grid-template-columns: 1fr; gap: 10px 20px; margin: 0; }
+@media (min-width: 760px) {
+  .eci-case-facts { grid-template-columns: 1fr 1fr; }
+}
+.eci-case-timeline { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid var(--rule); display: flex; flex-direction: column; gap: 18px; }
+.eci-case-timeline > li { position: relative; scroll-margin-top: 72px; }
+.eci-case-timeline > li::before {
+  content: ""; position: absolute; left: -23px; top: 5px; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--eci-ink); border: 2px solid var(--card);
+}
+.eci-case-timeline > li.eci-related::before { background: var(--card); border: 2px solid var(--border2); }
+.eci-case-timeline > li.eci-case-year::before { content: none; }
+
+.eci-role-chip {
+  display: inline-flex; align-items: center; font-size: 10px; font-weight: 600; letter-spacing: 0.03em;
+  padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border2); color: var(--ink2); background: var(--sunken);
+  white-space: nowrap;
+}
+
+.eci-status-banner {
+  display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; line-height: 1.5; color: var(--ink2);
+  background: var(--sunken); border: 1px solid var(--border2); border-radius: 8px; padding: 10px 13px; margin: 0 0 14px;
+}
+
+/* /objections chart: one focusable <a> per hand-drawn SVG mark. */
+.eci-obj-mark { cursor: pointer; }
+.eci-obj-mark:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
+@media (hover: hover) { .eci-obj-mark:hover circle, .eci-obj-mark:hover ellipse, .eci-obj-mark:hover rect { opacity: 0.75; } }
+/* --- end phase 5 --- */
+
+/* --- ECI UX numbers --- */
+/* /eci-files/numbers hero row (docs/eci-files/designs/B-After-Numbers.dc.html): the tile-grid card and
+   the headline card side by side on desktop; below ~900px the headline card moves above the tile grid,
+   matching B-Phone-Numbers.dc.html's stacked order, via `order` rather than a DOM reorder. */
+.eci-hero-row { display: flex; gap: 28px; align-items: stretch; flex-wrap: wrap; margin-bottom: 24px; }
+.eci-hero-tiles { flex: 3 1 560px; min-width: 0; }
+.eci-hero-headline { flex: 1 1 320px; min-width: 0; }
+@media (max-width: 900px) {
+  .eci-hero-headline { order: -1; }
+}
+/* --- end ECI UX numbers --- */
+/* --- ECI UX views --- */
+/* /objections and /answers reworks (docs/eci-files/designs/D-After-Objections.dc.html,
+   D-After-Answers.dc.html): the hero swimlane + response card, the collapsible objection rows, and the
+   equal-weight charge/answer rows. New classes only — nothing here edits an existing phase-5 rule. */
+
+.eci2-hero-grid { display: grid; grid-template-columns: minmax(0,1fr) minmax(260px,340px); gap: 20px; align-items: stretch; margin-bottom: 24px; }
+@media (max-width: 860px) { .eci2-hero-grid { grid-template-columns: 1fr; } }
+
+.eci2-card { background: var(--card); border: 1px solid var(--rule); border-radius: 14px; padding: clamp(16px,3vw,22px); }
+.eci2-response-card { display: flex; flex-direction: column; gap: 12px; }
+.eci2-eyebrow { font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.eci2-quote { margin: 0; font-size: 19px; font-weight: 650; line-height: 1.35; color: var(--ink); }
+.eci2-response-foot { display: flex; flex-direction: column; gap: 6px; padding-top: 12px; border-top: 1px solid var(--rule2); margin-top: auto; }
+
+/* /objections rows: a native <details> per objection, so "Details"/"Hide" needs no client JS. */
+.eci2-obj-row { border-top: 1px solid var(--rule); }
+.eci2-obj-summary {
+  list-style: none; cursor: pointer; display: grid;
+  grid-template-columns: 26px 76px 190px minmax(0,1fr) 84px; align-items: center; gap: 14px; padding: 13px 0;
+}
+.eci2-obj-summary::-webkit-details-marker { display: none; }
+.eci2-obj-summary:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
+.eci2-obj-n { font-size: 11px; color: var(--muted); }
+.eci2-obj-date { font-size: 12.5px; color: var(--ink2); }
+.eci2-obj-by { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.eci2-obj-by-name { font-size: 13px; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.eci2-obj-title { font-size: 14.5px; font-weight: 500; color: var(--ink); }
+.eci2-obj-toggle {
+  justify-self: end; display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--ink2);
+  border: 1px solid var(--border); border-radius: 8px; padding: 0 12px; min-height: 32px; white-space: nowrap;
+}
+.eci2-obj-toggle-close, .eci2-obj-row[open] .eci2-obj-toggle-open { display: none; }
+.eci2-obj-row[open] .eci2-obj-toggle-close { display: inline; }
+.eci2-obj-row[open] .eci2-chevron { transform: rotate(180deg); }
+.eci2-obj-detail { margin: 0 0 16px 120px; background: var(--sunken); border: 1px solid var(--rule); border-radius: 12px; padding: 16px 18px; }
+.eci2-cell-label { font-size: 10px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--faint); margin-bottom: 4px; }
+@media (max-width: 700px) {
+  .eci2-obj-summary { grid-template-columns: 1fr auto; grid-template-areas: "date toggle" "by by" "title title"; row-gap: 6px; }
+  .eci2-obj-n { display: none; }
+  .eci2-obj-date { grid-area: date; }
+  .eci2-obj-by { grid-area: by; }
+  .eci2-obj-title { grid-area: title; }
+  .eci2-obj-toggle { grid-area: toggle; }
+  .eci2-obj-detail { margin-left: 0; }
+}
+
+.eci2-obj-empty {
+  display: flex; align-items: center; gap: 14px; border: 1.5px dashed var(--border2); border-radius: 12px;
+  padding: 14px 18px; margin-top: 10px;
+}
+.eci2-obj-empty-dots { display: flex; gap: 4px; flex-shrink: 0; }
+.eci2-obj-empty-dots span { width: 12px; height: 12px; border-radius: 50%; border: 1.5px dashed var(--faint); display: block; }
+
+/* /answers hero: counts beside a stacked-by-year bar chart. */
+.eci2-answers-hero { display: flex; align-items: center; gap: clamp(20px,4vw,48px); margin-bottom: 20px; flex-wrap: wrap; }
+.eci2-answers-hero-counts { display: flex; flex-direction: column; gap: 10px; min-width: 220px; }
+.eci2-answers-hero-divider { width: 1px; align-self: stretch; background: var(--rule); min-height: 90px; }
+.eci2-answers-hero-chart { display: flex; flex-direction: column; gap: 12px; flex: 1 1 320px; min-width: 0; }
+.eci2-year-col { display: flex; flex-direction: column; align-items: center; gap: 6px; flex-shrink: 0; width: 44px; }
+.eci2-year-bar { display: flex; flex-direction: column-reverse; align-items: stretch; width: 100%; }
+.eci2-year-bar-answered { background: var(--eci-ink); border-radius: 3px 3px 0 0; }
+.eci2-year-bar-unanswered { background: var(--eci-seq-1); border: 1px solid var(--eci-seq-2); border-top: none; box-sizing: border-box; }
+@media (max-width: 640px) { .eci2-answers-hero-divider { display: none; } }
+
+/* /answers rows: equal-weight charge/answer columns (flex-basis 0 on both so they're mathematically
+   equal), with a thin "record" marker only when a document bears directly on the point — never a blank
+   third column. */
+.eci2-answer-row { display: flex; flex-direction: column; gap: 14px; padding: 18px 0; border-bottom: 1px solid var(--rule2); scroll-margin-top: 72px; }
+.eci2-answer-title { margin: 0 0 6px; font-size: 15.5px; font-weight: 650; line-height: 1.35; color: var(--ink); }
+.eci2-answer-record {
+  display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; background: var(--sunken); border-radius: 8px;
+  padding: 8px 12px;
+}
+.eci2-answer-record-label { font-size: 10px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--eci-ink); flex-shrink: 0; }
+.eci2-answer-record-list { display: flex; flex-direction: column; gap: 4px; font-size: 12.5px; }
+.eci2-answer-record-item { color: var(--accent-2); }
+.eci2-answer-note { font-size: 12.5px; }
+@media (min-width: 760px) {
+  .eci2-answer-row { flex-direction: row; flex-wrap: wrap; }
+  .eci2-answer-col { flex: 1 1 0; min-width: 0; }
+  .eci2-answer-record, .eci2-answer-note { flex-basis: 100%; }
+}
+.eci2-answer-head { display: none; }
+@media (min-width: 760px) {
+  .eci2-answer-head { display: flex; gap: 14px; padding: 10px 0; border-bottom: 1px solid var(--ink); }
+  .eci2-answer-head > * { flex: 1 1 0; }
+}
+/* --- end ECI UX views --- */
+/* --- ECI UX front --- */
+/* /eci-files front page: hero card (number + secondary stats beside the density strip) and the
+   "Start here" tile grid, both single-column on phone and multi-column from tablet up. */
+.eci-front-hero-grid { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: stretch; }
+@media (min-width: 860px) { .eci-front-hero-grid { grid-template-columns: minmax(240px, 380px) minmax(0, 1fr); gap: 40px; } }
+
+.eci-front-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 560px) { .eci-front-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 900px) { .eci-front-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1180px) { .eci-front-tiles { grid-template-columns: repeat(7, minmax(0, 1fr)); } }
+
+/* the key-moments strip: slimmer cards than .nr-xscroll's 340px minimum, so more of the row is visible. */
+.eci-front-moments { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
+.eci-front-moments > a { flex: 0 0 auto; width: 150px; }
+
+.eci-front-about summary { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; font-size: 13.5px; color: var(--ink2); }
+.eci-front-about summary::-webkit-details-marker { display: none; }
+.eci-front-about[open] summary svg { transform: rotate(180deg); }
+
+/* /eci-files/entries: the "+N more records on this day" fold and the "keep reading" continuation —
+   both plain <details>, no client JS. */
+.eci-fold-more summary { cursor: pointer; list-style: none; color: var(--eci-ink); font-size: 12.5px; }
+.eci-fold-more summary::-webkit-details-marker { display: none; }
+.eci-keep-reading { margin-top: 18px; }
+.eci-keep-reading > summary {
+  display: block; min-height: 48px; line-height: 48px; text-align: center; cursor: pointer; list-style: none;
+  border: 1px dashed var(--border2); border-radius: 12px; font-size: 14px; color: var(--ink2);
+}
+.eci-keep-reading > summary::-webkit-details-marker { display: none; }
+.eci-keep-reading > summary::after { content: " ↓"; }
+.eci-keep-reading[open] > summary::after { content: " ↑"; }
+/* --- end ECI UX front --- */
+/* --- ECI UX rules --- */
+/* Approved-design rework of /eci-files/rules(+diff) and /eci-files/courts(+case): a single time axis with
+   a scale break (RulesTimeAxis), real before/after preview cards (RuleComparisonCard), horizontal case
+   tracks with status end-caps (CourtsTracks) and a metro-line order stepper (CaseStepper). New tokens and
+   classes only, added at the end per the house rule that nothing outside globals.css names a colour. */
+
+/* /rules: the one-time-axis hero. Dots cluster when two dates sit closer than the axis can resolve, and
+   the pre-2025 stretch (a handful of changes since 1993) compresses behind a scale break so 2025–2026
+   (most of the record) gets the width it needs. */
+.eci-rules-axis { border: 1px solid var(--rule); border-radius: 12px; background: var(--card); padding: 20px clamp(10px,2vw,20px) 8px; }
+.eci-rules-axis-scroll { overflow-x: auto; }
+.eci-rules-axis-inner { position: relative; height: 98px; min-width: 640px; }
+.eci-rules-axis-line { position: absolute; top: 46px; height: 2px; background: var(--rule2); }
+.eci-rules-axis-break {
+  position: absolute; top: 33px; transform: translateX(-50%); font-family: var(--font-mono), monospace;
+  font-size: 13px; color: var(--faint); background: var(--card); padding: 0 2px;
+}
+.eci-rules-axis-dot { position: absolute; top: 46px; transform: translate(-50%, -50%); text-decoration: none; line-height: 0; }
+.eci-rules-axis-dot:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 3px; border-radius: 50%; }
+@media (hover: hover) { .eci-rules-axis-dot:hover > span:first-child { transform: scale(1.18); } }
+.eci-rules-axis-count { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 9.5px; color: var(--faint); }
+/* V5: two rows of ticks — years close enough to collide (the compressed pre-2025 stretch, worst around
+   the 2023 Act's cluster of changes) stagger onto the second row instead of overlapping the first. */
+.eci-rules-axis-ticks { position: absolute; left: 0; right: 0; top: 62px; height: 30px; }
+.eci-rules-axis-ticks span { position: absolute; transform: translateX(-50%); font-size: 10px; color: var(--faint); white-space: nowrap; }
+
+/* /rules: "Before and after" comparison cards, with a short real preview of the change. */
+.eci-rule-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.eci-rule-card {
+  display: flex; flex-direction: column; gap: 8px; min-height: 150px;
+  border: 1px solid var(--rule); border-radius: 12px; background: var(--card2); padding: 14px 16px;
+  text-decoration: none; color: var(--ink);
+}
+.eci-rule-card-preview {
+  display: flex; flex-direction: column; gap: 3px; margin-top: auto; padding-top: 8px;
+  border-top: 1px solid var(--rule2); font-size: 12.5px; line-height: 1.5;
+}
+.eci-rule-card-before, .eci-rule-card-after {
+  overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.eci-rule-card-before { color: var(--faint); text-decoration: line-through; }
+.eci-rule-card-after { color: var(--ink2); }
+.eci-rule-card-mark { background: color-mix(in srgb, var(--eci-ink) 18%, transparent); color: var(--ink); border-radius: 2px; padding: 0 2px; }
+
+/* /rules list: the rows the axis's diffed dots point at get a quiet accent, not a new colour. */
+.eci-rule-row--diffed { border-color: color-mix(in srgb, var(--eci-ink) 45%, var(--rule)); background: color-mix(in srgb, var(--eci-ink) 5%, var(--card2)); }
+
+/* /rules/[diff]: one prominent badge when the comparison isn't the document's own wording. */
+.eci-diff-callout {
+  display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 10px;
+  border: 1.5px solid var(--eci-report); background: color-mix(in srgb, var(--eci-report) 12%, var(--card2));
+  color: var(--eci-report); font-weight: 650; font-size: 14px; margin: 0 0 14px;
+}
+
+/* /courts: every case as a horizontal track on one shared axis; the end-cap shape (never colour alone)
+   says whether it's decided, pending or referred. */
+.eci-tracks { border: 1px solid var(--rule); border-radius: 12px; background: var(--card); padding: 18px clamp(10px,2vw,20px) 14px; }
+.eci-tracks-scroll { overflow-x: auto; }
+.eci-tracks-inner { min-width: 780px; }
+.eci-track-row {
+  /* V4: the label column was capped at 220px, so a long case name truncated and its status pill (part of
+     the wrapping .eci-track-sub line) fell outside the fixed 58px row height, over the next row's track.
+     Widened the column, let the name wrap instead of ellipsising, and let the row grow to fit both. */
+  display: grid; grid-template-columns: minmax(180px,300px) minmax(0,1fr); gap: 14px; align-items: center;
+  min-height: 58px; padding: 6px 0; text-decoration: none; color: var(--ink); border-top: 1px solid var(--rule2);
+}
+.eci-track-row:first-child { border-top: none; }
+.eci-track-row:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: -2px; }
+.eci-track-meta { display: flex; flex-direction: column; gap: 3px; overflow: hidden; min-width: 0; }
+.eci-track-name {
+  font-size: 13.5px; font-weight: 650; line-height: 1.25;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.eci-track-sub { font-size: 10.5px; color: var(--faint); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.eci-track-line-wrap { position: relative; height: 22px; }
+.eci-track-base { position: absolute; top: 10px; height: 3px; background: var(--eci-lane-courts); border-radius: 2px; }
+.eci-track-start { position: absolute; top: 6px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: var(--eci-lane-courts); }
+.eci-track-end-decided {
+  position: absolute; top: 3px; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%;
+  background: var(--eci-ink); box-shadow: 0 0 0 3px var(--card);
+}
+.eci-track-end-referred { position: absolute; top: 4px; width: 12px; height: 12px; margin-left: -6px; background: var(--ink); transform: rotate(45deg); }
+.eci-track-dash { position: absolute; top: 10px; height: 3px; background: repeating-linear-gradient(90deg, var(--border2) 0 4px, transparent 4px 8px); }
+.eci-track-end-pending {
+  position: absolute; top: 5px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%;
+  border: 2px solid var(--border2); background: var(--card);
+}
+.eci-tracks-ticks { position: relative; height: 16px; margin: 4px 0 0 314px; }
+.eci-tracks-ticks span { position: absolute; transform: translateX(-50%); font-size: 10px; color: var(--faint); }
+.eci-track-legend-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--eci-ink); display: inline-block; }
+.eci-track-legend-dash { width: 14px; height: 3px; display: inline-block; background: repeating-linear-gradient(90deg, var(--border2) 0 4px, transparent 4px 8px); }
+.eci-track-legend-diamond { width: 10px; height: 10px; display: inline-block; background: var(--ink); transform: rotate(45deg); }
+
+/* /courts: "Latest in each case" list. */
+.eci-latest-list { display: flex; flex-direction: column; gap: 8px; }
+.eci-latest-row {
+  display: grid; grid-template-columns: minmax(160px,230px) minmax(0,1fr) auto; gap: 14px; align-items: center;
+  text-decoration: none; color: var(--ink); padding: 12px 16px; border: 1px solid var(--rule); border-radius: 10px; background: var(--card2);
+}
+@media (max-width: 640px) { .eci-latest-row { grid-template-columns: 1fr; } }
+
+/* /courts/[case]: a wider facts strip once there's room, and the desktop/phone toggle between
+   CaseStepper (metro line) and the existing CaseTimeline (vertical rail) — both server-rendered. */
+@media (min-width: 1100px) { .eci-case-facts { grid-template-columns: repeat(4, 1fr); } }
+.eci-case-desktop-only { display: block; }
+.eci-case-mobile-only { display: none; }
+@media (max-width: 759px) {
+  .eci-case-desktop-only { display: none; }
+  .eci-case-mobile-only { display: block; }
+}
+
+/* /courts/[case]: the metro-line order stepper. Stops space evenly (a metro line spaces stops for
+   legibility, not by the calendar days between them); the outcome — the last non-"related" step — is the
+   one stop drawn bigger and bold, so the result of the case never gets lost among its procedural steps. */
+/* V3: each stop is centred on its point with translateX(-50%), so the first and last stops' labels
+   overhang the track by half a stop's width — padding here keeps that overhang inside the scrollable
+   area (both edges reachable, the outcome stop included) instead of clipped by the container. */
+.eci-stepper-scroll { overflow-x: auto; padding: 4px 70px 8px; }
+.eci-stepper-inner { position: relative; height: 132px; }
+.eci-stepper-line { position: absolute; left: 0; right: 0; top: 59px; height: 2px; background: var(--rule2); }
+.eci-stepper-stop {
+  position: absolute; top: 59px; transform: translateX(-50%); width: 132px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: inherit;
+}
+.eci-stepper-stop--above { transform: translateX(-50%) translateY(-100%); flex-direction: column-reverse; }
+.eci-stepper-node { width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 0 3px var(--card); flex-shrink: 0; background: var(--eci-lane-courts); }
+.eci-stepper-stop--outcome .eci-stepper-node { width: 18px; height: 18px; background: var(--eci-ink); box-shadow: 0 0 0 3px color-mix(in srgb, var(--eci-ink) 16%, var(--card)); }
+.eci-stepper-stop--related .eci-stepper-node { opacity: 0.55; }
+.eci-stepper-label { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; }
+.eci-stepper-stop--above .eci-stepper-label { flex-direction: column-reverse; }
+.eci-stepper-title {
+  font-size: 11.5px; font-weight: 600; color: var(--ink2); line-height: 1.25;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.eci-stepper-date { font-size: 9.5px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.eci-stepper-stop--outcome .eci-stepper-title { font-weight: 700; color: var(--ink); font-size: 12.5px; -webkit-line-clamp: 3; }
+.eci-stepper-stop--related .eci-stepper-title { color: var(--muted); }
+.eci-stepper-stop:focus-visible .eci-stepper-node { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
+@media (hover: hover) { .eci-stepper-stop:hover .eci-stepper-node { transform: scale(1.15); } }
+/* --- end ECI UX rules --- */
+/* --- ECI UX people --- */
+/* The redesigned /eci-files/people, /eci-files/people/[slug] and /eci-files/selections
+   (docs/eci-files/designs/DESIGN-BRIEF.md, C-After-People/Profile/Selections.dc.html). */
+
+/* Compact avatar-grid tiles for the people groups (PersonTile) — responsive auto-fill, never a fixed
+   column count, so a group of 5 or 55 both wrap cleanly down to 400px. */
+.eci-ptile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.eci-ptile-grid--dense { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+
+/* CareerLine (profile hero): a proportional desktop axis vs. a plain stacked list on the phone board
+   (C-Phone-Profile.dc.html) — the same CSS-toggle pattern as `.eci-avatar-lg`/`.eci-avatar-sm`. */
+.eci-careerline-desktop { display: block; }
+.eci-careerline-mobile { display: none; }
+@media (max-width: 680px) {
+  .eci-careerline-desktop { display: none; }
+  .eci-careerline-mobile { display: block; }
+}
+
+/* Selections: the eight-selection connected vertical timeline (SelectionTimeline) — a dot + rail per row,
+   a second colour only on the dot for a dissent, matching the named "Dissent · <name>" badge beside it. */
+.eci-sel-timeline { list-style: none; margin: 0; padding: 0; }
+.eci-sel-timeline > li { position: relative; padding: 16px 0 16px 26px; border-top: 1px solid var(--rule2); }
+.eci-sel-timeline > li:first-child { border-top: none; }
+.eci-sel-timeline > li::before {
+  content: ""; position: absolute; left: 0; top: 20px; width: 11px; height: 11px; border-radius: 50%; background: var(--eci-ink);
+}
+.eci-sel-timeline > li[data-dissent="true"]::before { background: var(--eci-claim); }
+
+/* Panel seats shared by the profile's "Selected by" and the selections timeline (SelectionSeatsRow). */
+.eci-seat-row { display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
+.eci-seat { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 128px; text-align: center; }
+/* --- end ECI UX people --- */
+/* --- ECI UX timeline --- */
+/* /eci-files/timeline rework: control bar + two-column layout (desktop) vs. month strip + lane chips +
+   stream (phone) — two full render branches in TimelineView, toggled here rather than reflowed, since the
+   phone layout drops the period card / heat map / key-moments list entirely (Mobile.dc.html), it doesn't
+   just restack the desktop one. Breakpoint matches this file's existing .nr-2col split. */
+.eci-tl-desktop { display: flex; flex-direction: column; gap: 18px; }
+.eci-tl-mobile { display: none; }
+.eci-tl-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 320px); gap: 28px; align-items: start; margin-top: 18px; }
+.eci-tl-aside { position: sticky; top: 84px; }
+@media (max-width: 760px) {
+  .eci-tl-desktop { display: none; }
+  .eci-tl-mobile { display: flex; }
+}
+
+/* HeatMap: one <button> per month (keyboard/AT-focusable), stacking one small rect per lane — the same
+   click/drag-to-select interaction as the older DensityStrip (.eci-density-wrap/.eci-density-select,
+   reused as-is), just per-lane instead of one bar. */
+.eci-heat-col { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; border: 0; background: none; padding: 0; cursor: pointer; touch-action: pan-y; }
+.eci-heat-col:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 1px; }
+/* --- end ECI UX timeline --- */
+
+/* Career bar: a visual for wide screens; the numbered list below it carries the text everywhere. */
+@media (max-width: 640px) { .eci-careerline-bar { display: none; } }

@@ -1,0 +1,6735 @@
+{
+ "openapi": "3.1.0",
+ "info": {
+  "title": "Neta-Resume API",
+  "description": "Read-only resume aggregate for Indian legislators. Every fact carries provenance.",
+  "version": "0.1.0"
+ },
+ "paths": {
+  "/persons/{person_id}/photo": {
+   "get": {
+    "tags": [
+     "persons"
+    ],
+    "summary": "Person Photo",
+    "operationId": "person_photo_persons__person_id__photo_get",
+    "parameters": [
+     {
+      "name": "person_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Person Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/persons": {
+   "get": {
+    "tags": [
+     "persons"
+    ],
+    "summary": "List Persons",
+    "description": "Browse legislators (directory): filter by house/state/constituency/jurisdiction/party/cases/theme/\nsearch, sort by assets|cases|attendance|theme_questions|name, and page via limit/offset. `cycle` (a Lok\nSabha cycle number) browses that session's roster as it stood at the time. Total match count is returned\nin the `X-Total-Count` response header (the body stays a plain list).",
+    "operationId": "list_persons_persons_get",
+    "parameters": [
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 200,
+       "minimum": 1,
+       "default": 60,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "offset",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 0,
+       "default": 0,
+       "title": "Offset"
+      }
+     },
+     {
+      "name": "house",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "House"
+      }
+     },
+     {
+      "name": "state",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "State"
+      }
+     },
+     {
+      "name": "constituency",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Constituency"
+      }
+     },
+     {
+      "name": "jurisdiction",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Jurisdiction"
+      }
+     },
+     {
+      "name": "party",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Party"
+      }
+     },
+     {
+      "name": "cases",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cases"
+      }
+     },
+     {
+      "name": "q",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Q"
+      }
+     },
+     {
+      "name": "theme",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Theme"
+      }
+     },
+     {
+      "name": "cycle",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cycle"
+      }
+     },
+     {
+      "name": "sort",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "default": "assets",
+       "title": "Sort"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/PersonSummary"
+         },
+         "title": "Response List Persons Persons Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/persons/facets": {
+   "get": {
+    "tags": [
+     "persons"
+    ],
+    "summary": "Person Facets",
+    "description": "Dropdown option lists (party / state / house / LS session, each with a count) for a browse scope.",
+    "operationId": "person_facets_persons_facets_get",
+    "parameters": [
+     {
+      "name": "house",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "House"
+      }
+     },
+     {
+      "name": "state",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "State"
+      }
+     },
+     {
+      "name": "jurisdiction",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Jurisdiction"
+      }
+     },
+     {
+      "name": "cycle",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "integer"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Cycle"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Facets"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/persons/{person_id}": {
+   "get": {
+    "tags": [
+     "persons"
+    ],
+    "summary": "Get Person",
+    "description": "Full resume for one legislator.",
+    "operationId": "get_person_persons__person_id__get",
+    "parameters": [
+     {
+      "name": "person_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Person Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/PersonResume"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/questions/{question_id}/document": {
+   "get": {
+    "tags": [
+     "documents"
+    ],
+    "summary": "Question Document",
+    "operationId": "question_document_questions__question_id__document_get",
+    "parameters": [
+     {
+      "name": "question_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Question Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/debates/{debate_id}/document": {
+   "get": {
+    "tags": [
+     "documents"
+    ],
+    "summary": "Debate Document",
+    "operationId": "debate_document_debates__debate_id__document_get",
+    "parameters": [
+     {
+      "name": "debate_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "integer",
+       "title": "Debate Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {}
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/parliament/stats": {
+   "get": {
+    "tags": [
+     "parliament"
+    ],
+    "summary": "Parliament Stats",
+    "description": "National dashboard: totals + theme mix + top ministries + most-active MPs, for the given house.",
+    "operationId": "parliament_stats_parliament_stats_get",
+    "parameters": [
+     {
+      "name": "house",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(ls|rs)$",
+       "default": "ls",
+       "title": "House"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ParliamentStats"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/parliament/ministries": {
+   "get": {
+    "tags": [
+     "parliament"
+    ],
+    "summary": "Parliament Ministries",
+    "description": "The full ranked list of ministries by question count, for the given house.",
+    "operationId": "parliament_ministries_parliament_ministries_get",
+    "parameters": [
+     {
+      "name": "house",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(ls|rs)$",
+       "default": "ls",
+       "title": "House"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/MinistryCount"
+         },
+         "title": "Response Parliament Ministries Parliament Ministries Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/parliament/search": {
+   "get": {
+    "tags": [
+     "parliament"
+    ],
+    "summary": "Parliament Search",
+    "description": "Topic search over question subjects + debate titles for the given house. Filter by kind/theme, page via\nlimit/offset; the total match count is in the `X-Total-Count` header (body stays a plain list).",
+    "operationId": "parliament_search_parliament_search_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "minLength": 2,
+       "title": "Q"
+      }
+     },
+     {
+      "name": "kind",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "pattern": "^(question|debate)$"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Kind"
+      }
+     },
+     {
+      "name": "theme",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Theme"
+      }
+     },
+     {
+      "name": "limit",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "maximum": 100,
+       "minimum": 1,
+       "default": 30,
+       "title": "Limit"
+      }
+     },
+     {
+      "name": "offset",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "integer",
+       "minimum": 0,
+       "default": 0,
+       "title": "Offset"
+      }
+     },
+     {
+      "name": "house",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(ls|rs)$",
+       "default": "ls",
+       "title": "House"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/RecordHit"
+         },
+         "title": "Response Parliament Search Parliament Search Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/parliament/trends": {
+   "get": {
+    "tags": [
+     "parliament"
+    ],
+    "summary": "Parliament Trends",
+    "description": "Monthly question volume split by policy theme, for the given house \u2014 the stacked-area trends view.",
+    "operationId": "parliament_trends_parliament_trends_get",
+    "parameters": [
+     {
+      "name": "house",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(ls|rs)$",
+       "default": "ls",
+       "title": "House"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Trends"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/aggregate/theme-focus": {
+   "get": {
+    "tags": [
+     "aggregate"
+    ],
+    "summary": "Theme Focus",
+    "description": "Theme-emphasis mix per party or state, for the given house: each group's policy-theme shares + volume.",
+    "operationId": "theme_focus_aggregate_theme_focus_get",
+    "parameters": [
+     {
+      "name": "by",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "pattern": "^(party|state)$",
+       "title": "By"
+      }
+     },
+     {
+      "name": "house",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(ls|rs)$",
+       "default": "ls",
+       "title": "House"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ThemeFocusBreakdown"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/search": {
+   "get": {
+    "tags": [
+     "search"
+    ],
+    "summary": "Search",
+    "description": "Fuzzy search legislators by name (uses person.normalized_name trigram index).",
+    "operationId": "search_search_get",
+    "parameters": [
+     {
+      "name": "q",
+      "in": "query",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "minLength": 2,
+       "title": "Q"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "type": "array",
+         "items": {
+          "$ref": "#/components/schemas/PersonSummary"
+         },
+         "title": "Response Search Search Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/stats": {
+   "get": {
+    "tags": [
+     "stats"
+    ],
+    "summary": "Get Stats",
+    "description": "Real counts (total / per house / with cases / crorepatis) \u2014 not capped by any list limit.",
+    "operationId": "get_stats_stats_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Stats"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/visits": {
+   "get": {
+    "tags": [
+     "visits"
+    ],
+    "summary": "Get Visits",
+    "description": "Current lifetime unique-visitor count (no increment).",
+    "operationId": "get_visits_visits_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/VisitCount"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/visits/hit": {
+   "post": {
+    "tags": [
+     "visits"
+    ],
+    "summary": "Hit",
+    "description": "Atomically increment the unique-visitor count and return the new total.",
+    "operationId": "hit_visits_hit_post",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/VisitCount"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/elections": {
+   "get": {
+    "tags": [
+     "elections"
+    ],
+    "summary": "List Elections",
+    "description": "All registered elections. Past entries carry a winner_count + house (results reuse /persons?house=\u2026).",
+    "operationId": "list_elections_elections_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/Election"
+         },
+         "type": "array",
+         "title": "Response List Elections Elections Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/indicators/india": {
+   "get": {
+    "tags": [
+     "indicators"
+    ],
+    "summary": "India",
+    "description": "The full India Dashboard: every catalogued macro series (history + latest), grouped by category.",
+    "operationId": "india_indicators_india_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/IndiaDashboard"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/summary": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Summary",
+    "description": "The front page: the four headline stats, ~8 key moments, and record-wide counts.",
+    "operationId": "summary_eci_files_summary_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciSummary"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/timeline": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Timeline",
+    "description": "Entries matching the filter (date ascending, then id), plus topic/people/lane/state facets and\nchecked/unchecked counts scoped to that same filtered set. `fields=compact` returns just enough\nper entry to draw the lane timeline's dots (no citations). An unknown `state` slug returns an empty\n`entries` list, the same as an unknown `person`.",
+    "operationId": "timeline_eci_files_timeline_get",
+    "parameters": [
+     {
+      "name": "topic",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Topic"
+      }
+     },
+     {
+      "name": "person",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Person"
+      }
+     },
+     {
+      "name": "status",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Status"
+      }
+     },
+     {
+      "name": "lane",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Lane"
+      }
+     },
+     {
+      "name": "from",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "From"
+      }
+     },
+     {
+      "name": "to",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string",
+         "format": "date"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "To"
+      }
+     },
+     {
+      "name": "state",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "State"
+      }
+     },
+     {
+      "name": "fields",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "Fields"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "anyOf": [
+          {
+           "$ref": "#/components/schemas/EciTimeline"
+          },
+          {
+           "$ref": "#/components/schemas/EciTimelineCompact"
+          }
+         ],
+         "title": "Response Timeline Eci Files Timeline Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/states": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "States Overview",
+    "description": "All 36 States/UTs, sorted by name, with the national SIR figures.",
+    "operationId": "states_overview_eci_files_states_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciStatesOverview"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/states/{slug}": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "State Page",
+    "description": "One State/UT's summary and notes. The web fetches its entries separately, through the\ntimeline's `state=` filter.",
+    "operationId": "state_page_eci_files_states__slug__get",
+    "parameters": [
+     {
+      "name": "slug",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Slug"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciStatePage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/density": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Density",
+    "description": "Month x lane counts across the whole record, for the timeline overview strip.",
+    "operationId": "density_eci_files_density_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciDensity"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/people": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "People",
+    "description": "Every person on record, with role/tenure from their profile entry and a linked-entry count.",
+    "operationId": "people_eci_files_people_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "items": {
+          "$ref": "#/components/schemas/EciPersonSummary"
+         },
+         "type": "array",
+         "title": "Response People Eci Files People Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/people/{slug}": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Person Page",
+    "description": "One person's profile (if linked) plus their full timeline.",
+    "operationId": "person_page_eci_files_people__slug__get",
+    "parameters": [
+     {
+      "name": "slug",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Slug"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciPersonPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/selections": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Selections",
+    "description": "Every selection regime, every selection (newest first), every departure, and a compact index\nof every entry any of them cites.",
+    "operationId": "selections_eci_files_selections_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciSelections"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/objections": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Objections",
+    "description": "The fourteen: the 11 identified objections, the Indian Express report and the Commission's\nresponse, and a per-person count.",
+    "operationId": "objections_eci_files_objections_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciObjectionsPage"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/answers": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Answers",
+    "description": "Every charge or Commission action beside its response (charge date descending, then id).\n`counts` is always computed on the full set, whatever `view` filters the rows to.",
+    "operationId": "answers_eci_files_answers_get",
+    "parameters": [
+     {
+      "name": "view",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "type": "string",
+       "pattern": "^(all|no-response|with-record)$",
+       "default": "all",
+       "title": "View"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciAnswersPage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/rules": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Rules",
+    "description": "Every `kind='rule'` entry (date descending, then id) plus the before-and-after diffs.",
+    "operationId": "rules_eci_files_rules_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciRulesPage"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/rules/diffs/{diff_id}": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Rule Diff",
+    "operationId": "rule_diff_eci_files_rules_diffs__diff_id__get",
+    "parameters": [
+     {
+      "name": "diff_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Diff Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciRuleDiff"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/courts": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Courts",
+    "description": "The five court cases, file order, with their step counts and latest recorded step.",
+    "operationId": "courts_eci_files_courts_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciCourtsPage"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/courts/{slug}": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Case Page",
+    "description": "One case, order by order (entry date ascending, then id).",
+    "operationId": "case_page_eci_files_courts__slug__get",
+    "parameters": [
+     {
+      "name": "slug",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Slug"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciCasePage"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/entries/{entry_id}": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Get Entry",
+    "operationId": "get_entry_eci_files_entries__entry_id__get",
+    "parameters": [
+     {
+      "name": "entry_id",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Entry Id"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciEntryDetail"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/health": {
+   "get": {
+    "summary": "Health",
+    "operationId": "health_health_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "additionalProperties": {
+          "type": "string"
+         },
+         "type": "object",
+         "title": "Response Health Health Get"
+        }
+       }
+      }
+     }
+    }
+   }
+  }
+ },
+ "components": {
+  "schemas": {
+   "ActivityMetric": {
+    "properties": {
+     "value": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Value"
+     },
+     "house_median": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "House Median"
+     },
+     "percentile": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Percentile"
+     }
+    },
+    "type": "object",
+    "required": [
+     "value"
+    ],
+    "title": "ActivityMetric"
+   },
+   "AffidavitWealth": {
+    "properties": {
+     "election_cycle": {
+      "type": "string",
+      "title": "Election Cycle"
+     },
+     "filed_year": {
+      "type": "integer",
+      "title": "Filed Year"
+     },
+     "total_assets": {
+      "type": "integer",
+      "title": "Total Assets"
+     },
+     "total_liabilities": {
+      "type": "integer",
+      "title": "Total Liabilities"
+     },
+     "movable_assets": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Movable Assets"
+     },
+     "immovable_assets": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Immovable Assets"
+     },
+     "self_income": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Self Income"
+     },
+     "source": {
+      "$ref": "#/components/schemas/Source"
+     }
+    },
+    "type": "object",
+    "required": [
+     "election_cycle",
+     "filed_year",
+     "total_assets",
+     "total_liabilities",
+     "source"
+    ],
+    "title": "AffidavitWealth"
+   },
+   "AggregateGroup": {
+    "properties": {
+     "key": {
+      "type": "string",
+      "title": "Key"
+     },
+     "total": {
+      "type": "integer",
+      "title": "Total"
+     },
+     "mps": {
+      "type": "integer",
+      "title": "Mps"
+     },
+     "themes": {
+      "items": {
+       "$ref": "#/components/schemas/ThemeShare"
+      },
+      "type": "array",
+      "title": "Themes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "key",
+     "total",
+     "mps",
+     "themes"
+    ],
+    "title": "AggregateGroup",
+    "description": "One party or state's collective question profile (18th Lok Sabha)."
+   },
+   "ChargeSection": {
+    "properties": {
+     "raw": {
+      "type": "string",
+      "title": "Raw"
+     },
+     "title": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "equivalent": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Equivalent"
+     }
+    },
+    "type": "object",
+    "required": [
+     "raw"
+    ],
+    "title": "ChargeSection"
+   },
+   "Contact": {
+    "properties": {
+     "channel_type": {
+      "type": "string",
+      "title": "Channel Type"
+     },
+     "value": {
+      "type": "string",
+      "title": "Value"
+     },
+     "label": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Label"
+     },
+     "source": {
+      "$ref": "#/components/schemas/Source"
+     }
+    },
+    "type": "object",
+    "required": [
+     "channel_type",
+     "value",
+     "label",
+     "source"
+    ],
+    "title": "Contact"
+   },
+   "CriminalCase": {
+    "properties": {
+     "case_number": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Number"
+     },
+     "court": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Court"
+     },
+     "filed_year": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Filed Year"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "is_convicted": {
+      "type": "boolean",
+      "title": "Is Convicted"
+     },
+     "severity": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "heinous",
+         "serious",
+         "minor"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Severity"
+     },
+     "sections": {
+      "items": {
+       "$ref": "#/components/schemas/ChargeSection"
+      },
+      "type": "array",
+      "title": "Sections"
+     },
+     "description": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Description"
+     },
+     "source": {
+      "$ref": "#/components/schemas/Source"
+     }
+    },
+    "type": "object",
+    "required": [
+     "case_number",
+     "court",
+     "filed_year",
+     "status",
+     "is_convicted",
+     "severity",
+     "sections",
+     "description",
+     "source"
+    ],
+    "title": "CriminalCase"
+   },
+   "EciAnswerRow": {
+    "properties": {
+     "charge": {
+      "$ref": "#/components/schemas/EciEntryCard"
+     },
+     "also_recorded_as": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryRef"
+      },
+      "type": "array",
+      "title": "Also Recorded As",
+      "default": []
+     },
+     "responses": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryCard"
+      },
+      "type": "array",
+      "title": "Responses",
+      "default": []
+     },
+     "record": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryCard"
+      },
+      "type": "array",
+      "title": "Record",
+      "default": []
+     },
+     "related": {
+      "items": {
+       "$ref": "#/components/schemas/EciRelatedRef"
+      },
+      "type": "array",
+      "title": "Related",
+      "default": []
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "curated": {
+      "type": "boolean",
+      "title": "Curated"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind",
+      "default": "charge"
+     }
+    },
+    "type": "object",
+    "required": [
+     "charge",
+     "curated"
+    ],
+    "title": "EciAnswerRow"
+   },
+   "EciAnswersCounts": {
+    "properties": {
+     "rows": {
+      "type": "integer",
+      "title": "Rows"
+     },
+     "with_response": {
+      "type": "integer",
+      "title": "With Response"
+     },
+     "without_response": {
+      "type": "integer",
+      "title": "Without Response"
+     },
+     "with_record": {
+      "type": "integer",
+      "title": "With Record"
+     }
+    },
+    "type": "object",
+    "required": [
+     "rows",
+     "with_response",
+     "without_response",
+     "with_record"
+    ],
+    "title": "EciAnswersCounts"
+   },
+   "EciAnswersPage": {
+    "properties": {
+     "counts": {
+      "$ref": "#/components/schemas/EciAnswersCounts"
+     },
+     "rows": {
+      "items": {
+       "$ref": "#/components/schemas/EciAnswerRow"
+      },
+      "type": "array",
+      "title": "Rows"
+     },
+     "unpaired_responses": {
+      "items": {
+       "$ref": "#/components/schemas/EciUnpairedResponse"
+      },
+      "type": "array",
+      "title": "Unpaired Responses"
+     }
+    },
+    "type": "object",
+    "required": [
+     "counts",
+     "rows",
+     "unpaired_responses"
+    ],
+    "title": "EciAnswersPage"
+   },
+   "EciCaseItem": {
+    "properties": {
+     "role": {
+      "type": "string",
+      "title": "Role"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "entry": {
+      "$ref": "#/components/schemas/EciEntryCard"
+     }
+    },
+    "type": "object",
+    "required": [
+     "role",
+     "entry"
+    ],
+    "title": "EciCaseItem"
+   },
+   "EciCasePage": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "short_name": {
+      "type": "string",
+      "title": "Short Name"
+     },
+     "court": {
+      "type": "string",
+      "title": "Court"
+     },
+     "short_status": {
+      "type": "string",
+      "title": "Short Status"
+     },
+     "status_note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status Note"
+     },
+     "case": {
+      "$ref": "#/components/schemas/EciEntry"
+     },
+     "case_name": {
+      "type": "string",
+      "title": "Case Name"
+     },
+     "case_number": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Number"
+     },
+     "bench": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Bench"
+     },
+     "citation": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Citation"
+     },
+     "parties": {
+      "additionalProperties": {
+       "items": {
+        "type": "string"
+       },
+       "type": "array"
+      },
+      "type": "object",
+      "title": "Parties"
+     },
+     "items": {
+      "items": {
+       "$ref": "#/components/schemas/EciCaseItem"
+      },
+      "type": "array",
+      "title": "Items"
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "short_name",
+     "court",
+     "short_status",
+     "case",
+     "case_name",
+     "parties",
+     "items"
+    ],
+    "title": "EciCasePage"
+   },
+   "EciCaseSummary": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "short_name": {
+      "type": "string",
+      "title": "Short Name"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "case_number": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case Number"
+     },
+     "court": {
+      "type": "string",
+      "title": "Court"
+     },
+     "short_status": {
+      "type": "string",
+      "title": "Short Status"
+     },
+     "status_note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Status Note"
+     },
+     "item_count": {
+      "type": "integer",
+      "title": "Item Count"
+     },
+     "order_count": {
+      "type": "integer",
+      "title": "Order Count"
+     },
+     "first_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "First Date"
+     },
+     "last_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Date"
+     },
+     "latest": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciEntryRef"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "short_name",
+     "title",
+     "court",
+     "short_status",
+     "item_count",
+     "order_count"
+    ],
+    "title": "EciCaseSummary"
+   },
+   "EciCheckCounts": {
+    "properties": {
+     "checked": {
+      "type": "integer",
+      "title": "Checked"
+     },
+     "unchecked": {
+      "type": "integer",
+      "title": "Unchecked"
+     }
+    },
+    "type": "object",
+    "required": [
+     "checked",
+     "unchecked"
+    ],
+    "title": "EciCheckCounts"
+   },
+   "EciCitation": {
+    "properties": {
+     "position": {
+      "type": "integer",
+      "title": "Position"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "publisher": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Publisher"
+     },
+     "title": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "published": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Published"
+     },
+     "tier": {
+      "type": "integer",
+      "title": "Tier"
+     },
+     "archive_url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Archive Url"
+     },
+     "quote": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Quote"
+     }
+    },
+    "type": "object",
+    "required": [
+     "position",
+     "tier"
+    ],
+    "title": "EciCitation"
+   },
+   "EciCourtsPage": {
+    "properties": {
+     "cases": {
+      "items": {
+       "$ref": "#/components/schemas/EciCaseSummary"
+      },
+      "type": "array",
+      "title": "Cases"
+     },
+     "other_court_entries": {
+      "type": "integer",
+      "title": "Other Court Entries"
+     }
+    },
+    "type": "object",
+    "required": [
+     "cases",
+     "other_court_entries"
+    ],
+    "title": "EciCourtsPage"
+   },
+   "EciDensity": {
+    "properties": {
+     "months": {
+      "items": {
+       "$ref": "#/components/schemas/EciDensityMonth"
+      },
+      "type": "array",
+      "title": "Months"
+     }
+    },
+    "type": "object",
+    "required": [
+     "months"
+    ],
+    "title": "EciDensity",
+    "description": "`/eci-files/density` \u2014 the overview strip's month x lane counts."
+   },
+   "EciDensityMonth": {
+    "properties": {
+     "month": {
+      "type": "string",
+      "title": "Month"
+     },
+     "lane": {
+      "type": "string",
+      "title": "Lane"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "month",
+     "lane",
+     "count"
+    ],
+    "title": "EciDensityMonth"
+   },
+   "EciDeparture": {
+    "properties": {
+     "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+     },
+     "person_slug": {
+      "type": "string",
+      "title": "Person Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "office": {
+      "type": "string",
+      "title": "Office"
+     },
+     "how": {
+      "type": "string",
+      "title": "How"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     }
+    },
+    "type": "object",
+    "required": [
+     "date",
+     "person_slug",
+     "name",
+     "office",
+     "how",
+     "entry_ids"
+    ],
+    "title": "EciDeparture"
+   },
+   "EciEntry": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "area": {
+      "type": "string",
+      "title": "Area"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     },
+     "date_precision": {
+      "type": "string",
+      "title": "Date Precision"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "summary": {
+      "type": "string",
+      "title": "Summary"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "lane": {
+      "type": "string",
+      "title": "Lane"
+     },
+     "attributed_to": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Attributed To"
+     },
+     "topics": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Topics",
+      "default": []
+     },
+     "states": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "States",
+      "default": []
+     },
+     "figures": {
+      "items": {},
+      "type": "array",
+      "title": "Figures"
+     },
+     "details": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Details"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "check_status": {
+      "type": "string",
+      "title": "Check Status"
+     },
+     "people": {
+      "items": {
+       "$ref": "#/components/schemas/EciPersonRef"
+      },
+      "type": "array",
+      "title": "People",
+      "default": []
+     },
+     "response_to": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Response To"
+     },
+     "responses": {
+      "items": {
+       "$ref": "#/components/schemas/EciResponseRef"
+      },
+      "type": "array",
+      "title": "Responses",
+      "default": []
+     },
+     "citations": {
+      "items": {
+       "$ref": "#/components/schemas/EciCitation"
+      },
+      "type": "array",
+      "title": "Citations",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "area",
+     "kind",
+     "date_precision",
+     "title",
+     "summary",
+     "status",
+     "lane",
+     "check_status"
+    ],
+    "title": "EciEntry"
+   },
+   "EciEntryCard": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     },
+     "date_precision": {
+      "type": "string",
+      "title": "Date Precision"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "summary": {
+      "type": "string",
+      "title": "Summary"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "lane": {
+      "type": "string",
+      "title": "Lane"
+     },
+     "attributed_to": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Attributed To"
+     },
+     "check_status": {
+      "type": "string",
+      "title": "Check Status"
+     },
+     "people": {
+      "items": {
+       "$ref": "#/components/schemas/EciPersonRef"
+      },
+      "type": "array",
+      "title": "People",
+      "default": []
+     },
+     "citation_count": {
+      "type": "integer",
+      "title": "Citation Count"
+     },
+     "lead_citation": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciCitation"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "kind",
+     "date_precision",
+     "title",
+     "summary",
+     "status",
+     "lane",
+     "check_status",
+     "citation_count"
+    ],
+    "title": "EciEntryCard",
+    "description": "Enough for a row or cell on the phase 5 pages; the drawer fetches the full entry."
+   },
+   "EciEntryCompact": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     },
+     "date_precision": {
+      "type": "string",
+      "title": "Date Precision"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "lane": {
+      "type": "string",
+      "title": "Lane"
+     },
+     "check_status": {
+      "type": "string",
+      "title": "Check Status"
+     },
+     "people": {
+      "items": {
+       "$ref": "#/components/schemas/EciPersonRef"
+      },
+      "type": "array",
+      "title": "People",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "date_precision",
+     "title",
+     "status",
+     "lane",
+     "check_status"
+    ],
+    "title": "EciEntryCompact",
+    "description": "`fields=compact` on `/eci-files/timeline` \u2014 just enough to draw a dot, no citations."
+   },
+   "EciEntryContext": {
+    "properties": {
+     "pairs": {
+      "items": {
+       "$ref": "#/components/schemas/EciPairContext"
+      },
+      "type": "array",
+      "title": "Pairs",
+      "default": []
+     },
+     "case": {
+      "anyOf": [
+       {
+        "additionalProperties": true,
+        "type": "object"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Case"
+     },
+     "objections": {
+      "items": {
+       "additionalProperties": true,
+       "type": "object"
+      },
+      "type": "array",
+      "title": "Objections",
+      "default": []
+     },
+     "rule_diffs": {
+      "items": {
+       "$ref": "#/components/schemas/EciRuleDiffRef"
+      },
+      "type": "array",
+      "title": "Rule Diffs",
+      "default": []
+     }
+    },
+    "type": "object",
+    "title": "EciEntryContext"
+   },
+   "EciEntryDetail": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "area": {
+      "type": "string",
+      "title": "Area"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     },
+     "date_precision": {
+      "type": "string",
+      "title": "Date Precision"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "summary": {
+      "type": "string",
+      "title": "Summary"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "lane": {
+      "type": "string",
+      "title": "Lane"
+     },
+     "attributed_to": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Attributed To"
+     },
+     "topics": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Topics",
+      "default": []
+     },
+     "states": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "States",
+      "default": []
+     },
+     "figures": {
+      "items": {},
+      "type": "array",
+      "title": "Figures"
+     },
+     "details": {
+      "additionalProperties": true,
+      "type": "object",
+      "title": "Details"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "check_status": {
+      "type": "string",
+      "title": "Check Status"
+     },
+     "people": {
+      "items": {
+       "$ref": "#/components/schemas/EciPersonRef"
+      },
+      "type": "array",
+      "title": "People",
+      "default": []
+     },
+     "response_to": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Response To"
+     },
+     "responses": {
+      "items": {
+       "$ref": "#/components/schemas/EciResponseRef"
+      },
+      "type": "array",
+      "title": "Responses",
+      "default": []
+     },
+     "citations": {
+      "items": {
+       "$ref": "#/components/schemas/EciCitation"
+      },
+      "type": "array",
+      "title": "Citations",
+      "default": []
+     },
+     "context": {
+      "$ref": "#/components/schemas/EciEntryContext",
+      "default": {
+       "pairs": [],
+       "objections": [],
+       "rule_diffs": []
+      }
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "area",
+     "kind",
+     "date_precision",
+     "title",
+     "summary",
+     "status",
+     "lane",
+     "check_status"
+    ],
+    "title": "EciEntryDetail"
+   },
+   "EciEntryRef": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     },
+     "date_precision": {
+      "type": "string",
+      "title": "Date Precision"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "check_status": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Check Status"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "date_precision",
+     "status"
+    ],
+    "title": "EciEntryRef",
+    "description": "A compact, labelled reference to an entry cited by a selection, regime or departure."
+   },
+   "EciHeadlineStat": {
+    "properties": {
+     "value": {
+      "type": "string",
+      "title": "Value"
+     },
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "source_label": {
+      "type": "string",
+      "title": "Source Label"
+     },
+     "source_url": {
+      "type": "string",
+      "title": "Source Url"
+     },
+     "entry_id": {
+      "type": "string",
+      "title": "Entry Id"
+     }
+    },
+    "type": "object",
+    "required": [
+     "value",
+     "label",
+     "source_label",
+     "source_url",
+     "entry_id"
+    ],
+    "title": "EciHeadlineStat"
+   },
+   "EciLaneCount": {
+    "properties": {
+     "lane": {
+      "type": "string",
+      "title": "Lane"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "lane",
+     "count"
+    ],
+    "title": "EciLaneCount"
+   },
+   "EciNationalFigure": {
+    "properties": {
+     "group": {
+      "type": "string",
+      "title": "Group"
+     },
+     "measure": {
+      "type": "string",
+      "title": "Measure"
+     },
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "scope": {
+      "type": "string",
+      "title": "Scope"
+     },
+     "electors": {
+      "type": "integer",
+      "title": "Electors"
+     },
+     "as_of": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "As Of"
+     },
+     "computed": {
+      "type": "boolean",
+      "title": "Computed"
+     },
+     "approx": {
+      "type": "boolean",
+      "title": "Approx"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "source_entry_id": {
+      "type": "string",
+      "title": "Source Entry Id"
+     },
+     "source_entry_title": {
+      "type": "string",
+      "title": "Source Entry Title"
+     },
+     "source_status": {
+      "type": "string",
+      "title": "Source Status"
+     }
+    },
+    "type": "object",
+    "required": [
+     "group",
+     "measure",
+     "label",
+     "scope",
+     "electors",
+     "computed",
+     "approx",
+     "source_entry_id",
+     "source_entry_title",
+     "source_status"
+    ],
+    "title": "EciNationalFigure"
+   },
+   "EciObjection": {
+    "properties": {
+     "n": {
+      "type": "integer",
+      "title": "N"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     },
+     "date_precision": {
+      "type": "string",
+      "title": "Date Precision"
+     },
+     "by": {
+      "items": {
+       "$ref": "#/components/schemas/EciPersonWithPhoto"
+      },
+      "type": "array",
+      "title": "By"
+     },
+     "concerns": {
+      "type": "string",
+      "title": "Concerns"
+     },
+     "followed_by": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Followed By"
+     },
+     "followed_by_refs": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryRef"
+      },
+      "type": "array",
+      "title": "Followed By Refs",
+      "default": []
+     },
+     "public": {
+      "type": "boolean",
+      "title": "Public"
+     },
+     "entries": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryRef"
+      },
+      "type": "array",
+      "title": "Entries"
+     }
+    },
+    "type": "object",
+    "required": [
+     "n",
+     "date_precision",
+     "by",
+     "concerns",
+     "public",
+     "entries"
+    ],
+    "title": "EciObjection"
+   },
+   "EciObjectionPersonCount": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "photo": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciPhoto"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     },
+     "joint": {
+      "type": "integer",
+      "title": "Joint"
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name",
+     "count",
+     "joint"
+    ],
+    "title": "EciObjectionPersonCount"
+   },
+   "EciObjectionsPage": {
+    "properties": {
+     "identified": {
+      "type": "integer",
+      "title": "Identified"
+     },
+     "missing": {
+      "type": "integer",
+      "title": "Missing"
+     },
+     "reported_total": {
+      "type": "integer",
+      "title": "Reported Total"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "report": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciEntryRef"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "response": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciEntryCard"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "objections": {
+      "items": {
+       "$ref": "#/components/schemas/EciObjection"
+      },
+      "type": "array",
+      "title": "Objections"
+     },
+     "by_person": {
+      "items": {
+       "$ref": "#/components/schemas/EciObjectionPersonCount"
+      },
+      "type": "array",
+      "title": "By Person"
+     }
+    },
+    "type": "object",
+    "required": [
+     "identified",
+     "missing",
+     "reported_total",
+     "objections",
+     "by_person"
+    ],
+    "title": "EciObjectionsPage"
+   },
+   "EciPairContext": {
+    "properties": {
+     "charge": {
+      "$ref": "#/components/schemas/EciEntryRef"
+     },
+     "role": {
+      "type": "string",
+      "title": "Role"
+     },
+     "responses": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryRef"
+      },
+      "type": "array",
+      "title": "Responses",
+      "default": []
+     },
+     "record": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryRef"
+      },
+      "type": "array",
+      "title": "Record",
+      "default": []
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     }
+    },
+    "type": "object",
+    "required": [
+     "charge",
+     "role"
+    ],
+    "title": "EciPairContext"
+   },
+   "EciPersonCount": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name",
+     "count"
+    ],
+    "title": "EciPersonCount"
+   },
+   "EciPersonDetail": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "profile": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciEntry"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "group": {
+      "type": "string",
+      "title": "Group"
+     },
+     "current": {
+      "type": "boolean",
+      "title": "Current"
+     },
+     "role": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Role"
+     },
+     "service": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Service"
+     },
+     "tenure": {
+      "items": {},
+      "type": "array",
+      "title": "Tenure"
+     },
+     "status_counts": {
+      "$ref": "#/components/schemas/EciStatusCounts"
+     },
+     "photo": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciPhoto"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name",
+     "group",
+     "current"
+    ],
+    "title": "EciPersonDetail"
+   },
+   "EciPersonPage": {
+    "properties": {
+     "person": {
+      "$ref": "#/components/schemas/EciPersonDetail"
+     },
+     "entries": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntry"
+      },
+      "type": "array",
+      "title": "Entries"
+     },
+     "selections": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelection"
+      },
+      "type": "array",
+      "title": "Selections"
+     },
+     "entries_index": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryRef"
+      },
+      "type": "array",
+      "title": "Entries Index"
+     }
+    },
+    "type": "object",
+    "required": [
+     "person",
+     "entries",
+     "selections",
+     "entries_index"
+    ],
+    "title": "EciPersonPage"
+   },
+   "EciPersonRef": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name"
+    ],
+    "title": "EciPersonRef"
+   },
+   "EciPersonSummary": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "group": {
+      "type": "string",
+      "title": "Group"
+     },
+     "group_rank": {
+      "type": "integer",
+      "title": "Group Rank"
+     },
+     "current": {
+      "type": "boolean",
+      "title": "Current"
+     },
+     "role": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Role"
+     },
+     "service": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Service"
+     },
+     "tenure": {
+      "items": {},
+      "type": "array",
+      "title": "Tenure"
+     },
+     "first_from": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "First From"
+     },
+     "last_to": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last To"
+     },
+     "entry_count": {
+      "type": "integer",
+      "title": "Entry Count"
+     },
+     "status_counts": {
+      "$ref": "#/components/schemas/EciStatusCounts"
+     },
+     "photo": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciPhoto"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name",
+     "group",
+     "group_rank",
+     "current",
+     "entry_count"
+    ],
+    "title": "EciPersonSummary"
+   },
+   "EciPersonWithPhoto": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "photo": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciPhoto"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name"
+    ],
+    "title": "EciPersonWithPhoto"
+   },
+   "EciPhoto": {
+    "properties": {
+     "url": {
+      "type": "string",
+      "title": "Url"
+     },
+     "source_page": {
+      "type": "string",
+      "title": "Source Page"
+     },
+     "attribution": {
+      "type": "string",
+      "title": "Attribution"
+     },
+     "licence": {
+      "type": "string",
+      "title": "Licence"
+     },
+     "licence_url": {
+      "type": "string",
+      "title": "Licence Url"
+     },
+     "licence_review": {
+      "type": "string",
+      "title": "Licence Review"
+     },
+     "original_publisher": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Original Publisher"
+     },
+     "caption": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Caption"
+     },
+     "photo_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Photo Date"
+     }
+    },
+    "type": "object",
+    "required": [
+     "url",
+     "source_page",
+     "attribution",
+     "licence",
+     "licence_url",
+     "licence_review"
+    ],
+    "title": "EciPhoto"
+   },
+   "EciRegionSummary": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "phase": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Phase"
+     },
+     "exercise": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Exercise"
+     },
+     "has_figures": {
+      "type": "boolean",
+      "title": "Has Figures"
+     },
+     "entry_count": {
+      "type": "integer",
+      "title": "Entry Count"
+     },
+     "stages": {
+      "items": {
+       "$ref": "#/components/schemas/EciStageValue"
+      },
+      "type": "array",
+      "title": "Stages",
+      "default": []
+     },
+     "metrics": {
+      "$ref": "#/components/schemas/EciStateMetrics"
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name",
+     "code",
+     "kind",
+     "has_figures",
+     "entry_count",
+     "metrics"
+    ],
+    "title": "EciRegionSummary"
+   },
+   "EciRelatedRef": {
+    "properties": {
+     "entry": {
+      "$ref": "#/components/schemas/EciEntryRef"
+     },
+     "why": {
+      "type": "string",
+      "title": "Why"
+     }
+    },
+    "type": "object",
+    "required": [
+     "entry",
+     "why"
+    ],
+    "title": "EciRelatedRef"
+   },
+   "EciResponseRef": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title"
+    ],
+    "title": "EciResponseRef",
+    "description": "One entry that answers another (`response_to` points back at the charge it responds to)."
+   },
+   "EciRuleDiff": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "document": {
+      "type": "string",
+      "title": "Document"
+     },
+     "rule_entry": {
+      "$ref": "#/components/schemas/EciEntryCard"
+     },
+     "before_label": {
+      "type": "string",
+      "title": "Before Label"
+     },
+     "after_label": {
+      "type": "string",
+      "title": "After Label"
+     },
+     "before": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Before"
+     },
+     "after": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "After"
+     },
+     "before_status": {
+      "type": "string",
+      "title": "Before Status"
+     },
+     "after_status": {
+      "type": "string",
+      "title": "After Status"
+     },
+     "text_status": {
+      "type": "string",
+      "title": "Text Status"
+     },
+     "excerpt": {
+      "type": "boolean",
+      "title": "Excerpt"
+     },
+     "quoted_lines_before": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Quoted Lines Before",
+      "default": []
+     },
+     "quoted_lines_after": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Quoted Lines After",
+      "default": []
+     },
+     "source_urls": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Source Urls"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "related": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryRef"
+      },
+      "type": "array",
+      "title": "Related",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "document",
+     "rule_entry",
+     "before_label",
+     "after_label",
+     "before",
+     "after",
+     "before_status",
+     "after_status",
+     "text_status",
+     "excerpt",
+     "source_urls"
+    ],
+    "title": "EciRuleDiff"
+   },
+   "EciRuleDiffRef": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "text_status": {
+      "type": "string",
+      "title": "Text Status"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "text_status"
+    ],
+    "title": "EciRuleDiffRef"
+   },
+   "EciRuleRow": {
+    "properties": {
+     "entry": {
+      "$ref": "#/components/schemas/EciEntryCard"
+     },
+     "diffs": {
+      "items": {
+       "$ref": "#/components/schemas/EciRuleDiffRef"
+      },
+      "type": "array",
+      "title": "Diffs",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "entry"
+    ],
+    "title": "EciRuleRow"
+   },
+   "EciRulesPage": {
+    "properties": {
+     "rules": {
+      "items": {
+       "$ref": "#/components/schemas/EciRuleRow"
+      },
+      "type": "array",
+      "title": "Rules"
+     },
+     "diffs": {
+      "items": {
+       "$ref": "#/components/schemas/EciRuleDiffRef"
+      },
+      "type": "array",
+      "title": "Diffs"
+     },
+     "counts": {
+      "additionalProperties": {
+       "type": "integer"
+      },
+      "type": "object",
+      "title": "Counts"
+     }
+    },
+    "type": "object",
+    "required": [
+     "rules",
+     "diffs",
+     "counts"
+    ],
+    "title": "EciRulesPage"
+   },
+   "EciSelection": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+     },
+     "date_precision": {
+      "type": "string",
+      "title": "Date Precision"
+     },
+     "date_meaning": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date Meaning"
+     },
+     "regime": {
+      "type": "string",
+      "title": "Regime"
+     },
+     "method": {
+      "type": "string",
+      "title": "Method"
+     },
+     "appointed": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelectionAppointee"
+      },
+      "type": "array",
+      "title": "Appointed"
+     },
+     "members": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelectionMember"
+      },
+      "type": "array",
+      "title": "Members"
+     },
+     "search": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciSelectionSearch"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "dissent": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelectionDissent"
+      },
+      "type": "array",
+      "title": "Dissent"
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "date",
+     "date_precision",
+     "regime",
+     "method",
+     "appointed",
+     "members",
+     "dissent",
+     "entry_ids"
+    ],
+    "title": "EciSelection"
+   },
+   "EciSelectionAppointee": {
+    "properties": {
+     "person_slug": {
+      "type": "string",
+      "title": "Person Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "office": {
+      "type": "string",
+      "title": "Office"
+     },
+     "took_charge": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Took Charge"
+     },
+     "replaced": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Replaced"
+     },
+     "photo": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciPhoto"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "person_slug",
+     "name",
+     "office"
+    ],
+    "title": "EciSelectionAppointee"
+   },
+   "EciSelectionDissent": {
+    "properties": {
+     "person_slug": {
+      "type": "string",
+      "title": "Person Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "summary": {
+      "type": "string",
+      "title": "Summary"
+     },
+     "note_public": {
+      "type": "boolean",
+      "title": "Note Public"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     },
+     "response_entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Response Entry Ids",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "person_slug",
+     "name",
+     "summary",
+     "note_public",
+     "status",
+     "entry_ids"
+    ],
+    "title": "EciSelectionDissent"
+   },
+   "EciSelectionMember": {
+    "properties": {
+     "person_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Person Slug"
+     },
+     "name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "role": {
+      "type": "string",
+      "title": "Role"
+     },
+     "part": {
+      "type": "string",
+      "title": "Part"
+     },
+     "has_profile": {
+      "type": "boolean",
+      "title": "Has Profile",
+      "default": false
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     }
+    },
+    "type": "object",
+    "required": [
+     "role",
+     "part",
+     "entry_ids"
+    ],
+    "title": "EciSelectionMember"
+   },
+   "EciSelectionRegime": {
+    "properties": {
+     "key": {
+      "type": "string",
+      "title": "Key"
+     },
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "from_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "From Date"
+     },
+     "to_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "To Date"
+     },
+     "rule": {
+      "type": "string",
+      "title": "Rule"
+     },
+     "panel": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Panel"
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "selection_count": {
+      "type": "integer",
+      "title": "Selection Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "key",
+     "label",
+     "rule",
+     "panel",
+     "entry_ids",
+     "selection_count"
+    ],
+    "title": "EciSelectionRegime"
+   },
+   "EciSelectionSearch": {
+    "properties": {
+     "by": {
+      "type": "string",
+      "title": "By"
+     },
+     "chair_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Chair Slug"
+     },
+     "shortlist_size": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Shortlist Size"
+     },
+     "shortlist": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Shortlist"
+     },
+     "shortlist_source": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Shortlist Source"
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     }
+    },
+    "type": "object",
+    "required": [
+     "by",
+     "entry_ids"
+    ],
+    "title": "EciSelectionSearch"
+   },
+   "EciSelections": {
+    "properties": {
+     "regimes": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelectionRegime"
+      },
+      "type": "array",
+      "title": "Regimes"
+     },
+     "selections": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelection"
+      },
+      "type": "array",
+      "title": "Selections"
+     },
+     "departures": {
+      "items": {
+       "$ref": "#/components/schemas/EciDeparture"
+      },
+      "type": "array",
+      "title": "Departures"
+     },
+     "entries_index": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryRef"
+      },
+      "type": "array",
+      "title": "Entries Index"
+     }
+    },
+    "type": "object",
+    "required": [
+     "regimes",
+     "selections",
+     "departures",
+     "entries_index"
+    ],
+    "title": "EciSelections",
+    "description": "`/eci-files/selections` \u2014 every regime, every selection, every departure and a compact index\nof every entry any of them cites."
+   },
+   "EciStageValue": {
+    "properties": {
+     "stage": {
+      "type": "string",
+      "title": "Stage"
+     },
+     "electors": {
+      "type": "integer",
+      "title": "Electors"
+     },
+     "as_of": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "As Of"
+     },
+     "computed": {
+      "type": "boolean",
+      "title": "Computed"
+     },
+     "approx": {
+      "type": "boolean",
+      "title": "Approx"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "source_entry_id": {
+      "type": "string",
+      "title": "Source Entry Id"
+     },
+     "source_entry_title": {
+      "type": "string",
+      "title": "Source Entry Title"
+     },
+     "source_status": {
+      "type": "string",
+      "title": "Source Status"
+     },
+     "url": {
+      "type": "string",
+      "title": "Url"
+     },
+     "tier": {
+      "type": "integer",
+      "title": "Tier"
+     }
+    },
+    "type": "object",
+    "required": [
+     "stage",
+     "electors",
+     "computed",
+     "approx",
+     "source_entry_id",
+     "source_entry_title",
+     "source_status",
+     "url",
+     "tier"
+    ],
+    "title": "EciStageValue"
+   },
+   "EciStateCount": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name",
+     "count"
+    ],
+    "title": "EciStateCount"
+   },
+   "EciStateMetric": {
+    "properties": {
+     "value": {
+      "type": "number",
+      "title": "Value"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     },
+     "base": {
+      "type": "integer",
+      "title": "Base"
+     },
+     "computed": {
+      "type": "boolean",
+      "title": "Computed"
+     },
+     "approx": {
+      "type": "boolean",
+      "title": "Approx"
+     },
+     "noted": {
+      "type": "boolean",
+      "title": "Noted"
+     }
+    },
+    "type": "object",
+    "required": [
+     "value",
+     "count",
+     "base",
+     "computed",
+     "approx",
+     "noted"
+    ],
+    "title": "EciStateMetric"
+   },
+   "EciStateMetrics": {
+    "properties": {
+     "draft_left_off": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciStateMetric"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "net_change": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciStateMetric"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "appeals_filed": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciStateMetric"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "title": "EciStateMetrics"
+   },
+   "EciStatePage": {
+    "properties": {
+     "region": {
+      "$ref": "#/components/schemas/EciRegionSummary"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "region"
+    ],
+    "title": "EciStatePage"
+   },
+   "EciStatesOverview": {
+    "properties": {
+     "regions": {
+      "items": {
+       "$ref": "#/components/schemas/EciRegionSummary"
+      },
+      "type": "array",
+      "title": "Regions"
+     },
+     "national": {
+      "items": {
+       "$ref": "#/components/schemas/EciNationalFigure"
+      },
+      "type": "array",
+      "title": "National"
+     },
+     "last_as_of": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last As Of"
+     }
+    },
+    "type": "object",
+    "required": [
+     "regions",
+     "national"
+    ],
+    "title": "EciStatesOverview"
+   },
+   "EciStatusCounts": {
+    "properties": {
+     "documented": {
+      "type": "integer",
+      "title": "Documented",
+      "default": 0
+     },
+     "reported": {
+      "type": "integer",
+      "title": "Reported",
+      "default": 0
+     },
+     "claim": {
+      "type": "integer",
+      "title": "Claim",
+      "default": 0
+     },
+     "response": {
+      "type": "integer",
+      "title": "Response",
+      "default": 0
+     }
+    },
+    "type": "object",
+    "title": "EciStatusCounts"
+   },
+   "EciSummary": {
+    "properties": {
+     "headline": {
+      "items": {
+       "$ref": "#/components/schemas/EciHeadlineStat"
+      },
+      "type": "array",
+      "title": "Headline"
+     },
+     "key_moments": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntry"
+      },
+      "type": "array",
+      "title": "Key Moments"
+     },
+     "counts": {
+      "$ref": "#/components/schemas/EciSummaryCounts"
+     },
+     "last_loaded": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date-time"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last Loaded"
+     }
+    },
+    "type": "object",
+    "required": [
+     "headline",
+     "key_moments",
+     "counts"
+    ],
+    "title": "EciSummary",
+    "description": "`/eci-files/summary` \u2014 the front page's headline stats, key moments and record-wide counts."
+   },
+   "EciSummaryCounts": {
+    "properties": {
+     "entries": {
+      "type": "integer",
+      "title": "Entries"
+     },
+     "dated_entries": {
+      "type": "integer",
+      "title": "Dated Entries"
+     },
+     "checked": {
+      "type": "integer",
+      "title": "Checked"
+     },
+     "people": {
+      "type": "integer",
+      "title": "People"
+     },
+     "citations": {
+      "type": "integer",
+      "title": "Citations"
+     }
+    },
+    "type": "object",
+    "required": [
+     "entries",
+     "dated_entries",
+     "checked",
+     "people",
+     "citations"
+    ],
+    "title": "EciSummaryCounts"
+   },
+   "EciTimeline": {
+    "properties": {
+     "entries": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntry"
+      },
+      "type": "array",
+      "title": "Entries"
+     },
+     "topics": {
+      "items": {
+       "$ref": "#/components/schemas/EciTopicCount"
+      },
+      "type": "array",
+      "title": "Topics"
+     },
+     "people": {
+      "items": {
+       "$ref": "#/components/schemas/EciPersonCount"
+      },
+      "type": "array",
+      "title": "People"
+     },
+     "lanes": {
+      "items": {
+       "$ref": "#/components/schemas/EciLaneCount"
+      },
+      "type": "array",
+      "title": "Lanes"
+     },
+     "states": {
+      "items": {
+       "$ref": "#/components/schemas/EciStateCount"
+      },
+      "type": "array",
+      "title": "States",
+      "default": []
+     },
+     "counts": {
+      "$ref": "#/components/schemas/EciCheckCounts"
+     }
+    },
+    "type": "object",
+    "required": [
+     "entries",
+     "topics",
+     "people",
+     "lanes",
+     "counts"
+    ],
+    "title": "EciTimeline",
+    "description": "The filtered ECI Files timeline \u2014 entries plus facets scoped to the same filter."
+   },
+   "EciTimelineCompact": {
+    "properties": {
+     "entries": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryCompact"
+      },
+      "type": "array",
+      "title": "Entries"
+     },
+     "topics": {
+      "items": {
+       "$ref": "#/components/schemas/EciTopicCount"
+      },
+      "type": "array",
+      "title": "Topics"
+     },
+     "people": {
+      "items": {
+       "$ref": "#/components/schemas/EciPersonCount"
+      },
+      "type": "array",
+      "title": "People"
+     },
+     "lanes": {
+      "items": {
+       "$ref": "#/components/schemas/EciLaneCount"
+      },
+      "type": "array",
+      "title": "Lanes"
+     },
+     "states": {
+      "items": {
+       "$ref": "#/components/schemas/EciStateCount"
+      },
+      "type": "array",
+      "title": "States",
+      "default": []
+     },
+     "counts": {
+      "$ref": "#/components/schemas/EciCheckCounts"
+     }
+    },
+    "type": "object",
+    "required": [
+     "entries",
+     "topics",
+     "people",
+     "lanes",
+     "counts"
+    ],
+    "title": "EciTimelineCompact",
+    "description": "The `fields=compact` shape of `/eci-files/timeline`: same facets, slimmer entries."
+   },
+   "EciTopicCount": {
+    "properties": {
+     "topic": {
+      "type": "string",
+      "title": "Topic"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "topic",
+     "count"
+    ],
+    "title": "EciTopicCount"
+   },
+   "EciUnpairedResponse": {
+    "properties": {
+     "response": {
+      "$ref": "#/components/schemas/EciEntryCard"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     }
+    },
+    "type": "object",
+    "required": [
+     "response"
+    ],
+    "title": "EciUnpairedResponse"
+   },
+   "Election": {
+    "properties": {
+     "eci_election_id": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Eci Election Id"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "level": {
+      "type": "string",
+      "title": "Level"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "election_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Election Date"
+     },
+     "seats": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Seats"
+     },
+     "house": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "House"
+     },
+     "winner_count": {
+      "type": "integer",
+      "title": "Winner Count"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     }
+    },
+    "type": "object",
+    "required": [
+     "eci_election_id",
+     "name",
+     "level",
+     "status",
+     "election_date",
+     "seats",
+     "house",
+     "winner_count"
+    ],
+    "title": "Election"
+   },
+   "FacetCount": {
+    "properties": {
+     "value": {
+      "type": "string",
+      "title": "Value"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "value",
+     "count"
+    ],
+    "title": "FacetCount"
+   },
+   "Facets": {
+    "properties": {
+     "parties": {
+      "items": {
+       "$ref": "#/components/schemas/FacetCount"
+      },
+      "type": "array",
+      "title": "Parties",
+      "default": []
+     },
+     "states": {
+      "items": {
+       "$ref": "#/components/schemas/FacetCount"
+      },
+      "type": "array",
+      "title": "States",
+      "default": []
+     },
+     "houses": {
+      "items": {
+       "$ref": "#/components/schemas/FacetCount"
+      },
+      "type": "array",
+      "title": "Houses",
+      "default": []
+     },
+     "themes": {
+      "items": {
+       "$ref": "#/components/schemas/FacetCount"
+      },
+      "type": "array",
+      "title": "Themes",
+      "default": []
+     },
+     "cycles": {
+      "items": {
+       "$ref": "#/components/schemas/FacetCount"
+      },
+      "type": "array",
+      "title": "Cycles",
+      "default": []
+     }
+    },
+    "type": "object",
+    "title": "Facets",
+    "description": "Dropdown option lists for a browse scope (party / state / house / theme), each with its row count."
+   },
+   "FirstOffice": {
+    "properties": {
+     "year": {
+      "type": "integer",
+      "title": "Year"
+     },
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "source": {
+      "$ref": "#/components/schemas/Source"
+     }
+    },
+    "type": "object",
+    "required": [
+     "year",
+     "label",
+     "kind",
+     "source"
+    ],
+    "title": "FirstOffice",
+    "description": "The earliest public office on record \u2014 a person's 'entered public life' anchor.\n\nDerived (not stored): the earliest-dated of the person's office_terms and leadership roles. It's only\nas deep as the sourced record reaches, so it's a floor ('at least since'), never a claim of the very\nfirst office ever held. Carries the provenance of whichever fact it was derived from."
+   },
+   "HTTPValidationError": {
+    "properties": {
+     "detail": {
+      "items": {
+       "$ref": "#/components/schemas/ValidationError"
+      },
+      "type": "array",
+      "title": "Detail"
+     }
+    },
+    "type": "object",
+    "title": "HTTPValidationError"
+   },
+   "IndiaDashboard": {
+    "properties": {
+     "country": {
+      "type": "string",
+      "title": "Country"
+     },
+     "categories": {
+      "items": {
+       "$ref": "#/components/schemas/IndicatorCategory"
+      },
+      "type": "array",
+      "title": "Categories"
+     },
+     "total_indicators": {
+      "type": "integer",
+      "title": "Total Indicators"
+     }
+    },
+    "type": "object",
+    "required": [
+     "country",
+     "categories",
+     "total_indicators"
+    ],
+    "title": "IndiaDashboard",
+    "description": "The India Dashboard aggregate \u2014 country-level macro indicators, grouped by category.\n\nDescriptive official statistics (World Bank Open Data, CC-BY 4.0, trust tier 1) \u2014 what the record\nsays, never a judgment. Every series carries its own source link and its latest year (series lag\ndiffers: GDP is near-current, survey series like the Gini update only in survey years)."
+   },
+   "IndicatorCategory": {
+    "properties": {
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "indicators": {
+      "items": {
+       "$ref": "#/components/schemas/IndicatorSeries"
+      },
+      "type": "array",
+      "title": "Indicators"
+     }
+    },
+    "type": "object",
+    "required": [
+     "name",
+     "indicators"
+    ],
+    "title": "IndicatorCategory"
+   },
+   "IndicatorPoint": {
+    "properties": {
+     "year": {
+      "type": "integer",
+      "title": "Year"
+     },
+     "value": {
+      "type": "number",
+      "title": "Value"
+     }
+    },
+    "type": "object",
+    "required": [
+     "year",
+     "value"
+    ],
+    "title": "IndicatorPoint"
+   },
+   "IndicatorSeries": {
+    "properties": {
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "unit": {
+      "type": "string",
+      "title": "Unit"
+     },
+     "format": {
+      "type": "string",
+      "title": "Format"
+     },
+     "polarity": {
+      "type": "integer",
+      "title": "Polarity",
+      "default": 0
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "latest_value": {
+      "type": "number",
+      "title": "Latest Value"
+     },
+     "latest_year": {
+      "type": "integer",
+      "title": "Latest Year"
+     },
+     "points": {
+      "items": {
+       "$ref": "#/components/schemas/IndicatorPoint"
+      },
+      "type": "array",
+      "title": "Points"
+     },
+     "source": {
+      "$ref": "#/components/schemas/Source"
+     }
+    },
+    "type": "object",
+    "required": [
+     "code",
+     "name",
+     "unit",
+     "format",
+     "latest_value",
+     "latest_year",
+     "points",
+     "source"
+    ],
+    "title": "IndicatorSeries",
+    "description": "One macro series (e.g. GDP) \u2014 full yearly history + the latest value, with provenance."
+   },
+   "MinistryCount": {
+    "properties": {
+     "ministry": {
+      "type": "string",
+      "title": "Ministry"
+     },
+     "theme": {
+      "type": "string",
+      "title": "Theme"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "ministry",
+     "theme",
+     "count"
+    ],
+    "title": "MinistryCount"
+   },
+   "MpCount": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "display_name": {
+      "type": "string",
+      "title": "Display Name"
+     },
+     "photo_url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Photo Url"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     },
+     "top_theme": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Top Theme"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "display_name",
+     "count"
+    ],
+    "title": "MpCount"
+   },
+   "OfficeTerm": {
+    "properties": {
+     "house": {
+      "type": "string",
+      "title": "House"
+     },
+     "cycle_number": {
+      "type": "integer",
+      "title": "Cycle Number"
+     },
+     "constituency": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Constituency"
+     },
+     "state": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "State"
+     },
+     "party": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Party"
+     },
+     "membership_type": {
+      "type": "string",
+      "title": "Membership Type"
+     },
+     "start_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Start Date"
+     },
+     "end_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "End Date"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "source": {
+      "$ref": "#/components/schemas/Source"
+     },
+     "attendance_pct": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Attendance Pct"
+     },
+     "attendance_source": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/Source"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "house",
+     "cycle_number",
+     "constituency",
+     "state",
+     "party",
+     "membership_type",
+     "start_date",
+     "end_date",
+     "status",
+     "source"
+    ],
+    "title": "OfficeTerm"
+   },
+   "ParliamentStats": {
+    "properties": {
+     "house": {
+      "type": "string",
+      "title": "House"
+     },
+     "total_questions": {
+      "type": "integer",
+      "title": "Total Questions"
+     },
+     "total_debates": {
+      "type": "integer",
+      "title": "Total Debates"
+     },
+     "active_mps": {
+      "type": "integer",
+      "title": "Active Mps"
+     },
+     "themes": {
+      "items": {
+       "$ref": "#/components/schemas/ThemeCount"
+      },
+      "type": "array",
+      "title": "Themes"
+     },
+     "top_ministries": {
+      "items": {
+       "$ref": "#/components/schemas/MinistryCount"
+      },
+      "type": "array",
+      "title": "Top Ministries"
+     },
+     "most_active": {
+      "items": {
+       "$ref": "#/components/schemas/MpCount"
+      },
+      "type": "array",
+      "title": "Most Active"
+     }
+    },
+    "type": "object",
+    "required": [
+     "house",
+     "total_questions",
+     "total_debates",
+     "active_mps",
+     "themes",
+     "top_ministries",
+     "most_active"
+    ],
+    "title": "ParliamentStats",
+    "description": "Institutional-lens dashboard: what the House is asking (currently the 18th Lok Sabha)."
+   },
+   "ParliamentaryActivity": {
+    "properties": {
+     "house": {
+      "type": "string",
+      "title": "House"
+     },
+     "questions": {
+      "$ref": "#/components/schemas/ActivityMetric"
+     },
+     "debates": {
+      "$ref": "#/components/schemas/ActivityMetric"
+     },
+     "private_member_bills": {
+      "$ref": "#/components/schemas/ActivityMetric"
+     },
+     "period_start": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Period Start"
+     },
+     "period_end": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Period End"
+     },
+     "source": {
+      "$ref": "#/components/schemas/Source"
+     }
+    },
+    "type": "object",
+    "required": [
+     "house",
+     "questions",
+     "debates",
+     "private_member_bills",
+     "source"
+    ],
+    "title": "ParliamentaryActivity",
+    "description": "What an MP did in the House \u2014 counts with peer context, from PRS MP Track (CC-BY 4.0)."
+   },
+   "ParliamentaryDebate": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "title": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "debate_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Debate Type"
+     },
+     "debate_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Debate Date"
+     },
+     "document_url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Document Url"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id"
+    ],
+    "title": "ParliamentaryDebate"
+   },
+   "ParliamentaryQuestion": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "subject": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Subject"
+     },
+     "ministry": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ministry"
+     },
+     "theme": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Theme"
+     },
+     "question_type": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Question Type"
+     },
+     "asked_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Asked Date"
+     },
+     "document_url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Document Url"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id"
+    ],
+    "title": "ParliamentaryQuestion"
+   },
+   "ParliamentaryRecord": {
+    "properties": {
+     "house": {
+      "type": "string",
+      "title": "House"
+     },
+     "questions_count": {
+      "type": "integer",
+      "title": "Questions Count"
+     },
+     "debates_count": {
+      "type": "integer",
+      "title": "Debates Count"
+     },
+     "questions": {
+      "items": {
+       "$ref": "#/components/schemas/ParliamentaryQuestion"
+      },
+      "type": "array",
+      "title": "Questions"
+     },
+     "debates": {
+      "items": {
+       "$ref": "#/components/schemas/ParliamentaryDebate"
+      },
+      "type": "array",
+      "title": "Debates"
+     },
+     "thematic_focus": {
+      "items": {
+       "$ref": "#/components/schemas/ThemeFocus"
+      },
+      "type": "array",
+      "title": "Thematic Focus",
+      "default": []
+     },
+     "source": {
+      "$ref": "#/components/schemas/Source"
+     }
+    },
+    "type": "object",
+    "required": [
+     "house",
+     "questions_count",
+     "debates_count",
+     "questions",
+     "debates",
+     "source"
+    ],
+    "title": "ParliamentaryRecord",
+    "description": "Individual questions asked + debates joined \u2014 the content behind the activity counts.\n\nEnumerated from PRS MP Track profiles (CC-BY 4.0). `*_count` is the full total; the lists are capped\n(most-recent first) to bound payload \u2014 the UI shows \"showing N of total\"."
+   },
+   "PartyStint": {
+    "properties": {
+     "party": {
+      "type": "string",
+      "title": "Party"
+     },
+     "joined_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Joined Date"
+     },
+     "left_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Left Date"
+     },
+     "is_current": {
+      "type": "boolean",
+      "title": "Is Current"
+     },
+     "join_reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Join Reason"
+     },
+     "leave_reason": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Leave Reason"
+     },
+     "reason_source": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/Source"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "source": {
+      "$ref": "#/components/schemas/Source"
+     }
+    },
+    "type": "object",
+    "required": [
+     "party",
+     "joined_date",
+     "left_date",
+     "is_current",
+     "join_reason",
+     "leave_reason",
+     "reason_source",
+     "source"
+    ],
+    "title": "PartyStint"
+   },
+   "PartySwitch": {
+    "properties": {
+     "from_party": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "From Party"
+     },
+     "to_party": {
+      "type": "string",
+      "title": "To Party"
+     },
+     "event_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Event Date"
+     },
+     "narrative": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Narrative"
+     },
+     "source": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/Source"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "from_party",
+     "to_party",
+     "event_date",
+     "narrative",
+     "source"
+    ],
+    "title": "PartySwitch"
+   },
+   "PersonResume": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "display_name": {
+      "type": "string",
+      "title": "Display Name"
+     },
+     "native_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Native Name"
+     },
+     "photo_url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Photo Url"
+     },
+     "age": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age"
+     },
+     "education": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Education"
+     },
+     "relative_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Relative Name"
+     },
+     "home_state": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Home State"
+     },
+     "first_office": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/FirstOffice"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "office_terms": {
+      "items": {
+       "$ref": "#/components/schemas/OfficeTerm"
+      },
+      "type": "array",
+      "title": "Office Terms"
+     },
+     "roles": {
+      "items": {
+       "$ref": "#/components/schemas/RoleEntry"
+      },
+      "type": "array",
+      "title": "Roles",
+      "default": []
+     },
+     "contacts": {
+      "items": {
+       "$ref": "#/components/schemas/Contact"
+      },
+      "type": "array",
+      "title": "Contacts",
+      "default": []
+     },
+     "party_history": {
+      "items": {
+       "$ref": "#/components/schemas/PartyStint"
+      },
+      "type": "array",
+      "title": "Party History"
+     },
+     "party_switches": {
+      "items": {
+       "$ref": "#/components/schemas/PartySwitch"
+      },
+      "type": "array",
+      "title": "Party Switches",
+      "default": []
+     },
+     "wealth": {
+      "items": {
+       "$ref": "#/components/schemas/AffidavitWealth"
+      },
+      "type": "array",
+      "title": "Wealth"
+     },
+     "criminal_cases": {
+      "items": {
+       "$ref": "#/components/schemas/CriminalCase"
+      },
+      "type": "array",
+      "title": "Criminal Cases"
+     },
+     "activity": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ParliamentaryActivity"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "parliamentary_record": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/ParliamentaryRecord"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "display_name",
+     "office_terms",
+     "party_history",
+     "wealth",
+     "criminal_cases"
+    ],
+    "title": "PersonResume"
+   },
+   "PersonSummary": {
+    "properties": {
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "display_name": {
+      "type": "string",
+      "title": "Display Name"
+     },
+     "native_name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Native Name"
+     },
+     "photo_url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Photo Url"
+     },
+     "current_party": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Current Party"
+     },
+     "current_house": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Current House"
+     },
+     "constituency": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Constituency"
+     },
+     "state": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "State"
+     },
+     "net_assets": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Net Assets"
+     },
+     "age": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Age"
+     },
+     "education": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Education"
+     },
+     "gender": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Gender"
+     },
+     "pending_cases": {
+      "type": "integer",
+      "title": "Pending Cases",
+      "default": 0
+     },
+     "total_cases": {
+      "type": "integer",
+      "title": "Total Cases",
+      "default": 0
+     },
+     "top_severity": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "heinous",
+         "serious",
+         "minor"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Top Severity"
+     },
+     "current_attendance_pct": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Current Attendance Pct"
+     },
+     "questions_count": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Questions Count"
+     },
+     "top_theme": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Top Theme"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "display_name",
+     "current_party",
+     "current_house",
+     "constituency"
+    ],
+    "title": "PersonSummary"
+   },
+   "RecordHit": {
+    "properties": {
+     "kind": {
+      "type": "string",
+      "enum": [
+       "question",
+       "debate"
+      ],
+      "title": "Kind"
+     },
+     "id": {
+      "type": "integer",
+      "title": "Id"
+     },
+     "title": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "mp_id": {
+      "type": "integer",
+      "title": "Mp Id"
+     },
+     "mp_name": {
+      "type": "string",
+      "title": "Mp Name"
+     },
+     "ministry": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Ministry"
+     },
+     "theme": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Theme"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     }
+    },
+    "type": "object",
+    "required": [
+     "kind",
+     "id",
+     "mp_id",
+     "mp_name"
+    ],
+    "title": "RecordHit",
+    "description": "One topic-search hit \u2014 a question or debate matching the query (18th Lok Sabha)."
+   },
+   "RoleEntry": {
+    "properties": {
+     "role_type": {
+      "type": "string",
+      "title": "Role Type"
+     },
+     "title": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Title"
+     },
+     "body": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Body"
+     },
+     "house": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "House"
+     },
+     "portfolio": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Portfolio"
+     },
+     "start_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Start Date"
+     },
+     "end_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "End Date"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "source": {
+      "$ref": "#/components/schemas/Source"
+     }
+    },
+    "type": "object",
+    "required": [
+     "role_type",
+     "title",
+     "body",
+     "house",
+     "portfolio",
+     "start_date",
+     "end_date",
+     "status",
+     "source"
+    ],
+    "title": "RoleEntry"
+   },
+   "Source": {
+    "properties": {
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "url": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Url"
+     },
+     "trust_tier": {
+      "type": "integer",
+      "title": "Trust Tier"
+     }
+    },
+    "type": "object",
+    "required": [
+     "code",
+     "name",
+     "trust_tier"
+    ],
+    "title": "Source"
+   },
+   "Stats": {
+    "properties": {
+     "total_legislators": {
+      "type": "integer",
+      "title": "Total Legislators"
+     },
+     "lok_sabha": {
+      "type": "integer",
+      "title": "Lok Sabha"
+     },
+     "rajya_sabha": {
+      "type": "integer",
+      "title": "Rajya Sabha"
+     },
+     "with_cases": {
+      "type": "integer",
+      "title": "With Cases"
+     },
+     "crorepatis": {
+      "type": "integer",
+      "title": "Crorepatis"
+     }
+    },
+    "type": "object",
+    "required": [
+     "total_legislators",
+     "lok_sabha",
+     "rajya_sabha",
+     "with_cases",
+     "crorepatis"
+    ],
+    "title": "Stats"
+   },
+   "ThemeCount": {
+    "properties": {
+     "theme": {
+      "type": "string",
+      "title": "Theme"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "theme",
+     "count"
+    ],
+    "title": "ThemeCount"
+   },
+   "ThemeFocus": {
+    "properties": {
+     "theme": {
+      "type": "string",
+      "title": "Theme"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     },
+     "share": {
+      "type": "number",
+      "title": "Share"
+     },
+     "house_share": {
+      "anyOf": [
+       {
+        "type": "number"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "House Share"
+     }
+    },
+    "type": "object",
+    "required": [
+     "theme",
+     "count",
+     "share"
+    ],
+    "title": "ThemeFocus",
+    "description": "One policy theme's weight in an MP's questions, vs the House \u2014 the 'Policy focus' breakdown.\n\nDescriptive topical emphasis derived from the official ministry each question addressed (never a value\njudgment). `share` = this MP's fraction of questions in the theme; `house_share` = the same fraction\npooled across all sitting members of the house (None until the house corpus is large enough to average)."
+   },
+   "ThemeFocusBreakdown": {
+    "properties": {
+     "by": {
+      "type": "string",
+      "enum": [
+       "party",
+       "state"
+      ],
+      "title": "By"
+     },
+     "house": {
+      "type": "string",
+      "title": "House"
+     },
+     "groups": {
+      "items": {
+       "$ref": "#/components/schemas/AggregateGroup"
+      },
+      "type": "array",
+      "title": "Groups"
+     }
+    },
+    "type": "object",
+    "required": [
+     "by",
+     "house",
+     "groups"
+    ],
+    "title": "ThemeFocusBreakdown",
+    "description": "Descriptive theme-emphasis breakdown by party or state \u2014 what a group's members collectively raise.\n\nTopical emphasis derived from the official ministry each question addressed; a comparison of focus, never\na value judgment or productivity ranking (same ethic as the per-MP 'Policy focus'). Missing \u2260 zero."
+   },
+   "ThemeSeries": {
+    "properties": {
+     "theme": {
+      "type": "string",
+      "title": "Theme"
+     },
+     "points": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Points"
+     }
+    },
+    "type": "object",
+    "required": [
+     "theme",
+     "points"
+    ],
+    "title": "ThemeSeries"
+   },
+   "ThemeShare": {
+    "properties": {
+     "theme": {
+      "type": "string",
+      "title": "Theme"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     },
+     "share": {
+      "type": "number",
+      "title": "Share"
+     }
+    },
+    "type": "object",
+    "required": [
+     "theme",
+     "count",
+     "share"
+    ],
+    "title": "ThemeShare"
+   },
+   "Trends": {
+    "properties": {
+     "house": {
+      "type": "string",
+      "title": "House"
+     },
+     "months": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Months"
+     },
+     "totals": {
+      "items": {
+       "type": "integer"
+      },
+      "type": "array",
+      "title": "Totals"
+     },
+     "series": {
+      "items": {
+       "$ref": "#/components/schemas/ThemeSeries"
+      },
+      "type": "array",
+      "title": "Series"
+     }
+    },
+    "type": "object",
+    "required": [
+     "house",
+     "months",
+     "totals",
+     "series"
+    ],
+    "title": "Trends",
+    "description": "Monthly question volume split by policy theme (stacked-area trends over the term)."
+   },
+   "ValidationError": {
+    "properties": {
+     "loc": {
+      "items": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "integer"
+        }
+       ]
+      },
+      "type": "array",
+      "title": "Location"
+     },
+     "msg": {
+      "type": "string",
+      "title": "Message"
+     },
+     "type": {
+      "type": "string",
+      "title": "Error Type"
+     },
+     "input": {
+      "title": "Input"
+     },
+     "ctx": {
+      "type": "object",
+      "title": "Context"
+     }
+    },
+    "type": "object",
+    "required": [
+     "loc",
+     "msg",
+     "type"
+    ],
+    "title": "ValidationError"
+   },
+   "VisitCount": {
+    "properties": {
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "count"
+    ],
+    "title": "VisitCount"
+   }
+  }
+ }
+}

@@ -1,0 +1,93 @@
+{
+  "area": "numbers-phase3",
+  "entries": [
+    {
+      "id": "numbers-phase3-base-2026-05-14",
+      "kind": "figure",
+      "date": "2026-05-14",
+      "date_precision": "day",
+      "title": "ECI sets out each phase III state's roll size as the SIR begins",
+      "summary": "Annexure II of the Commission's press note announcing SIR phase III lists the electors on each state's roll as on 12 May 2026, the figure it used for planning booth-level work. For these seven states it is the only official pre-SIR total on record.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Telangana",
+        "Andhra Pradesh",
+        "Jharkhand",
+        "Haryana",
+        "Punjab",
+        "Arunachal Pradesh",
+        "Dadra and Nagar Haveli and Daman and Diu"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "Telangana: electors as on 12 May 2026",
+          "value": 33920705,
+          "unit": "electors",
+          "as_of": "2026-05-12"
+        },
+        {
+          "label": "Andhra Pradesh: electors as on 12 May 2026",
+          "value": 41616061,
+          "unit": "electors",
+          "as_of": "2026-05-12"
+        },
+        {
+          "label": "Jharkhand: electors as on 12 May 2026",
+          "value": 26489777,
+          "unit": "electors",
+          "as_of": "2026-05-12"
+        },
+        {
+          "label": "Haryana: electors as on 12 May 2026",
+          "value": 20663155,
+          "unit": "electors",
+          "as_of": "2026-05-12"
+        },
+        {
+          "label": "Punjab: electors as on 12 May 2026",
+          "value": 21456297,
+          "unit": "electors",
+          "as_of": "2026-05-12"
+        },
+        {
+          "label": "Arunachal Pradesh: electors as on 12 May 2026",
+          "value": 887607,
+          "unit": "electors",
+          "as_of": "2026-05-12"
+        },
+        {
+          "label": "Dadra and Nagar Haveli and Daman and Diu: electors as on 12 May 2026",
+          "value": 427849,
+          "unit": "electors",
+          "as_of": "2026-05-12"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "publisher": "Election Commission of India",
+          "title": "Press Note ECI/PN/086/2026, Annexure II (mirrored on CEO Jharkhand and CEO Punjab sites)",
+          "published": "2026-05-14",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "notes": "The annexure labels these 'Electors (as on 12.05.2026)'. It is a planning snapshot, not a roll the Commission calls the qualifying-date roll.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+        "note": "PDF opened and read by the states researcher on 26 Sep 2026."
+      }
+    }
+  ],
+  "gaps": []
+}

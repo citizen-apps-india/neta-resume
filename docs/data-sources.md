@@ -127,6 +127,23 @@ See `severity-rubric.md`.
 
 ---
 
+## F. ECI Files — a curated editorial record
+
+### `eci_files.curated` — ✓ reviewed data files, not a live crawl
+- **Input:** `data/eci_files/entries/*.json`, hand-researched and fact-checked against primary
+  documents (ECI orders/press notes, the Gazette, court orders, Parliament Q&As) with press reporting
+  used only where no primary document exists. Sourcing rules and stance: `data/eci_files/research/BRIEF.md`.
+- **Access:** nothing is fetched at load time — `neta eci-files` reads the files already in the repo and
+  writes `eci_file_entry`/`eci_file_person`/`eci_file_citation`, full-replace, idempotent. See
+  `docs/eci-files/SPEC.md` and the "ECI Files" section of `docs/OPERATIONS.md`.
+- **Trust tiers per citation**, not per source: `eci_files_primary` (official documents, tier 1),
+  `eci_files_research` (research bodies and filings, tier 2), `eci_files_press` (press reports, tier 3).
+- **Launch is gated:** pages exist but are unlinked, `noindex`, and left out of `sitemap.ts` until the
+  owner approves.
+- **ECI Files photos:** Wikimedia Commons, GODL-India, attribution per file.
+
+---
+
 ## Entity resolution — unique-ID strategy
 
 - **TCPD SURF** (https://tcpd.ashoka.edu.in/surf-an-entity-mapping-and-resolution-system-for-indian/) —

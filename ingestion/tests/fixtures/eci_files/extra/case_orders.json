@@ -1,0 +1,22 @@
+{
+  "about": "fixture case orders for phase 5 tests",
+  "built_on": "2026-09-25",
+  "roles": [
+    "order", "judgment", "hearing", "filing", "listing", "recusal", "compliance", "related"
+  ],
+  "cases": [
+    {
+      "slug": "phase5-case",
+      "short_name": "Phase 5 Test Case",
+      "case_entry_id": "phase5-case-1",
+      "court": "Test Court",
+      "short_status": "pending",
+      "status_note": null,
+      "parties": {"petitioners": ["Test Petitioner"], "respondents": ["Election Commission of India"]},
+      "items": [
+        {"entry_id": "phase5-order-1", "role": "order", "note": null}
+      ]
+    }
+  ],
+  "unmapped": []
+}

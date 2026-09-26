@@ -1,0 +1,27 @@
+{
+  "about": "fixture rule diffs for phase 5 tests",
+  "built_on": "2026-09-25",
+  "text_statuses": ["verbatim", "quoted in reporting", "paraphrased from reporting"],
+  "diffs": [
+    {
+      "id": "phase5-diff-1",
+      "rule_entry_id": "phase5-rule-1",
+      "title": "Test rule diff",
+      "document": "Test Rules, 2026",
+      "before_label": "Before",
+      "after_label": "After",
+      "before": ["a test line"],
+      "after": ["a test line", "an added line"],
+      "before_status": "verbatim",
+      "after_status": "verbatim",
+      "text_status": "verbatim",
+      "excerpt": false,
+      "quoted_lines_before": [],
+      "quoted_lines_after": [],
+      "source_urls": ["https://example.com/rule-1-gazette"],
+      "note": null,
+      "related_entry_ids": ["phase5-order-1"]
+    }
+  ],
+  "gaps": []
+}

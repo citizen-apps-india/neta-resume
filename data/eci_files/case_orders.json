@@ -1,0 +1,339 @@
+{
+  "about": "Which entries belong to which of the five court cases in the courts area, for /eci-files/courts (docs/eci-files/PHASE5-SPEC.md section 5). Built from each case entry's own notes, which list the order entries already recorded in other areas. Roles: order, judgment, hearing, filing, listing, recusal, compliance (a Commission act carrying out an order), related (linked but not part of this case's proceedings). An entry belongs to at most one case.",
+  "built_on": "2026-09-25",
+  "roles": [
+    "order",
+    "judgment",
+    "hearing",
+    "filing",
+    "listing",
+    "recusal",
+    "compliance",
+    "related"
+  ],
+  "cases": [
+    {
+      "slug": "form-17c",
+      "short_name": "Form 17C turnout data",
+      "case_entry_id": "courts-case-form-17c",
+      "court": "Supreme Court of India",
+      "short_status": "pending",
+      "status_note": "Reported as pending. Last confirmed hearing 24 May 2024; no later order found.",
+      "parties": {
+        "petitioners": [
+          "Mahua Moitra",
+          "Association for Democratic Reforms (interim application)"
+        ],
+        "respondents": [
+          "Election Commission of India"
+        ]
+      },
+      "items": [
+        {
+          "entry_id": "elections-2019-2024-adr-17c-notice",
+          "role": "order"
+        },
+        {
+          "entry_id": "elections-2019-2024-eci-17c-affidavit",
+          "role": "filing"
+        },
+        {
+          "entry_id": "elections-2019-2024-sc-17c-may24",
+          "role": "order"
+        }
+      ]
+    },
+    {
+      "slug": "evm-vvpat",
+      "short_name": "EVM and VVPAT verification",
+      "case_entry_id": "courts-case-evm-vvpat",
+      "court": "Supreme Court of India",
+      "short_status": "disposed",
+      "status_note": "Judgment 26 April 2024; review dismissed 30 July 2024.",
+      "parties": {
+        "petitioners": [
+          "Association for Democratic Reforms"
+        ],
+        "respondents": [
+          "Election Commission of India",
+          "and another"
+        ]
+      },
+      "items": [
+        {
+          "entry_id": "elections-2019-2024-vvpat-naidu-order",
+          "role": "related",
+          "note": "An earlier, separate case (N. Chandrababu Naidu v Union of India) on VVPAT checks"
+        },
+        {
+          "entry_id": "officials-vyas-supreme-court-evm-2024",
+          "role": "hearing"
+        },
+        {
+          "entry_id": "elections-2019-2024-adr-v-eci-vvpat-judgment",
+          "role": "judgment"
+        },
+        {
+          "entry_id": "courts-event-evm-vvpat-2024-04-29-bhandari-rejected",
+          "role": "related",
+          "note": "A parallel petition making the same demand"
+        },
+        {
+          "entry_id": "courts-event-evm-vvpat-2024-07-30-review-dismissed",
+          "role": "order"
+        }
+      ]
+    },
+    {
+      "slug": "2023-act-challenge",
+      "short_name": "Challenge to the 2023 appointments Act",
+      "case_entry_id": "courts-case-2023-act-challenge",
+      "court": "Supreme Court of India",
+      "short_status": "referred",
+      "status_note": "Pending. On 23 Sep 2026 a split opinion sent the papers to the Chief Justice to consider a Constitution Bench.",
+      "parties": {
+        "petitioners": [
+          "Dr Jaya Thakur",
+          "Gopal Singh",
+          "Naman Sherstra",
+          "Association for Democratic Reforms",
+          "People's Union for Civil Liberties",
+          "Lok Prahari"
+        ],
+        "respondents": [
+          "Union of India & Ors"
+        ]
+      },
+      "items": [
+        {
+          "entry_id": "selection-law-anoop-baranwal-judgment",
+          "role": "related",
+          "note": "The 2023 judgment the Act followed"
+        },
+        {
+          "entry_id": "selection-law-thakur-petition-filed",
+          "role": "filing"
+        },
+        {
+          "entry_id": "selection-law-sc-notice-no-stay-jan-2024",
+          "role": "order"
+        },
+        {
+          "entry_id": "selection-law-stay-applications-march-2024",
+          "role": "filing"
+        },
+        {
+          "entry_id": "selection-law-sc-refuses-stay-march-2024",
+          "role": "order"
+        },
+        {
+          "entry_id": "selection-law-union-reply-march-2024",
+          "role": "filing"
+        },
+        {
+          "entry_id": "selection-law-cji-khanna-recuses",
+          "role": "recusal"
+        },
+        {
+          "entry_id": "selection-law-sc-hearing-jan-2025",
+          "role": "hearing"
+        },
+        {
+          "entry_id": "selection-law-sc-feb-12-2025",
+          "role": "listing"
+        },
+        {
+          "entry_id": "selection-law-sc-defers-feb-2025",
+          "role": "listing"
+        },
+        {
+          "entry_id": "selection-law-sc-listings-2025",
+          "role": "listing"
+        },
+        {
+          "entry_id": "selection-law-section-16-notice",
+          "role": "order",
+          "note": "On Lok Prahari's challenge to Section 16"
+        },
+        {
+          "entry_id": "selection-law-cji-surya-kant-recuses",
+          "role": "recusal"
+        },
+        {
+          "entry_id": "selection-law-union-defends-act-2026",
+          "role": "filing"
+        },
+        {
+          "entry_id": "selection-law-hearing-may-2026",
+          "role": "hearing"
+        },
+        {
+          "entry_id": "selection-law-court-on-ec-speed-may-2026",
+          "role": "hearing"
+        },
+        {
+          "entry_id": "selection-law-reference-reserved",
+          "role": "order"
+        },
+        {
+          "entry_id": "selection-law-datta-perception-test",
+          "role": "judgment",
+          "note": "One judge's opinion in the split decision"
+        },
+        {
+          "entry_id": "selection-law-split-verdict-reference",
+          "role": "order"
+        },
+        {
+          "entry_id": "selection-law-section-16-pil-sep-2026",
+          "role": "related",
+          "note": "A separate PIL on Section 16, filed September 2026"
+        }
+      ]
+    },
+    {
+      "slug": "bihar-sir",
+      "short_name": "Bihar SIR",
+      "case_entry_id": "courts-case-bihar-sir",
+      "court": "Supreme Court of India",
+      "short_status": "disposed",
+      "status_note": "Judgment 27 May 2026 (2026 INSC 564).",
+      "parties": {
+        "petitioners": [
+          "Association for Democratic Reforms",
+          "Yogendra Singh Yadav",
+          "Manoj Jha",
+          "Mahua Moitra",
+          "People's Union for Civil Liberties"
+        ],
+        "respondents": [
+          "Election Commission of India"
+        ]
+      },
+      "items": [
+        {
+          "entry_id": "sir-rules-bihar-sir-order",
+          "role": "related",
+          "note": "The order under challenge"
+        },
+        {
+          "entry_id": "sir-rules-sc-suggests-aadhaar-epic-ration",
+          "role": "order"
+        },
+        {
+          "entry_id": "sir-rules-sc-deleted-list-aadhaar-claims",
+          "role": "order"
+        },
+        {
+          "entry_id": "sir-rules-sc-parties-aadhaar-claims",
+          "role": "order"
+        },
+        {
+          "entry_id": "sir-rules-claims-after-deadline",
+          "role": "hearing"
+        },
+        {
+          "entry_id": "sir-rules-aadhaar-12th-document",
+          "role": "compliance",
+          "note": "The Commission's letter carrying out the 8 Sep 2025 order"
+        },
+        {
+          "entry_id": "numbers-bihar-sc-366-lakh-2025-10-07",
+          "role": "hearing"
+        },
+        {
+          "entry_id": "sir-rules-sc-logical-discrepancy-hearing",
+          "role": "order",
+          "note": "Arose from Tamil Nadu; the Court expected compliance in every SIR state"
+        },
+        {
+          "entry_id": "sir-rules-logical-discrepancy-letter",
+          "role": "compliance"
+        },
+        {
+          "entry_id": "sir-rules-sc-sir-judgment",
+          "role": "judgment"
+        }
+      ]
+    },
+    {
+      "slug": "west-bengal-sir",
+      "short_name": "West Bengal SIR",
+      "case_entry_id": "courts-case-wb-sir",
+      "court": "Supreme Court of India",
+      "short_status": "pending",
+      "status_note": "Pending. Supervisory hearings continuing through September 2026.",
+      "parties": {
+        "petitioners": [
+          "Mostari Banu & Ors",
+          "Adhir Ranjan Chowdhury (connected petition)"
+        ],
+        "respondents": [
+          "Election Commission of India & Ors"
+        ]
+      },
+      "items": [
+        {
+          "entry_id": "courts-event-wb-sir-2026-02-09-officers-report",
+          "role": "order"
+        },
+        {
+          "entry_id": "sir-rules-wb-judicial-adjudication",
+          "role": "order"
+        },
+        {
+          "entry_id": "courts-event-wb-sir-2026-02-24-civil-judges",
+          "role": "order"
+        },
+        {
+          "entry_id": "sir-rules-wb-appellate-tribunals",
+          "role": "compliance",
+          "note": "The Commission's notification after the 10 Mar 2026 order"
+        },
+        {
+          "entry_id": "courts-event-wb-sir-2026-04-02-central-forces",
+          "role": "order"
+        },
+        {
+          "entry_id": "courts-event-wb-sir-2026-05-07-sivagnanam-resigns",
+          "role": "related",
+          "note": "A tribunal member set up under the Court's orders resigns"
+        },
+        {
+          "entry_id": "courts-event-wb-sir-2026-08-11-tribunal-timeline",
+          "role": "hearing"
+        },
+        {
+          "entry_id": "courts-event-wb-sir-2026-08-25-winning-margin",
+          "role": "hearing"
+        },
+        {
+          "entry_id": "numbers-wb-affidavit-appeals-2026-09-17",
+          "role": "filing"
+        },
+        {
+          "entry_id": "numbers-obrien-31-seats-claim-2026-09-18",
+          "role": "filing"
+        },
+        {
+          "entry_id": "numbers-ec-reply-31-seats-2026-09-18",
+          "role": "filing"
+        },
+        {
+          "entry_id": "numbers-wb-reply-obrien-appeals-2026-09-18",
+          "role": "filing"
+        }
+      ]
+    }
+  ],
+  "unmapped": [
+    {
+      "entry_id": "statements-reporting-eci-affidavit-dedup-scrapped",
+      "why": "A Commission counter-affidavit of Nov 2025; the record does not say in which petition it was filed."
+    },
+    {
+      "entry_id": "statements-reporting-trc-eci-misled-sc-bengal",
+      "why": "Reporting on what the Commission told the Court; the record does not name the case or the filing."
+    }
+  ]
+}

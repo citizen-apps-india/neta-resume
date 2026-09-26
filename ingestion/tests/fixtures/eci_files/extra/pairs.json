@@ -1,0 +1,17 @@
+{
+  "about": "fixture pairs for phase 5 tests",
+  "built_on": "2026-09-25",
+  "pairs": [
+    {
+      "charge_id": "phase5-claim-1",
+      "also_recorded_as": [],
+      "response_ids": ["phase5-response-1"],
+      "record_ids": ["phase5-documented-1"],
+      "related": [],
+      "note": null
+    }
+  ],
+  "unpaired_responses": [
+    {"response_id": "phase5-response-2", "note": "Answers a claim not in the record."}
+  ]
+}

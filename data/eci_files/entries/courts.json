@@ -1,0 +1,625 @@
+{
+  "area": "courts",
+  "entries": [
+    {
+      "id": "courts-case-form-17c",
+      "kind": "case",
+      "date": "2019-01-01",
+      "date_precision": "year",
+      "title": "Mahua Moitra and ADR v ECI: disclosure of Form 17C turnout data",
+      "summary": "TMC MP Mahua Moitra's 2019 writ petition over discrepancies in provisional and final voter-turnout figures remained pending in the Supreme Court; ADR filed an interim application in it during the 2024 general election seeking real-time, polling-station-wise publication of Form 17C. The Commission opposed disclosure, citing the absence of a legal mandate and risk of morphed images undermining public trust. A vacation bench declined interim relief on 24 May 2024, holding that granting it would effectively decide Moitra's main petition, and relisted the case after the vacation; no record of the main petition's final disposal was found.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Mahua Moitra",
+        "Justice Dipankar Datta"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "turnout-data",
+        "forms"
+      ],
+      "figures": [],
+      "details": {
+        "case_name": "Mahua Moitra v Election Commission of India, with Association for Democratic Reforms' interim application",
+        "case_number": "W.P.(C) No. 1382/2019 (Moitra, main petition); I.A. No. 115592/2024 (ADR, interim application within it)",
+        "bench": "Justice Dipankar Datta and Justice Satish Chandra Sharma (vacation bench, May 2024 hearing); Justice D.Y. Chandrachud CJI, Justice J.B. Pardiwala and Justice Sanjiv Khanna (notice, May 2024)",
+        "status": "Reported as pending; last confirmed hearing 24 May 2024, relisted after the summer vacation. No later hearing or final order located."
+      },
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/journal/what-is-the-form-17c-petition-about/",
+          "publisher": "Supreme Court Observer",
+          "title": "What is the Form 17C petition about?",
+          "published": "2024-06-13",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The three 2024 order/affidavit entries in this case are already recorded in elections-2019-2024.json: elections-2019-2024-adr-17c-notice (2024-05-17), elections-2019-2024-eci-17c-affidavit (2024-05-22), elections-2019-2024-sc-17c-may24 (2024-05-24). Not duplicated here; this entry only adds the case-level framing (parties, case numbers, status). The existing sc-17c-may24 entry already flags 'later outcome of the main petitions not found' - confirmed again here after a further search; listed in gaps.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.scobserver.in/journal/what-is-the-form-17c-petition-about/",
+        "note": "self-checked by researcher"
+      },
+      "check": "checked"
+    },
+    {
+      "id": "courts-case-evm-vvpat",
+      "kind": "case",
+      "date": "2023-01-01",
+      "date_precision": "year",
+      "title": "ADR v ECI: challenge to EVM reliability and demand for full VVPAT verification",
+      "summary": "Association for Democratic Reforms petitioned the Supreme Court seeking a return to paper ballots or, alternatively, verification of every VVPAT slip against EVM counts. On 26 April 2024 a two-judge bench rejected both demands, holding there was no credible evidence of EVM manipulation and that 5% randomised VVPAT verification with administrative safeguards was adequate, while directing that symbol-loading units be sealed for 45 days after results and allowing the second- and third-placed candidates to request a burnt-memory check of 5% of EVMs per assembly segment. Related petitions making the same demand were rejected days later, and a review petition against the judgment was dismissed on 30 July 2024.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Justice Sanjiv Khanna",
+        "Justice Dipankar Datta"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "evm-vvpat"
+      ],
+      "figures": [],
+      "details": {
+        "case_name": "Association for Democratic Reforms v Election Commission of India",
+        "case_number": "W.P.(C) No. 434 of 2023",
+        "petitioner": "Association for Democratic Reforms",
+        "respondents": "Election Commission of India and another",
+        "bench": "Justice Sanjiv Khanna, Justice Dipankar Datta",
+        "citation": "2024 INSC 341",
+        "status": "Disposed - judgment 26 April 2024; review dismissed 30 July 2024"
+      },
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/176933971/",
+          "publisher": "Supreme Court of India (via Indian Kanoon)",
+          "title": "Association For Democratic Reforms vs Election Commission Of India on 26 April, 2024",
+          "published": "2024-04-26",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The 26 April 2024 judgment is already recorded as elections-2019-2024-adr-v-eci-vvpat-judgment; the 2019 order raising VVPAT checks from one to five booths per segment (N. Chandrababu Naidu v Union of India, W.P.(C) 273/2019) that preceded this case is elections-2019-2024-vvpat-naidu-order. Not duplicated here. Two new, not-previously-recorded post-judgment orders are added below: the 29 April 2024 dismissal of a parallel petition (Mohit Kumar Bhandari v ECI) and the 30 July 2024 dismissal of the review petition (Arun Kumar Agarwal v ECI).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indiankanoon.org/doc/176933971/",
+        "note": "self-checked by researcher"
+      },
+      "check": "checked"
+    },
+    {
+      "id": "courts-case-2023-act-challenge",
+      "kind": "case",
+      "date": "2024-01-02",
+      "date_precision": "day",
+      "title": "Jaya Thakur and others v Union of India: challenge to the 2023 selection-law Act",
+      "summary": "A group of connected petitions led by Dr Jaya Thakur challenge Sections 6, 7 and 8 of the Chief Election Commissioner and Other Election Commissioners (Appointment, Conditions of Service and Term of Office) Act, 2023, arguing it dilutes the Supreme Court's Anoop Baranwal judgment by giving the executive a majority on the selection committee. The case has moved through repeated listings, adjournments and a recusal since January 2024 without a final hearing on merits. On 23 September 2026 a split opinion sent the question of whether it needs a larger bench to the Chief Justice, who is being asked to consider constituting a Constitution Bench.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Jaya Thakur",
+        "Justice Dipankar Datta",
+        "Justice Satish Chandra Sharma"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {
+        "case_name": "Dr Jaya Thakur v Union of India & Ors, with connected petitions",
+        "case_number": "W.P.(C) 14/2024 (Jaya Thakur, lead); connected W.P.(C) 13/2024 (Gopal Singh), 11/2024 (Naman Sherstra), 87/2024 (ADR), 191/2024 (PUCL), 272/2024 (Lok Prahari)",
+        "bench": "Varied by hearing; most recently Justice Dipankar Datta and Justice Satish Chandra Sharma (split opinion, September 2026)",
+        "status": "Pending - referred for a possible Constitution Bench as of 23 September 2026"
+      },
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Cross-reference entry only, per the courts brief: this case's full timeline of orders and statements is already recorded in selection-law.json and not repeated here. Relevant existing ids: selection-law-thakur-petition-filed (2024-01-02), selection-law-sc-notice-no-stay-jan-2024 (2024-01-12), selection-law-stay-applications-march-2024 (2024-03-13), selection-law-sc-refuses-stay-march-2024 (2024-03-21), selection-law-union-reply-march-2024 (2024-03-21), selection-law-cji-khanna-recuses (2024-12-03), selection-law-sc-hearing-jan-2025 (2025-01-08), selection-law-sc-feb-12-2025 (2025-02-12), selection-law-sc-defers-feb-2025 (2025-02-19), selection-law-sc-listings-2025 (2025-03-19), selection-law-section-16-notice (2026-01), selection-law-cji-surya-kant-recuses (2026-03-20), selection-law-union-defends-act-2026 (2026-05), selection-law-hearing-may-2026 (2026-05-06), selection-law-court-on-ec-speed-may-2026 (2026-05-07), selection-law-reference-reserved (2026-07-30), selection-law-section-16-pil-sep-2026 (2026-09), selection-law-datta-perception-test (2026-09-23), selection-law-split-verdict-reference (2026-09-23). Also related, in selection-law.json: the underlying selection-law-anoop-baranwal-judgment (2023-03-02) that this Act responds to, and the earlier selection-law-adr-goel-plea-dismissed (2023-08-04) case about the pre-Act appointment process (also touched in commissioners.json).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+        "note": "self-checked by researcher; verified by reading the existing selection-law.json entries this cross-references, not by re-fetching every order"
+      },
+      "check": "checked"
+    },
+    {
+      "id": "courts-event-evm-vvpat-2024-04-29-bhandari-rejected",
+      "kind": "event",
+      "date": "2024-04-29",
+      "date_precision": "day",
+      "title": "Supreme Court rejects a second petition seeking full VVPAT-EVM tally",
+      "summary": "Days after the main judgment, the Supreme Court declined to hear a separate petition by Mohit Kumar Bhandari that also sought directions to tally more VVPAT slips against EVM counts, noting another bench had already dismissed a similar plea the week before through a detailed judgment.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "courts",
+        "evm-vvpat"
+      ],
+      "figures": [],
+      "details": {
+        "case_name": "Mohit Kumar Bhandari v Election Commission of India"
+      },
+      "sources": [
+        {
+          "url": "https://www.barandbench.com/news/supreme-court-rejects-yet-another-petition-tally-vvpat-slips-evm-votes",
+          "publisher": "Bar and Bench",
+          "title": "Supreme Court rejects yet another petition to tally VVPAT slips with EVM votes",
+          "published": "2024-04-29",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Not previously recorded. Companion to elections-2019-2024-adr-v-eci-vvpat-judgment (2024-04-26).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.barandbench.com/news/supreme-court-rejects-yet-another-petition-tally-vvpat-slips-evm-votes",
+        "note": "self-checked by researcher"
+      },
+      "check": "checked"
+    },
+    {
+      "id": "courts-event-evm-vvpat-2024-07-30-review-dismissed",
+      "kind": "event",
+      "date": "2024-07-30",
+      "date_precision": "day",
+      "title": "Supreme Court dismisses review petition against the VVPAT judgment",
+      "summary": "The Supreme Court dismissed a review petition filed by Arun Kumar Agarwal against its 26 April 2024 judgment declining to order full VVPAT-EVM tally verification or a return to paper ballots, leaving that judgment as the final word on the issue.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "courts",
+        "evm-vvpat"
+      ],
+      "figures": [],
+      "details": {
+        "case_name": "Arun Kumar Agarwal v Election Commission of India and Another (review petition)"
+      },
+      "sources": [
+        {
+          "url": "https://www.barandbench.com/news/supreme-court-dismisses-review-petition-evm-vvpat-tally-verdict",
+          "publisher": "Bar and Bench",
+          "title": "Supreme Court dismisses review petition against EVM-VVPAT tally verdict",
+          "published": "2024-07-30",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Not previously recorded. Closes out courts-case-evm-vvpat.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.barandbench.com/news/supreme-court-dismisses-review-petition-evm-vvpat-tally-verdict",
+        "note": "self-checked by researcher"
+      },
+      "check": "checked"
+    },
+    {
+      "id": "courts-case-bihar-sir",
+      "kind": "case",
+      "date": "2025-07-06",
+      "date_precision": "day",
+      "title": "ADR, Yogendra Yadav, Mahua Moitra challenge Bihar SIR in Supreme Court",
+      "summary": "Association for Democratic Reforms, Yogendra Singh Yadav, Manoj Jha, Mahua Moitra and the People's Union for Civil Liberties petitioned the Supreme Court within days of the Commission's 24 June 2025 order starting a Special Intensive Revision of Bihar's electoral rolls, arguing the exercise risked mass, arbitrary disenfranchisement. The Court heard the case on an expedited basis through July 2025 to January 2026 and reserved judgment on 29 January 2026, delivering a unanimous verdict on 27 May 2026 that upheld the SIR and traced the Commission's power to it to Section 21(3) of the Representation of the People Act, 1950, while issuing directions on Aadhaar as an identity document, disclosure of 'logical discrepancy' lists and other procedural safeguards.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Yogendra Singh Yadav",
+        "Manoj Kumar Jha",
+        "Mahua Moitra",
+        "Justice Surya Kant",
+        "Justice Joymalya Bagchi"
+      ],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "courts",
+        "sir",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "case_name": "Association for Democratic Reforms & Ors v Election Commission of India",
+        "case_number": "W.P.(C) No. 640/2025 (PIL-W), with connected petitions",
+        "petitioners": [
+          "Association for Democratic Reforms",
+          "Yogendra Singh Yadav",
+          "Manoj Kumar Jha",
+          "Mahua Moitra",
+          "People's Union for Civil Liberties"
+        ],
+        "respondent": "Election Commission of India",
+        "bench": "Justice Surya Kant CJI, Justice Joymalya Bagchi J",
+        "citation": "2026 INSC 564",
+        "status": "Disposed - judgment delivered 27 May 2026"
+      },
+      "sources": [
+        {
+          "url": "https://www.scobserver.in/cases/challenge-to-the-ecis-revision-of-electoral-rolls-in-bihar-sir-association-for-democratic-reforms-v-election-commission-of-india/",
+          "publisher": "Supreme Court Observer",
+          "title": "Challenge to the ECI's revision of electoral rolls in Bihar (SIR): Association for Democratic Reforms v Election Commission of India",
+          "published": "2026-05-27",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Case-level entry only. The Aadhaar direction, the 29 Jan 2026 logical-discrepancy order and the 27 May 2026 judgment are already recorded as separate order entries in sir-rules.json: sir-rules-sc-suggests-aadhaar-epic-ration (2025-07-10), sir-rules-sc-deleted-list-aadhaar-claims (2025-08-14), sir-rules-sc-parties-aadhaar-claims (2025-08-22), sir-rules-claims-after-deadline (2025-09-01), sir-rules-aadhaar-12th-document (2025-09-09), sir-rules-sc-logical-discrepancy-hearing (2026-01-29), sir-rules-sc-sir-judgment (2026-05-27), and numbers-bihar-sc-366-lakh-2025-10-07. Not duplicated here. scobserver's own hearing table misdates two entries (it lists '29 January 2025' and '8 September 2025' where context makes clear it means 2026 and closer to the recorded 2025-09-09/2025-09-01 Aadhaar orders); dates used here follow the already-verified entries in sir-rules.json rather than scobserver's table.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.scobserver.in/cases/challenge-to-the-ecis-revision-of-electoral-rolls-in-bihar-sir-association-for-democratic-reforms-v-election-commission-of-india/",
+        "note": "self-checked by researcher"
+      },
+      "check": "checked"
+    },
+    {
+      "id": "courts-case-wb-sir",
+      "kind": "case",
+      "date": "2025-12-01",
+      "date_precision": "month",
+      "title": "West Bengal SIR litigation: Mostari Banu, Adhir Ranjan Chowdhury and others v ECI",
+      "summary": "After the Commission ordered a Special Intensive Revision of West Bengal's electoral rolls, a group of connected petitions - led by Mostari Banu and later including Congress MP Adhir Ranjan Chowdhury and others - came before the same Supreme Court bench that decided the Bihar SIR case. The matter has stayed open through 2026 as an ongoing supervisory proceeding: the Court has directed deployment of judicial officers (including retired judges) to adjudicate claims and objections, protected those officers, and repeatedly sought Commission data on the huge backlog of appeals before the appellate tribunals it ordered set up.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Adhir Ranjan Chowdhury",
+        "Justice Surya Kant",
+        "Justice Joymalya Bagchi",
+        "Justice V. Mohana"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "courts",
+        "sir",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {
+        "case_name": "Mostari Banu & Ors v Election Commission of India & Ors, with connected petitions including Adhir Ranjan Chowdhury v Election Commission of India",
+        "case_number": "W.P.(C) No. 1089/2025 (lead) and connected matters, incl. Diary No. 38345/2026 (Adhir Ranjan Chowdhury)",
+        "bench": "Justice Surya Kant CJI, Justice Joymalya Bagchi J and Justice V. Mohana J (composition varies slightly by hearing)",
+        "status": "Pending - ongoing supervisory hearings through September 2026"
+      },
+      "sources": [
+        {
+          "url": "https://www.livelaw.in/top-stories/supreme-court-west-bengal-sir-eci-affidavit-over-22-lakh-appeals-against-exclusion-of-voters-16-lakh-against-inclusion-551110",
+          "publisher": "LiveLaw",
+          "title": "Of 38 Lakh Appeals, 22 Lakh Filed By Excluded Voters: ECI To Supreme Court",
+          "published": "2026-09-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.barandbench.com/news/supreme-court-orders-deployment-of-judicial-officers-for-west-bengal-sir-cites-blame-game-between-state-and-eci",
+          "publisher": "Bar and Bench",
+          "title": "Supreme Court orders deployment of judicial officers for West Bengal SIR, cites blame game between State and ECI",
+          "published": "2026-02-20",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Case-level entry only. The 20 Feb 2026 order moving the last stage of claims/objections to judicial officers is already recorded as sir-rules-wb-judicial-adjudication; the 20 March 2026 notification of 19 appellate tribunals of retired High Court judges is sir-rules-wb-appellate-tribunals; ECI's affidavit on 37.18 lakh pending appeals is numbers-wb-affidavit-appeals-2026-09-17; the 22.21 lakh/16.10 lakh breakdown responding to Derek O'Brien's application is numbers-wb-reply-obrien-appeals-2026-09-18 and numbers-ec-reply-31-seats-2026-09-18/numbers-obrien-31-seats-claim-2026-09-18. The 21 Sept 2026 LiveLaw report cited here gives the same 22,21,118/16,10,311 breakdown (total 38,31,429) as those existing entries with a slightly later publish date, and is treated as the same underlying affidavit, not a new one - not duplicated. New order entries not previously recorded are filed separately below (Feb 9, Feb 24, Apr 2, May 7, Aug 11, Aug 25 2026). Not researched here: individual grievance petitions the Court has redirected to the Calcutta High Court (e.g. a plea about rations after SIR exclusion), a plea by Congress's Prasenjit Bose for voter-list details, and any Calcutta or Patna High Court proceedings not before the Supreme Court bench - flagged in gaps.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.livelaw.in/top-stories/supreme-court-west-bengal-sir-eci-affidavit-over-22-lakh-appeals-against-exclusion-of-voters-16-lakh-against-inclusion-551110",
+        "note": "self-checked by researcher"
+      },
+      "check": "checked"
+    },
+    {
+      "id": "courts-event-wb-sir-2026-02-09-officers-report",
+      "kind": "event",
+      "date": "2026-02-09",
+      "date_precision": "day",
+      "title": "Supreme Court directs West Bengal to ensure officers report for SIR duty",
+      "summary": "In the West Bengal SIR proceedings, the Supreme Court directed the State to ensure that officers assigned to the Commission for the Special Intensive Revision actually report for duty, after complaints of officers not showing up. This order preceded, and set up, the Court's fuller 20 February 2026 direction deploying judicial officers including retired judges.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Justice Surya Kant",
+        "Justice Joymalya Bagchi"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "courts",
+        "sir"
+      ],
+      "figures": [],
+      "details": {
+        "case_number": "W.P.(C) No. 1089/2025 and connected matters"
+      },
+      "sources": [
+        {
+          "url": "https://www.barandbench.com/news/supreme-court-orders-deployment-of-judicial-officers-for-west-bengal-sir-cites-blame-game-between-state-and-eci",
+          "publisher": "Bar and Bench",
+          "title": "Supreme Court orders deployment of judicial officers for West Bengal SIR, cites blame game between State and ECI",
+          "published": "2026-02-20",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "This order is described only in passing, inside reporting on the later 20 February order, which is already recorded as sir-rules-wb-judicial-adjudication. No dedicated report of the 9 February order itself was found; its own bench and full text are unconfirmed. Flagged in gaps as needing a primary source.",
+      "verification": {
+        "verdict": "unconfirmed",
+        "checked_url": "https://www.barandbench.com/news/supreme-court-orders-deployment-of-judicial-officers-for-west-bengal-sir-cites-blame-game-between-state-and-eci",
+        "note": "Only a passing mention inside reporting on the 20 Feb 2026 order; no order text found. Marked unconfirmed by the reviewer."
+      },
+      "check": "unchecked"
+    },
+    {
+      "id": "courts-event-wb-sir-2026-02-24-civil-judges",
+      "kind": "event",
+      "date": "2026-02-24",
+      "date_precision": "day",
+      "title": "Supreme Court lets Calcutta High Court deploy civil judges for SIR duty",
+      "summary": "Days after ordering district judges and retired judges deployed for West Bengal's SIR, the Supreme Court permitted the Calcutta High Court to also deploy civil judges with at least three years' experience, and said judicial officers could be brought in from outside the state if needed to clear the backlog.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Justice Surya Kant",
+        "Justice Joymalya Bagchi"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "courts",
+        "sir"
+      ],
+      "figures": [],
+      "details": {
+        "case_number": "W.P.(C) No. 1089/2025 and connected matters"
+      },
+      "sources": [
+        {
+          "url": "https://www.barandbench.com/news/litigation/west-bengal-sir-supreme-court-allows-deployment-of-civil-judges-says-bring-judicial-officers-from-outside-if-needed",
+          "publisher": "Bar and Bench",
+          "title": "West Bengal SIR: Supreme Court allows deployment of civil judges, says bring judicial officers from outside if needed",
+          "published": "2026-02-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Follows and extends sir-rules-wb-judicial-adjudication (2026-02-20) and precedes sir-rules-wb-appellate-tribunals (2026-03-20). Not previously recorded.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.barandbench.com/news/litigation/west-bengal-sir-supreme-court-allows-deployment-of-civil-judges-says-bring-judicial-officers-from-outside-if-needed",
+        "note": "self-checked by researcher"
+      },
+      "check": "checked"
+    },
+    {
+      "id": "courts-event-wb-sir-2026-04-02-central-forces",
+      "kind": "event",
+      "date": "2026-04-02",
+      "date_precision": "day",
+      "title": "Supreme Court orders central forces to protect judicial officers on SIR duty",
+      "summary": "After seven judicial officers conducting West Bengal's SIR were surrounded for hours by protesters objecting to their deletion from the voter list, the Supreme Court ordered deployment of central armed forces to protect judicial officers carrying out the revision.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "courts",
+        "sir"
+      ],
+      "figures": [],
+      "details": {
+        "case_number": "W.P.(C) No. 1089/2025 and connected matters"
+      },
+      "sources": [
+        {
+          "url": "https://www.barandbench.com/news/most-polarised-state-supreme-court-orders-deployment-of-central-forces-to-protect-judges-on-sir-duty-in-west-bengal",
+          "publisher": "Bar and Bench",
+          "title": "'Most polarised state': Supreme Court orders deployment of central forces to protect judges on SIR duty in West Bengal",
+          "published": "2026-04-02",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Not previously recorded. Bench composition not stated in the source.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.barandbench.com/news/most-polarised-state-supreme-court-orders-deployment-of-central-forces-to-protect-judges-on-sir-duty-in-west-bengal",
+        "note": "self-checked by researcher"
+      },
+      "check": "checked"
+    },
+    {
+      "id": "courts-event-wb-sir-2026-05-07-sivagnanam-resigns",
+      "kind": "event",
+      "date": "2026-05-07",
+      "date_precision": "day",
+      "title": "Former Calcutta HC Chief Justice resigns from West Bengal SIR appellate tribunal",
+      "summary": "Justice T.S. Sivagnanam, former Chief Justice of the Calcutta High Court and one of 19 retired judges the Commission appointed to appellate tribunals under the Supreme Court's March 2026 directions, resigned from his tribunal days after West Bengal's assembly elections concluded.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Justice T.S. Sivagnanam"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "courts",
+        "sir"
+      ],
+      "figures": [],
+      "details": {
+        "case_number": "Appointment under W.P.(C) No. 1089/2025 and connected matters"
+      },
+      "sources": [
+        {
+          "url": "https://www.barandbench.com/news/west-bengal-polls-justice-ts-sivagnanam-resigns-from-sir-appellate-tribunal",
+          "publisher": "Bar and Bench",
+          "title": "West Bengal polls: Justice TS Sivagnanam resigns from SIR appellate tribunal",
+          "published": "2026-05-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Relates to the tribunals of retired High Court judges recorded as sir-rules-wb-appellate-tribunals (2026-03-20). No reason for the resignation was reported; the article does not say whether a replacement was named. Not previously recorded.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.barandbench.com/news/west-bengal-polls-justice-ts-sivagnanam-resigns-from-sir-appellate-tribunal",
+        "note": "self-checked by researcher"
+      },
+      "check": "checked"
+    },
+    {
+      "id": "courts-event-wb-sir-2026-08-11-tribunal-timeline",
+      "kind": "event",
+      "date": "2026-08-11",
+      "date_precision": "day",
+      "title": "Supreme Court says it cannot fix a timeline for SIR appellate tribunals",
+      "summary": "Hearing Adhir Ranjan Chowdhury's plea over the roughly 34 lakh voters deleted in West Bengal's SIR, the Supreme Court said it could not fix a deadline for the appellate tribunals to decide appeals, though it would monitor their functioning, and directed the Commission to produce data on disposal rates. Justice Bagchi noted that at current rates the backlog would take about 21 years to clear. The case was adjourned to 25 August 2026.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Justice Surya Kant",
+        "Justice Joymalya Bagchi",
+        "Justice V. Mohana",
+        "Adhir Ranjan Chowdhury"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "courts",
+        "sir"
+      ],
+      "figures": [
+        {
+          "label": "voters deleted in West Bengal SIR, cited in this hearing",
+          "value": 3400000,
+          "unit": "electors",
+          "as_of": "2026-08-11"
+        }
+      ],
+      "details": {
+        "case_number": "D. No. 38345/2026 (Adhir Ranjan Chowdhury), within W.P.(C) No. 1089/2025 and connected matters"
+      },
+      "sources": [
+        {
+          "url": "https://www.livelaw.in/top-stories/west-bengal-sir-cant-fix-timeline-for-appellate-tribunals-says-supreme-court-seek-data-on-appeal-disposals-545231",
+          "publisher": "LiveLaw",
+          "title": "West Bengal SIR | Can't Fix Timeline For Appellate Tribunals, Says Supreme Court",
+          "published": "2026-08-11",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "Timeline we cannot fix"
+        }
+      ],
+      "response_to": null,
+      "notes": "Not previously recorded. Precedes numbers-wb-affidavit-appeals-2026-09-17 and numbers-wb-reply-obrien-appeals-2026-09-18, the later disposal-data affidavits the Court sought here.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.livelaw.in/top-stories/west-bengal-sir-cant-fix-timeline-for-appellate-tribunals-says-supreme-court-seek-data-on-appeal-disposals-545231",
+        "note": "self-checked by researcher"
+      },
+      "check": "checked"
+    },
+    {
+      "id": "courts-event-wb-sir-2026-08-25-winning-margin",
+      "kind": "event",
+      "date": "2026-08-25",
+      "date_precision": "day",
+      "title": "Supreme Court weighs whether SIR deletions exceeding poll margins matter",
+      "summary": "On a Trinamool Congress claim that in 31 constituencies the number of voters deleted in the SIR exceeded the winning margin, the Chief Justice asked aloud whether the Court could direct fresh elections on that basis. Justice Bagchi said the point could become relevant if an election result itself came to be decided by the Court. The bench directed that all pending appeals, not only those in the 31 flagged constituencies, be examined.",
+      "status": "reported",
+      "attributed_to": "Trinamool Congress",
+      "people": [
+        "Justice Surya Kant",
+        "Justice Joymalya Bagchi"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "courts",
+        "sir"
+      ],
+      "figures": [
+        {
+          "label": "constituencies where cited SIR deletions exceeded the winning margin",
+          "value": 31,
+          "unit": "constituencies",
+          "as_of": "2026-08-25"
+        }
+      ],
+      "details": {
+        "case_number": "W.P.(C) No. 1089/2025 and connected matters"
+      },
+      "sources": [
+        {
+          "url": "https://www.barandbench.com/news/cant-interfere-with-poll-results-unless-winning-margin-less-than-number-of-exclusions-supreme-court-in-west-bengal-sir-case",
+          "publisher": "Bar and Bench",
+          "title": "Can't interfere with poll results unless winning margin less than number of exclusions: Supreme Court in West Bengal SIR case",
+          "published": "2026-08-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The '31 seats' figure recurs in numbers-obrien-31-seats-claim-2026-09-18 and numbers-ec-reply-31-seats-2026-09-18 (18 Sept 2026), where the Commission tells the Court elections can only be challenged by election petition; this 25 Aug 2026 hearing is the earlier occasion the same 31-constituency claim was argued, and is not a duplicate of those entries. Not previously recorded.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.barandbench.com/news/cant-interfere-with-poll-results-unless-winning-margin-less-than-number-of-exclusions-supreme-court-in-west-bengal-sir-case",
+        "note": "self-checked by researcher"
+      },
+      "check": "checked"
+    }
+  ],
+  "gaps": [
+    "The Supreme Court's 9 February 2026 order directing West Bengal to ensure officers report for SIR duty is known only from a passing mention inside reporting on the later 20 February order; its own bench, case number and full text were not independently found. Someone with access to sci.gov.in's order list for W.P.(C) 1089/2025 should pull the primary order.",
+    "Mahua Moitra's 2019 Form 17C petition (W.P.(C) 1382/2019) has no confirmed final disposition after the Supreme Court's 24 May 2024 order relisting it post-vacation; neither this research nor the existing elections-2019-2024.json entries found a later hearing or order. Someone should check the Supreme Court's case-status portal directly for W.P.(C) 1382/2019.",
+    "Several individual West Bengal SIR grievance petitions before the Supreme Court were not researched as separate matters: a plea about denial of rations after SIR exclusion (which the Court told the petitioner to take to the Calcutta High Court), Congress leader Prasenjit Bose's application for voter deletion/addition data, a case involving a person deported to Bangladesh after an SIR deletion, and a plea over an excluded elderly lawyer. These may be worth their own entries if the section expands its West Bengal SIR coverage.",
+    "No dedicated Patna High Court or Calcutta High Court case (as distinct from the Supreme Court's supervisory jurisdiction) about the Commission's conduct was located in this pass; it is possible such petitions exist and were transferred to, or overtaken by, the Supreme Court proceedings, but that was not confirmed.",
+    "The exact case number and bench for the 2 April 2026 central-forces order and the 7 May 2026 Sivagnanam resignation were not stated in the sources found; both are filed here under the general West Bengal SIR case number for lack of a more specific one."
+  ]
+}

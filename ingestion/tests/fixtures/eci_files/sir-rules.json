@@ -1,0 +1,71 @@
+{
+  "area": "sir-rules",
+  "researched_on": "2026-09-25",
+  "entries": [
+    {
+      "id": "sir-rules-2025-notification",
+      "kind": "rule",
+      "date": "2025-06-24",
+      "date_precision": "day",
+      "title": "ECI orders Special Intensive Revision of electoral rolls",
+      "summary": "The Commission ordered a Special Intensive Revision of electoral rolls starting with Bihar.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": ["Bihar"],
+      "topics": ["sir", "rolls"],
+      "figures": [
+        {"label": "electors covered", "value": 78000000, "unit": "electors", "as_of": "2025-06-24"},
+        {"label": "electors on roll (draft, states.json fixture)", "value": 72400000, "unit": "electors", "as_of": "2025-08-01"},
+        {"label": "electors on roll (before, states.json fixture)", "value": 78900000, "unit": "electors", "as_of": "2025-06-24"}
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://eci.gov.in/sir-order",
+          "publisher": "Election Commission of India",
+          "title": "Special Intensive Revision order",
+          "published": "2025-06-24",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "checked"
+    },
+    {
+      "id": "sir-rules-numbers-deleted",
+      "kind": "figure",
+      "date": "2025-08-01",
+      "date_precision": "month",
+      "title": "Names deleted from the draft roll",
+      "summary": "Reported count of names removed from the Bihar draft electoral roll.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": ["Bihar"],
+      "topics": ["sir", "numbers"],
+      "figures": [
+        {"label": "names deleted from draft roll", "value": 6500000, "unit": "electors", "as_of": "2025-08-01"}
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/sir-numbers",
+          "publisher": "Indian Express",
+          "title": "6.5 million names dropped from Bihar draft roll",
+          "published": "2025-08-05",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "unchecked"
+    }
+  ],
+  "gaps": []
+}

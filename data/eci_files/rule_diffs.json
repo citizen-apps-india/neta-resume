@@ -1,0 +1,344 @@
+{
+  "about": "Before/after text for rule changes in the record, for /eci-files/rules (docs/eci-files/PHASE5-SPEC.md section 4). Each side carries its own text status. 'verbatim': copied from the document itself (or an unaltered reproduction, named in note). 'quoted in reporting': the exact wording as a news report quotes it; the document itself was not seen. 'paraphrased from reporting': a report's description, not the document's wording. text_status is the weaker of the two sides. excerpt: true means lines outside the change were left out. Nothing here is reconstructed wording.",
+  "built_on": "2026-09-25",
+  "text_statuses": [
+    "verbatim",
+    "quoted in reporting",
+    "paraphrased from reporting"
+  ],
+  "diffs": [
+    {
+      "id": "rule-93-inspection",
+      "rule_entry_id": "elections-2019-2024-rule93-amendment",
+      "title": "Rule 93: which election papers are open to public inspection",
+      "document": "Conduct of Elections Rules, 1961, rule 93(2)",
+      "before_label": "Rule 93(2) before 20 Dec 2024",
+      "after_label": "Rule 93(2) as amended by S.O. 5517(E), 20 Dec 2024",
+      "before": [
+        "(2) Subject to such conditions and to the payment of such fee as the Election Commission may direct, -",
+        "(a) all other papers relating to the election shall be open to public inspection; and",
+        "(b) copies thereof shall on application be furnished."
+      ],
+      "after": [
+        "(2) Subject to such conditions and to the payment of such fee as the Election Commission may direct, -",
+        "(a) all other papers as specified in these rules relating to the election shall be open to public inspection; and",
+        "(b) copies thereof shall on application be furnished."
+      ],
+      "before_status": "verbatim",
+      "after_status": "verbatim",
+      "text_status": "verbatim",
+      "excerpt": true,
+      "source_urls": [
+        "https://indiankanoon.org/doc/85352588/",
+        "https://egazette.gov.in/WriteReadData/2024/259568.pdf"
+      ],
+      "note": "The 'after' text applies the Gazette's amending instruction word for word: 'after the word “papers”, the words “as specified in these rules” shall be inserted'. The Gazette prints no consolidated rule. The Hindi text of the same notification places the phrase after 'संबंधित' ('relating'), not after 'papers'. The 'before' text is from Indian Kanoon's copy of the 1961 Rules, not a Gazette copy.",
+      "related_entry_ids": [
+        "elections-2019-2024-ramesh-challenge-rule93",
+        "elections-2019-2024-ph-hc-pracha-order"
+      ]
+    },
+    {
+      "id": "selection-committee",
+      "rule_entry_id": "selection-law-rule-selection-committee",
+      "title": "Who selects the Chief Election Commissioner and Election Commissioners",
+      "document": "Anoop Baranwal judgment (2 Mar 2023), operative direction I, and Section 7 of the 2023 Act",
+      "before_label": "Supreme Court's interim rule, 2 Mar 2023 until Parliament legislated",
+      "after_label": "Section 7, CEC and Other ECs Act, 2023 (in force 2 Jan 2024)",
+      "before": [
+        "I. We declare that as far as appointment to the posts of Chief Election Commissioner and the Election Commissioners are concerned, the same shall be done by the President of India on the basis of the advice tendered by a Committee consisting of",
+        "the Prime Minister of India,",
+        "the Leader of the Opposition in the Lok Sabha and, in case, there is no such Leader, the Leader of the largest Party in the Opposition in the Lok Sabha having the largest numerical strength,",
+        "and the Chief Justice of India.",
+        "This norm will continue to hold good till a law is made by the Parliament."
+      ],
+      "after": [
+        "7. (1) The Chief Election Commissioner and other Election Commissioners shall be appointed by the President on the recommendation of a Selection Committee consisting of—",
+        "(a) the Prime Minister—Chairperson;",
+        "(b) the Leader of Opposition in the House of the People—Member;",
+        "(c) a Union Cabinet Minister to be nominated by the Prime Minister—Member.",
+        "Explanation.—For the purposes of removal of doubts, it is hereby declared that where the Leader of Opposition in the House of the People has not been recognised as such, the leader of the single largest party in opposition of the Government in the House of the People shall be deemed to be the Leader of Opposition.",
+        "(2) The appointment of Chief Election Commissioner and other Election Commissioners shall not be invalid merely by reason of any vacancy in or any defect in the constitution of, the Selection Committee."
+      ],
+      "before_status": "verbatim",
+      "after_status": "verbatim",
+      "text_status": "verbatim",
+      "excerpt": false,
+      "source_urls": [
+        "https://indiankanoon.org/doc/56882156/",
+        "https://prsindia.org/files/bills_acts/bills_parliament/2023/Bill_Text_Chief_Election_Commissioner_and_other_Election_Commissioners_Bill_2023.pdf",
+        "https://prsindia.org/files/bills_acts/bills_parliament/2023/Amendment%20to%20CEC%20Bill%202023.pdf",
+        "https://www.indiacode.nic.in/bitstream/123456789/19721/1/a2023-49.pdf"
+      ],
+      "note": "The 'before' lines are one sentence of the majority's direction I, split at its list items. The 'after' text is clause 7 of the bill as introduced. The government's notice of amendments of 11 Dec 2023 proposes no change to clause 7, and the opposition amendment to put the CJI back was negatived (selection-law-rs-passes-bill). The quote on selection-law-rule-selection-committee matches clause 7(1)(c). The India Code copy of the Act could not be fetched for this check; confirm against it before launch.",
+      "related_entry_ids": [
+        "selection-law-anoop-baranwal-judgment",
+        "selection-law-rs-amendments-listed",
+        "selection-law-rs-passes-bill"
+      ]
+    },
+    {
+      "id": "business-rule",
+      "rule_entry_id": "selection-law-rule-section-18-business",
+      "title": "How the three Commissioners decide: 1991 Act and 2023 Act",
+      "document": "Section 10 of the 1991 Act and Section 18 of the 2023 Act",
+      "before_label": "Section 10, Election Commission (Conditions of Service of Election Commissioners and Transaction of Business) Act, 1991",
+      "after_label": "Section 18, CEC and Other ECs Act, 2023",
+      "before": [
+        "(1) The Election Commission may, by unanimous decision, regulate the procedure for transaction of its business as also allocation of its business amongst the Chief Election Commissioner and other Election Commissioners.",
+        "(2) Save as provided in sub-section (1), all business of the Election Commission shall, as far as possible, be transacted unanimously.",
+        "(3) Subject to the provisions of sub-section (2), if the Chief Election Commissioner and other Election Commissioners differ in opinion on any matter, such matter shall be decided according to the opinion of the majority."
+      ],
+      "after": [
+        "(1) The Election Commission may, by unanimous decision, regulate the procedure for transaction of its business as also allocation of its business amongst the Chief Election Commissioner and other Election Commissioners.",
+        "(2) All business of the Election Commission shall, as far as possible, be transacted unanimously, and if the Chief Election Commissioner and other Election Commissioners differ in opinion on any matter, such matter shall be decided according to the opinion of the majority."
+      ],
+      "before_status": "verbatim",
+      "after_status": "verbatim",
+      "text_status": "verbatim",
+      "excerpt": false,
+      "source_urls": [
+        "https://indiankanoon.org/doc/390370/",
+        "https://prsindia.org/files/bills_acts/bills_parliament/2023/Bill_Text_Chief_Election_Commissioner_and_other_Election_Commissioners_Bill_2023.pdf",
+        "https://prsindia.org/files/bills_acts/bills_parliament/2023/Amendment%20to%20CEC%20Bill%202023.pdf"
+      ],
+      "note": "The 2023 text is clause 17 of the bill as introduced. The government's notice of amendments proposes no change to it, and it became Section 18 when new clause 15A (now Section 16) was inserted. Sub-section (1) is unchanged; the old sub-sections (2) and (3) are merged. Confirm against the India Code copy of the Act before launch.",
+      "related_entry_ids": [
+        "selection-law-rule-1991-predecessor",
+        "sir-rules-work-allocation-set-aside"
+      ]
+    },
+    {
+      "id": "sir-document-list-phase-2",
+      "rule_entry_id": "sir-rules-phase2-forms-last-sir-linkage",
+      "title": "SIR list of documents: Bihar (June 2025) to phase 2 (October 2025)",
+      "document": "Indicative list of documents attached to the SIR Declaration Form",
+      "before_label": "Bihar SIR order, 24 Jun 2025, Annexure D",
+      "after_label": "Phase 2 SIR order, 27 Oct 2025, Annexure IV",
+      "before": [
+        "Indicative (not exhaustive) list of documents to be submitted in support of the declaration (separate self attested documents to be submitted for Self, Father and Mother, if mentioned above, except where extract of the Electoral Roll of Bihar with qualifying date 01.01.2003 is used, which will be considered as a sufficient document in itself):",
+        "1. Any Identity card/Pension Payment Order issued to regular employee/pensioner of any Central Govt./State Govt./PSU.",
+        "2. Any Identity Card/Certificate/Document issued in India by Government/local authorities/Banks/Post Office/LIC/PSUs prior to 01.07.1987.",
+        "3. Birth Certificate issued by the competent authority.",
+        "4. Passport",
+        "5. Matriculation/Educational certificate issued by recognised Boards/universities",
+        "6. Permanent Residence certificate issued by competent State authority",
+        "7. Forest Right Certificate",
+        "8. OBC/SC/ST or any caste certificate issued by the Competent authority",
+        "9. National Register of Citizens (wherever it exists)",
+        "10. Family Register, prepared by State/Local authorities.",
+        "11. Any land/house allotment certificate by Government"
+      ],
+      "after": [
+        "Indicative (not exhaustive) list of documents (separate self-attested documents to be submitted for Self, Father and Mother, if mentioned above):",
+        "1. Any Identity card/Pension Payment Order issued to a regular employee/pensioner of any Central Govt./State Govt./PSU.",
+        "2. Any Identity Card/Certificate/Document issued in India by the Government/ local authorities/Banks/Post Office/LIC/PSUs prior to 01.07.1987.",
+        "3. Birth Certificate issued by the competent authority.",
+        "4. Passport",
+        "5. Matriculation/Educational certificate issued by recognised Boards/universities",
+        "6. Permanent Residence certificate issued by the competent State authority",
+        "7. Forest Right Certificate",
+        "8. OBC/SC/ST or any caste certificate issued by the Competent Authority",
+        "9. National Register of Citizens (wherever it exists)",
+        "10. Family Register, prepared by State/Local authorities.",
+        "11. Any land/house allotment certificate by the Government",
+        "12. For Aadhaar, the Commission’s directions issued vide letter No. 23/2025-ERS/Vol.II dated 09.09.2025 (Annexure II) shall apply.",
+        "13. Extract of the electoral roll of Bihar SIR with reference to 01.07.2025."
+      ],
+      "before_status": "verbatim",
+      "after_status": "verbatim",
+      "text_status": "verbatim",
+      "excerpt": true,
+      "source_urls": [
+        "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpSBy2rLSWcB8ZqM9aI5KyrxL4EAnNdah6vWMkIUyW8NsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e%2B7gOOlUZXPW%2BNP40Y7lTYFOwY1tfrOT2D3RbDx4E5EzO4jyvJqQIR5ZMChqCiQwfQ%3D%3D"
+      ],
+      "note": "The Bihar text is a scanned page, read against the page image. The same list also appears under Annexure C (enumeration form) in the Bihar order and under Annexure III in the phase 2 order.",
+      "related_entry_ids": [
+        "sir-rules-bihar-eligibility-documents",
+        "sir-rules-aadhaar-12th-document",
+        "sir-rules-phase2-order"
+      ]
+    },
+    {
+      "id": "aadhaar-12th-document",
+      "rule_entry_id": "sir-rules-aadhaar-12th-document",
+      "title": "Aadhaar added to the Bihar SIR documents, 9 Sep 2025",
+      "document": "Bihar SIR document list, and the Commission's letter No. 23/2025-ERS/Vol.II of 09.09.2025, para 3",
+      "before_label": "Bihar SIR order, 24 Jun 2025, Annexure D (list items)",
+      "after_label": "The same list, with para 3(a)-(b) of the 9 Sep 2025 letter",
+      "before": [
+        "1. Any Identity card/Pension Payment Order issued to regular employee/pensioner of any Central Govt./State Govt./PSU.",
+        "2. Any Identity Card/Certificate/Document issued in India by Government/local authorities/Banks/Post Office/LIC/PSUs prior to 01.07.1987.",
+        "3. Birth Certificate issued by the competent authority.",
+        "4. Passport",
+        "5. Matriculation/Educational certificate issued by recognised Boards/universities",
+        "6. Permanent Residence certificate issued by competent State authority",
+        "7. Forest Right Certificate",
+        "8. OBC/SC/ST or any caste certificate issued by the Competent authority",
+        "9. National Register of Citizens (wherever it exists)",
+        "10. Family Register, prepared by State/Local authorities.",
+        "11. Any land/house allotment certificate by Government"
+      ],
+      "after": [
+        "1. Any Identity card/Pension Payment Order issued to regular employee/pensioner of any Central Govt./State Govt./PSU.",
+        "2. Any Identity Card/Certificate/Document issued in India by Government/local authorities/Banks/Post Office/LIC/PSUs prior to 01.07.1987.",
+        "3. Birth Certificate issued by the competent authority.",
+        "4. Passport",
+        "5. Matriculation/Educational certificate issued by recognised Boards/universities",
+        "6. Permanent Residence certificate issued by competent State authority",
+        "7. Forest Right Certificate",
+        "8. OBC/SC/ST or any caste certificate issued by the Competent authority",
+        "9. National Register of Citizens (wherever it exists)",
+        "10. Family Register, prepared by State/Local authorities.",
+        "11. Any land/house allotment certificate by Government",
+        "a. The Aadhaar Card shall be treated as the 12th document, in addition to the 11 documents listed in Annexure C and Annexure D of the SIR order dated 24.06.2025.",
+        "b. The Aadhaar Card is to be accepted and utilized as a proof of identity and not as a proof of citizenship, in terms of Section 9 of the Aadhaar (Delivery of Financial And Other Subsidies, Benefits and Services) Act, 2026."
+      ],
+      "before_status": "verbatim",
+      "after_status": "verbatim",
+      "text_status": "verbatim",
+      "excerpt": true,
+      "source_urls": [
+        "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpSBy2rLSWcB8ZqM9aI5KyrxL4EAnNdah6vWMkIUyW8NsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e%2B7gOOlUZXPW%2BNP40Y7lTYFOwY1tfrOT2D3RbDx4E5EzO4jyvJqQIR5ZMChqCiQwfQ%3D%3D"
+      ],
+      "note": "The letter did not reissue the list. It added Aadhaar by instruction, so the added lines are the letter's own paragraphs, not a new list item. The letter was read from Annexure II of the phase 2 order (a scanned page, read against the page image); the standalone copy on eci.gov.in returned 'Access denied'. The letter gives the Aadhaar Act's year as 2026; the Act is of 2016. It is quoted as written.",
+      "related_entry_ids": [
+        "sir-rules-sc-deleted-list-aadhaar-claims",
+        "sir-rules-sc-parties-aadhaar-claims",
+        "sir-rules-sc-suggests-aadhaar-epic-ration"
+      ]
+    },
+    {
+      "id": "sir-declaration-form-phase-2",
+      "rule_entry_id": "sir-rules-phase2-forms-last-sir-linkage",
+      "title": "The Declaration Form filed with Form 6: birth-date tiers become a last-SIR lookup",
+      "document": "SIR Declaration Form (to be submitted along with Form 6/Form 8)",
+      "before_label": "Bihar SIR order, 24 Jun 2025, Annexure D",
+      "after_label": "Phase 2 SIR order, 27 Oct 2025, Annexure IV",
+      "before": [
+        "Declaration Form",
+        "(To be submitted alongwith Form 6/8 for enrolment as a new Elector/shifting from outside the state)",
+        "I HEREBY DECLARE that to the best of my knowledge and belief-",
+        "(i) I am above 18 years of age, ordinary resident on the above address, and citizen of India, and (tick any one)",
+        "• I was born in India before 01.07.1987",
+        "• Provide any document, for Self, from the list given below establishing date of birth and/or place of birth.",
+        "• I was born in India between 01.07.1987 and 02.12.2004",
+        "• Provide any document, for Self, from the list given below establishing date of birth and/or place of birth.",
+        "• Provide any document, for Father or Mother, from the list given below establishing date of birth and/or place of birth.",
+        "• I was born in India after 02.12.2004",
+        "• Provide any document, for Self, from the list given below establishing date of birth and/or place of birth.",
+        "• Provide any document, for Father, from the list given below establishing date of birth and/or place of birth.",
+        "• Provide any document, for Mother, from the list given below establishing date of birth and/or place of birth.",
+        "• If any parent is not Indian, provide a copy of his/her valid passport & visa at the time of your birth.",
+        "• I was born outside of India (attach proof of Birth Registration issued by Indian Mission abroad),",
+        "• I have acquired Indian citizenship by Registration/Naturalisation (attach Certificate of Registration of Citizenship)",
+        "(ii) I have not acquired the citizenship of any other country.",
+        "(iii) I am applying for inclusion in the Electoral Roll and my name is not included in any other Assembly Constituency/ Parliamentary Constituency.",
+        "(iv) I am aware that making the above statement or declaration in relation to this application which is false and which I know or believe to be false or do not believe to be true, is punishable under Section 31 of Representation of the People Act,1950 (43 of 1950) with imprisonment for a term which may extend to one year or with fine or with both."
+      ],
+      "after": [
+        "Declaration Form",
+        "(To be submitted along with Form 6/Form 8 for enrolment as a new Elector/shifting from outside the state)",
+        "Applicant's Name:",
+        "Mobile Number:",
+        "Address:",
+        "Father’s/Guardian Name",
+        "Father’s/Guardian EPIC No. (if available)",
+        "Mother’s Name",
+        "Mother’s EPIC No. (if available)",
+        "Spouse’s Name (if applicable)",
+        "Spouse’s EPIC No. (if available)",
+        "Details of the Elector in the Electoral Roll of the last SIR (if applicable)",
+        "Details of the Relative, whose name is given in the previous column, in the last SIR",
+        "Elector Name: / EPIC No. (if available) / Relative’s Name: / Relationship: / District: / State: / AC Name: / AC Number / Part No. / Sr No.",
+        "(i) I have not acquired the citizenship of any other country.",
+        "(ii) I am applying for inclusion in the Electoral Roll through Form 6, and my name is not included in any other Assembly Constituency/Parliamentary Constituency.",
+        "Or",
+        "I am applying for inclusion in the Electoral Roll through Form 8 on shifting.",
+        "(iii) I am aware that making the above statement or declaration in relation to this application which is false and which I know or believe to be false or do not believe to be true, is punishable under Section 31 of Representation of the People Act,1950 (43 of 1950) with imprisonment for a term which may extend to one year or with fine or with both.",
+        "BLO’s undertaking: I have verified the above details from the electoral roll(s) of the last SIR."
+      ],
+      "before_status": "verbatim",
+      "after_status": "verbatim",
+      "text_status": "verbatim",
+      "excerpt": true,
+      "source_urls": [
+        "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpSBy2rLSWcB8ZqM9aI5KyrxL4EAnNdah6vWMkIUyW8NsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e%2B7gOOlUZXPW%2BNP40Y7lTYFOwY1tfrOT2D3RbDx4E5EzO4jyvJqQIR5ZMChqCiQwfQ%3D%3D"
+      ],
+      "note": "Signature and date lines are left out on both sides. In the phase 2 form, the birth-date tiers move to an 'Information Sheet for Declaration Form', which applies only after an ERO notice. The two-column last-SIR table is shown as three lines: the two column headings and the fields each column repeats. The Bihar text is a scanned page, read against the page image.",
+      "related_entry_ids": [
+        "sir-rules-annexure-d-declaration",
+        "sir-rules-phase3-order",
+        "sir-rules-form6-online-sir-declaration"
+      ]
+    },
+    {
+      "id": "form-6-online-last-sir",
+      "rule_entry_id": "sir-rules-form6-online-sir-declaration",
+      "title": "Online Form 6 on ECINET: the added 'last SIR' question",
+      "document": "Form 6 (application for inclusion of name), online version on ECINET",
+      "before_label": "Form 6 as prescribed in the Registration of Electors Rules, 1960 (last amended 17 Jun 2022)",
+      "after_label": "Online Form 6 on ECINET, as seen by The Indian Express on 11 Jul 2026",
+      "before": [
+        "No question about the last SIR roll.",
+        "The applicant gives the name and EPIC number of family members with whom they currently reside."
+      ],
+      "after": [
+        "A “declaration form” part, not lettered, inserted between parts J and K.",
+        "my name exists in Electoral Roll of last SIR",
+        "my parents name (Father, Mother, Grandfather, Grandmother) exists in the electoral roll of last SIR",
+        "neither my name nor my parents name exists in the electoral roll of last SIR",
+        "For either of the first two options: the Assembly constituency, booth number and serial number in the last SIR roll."
+      ],
+      "before_status": "paraphrased from reporting",
+      "after_status": "paraphrased from reporting",
+      "text_status": "paraphrased from reporting",
+      "excerpt": true,
+      "source_urls": [
+        "https://indianexpress.com/article/india/election-commission-changes-form-6-for-new-voters-inserts-section-asking-them-about-parents-in-sir-10782435/",
+        "https://indianexpress.com/article/explained/election-commission-new-voter-registration-sir-form6-10782904/",
+        "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/"
+      ],
+      "quoted_lines_after": [
+        1,
+        2,
+        3
+      ],
+      "note": "Neither side is from a primary document. The statutory Form 6 could not be fetched: the ECINET portal serves only the 2022 Form 6 guidelines at voters.eci.gov.in/guidelines/Form-6_en.pdf, not the form. The 'before' lines paraphrase The Indian Express's description of the statutory form. The three options on the 'after' side are the portal's wording as The Indian Express quoted it; the other 'after' lines paraphrase its report. The online form sits behind a login and could not be opened. The report says the question was not marked mandatory, but the form could not be submitted without answering it. The Indian Express reported it was still on the portal on 21 Sep 2026.",
+      "related_entry_ids": [
+        "statements-reporting-joshi-note-form6-rules",
+        "officials-sandhu-form6-note",
+        "sir-rules-eci-annexure-d-response"
+      ]
+    }
+  ],
+  "gaps": [
+    {
+      "rule_entry_id": "sir-rules-bla-criteria",
+      "have": "after",
+      "missing": "before",
+      "why": "The new para 3(iv) is verbatim in ECI letter No.23/BLA/2025-ERS of 11.11.2025 (scanned; read against the image). The earlier para 3(iv) of instruction No.23/BLA/2023-ERS of 09.08.2023 and para 25.2.1(iii) of the Manual on Electoral Rolls 2023 were not found."
+    },
+    {
+      "rule_entry_id": "elections-2019-2024-cctv-45-day-destruction",
+      "have": "neither",
+      "missing": "both",
+      "why": "The letter to CEOs was not opened (reported by The Tribune), and the earlier retention instruction was not found."
+    },
+    {
+      "rule_entry_id": "sir-rules-form6-online-sir-declaration",
+      "have": "reporting only",
+      "missing": "primary text of both sides",
+      "why": "The Form 6 in the 1960 Rules (as amended by the Law Ministry on 17.06.2022) should be pulled from the Gazette, and the online form captured from ECINET, so this diff can move to verbatim."
+    },
+    {
+      "rule_entry_id": "sir-rules-phase3-order",
+      "have": "neither",
+      "missing": "both",
+      "why": "The phase 3 order says its forms are as in phase 2. Its Annexure V linking rule was not compared line by line in this pass."
+    }
+  ]
+}

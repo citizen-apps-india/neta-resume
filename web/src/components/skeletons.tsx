@@ -145,6 +145,61 @@ export function DashboardBodySkeleton() {
   );
 }
 
+/** Inline fallback for the ECI Files front page body (streamed in below the static SectionHero). Header-less. */
+export function EciFrontSkeleton() {
+  return (
+    <div>
+      <S h={220} r={14} style={{ marginBottom: 28 }} />
+      <S w={140} h={11} r={4} style={{ marginBottom: 12 }} />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12, marginBottom: 28 }}>
+        {Array.from({ length: 7 }).map((_, i) => <S key={i} h={158} r={14} />)}
+      </div>
+      <S w={140} h={11} r={4} style={{ marginBottom: 12 }} />
+      <div style={{ display: "flex", gap: 10 }}>
+        {Array.from({ length: 6 }).map((_, i) => <S key={i} w={150} h={74} r={8} />)}
+      </div>
+    </div>
+  );
+}
+
+/** Inline fallback for the ECI Files "every entry" body (streamed in below the static SectionHero). */
+export function EciEntriesSkeleton() {
+  return (
+    <div>
+      <S h={70} r={14} style={{ marginBottom: 18 }} />
+      <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
+        {Array.from({ length: 8 }).map((_, i) => <S key={i} w={64} h={40} r={10} />)}
+      </div>
+      {Array.from({ length: 6 }).map((_, i) => <S key={i} h={58} r={0} style={{ marginBottom: 2 }} />)}
+    </div>
+  );
+}
+
+/** Inline fallback for the ECI Files lane timeline body (streamed in below the static SectionHero). */
+export function EciTimelineSkeleton() {
+  return (
+    <div>
+      <S h={56} r={8} style={{ marginBottom: 22 }} />
+      <S h={30} r={20} style={{ marginBottom: 20, maxWidth: 420 }} />
+      <S h={220} r={12} />
+    </div>
+  );
+}
+
+/** Inline fallback for the /eci-files/numbers body (streamed in below the static SectionHero). */
+export function EciNumbersSkeleton() {
+  return (
+    <div>
+      <S h={40} r={20} style={{ marginBottom: 22, maxWidth: 420 }} />
+      <S h={90} r={12} style={{ marginBottom: 22 }} />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(9, minmax(0, 1fr))", gap: 4, maxWidth: 720, margin: "0 auto 18px" }}>
+        {Array.from({ length: 63 }).map((_, i) => <S key={i} h="100%" r={8} style={{ aspectRatio: "1" }} />)}
+      </div>
+      <S w={280} h={14} r={5} />
+    </div>
+  );
+}
+
 /** Generic placeholder for other pages (home / elections). */
 export function PageSkeleton() {
   return (
@@ -159,3 +214,68 @@ export function PageSkeleton() {
     </>
   );
 }
+
+// --- ECI Files phase 5 (views) ---
+// Inline fallbacks for /objections, /answers, /rules(+diff), /courts(+case) — streamed in below each
+// page's static SectionHero, same pattern as EciTimelineSkeleton.
+
+export function EciObjectionsSkeleton() {
+  return (
+    <div>
+      <S h={70} r={10} style={{ marginBottom: 20 }} />
+      <S w={220} h={20} style={{ marginBottom: 20 }} />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14 }}>
+        {Array.from({ length: 4 }).map((_, i) => <S key={i} h={150} r={12} />)}
+      </div>
+    </div>
+  );
+}
+
+export function EciAnswersSkeleton() {
+  return (
+    <div>
+      <S h={30} r={20} style={{ marginBottom: 20, maxWidth: 420 }} />
+      {Array.from({ length: 5 }).map((_, i) => <S key={i} h={110} r={10} style={{ marginBottom: 14 }} />)}
+    </div>
+  );
+}
+
+export function EciRulesSkeleton() {
+  return (
+    <div>
+      <S w={260} h={16} style={{ marginBottom: 16 }} />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12, marginBottom: 20 }}>
+        {Array.from({ length: 4 }).map((_, i) => <S key={i} h={64} r={10} />)}
+      </div>
+      {Array.from({ length: 6 }).map((_, i) => <S key={i} h={44} r={8} style={{ marginBottom: 8 }} />)}
+    </div>
+  );
+}
+
+export function EciRuleDiffSkeleton() {
+  return (
+    <div>
+      <S w={90} h={12} style={{ marginBottom: 16 }} />
+      <S w={320} h={26} style={{ marginBottom: 20 }} />
+      <S h={280} r={12} />
+    </div>
+  );
+}
+
+export function EciCourtsSkeleton() {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14 }}>
+      {Array.from({ length: 5 }).map((_, i) => <S key={i} h={170} r={12} />)}
+    </div>
+  );
+}
+
+export function EciCaseSkeleton() {
+  return (
+    <div>
+      <S h={120} r={12} style={{ marginBottom: 20 }} />
+      <S h={320} r={12} />
+    </div>
+  );
+}
+// --- end phase 5 ---

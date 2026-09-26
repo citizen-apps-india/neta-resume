@@ -1,0 +1,882 @@
+{
+  "states": [
+    {
+      "state": "Bihar",
+      "phase": 1,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 78969844,
+          "as_of": "2025-06-24",
+          "source_entry": "numbers-bihar-roll-base-2025-06-24",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6riZKC6QZO6gLSygWGSdadvAsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 72400000,
+          "as_of": "2025-08-01",
+          "source_entry": "numbers-bihar-draft-roll-2025-08-01",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2Fzznw5Qtyss%2B8ILdni0Z0RBAkwVPAdy67ySd4dS2SdwaNNq0p8WWXDoViUeHPyzG9HgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "tier": 1,
+          "approx": true
+        },
+        {
+          "stage": "final",
+          "electors": 74192357,
+          "as_of": "2025-09-30",
+          "source_entry": "numbers-bihar-final-roll-2025-09-30",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "left_off",
+          "electors": 6500000,
+          "as_of": "2025-08-01",
+          "source_entry": "numbers-bihar-draft-roll-2025-08-01",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2Fzznw5Qtyss%2B8ILdni0Z0RBAkwVPAdy67ySd4dS2SdwaNNq0p8WWXDoViUeHPyzG9HgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "tier": 1,
+          "approx": true,
+          "note": "ECI's outcome table rounds this to the nearest lakh; the draft-roll figure it also reports rounds separately, so the two do not subtract to exactly this count."
+        }
+      ],
+      "notes": "Phase 1 pilot SIR, qualifying date 1 July 2025. Final figure of 7,41,92,357 excludes 1,63,619 service voters (total incl. service voters: 7,43,55,976, same entry). ECI's PN of 13 Nov 2025 (ECI/PN/353/2025) reportedly claimed zero appeals and a final count of 7,45,26,858, per numbers-bihar-final-roll-2025-09-30's notes; that press note returned 'Access denied' on the date checked and has no Wayback copy, so those two figures are unverified and are not used as the stage value here."
+    },
+    {
+      "state": "Andaman & Nicobar",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 310404,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 246404,
+          "as_of": "2025-12-23",
+          "source_entry": "numbers-andaman-draft-roll-2025-12-23",
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "tier": 3,
+          "computed": true,
+          "note": "No absolute draft-roll figure is reported for Andaman & Nicobar; the entry gives only 'about 64,000 removed (20.62% of the roll)'. Computed as the 27 Oct 2025 base (310,404) minus the reported removal (64,000) = 246,404."
+        }
+      ],
+      "notes": "No final-roll figure for Andaman & Nicobar was found in the record; only draft-stage reporting exists."
+    },
+    {
+      "state": "Chhattisgarh",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 21230737,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 18495920,
+          "as_of": "2025-12-23",
+          "source_entry": "numbers-chhattisgarh-draft-roll-2025-12-23",
+          "url": "https://ceochhattisgarh.nic.in/assets/pdf%20files/PN21.02.2026FinalPublicationofERollChhattisgarh.pdf",
+          "tier": 1
+        },
+        {
+          "stage": "final",
+          "electors": 18730914,
+          "as_of": "2026-02-21",
+          "source_entry": "numbers-chhattisgarh-final-roll-2026-02-21",
+          "url": "https://ceochhattisgarh.nic.in/assets/pdf%20files/PN21.02.2026FinalPublicationofERollChhattisgarh.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "All three stages are ECI/CEO Chhattisgarh press notes (tier 1)."
+    },
+    {
+      "state": "Goa",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 1185034,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 1084992,
+          "as_of": "2025-12-16",
+          "source_entry": "numbers-goa-draft-roll-2025-12-16",
+          "url": "https://ceogoa.nic.in/PDF/SIR2026/press-note-Final-publication.pdf",
+          "tier": 1
+        },
+        {
+          "stage": "final",
+          "electors": 1057566,
+          "as_of": "2026-02-21",
+          "source_entry": "numbers-goa-final-roll-2026-02-21",
+          "url": "https://ceogoa.nic.in/PDF/SIR2026/press-note-Final-publication.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Goa's net SIR deletion (electors in final roll minus 27 Oct base) is about 1,27,468, per numbers-goa-final-roll-2026-02-21's own computed figure. Separately: 97 electors whom EROs had found eligible were left off the final roll (an ECINet/IT issue the Goa CEO's office and EC Sandhu both escalated). Goa's CEO said on 25 Sep 2026 that many of the 97 have since been enrolled through Form 6 (numbers-goa-97-voters-ceo-response-2026-09-25); no reconciled count of how many were actually restored to the roll itself is in the record, so the value here is the original 97 left off, not a confirmed restored count."
+    },
+    {
+      "state": "Gujarat",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 50843436,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 43400000,
+          "as_of": "2025-12-19",
+          "source_entry": "numbers-gujarat-draft-roll-2025-12-19",
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "tier": 3,
+          "approx": true
+        },
+        {
+          "stage": "final",
+          "electors": 44030725,
+          "as_of": "2026-02-17",
+          "source_entry": "numbers-gujarat-final-roll-2026-02-17",
+          "url": "https://www.deccanherald.com/india/gujarats-voter-count-stands-at-440-crore-in-final-electoral-rolls-published-by-ec-after-sir-3901904",
+          "tier": 3
+        },
+        {
+          "stage": "left_off",
+          "electors": 7373000,
+          "as_of": "2025-12-19",
+          "source_entry": "numbers-gujarat-draft-roll-2025-12-19",
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "tier": 3,
+          "approx": true,
+          "note": "Deccan Herald reports 73.73 lakh (14.5%) omitted directly; the roll and omitted figures are each rounded and do not subtract to exactly this count."
+        }
+      ],
+      "notes": null
+    },
+    {
+      "state": "Lakshadweep",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 57813,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 56384,
+          "as_of": "2025-12-16",
+          "source_entry": "numbers-puducherry-lakshadweep-draft-2025-12-16",
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "tier": 3
+        }
+      ],
+      "notes": "No final-roll figure for Lakshadweep was found in the record."
+    },
+    {
+      "state": "Madhya Pradesh",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 57406143,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 53131983,
+          "as_of": "2025-12-23",
+          "source_entry": "numbers-mp-draft-roll-2025-12-23",
+          "url": "https://www.business-standard.com/india-news/ec-publishes-final-electoral-roll-for-mp-with-5-3-crore-voters-over-34-million-names-dropped-126022100775_1.html",
+          "tier": 3
+        },
+        {
+          "stage": "final",
+          "electors": 53981065,
+          "as_of": "2026-02-21",
+          "source_entry": "numbers-mp-final-roll-2026-02-21",
+          "url": "https://www.business-standard.com/india-news/ec-publishes-final-electoral-roll-for-mp-with-5-3-crore-voters-over-34-million-names-dropped-126022100775_1.html",
+          "tier": 3
+        }
+      ],
+      "notes": null
+    },
+    {
+      "state": "Puducherry",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 1021578,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 918000,
+          "as_of": "2025-12-16",
+          "source_entry": "numbers-puducherry-lakshadweep-draft-2025-12-16",
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "tier": 3,
+          "approx": true
+        },
+        {
+          "stage": "final",
+          "electors": 944211,
+          "as_of": "2026-02-14",
+          "source_entry": "numbers-py-final-roll-2026-02-14",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzBiU51zPFZI5qMtjV1qgjFg193XTtp6Zn6FU9qB%2FYxKh2I6Fg%2BNN0%2Fk6VQmFY0pHFCSv%2B1yJkuMeCkTzY9fhBvw%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "left_off",
+          "electors": 103000,
+          "as_of": "2025-12-16",
+          "source_entry": "numbers-puducherry-lakshadweep-draft-2025-12-16",
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "tier": 3,
+          "approx": true,
+          "note": "Deccan Herald's reason-wise break-up (deceased/shifted/multiple) sums to 1,03,467, 467 above this rounded total."
+        }
+      ],
+      "notes": null
+    },
+    {
+      "state": "Tamil Nadu",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 64114587,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 54376756,
+          "as_of": "2025-12-19",
+          "source_entry": "numbers-tn-draft-roll-2025-12-19",
+          "url": "https://www.tribuneindia.com/news/india/tamil-nadu-ceo-releases-final-electoral-roll-97-37-lakh-names-of-voters-deleted/",
+          "tier": 3
+        },
+        {
+          "stage": "final",
+          "electors": 56707380,
+          "as_of": "2026-02-17",
+          "source_entry": "numbers-tn-final-roll-2026-02",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzBiU51zPFZI5qMtjV1qgjFg193XTtp6Zn6FU9qB%2FYxKh2I6Fg%2BNN0%2Fk6VQmFY0pHFCSv%2B1yJkuMeCkTzY9fhBvw%3D%3D",
+          "tier": 1
+        }
+      ],
+      "notes": "numbers-tn-final-roll-2026-02 (CEO announcement, 23 Feb 2026) rounds the same final figure to 5.67 crore; kept the ECI's own figure of 5,67,07,380."
+    },
+    {
+      "state": "West Bengal",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 76637529,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 70816630,
+          "as_of": "2025-12-16",
+          "source_entry": "numbers-wb-draft-roll-2025-12-16",
+          "url": "https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+          "tier": 1
+        },
+        {
+          "stage": "final",
+          "electors": 64452609,
+          "as_of": "2026-02-28",
+          "source_entry": "numbers-wb-final-roll-2026-02-28",
+          "url": "https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+          "tier": 1,
+          "note": "6,006,675 more electors were marked 'under adjudication' at final-roll publication and excluded from this figure; judicial officers had disposed of about 27.16 lakh deletions and roughly 32.9 lakh inclusions of that pool by 7 April 2026 (numbers-wb-adjudication-outcome-2026-04)."
+        },
+        {
+          "stage": "appeals_filed",
+          "electors": 3831429,
+          "as_of": "2026-09-18",
+          "source_entry": "numbers-wb-reply-obrien-appeals-2026-09-18",
+          "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "tier": 3
+        },
+        {
+          "stage": "appeals_pending",
+          "electors": 3705235,
+          "as_of": "2026-09-18",
+          "source_entry": "numbers-wb-reply-obrien-appeals-2026-09-18",
+          "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "tier": 3,
+          "note": "ECI told the Supreme Court on 18 Sep 2026 that 22.21 lakh of these appeals sought restoration of deleted names and 16.10 lakh sought deletion of included names, without saying who filed the latter category; EC Sandhu had separately asked who authorised them (sir-rules-wb-eci-appeals-against-inclusions)."
+        },
+        {
+          "stage": "restored",
+          "electors": 1607,
+          "as_of": "2026-04-29",
+          "source_entry": "numbers-wb-tribunal-restorations-before-poll-2026-04",
+          "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "tier": 3
+        },
+        {
+          "stage": "under_adjudication",
+          "electors": 6006675,
+          "as_of": "2026-02-28",
+          "source_entry": "numbers-wb-final-roll-2026-02-28",
+          "url": "https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+          "tier": 1,
+          "note": "Flagged by ECI's 'logical discrepancy' checks and excluded from the final roll pending judicial adjudication; judicial officers later disposed of about 27.16 lakh deletions and 32.9 lakh inclusions from this pool (numbers-wb-adjudication-outcome-2026-04)."
+        },
+        {
+          "stage": "form7_deletions",
+          "electors": 546053,
+          "as_of": "2026-02-28",
+          "source_entry": "numbers-wb-final-roll-2026-02-28",
+          "url": "https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+          "tier": 1,
+          "note": "Deletions on Form 7 objections between the draft and final rolls, distinct from the 60.07 lakh held under adjudication above."
+        }
+      ],
+      "notes": "West Bengal has two distinct post-draft review tracks in the record: pre-final 'adjudication' of unmapped/flagged electors by judicial officers (resolved before the 28 Feb 2026 final roll, see the note on the final stage), and post-final tribunal appeals against the final roll (appeals_filed / appeals_pending / restored above, running Mar-Sep 2026). Do not sum the two."
+    },
+    {
+      "state": "Rajasthan",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 54884479,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1,
+          "note": "numbers-rajasthan-draft-roll-2025-12-16 separately gives 5,46,56,215 'as on 27 Oct 2025 (excl. Anta)' -- about 2.28 lakh lower -- because the Anta assembly constituency was under a countermanded/deferred poll and is excluded from that entry's series. The value kept here is the ECI's full-state Phase II tally."
+        },
+        {
+          "stage": "draft",
+          "electors": 50471324,
+          "as_of": "2025-12-16",
+          "source_entry": "numbers-rajasthan-draft-roll-2025-12-16",
+          "url": "https://www.indiatvnews.com/rajasthan/rajasthan-sir-over-2-42-lakh-names-deleted-in-final-voter-list-published-by-ec-2026-02-21-1031131",
+          "tier": 3
+        },
+        {
+          "stage": "final",
+          "electors": 51519929,
+          "as_of": "2026-02-21",
+          "source_entry": "numbers-rajasthan-final-roll-2026-02-21",
+          "url": "https://www.indiatvnews.com/rajasthan/rajasthan-sir-over-2-42-lakh-names-deleted-in-final-voter-list-published-by-ec-2026-02-21-1031131",
+          "tier": 3
+        }
+      ],
+      "notes": null
+    },
+    {
+      "state": "Uttar Pradesh",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 154430092,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 125556025,
+          "as_of": "2026-01-06",
+          "source_entry": "numbers-up-draft-roll-2026-01-06",
+          "url": "https://newsonair.gov.in/election-commission-publishes-draft-sir-electoral-roll-of-uttar-pradesh/",
+          "tier": 3
+        },
+        {
+          "stage": "final",
+          "electors": 133984792,
+          "as_of": "2026-04-10",
+          "source_entry": "numbers-up-final-roll-2026-04-10",
+          "url": "https://www.newsonair.gov.in/uttar-pradesh-electorate-grows-by-over-84-lakh-after-completion-of-sir-exercise",
+          "tier": 3
+        }
+      ],
+      "notes": null
+    },
+    {
+      "state": "Kerala",
+      "phase": 2,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 27850855,
+          "as_of": "2025-10-27",
+          "source_entry": "numbers-phase2-roll-base-2025-10-27",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 25442352,
+          "as_of": "2025-12-23",
+          "source_entry": "numbers-kerala-draft-roll-2025-12-23",
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "tier": 3
+        },
+        {
+          "stage": "final",
+          "electors": 27052007,
+          "as_of": "2026-02-21",
+          "source_entry": "numbers-kerala-final-roll-2026-02-21",
+          "url": "https://www.thenewsminute.com/kerala/kerala-sir-53229-voters-deleted-final-electorate-at-269-crore",
+          "tier": 3,
+          "note": "Kerala's CEO announced a final electorate of 2,69,53,644 on 21 Feb 2026 (The News Minute); ECI's own 15 March note gives 2,70,52,007. The ECI figure is kept as the stage value; the CEO figure and the roughly 98,363 gap between them are recorded here, not invented away."
+        }
+      ],
+      "notes": null
+    },
+    {
+      "state": "Odisha",
+      "phase": 3,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 33414856,
+          "as_of": "2026-05-31",
+          "source_entry": "numbers-phase3-batch1-base-2026-05-31",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2Ff9ehkivZ9M0LYA0Mx7TMHPF8lTJJNtD8SeE0kK%2B10IFdOFtn933icz0MOeiesxvsQ%3D%3D",
+          "tier": 1,
+          "note": "numbers-odisha-draft-final-2026-09-21 separately gives 3,33,99,591 'before SIR' as of 30 May 2026 -- about 15,265 lower -- one day earlier in the same enumeration start."
+        },
+        {
+          "stage": "draft",
+          "electors": 31387034,
+          "as_of": "2026-07-05",
+          "source_entry": "numbers-odisha-draft-final-2026-09-21",
+          "url": "https://ommcomnews.com/odisha-news/odisha-publishes-final-electoral-roll-with-3-16-cr-electors/",
+          "tier": 3
+        },
+        {
+          "stage": "final",
+          "electors": 31632754,
+          "as_of": "2026-09-21",
+          "source_entry": "numbers-odisha-draft-final-2026-09-21",
+          "url": "https://ommcomnews.com/odisha-news/odisha-publishes-final-electoral-roll-with-3-16-cr-electors/",
+          "tier": 3
+        },
+        {
+          "stage": "left_off",
+          "electors": 2012557,
+          "as_of": "2026-07-05",
+          "source_entry": "numbers-odisha-draft-final-2026-09-21",
+          "url": "https://ommcomnews.com/odisha-news/odisha-publishes-final-electoral-roll-with-3-16-cr-electors/",
+          "tier": 3,
+          "note": "The CEO's own excluded-from-draft count; the pre-SIR base above is the ECI's, one day earlier and about 15,265 higher than the CEO's own base for this figure (see the state notes)."
+        }
+      ],
+      "notes": null
+    },
+    {
+      "state": "Sikkim",
+      "phase": 3,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 471077,
+          "as_of": "2026-05-31",
+          "source_entry": "numbers-phase3-batch1-base-2026-05-31",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2Ff9ehkivZ9M0LYA0Mx7TMHPF8lTJJNtD8SeE0kK%2B10IFdOFtn933icz0MOeiesxvsQ%3D%3D",
+          "tier": 1,
+          "note": "numbers-sikkim-draft-final-2026-09-06 separately gives 4,71,018 'before SIR' as of 30 May 2026 -- 59 lower -- one day earlier in the same enumeration start."
+        },
+        {
+          "stage": "draft",
+          "electors": 433294,
+          "as_of": "2026-07-05",
+          "source_entry": "numbers-sikkim-draft-final-2026-09-06",
+          "url": "https://northeasttoday.in/northeast/sikkim-publishes-final-electoral-roll-under-sir-2026-electorate-declines-by-3-42/",
+          "tier": 3
+        },
+        {
+          "stage": "final",
+          "electors": 418467,
+          "as_of": "2026-09-06",
+          "source_entry": "numbers-sikkim-draft-final-2026-09-06",
+          "url": "https://northeasttoday.in/northeast/sikkim-publishes-final-electoral-roll-under-sir-2026-electorate-declines-by-3-42/",
+          "tier": 3
+        },
+        {
+          "stage": "left_off",
+          "electors": 37737,
+          "as_of": "2026-07-05",
+          "source_entry": "numbers-sikkim-draft-final-2026-09-06",
+          "url": "https://northeasttoday.in/northeast/sikkim-publishes-final-electoral-roll-under-sir-2026-electorate-declines-by-3-42/",
+          "tier": 3,
+          "note": "Forms not returned by the draft stage, per the CEO; the pre-SIR base above is the ECI's, one day earlier and 59 higher than the CEO's own base for this figure (see the state notes)."
+        }
+      ],
+      "notes": null
+    },
+    {
+      "state": "Mizoram",
+      "phase": 3,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 875008,
+          "as_of": "2026-05-31",
+          "source_entry": "numbers-phase3-batch1-base-2026-05-31",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2Ff9ehkivZ9M0LYA0Mx7TMHPF8lTJJNtD8SeE0kK%2B10IFdOFtn933icz0MOeiesxvsQ%3D%3D",
+          "tier": 1
+        }
+      ],
+      "notes": "No draft- or final-roll figure for Mizoram was found in the record."
+    },
+    {
+      "state": "Manipur",
+      "phase": 3,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 2092140,
+          "as_of": "2026-05-31",
+          "source_entry": "numbers-phase3-batch1-base-2026-05-31",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2Ff9ehkivZ9M0LYA0Mx7TMHPF8lTJJNtD8SeE0kK%2B10IFdOFtn933icz0MOeiesxvsQ%3D%3D",
+          "tier": 1
+        }
+      ],
+      "notes": "No draft- or final-roll figure for Manipur was found in the record."
+    },
+    {
+      "state": "Chandigarh",
+      "phase": 3,
+      "stages": [
+        {
+          "stage": "draft",
+          "electors": 450282,
+          "as_of": "2026-07-21",
+          "source_entry": "numbers-chandigarh-draft-final-2026-09-22",
+          "url": "https://www.tribuneindia.com/news/chandigarh/chandigarhs-special-intensive-revision-adds-9927-voters-no-big-names-deleted-unlike-in-delhi/",
+          "tier": 3
+        },
+        {
+          "stage": "final",
+          "electors": 460209,
+          "as_of": "2026-09-22",
+          "source_entry": "numbers-chandigarh-draft-final-2026-09-22",
+          "url": "https://www.tribuneindia.com/news/chandigarh/chandigarhs-special-intensive-revision-adds-9927-voters-no-big-names-deleted-unlike-in-delhi/",
+          "tier": 3
+        }
+      ],
+      "notes": "No pre-SIR 'before' figure for Chandigarh was found in the record."
+    },
+    {
+      "state": "Karnataka",
+      "phase": 3,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 55432314,
+          "as_of": "2026-06-16",
+          "source_entry": "numbers-karnataka-draft-roll-2026-08-24",
+          "url": "https://ceo.karnataka.gov.in/uploads/PRESS%20NOTE%2024th%20Aug.pdf",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 44635975,
+          "as_of": "2026-08-24",
+          "source_entry": "numbers-karnataka-draft-roll-2026-08-24",
+          "url": "https://ceo.karnataka.gov.in/uploads/PRESS%20NOTE%2024th%20Aug.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Final roll not yet published as of the last entry in the record (25 Sep 2026), by which date notices and hearings were still under way (numbers-karnataka-notices-2026-09-25: 43.82 lakh notices generated, 28.81 lakh hearings completed, 4,48,44,080 electors on the roll at that point)."
+    },
+    {
+      "state": "NCT of Delhi",
+      "phase": 3,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 14510299,
+          "as_of": "2026-06-30",
+          "source_entry": "numbers-delhi-draft-roll-2026-08-31",
+          "url": "https://ceodelhi.gov.in/PDFFolders/2026/Draft_PublicationSIR31Aug2026.pdf",
+          "tier": 1
+        },
+        {
+          "stage": "draft",
+          "electors": 9753577,
+          "as_of": "2026-08-31",
+          "source_entry": "numbers-delhi-draft-roll-2026-08-31",
+          "url": "https://ceodelhi.gov.in/PDFFolders/2026/Draft_PublicationSIR31Aug2026.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Final roll not yet published as of the last entry in the record (25 Sep 2026); 31.64 lakh SIR notices to draft-roll electors had been issued by 19 Sep 2026 (numbers-delhi-notices-2026-09-19)."
+    },
+    {
+      "state": "Maharashtra",
+      "phase": 3,
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 97854049,
+          "as_of": null,
+          "source_entry": "numbers-maharashtra-draft-roll-2026-08-31",
+          "url": "https://ceoelection.maharashtra.gov.in/Downloads/PDF/Notification/Press%20Note%20English_31.08.2026%20Draft%20Roll.pdf",
+          "tier": 1,
+          "note": "The source entry records no as_of date for this 'electors before SIR' figure."
+        },
+        {
+          "stage": "draft",
+          "electors": 77165562,
+          "as_of": "2026-08-31",
+          "source_entry": "numbers-maharashtra-draft-roll-2026-08-31",
+          "url": "https://ceoelection.maharashtra.gov.in/Downloads/PDF/Notification/Press%20Note%20English_31.08.2026%20Draft%20Roll.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Final roll not yet published as of the last entry in the record (25 Sep 2026)."
+    },
+    {
+      "state": "Assam",
+      "phase": null,
+      "stages": [
+        {
+          "stage": "draft",
+          "electors": 25201624,
+          "as_of": "2025-12-27",
+          "source_entry": "numbers-assam-special-revision-2026-02-10",
+          "url": "https://www.newsonair.gov.in/eci-publishes-final-voter-list-for-special-revision-in-assam-extends-west-bengal-sir-deadline-to-feb-28",
+          "tier": 3
+        },
+        {
+          "stage": "final",
+          "electors": 24958139,
+          "as_of": "2026-02-10",
+          "source_entry": "numbers-assam-special-revision-2026-02-10",
+          "url": "https://www.newsonair.gov.in/eci-publishes-final-voter-list-for-special-revision-in-assam-extends-west-bengal-sir-deadline-to-feb-28",
+          "tier": 3
+        }
+      ],
+      "notes": "This is Assam's ordinary Special Revision, a different exercise from the Special Intensive Revision (SIR) run in the other states above -- it is not numbered as an SIR phase and 'phase' is left null. The final roll dropped 2,43,485 names between draft and final; final excludes 63,269 service voters, counted separately. Do not treat this as SIR phase data.",
+      "exercise": "special_revision"
+    },
+    {
+      "state": "Telangana",
+      "phase": 3,
+      "exercise": "sir",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 33920705,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        },
+        {
+          "stage": "left_off",
+          "electors": 7339235,
+          "as_of": "2026-09-01",
+          "source_entry": "numbers-phase3-draft-tally-2026-09-01",
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "tier": 3,
+          "note": "Deccan Herald's tally gives this as 21.69% of the pre-SIR roll; against the pre-SIR base above (a different, 12 May snapshot) it is 21.6%. The Indian Express (10857760) separately reports 21.70%, from EC data, without the count."
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total is in the record yet; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 73,39,235 names left off the draft (21.69% of the pre-SIR roll) but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
+    },
+    {
+      "state": "Andhra Pradesh",
+      "phase": 3,
+      "exercise": "sir",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 41616061,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total is in the record yet; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 44,89,512 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
+    },
+    {
+      "state": "Jharkhand",
+      "phase": 3,
+      "exercise": "sir",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 26489777,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total is in the record yet; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 43,61,987 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
+    },
+    {
+      "state": "Haryana",
+      "phase": 3,
+      "exercise": "sir",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 20663155,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total is in the record yet; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 33,83,302 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
+    },
+    {
+      "state": "Punjab",
+      "phase": 3,
+      "exercise": "sir",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 21456297,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total is in the record yet; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 20,66,635 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
+    },
+    {
+      "state": "Dadra and Nagar Haveli and Daman and Diu",
+      "phase": 3,
+      "exercise": "sir",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 427849,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        },
+        {
+          "stage": "left_off",
+          "electors": 126814,
+          "as_of": "2026-09-01",
+          "source_entry": "numbers-phase3-draft-tally-2026-09-01",
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "tier": 3,
+          "computed": true,
+          "approx": true,
+          "note": "No count is in the record, only the 29.64% share Deccan Herald reports; this count is 29.64% of the pre-SIR base above. The Indian Express (10857760) separately reports 29.60%, from EC data."
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total is in the record yet; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 29.64% of the pre-SIR roll left off the draft, without the counts (numbers-phase3-draft-tally-2026-09-01)."
+    },
+    {
+      "state": "Arunachal Pradesh",
+      "phase": 3,
+      "exercise": "sir",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 887607,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total is in the record yet; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 19.09% of the pre-SIR roll left off the draft, without the counts (numbers-phase3-draft-tally-2026-09-01)."
+    },
+    {
+      "state": "Meghalaya",
+      "phase": 3,
+      "exercise": "sir",
+      "stages": [],
+      "notes": "Included in Deccan Herald's Phase III draft tally of 17 States/UTs (1 Sep 2026), but no figure for Meghalaya on its own is in the record (numbers-phase3-draft-tally-2026-09-01)."
+    },
+    {
+      "state": "Uttarakhand",
+      "phase": 3,
+      "exercise": "sir",
+      "stages": [],
+      "notes": "Included in Deccan Herald's Phase III draft tally of 17 States/UTs (1 Sep 2026), but no figure for Uttarakhand on its own is in the record (numbers-phase3-draft-tally-2026-09-01)."
+    },
+    {
+      "state": "Nagaland",
+      "phase": 3,
+      "exercise": "sir",
+      "stages": [],
+      "notes": "The draft roll was due on 20 September 2026 and is not in the record's tallies (numbers-phase3-draft-tally-2026-09-01)."
+    },
+    {
+      "state": "Tripura",
+      "phase": 3,
+      "exercise": "sir",
+      "stages": [],
+      "notes": "As of 1 September 2026 the draft roll was due on 21 October 2026 (numbers-phase3-draft-tally-2026-09-01)."
+    },
+    {
+      "state": "Himachal Pradesh",
+      "phase": null,
+      "exercise": null,
+      "stages": [],
+      "notes": "Not in the SIR orders in the record. PTI (11 Apr 2026) described a planned Phase III including Himachal Pradesh; the ECI order of 14 May 2026 does not list it (sir-rules-phase3-order)."
+    },
+    {
+      "state": "Jammu and Kashmir",
+      "phase": null,
+      "exercise": null,
+      "stages": [],
+      "notes": "Not in the SIR orders in the record. PTI (11 Apr 2026) described a planned Phase III including Jammu and Kashmir; the ECI order of 14 May 2026 does not list it (sir-rules-phase3-order)."
+    },
+    {
+      "state": "Ladakh",
+      "phase": null,
+      "exercise": null,
+      "stages": [],
+      "notes": "Not in the SIR orders in the record. PTI (11 Apr 2026) described a planned Phase III including Ladakh; the ECI order of 14 May 2026 does not list it (sir-rules-phase3-order)."
+    }
+  ]
+}

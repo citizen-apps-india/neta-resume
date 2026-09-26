@@ -1,0 +1,16 @@
+{
+  "figures": [
+    {
+      "group": "phase_1",
+      "measure": "draft",
+      "label": "Electors in the draft roll",
+      "scope": "Bihar",
+      "electors": 72400000,
+      "as_of": "2025-08-01",
+      "computed": false,
+      "approx": false,
+      "source_entry": "sir-rules-2025-notification",
+      "note": null
+    }
+  ]
+}

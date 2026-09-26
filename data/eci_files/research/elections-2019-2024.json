@@ -1,0 +1,2720 @@
+{
+  "area": "elections-2019-2024",
+  "researched_on": "2026-09-25",
+  "entries": [
+    {
+      "id": "elections-2019-2024-ls2019-schedule",
+      "kind": "event",
+      "date": "2019-03-10",
+      "date_precision": "day",
+      "title": "ECI announces seven-phase 2019 Lok Sabha schedule",
+      "summary": "The Commission's press note ECI/PN/23/2019 announced the general election to the 17th Lok Sabha along with assembly polls in Andhra Pradesh, Arunachal Pradesh, Odisha and Sikkim. It put the electorate at about 900 million, up more than 84 million from 2014, and the number of polling stations at about 10.36 lakh. The Model Code of Conduct took effect on announcement.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Sunil Arora",
+        "Ashok Lavasa",
+        "Sushil Chandra"
+      ],
+      "states": [],
+      "topics": [
+        "elections-2019",
+        "numbers"
+      ],
+      "figures": [
+        {
+          "label": "electorate as per final rolls (qualifying date 1 Jan 2019)",
+          "value": 900000000,
+          "unit": "electors (approx.)",
+          "as_of": "2019-03-10"
+        },
+        {
+          "label": "polling stations",
+          "value": 1035928,
+          "unit": "polling stations (approx.)",
+          "as_of": "2019-03-10"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://adrindia.org/sites/default/files/ECI-%20Press%20Note%20(LS%202019%20Elections).pdf",
+          "publisher": "Election Commission of India (copy hosted by ADR)",
+          "title": "Press Note ECI/PN/23/2019: Announcement of schedule for General Elections to Lok Sabha and Legislative Assemblies in Andhra Pradesh, Arunachal Pradesh, Odisha & Sikkim, 2019",
+          "published": "2019-03-10",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Polling ran 11 April to 19 May 2019 in seven phases; counting on 23 May 2019 (dates as announced in the schedule). The copy opened is the ECI press note PDF hosted on adrindia.org."
+    },
+    {
+      "id": "elections-2019-2024-eb-affidavit-2019",
+      "kind": "case",
+      "date": "2019-03-27",
+      "date_precision": "day",
+      "title": "ECI tells Supreme Court electoral bonds hurt transparency in political funding",
+      "summary": "In a counter-affidavit in the electoral bonds case, the Commission said the Finance Act 2017 amendments that let parties skip reporting bond donations were a retrograde step for transparency. It annexed its 26 May 2017 letter to the Law Ministry warning that the changes could hide foreign and government-company donations and open the door to shell companies.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "courts",
+        "statements",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.livelaw.in/top-stories/modi-govts-electoral-bond-scheme-has-serious-impact-on-transparency-in-political-funding-eci-tells-sc-read-affidavit-143875",
+          "publisher": "LiveLaw",
+          "title": "'Retrograde Step': Election Commission Opposes Anonymity Of Electoral Bonds Scheme [Read Affidavit]",
+          "published": "2019-03-27",
+          "tier": 2,
+          "archive_url": null,
+          "quote": "retrograde step as far as transparency of donations is concerned"
+        }
+      ],
+      "response_to": null,
+      "notes": "LiveLaw says the affidavit was filed on the day of its report (27 March 2019); some secondary accounts give 25 March 2019. The affidavit itself was not opened."
+    },
+    {
+      "id": "elections-2019-2024-vvpat-naidu-order",
+      "kind": "case",
+      "date": "2019-04-08",
+      "date_precision": "day",
+      "title": "Supreme Court raises VVPAT slip checks from one to five booths per segment",
+      "summary": "Hearing a petition by N. Chandrababu Naidu and 20 other opposition leaders who sought verification of 50% of VVPAT slips, the Supreme Court ordered that VVPAT slips be matched with EVM counts at five randomly selected polling stations per assembly constituency or segment, up from one. The Commission had argued that 50% verification would delay results.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "evm-vvpat",
+        "courts",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/24904462/",
+          "publisher": "Supreme Court of India (via Indian Kanoon)",
+          "title": "N Chandrababu Naidu vs Union Of India, order dated 8 April 2019, WP (C) 273 of 2019",
+          "published": "2019-04-08",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/cases/n-chandrababu-naidu-union-of-india-vvpat-case-background/",
+          "publisher": "Supreme Court Observer",
+          "title": "Increased Vote Verification Through VVPAT",
+          "published": "2021-09-16",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Bench: CJI Ranjan Gogoi, Justices Deepak Gupta and Sanjiv Khanna. Supreme Court Observer reports the Commission's affidavit said 50% verification would delay results by at least six days, and that review petitions were heard and the order left unmodified on 7 May (SCO prints the year as 2018, which is a typo for 2019)."
+    },
+    {
+      "id": "elections-2019-2024-biopic-order",
+      "kind": "event",
+      "date": "2019-04-10",
+      "date_precision": "day",
+      "title": "ECI bars release of political biopics, including one on the PM, during MCC",
+      "summary": "A day before the first phase, the Commission ordered that biopics serving a political entity or individual should not be shown in electronic media, including cinemas, while the Model Code was in force. This stopped the scheduled release of the film 'PM Narendra Modi'.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sunil Arora",
+        "Ashok Lavasa",
+        "Sushil Chandra"
+      ],
+      "states": [],
+      "topics": [
+        "mcc",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/india%2Fec-stops-release-of-narendra-modi-biopic-727948",
+          "publisher": "Deccan Herald",
+          "title": "EC stops release of Narendra Modi biopic",
+          "published": "2019-04-10",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Congress and other opposition parties had sought a halt to the release. Other outlets reported that the order also covered NaMo TV; that report was not opened."
+    },
+    {
+      "id": "elections-2019-2024-sc-toothless-hearing",
+      "kind": "case",
+      "date": "2019-04-15",
+      "date_precision": "day",
+      "title": "Supreme Court questions ECI after it calls its powers limited on hate speech",
+      "summary": "Hearing a PIL on communal campaign speeches, a bench led by CJI Ranjan Gogoi asked what action the Commission had taken; its counsel said it could issue notices and advisories and file complaints but could not disqualify candidates. The bench said the Commission was effectively calling itself toothless and listed the matter for the next day. The same afternoon the Commission barred Yogi Adityanath (72 hours), Mayawati (48 hours), Maneka Gandhi (48 hours) and Azam Khan (72 hours) from campaigning.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "mcc",
+        "courts",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/national/national-politics/violations-of-model-code-of-conduct-sc-takes-note-728725",
+          "publisher": "Deccan Herald",
+          "title": "Violations of model code of conduct: SC takes note",
+          "published": "2019-04-15",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.business-standard.com/article/elections/hate-speech-ec-bars-yogi-adityanath-mayawati-from-election-campaigning-119041501127_1.html",
+          "publisher": "Business Standard",
+          "title": "EC restrains Adityanath, Mayawati, Azam Khan, Maneka from poll campaigning",
+          "published": "2019-04-16",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The PIL was filed by Harpreet Mansukhani. The campaign bans were issued under Article 324 and took effect the next morning."
+    },
+    {
+      "id": "elections-2019-2024-mohsin-suspension",
+      "kind": "event",
+      "date": "2019-04-17",
+      "date_precision": "day",
+      "title": "ECI suspends poll observer who checked the PM's helicopter in Sambalpur",
+      "summary": "The Commission suspended Mohammed Mohsin, a 1996-batch Karnataka-cadre IAS officer posted as general observer in Sambalpur, Odisha, saying his checking of Prime Minister Modi's helicopter breached its instructions on SPG protectees. On 25 April 2019 the Bangalore bench of the Central Administrative Tribunal stayed the suspension; the Commission then revoked it but barred him from election duty and recommended disciplinary action for dereliction of duty.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Mohammed Mohsin"
+      ],
+      "states": [
+        "Odisha"
+      ],
+      "topics": [
+        "mcc",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/ec-suspends-officer-for-checking-pms-chopper-729337",
+          "publisher": "Deccan Herald",
+          "title": "EC suspends officer for checking PM's chopper",
+          "published": "2019-04-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/ec-lifts-suspension-of-officer-who-checked-pms-chopper-730728",
+          "publisher": "Deccan Herald",
+          "title": "EC lifts suspension of officer who checked PM's chopper",
+          "published": "2019-04-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Deccan Herald's 18 April report says the suspension came on Wednesday night (17 April); its 25 April report says 16 April. Congress criticised the suspension, saying the rule cited did not exempt the PM's vehicle from search. Final outcome of the CAT case not found."
+    },
+    {
+      "id": "elections-2019-2024-congress-mcc-complaints-2019",
+      "kind": "statement",
+      "date": "2019-04",
+      "date_precision": "month",
+      "title": "Congress files complaints that Modi and Shah speeches broke the model code",
+      "summary": "Congress lodged complaints with the Commission from 1 April 2019 onward alleging that speeches by Prime Minister Narendra Modi and BJP president Amit Shah violated the Model Code of Conduct and the Commission's advisories against using the armed forces in campaigning. The speeches cited included Modi at Wardha (1 April), Latur/Ausa (9 April), and Patan and Barmer (21 April), and Shah at Nagpur (9 April).",
+      "status": "claim",
+      "attributed_to": "Indian National Congress",
+      "people": [],
+      "states": [],
+      "topics": [
+        "mcc",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/sc-notice-to-ec-on-plea-for-action-against-modi-shah-731444",
+          "publisher": "Deccan Herald",
+          "title": "SC notice to EC on plea for action against Modi, Shah",
+          "published": "2019-04-30",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.livelaw.in/top-stories/sushmita-dev-pm-modi-shah-eci-144877",
+          "publisher": "LiveLaw",
+          "title": "'Can't Examine Merits Of Clean Chits To Modi & Shah; File Separate Petition', SC Disposes Of Congress MP's Petition",
+          "published": "2019-05-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Commission's responses are recorded as separate response entries. Congress said it had filed 11 representations against the two leaders."
+    },
+    {
+      "id": "elections-2019-2024-sc-dev-petition-notice",
+      "kind": "case",
+      "date": "2019-04-30",
+      "date_precision": "day",
+      "title": "Supreme Court issues notice on Congress MP's plea over ECI inaction",
+      "summary": "Congress MP Sushmita Dev petitioned the Supreme Court on 29 April 2019, alleging the Commission had not acted for over three weeks on complaints against Modi and Shah. A bench of CJI Ranjan Gogoi and Justices S.K. Kaul and K.M. Joseph issued notice on 30 April and said the Commission remained free to pass orders.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sushmita Dev"
+      ],
+      "states": [],
+      "topics": [
+        "mcc",
+        "courts",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/sc-notice-to-ec-on-plea-for-action-against-modi-shah-731444",
+          "publisher": "Deccan Herald",
+          "title": "SC notice to EC on plea for action against Modi, Shah",
+          "published": "2019-04-30",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The petition also cited a rally the PM held in Gujarat on 23 April, the day of phase-3 polling."
+    },
+    {
+      "id": "elections-2019-2024-wardha-clean-chit",
+      "kind": "event",
+      "date": "2019-04-30",
+      "date_precision": "day",
+      "title": "ECI finds no violation in Modi's Wardha speech",
+      "summary": "The full Commission examined Modi's 1 April 2019 Wardha speech, in which he referred to Congress contesting seats where the majority community is a minority, and said no violation of the Model Code had been noticed. It did not decide the other pending complaints against Modi, Shah and Rahul Gandhi that day.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Sunil Arora",
+        "Ashok Lavasa",
+        "Sushil Chandra"
+      ],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "mcc",
+        "dissent",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/ec-gives-clean-chit-to-pm-for-wardha-speech-731500",
+          "publisher": "Deccan Herald",
+          "title": "EC gives clean chit to PM for Wardha speech",
+          "published": "2019-04-30",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-congress-mcc-complaints-2019",
+      "notes": "According to reports cited in the Lavasa entries, this was one of the decisions on which Ashok Lavasa dissented; the order does not record dissent."
+    },
+    {
+      "id": "elections-2019-2024-latur-clean-chit",
+      "kind": "event",
+      "date": "2019-05-01",
+      "date_precision": "day",
+      "title": "ECI clears Modi's Latur speech invoking Pulwama and Balakot",
+      "summary": "The Commission said Modi's 9 April 2019 speech at Ausa, Latur, asking first-time voters to dedicate their vote to those killed in Pulwama and the Balakot strike, did not violate its advisories or the Model Code. It said it had examined the full 11-page transcript.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Sunil Arora",
+        "Ashok Lavasa",
+        "Sushil Chandra"
+      ],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "mcc",
+        "dissent",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/elections/another-ec-relief-to-pm-now-for-pulwama-731682",
+          "publisher": "Deccan Herald",
+          "title": "Another EC relief to PM, now for Pulwama",
+          "published": "2019-05-01",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-congress-mcc-complaints-2019",
+      "notes": "Deccan Herald, citing The Indian Express, reports that the Maharashtra CEO and the Osmanabad DEO had found the speech inconsistent with the Commission's advisories, and that the Commission overruled them. The Commission's 9 and 19 March 2019 advisories asked parties not to use defence personnel in campaigning."
+    },
+    {
+      "id": "elections-2019-2024-sc-deadline-may",
+      "kind": "case",
+      "date": "2019-05-02",
+      "date_precision": "day",
+      "title": "Supreme Court tells ECI to decide all complaints against Modi and Shah",
+      "summary": "A bench of CJI Ranjan Gogoi and Justices Deepak Gupta and Sanjiv Khanna told the Commission to decide the pending Congress complaints against Modi and Shah, listing the case for 6 May. The Commission's counsel said three complaints had been decided and all would be decided soon; the petitioner said seven of eleven remained pending.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "mcc",
+        "courts",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/elections%2Fdecide-pending-complaints-against-modi-shah-by-may-5-731811",
+          "publisher": "Deccan Herald",
+          "title": "'Decide pending complaints against Modi, Shah by May 5'",
+          "published": "2019-05-02",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.livelaw.in/top-stories/sushmita-dev-pm-modi-shah-eci-144877",
+          "publisher": "LiveLaw",
+          "title": "SC Disposes Of Congress MP's Petition",
+          "published": "2019-05-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Deccan Herald's headline gives 5 May as the deadline; LiveLaw says 6 May. The case was listed for 6 May."
+    },
+    {
+      "id": "elections-2019-2024-clean-chits-may3-4",
+      "kind": "event",
+      "date": "2019-05-04",
+      "date_precision": "day",
+      "title": "ECI clears Modi in six complaints and Shah in two by early May",
+      "summary": "By 4 May 2019 the Commission had cleared Modi in six complaints, including his 21 April Patan speech about the return of Wing Commander Abhinandan Varthaman, and cleared Shah in two cases, including his 9 April Nagpur remark linking Wayanad to Pakistan. All complaints against the two were disposed of before the court's deadline, with no violation found.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Sunil Arora",
+        "Ashok Lavasa",
+        "Sushil Chandra"
+      ],
+      "states": [
+        "Gujarat",
+        "Maharashtra",
+        "Rajasthan"
+      ],
+      "topics": [
+        "mcc",
+        "dissent",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/elections%2Fec-gives-clean-chit-to-pm-in-sixth-case-732193",
+          "publisher": "Deccan Herald",
+          "title": "EC gives clean chit to PM in sixth case",
+          "published": "2019-05-04",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.livelaw.in/top-stories/sushmita-dev-pm-modi-shah-eci-144877",
+          "publisher": "LiveLaw",
+          "title": "SC Disposes Of Congress MP's Petition",
+          "published": "2019-05-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-congress-mcc-complaints-2019",
+      "notes": "The individual orders were not opened, and the exact dates of the Barmer and Varanasi clean chits were not independently sourced."
+    },
+    {
+      "id": "elections-2019-2024-sc-dev-disposed",
+      "kind": "case",
+      "date": "2019-05-08",
+      "date_precision": "day",
+      "title": "Supreme Court closes Congress plea after ECI clears Modi and Shah",
+      "summary": "The CJI-led bench held that Sushmita Dev's petition, which was about inaction, had become infructuous because the Commission had decided all complaints. It said the merits of the clean chits could only be challenged in a fresh petition. Dev's additional affidavit had called the orders belated and inconsistent with action taken against other leaders.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sushmita Dev"
+      ],
+      "states": [],
+      "topics": [
+        "mcc",
+        "courts",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.livelaw.in/top-stories/sushmita-dev-pm-modi-shah-eci-144877",
+          "publisher": "LiveLaw",
+          "title": "'Can't Examine Merits Of Clean Chits To Modi & Shah; File Separate Petition', SC Disposes Of Congress MP's Petition",
+          "published": "2019-05-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-lavasa-letters",
+      "kind": "event",
+      "date": "2019-05-04",
+      "date_precision": "day",
+      "title": "Lavasa writes to CEC seeking recording of minority views in MCC orders",
+      "summary": "Election Commissioner Ashok Lavasa wrote to CEC Sunil Arora on 4 May 2019 seeking greater transparency in model code decisions, and wrote again on 10, 14 and 16 May. In the last letter he said he was being forced to stay away from full-Commission meetings on MCC matters because minority decisions were not being recorded.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Ashok Lavasa",
+        "Sunil Arora"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "mcc",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/lok-sabha-election-2019/model-code-violation-cases-would-not-be-made-public-ec-735096",
+          "publisher": "Deccan Herald",
+          "title": "Lavasa's demand for recording dissenting views rejected",
+          "published": "2019-05-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/archive/nation/ec-members-not-meant-to-be-clones-cec-on-lavasa-s-letter-774896",
+          "publisher": "The Tribune",
+          "title": "EC members not meant to be clones: CEC on Lavasa's letter",
+          "published": "2019-05-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "PTI, via The Tribune, reports the Commission's legal division had advised that dissent could not be recorded in MCC decisions because they are not quasi-judicial; dissent stays in the file. Reports say Lavasa dissented on four Modi speeches and one Shah speech (ummid.com/IANS), or in at least five decisions."
+    },
+    {
+      "id": "elections-2019-2024-lavasa-recusal-public",
+      "kind": "event",
+      "date": "2019-05-18",
+      "date_precision": "day",
+      "title": "Lavasa's recusal from MCC meetings becomes public on eve of final phase",
+      "summary": "A day before the seventh phase, it was reported that Lavasa had stayed away from MCC meetings since early May because his dissents on clean chits to Modi and Shah were not recorded. Asked about it, Lavasa called it an internal matter.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Ashok Lavasa"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/archive/nation/ec-members-not-meant-to-be-clones-cec-on-lavasa-s-letter-774896",
+          "publisher": "The Tribune",
+          "title": "EC members not meant to be clones: CEC on Lavasa's letter",
+          "published": "2019-05-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://ummid.com/news/2019/may/18.05.2019/rift-in-election-commission-over-clean-chit-to-modi-widens.html",
+          "publisher": "ummid.com (IANS)",
+          "title": "Rift in Election Commission over clean chit to Modi widens",
+          "published": "2019-05-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Congress, as reported by ummid.com, questioned whether the body was an 'Election Commission or Election Omission'."
+    },
+    {
+      "id": "elections-2019-2024-arora-statement-clones",
+      "kind": "statement",
+      "date": "2019-05-18",
+      "date_precision": "day",
+      "title": "CEC Arora calls the controversy 'unsavoury and avoidable'",
+      "summary": "CEC Sunil Arora issued a statement saying commissioners are not expected to be clones of each other, that differences had usually stayed within the Commission, and that the full Commission would meet on 21 May to discuss the issue.",
+      "status": "response",
+      "attributed_to": "Sunil Arora, Chief Election Commissioner",
+      "people": [
+        "Sunil Arora"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "statements",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/archive/nation/ec-members-not-meant-to-be-clones-cec-on-lavasa-s-letter-774896",
+          "publisher": "The Tribune",
+          "title": "EC members not meant to be clones: CEC on Lavasa's letter",
+          "published": "2019-05-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "not expected to be template or clones of each other"
+        }
+      ],
+      "response_to": "elections-2019-2024-lavasa-recusal-public",
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-dissent-decision",
+      "kind": "rule",
+      "date": "2019-05-21",
+      "date_precision": "day",
+      "title": "ECI decides 2-1 that dissent stays in file notes, not in orders",
+      "summary": "The full Commission rejected Lavasa's demand that minority views be included in MCC orders. By a 2-1 majority of Arora and Sushil Chandra, it decided that the minutes of meetings would record all members' views but orders would reflect only the majority, and that formal instructions would follow.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sunil Arora",
+        "Ashok Lavasa",
+        "Sushil Chandra"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "mcc",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/lok-sabha-election-2019/model-code-violation-cases-would-not-be-made-public-ec-735096",
+          "publisher": "Deccan Herald",
+          "title": "Lavasa's demand for recording dissenting views rejected",
+          "published": "2019-05-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The formal instructions said to follow were not located."
+    },
+    {
+      "id": "elections-2019-2024-lavasa-rti-refusal",
+      "kind": "event",
+      "date": "2019-06-24",
+      "date_precision": "day",
+      "title": "ECI refuses RTI request for Lavasa's dissent notes",
+      "summary": "Answering an RTI application by Pune activist Vihar Durve for Lavasa's dissent notes on Modi's Wardha, Latur, Patan, Barmer and Varanasi speeches, the Commission refused under Section 8(1)(g) of the RTI Act, the clause on information that could endanger someone's life or physical safety. It also withheld the procedure followed and the decisions.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Ashok Lavasa"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "mcc",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://theprint.in/india/ec-refuses-to-disclose-ashok-lavasas-dissent-note-cites-danger-to-life-of-individual/253986/",
+          "publisher": "ThePrint (PTI)",
+          "title": "EC refuses to disclose Ashok Lavasa's dissent note, cites danger to life of individual",
+          "published": "2019-06-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The dissent notes have not been made public."
+    },
+    {
+      "id": "elections-2019-2024-lavasa-family-tax-notices",
+      "kind": "event",
+      "date": "2019-09-23",
+      "date_precision": "day",
+      "title": "Tax notices to a family member of Lavasa reported months after his dissents",
+      "summary": "Official sources told the press that the Income Tax Department had issued notices to a member of Lavasa's family over tax returns, and reports noted this came after his dissents in the 2019 MCC cases. The family member said in a statement that all taxes had been paid and every notice received since 5 August 2019 had been answered.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Ashok Lavasa"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "elections-2019"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/election-commissioner-lavasas-wife-under-i-t-scanner-763555",
+          "publisher": "Deccan Herald",
+          "title": "[Headline withheld: names a family member] Deccan Herald report on I-T notices, 24 Sep 2019",
+          "published": "2019-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Recorded only as a reported event. Per the brief, family members are not named. Other outlets reported notices to more relatives. No finding of wrongdoing was found in the sources opened."
+    },
+    {
+      "id": "elections-2019-2024-lavasa-adb",
+      "kind": "event",
+      "date": "2020-07-15",
+      "date_precision": "day",
+      "title": "ADB names Lavasa vice-president; he was next in line for CEC",
+      "summary": "The Asian Development Bank announced Ashok Lavasa's appointment as Vice-President for Private Sector Operations and Public-Private Partnerships, succeeding Diwakar Gupta, whose term ended on 31 August 2020. At the time Lavasa was the senior Election Commissioner.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Ashok Lavasa"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.adb.org/news/adb-appoints-ashok-lavasa-new-vice-president",
+          "publisher": "Asian Development Bank",
+          "title": "ADB Appoints Ashok Lavasa as New Vice-President",
+          "published": "2020-07-15",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20240518045317/https://www.adb.org/news/adb-appoints-ashok-lavasa-new-vice-president",
+          "quote": null
+        },
+        {
+          "url": "https://www.nationalheraldindia.com/india/election-commissioner-ashok-lavasa-who-opposed-clean-chit-to-modi-shah-during-ls-polls-set-to-join-adb",
+          "publisher": "National Herald",
+          "title": "Election Commissioner Ashok Lavasa who opposed clean chit to Modi-Shah during LS polls set to join ADB",
+          "published": "2020-07-15",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "adb.org blocks automated fetches; the Wayback copy was read. National Herald, citing Hindustan Times, notes that by convention he would have succeeded Sunil Arora as CEC, though no rule requires it, and that he was only the second Election Commissioner to leave before his term ended."
+    },
+    {
+      "id": "elections-2019-2024-lavasa-resigns",
+      "kind": "event",
+      "date": "2020-08-18",
+      "date_precision": "day",
+      "title": "Lavasa resigns from ECI; Rajiv Kumar appointed in his place",
+      "summary": "Lavasa sent his resignation to President Ram Nath Kovind, effective 31 August 2020. On 21 August the Law Ministry notified the appointment of former Finance Secretary Rajiv Kumar (IAS, Jharkhand cadre, 1984 batch) as Election Commissioner in his place.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Ashok Lavasa",
+        "Rajiv Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://gulfnews.com/world/asia/india/india-former-finance-secretary-rajiv-kumar-appointed-election-commissioner-1.1598032628781",
+          "publisher": "Gulf News",
+          "title": "India: Former Finance Secretary Rajiv Kumar appointed Election Commissioner",
+          "published": "2020-08-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.indiatvnews.com/news/india/who-is-rajiv-kumar-new-election-commissioner-former-finance-secretary-election-commission-643882",
+          "publisher": "India TV",
+          "title": "Former Finance Secretary Rajiv Kumar appointed new Election Commissioner, to replace Ashok Lavasa",
+          "published": "2020-08-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The resignation date is taken from Gulf News's 21 August (Friday) report that he resigned 'on Tuesday', which is 18 August 2020. The Gazette notifications were not opened; this should be checked against egazette.gov.in."
+    },
+    {
+      "id": "elections-2019-2024-person-ashok-lavasa",
+      "kind": "person",
+      "date": "2018-01-23",
+      "date_precision": "day",
+      "title": "Ashok Lavasa, Election Commissioner 2018-2020",
+      "summary": "Former Union Finance Secretary who served as Election Commissioner from January 2018 to August 2020. He dissented on several 2019 clean chits to Modi and Shah, sought to have minority views recorded in MCC orders, and left for the Asian Development Bank while next in line to be CEC.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Ashok Lavasa"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {
+        "role": "Election Commissioner",
+        "tenure": [
+          {
+            "office": "Election Commissioner",
+            "from": "2018-01-23",
+            "to": "2020-08-31"
+          }
+        ],
+        "service": "Retired IAS officer (cadre and batch not confirmed from a primary source in this research)",
+        "career": [
+          {
+            "from": null,
+            "to": null,
+            "post": "Union Finance Secretary",
+            "source_url": "http://web.archive.org/web/20240518045317/https://www.adb.org/news/adb-appoints-ashok-lavasa-new-vice-president"
+          },
+          {
+            "from": null,
+            "to": null,
+            "post": "Union Secretary, Ministry of Environment, Forests and Climate Change; led India's delegation in Paris Agreement negotiations",
+            "source_url": "http://web.archive.org/web/20240518045317/https://www.adb.org/news/adb-appoints-ashok-lavasa-new-vice-president"
+          },
+          {
+            "from": null,
+            "to": null,
+            "post": "Union Secretary, Ministry of Civil Aviation",
+            "source_url": "http://web.archive.org/web/20240518045317/https://www.adb.org/news/adb-appoints-ashok-lavasa-new-vice-president"
+          },
+          {
+            "from": null,
+            "to": null,
+            "post": "Joint Secretary, Department of Economic Affairs",
+            "source_url": "http://web.archive.org/web/20240518045317/https://www.adb.org/news/adb-appoints-ashok-lavasa-new-vice-president"
+          },
+          {
+            "from": "2018-01",
+            "to": "2020-08",
+            "post": "Election Commissioner of India",
+            "source_url": "https://www.deccanherald.com/india/election-commissioner-lavasas-wife-under-i-t-scanner-763555"
+          },
+          {
+            "from": "2020-09",
+            "to": null,
+            "post": "Vice-President, Private Sector Operations and PPPs, Asian Development Bank",
+            "source_url": "http://web.archive.org/web/20240518045317/https://www.adb.org/news/adb-appoints-ashok-lavasa-new-vice-president"
+          }
+        ],
+        "selection": "Appointed Election Commissioner on 23 January 2018, before the 2023 appointments law, under Article 324(2) on government advice (appointment date from Deccan Herald; selection record not opened).",
+        "education": "Per ADB's official release: BA (English Honours) and MA (English Literature), Delhi University; MPhil in Defence and Strategic Studies, University of Madras; MBA, Southern Cross University."
+      },
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/election-commissioner-lavasas-wife-under-i-t-scanner-763555",
+          "publisher": "Deccan Herald",
+          "title": "[Headline withheld: names a family member] Deccan Herald report, 24 Sep 2019, stating Lavasa was appointed EC on 23 Jan 2018",
+          "published": "2019-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.adb.org/news/adb-appoints-ashok-lavasa-new-vice-president",
+          "publisher": "Asian Development Bank",
+          "title": "ADB Appoints Ashok Lavasa as New Vice-President",
+          "published": "2020-07-15",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20240518045317/https://www.adb.org/news/adb-appoints-ashok-lavasa-new-vice-president",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Dates for pre-2018 postings are not given in the ADB release; DoPT civil list or Executive Record Sheet should be checked."
+    },
+    {
+      "id": "elections-2019-2024-mamata-campaign-ban",
+      "kind": "event",
+      "date": "2021-04-12",
+      "date_precision": "day",
+      "title": "ECI bars Mamata Banerjee from campaigning for 24 hours",
+      "summary": "During the West Bengal assembly election, the Commission barred Chief Minister Mamata Banerjee from campaigning from 8 pm on 12 April to 8 pm on 13 April 2021. It cited her 7 April appeal to Muslim voters not to split their vote and her 8 April remarks about central forces. It called her handwritten reply factually incorrect and without evidence.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Mamata Banerjee",
+        "Sunil Arora",
+        "Sushil Chandra",
+        "Rajiv Kumar"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "mcc"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/elections/west-bengal/ec-bans-mamata-banerjee-from-election-campaigning-for-24-hours-973750",
+          "publisher": "Deccan Herald",
+          "title": "EC bans Mamata Banerjee from election campaigning for 24 hours",
+          "published": "2021-04-13",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Banerjee held a dharna in protest against the order."
+    },
+    {
+      "id": "elections-2019-2024-madras-hc-murder-remark",
+      "kind": "case",
+      "date": "2021-04-26",
+      "date_precision": "day",
+      "title": "Madras High Court orally blames ECI for Covid second wave",
+      "summary": "While hearing a plea on Covid protocols for counting in Karur, a Madras High Court bench of Chief Justice Sanjib Banerjee and Justice Senthilkumar Ramamoorthy was reported to have said orally that the Commission was singularly responsible for the second wave and should perhaps face murder charges. The remarks were not part of the written order.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Tamil Nadu"
+      ],
+      "topics": [
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/188051462/",
+          "publisher": "Supreme Court of India (via Indian Kanoon)",
+          "title": "The Chief Election Commissioner Of India vs M.R. Vijayabhaskar, judgment dated 6 May 2021",
+          "published": "2021-05-06",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Supreme Court judgment records the reported oral remarks as allegations, not as part of the High Court order. It also notes a 27 April 2021 police complaint in Kolkata against Deputy Election Commissioner Sudip Jain and others."
+    },
+    {
+      "id": "elections-2019-2024-sc-vijayabhaskar",
+      "kind": "case",
+      "date": "2021-05-06",
+      "date_precision": "day",
+      "title": "Supreme Court declines ECI plea to curb reporting of court's oral remarks",
+      "summary": "A bench of Justices D.Y. Chandrachud and M.R. Shah dismissed the Commission's appeal seeking to stop media reporting of the Madras High Court's oral remarks and to have them expunged, upholding open-court reporting. It advised judicial restraint in oral comments.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Tamil Nadu"
+      ],
+      "topics": [
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indiankanoon.org/doc/188051462/",
+          "publisher": "Supreme Court of India (via Indian Kanoon)",
+          "title": "The Chief Election Commissioner Of India vs M.R. Vijayabhaskar, judgment dated 6 May 2021",
+          "published": "2021-05-06",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-goel-resigns",
+      "kind": "event",
+      "date": "2024-03-09",
+      "date_precision": "day",
+      "title": "Election Commissioner Arun Goel resigns days before 2024 schedule",
+      "summary": "Election Commissioner Arun Goel, whose term ran to December 2027 and who was in line to become CEC, resigned, and the President accepted the resignation the same day. With Anup Chandra Pandey having retired in February, the Commission was left with only CEC Rajiv Kumar. No reason was given publicly.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Arun Goel",
+        "Rajiv Kumar",
+        "Anup Chandra Pandey"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/election-commissioner-arun-goel-resigns-ahead-of-lok-sabha-election-598901",
+          "publisher": "The Tribune",
+          "title": "Election Commissioner Arun Goel resigns ahead of Lok Sabha election",
+          "published": "2024-03-10",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Gyanesh Kumar and Sukhbir Singh Sandhu were appointed under the 2023 Act days later; see the appointments area."
+    },
+    {
+      "id": "elections-2019-2024-sc-eb-mar11",
+      "kind": "case",
+      "date": "2024-03-11",
+      "date_precision": "day",
+      "title": "Supreme Court sets deadlines for SBI and ECI to publish bond data",
+      "summary": "Rejecting SBI's plea for more time, a Constitution Bench ordered SBI to give electoral bond details to the Commission by close of business on 12 March 2024, and the Commission to publish them on its website by 5 pm on 15 March 2024. This followed the 15 February 2024 judgment striking down the scheme.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "courts",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://api.sci.gov.in/supremecourt/2024/10865/10865_2024_1_302_51365_Judgement_11-Mar-2024.pdf",
+          "publisher": "Supreme Court of India",
+          "title": "MA 486/2024 in WP(C) 880/2017, judgment dated 11 March 2024 (2024 INSC 195)",
+          "published": "2024-03-11",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-eci-eb-mar14",
+      "kind": "event",
+      "date": "2024-03-14",
+      "date_precision": "day",
+      "title": "ECI publishes electoral bond data received from SBI",
+      "summary": "The Commission published the electoral bond data that SBI had supplied on 12 March. It came in two parts, purchases and redemptions, without the unique bond numbers that would link donors to parties. The Commission said it had consistently favoured disclosure and transparency.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "elections-2024",
+        "numbers"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/election-commission-releases-electoral-bonds-data-on-website",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "Election Commission Releases Electoral Bonds Data on Website",
+          "published": "2024-03-14",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Published a day before the court's 15 March deadline. The absence of bond numbers is from other reporting and the later 18 March court order referenced in the 21 March ECI release."
+    },
+    {
+      "id": "elections-2019-2024-eci-eb-mar17",
+      "kind": "event",
+      "date": "2024-03-17",
+      "date_precision": "day",
+      "title": "ECI publishes sealed-cover party bond disclosures returned by Supreme Court",
+      "summary": "The Commission published the bond data that political parties had filed in sealed covers and that the Commission had deposited in court unopened. The Supreme Court registry returned the data in digitised form after a 15 March order.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "elections-2024",
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/ec-makes-fresh-electoral-bond-data-public",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "EC makes fresh electoral bond data public",
+          "published": "2024-03-17",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-eci-eb-mar21",
+      "kind": "event",
+      "date": "2024-03-21",
+      "date_precision": "day",
+      "title": "ECI publishes bond data with unique numbers from SBI 'as is where is'",
+      "summary": "Following Supreme Court orders of 15 February, 11 March and 18 March 2024, SBI gave the Commission the bond data including the alphanumeric numbers, and the Commission published it the same day, as received from SBI on an 'as is where is basis'.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "elections-2024",
+        "numbers",
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2015989",
+          "publisher": "Press Information Bureau (Election Commission)",
+          "title": "Public disclosure by ECI of the data relating to electoral bonds as supplied by the State Bank of India today ie 21st March 2024",
+          "published": "2024-03-21",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "as is where is basis"
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-ls2024-schedule",
+      "kind": "event",
+      "date": "2024-03-16",
+      "date_precision": "day",
+      "title": "ECI announces seven-phase 2024 Lok Sabha schedule, 19 April to 1 June",
+      "summary": "CEC Rajiv Kumar, with the two new commissioners Gyanesh Kumar and Sukhbir Singh Sandhu, announced polling in seven phases (19 April, 26 April, 7 May, 13 May, 20 May, 25 May and 1 June) with counting on 4 June 2024, along with assembly polls in Andhra Pradesh, Arunachal Pradesh, Odisha and Sikkim. The CEC said there were 97 crore registered voters and over 10.5 lakh polling stations. Uttar Pradesh, Bihar and West Bengal were given seven phases each.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "elections-2024",
+        "numbers"
+      ],
+      "figures": [
+        {
+          "label": "registered voters",
+          "value": 970000000,
+          "unit": "electors (approx.)",
+          "as_of": "2024-03-16"
+        },
+        {
+          "label": "polling stations",
+          "value": 1050000,
+          "unit": "polling stations (approx.)",
+          "as_of": "2024-03-16"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.pib.gov.in/PressReleasePage.aspx?PRID=2015237",
+          "publisher": "Press Information Bureau (Election Commission)",
+          "title": "Announcement of schedule for General Elections to Lok Sabha and Legislative Assemblies of Andhra Pradesh, Arunachal Pradesh, Odisha & Sikkim, 2024 in maps & tables",
+          "published": "2024-03-16",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://newsonair.gov.in/election-commission-to-announce-schedule-for-lok-sabha-polls",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "Lok Sabha polls to be held in 7 phases from April 19",
+          "published": "2024-03-16",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The main press-note text was not opened; the phase dates are from the PIB schedule tables and the voter figures are from AIR's report of the CEC's announcement."
+    },
+    {
+      "id": "elections-2019-2024-transfers-mar18",
+      "kind": "event",
+      "date": "2024-03-18",
+      "date_precision": "day",
+      "title": "ECI removes home secretaries of six states and West Bengal DGP",
+      "summary": "The Commission ordered the removal of home secretaries in Gujarat, Uttar Pradesh, Bihar, Jharkhand, Himachal Pradesh and Uttarakhand who also held posts in chief ministers' offices. It also removed the West Bengal DGP, general administration secretaries in Mizoram and Himachal Pradesh, and the BMC commissioner after Maharashtra failed to transfer some officers.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [
+        "Gujarat",
+        "Uttar Pradesh",
+        "Bihar",
+        "Jharkhand",
+        "Himachal Pradesh",
+        "Uttarakhand",
+        "West Bengal",
+        "Mizoram",
+        "Maharashtra"
+      ],
+      "topics": [
+        "mcc",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/lok-sabha-polls-election-commission-orders-removal-of-home-secretaries-in-six-states-west-bengal-dgp-601837",
+          "publisher": "The Tribune",
+          "title": "Lok Sabha polls: Election Commission orders removal of Home Secretaries in 6 states, West Bengal DGP",
+          "published": "2024-03-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-adr-v-eci-vvpat-judgment",
+      "kind": "case",
+      "date": "2024-04-26",
+      "date_precision": "day",
+      "title": "Supreme Court rejects return to paper ballots and full VVPAT count",
+      "summary": "In ADR v ECI, Justices Sanjiv Khanna and Dipankar Datta turned down pleas to return to paper ballots, count all VVPAT slips or give voters the slip. They issued two directions. First, symbol loading units must be sealed and stored for 45 days after results. Second, candidates placed second or third can ask, within seven days of the result and at their own cost, for engineers to check the burnt memory of 5% of EVMs per assembly segment; the cost is refunded if tampering is found.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "evm-vvpat",
+        "courts",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://api.sci.gov.in/supremecourt/2023/10857/10857_2023_2_1501_52646_Judgement_26-Apr-2024.pdf",
+          "publisher": "Supreme Court of India",
+          "title": "Association for Democratic Reforms v Election Commission of India, WP(C) 434 of 2023, 2024 INSC 341",
+          "published": "2024-04-26",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The judgment records that the petitioners did not allege motive or malice on the Commission's part. The directions applied to symbol loading done on or after 1 May 2024."
+    },
+    {
+      "id": "elections-2019-2024-banswara-complaints",
+      "kind": "statement",
+      "date": "2024-04-21",
+      "date_precision": "day",
+      "title": "Opposition complains Modi's Banswara speech was divisive",
+      "summary": "Congress, CPI, CPI(ML) and civil society groups complained to the Commission that Prime Minister Modi's 21 April 2024 speech in Banswara, Rajasthan, was divisive and derogatory. The speech spoke of Congress redistributing wealth to 'infiltrators' and of 'mangalsutras'.",
+      "status": "claim",
+      "attributed_to": "Indian National Congress, CPI, CPI(ML), civil society groups",
+      "people": [],
+      "states": [
+        "Rajasthan"
+      ],
+      "topics": [
+        "mcc",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.business-standard.com/elections/lok-sabha-election/ec-notice-to-bjp-congress-chiefs-over-complaints-against-modi-rahul-124042501288_1.html",
+          "publisher": "Business Standard",
+          "title": "EC sends notice to BJP and Congress over hate speech complaints",
+          "published": "2024-04-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/elections/india/ec-directs-bjp-to-desist-from-campaigning-on-religious-communal-lines-3033803",
+          "publisher": "Deccan Herald",
+          "title": "No campaigning on religious lines, don't politicise defence forces: EC pulls up both BJP, Congress",
+          "published": "2024-05-22",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The 21 April date is the date of the speech; complaints were filed in the following days."
+    },
+    {
+      "id": "elections-2019-2024-ec-notice-nadda-kharge",
+      "kind": "event",
+      "date": "2024-04-25",
+      "date_precision": "day",
+      "title": "ECI sends notices to party presidents, not to Modi or Rahul Gandhi",
+      "summary": "Invoking Section 77 of the Representation of the People Act, the Commission sent notices to BJP president J.P. Nadda over complaints about Modi's speech and to Congress president Mallikarjun Kharge over BJP complaints about his and Rahul Gandhi's speeches. It asked for replies by 29 April. Officials said this was the first time the Commission had taken cognisance of an MCC complaint against a sitting PM. The letters did not name the speakers; the complaints were attached.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "mcc",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.business-standard.com/elections/lok-sabha-election/ec-notice-to-bjp-congress-chiefs-over-complaints-against-modi-rahul-124042501288_1.html",
+          "publisher": "Business Standard",
+          "title": "EC sends notice to BJP and Congress over hate speech complaints",
+          "published": "2024-04-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-banswara-complaints",
+      "notes": "Congress's Jairam Ramesh said the Commission was being 'super, super cautious' with the PM because the notice went to the BJP president rather than to Modi."
+    },
+    {
+      "id": "elections-2019-2024-turnout-phase12-release",
+      "kind": "figure",
+      "date": "2024-04-30",
+      "date_precision": "day",
+      "title": "ECI releases final turnout for phases 1 and 2, 11 days after phase 1",
+      "summary": "The Commission published turnout of 66.14% for phase 1 (102 PCs, polled 19 April) and 66.71% for phase 2 (88 PCs, polled 26 April), with state- and PC-wise percentages. It said Form 17C data given to candidates' agents would prevail. The release gave percentages, not absolute numbers of votes.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "turnout-data",
+        "forms",
+        "elections-2024",
+        "numbers"
+      ],
+      "figures": [
+        {
+          "label": "phase 1 turnout at polling stations",
+          "value": 66.14,
+          "unit": "percent",
+          "as_of": "2024-04-30"
+        },
+        {
+          "label": "phase 2 turnout at polling stations",
+          "value": 66.71,
+          "unit": "percent",
+          "as_of": "2024-04-30"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.pib.gov.in/PressReleaseIframePage.aspx?PRID=2019225",
+          "publisher": "Press Information Bureau (Election Commission)",
+          "title": "Voter turnout of 66.14% in phase 1 and 66.71% in phase 2 recorded in General Elections 2024",
+          "published": "2024-04-30",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "ADR later told the Supreme Court this was about 6 percentage points above the poll-day figures; the Commission's counsel put the variance at 1-2%."
+    },
+    {
+      "id": "elections-2019-2024-kharge-turnout-letter",
+      "kind": "statement",
+      "date": "2024-05-07",
+      "date_precision": "day",
+      "title": "Kharge writes to INDIA leaders questioning delayed turnout data",
+      "summary": "Congress president Mallikarjun Kharge wrote to INDIA bloc leaders that the inordinate delay in releasing final turnout for the first two phases raised serious doubts about the data. He said the Commission should publish polling-station-wise turnout, and asked allies to protect the Commission's independence.",
+      "status": "claim",
+      "attributed_to": "Mallikarjun Kharge, Congress president",
+      "people": [],
+      "states": [],
+      "topics": [
+        "turnout-data",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/congress-president-mallikarjun-kharge-expresses-concern-over-alleged-doctoring-of-voter-turnout-results",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "Congress President Mallikarjun Kharge expresses concern over alleged doctoring of voter turnout results",
+          "published": "2024-05-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-ec-reply-kharge",
+      "kind": "statement",
+      "date": "2024-05-10",
+      "date_precision": "day",
+      "title": "ECI calls Kharge's turnout charges unwarranted and a biased narrative",
+      "summary": "In a five-page reply with annexures, the Commission called Kharge's allegations unwarranted, without facts and a deliberate attempt to spread confusion. It said his public letter mid-election could deter voters. It pointed to earlier Congress statements questioning EVMs as a trend.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "turnout-data",
+        "statements",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/elections%2Findia%2Flok-sabha-elections-2024-ec-rejects-charges-by-kharge-over-poll-turnout-data-mismanagement-calls-it-biased-3017160",
+          "publisher": "Deccan Herald",
+          "title": "'Attempt to push biased narrative': EC counters Mallikarjun Kharge's charges",
+          "published": "2024-05-10",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-kharge-turnout-letter",
+      "notes": "Congress called the Commission's approach 'regrettable' (Tribune, per search listing; not opened)."
+    },
+    {
+      "id": "elections-2019-2024-adr-17c-notice",
+      "kind": "case",
+      "date": "2024-05-17",
+      "date_precision": "day",
+      "title": "Supreme Court seeks ECI reply on ADR plea to publish Form 17C in 48 hours",
+      "summary": "On an application filed by ADR on 9 May 2024 in its pending 2019 petition, a bench of CJI D.Y. Chandrachud and Justices J.B. Pardiwala and Sanjiv Khanna gave the Commission a week to reply. ADR sought publication of polling-station-wise absolute votes from Form 17C Part I within 48 hours of each phase, and scanned Form 17C Part II after counting. Asked why it would not disclose the data, the Commission's counsel said compiling it took time.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "turnout-data",
+        "forms",
+        "courts",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/india%2Fsc-notice-to-ec-over-adr-plea-on-immediate-release-of-voter-turnout-data-3027451",
+          "publisher": "Deccan Herald",
+          "title": "SC notice to EC over ADR plea on immediate release of voter turnout data",
+          "published": "2024-05-17",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/journal/what-is-the-form-17c-petition-about/",
+          "publisher": "Supreme Court Observer",
+          "title": "What is the Form 17C petition about?",
+          "published": "2024-06-13",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "A 2019 writ petition by TMC MP Mahua Moitra on 2019 turnout discrepancies was heard with it."
+    },
+    {
+      "id": "elections-2019-2024-eci-17c-affidavit",
+      "kind": "case",
+      "date": "2024-05-22",
+      "date_precision": "day",
+      "title": "ECI tells Supreme Court no legal mandate to publish Form 17C",
+      "summary": "In an affidavit, the Commission said the law requires Form 17C to be given only to candidates' agents under Rule 49S, so there is no legal mandate to publish it. It said posting it online could allow images to be morphed and cause public mistrust, and that changing procedure mid-election would breach Article 329(b). It called the claim of a 5-6% rise in turnout misleading and unsubstantiated.",
+      "status": "response",
+      "attributed_to": "Election Commission of India (affidavit in Supreme Court)",
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "turnout-data",
+        "forms",
+        "courts",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/elections%2Fuploading-of-form-17c-on-website-to-lead-to-mischief-discomfort-and-mistrust-ec-tells-sc-3034551",
+          "publisher": "Deccan Herald",
+          "title": "Uploading of Form 17C on website to lead to mischief, discomfort and mistrust, EC tells SC",
+          "published": "2024-05-22",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-adr-17c-notice",
+      "notes": "The affidavit itself was not opened; other outlets describe it as 225 pages."
+    },
+    {
+      "id": "elections-2019-2024-ec-directions-may22",
+      "kind": "event",
+      "date": "2024-05-22",
+      "date_precision": "day",
+      "title": "ECI directs BJP to stop communal campaigning and Congress on Constitution claims",
+      "summary": "Twenty-seven days after its notices, the Commission rejected Nadda's defence as not tenable and directed the BJP and its star campaigners to refrain from campaigning along religious or communal lines. It directed Congress not to politicise the defence forces or suggest the Constitution could be abolished or sold. It asked both presidents to issue formal cautions to star campaigners. No action was taken against any individual speaker.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "mcc",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/elections/india/ec-directs-bjp-to-desist-from-campaigning-on-religious-communal-lines-3033803",
+          "publisher": "Deccan Herald",
+          "title": "No campaigning on religious lines, don't politicise defence forces: EC pulls up both BJP, Congress",
+          "published": "2024-05-22",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.newsonair.gov.in/eci-directs-bjp-congress-party-presidents-to-caution-party-star-campaigners-from-making-statements-violating-mcc/",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "ECI directs BJP & Congress party presidents to caution party star campaigners",
+          "published": "2024-05-22",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-banswara-complaints",
+      "notes": "Nadda replied on 13 May after two extensions and Kharge on 6 May after one. The directions came after five of seven phases had polled."
+    },
+    {
+      "id": "elections-2019-2024-sc-17c-may24",
+      "kind": "case",
+      "date": "2024-05-24",
+      "date_precision": "day",
+      "title": "Supreme Court vacation bench declines interim relief on Form 17C",
+      "summary": "A vacation bench of Justices Dipankar Datta and Satish Chandra Sharma said interim relief would amount to final relief and that a hands-off approach was needed mid-election. It relisted ADR's application with the main petitions after the vacation. The Commission's counsel called the plea based on unfounded suspicions and said such petitions reduce turnout.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "turnout-data",
+        "forms",
+        "courts",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.livelaw.in/top-stories/supreme-court-refuses-to-direct-eci-to-disclose-form-17c-records-of-votes-polled-adjourns-plea-258740",
+          "publisher": "LiveLaw",
+          "title": "'Hands-Off Approach Amidst Elections': Supreme Court Refuses To Direct ECI To Disclose Form 17C Records Of Votes Polled, Adjourns Plea",
+          "published": "2024-05-24",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/journal/what-is-the-form-17c-petition-about/",
+          "publisher": "Supreme Court Observer",
+          "title": "What is the Form 17C petition about?",
+          "published": "2024-06-13",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The court said it expressed no opinion on the merits. Later outcome of the main petitions not found."
+    },
+    {
+      "id": "elections-2019-2024-eci-pn-absolute-numbers",
+      "kind": "statement",
+      "date": "2024-05-25",
+      "date_precision": "day",
+      "title": "ECI publishes absolute votes per constituency, rejects delay charge",
+      "summary": "The day after the hearing, the Commission's press note ECI/PN/102/2024 said it felt strengthened by the Supreme Court's observations. It widened its turnout releases to include absolute numbers of voters per constituency for the first five phases. It said Form 17C totals held by all candidates cannot be altered, denied any delay because the Voter Turnout App was live throughout, and spoke of a pattern of false narratives.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "turnout-data",
+        "forms",
+        "statements",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2FYMdYo4qvd6YLkLk2XBNde3yLdalC2imUPRS60zr1MewdOFtn933icz0MOeiesxvsQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note ECI/PN/102/2024: EC releases absolute number of voters for all completed phases",
+          "published": "2024-05-25",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "Any alteration in the number of votes polled is not possible"
+        }
+      ],
+      "response_to": "elections-2019-2024-kharge-turnout-letter",
+      "notes": "The note says the Commission had issued 13 turnout press notes for five phases. It did not publish polling-station-wise Form 17C."
+    },
+    {
+      "id": "elections-2019-2024-ramesh-dm-claim",
+      "kind": "statement",
+      "date": "2024-06-01",
+      "date_precision": "day",
+      "title": "Jairam Ramesh claims Amit Shah phoned 150 district magistrates before counting",
+      "summary": "Congress general secretary Jairam Ramesh posted on X that the Home Minister had called up DMs and collectors, 150 of them so far, and called it blatant intimidation ahead of the 4 June count.",
+      "status": "claim",
+      "attributed_to": "Jairam Ramesh, Congress general secretary",
+      "people": [],
+      "states": [],
+      "topics": [
+        "elections-2024",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/election-commission-asks-congress-to-share-information-on-amit-shah-calling-up-150-dms-ahead-of-counting-627204",
+          "publisher": "The Tribune",
+          "title": "Election Commission asks Congress to share information on Amit Shah 'calling up' 150 DMs ahead of counting",
+          "published": "2024-06-03",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-ec-ramesh-response",
+      "kind": "statement",
+      "date": "2024-06-02",
+      "date_precision": "day",
+      "title": "ECI says no DM reported pressure and refuses Ramesh more time",
+      "summary": "The Commission said DMs are on deemed deputation to it during the MCC and none had reported undue influence. It asked Ramesh for the names and basis of his claim by 7 pm on 2 June. On 3 June it outright rejected his request for a week and gave him until 7 pm that day, saying otherwise it would presume he had nothing substantive to say.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "elections-2024",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://newsonair.gov.in/ec-seeks-details-from-jairam-ramesh-on-alleged-amit-shahs-calls-to-150-dms",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "EC seeks details from Jairam Ramesh on alleged Amit Shah's calls to 150 DMs",
+          "published": "2024-06-02",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/ec-refuses-extra-time-to-jairam-ramesh-to-back-claims-on-attempts-to-influence-dms-ahead-of-vote-count-627467",
+          "publisher": "The Tribune",
+          "title": "EC refuses extra time to Jairam Ramesh to back claims on attempts to influence DMs ahead of vote count",
+          "published": "2024-06-03",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-ramesh-dm-claim",
+      "notes": "Whether Ramesh replied, and any further Commission action, were not found in sources opened."
+    },
+    {
+      "id": "elections-2019-2024-cec-june3-presser",
+      "kind": "statement",
+      "date": "2024-06-03",
+      "date_precision": "day",
+      "title": "CEC Rajiv Kumar reports record 642 million voters and 39 repolls",
+      "summary": "At a press conference the day before counting, CEC Rajiv Kumar said 642 million people had voted, including 312 million women. He said there were 39 repolls against 540 in 2019, and record seizures of almost Rs 10,000 crore. He said impediments including MCC violations had been tackled.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "elections-2024",
+        "numbers",
+        "statements"
+      ],
+      "figures": [
+        {
+          "label": "voters who cast ballots, as stated by CEC",
+          "value": 642000000,
+          "unit": "voters",
+          "as_of": "2024-06-03"
+        },
+        {
+          "label": "repolls in 2024 (vs 540 in 2019)",
+          "value": 39,
+          "unit": "repolls",
+          "as_of": "2024-06-03"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ddnews.gov.in/en/indian-elections-are-indeed-miracle-created-world-record-of-642-million-voters-cec-rajiv-kumar/",
+          "publisher": "DD News",
+          "title": "Indian elections are indeed a miracle, created world record of 642 million voters: CEC Rajiv Kumar",
+          "published": "2024-06-03",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-final-turnout-2024",
+      "kind": "figure",
+      "date": "2024-06-06",
+      "date_precision": "day",
+      "title": "ECI puts 2024 turnout at polling stations at 65.79%",
+      "summary": "Press note ECI/PN/116/2024 recorded 63.88% turnout in phase 7 and 65.79% overall at polling stations. It said figures including postal ballots would follow in the statistical reports.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "turnout-data",
+        "numbers",
+        "elections-2024"
+      ],
+      "figures": [
+        {
+          "label": "overall turnout at polling stations, GE 2024",
+          "value": 65.79,
+          "unit": "percent",
+          "as_of": "2024-06-06"
+        },
+        {
+          "label": "phase 7 turnout",
+          "value": 63.88,
+          "unit": "percent",
+          "as_of": "2024-06-06"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://elections24.eci.gov.in/docs/BnS4hhbvK9.pdf",
+          "publisher": "Election Commission of India",
+          "title": "Press Note ECI/PN/116/2024: 65.79% voter turnout recorded at polling stations in GE 2024",
+          "published": "2024-06-06",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-haryana-congress-rejects-result",
+      "kind": "statement",
+      "date": "2024-10-08",
+      "date_precision": "day",
+      "title": "Congress says Haryana result 'not acceptable', cites counting and EVM issues",
+      "summary": "On counting day, Jairam Ramesh said the party could not accept the Haryana result and cited serious issues with counting and EVMs in around a dozen seats. Pawan Khera said some EVMs showed 99% battery after many rounds and went against Congress, while those at 60-70% favoured it. Kharge called the result unexpected.",
+      "status": "claim",
+      "attributed_to": "Jairam Ramesh and Pawan Khera, Indian National Congress",
+      "people": [],
+      "states": [
+        "Haryana"
+      ],
+      "topics": [
+        "evm-vvpat",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/elections%2Fharyana%2Fharyana-assembly-elections-2024-result-not-acceptable-raises-serious-questions-about-integrity-of-democratic-process-congress-3224301",
+          "publisher": "Deccan Herald",
+          "title": "Result not acceptable, raises serious questions about integrity of democratic process: Congress",
+          "published": "2024-10-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-ec-rejects-ramesh-delay",
+      "kind": "statement",
+      "date": "2024-10-08",
+      "date_precision": "day",
+      "title": "ECI rejects Ramesh claim of slow Haryana result updates",
+      "summary": "The Commission called Ramesh's claim of inordinate delay in updating Haryana results ill-founded. It said data for all 25 rounds was updated every five minutes and nothing on record supported a slowdown.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [
+        "Haryana"
+      ],
+      "topics": [
+        "elections-2024",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://newsonair.gov.in/election-commission-rejects-jairam-rameshs-claims-of-delay-in-updating-haryana-assembly-election-results/",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "Election Commission rejects Jairam Ramesh's claims of delay in updating Haryana assembly election results",
+          "published": "2024-10-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-haryana-congress-rejects-result",
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-haryana-congress-memorandum",
+      "kind": "statement",
+      "date": "2024-10-09",
+      "date_precision": "day",
+      "title": "Congress files memorandum on EVM battery readings in Haryana seats",
+      "summary": "A Congress delegation led by K.C. Venugopal gave the Commission a 31-page memorandum on EVMs said to show 99% battery at counting while others showed 60-70%. It covered seven seats including Karnal, Panipat City, Dabwali and Narnaul, and the party said complaints from 13 more would follow.",
+      "status": "claim",
+      "attributed_to": "Indian National Congress",
+      "people": [],
+      "states": [
+        "Haryana"
+      ],
+      "topics": [
+        "evm-vvpat",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/india%2Fharyana-assembly-polls-2024-after-shock-defeat-congress-seeks-inquiry-into-complaints-of-discrepancies-in-evms-3226076",
+          "publisher": "Deccan Herald",
+          "title": "Congress knocks EC door on EVM battery capacity, poll body slams 'unacceptable' remark by leaders",
+          "published": "2024-10-09",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-ec-letter-kharge-oct9",
+      "kind": "statement",
+      "date": "2024-10-09",
+      "date_precision": "day",
+      "title": "ECI calls Congress leaders' rejection of Haryana verdict 'unprecedented'",
+      "summary": "Before meeting the delegation, the Commission wrote to Kharge that statements by Ramesh and Khera calling the result unacceptable were unprecedented and moved towards an undemocratic rejection of the people's will. It said the meeting time was given on the basis that Kharge's view, that the result was 'unexpected', was the party's official position.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [
+        "Haryana"
+      ],
+      "topics": [
+        "statements",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/india%2Fharyana-assembly-polls-2024-after-shock-defeat-congress-seeks-inquiry-into-complaints-of-discrepancies-in-evms-3226076",
+          "publisher": "Deccan Herald",
+          "title": "Congress knocks EC door on EVM battery capacity, poll body slams 'unacceptable' remark by leaders",
+          "published": "2024-10-09",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-haryana-congress-rejects-result",
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-cec-oct15-evm",
+      "kind": "statement",
+      "date": "2024-10-15",
+      "date_precision": "day",
+      "title": "CEC says 20 Haryana battery complaints received, EVMs foolproof",
+      "summary": "CEC Rajiv Kumar said the Commission had received 20 complaints from Congress candidates about EVM battery levels. He ruled out manipulation, saying machines were checked at each stage in the presence of candidates' agents, and said a detailed reply would follow.",
+      "status": "response",
+      "attributed_to": "Rajiv Kumar, Chief Election Commissioner",
+      "people": [
+        "Rajiv Kumar"
+      ],
+      "states": [
+        "Haryana"
+      ],
+      "topics": [
+        "evm-vvpat",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://newsonair.gov.in/ec-dismisses-allegations-by-congress-of-tampered-evms-in-haryana-assembly-elections/",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "EC dismisses allegations by Congress of tampered EVMs in Haryana assembly elections",
+          "published": "2024-10-15",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-haryana-congress-memorandum",
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-ec-reply-haryana-oct29",
+      "kind": "statement",
+      "date": "2024-10-29",
+      "date_precision": "day",
+      "title": "ECI rejects Congress's Haryana complaints with 1,642 pages of replies",
+      "summary": "In an eight-page letter to Kharge, backed by 1,642 pages of replies from the Haryana CEO and returning officers, the Commission categorically rejected the Congress complaints. It said battery status has no bearing on vote counting, that Congress agents were present at every stage, and that 19 petitions did not say when a 99% reading was seen. It urged the party to avoid frivolous doubts that could cause unrest.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [
+        "Rajiv Kumar",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [
+        "Haryana"
+      ],
+      "topics": [
+        "evm-vvpat",
+        "statements",
+        "elections-2024"
+      ],
+      "figures": [
+        {
+          "label": "pages of CEO/RO replies annexed to ECI response",
+          "value": 1642,
+          "unit": "pages",
+          "as_of": "2024-10-29"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/elections%2Findia%2Feci-rejects-congress-allegations-on-haryana-assembly-elections-cautions-against-making-false-claims-on-evms-bjp-elections-3253749",
+          "publisher": "Deccan Herald",
+          "title": "ECI rejects Congress' allegations on Haryana Assembly elections, cautions against making false claims on EVMs",
+          "published": "2024-10-29",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://newsonair.gov.in/election-commission-dismisses-congress-allegations-of-irregularities-in-haryana-assembly-polls/",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "Election Commission dismisses Congress allegations of irregularities in Haryana assembly polls",
+          "published": "2024-10-29",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-haryana-congress-memorandum",
+      "notes": "Congress's reply calling the tone condescending and saying legal action was its only option was seen in a search listing (Swarajya) but not opened."
+    },
+    {
+      "id": "elections-2019-2024-ph-hc-pracha-order",
+      "kind": "case",
+      "date": "2024-12-09",
+      "date_precision": "day",
+      "title": "Punjab and Haryana High Court orders ECI to give Haryana poll records to advocate",
+      "summary": "The High Court directed the Commission to give advocate Mehmood Pracha videography, CCTV footage and copies of Form 17C Parts I and II for a Haryana polling station within six weeks. It rejected the Commission's argument that a non-candidate was not entitled to them, noting the rules allow others to obtain copies for a fee.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Mehmood Pracha"
+      ],
+      "states": [
+        "Haryana"
+      ],
+      "topics": [
+        "courts",
+        "forms",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.medianama.com/2024/12/223-centre-amends-election-rule-to-restrict-access-to-electronic-and-cctv-records/",
+          "publisher": "MediaNama",
+          "title": "Election Commission Restricts Access to Polling CCTV Footage",
+          "published": "2024-12-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://scroll.in/article/1083411/election-conduct-rules-amended-at-lightning-speed-despite-objection-by-law-officers-documents-show",
+          "publisher": "Scroll",
+          "title": "Election conduct rules amended at lightning speed, despite objection by law officers, documents show",
+          "published": "2025-06-11",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The High Court order itself was not opened."
+    },
+    {
+      "id": "elections-2019-2024-rule93-amendment",
+      "kind": "rule",
+      "date": "2024-12-20",
+      "date_precision": "day",
+      "title": "Rule 93 amended to limit public inspection to papers 'specified in these rules'",
+      "summary": "On the Commission's recommendation, the Law Ministry notified the Conduct of Elections (Second Amendment) Rules, 2024 (S.O. 5517(E)). It inserted 'as specified in these rules' after 'papers' in Rule 93(2)(a), which narrowed public inspection and in effect excluded CCTV, webcasting and video records. Scroll reports the Commission proposed the change on 17 December, eight days after the High Court order, and the Gazette copy is digitally signed at 10:23 pm on 20 December.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "rules",
+        "forms",
+        "it-systems",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://egazette.gov.in/WriteReadData/2024/259568.pdf",
+          "publisher": "Gazette of India (Ministry of Law and Justice)",
+          "title": "Notification S.O. 5517(E): Conduct of Elections (Second Amendment) Rules, 2024",
+          "published": "2024-12-20",
+          "tier": 1,
+          "archive_url": null,
+          "quote": "after the word “papers”, the words “as specified in these rules” shall be inserted"
+        },
+        {
+          "url": "https://scroll.in/article/1083411/election-conduct-rules-amended-at-lightning-speed-despite-objection-by-law-officers-documents-show",
+          "publisher": "Scroll",
+          "title": "Election conduct rules amended at lightning speed, despite objection by law officers, documents show",
+          "published": "2025-06-11",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Scroll, citing documents it obtained, reports that Law Ministry officers objected to the Commission's original wording (inserting 'statutory') and that the Commission cited the workload on returning officers. A Commission official told Scroll it had long planned to regulate access (via MediaNama). The topic slug 'rules' is used here although it is not in the brief's list; it is kept for the rules area to reconcile."
+    },
+    {
+      "id": "elections-2019-2024-ramesh-challenge-rule93",
+      "kind": "case",
+      "date": "2025-01-15",
+      "date_precision": "day",
+      "title": "Supreme Court seeks replies on Congress challenge to Rule 93 change",
+      "summary": "Jairam Ramesh challenged the amendment, saying the Commission had rushed to cut what it must share instead of complying with the High Court. A bench led by CJI Sanjiv Khanna issued notice to the Centre and the Commission on 15 January 2025, and on 17 April 2025 gave the Commission three more weeks to reply.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Jairam Ramesh"
+      ],
+      "states": [],
+      "topics": [
+        "courts",
+        "rules",
+        "forms"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/election-rules-tweaking-sc-gives-3-more-weeks-to-ec-to-respond-to-jairam-rameshs-pil/amp",
+          "publisher": "The Tribune",
+          "title": "Election rules tweaking: SC gives 3 more weeks to EC to respond to Jairam Ramesh's PIL",
+          "published": "2025-04-17",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Final outcome not found."
+    },
+    {
+      "id": "elections-2019-2024-cctv-45-day-destruction",
+      "kind": "rule",
+      "date": "2025-05-30",
+      "date_precision": "day",
+      "title": "ECI tells state CEOs to destroy poll CCTV and webcast footage after 45 days",
+      "summary": "In a letter to state chief electoral officers, the Commission said CCTV, webcasting and photographic records of the election process will be kept for 45 days and may be destroyed if no election petition is filed. It cited misuse of such content by non-contestants to spread misinformation, and said the law does not require the recordings, which serve as an internal management tool.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "rules",
+        "it-systems"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/malicious-narratives-being-spread-using-our-video-footage-ec",
+          "publisher": "The Tribune",
+          "title": "Malicious narratives being spread using our video footage: EC",
+          "published": "2025-06-20",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "misuse of this content by non-contestants for spreading misinformation"
+        }
+      ],
+      "response_to": null,
+      "notes": "Reported on 20 June 2025; the letter itself was not opened."
+    },
+    {
+      "id": "elections-2019-2024-haryana-h-files",
+      "kind": "statement",
+      "date": "2025-11-05",
+      "date_precision": "day",
+      "title": "Rahul Gandhi alleges 25 lakh fake entries in Haryana 2024 rolls",
+      "summary": "At a press conference, Leader of Opposition Rahul Gandhi alleged that 25.41 lakh entries in Haryana's rolls, about one in eight, were fake: duplicates, invalid addresses, bulk registrations and voters also registered in UP. He said one woman's photo appeared 22 times in Rai constituency, and alleged the Commission was helping the BJP. He said Congress lost eight seats by a combined 22,779 votes.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition in Lok Sabha",
+      "people": [],
+      "states": [
+        "Haryana"
+      ],
+      "topics": [
+        "rolls",
+        "elections-2024"
+      ],
+      "figures": [
+        {
+          "label": "entries alleged fake by Congress",
+          "value": 2541000,
+          "unit": "electoral roll entries",
+          "as_of": "2025-11-05"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/india%2Fbrazilian-model-voted-22-times-to-ec-rahul-gandhi-drops-h-bomb-on-haryana-3787432",
+          "publisher": "Deccan Herald",
+          "title": "'Brazilian model's photo used for 22 voters in Haryana: Rahul Gandhi drops new 'hydrogen bomb'",
+          "published": "2025-11-05",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Deccan Herald's text says 'Tuesday' but the report is dated 5 November 2025, a Wednesday; The Tribune dates the Commission's response to Wednesday. The date used is 5 November 2025."
+    },
+    {
+      "id": "elections-2019-2024-haryana-h-files-response",
+      "kind": "statement",
+      "date": "2025-11-05",
+      "date_precision": "day",
+      "title": "ECI calls Haryana charge baseless; CEO says no roll appeals were filed",
+      "summary": "Commission sources called the allegations baseless and asked why Congress booth-level agents had not objected during roll revision. Haryana CEO A. Sreenivas said 4.16 lakh claims and objections were received after the 2 August 2024 draft roll, and that no appeals followed the 27 August final roll. He said 1,031 candidates had 86,790 polling agents, only five complaints came during counting, and 23 election petitions were filed.",
+      "status": "response",
+      "attributed_to": "Election Commission of India (sources); A. Sreenivas, Chief Electoral Officer, Haryana",
+      "people": [
+        "A. Sreenivas"
+      ],
+      "states": [
+        "Haryana"
+      ],
+      "topics": [
+        "rolls",
+        "elections-2024"
+      ],
+      "figures": [
+        {
+          "label": "claims and objections received after Haryana draft roll",
+          "value": 416000,
+          "unit": "claims/objections",
+          "as_of": "2024-08-27"
+        },
+        {
+          "label": "election petitions filed after Haryana 2024 results",
+          "value": 23,
+          "unit": "petitions",
+          "as_of": "2025-11-05"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/baseless-why-no-objections-filed-ec-on-rahul-allegations",
+          "publisher": "The Tribune",
+          "title": "Baseless, why no objections filed: EC on Rahul allegations",
+          "published": "2025-11-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/haryana/no-appeal-filed-after-final-electoral-rolls-says-ceo",
+          "publisher": "The Tribune",
+          "title": "No appeal was filed after final electoral rolls: Haryana CEO",
+          "published": "2025-11-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-haryana-h-files",
+      "notes": "The CEO also reposted his 9 August 2025 request that Gandhi submit a declaration under oath under Rule 20(3)(b) of the Registration of Electors Rules, 1960."
+    },
+    {
+      "id": "elections-2019-2024-mh-turnout-poll-day",
+      "kind": "figure",
+      "date": "2024-11-20",
+      "date_precision": "day",
+      "title": "Maharashtra turnout 58.22% at 5 pm, about 65.11% by next day",
+      "summary": "On polling day for the 288-seat Maharashtra assembly, reported turnout was 58.22% at 5 pm. The next day, All India Radio reported approximately 65.11%, the highest in 30 years. The rise between the 5 pm figure and the final figure later became part of the opposition's dispute.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "turnout-data",
+        "elections-2024",
+        "numbers"
+      ],
+      "figures": [
+        {
+          "label": "Maharashtra turnout till 5 pm",
+          "value": 58.22,
+          "unit": "percent",
+          "as_of": "2024-11-20"
+        },
+        {
+          "label": "Maharashtra approximate turnout reported next day",
+          "value": 65.11,
+          "unit": "percent",
+          "as_of": "2024-11-21"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://newsonair.gov.in/maharashtra-records-average-voting-turnout-of-58-22-till-5-pm/",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "Maharashtra records average voting turnout of 58.22% till 5 pm",
+          "published": "2024-11-20",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://newsonair.gov.in/maharashtra-assembly-polls-65-11-voting-recorded-highest-in-30-years/",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "Maharashtra assembly polls: 65.11% voting recorded, highest in 30 years",
+          "published": "2024-11-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The final ECI turnout (widely cited as about 66%) was not opened from a primary source."
+    },
+    {
+      "id": "elections-2019-2024-mh-portal-mismatch-response",
+      "kind": "statement",
+      "date": "2024-11-26",
+      "date_precision": "day",
+      "title": "ECI calls report of 5 lakh vote mismatch in Maharashtra misleading",
+      "summary": "Through a letter from the Maharashtra CEO to an online portal's editor, the Commission rejected a report of a mismatch of over 5 lakh votes between votes polled and counted. It said the report left out postal ballots, and called it misleading, inaccurate and hasty.",
+      "status": "response",
+      "attributed_to": "Election Commission of India / Chief Electoral Officer, Maharashtra",
+      "people": [],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "turnout-data",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://newsonair.gov.in/eci-dismisses-online-complaint-of-mismatch-of-votes-in-maharashtra-assembly-elections/",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "ECI dismisses online complaint of mismatch of votes in Maharashtra assembly elections",
+          "published": "2024-11-26",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The portal is not named in the source opened, and its original report was not opened."
+    },
+    {
+      "id": "elections-2019-2024-mh-ceo-fir-evm-claim",
+      "kind": "event",
+      "date": "2024-11-30",
+      "date_precision": "day",
+      "title": "Maharashtra CEO complaint leads to FIR over EVM hacking video",
+      "summary": "On the Maharashtra CEO's complaint, Mumbai Cyber Police registered an FIR on 30 November 2024 against an individual who claimed in a video that EVMs had been hacked in the assembly election. The CEO restated that EVMs cannot be connected to any network.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "evm-vvpat",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://newsonair.gov.in/maharashtra-chief-electoral-officer-files-complaint-over-false-evm-tampering-claims/",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "Maharashtra Chief Electoral Officer files complaint over false EVM tampering claims",
+          "published": "2024-12-01",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-mh-rahul-match-fixing",
+      "kind": "statement",
+      "date": "2025-06",
+      "date_precision": "month",
+      "title": "Rahul Gandhi alleges 'match-fixing' in Maharashtra assembly election",
+      "summary": "In a newspaper article in early June 2025, Rahul Gandhi alleged 'match-fixing' in the November 2024 Maharashtra election and asked the Commission to answer his questions rather than issue 'unsigned, evasive' notes. He then asked for machine-readable electoral rolls for Maharashtra and Haryana from 2009 to 2024.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition in Lok Sabha",
+      "people": [],
+      "states": [
+        "Maharashtra",
+        "Haryana"
+      ],
+      "topics": [
+        "rolls",
+        "turnout-data",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/india%2Fcan-ec-announce-date-by-which-electoral-roll-data-of-haryana-maharashtra-will-be-handed-over-rahul-gandhi-3577501",
+          "publisher": "Deccan Herald",
+          "title": "Can EC announce date by which electoral-roll data of Haryana, Maharashtra will be handed over: Rahul Gandhi",
+          "published": "2025-06-09",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The article itself was not opened; its exact date and outlet should be confirmed."
+    },
+    {
+      "id": "elections-2019-2024-mh-ceo-rolls-statement",
+      "kind": "statement",
+      "date": "2025-06",
+      "date_precision": "month",
+      "title": "Maharashtra CEO says rolls were shared with Congress at every revision",
+      "summary": "The Maharashtra CEO said rolls were revised and shared free with recognised parties, including Congress, in 2009, 2014, 2019 and 2024. It said the full 2024 assembly roll was online and older rolls could be obtained from DEOs for a fee under Rule 33. Commission sources said the Commission would respond only if Gandhi wrote to it officially.",
+      "status": "response",
+      "attributed_to": "Chief Electoral Officer, Maharashtra; Election Commission of India (sources)",
+      "people": [],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "rolls",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/amp/story/india%2Fcan-ec-announce-date-by-which-electoral-roll-data-of-haryana-maharashtra-will-be-handed-over-rahul-gandhi-3577501",
+          "publisher": "Deccan Herald",
+          "title": "Can EC announce date by which electoral-roll data of Haryana, Maharashtra will be handed over: Rahul Gandhi",
+          "published": "2025-06-09",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-mh-rahul-match-fixing",
+      "notes": "Reports cited by Deccan Herald said the Commission had agreed to share 2009-2024 roll data after an assurance to the Delhi High Court in a petition by Randeep Surjewala; that assurance was not opened."
+    },
+    {
+      "id": "elections-2019-2024-mh-rahul-stolen-claim",
+      "kind": "statement",
+      "date": "2025-07-21",
+      "date_precision": "day",
+      "title": "Rahul Gandhi says Maharashtra election was 'stolen' through new voters",
+      "summary": "Addressing Madhya Pradesh Congress MLAs, Gandhi said about 1 crore voters differed between the 2024 Lok Sabha and assembly polls in Maharashtra, and that the BJP won where new voters were added. He said the Commission had not given the voter list or polling-station video despite telling a court it would.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition in Lok Sabha",
+      "people": [],
+      "states": [
+        "Maharashtra",
+        "Madhya Pradesh"
+      ],
+      "topics": [
+        "rolls",
+        "elections-2024"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.thehindu.com/news/national/madhya-pradesh/madhya-pradesh-elections-could-be-stolen-just-as-in-maharashtra-rahul-gandhi/article69839430.ece",
+          "publisher": "The Hindu",
+          "title": "'Madhya Pradesh elections could be stolen, just as in Maharashtra': Rahul Gandhi",
+          "published": "2025-07-22",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null
+    },
+    {
+      "id": "elections-2019-2024-mh-evm-verification",
+      "kind": "statement",
+      "date": "2025-08-01",
+      "date_precision": "day",
+      "title": "ECI says Maharashtra EVM checks requested by losing candidates found no mismatch",
+      "summary": "Citing burnt-memory checks run under the April 2024 Supreme Court directions at the request of 10 candidates, the Commission said 48 ballot units, 31 control units and 31 VVPATs from 10 assembly constituencies all passed diagnostic tests, with no VVPAT mismatch.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "evm-vvpat",
+        "elections-2024"
+      ],
+      "figures": [
+        {
+          "label": "Maharashtra EVM units checked on candidates' request (BU+CU+VVPAT)",
+          "value": 110,
+          "unit": "units",
+          "as_of": "2025-08-01"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://newsonair.gov.in/evms-tamper-proof-no-vvpat-mismatch-in-maharashtra-polls-eci/",
+          "publisher": "News On AIR (All India Radio)",
+          "title": "EVMs tamper-proof, no VVPAT mismatch in Maharashtra polls: ECI",
+          "published": "2025-08-01",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-mh-rahul-stolen-claim",
+      "notes": "The link to the April 2024 judgment is inferred from the procedure described; the Commission's own note was not opened."
+    },
+    {
+      "id": "elections-2019-2024-ceo-letters-declaration",
+      "kind": "statement",
+      "date": "2025-08-10",
+      "date_precision": "day",
+      "title": "Maharashtra and Haryana CEOs ask Rahul Gandhi for sworn declaration within 10 days",
+      "summary": "The CEOs of Maharashtra and Haryana wrote to Gandhi giving him 10 days to submit a signed declaration under Rule 20(3)(b) of the Registration of Electors Rules, 1960, naming the electors he alleged were wrongly added or removed. A Commission functionary said he should file the declaration or apologise.",
+      "status": "response",
+      "attributed_to": "Chief Electoral Officers of Maharashtra and Haryana; Election Commission of India",
+      "people": [],
+      "states": [
+        "Maharashtra",
+        "Haryana"
+      ],
+      "topics": [
+        "rolls"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://timesofindia.indiatimes.com/india/ceos-of-maharashtra-haryana-issue-fresh-letter-to-rahul-gandhi-give-him-10-days-to-prove-voter-fraud-claims/articleshow/123228040.cms",
+          "publisher": "The Times of India",
+          "title": "CEOs of Maharashtra, Haryana issue fresh letter to Rahul Gandhi, give him 10 days to prove 'voter fraud' claims",
+          "published": "2025-08-11",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-mh-rahul-stolen-claim",
+      "notes": "TOI (11 August, Monday) says the letters were sent 'on Sunday', 10 August 2025."
+    },
+    {
+      "id": "elections-2019-2024-cec-aug17-affidavit-or-apologise",
+      "kind": "statement",
+      "date": "2025-08-17",
+      "date_precision": "day",
+      "title": "CEC Gyanesh Kumar tells Rahul Gandhi to file affidavit in 7 days or apologise",
+      "summary": "At a press conference, CEC Gyanesh Kumar said Gandhi's roll allegations would be treated as baseless if not backed by a declaration under oath within seven days, and asked whether the Commission should issue notices to 1.5 lakh voters without one.",
+      "status": "response",
+      "attributed_to": "Gyanesh Kumar, Chief Election Commissioner",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://economictimes.indiatimes.com/news/india/submit-affidavit-or-apologise-to-the-nation-cec-gyanesh-kumar-to-rahul-gandhi-over-his-voter-theft-allegations/articleshow/123345589.cms",
+          "publisher": "The Economic Times",
+          "title": "Submit affidavit or apologise to the nation: CEC Gyanesh Kumar to Rahul Gandhi over his 'voter theft' allegations",
+          "published": "2025-08-17",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "elections-2019-2024-mh-rahul-stolen-claim",
+      "notes": "The press conference mainly addressed the Karnataka (Mahadevapura) and Bihar SIR controversies, which belong to other areas. It is linked here because it is the Commission's collective answer to the roll allegations, including Maharashtra's."
+    }
+  ],
+  "gaps": [
+    "Commission's reply of December 2024 to Congress on the Maharashtra 5 pm-to-final turnout rise and roll additions: not located. Check ECI press notes on eci.gov.in and PIB for December 2024.",
+    "Rahul Gandhi's 7 February 2025 joint press conference on Maharashtra roll additions (widely reported as 39 lakh voters added in five months) and the Commission's written response: not sourced in this pass.",
+    "Maharashtra electorate at the 2024 Lok Sabha poll vs the November 2024 assembly poll, and the final assembly turnout: should come from ECI statistical reports (eci.gov.in results and statistical reports sections).",
+    "Text of the 2019 EC orders on complaints against Modi and Shah and Lavasa's dissent notes: not public (RTI refused under Section 8(1)(g)). Check CIC appeals by Vihar Durve and others.",
+    "Exact dates of the 2019 clean chits for Modi's Barmer (21 Apr) and Varanasi (25 Apr) speeches and the Shah Nadia speech: not independently sourced.",
+    "Formal instructions the Commission said it would issue after its 21 May 2019 decision on recording dissent: not located.",
+    "Outcome of the ADR and Mahua Moitra Form 17C writ petitions after May 2024: search sci.gov.in case status for WP(C) 1382/2019 and the Moitra petition.",
+    "Outcome of Jairam Ramesh's Supreme Court challenge to the December 2024 Rule 93 amendment: check sci.gov.in.",
+    "Punjab and Haryana High Court order of 9 December 2024 in Mehmood Pracha's case: primary copy not opened.",
+    "The Commission's 30 May 2025 letter on destroying CCTV and webcasting footage: primary copy not opened.",
+    "Gazette notifications of Lavasa's resignation and Rajiv Kumar's 2020 appointment, and Lavasa's cadre and batch: check egazette.gov.in and the DoPT civil list.",
+    "2019 reports that Lavasa dissented on complaints about the PMO and NITI Aayog: Scroll/Indian Express report found but body not extractable.",
+    "West Bengal 2021 eight-phase schedule and the opposition's objection to it: not sourced.",
+    "Delhi High Court's April 2024 dismissal of a plea to disqualify Modi over invoking deities, and other 2024 MCC court cases: not sourced.",
+    "Aggregate 2024 MCC complaint statistics (cVIGIL, notices issued, action taken per party): check ECI statistical reports and the ECI 'Proactive Disclosure' release of 26 Dec 2024 (PIB PRID 2088064).",
+    "Gross 2024 turnout including postal ballots, from ECI statistical reports.",
+    "Final outcome of the CAT case over the 2019 suspension of observer Mohammed Mohsin.",
+    "The Indian Express reporting on the 2019 Latur decision (that the Maharashtra CEO and Osmanabad DEO found the speech inconsistent) was read only through Deccan Herald's citation. indianexpress.com should be fetched via curl ld+json for the original."
+  ]
+}

@@ -1,0 +1,4525 @@
+{
+  "area": "numbers",
+  "entries": [
+    {
+      "id": "numbers-bihar-roll-base-2025-06-24",
+      "kind": "figure",
+      "date": "2025-06-24",
+      "date_precision": "day",
+      "title": "Bihar roll stood at 7,89,69,844 electors when SIR began",
+      "summary": "The Commission's baseline for the Bihar SIR was the electoral roll as it stood on 24 June 2025, which listed 7,89,69,844 electors. Every later Bihar figure (forms collected, names left out of the draft, final roll) is measured against this number.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors on Bihar roll as on 24 June 2025",
+          "value": 78969844,
+          "unit": "electors",
+          "as_of": "2025-06-24"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6riZKC6QZO6gLSygWGSdadvAsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/252/2025: 6,60,67,208 out of the 7,89,69,844 electors in Bihar to be included in draft Electoral Roll",
+          "published": "2025-07-14",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The 24 June 2025 SIR order itself was listed on the ECI press-release index (PN-233) but its PDF returned 'Access denied' from the ECI server when fetched on 2026-09-25.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6riZKC6QZO6gLSygWGSdadvAsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "note": "Opened ECI PN/252/2025 (14.07.2025): states 7,89,69,844 electors; PN/270 confirms the roll as on 24.06.2025."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-bihar-enumeration-2025-07-14",
+      "kind": "figure",
+      "date": "2025-07-14",
+      "date_precision": "day",
+      "title": "Bihar: 83.66% of enumeration forms collected with 11 days left",
+      "summary": "ECI said 6,60,67,208 of 7,89,69,844 Bihar electors had returned enumeration forms. It said 1.59% of electors had been found dead, 2.2% permanently shifted and 0.73% enrolled at more than one place, with 11.82% yet to submit.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "enumeration forms collected",
+          "value": 66067208,
+          "unit": "electors",
+          "as_of": "2025-07-14"
+        },
+        {
+          "label": "share of electors found deceased",
+          "value": 1.59,
+          "unit": "percent",
+          "as_of": "2025-07-14"
+        },
+        {
+          "label": "share of electors found permanently shifted",
+          "value": 2.2,
+          "unit": "percent",
+          "as_of": "2025-07-14"
+        },
+        {
+          "label": "share of electors enrolled at more than one place",
+          "value": 0.73,
+          "unit": "percent",
+          "as_of": "2025-07-14"
+        },
+        {
+          "label": "share of electors yet to submit forms",
+          "value": 11.82,
+          "unit": "percent",
+          "as_of": "2025-07-14"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6riZKC6QZO6gLSygWGSdadvAsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/252/2025",
+          "published": "2025-07-14",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6riZKC6QZO6gLSygWGSdadvAsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "note": "Opened PN/252/2025: 6,60,67,208 (83.66%), 1.59% deceased, 2.2% shifted, 0.73% multiple, 11.82% remaining all match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-bihar-enumeration-findings-2025-07-25",
+      "kind": "figure",
+      "date": "2025-07-25",
+      "date_precision": "day",
+      "title": "Bihar enumeration ends: about 65 lakh reported dead, duplicate, shifted or untraced",
+      "summary": "At the close of enumeration ECI said forms of 7.23 crore electors had been received and digitised. Booth-level officers and agents had reported about 22 lakh deceased electors, about 7 lakh enrolled in more than one place, about 35 lakh permanently migrated or untraceable, and about 1.2 lakh forms still outstanding.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "forms received and digitised",
+          "value": 72300000,
+          "unit": "electors",
+          "as_of": "2025-07-25"
+        },
+        {
+          "label": "electors reported deceased (approx.)",
+          "value": 2200000,
+          "unit": "electors",
+          "as_of": "2025-07-25"
+        },
+        {
+          "label": "electors reported registered in more than one place (approx.)",
+          "value": 700000,
+          "unit": "electors",
+          "as_of": "2025-07-25"
+        },
+        {
+          "label": "electors reported permanently migrated or untraceable (approx.)",
+          "value": 3500000,
+          "unit": "electors",
+          "as_of": "2025-07-25"
+        },
+        {
+          "label": "forms yet to be received (approx.)",
+          "value": 120000,
+          "unit": "electors",
+          "as_of": "2025-07-25"
+        },
+        {
+          "label": "booth level agents appointed by 12 parties",
+          "value": 160813,
+          "unit": "agents",
+          "as_of": "2025-07-25"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6rhMATHOgJCj49OALsN3dvfgsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/269/2025: 7.23 crore Bihar electors express full faith in SIR process",
+          "published": "2025-07-25",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6riQEmeL%2B3uHZswwDni92D9OsXQUwCbGU493NshNTgs7UQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/270/2025: Bihar SIR: Key Findings of Enumeration Phase (24 June-25 July 2025)",
+          "published": "2025-07-27",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "All reason-wise counts at this stage are ECI's rounded figures and are BLO/BLA reports, not ERO orders. ECI said lists of these electors were shared with 12 political parties on 20 July 2025. PN/270's chart (27 July) gives 7.24 crore forms collected and 36 lakh shifted/not found, slightly different from PN/269's 7.23 crore and 35 lakh; PN/269's four categories alone sum to about 64 lakh, and PN/270's three to 65 lakh.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzcyjgeFPh4LtAbjL4Y7X74fA2DX8Gg37OsZNwQN5l6rhMATHOgJCj49OALsN3dvfgsXQUwCbGU493NshNTgs7UQ%3D%3D",
+        "note": "Opened PN/269 (25.07.2025) and PN/270 (27.07.2025). PN/269 gives 7.23 crore digitised, ~22 lakh deceased, ~7 lakh multiple, ~35 lakh migrated/untraced, ~1.2 lakh outstanding, 1,60,813 BLAs. The 65 lakh in the title matches PN/270, whose chart shows 7.24 crore collected, 22 lakh deceased, 36 lakh shifted/not found, 7 lakh multiple."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-bihar-draft-roll-2025-08-01",
+      "kind": "figure",
+      "date": "2025-08-01",
+      "date_precision": "day",
+      "title": "Bihar draft roll published with 7.24 crore electors; 65 lakh left out",
+      "summary": "ECI published Bihar's draft roll on 1 August 2025 with over 7.24 crore electors, covering 90,712 polling booths in 243 constituencies. ECI's later outcome table records 65 lakh electors from the 24 June roll as not carried into the draft. The claims and objections window ran to 1 September 2025.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in Bihar draft roll",
+          "value": 72400000,
+          "unit": "electors",
+          "as_of": "2025-08-01"
+        },
+        {
+          "label": "electors removed from roll at draft stage",
+          "value": 6500000,
+          "unit": "electors",
+          "as_of": "2025-08-01"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2Fzznw5Qtyss%2B8ILdni0Z0RBAkwVPAdy67ySd4dS2SdwaNNq0p8WWXDoViUeHPyzG9HgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/278/2025: Draft Electoral Roll issued in Bihar today",
+          "published": "2025-08-01",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/313/2025: SIR of Electoral Rolls in Bihar Successfully Completed",
+          "published": "2025-09-30",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The 1 August press note gives the draft figure only as 'more than 7.24 crore' and does not state the number left out; the 65 lakh figure comes from ECI's 30 September outcome table, which rounds to the nearest lakh. ECI's 1 September bulletin says the list of names not included, with reasons, was displayed district-wise and on the CEO Bihar website in EPIC-searchable form.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2Fzznw5Qtyss%2B8ILdni0Z0RBAkwVPAdy67ySd4dS2SdwaNNq0p8WWXDoViUeHPyzG9HgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+        "note": "Opened PN/278 (01.08.2025): more than 7.24 crore, 90,712 booths, 243 ACs, claims 1 Aug-1 Sep. PN/313 table: 65 lakh removed from draft list, rounded to lakhs."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-bihar-claims-objections-2025-09-01",
+      "kind": "figure",
+      "date": "2025-09-01",
+      "date_precision": "day",
+      "title": "Bihar claims window closes: 2.17 lakh objections, 36,475 inclusion claims from electors",
+      "summary": "On the last day of claims and objections ECI reported that electors had filed 36,475 claims for inclusion and 2,17,049 objections for exclusion against the 7.24 crore draft. Party booth agents had filed 25 inclusion claims and 119 exclusion objections. Separately, 16,56,886 new-elector applications (Form 6) had been received.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "claims for inclusion filed directly by electors",
+          "value": 36475,
+          "unit": "claims",
+          "as_of": "2025-09-01"
+        },
+        {
+          "label": "objections for exclusion filed directly by electors",
+          "value": 217049,
+          "unit": "objections",
+          "as_of": "2025-09-01"
+        },
+        {
+          "label": "inclusion claims filed by party BLAs",
+          "value": 25,
+          "unit": "claims",
+          "as_of": "2025-09-01"
+        },
+        {
+          "label": "exclusion objections filed by party BLAs",
+          "value": 119,
+          "unit": "objections",
+          "as_of": "2025-09-01"
+        },
+        {
+          "label": "Form 6 applications from new electors",
+          "value": 1656886,
+          "unit": "applications",
+          "as_of": "2025-09-01"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw6MA1FNC3hFn7gaiQZfHeEbqTKfKteB91VEcg4IKygWdA%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Bihar SIR 2025 Daily Bulletin No. ECI/B/28/2025: 1st Aug (3 PM) till 1st Sept (10 AM)",
+          "published": "2025-09-01",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Of the party-agent objections, 103 of 119 were filed by BLAs of CPI(ML) Liberation and 16 by BJP BLAs, per the bulletin's table.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw6MA1FNC3hFn7gaiQZfHeEbqTKfKteB91VEcg4IKygWdA%3D%3D",
+        "note": "Opened Bulletin ECI/B/28/2025: 36,475 inclusion and 2,17,049 exclusion from electors; BLAs 25 and 119 (CPI(ML)L 103, BJP 16); Form 6 16,56,886. All match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-bihar-final-roll-2025-09-30",
+      "kind": "figure",
+      "date": "2025-09-30",
+      "date_precision": "day",
+      "title": "Bihar final roll: about 7.42 crore electors, 47 lakh fewer than June",
+      "summary": "ECI published Bihar's final roll on 30 September 2025. Its outcome table: 7.89 crore on 24 June, 65 lakh removed at the draft stage, 7.24 crore in the draft, 3.66 lakh ineligible names removed from the draft, 21.53 lakh added through Form 6, and about 7.42 crore in the final roll. The election schedule note of 6 October gives the exact final count as 7,41,92,357 general electors plus 1,63,619 service voters.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in Bihar final roll (general)",
+          "value": 74192357,
+          "unit": "electors",
+          "as_of": "2025-09-30"
+        },
+        {
+          "label": "service voters",
+          "value": 163619,
+          "unit": "electors",
+          "as_of": "2025-09-30"
+        },
+        {
+          "label": "total electors incl. service voters",
+          "value": 74355976,
+          "unit": "electors",
+          "as_of": "2025-09-30"
+        },
+        {
+          "label": "ineligible electors removed from draft",
+          "value": 366000,
+          "unit": "electors",
+          "as_of": "2025-09-30"
+        },
+        {
+          "label": "eligible electors added to draft (Form 6)",
+          "value": 2153000,
+          "unit": "electors",
+          "as_of": "2025-09-30"
+        },
+        {
+          "label": "net fall from 24 June roll (computed: 7,89,69,844 minus 7,41,92,357)",
+          "value": 4777487,
+          "unit": "electors",
+          "as_of": "2025-09-30"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/313/2025",
+          "published": "2025-09-30",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzX%2FLARKC1lI3JwqUiIIk3e6jbGk1CRYxaGzABkOgdfk8DYQVtl8QBUpiBVKUEB0x1O4jyvJqQIR5ZMChqCiQwfQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/316/2025: Schedule for General Election to the Legislative Assembly of Bihar, 2025",
+          "published": "2025-10-06",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAYCxQSwErm054LraiPGlBSWYP5beHYo2ouO%2BqGjFKA7nw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "ECI/PN/353/2025: Successful conduct of Bihar Elections: Zero Repolls, Zero Appeals during SIR in Bihar",
+          "published": "2025-11-13",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The net-fall figure is our subtraction of two ECI numbers. ECI's 30 September table rounds to the nearest lakh.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
+        "note": "Opened PN/313 (outcome table: 7.89 cr, 65 lakh, 7.24 cr, 3.66 lakh, 21.53 lakh, ~7.42 cr) and PN/316 (7,41,92,357 general + 1,63,619 service = 7,43,55,976). Subtraction 4,777,487 checked."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-bihar-sc-366-lakh-2025-10-07",
+      "kind": "figure",
+      "date": "2025-10-07",
+      "date_precision": "day",
+      "title": "Supreme Court asks ECI for details of 3.66 lakh names cut from Bihar draft",
+      "summary": "A bench of Justices Surya Kant and Joymalya Bagchi asked ECI to furnish details of the 3.66 lakh electors excluded between the Bihar draft and final rolls, and the identity of names added. ECI's counsel told the court most additions were new voters and that no excluded voter had filed a complaint or appeal so far.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "courts"
+      ],
+      "figures": [
+        {
+          "label": "electors excluded between draft and final roll",
+          "value": 366000,
+          "unit": "electors",
+          "as_of": "2025-10-07"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/elections/bihar/bihar-assembly-elections-2025-supreme-court-directs-ec-to-furnish-details-of-366-lakh-excluded-voters-from-final-electoral-roll-3755573",
+          "publisher": "Deccan Herald",
+          "title": "Supreme Court directs EC to furnish details of 3.66 lakh excluded voters from final electoral roll",
+          "published": "2025-10-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The court order itself was not opened; this entry relies on the report. ECI later titled a 13 November 2025 press note 'Zero Repolls Zero Appeals during SIR in Bihar' (PN 353), whose PDF could not be retrieved.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.deccanherald.com/elections/bihar/bihar-assembly-elections-2025-supreme-court-directs-ec-to-furnish-details-of-366-lakh-excluded-voters-from-final-electoral-roll-3755573",
+        "note": "Opened DH report (7 Oct 2025, byline Ashish Tripathi, not PTI): bench of Surya Kant and Joymalya Bagchi sought details of 3.66 lakh excluded; Rakesh Dwivedi for ECI said most additions were new voters and no excluded voter had complained or appealed. Summary accurate; publisher corrected from \"Deccan Herald (PTI)\" to \"Deccan Herald\"."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-phase2-roll-base-2025-10-27",
+      "kind": "figure",
+      "date": "2025-10-27",
+      "date_precision": "day",
+      "title": "SIR Phase II covers 50.99 crore electors in 12 States/UTs",
+      "summary": "ECI ordered Phase II of the SIR on 27 October 2025 in nine states and three UTs. Its daily bulletin lists 50,99,72,687 electors on the rolls as of 27 October 2025 across these 12 States/UTs, with Uttar Pradesh the largest at 15.44 crore.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Andaman & Nicobar",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Lakshadweep",
+        "Madhya Pradesh",
+        "Puducherry",
+        "Tamil Nadu",
+        "West Bengal",
+        "Rajasthan",
+        "Uttar Pradesh",
+        "Kerala"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors as on 27 Oct 2025: Andaman & Nicobar",
+          "value": 310404,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: Chhattisgarh",
+          "value": 21230737,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: Goa",
+          "value": 1185034,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: Gujarat",
+          "value": 50843436,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: Lakshadweep",
+          "value": 57813,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: Madhya Pradesh",
+          "value": 57406143,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: Puducherry",
+          "value": 1021578,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: Tamil Nadu",
+          "value": 64114587,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: West Bengal",
+          "value": 76637529,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: Rajasthan",
+          "value": 54884479,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: Uttar Pradesh",
+          "value": 154430092,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: Kerala",
+          "value": 27850855,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors as on 27 Oct 2025: total, 12 States/UTs",
+          "value": 509972687,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "SIR Phase-2 Daily Bulletin: 3:00 PM of 11th December 2025 (No. ECI/SIR/DB/30/2025)",
+          "published": "2025-12-11",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAaRX2o6veifpDhCjDTVA%2FVMQDbiNcXHdpjdC4NGIujanw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/348/2025: SIR Phase-II begins in 9 States and 3 UTs",
+          "published": "2025-11-04",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Rajasthan's figure includes 193-Anta, where enumeration was deferred for a bye-election; the Rajasthan CEO's own baseline excluding Anta is 5,46,56,215. DH (8 Jan 2026) used a Phase II baseline of 50.96 crore; PTI (11 Apr 2026) used 50.99 crore.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+        "note": "Opened ECI/SIR/DB/30/2025: all 12 state figures and total 50,99,72,687 match; Rajasthan footnote on 193-Anta present. PN/348 confirms 27 Oct order, 9 states + 3 UTs."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-phase2-draft-dates-2025-12-11",
+      "kind": "event",
+      "date": "2025-12-11",
+      "date_precision": "day",
+      "title": "Phase II draft roll dates staggered from 16 to 31 December 2025",
+      "summary": "ECI first extended the whole Phase II schedule by a week (draft on 16 December, final on 14 February 2026), then moved six States/UT later: Tamil Nadu and Gujarat to 19 December; Madhya Pradesh, Chhattisgarh and Andaman & Nicobar to 23 December; Uttar Pradesh to 31 December. Kerala's draft had already been moved to 23 December. Goa, Puducherry, Lakshadweep, Rajasthan and West Bengal kept 16 December.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Tamil Nadu",
+        "Gujarat",
+        "Madhya Pradesh",
+        "Chhattisgarh",
+        "Andaman & Nicobar",
+        "Uttar Pradesh",
+        "Kerala",
+        "Goa",
+        "Puducherry",
+        "Lakshadweep",
+        "Rajasthan",
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAY%2FlNfHhCNmkamD4tYgD1vkZhdXAWTuAWd47JJFkivjUQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/359/2025: ECI revises schedule for SIR by extending dates by one week",
+          "published": "2025-11-30",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAZH8NWm%2FEhSj06A8WFtmUvPItdYg6yfdEV6qFhUBaAfEQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/364/2025: ECI revises schedule for SIR in 6 States/UT",
+          "published": "2025-12-11",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Uttar Pradesh's draft was eventually published on 6 January 2026 (Akashvani, 6 Jan 2026), a further change not covered by these two notes.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAY%2FlNfHhCNmkamD4tYgD1vkZhdXAWTuAWd47JJFkivjUQ%3D%3D",
+        "note": "Opened PN/359 (30.11.2025: draft 16.12.2025, final 14.02.2026) and PN/364 (11.12.2025: TN/Gujarat 19 Dec; MP/CG/A&N 23 Dec; UP 31 Dec; Kerala 23 Dec; Goa, PY, Lakshadweep, Rajasthan, WB 16 Dec). All match. UP 6 Jan draft confirmed by Akashvani 6 Jan 2026."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "numbers-goa-draft-roll-2025-12-16",
+      "kind": "figure",
+      "date": "2025-12-16",
+      "date_precision": "day",
+      "title": "Goa draft roll: 10,84,992 electors; 1,00,042 listed absent, shifted, dead or duplicate",
+      "summary": "Goa's CEO reported 11,85,034 electors on 27 October 2025, of whom 10,84,992 returned forms and entered the 16 December draft. The 1,00,042 not included were recorded as 25,574 dead, 29,729 untraceable or absent, 40,469 permanently shifted, 1,997 already enrolled and 2,273 others. Of 9,02,589 electors mapped to the last SIR roll, the ECI IT system flagged 58,923 as 'logical discrepancies'.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Goa"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors as on 27 Oct 2025",
+          "value": 1185034,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors in draft roll",
+          "value": 1084992,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "ASDD total not included in draft",
+          "value": 100042,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "ASDD: death",
+          "value": 25574,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "ASDD: untraceable/absent",
+          "value": 29729,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "ASDD: permanently shifted",
+          "value": 40469,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "ASDD: already enrolled",
+          "value": 1997,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "ASDD: others",
+          "value": 2273,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "draft electors unmapped to last SIR",
+          "value": 182403,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "mapped electors flagged as logical discrepancies",
+          "value": 58923,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceogoa.nic.in/PDF/SIR2026/press-note-Final-publication.pdf",
+          "publisher": "Office of the Chief Electoral Officer, Goa",
+          "title": "Press Note on final publication of electoral roll, SIR 2026",
+          "published": "2026-02-21",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20260420095255/https://www.ceogoa.nic.in/PDF/SIR2026/press-note-Final-publication.pdf",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceogoa.nic.in/PDF/SIR2026/press-note-Final-publication.pdf",
+        "note": "Opened Goa CEO final-publication note: 11,85,034; 10,84,992; ASDD 1,00,042 with all five category counts; 9,02,589 mapped, 1,82,403 unmapped, 58,923 logical discrepancies. All match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-puducherry-lakshadweep-draft-2025-12-16",
+      "kind": "figure",
+      "date": "2025-12-16",
+      "date_precision": "day",
+      "title": "Puducherry drops 1.03 lakh and Lakshadweep 1,429 names at draft stage",
+      "summary": "Deccan Herald's compilation reported Puducherry's draft at 9.18 lakh of 10.21 lakh, with 1.03 lakh left out (20,798 deceased, 80,645 shifted or absent, 2,024 multiple enrolments). Lakshadweep's draft listed 56,384 of 57,813, with 1,429 left out (705 dead, 252 shifted or absent, 472 multiple enrolments).",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Puducherry",
+        "Lakshadweep"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "Puducherry: electors in draft roll (approx.)",
+          "value": 918000,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "Puducherry: names left out of draft (approx.)",
+          "value": 103000,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "Puducherry: left out as deceased",
+          "value": 20798,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "Puducherry: left out as shifted/absent",
+          "value": 80645,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "Puducherry: left out as multiple enrolment",
+          "value": 2024,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "Lakshadweep: electors in draft roll",
+          "value": 56384,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "Lakshadweep: names left out of draft",
+          "value": 1429,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "Lakshadweep: left out as dead",
+          "value": 705,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "Lakshadweep: left out as shifted/absent",
+          "value": 252,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "Lakshadweep: left out as multiple enrolment",
+          "value": 472,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "publisher": "Deccan Herald",
+          "title": "SIR 2.0: Nearly 6.5 crore electors removed from draft rolls of 12 States, Union Territories",
+          "published": "2026-01-08",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260117111100/https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Puducherry reason-wise counts sum to 1,03,467. The CEO Puducherry and CEO Lakshadweep press notes themselves were not opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+        "note": "Opened DH (8 Jan 2026): Puducherry 9.18 of 10.21 lakh, 1.03 lakh left out (20,798 / 80,645 / 2,024); Lakshadweep 56,384 of 57,813, 1,429 left out (705 / 252 / 472). All match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-rajasthan-draft-roll-2025-12-16",
+      "kind": "figure",
+      "date": "2025-12-16",
+      "date_precision": "day",
+      "title": "Rajasthan draft roll: 41.85 lakh not included, 5.05 crore listed",
+      "summary": "According to the Rajasthan CEO's release as reported, 5,46,56,215 electors were on the roll on 27 October 2025 (excluding 193-Anta), 41,84,891 were not included in the draft, and the draft published 16 December 2025 listed 5,04,71,324.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Rajasthan"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors as on 27 Oct 2025 (excl. Anta)",
+          "value": 54656215,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors not included in draft",
+          "value": 4184891,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "electors in draft roll",
+          "value": 50471324,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.indiatvnews.com/rajasthan/rajasthan-sir-over-2-42-lakh-names-deleted-in-final-voter-list-published-by-ec-2026-02-21-1031131",
+          "publisher": "India TV",
+          "title": "Rajasthan SIR: Over 2.42 lakh names deleted in final voter list published by EC",
+          "published": "2026-02-21",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260222170858/https://www.indiatvnews.com/rajasthan/rajasthan-sir-over-2-42-lakh-names-deleted-in-final-voter-list-published-by-ec-2026-02-21-1031131",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Reason-wise break-up for Rajasthan's draft exclusions was not found in an opened source.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.indiatvnews.com/rajasthan/rajasthan-sir-over-2-42-lakh-names-deleted-in-final-voter-list-published-by-ec-2026-02-21-1031131",
+        "note": "Opened India TV (21 Feb 2026): 5,46,56,215 as on 27 Oct 2025 excl. Anta; 41,84,891 not included; draft 5,04,71,324 on 16 Dec. DH (8 Jan 2026) corroborates 41.84 lakh."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-wb-draft-roll-2025-12-16",
+      "kind": "figure",
+      "date": "2025-12-16",
+      "date_precision": "day",
+      "title": "West Bengal draft roll: 7.08 crore electors, 58.20 lakh forms not received",
+      "summary": "West Bengal's CEO reported 7,66,37,529 electors on 27 October 2025 and 7,08,16,630 in the draft roll published 16 December 2025. Enumeration forms of 58,20,899 electors were not received: 24,16,852 recorded as deceased, 12,20,039 absent, 19,88,076 shifted, 1,38,328 already enrolled elsewhere and 57,604 for other reasons.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors as on 27 Oct 2025",
+          "value": 76637529,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors in draft roll",
+          "value": 70816630,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "forms not received (total)",
+          "value": 5820899,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "not received: deceased",
+          "value": 2416852,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "not received: absent",
+          "value": 1220039,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "not received: shifted",
+          "value": 1988076,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "not received: already enrolled (duplicate)",
+          "value": 138328,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        },
+        {
+          "label": "not received: others",
+          "value": 57604,
+          "unit": "electors",
+          "as_of": "2025-12-16"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+          "publisher": "Office of the Chief Electoral Officer, West Bengal",
+          "title": "Press Note No. CEO/PN-05/2026 (final roll publication)",
+          "published": "2026-02-28",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20260422193949/https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+          "quote": null
+        },
+        {
+          "url": "https://ceowestbengal.wb.gov.in/Downloads/SIR2026/SIR_PressNote/CEO%20PN_36_16.12.2025.pdf",
+          "publisher": "Office of the Chief Electoral Officer, West Bengal",
+          "title": "Press Note No. CEO/PN-36/2025: West Bengal SIR: Key Findings of Enumeration Phase",
+          "published": "2025-12-16",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20260504133538/https://ceowestbengal.wb.gov.in/Downloads/SIR2026/SIR_PressNote/CEO%20PN_36_16.12.2025.pdf",
+          "quote": null
+        },
+        {
+          "url": "https://www.newsonair.gov.in/west-bengal-draft-voters-list-published-under-sir-2026",
+          "publisher": "All India Radio News (newsonair.gov.in)",
+          "title": "West Bengal draft voters list published under SIR",
+          "published": "2025-12-16",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20251219142418/https://www.newsonair.gov.in/west-bengal-draft-voters-list-published-under-sir-2026/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+          "publisher": "The Indian Express",
+          "title": "Missing in Election Commission affidavit: Break-up of Bengal SIR appeals for inclusion, exclusion of names",
+          "published": "2026-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Some reports put the draft at 7,08,16,631 and the 'absent' count at 12,20,038; the CEO's own notes give 7,08,16,630 and 12,20,039.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+        "note": "Opened CEO/PN-05/2026: 7,66,37,529; 58,20,899 not received (24,16,852 / 12,20,039 / 19,88,076 / 1,38,328 / 57,604); draft 7,08,16,630. CEO/PN-36/2025 corroborates 7.08 cr."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-gujarat-draft-roll-2025-12-19",
+      "kind": "figure",
+      "date": "2025-12-19",
+      "date_precision": "day",
+      "title": "Gujarat draft roll: 73.73 lakh names omitted, 4.34 crore valid",
+      "summary": "Gujarat's draft roll of 19 December 2025 omitted 73.73 lakh voters (14.5%), leaving 4.34 crore against 5.08 crore registered earlier.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Gujarat"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "names omitted from draft (approx.)",
+          "value": 7373000,
+          "unit": "electors",
+          "as_of": "2025-12-19"
+        },
+        {
+          "label": "electors in draft roll (approx.)",
+          "value": 43400000,
+          "unit": "electors",
+          "as_of": "2025-12-19"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "publisher": "Deccan Herald",
+          "title": "SIR 2.0: Nearly 6.5 crore electors removed from draft rolls of 12 States, Union Territories",
+          "published": "2026-01-08",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260117111100/https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/gujarats-voter-count-stands-at-440-crore-in-final-electoral-rolls-published-by-ec-after-sir-3901904",
+          "publisher": "Deccan Herald (PTI)",
+          "title": "Gujarat's voter count stands at 4.40 crore in final electoral rolls published by EC after SIR",
+          "published": "2026-02-17",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260307205854/https://www.deccanherald.com/india/gujarats-voter-count-stands-at-440-crore-in-final-electoral-rolls-published-by-ec-after-sir-3901904",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Reason-wise break-up for Gujarat was not found in an opened source. A Gujarat High Court petition by two Congress leaders alleged bulk Form-7 objections by BJP workers without documents (DH, 17 Feb 2026); outcome not traced.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+        "note": "Opened DH (8 Jan 2026): 73.73 lakh (14.5%) omitted, 4.34 crore valid vs 5.08 crore. DH/PTI (17 Feb) corroborates and reports the Gujarat HC petition by two Congress leaders."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-tn-draft-roll-2025-12-19",
+      "kind": "figure",
+      "date": "2025-12-19",
+      "date_precision": "day",
+      "title": "Tamil Nadu draft roll: 97.37 lakh names dropped, 5.44 crore listed",
+      "summary": "Tamil Nadu's draft roll of 19 December 2025 listed 5,43,76,756 electors against 6,41,14,587 on 27 October 2025. Data attributed to the Tamil Nadu CEO put the 97.37 lakh left out at 66.4 lakh shifted, 26.9 lakh dead and 3.98 lakh enrolled at multiple places.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Tamil Nadu"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in draft roll",
+          "value": 54376756,
+          "unit": "electors",
+          "as_of": "2025-12-19"
+        },
+        {
+          "label": "names left out of draft",
+          "value": 9737831,
+          "unit": "electors",
+          "as_of": "2025-12-19"
+        },
+        {
+          "label": "left out: shifted",
+          "value": 6640000,
+          "unit": "electors",
+          "as_of": "2025-12-19"
+        },
+        {
+          "label": "left out: dead",
+          "value": 2690000,
+          "unit": "electors",
+          "as_of": "2025-12-19"
+        },
+        {
+          "label": "left out: multiple enrolment",
+          "value": 398000,
+          "unit": "electors",
+          "as_of": "2025-12-19"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/tamil-nadu-ceo-releases-final-electoral-roll-97-37-lakh-names-of-voters-deleted/",
+          "publisher": "The Tribune (PTI)",
+          "title": "TN CEO releases final electoral roll, 97.37 lakh names of voters deleted",
+          "published": "2026-02-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260723104031/https://www.tribuneindia.com/news/india/tamil-nadu-ceo-releases-final-electoral-roll-97-37-lakh-names-of-voters-deleted/",
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "publisher": "Deccan Herald",
+          "title": "SIR 2.0: Nearly 6.5 crore electors removed from draft rolls of 12 States, Union Territories",
+          "published": "2026-01-08",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260117111100/https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The 97,37,831 figure is our subtraction of the two CEO-reported totals; reports round it to 97.37 lakh. DH gives the draft as 5,43,76,755, one less than the Tribune/PTI figure.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.tribuneindia.com/news/india/tamil-nadu-ceo-releases-final-electoral-roll-97-37-lakh-names-of-voters-deleted/",
+        "note": "Opened Tribune/PTI (23 Feb 2026): draft 5,43,76,756 on 19 Dec vs 6,41,14,587. DH (8 Jan) gives 66.4 lakh shifted, 26.9 lakh dead, 3.98 lakh multiple, attributed to TN CEO; DH draft 5,43,76,755. Matches."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-andaman-draft-roll-2025-12-23",
+      "kind": "figure",
+      "date": "2025-12-23",
+      "date_precision": "day",
+      "title": "Andaman & Nicobar draft removes about 64,000, a fifth of the roll",
+      "summary": "About 64,000 of 3.1 lakh electors (20.62%) in the Andaman and Nicobar Islands were removed from the draft roll. By our comparison of Deccan Herald's state figures, this was the highest share among Phase II States/UTs (Uttar Pradesh was next at 18.7%).",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Andaman & Nicobar"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "names removed at draft stage (approx.)",
+          "value": 64000,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "share of roll removed",
+          "value": 20.62,
+          "unit": "percent",
+          "as_of": "2025-12-23"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "publisher": "Deccan Herald",
+          "title": "SIR 2.0: Nearly 6.5 crore electors removed from draft rolls of 12 States, Union Territories",
+          "published": "2026-01-08",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260117111100/https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Andaman & Nicobar CEO press note and the UT's final-roll figures were not found.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+        "note": "Opened DH (8 Jan 2026): 64,000 or 20.62% of 3.1 lakh. DH does not itself say this was the highest share; the summary now marks that as our comparison of DH figures."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-chhattisgarh-draft-roll-2025-12-23",
+      "kind": "figure",
+      "date": "2025-12-23",
+      "date_precision": "day",
+      "title": "Chhattisgarh draft roll: 1,84,95,920 of 2,12,30,737 electors",
+      "summary": "Chhattisgarh's CEO recorded 2,12,30,737 electors before the draft and 1,84,95,920 after the draft was published, a drop of 27,34,817 (our subtraction). Claims and objections were taken from 23 December 2025 to 22 January 2026.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Chhattisgarh"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors before draft",
+          "value": 21230737,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors in draft roll",
+          "value": 18495920,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "drop at draft stage (computed)",
+          "value": 2734817,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceochhattisgarh.nic.in/assets/pdf%20files/PN21.02.2026FinalPublicationofERollChhattisgarh.pdf",
+          "publisher": "Office of the Chief Electoral Officer, Chhattisgarh",
+          "title": "Press note on final publication of electoral roll (Hindi)",
+          "published": "2026-02-21",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The CEO note is in Hindi; figures transcribed from it. Reason-wise break-up was not in the note.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceochhattisgarh.nic.in/assets/pdf%20files/PN21.02.2026FinalPublicationofERollChhattisgarh.pdf",
+        "note": "Opened CEO Chhattisgarh Hindi note (21.02.2026): 2,12,30,737 before draft, 1,84,95,920 after; claims 23.12.2025-22.01.2026. Subtraction checked."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-kerala-draft-roll-2025-12-23",
+      "kind": "figure",
+      "date": "2025-12-23",
+      "date_precision": "day",
+      "title": "Kerala draft roll: 24.08 lakh left out, 2.54 crore listed",
+      "summary": "Kerala's draft left out 24,08,503 of 2,78,50,855 electors (8.65%), bringing the roll to 2,54,42,352. The reported break-up: 6,49,885 deceased, 8,16,221 shifted, 6,45,548 untraceable, 1,36,029 duplicate and 1,60,830 who did not return or refused the form.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Kerala"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors as on 27 Oct 2025",
+          "value": 27850855,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors in draft roll",
+          "value": 25442352,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "left out of draft (total)",
+          "value": 2408503,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "left out: deceased",
+          "value": 649885,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "left out: shifted",
+          "value": 816221,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "left out: untraceable",
+          "value": 645548,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "left out: duplicate",
+          "value": 136029,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "left out: form not returned or refused",
+          "value": 160830,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "publisher": "Deccan Herald",
+          "title": "SIR 2.0: Nearly 6.5 crore electors removed from draft rolls of 12 States, Union Territories",
+          "published": "2026-01-08",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260117111100/https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The reported reason-wise counts sum to 24,08,513, ten more than the stated total. The News Minute (21 Feb 2026) described the Kerala draft as 'around 2.70 crore', which does not match the 2.54 crore reported by DH or the arithmetic of later additions; the DH figure is used here.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+        "note": "Opened DH (8 Jan 2026): 24,08,503 (8.65%) of 2,78,50,855 left out, draft 2,54,42,352; category counts match. Sum-mismatch note checked (24,08,513)."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-mp-draft-roll-2025-12-23",
+      "kind": "figure",
+      "date": "2025-12-23",
+      "date_precision": "day",
+      "title": "Madhya Pradesh draft roll: 42.74 lakh deleted, 5.31 crore listed",
+      "summary": "Madhya Pradesh's draft roll listed 5,31,31,983 electors against 5,74,06,143 before the SIR. Reported break-up of the 42.74 lakh deleted: 8.46 lakh dead, 31.51 lakh absent or migrated, 2.77 lakh registered in more than one place.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Madhya Pradesh"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in draft roll",
+          "value": 53131983,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "deleted at draft stage (computed)",
+          "value": 4274160,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "deleted: dead",
+          "value": 846000,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "deleted: absent/migrated",
+          "value": 3151000,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        },
+        {
+          "label": "deleted: multiple registration",
+          "value": 277000,
+          "unit": "electors",
+          "as_of": "2025-12-23"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.business-standard.com/india-news/ec-publishes-final-electoral-roll-for-mp-with-5-3-crore-voters-over-34-million-names-dropped-126022100775_1.html",
+          "publisher": "Business Standard (PTI)",
+          "title": "EC publishes final MP electoral roll: 5.39 cr voters, 3.4 mn dropped",
+          "published": "2026-02-21",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260221165611/https://www.business-standard.com/india-news/ec-publishes-final-electoral-roll-for-mp-with-5-3-crore-voters-over-34-million-names-dropped-126022100775_1.html",
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "publisher": "Deccan Herald",
+          "title": "SIR 2.0: Nearly 6.5 crore electors removed from draft rolls of 12 States, Union Territories",
+          "published": "2026-01-08",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260117111100/https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.business-standard.com/india-news/ec-publishes-final-electoral-roll-for-mp-with-5-3-crore-voters-over-34-million-names-dropped-126022100775_1.html",
+        "note": "Opened BS/PTI (21 Feb 2026): 5,74,06,143 before, 5,31,31,983 draft. DH (8 Jan): 42.74 lakh (8.46 dead, 31.51 absent/migrated, 2.77 multiple). Subtraction 42,74,160 checked."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-up-draft-roll-2026-01-06",
+      "kind": "figure",
+      "date": "2026-01-06",
+      "date_precision": "day",
+      "title": "Uttar Pradesh draft roll leaves out 2.89 crore of 15.44 crore electors",
+      "summary": "Uttar Pradesh's draft roll of 6 January 2026 listed 12,55,56,025 electors against 15,44,30,092 on the existing roll, leaving out 2.89 crore (18.70%). The reported reasons: 46.23 lakh found dead, 2.17 crore not found by BLOs (absent or shifted), and 25.47 lakh enrolled in more than one place.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Uttar Pradesh"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors on existing roll",
+          "value": 154430092,
+          "unit": "electors",
+          "as_of": "2025-10-27"
+        },
+        {
+          "label": "electors in draft roll",
+          "value": 125556025,
+          "unit": "electors",
+          "as_of": "2026-01-06"
+        },
+        {
+          "label": "left out of draft (computed)",
+          "value": 28874067,
+          "unit": "electors",
+          "as_of": "2026-01-06"
+        },
+        {
+          "label": "left out: dead",
+          "value": 4623000,
+          "unit": "electors",
+          "as_of": "2026-01-06"
+        },
+        {
+          "label": "left out: not found (absent/shifted)",
+          "value": 21700000,
+          "unit": "electors",
+          "as_of": "2026-01-06"
+        },
+        {
+          "label": "left out: multiple enrolment",
+          "value": 2547000,
+          "unit": "electors",
+          "as_of": "2026-01-06"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://newsonair.gov.in/election-commission-publishes-draft-sir-electoral-roll-of-uttar-pradesh/",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "Names of 2.89 crore voters not found in draft electoral roll of Uttar Pradesh after SIR: ECI",
+          "published": "2026-01-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.newsonair.gov.in/eci-to-release-draft-voter-list-for-uttar-pradesh-today-after-sir-process/",
+          "publisher": "All India Radio News (newsonair.gov.in)",
+          "title": "ECI to release draft voter list for Uttar Pradesh today after SIR process",
+          "published": "2026-01-06",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260106024857/https://www.newsonair.gov.in/eci-to-release-draft-voter-list-for-uttar-pradesh-today-after-sir-process/",
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/uttar-pradesh/uttar-pradesh-sir-draft-voter-list-out-more-than-289-cr-voters-not-included-due-to-deaths-migrations-3853077",
+          "publisher": "Deccan Herald",
+          "title": "Uttar Pradesh SIR draft voter list out: More than 2.89 cr voters not included due to deaths, migrations",
+          "published": "2026-01-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "PTI's 11 April 2026 tally (see phase2-final-tally) gives 25.47 lakh as the number of deceased electors removed in UP, the same figure Akashvani gives for multiple enrolments; one of the two uses appears to be an error, and the CEO UP press note was not opened to settle it.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://newsonair.gov.in/election-commission-publishes-draft-sir-electoral-roll-of-uttar-pradesh/",
+        "note": "Opened Akashvani (6 Jan 2026): CEO Navdeep Rinwa gave 12,55,56,025 in draft vs 15,44,30,092; 2.89 crore (18.70%); 46.23 lakh dead, 2.17 crore not found, 25.47 lakh multiple. DH corroborates."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-phase2-draft-tally-2026-01-08",
+      "kind": "figure",
+      "date": "2026-01-08",
+      "date_precision": "day",
+      "title": "Phase II drafts: 6.56 crore names removed across 12 States/UTs",
+      "summary": "Deccan Herald reported that 6.56 crore electors had been removed from the Phase II draft rolls, taking the 12 States/UTs from 50.96 crore to 44.4 crore. By reason: 4.64 crore for shifting, 1.46 crore for death and 44.06 lakh for multiple registration, in the absent-shifted-dead/duplicate (ASD) category.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Andaman & Nicobar",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Lakshadweep",
+        "Madhya Pradesh",
+        "Puducherry",
+        "Tamil Nadu",
+        "West Bengal",
+        "Rajasthan",
+        "Uttar Pradesh",
+        "Kerala"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "names removed from Phase II draft rolls",
+          "value": 65600000,
+          "unit": "electors",
+          "as_of": "2026-01-08"
+        },
+        {
+          "label": "removed: shifting",
+          "value": 46400000,
+          "unit": "electors",
+          "as_of": "2026-01-08"
+        },
+        {
+          "label": "removed: death",
+          "value": 14600000,
+          "unit": "electors",
+          "as_of": "2026-01-08"
+        },
+        {
+          "label": "removed: multiple registration",
+          "value": 4406000,
+          "unit": "electors",
+          "as_of": "2026-01-08"
+        },
+        {
+          "label": "electors in Phase II draft rolls (approx.)",
+          "value": 444000000,
+          "unit": "electors",
+          "as_of": "2026-01-08"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "publisher": "Deccan Herald",
+          "title": "SIR 2.0: Nearly 6.5 crore electors removed from draft rolls of 12 States, Union Territories",
+          "published": "2026-01-08",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260117111100/https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "This tally is Deccan Herald's aggregation of state figures, not an ECI total. Summing the state figures in this file gives 6,56,77,106 (Gujarat and Andaman & Nicobar rounded; Rajasthan excludes Anta), consistent with DH.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+        "note": "Opened DH (8 Jan 2026): 6.56 crore removed, 50.96 to 44.4 crore, 4.64 crore shifting, 1.46 crore death, 44.06 lakh multiple. Recomputed the state sum: 6,56,77,106 checks out."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-wb-unmapped-hearings-2026-01-08",
+      "kind": "figure",
+      "date": "2026-01-08",
+      "date_precision": "day",
+      "title": "West Bengal: 31.68 lakh draft electors with no mapping; 25.6 lakh notices delivered",
+      "summary": "West Bengal's CEO reported 31,68,426 draft electors with no mapping. By 8 January 2026 notices had been delivered to 25,60,476 of them and 7,25,899 hearings completed. The same note said electors aged 85 and over, sick or disabled need not attend in person if they or a family member ask the ERO, with verification at home instead; electors temporarily abroad were exempted and could send a family member.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "draft electors with no mapping",
+          "value": 3168426,
+          "unit": "electors",
+          "as_of": "2026-01-08"
+        },
+        {
+          "label": "notices delivered",
+          "value": 2560476,
+          "unit": "notices",
+          "as_of": "2026-01-08"
+        },
+        {
+          "label": "hearings completed",
+          "value": 725899,
+          "unit": "hearings",
+          "as_of": "2026-01-08"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceowestbengal.wb.gov.in/Downloads/SIR2026/SIR_PressNote/Press%20Note%2001_08.01.2026.pdf",
+          "publisher": "Office of the Chief Electoral Officer, West Bengal",
+          "title": "Press Note No. 01/CEO/PN/2026",
+          "published": "2026-01-08",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://ceowestbengal.wb.gov.in/Downloads/SIR2026/SIR_PressNote/Press%20Note%2001_08.01.2026.pdf",
+        "note": "Opened WB CEO Press Note 01/CEO/PN/2026 (08.01.2026): 31,68,426 no-mapping, 25,60,476 notices delivered, 68,577 hearings that day, 7,25,899 completed. Title said all 31.68 lakh were \"called for hearings\"; the note only gives notices delivered, so title reworded. The 85+/sick/PwD relief applies on request, not automatically; summary tightened."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-assam-special-revision-2026-02-10",
+      "kind": "figure",
+      "date": "2026-02-10",
+      "date_precision": "day",
+      "title": "Assam's Special Revision (not SIR): 2.43 lakh dropped between draft and final",
+      "summary": "Assam had a Special Revision rather than an SIR. Its draft of 27 December 2025 listed 2,52,01,624 voters; the final roll of 10 February 2026 listed 2,49,58,139, with 2,43,485 names dropped in between. ECI's election note gives the same final count plus 63,269 service voters.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Assam"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in draft roll",
+          "value": 25201624,
+          "unit": "electors",
+          "as_of": "2025-12-27"
+        },
+        {
+          "label": "electors in final roll (general)",
+          "value": 24958139,
+          "unit": "electors",
+          "as_of": "2026-02-10"
+        },
+        {
+          "label": "names dropped between draft and final",
+          "value": 243485,
+          "unit": "electors",
+          "as_of": "2026-02-10"
+        },
+        {
+          "label": "service voters",
+          "value": 63269,
+          "unit": "electors",
+          "as_of": "2026-02-10"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/eci-publishes-final-voter-list-for-special-revision-in-assam-extends-west-bengal-sir-deadline-to-feb-28",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "ECI publishes final voter list for Special Revision in Assam, extends West Bengal SIR deadline to Feb 28",
+          "published": "2026-02-10",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzBiU51zPFZI5qMtjV1qgjFg193XTtp6Zn6FU9qB%2FYxKh2I6Fg%2BNN0%2Fk6VQmFY0pHFCSv%2B1yJkuMeCkTzY9fhBvw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "General Election to the Legislative Assemblies of Assam, Kerala, Tamil Nadu, West Bengal and Puducherry, 2026 (No. 464/PN/2026/EPS)",
+          "published": "2026-03-15",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Assam is excluded from SIR tallies here and in most press tallies. The pre-revision Assam roll size was not found in an opened source. Only the final count and service voters are documented (ECI note of 15 March 2026); the draft figure and the 2,43,485 drop are from Akashvani quoting the CEO.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.newsonair.gov.in/eci-publishes-final-voter-list-for-special-revision-in-assam-extends-west-bengal-sir-deadline-to-feb-28",
+        "note": "Opened Akashvani (10 Feb 2026): draft 2,52,01,624 (27 Dec 2025), final 2,49,58,139, 2,43,485 dropped, per CEO Assam. Opened ECI 464/PN/2026/EPS: Assam final 2,49,58,139 general + 63,269 service, final publication 10.02.2026. Status changed from documented to reported because the headline 2.43 lakh and the draft size come only from the Akashvani report; only the final count is in a primary document."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-py-final-roll-2026-02-14",
+      "kind": "figure",
+      "date": "2026-02-14",
+      "date_precision": "day",
+      "title": "Puducherry final roll: 9,44,211 electors",
+      "summary": "ECI's election announcement records Puducherry's final SIR roll, published 14 February 2026, at 9,44,211 general electors plus 328 service voters, against 10,21,578 on 27 October 2025.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Puducherry"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in final roll (general)",
+          "value": 944211,
+          "unit": "electors",
+          "as_of": "2026-02-14"
+        },
+        {
+          "label": "service voters",
+          "value": 328,
+          "unit": "electors",
+          "as_of": "2026-02-14"
+        },
+        {
+          "label": "net fall from 27 Oct 2025 (computed)",
+          "value": 77367,
+          "unit": "electors",
+          "as_of": "2026-02-14"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzBiU51zPFZI5qMtjV1qgjFg193XTtp6Zn6FU9qB%2FYxKh2I6Fg%2BNN0%2Fk6VQmFY0pHFCSv%2B1yJkuMeCkTzY9fhBvw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "General Election to the Legislative Assemblies of Assam, Kerala, Tamil Nadu, West Bengal and Puducherry, 2026 (No. 464/PN/2026/EPS)",
+          "published": "2026-03-15",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "SIR Phase-2 Daily Bulletin: 3:00 PM of 11th December 2025 (No. ECI/SIR/DB/30/2025)",
+          "published": "2025-12-11",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzBiU51zPFZI5qMtjV1qgjFg193XTtp6Zn6FU9qB%2FYxKh2I6Fg%2BNN0%2Fk6VQmFY0pHFCSv%2B1yJkuMeCkTzY9fhBvw%3D%3D",
+        "note": "Opened ECI 464/PN/2026/EPS: Puducherry final 14.02.2026, 9,44,211 general + 328 service. Bulletin 30 gives 10,21,578 on 27 Oct. Subtraction 77,367 checked."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-gujarat-final-roll-2026-02-17",
+      "kind": "figure",
+      "date": "2026-02-17",
+      "date_precision": "day",
+      "title": "Gujarat final roll: 4,40,30,725 electors, 5.60 lakh above draft",
+      "summary": "Gujarat's CEO office said the final roll published 17 February 2026 contains 4,40,30,725 voters, an addition of 5.60 lakh after the draft. Against 5,08,43,436 on 27 October 2025, the roll is about 68 lakh smaller.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Gujarat"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in final roll",
+          "value": 44030725,
+          "unit": "electors",
+          "as_of": "2026-02-17"
+        },
+        {
+          "label": "net addition after draft",
+          "value": 560000,
+          "unit": "electors",
+          "as_of": "2026-02-17"
+        },
+        {
+          "label": "net fall from 27 Oct 2025 (computed)",
+          "value": 6812711,
+          "unit": "electors",
+          "as_of": "2026-02-17"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/gujarats-voter-count-stands-at-440-crore-in-final-electoral-rolls-published-by-ec-after-sir-3901904",
+          "publisher": "Deccan Herald (PTI)",
+          "title": "Gujarat's voter count stands at 4.40 crore in final electoral rolls published by EC after SIR",
+          "published": "2026-02-17",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260307205854/https://www.deccanherald.com/india/gujarats-voter-count-stands-at-440-crore-in-final-electoral-rolls-published-by-ec-after-sir-3901904",
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzPKLkuiExxOKadAHYzWQYglpeBXSsnQZZ9%2F7T4x79iAbqZkPGQcgpZ5DC5VgTXBLPY2ucV7cIdu67aNQ0sZco1w%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "SIR Phase-2 Daily Bulletin: 3:00 PM of 11th December 2025 (No. ECI/SIR/DB/30/2025)",
+          "published": "2025-12-11",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.deccanherald.com/india/gujarats-voter-count-stands-at-440-crore-in-final-electoral-rolls-published-by-ec-after-sir-3901904",
+        "note": "Opened DH/PTI (17 Feb 2026): 4,40,30,725 voters, 5.60 lakh added after draft, per CEO office. Subtraction from 5,08,43,436 checked (68,12,711)."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-tn-final-roll-2026-02",
+      "kind": "figure",
+      "date": "2026-02-17",
+      "date_precision": "day",
+      "title": "Tamil Nadu final roll: 5,67,07,380 electors after 27.53 lakh added",
+      "summary": "ECI records Tamil Nadu's final roll at 5,67,07,380 general electors plus 67,056 service voters. As reported by PTI, the CEO said 27.53 lakh eligible electors were added and 4.23 lakh ineligible names deleted during claims and objections (19 December 2025 to 30 January 2026), and that 97.37 lakh names were deleted overall against 6.41 crore before the SIR.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Tamil Nadu"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in final roll (general)",
+          "value": 56707380,
+          "unit": "electors",
+          "as_of": "2026-02-17"
+        },
+        {
+          "label": "service voters",
+          "value": 67056,
+          "unit": "electors",
+          "as_of": "2026-02-17"
+        },
+        {
+          "label": "added during claims and objections",
+          "value": 2753000,
+          "unit": "electors",
+          "as_of": "2026-02-23"
+        },
+        {
+          "label": "deleted during claims and objections",
+          "value": 423000,
+          "unit": "electors",
+          "as_of": "2026-02-23"
+        },
+        {
+          "label": "net fall from 27 Oct 2025 (computed)",
+          "value": 7407207,
+          "unit": "electors",
+          "as_of": "2026-02-17"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzBiU51zPFZI5qMtjV1qgjFg193XTtp6Zn6FU9qB%2FYxKh2I6Fg%2BNN0%2Fk6VQmFY0pHFCSv%2B1yJkuMeCkTzY9fhBvw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "General Election to the Legislative Assemblies of Assam, Kerala, Tamil Nadu, West Bengal and Puducherry, 2026 (No. 464/PN/2026/EPS)",
+          "published": "2026-03-15",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/tamil-nadu-ceo-releases-final-electoral-roll-97-37-lakh-names-of-voters-deleted/",
+          "publisher": "The Tribune (PTI)",
+          "title": "TN CEO releases final electoral roll, 97.37 lakh names of voters deleted",
+          "published": "2026-02-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260723104031/https://www.tribuneindia.com/news/india/tamil-nadu-ceo-releases-final-electoral-roll-97-37-lakh-names-of-voters-deleted/",
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/tamil-nadu/sir-in-tamil-nadu-final-electoral-roll-for-poll-bound-state-out-over-74-lakh-names-deleted-3908556",
+          "publisher": "Deccan Herald",
+          "title": "SIR in Tamil Nadu: Final voter list for poll-bound state out, over 74 lakh names deleted",
+          "published": "2026-02-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Dates conflict: ECI's 15 March 2026 note says Tamil Nadu's final publication was on 17.02.2026; PTI reports the CEO released the final roll on Monday 23 February 2026. The '97.37 lakh deleted' figure the CEO cited is the draft-stage exclusion, not the net fall.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzBiU51zPFZI5qMtjV1qgjFg193XTtp6Zn6FU9qB%2FYxKh2I6Fg%2BNN0%2Fk6VQmFY0pHFCSv%2B1yJkuMeCkTzY9fhBvw%3D%3D",
+        "note": "Opened ECI 464/PN/2026/EPS (TN final 5,67,07,380 + 67,056; final publication 17.02.2026) and Tribune/PTI (23 Feb 2026: CEO Archana Patnaik, 27.53 lakh added, 4.23 lakh deleted; gender split sums to 5,67,07,380). Summary now says the CEO figures come via PTI; the date conflict note is accurate."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-chhattisgarh-final-roll-2026-02-21",
+      "kind": "figure",
+      "date": "2026-02-21",
+      "date_precision": "day",
+      "title": "Chhattisgarh final roll: 1,87,30,914 electors, net 2.35 lakh above draft",
+      "summary": "Chhattisgarh's CEO published the final roll on 21 February 2026 with 1,87,30,914 electors, a net addition of 2,34,994 after the draft; claims were disposed of by 14 February. Against 2,12,30,737 before the SIR, the roll is 24,99,823 smaller (our subtraction).",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Chhattisgarh"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in final roll",
+          "value": 18730914,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "net addition after draft",
+          "value": 234994,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "net fall from pre-SIR roll (computed)",
+          "value": 2499823,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceochhattisgarh.nic.in/assets/pdf%20files/PN21.02.2026FinalPublicationofERollChhattisgarh.pdf",
+          "publisher": "Office of the Chief Electoral Officer, Chhattisgarh",
+          "title": "Press note on final publication of electoral roll (Hindi)",
+          "published": "2026-02-21",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceochhattisgarh.nic.in/assets/pdf%20files/PN21.02.2026FinalPublicationofERollChhattisgarh.pdf",
+        "note": "Opened CEO Chhattisgarh note: final 1,87,30,914 on 21.02.2026, net +2,34,994, claims disposed by 14 Feb. Subtraction 24,99,823 checked."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-goa-final-roll-2026-02-21",
+      "kind": "figure",
+      "date": "2026-02-21",
+      "date_precision": "day",
+      "title": "Goa final roll: 10,57,566 electors; 35,780 marked ineligible after notices",
+      "summary": "Goa's final roll of 21 February 2026 lists 10,57,566 electors. From the 10,84,992 draft, 12,166 electors were added, 3,812 deleted through forms and 35,780 marked ineligible after notices on 'unmapped' and 'logical discrepancy' cases, a net change of minus 27,426. Against 11,85,034 before the SIR, the roll is 1,27,468 smaller (our subtraction).",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Goa"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in final roll",
+          "value": 1057566,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "electors added (Form 6)",
+          "value": 12166,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "electors deleted via forms",
+          "value": 3812,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "electors marked ineligible (unmapped / logical discrepancy)",
+          "value": 35780,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "total deleted from draft",
+          "value": 39592,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "claims and objections filed on draft",
+          "value": 24949,
+          "unit": "forms",
+          "as_of": "2026-01-19"
+        },
+        {
+          "label": "net fall from pre-SIR roll (computed)",
+          "value": 127468,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceogoa.nic.in/PDF/SIR2026/press-note-Final-publication.pdf",
+          "publisher": "Office of the Chief Electoral Officer, Goa",
+          "title": "Press Note on final publication of electoral roll, SIR 2026",
+          "published": "2026-02-21",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20260420095255/https://www.ceogoa.nic.in/PDF/SIR2026/press-note-Final-publication.pdf",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "India TV (21 Feb 2026) reported 3,959 deletions via forms; the CEO's note says 3,812.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceogoa.nic.in/PDF/SIR2026/press-note-Final-publication.pdf",
+        "note": "Opened Goa CEO note: 24,949 claims/objections, 12,166 added, 3,812 deleted, 35,780 ineligible, 39,592 total deleted, net -27,426, final 10,57,566. Subtraction 1,27,468 checked."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-kerala-final-roll-2026-02-21",
+      "kind": "figure",
+      "date": "2026-02-21",
+      "date_precision": "day",
+      "title": "Kerala final roll: about 2.70 crore electors; 53,229 cut after hearings",
+      "summary": "As reported by The News Minute, Kerala's CEO office announced on 20 February a final electorate of 2,69,53,644, with 53,229 names deleted from the draft after hearings, 13,51,151 Form 6 and 1,59,111 overseas (Form 6A) applications accepted, and 36,88,948 notices issued (19,32,688 'no mapping', 17,56,260 discrepancies). ECI's 15 March note lists Kerala's final roll, published 21 February, at 2,70,52,007 general electors plus 54,052 service voters.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Kerala"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "final electorate announced by CEO",
+          "value": 26953644,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "final roll per ECI 15 March note (general)",
+          "value": 27052007,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "names deleted from draft after hearings",
+          "value": 53229,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "Form 6 applications accepted",
+          "value": 1351151,
+          "unit": "applications",
+          "as_of": "2026-01-30"
+        },
+        {
+          "label": "Form 6A overseas applications accepted",
+          "value": 159111,
+          "unit": "applications",
+          "as_of": "2026-01-30"
+        },
+        {
+          "label": "notices issued",
+          "value": 3688948,
+          "unit": "notices",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "notices: no mapping",
+          "value": 1932688,
+          "unit": "notices",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "notices: discrepancies",
+          "value": 1756260,
+          "unit": "notices",
+          "as_of": "2026-02-21"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.thenewsminute.com/kerala/kerala-sir-53229-voters-deleted-final-electorate-at-269-crore",
+          "publisher": "The News Minute",
+          "title": "Kerala SIR: 53,229 voters deleted, final electorate at 2.69 crore",
+          "published": "2026-02-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzBiU51zPFZI5qMtjV1qgjFg193XTtp6Zn6FU9qB%2FYxKh2I6Fg%2BNN0%2Fk6VQmFY0pHFCSv%2B1yJkuMeCkTzY9fhBvw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "General Election to the Legislative Assemblies of Assam, Kerala, Tamil Nadu, West Bengal and Puducherry, 2026 (No. 464/PN/2026/EPS)",
+          "published": "2026-03-15",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The CEO-announced figure (2,69,53,644) and ECI's figure (2,70,52,007) differ by 98,363; the source of the gap is not explained in either document.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.thenewsminute.com/kerala/kerala-sir-53229-voters-deleted-final-electorate-at-269-crore",
+        "note": "Opened TNM (21 Feb 2026) and ECI 464/PN/2026/EPS. All figures match; the CEO figures are from TNM, so the summary now says so. TNM says the figures were announced Friday 20 Feb for publication 21 Feb. Gap of 98,363 recomputed."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-mp-final-roll-2026-02-21",
+      "kind": "figure",
+      "date": "2026-02-21",
+      "date_precision": "day",
+      "title": "Madhya Pradesh final roll: 5,39,81,065 electors, 34.25 lakh fewer",
+      "summary": "ECI data reported by PTI put Madhya Pradesh's final roll at 5,39,81,065, up from 5,31,31,983 in the draft and down 34,25,078 (about 6%) from 5,74,06,143 before the SIR, on grounds of absence, death, migration and duplication.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Madhya Pradesh"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in final roll",
+          "value": 53981065,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "net deletion from pre-SIR roll",
+          "value": 3425078,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.business-standard.com/india-news/ec-publishes-final-electoral-roll-for-mp-with-5-3-crore-voters-over-34-million-names-dropped-126022100775_1.html",
+          "publisher": "Business Standard (PTI)",
+          "title": "EC publishes final MP electoral roll: 5.39 cr voters, 3.4 mn dropped",
+          "published": "2026-02-21",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260221165611/https://www.business-standard.com/india-news/ec-publishes-final-electoral-roll-for-mp-with-5-3-crore-voters-over-34-million-names-dropped-126022100775_1.html",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.business-standard.com/india-news/ec-publishes-final-electoral-roll-for-mp-with-5-3-crore-voters-over-34-million-names-dropped-126022100775_1.html",
+        "note": "Opened BS/PTI (21 Feb 2026): 5,39,81,065 final, 5,31,31,983 draft, 34,25,078 (~6%) deleted. Match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-rajasthan-final-roll-2026-02-21",
+      "kind": "figure",
+      "date": "2026-02-21",
+      "date_precision": "day",
+      "title": "Rajasthan final roll: 5,15,19,929 electors; 12.91 lakh added, 2.43 lakh deleted",
+      "summary": "The Rajasthan CEO's release, as reported, said 12,91,365 voters were added and 2,42,760 deleted after the draft, giving a final roll of 5,15,19,929 across 199 constituencies (excluding Anta).",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Rajasthan"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in final roll (excl. Anta)",
+          "value": 51519929,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "added after draft",
+          "value": 1291365,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "deleted after draft",
+          "value": 242760,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.indiatvnews.com/rajasthan/rajasthan-sir-over-2-42-lakh-names-deleted-in-final-voter-list-published-by-ec-2026-02-21-1031131",
+          "publisher": "India TV",
+          "title": "Rajasthan SIR: Over 2.42 lakh names deleted in final voter list published by EC",
+          "published": "2026-02-21",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260222170858/https://www.indiatvnews.com/rajasthan/rajasthan-sir-over-2-42-lakh-names-deleted-in-final-voter-list-published-by-ec-2026-02-21-1031131",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.indiatvnews.com/rajasthan/rajasthan-sir-over-2-42-lakh-names-deleted-in-final-voter-list-published-by-ec-2026-02-21-1031131",
+        "note": "Opened India TV (21 Feb 2026): 12,91,365 added, 2,42,760 deleted, final 5,15,19,929, 199 ACs excl. Anta. Match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-wb-final-roll-2026-02-28",
+      "kind": "figure",
+      "date": "2026-02-28",
+      "date_precision": "day",
+      "title": "West Bengal final roll: 6.45 crore listed, 60.06 lakh 'under adjudication'",
+      "summary": "West Bengal's final roll was published on 28 February 2026 under Supreme Court orders. From the 7,08,16,630 draft, 1,82,036 were added (Form 6/6A), 6,671 added via Form 8, 5,46,053 deleted (Form 7), and 60,06,675 marked 'under adjudication', leaving 6,44,52,609 on the roll. Names cleared by judicial officers were to be added by supplementary lists.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in final roll (excluding those under adjudication)",
+          "value": 64452609,
+          "unit": "electors",
+          "as_of": "2026-02-28"
+        },
+        {
+          "label": "electors marked under adjudication",
+          "value": 6006675,
+          "unit": "electors",
+          "as_of": "2026-02-28"
+        },
+        {
+          "label": "additions (Form 6 and 6A)",
+          "value": 182036,
+          "unit": "electors",
+          "as_of": "2026-02-28"
+        },
+        {
+          "label": "additions (Form 8)",
+          "value": 6671,
+          "unit": "electors",
+          "as_of": "2026-02-28"
+        },
+        {
+          "label": "deletions (Form 7)",
+          "value": 546053,
+          "unit": "electors",
+          "as_of": "2026-02-28"
+        },
+        {
+          "label": "service voters",
+          "value": 108543,
+          "unit": "electors",
+          "as_of": "2026-02-28"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+          "publisher": "Office of the Chief Electoral Officer, West Bengal",
+          "title": "Press Note No. CEO/PN-05/2026 (final roll publication)",
+          "published": "2026-02-28",
+          "tier": 1,
+          "archive_url": "http://web.archive.org/web/20260422193949/https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzBiU51zPFZI5qMtjV1qgjFg193XTtp6Zn6FU9qB%2FYxKh2I6Fg%2BNN0%2Fk6VQmFY0pHFCSv%2B1yJkuMeCkTzY9fhBvw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "General Election to the Legislative Assemblies of Assam, Kerala, Tamil Nadu, West Bengal and Puducherry, 2026 (No. 464/PN/2026/EPS)",
+          "published": "2026-03-15",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/bengal-voters-deleted-adjudication-election-rolls-assembly-polls-10624203/",
+          "publisher": "The Indian Express",
+          "title": "Of 27.16 lakh Bengal voters deleted after adjudication, doors shut for more than half",
+          "published": "2026-04-07",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260419145836/https://indianexpress.com/article/political-pulse/bengal-voters-deleted-adjudication-election-rolls-assembly-polls-10624203/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+          "publisher": "The Indian Express",
+          "title": "Missing in Election Commission affidavit: Break-up of Bengal SIR appeals for inclusion, exclusion of names",
+          "published": "2026-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The CEO's table reconciles exactly: 7,08,16,630 + 1,82,036 + 6,671 - 5,46,053 - 60,06,675 = 6,44,52,609. The 60.06 lakh were electors flagged by ECI's 'logical discrepancy' checks; the Supreme Court's orders of 20 and 24 February 2026 in W.P.(C) 1089/2025 placed them before judicial officers. The CEO's note itself calls the 60.06 lakh 'doubtful and pending cases'; The Quint described them as marked doubtful by election officers.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+        "note": "Opened CEO/PN-05/2026: all additions, deletions, 60,06,675 under adjudication and 6,44,52,609 match; cites SC orders of 20/02 and 24/02/2026 in WP(C) 1089/2025. ECI 464/PN gives 1,08,543 service voters. The logical-discrepancy description is supported by IE (19 Sep 2026)."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-wb-supplementary-lists-2026-03-27",
+      "kind": "figure",
+      "date": "2026-03-27",
+      "date_precision": "day",
+      "title": "Judicial officers clear 37 lakh of 60 lakh West Bengal cases by 27 March",
+      "summary": "West Bengal CEO Manoj Agarwal said about 37 lakh adjudication cases had been disposed of by 705 judicial officers by 27 March, under Calcutta High Court monitoring. The CEO's office said the first supplementary list (23 March) covered nearly 29 lakh cases and 8 lakh more followed in the second. Unnamed sources told the paper that around 3 lakh names were rejected out of the first 10 lakh cases adjudicated.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Manoj Kumar Agarwal"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "adjudication cases disposed",
+          "value": 3700000,
+          "unit": "cases",
+          "as_of": "2026-03-27"
+        },
+        {
+          "label": "cases in first supplementary list",
+          "value": 2900000,
+          "unit": "cases",
+          "as_of": "2026-03-23"
+        },
+        {
+          "label": "judicial officers deployed",
+          "value": 705,
+          "unit": "officers",
+          "as_of": "2026-03-27"
+        },
+        {
+          "label": "names rejected among first 10 lakh cases (approx.)",
+          "value": 300000,
+          "unit": "electors",
+          "as_of": "2026-03-27"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/judicial-officers-clear-37l-of-60l-cases-in-bengal-roll-revision/",
+          "publisher": "The Tribune",
+          "title": "Judicial officers clear 37L of 60L cases in Bengal roll revision",
+          "published": "2026-03-29",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The report notes ECI had not disclosed total deletions across the two supplementary lists at that point.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.tribuneindia.com/news/india/judicial-officers-clear-37l-of-60l-cases-in-bengal-roll-revision/",
+        "note": "Opened Tribune (29 Mar 2026). Figures match, but the ~3 lakh rejections are attributed in the report to unnamed \"sources\", not to the CEO; summary now says so."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-wb-tribunal-restorations-before-poll-2026-04",
+      "kind": "figure",
+      "date": "2026-04",
+      "date_precision": "month",
+      "title": "Tribunals restored 1,607 West Bengal electors before polling",
+      "summary": "Nineteen appellate tribunals of retired High Court judges, ordered by the Supreme Court on 10 March and notified on 20 March, began work on 13 April. Before polling on 23 and 29 April they added back 1,607 electors; others with pending appeals could not vote.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "courts"
+      ],
+      "figures": [
+        {
+          "label": "electors restored by tribunals before polling",
+          "value": 1607,
+          "unit": "electors",
+          "as_of": "2026-04-29"
+        },
+        {
+          "label": "appellate tribunals",
+          "value": 19,
+          "unit": "tribunals",
+          "as_of": "2026-04-13"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "publisher": "The Indian Express",
+          "title": "Of 27 lakh deleted West Bengal voters, 22 lakh have filed appeals: Election Commission to Supreme Court",
+          "published": "2026-09-19",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260920041032/https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "A search-result summary of another report gave 136 restorations before the first-phase cut-off; that report was not opened and is not relied on. The two figures may refer to different cut-off dates.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+        "note": "Opened IE (19 Sep 2026) and IE (18 Sep 2026): SC ordered tribunals 10 March, EC notified 19 on 20 March, began 13 April; polling 23 and 29 April; 1,607 added back in time. Match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-wb-adjudication-outcome-2026-04",
+      "kind": "figure",
+      "date": "2026-04-07",
+      "date_precision": "day",
+      "title": "West Bengal adjudication ends: 27.16 lakh deleted, 32.9 lakh retained",
+      "summary": "Judicial officers ordered 27.16 lakh of the 60.06 lakh flagged electors deleted and about 32.9 lakh included. The Quint attributed the 27.16 lakh figure to official numbers cited by ECI; by its analysis Murshidabad (4.55 lakh), North 24 Parganas (3.25 lakh), Malda (2.39 lakh), South 24 Parganas (2.22 lakh) and Purba Bardhaman (2.09 lakh) accounted for over half.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Manoj Kumar Agarwal"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors deleted after judicial adjudication",
+          "value": 2716000,
+          "unit": "electors",
+          "as_of": "2026-04-07"
+        },
+        {
+          "label": "electors included after judicial adjudication (approx.)",
+          "value": 3290000,
+          "unit": "electors",
+          "as_of": "2026-04-07"
+        },
+        {
+          "label": "deleted: Murshidabad",
+          "value": 455000,
+          "unit": "electors",
+          "as_of": "2026-04-07"
+        },
+        {
+          "label": "deleted: North 24 Parganas",
+          "value": 325000,
+          "unit": "electors",
+          "as_of": "2026-04-07"
+        },
+        {
+          "label": "deleted: Malda",
+          "value": 239000,
+          "unit": "electors",
+          "as_of": "2026-04-07"
+        },
+        {
+          "label": "deleted: South 24 Parganas",
+          "value": 222000,
+          "unit": "electors",
+          "as_of": "2026-04-07"
+        },
+        {
+          "label": "deleted: Purba Bardhaman",
+          "value": 209000,
+          "unit": "electors",
+          "as_of": "2026-04-07"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.thequint.com/news/politics/west-bengal-final-voter-list-deletions-2026-elections-muslims-and-tmc-voters-targeted",
+          "publisher": "The Quint",
+          "title": "27 Lakh Deleted: Bengal's Voter Purge is Clustered In Minority & TMC Bastions",
+          "published": "2026-04-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+          "publisher": "The Indian Express",
+          "title": "Missing in Election Commission affidavit: Break-up of Bengal SIR appeals for inclusion, exclusion of names",
+          "published": "2026-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Date is the Quint's first publication; the adjudication was reported to conclude on 6 April 2026. The district figures are the Quint's analysis of CEO data; its headline characterisation is the outlet's, not ours. 27.16 + 32.9 = 60.06 lakh.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.thequint.com/news/politics/west-bengal-final-voter-list-deletions-2026-elections-muslims-and-tmc-voters-targeted",
+        "note": "Opened The Quint (7 Apr 2026) and IE (18 Sep 2026). Figures match (IE: 27.16 lakh deleted, 32.9 lakh included). Corrected: the Quint attributes 27.16 lakh to \"official numbers cited by the ECI\", not to CEO Agarwal (who is quoted only on freezing the roll); source title corrected to the live headline."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-up-final-roll-2026-04-10",
+      "kind": "figure",
+      "date": "2026-04-10",
+      "date_precision": "day",
+      "title": "Uttar Pradesh final roll: 13,39,84,792 electors, 84.29 lakh above draft",
+      "summary": "Uttar Pradesh's final roll of 10 April 2026 lists 13,39,84,792 voters, an increase of 84,28,767 over the 12,55,56,025 draft. Against 15,44,30,092 before the SIR, the roll is 2,04,45,300 smaller (our subtraction).",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Uttar Pradesh"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in final roll",
+          "value": 133984792,
+          "unit": "electors",
+          "as_of": "2026-04-10"
+        },
+        {
+          "label": "increase over draft",
+          "value": 8428767,
+          "unit": "electors",
+          "as_of": "2026-04-10"
+        },
+        {
+          "label": "18-19 age electors",
+          "value": 1763360,
+          "unit": "electors",
+          "as_of": "2026-04-10"
+        },
+        {
+          "label": "net fall from pre-SIR roll (computed)",
+          "value": 20445300,
+          "unit": "electors",
+          "as_of": "2026-04-10"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/uttar-pradesh-electorate-grows-by-over-84-lakh-after-completion-of-sir-exercise",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "Uttar Pradesh electorate grows by over 84 lakh after completion of SIR exercise",
+          "published": "2026-04-10",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "UP's final was originally scheduled for 6 March 2026 (Akashvani, 6 Jan 2026).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.newsonair.gov.in/uttar-pradesh-electorate-grows-by-over-84-lakh-after-completion-of-sir-exercise",
+        "note": "Opened Akashvani (10 Apr 2026): final 13,39,84,792, draft 12,55,56,025, increase 84,28,767, 17,63,360 aged 18-19. Subtraction 2,04,45,300 checked."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-phase2-final-tally-2026-04-11",
+      "kind": "figure",
+      "date": "2026-04-11",
+      "date_precision": "day",
+      "title": "Phase II ends: 12 States/UTs' rolls shrink 10.2%, from 50.99 to 45.81 crore",
+      "summary": "With Uttar Pradesh's final roll, PTI reported the combined Phase II roll at 45.81 crore against 50.99 crore on 27 October 2025, a fall of over 5.18 crore (10.2%). It said 66,88,636 deceased electors were removed, including 25.47 lakh in UP and 24.16 lakh in West Bengal, and 63.16 lakh names were deleted after objections and adjudication.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Andaman & Nicobar",
+        "Chhattisgarh",
+        "Goa",
+        "Gujarat",
+        "Lakshadweep",
+        "Madhya Pradesh",
+        "Puducherry",
+        "Tamil Nadu",
+        "West Bengal",
+        "Rajasthan",
+        "Uttar Pradesh",
+        "Kerala"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "Phase II final electors",
+          "value": 458100000,
+          "unit": "electors",
+          "as_of": "2026-04-11"
+        },
+        {
+          "label": "net fall from 27 Oct 2025",
+          "value": 51800000,
+          "unit": "electors",
+          "as_of": "2026-04-11"
+        },
+        {
+          "label": "deceased electors removed",
+          "value": 6688636,
+          "unit": "electors",
+          "as_of": "2026-04-11"
+        },
+        {
+          "label": "deleted after objections and adjudication",
+          "value": 6316000,
+          "unit": "electors",
+          "as_of": "2026-04-11"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://theprint.in/india/sir-phase-2-voters-list-of-12-states-uts-pruned-by-over-10/2902486/",
+          "publisher": "ThePrint (PTI)",
+          "title": "SIR phase 2: Voters' list of 12 states/UTs pruned by over 10%",
+          "published": "2026-04-11",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260413044837/https://theprint.in/india/sir-phase-2-voters-list-of-12-states-uts-pruned-by-over-10/2902486/",
+          "quote": null
+        },
+        {
+          "url": "https://thefederal.com/elections-2026/ec-sir-12-states-ut-reduces-voter-rolls-by-10pc-over-5-crore-names-scrapped-elections-2026-238635",
+          "publisher": "The Federal (PTI)",
+          "title": "SIR trims voter rolls by 10pc in 12 states, UTs; over 5.18 cr names scrapped",
+          "published": "2026-04-11",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Computed by PTI from EC and state data, not an ECI total. The deceased figure (66.9 lakh) conflicts with DH's draft-stage count of 1.46 crore removed for death; the UP component (25.47 lakh) matches Akashvani's UP multiple-enrolment figure, not its UP death figure (46.23 lakh). Summing the final figures in this file (WB at 6.45 crore excluding supplementary additions; A&N and Lakshadweep finals not found) gives about 45.2 crore; adding WB's roughly 32.9 lakh post-adjudication inclusions brings it closer to PTI's 45.81 crore, but the exact reconciliation is not published.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://thefederal.com/elections-2026/ec-sir-12-states-ut-reduces-voter-rolls-by-10pc-over-5-crore-names-scrapped-elections-2026-238635",
+        "note": "Opened The Federal/PTI (11 Apr 2026): 50.99 to 45.81 crore, over 5.18 crore (10.2%), 66,88,636 deceased incl. 25.47 lakh UP and 24.16 lakh WB, 63.16 lakh after objections and adjudication. ThePrint headline matches; its body did not render."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-phase3-announced-2026-05-14",
+      "kind": "event",
+      "date": "2026-05-14",
+      "date_precision": "day",
+      "title": "SIR Phase III ordered in 16 States and 3 UTs, about 36.73 crore electors",
+      "summary": "ECI ordered Phase III on 14 May 2026 across 16 states and three UTs covering about 36.73 crore voters, in staggered batches.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Andhra Pradesh",
+        "Arunachal Pradesh",
+        "Haryana",
+        "Jharkhand",
+        "Karnataka",
+        "Maharashtra",
+        "Manipur",
+        "Meghalaya",
+        "Mizoram",
+        "Nagaland",
+        "Odisha",
+        "Punjab",
+        "Sikkim",
+        "Tripura",
+        "Telangana",
+        "Uttarakhand",
+        "Delhi",
+        "Chandigarh",
+        "Dadra and Nagar Haveli and Daman and Diu"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors covered by Phase III (approx.)",
+          "value": 367300000,
+          "unit": "electors",
+          "as_of": "2026-05-14"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceochandigarh.gov.in/cadmin/uploads/advertisments/SIR-III_instruction_14_05_2026.pdf",
+          "publisher": "Election Commission of India",
+          "title": "Letter No. 23/2025-ERS (Vol.II) dated 14 May 2026: SIR of Electoral Roll (Phase III order to 19 CEOs)",
+          "published": "2026-05-14",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanchronicle.com/southern-states/telangana/sir-phase-3-several-states-push-forward-dates-to-publish-final-electoral-rolls-1984304",
+          "publisher": "Deccan Chronicle",
+          "title": "SIR Phase 3: Several States Push Forward Dates to Publish Final Electoral Rolls",
+          "published": "2026-09-02",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The ECI order (hosted by CEO Chandigarh) lists the 19 States/UTs; the 36.73 crore figure comes from the report because ECI's 14 May press note PDF returned 'Access denied'. PTI (11 April 2026) had earlier described a planned Phase III of 17 states and 5 UTs including Himachal Pradesh, Jammu and Kashmir and Ladakh, which are not in the 14 May order.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceochandigarh.gov.in/cadmin/uploads/advertisments/SIR-III_instruction_14_05_2026.pdf",
+        "note": "Opened ECI letter 23/2025-ERS (Vol.II) of 14 May 2026 on CEO Chandigarh site: addressed to 19 CEOs matching the list. Deccan Chronicle (2 Sep) gives 16 states + 3 UTs, 36.73 crore. ECI PN/96/2026 also says 16 States and 3 UTs ordered 14 May."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "numbers-phase3-batch1-base-2026-05-31",
+      "kind": "figure",
+      "date": "2026-05-31",
+      "date_precision": "day",
+      "title": "Phase III first batch: Odisha, Mizoram, Sikkim, Manipur enumeration begins",
+      "summary": "Enumeration began on 30 May 2026 in Odisha (3,34,14,856 electors), Mizoram (8,75,008), Sikkim (4,71,077) and Manipur (20,92,140), with forms due by 28 June.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Odisha",
+        "Mizoram",
+        "Sikkim",
+        "Manipur"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors: Odisha",
+          "value": 33414856,
+          "unit": "electors",
+          "as_of": "2026-05-31"
+        },
+        {
+          "label": "electors: Mizoram",
+          "value": 875008,
+          "unit": "electors",
+          "as_of": "2026-05-31"
+        },
+        {
+          "label": "electors: Sikkim",
+          "value": 471077,
+          "unit": "electors",
+          "as_of": "2026-05-31"
+        },
+        {
+          "label": "electors: Manipur",
+          "value": 2092140,
+          "unit": "electors",
+          "as_of": "2026-05-31"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2Ff9ehkivZ9M0LYA0Mx7TMHPF8lTJJNtD8SeE0kK%2B10IFdOFtn933icz0MOeiesxvsQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/96/2026: SIR Phase III enumeration phase has started for Odisha, Mizoram, Sikkim and Manipur",
+          "published": "2026-05-31",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Odisha CEO later gave a pre-SIR base of 3,33,99,591 and the Sikkim CEO 4,71,018, slightly different from these ECI figures.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FztfbUTpXSxLP8g7dpVrk7%2Ff9ehkivZ9M0LYA0Mx7TMHPF8lTJJNtD8SeE0kK%2B10IFdOFtn933icz0MOeiesxvsQ%3D%3D",
+        "note": "Opened ECI PN/96/2026 (31.05.2026): enumeration started 30.05.2026, forms by 28.06.2026; Odisha 3,34,14,856, Mizoram 8,75,008, Sikkim 4,71,077, Manipur 20,92,140. Match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-karnataka-draft-roll-2026-08-24",
+      "kind": "figure",
+      "date": "2026-08-24",
+      "date_precision": "day",
+      "title": "Karnataka draft roll: 1.08 crore of 5.54 crore electors marked absent, shifted, dead",
+      "summary": "Karnataka's CEO published the draft on 24 August 2026 with 4,46,35,975 general electors against 5,54,32,314 on 16 June. 1,07,96,339 were marked ASDDO: 15,17,042 absent, 65,45,679 permanently shifted, 16,39,864 dead, 7,09,870 already enrolled and 3,83,884 other. 43,81,335 notices were due (20,35,835 anomalies, 23,45,500 no mapping). The final roll is due on 27 October.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Karnataka"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors as on 16 June 2026",
+          "value": 55432314,
+          "unit": "electors",
+          "as_of": "2026-06-16"
+        },
+        {
+          "label": "electors in draft roll (general)",
+          "value": 44635975,
+          "unit": "electors",
+          "as_of": "2026-08-24"
+        },
+        {
+          "label": "ASDDO total",
+          "value": 10796339,
+          "unit": "electors",
+          "as_of": "2026-08-24"
+        },
+        {
+          "label": "ASDDO: absent",
+          "value": 1517042,
+          "unit": "electors",
+          "as_of": "2026-08-24"
+        },
+        {
+          "label": "ASDDO: permanently shifted",
+          "value": 6545679,
+          "unit": "electors",
+          "as_of": "2026-08-24"
+        },
+        {
+          "label": "ASDDO: dead",
+          "value": 1639864,
+          "unit": "electors",
+          "as_of": "2026-08-24"
+        },
+        {
+          "label": "ASDDO: already enrolled (duplicate)",
+          "value": 709870,
+          "unit": "electors",
+          "as_of": "2026-08-24"
+        },
+        {
+          "label": "ASDDO: other",
+          "value": 383884,
+          "unit": "electors",
+          "as_of": "2026-08-24"
+        },
+        {
+          "label": "notices to be generated",
+          "value": 4381335,
+          "unit": "notices",
+          "as_of": "2026-08-24"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceo.karnataka.gov.in/uploads/PRESS%20NOTE%2024th%20Aug.pdf",
+          "publisher": "Office of the Chief Electoral Officer, Karnataka",
+          "title": "Press Note No. DPAR 163 ChuMaPa 2026: Publication of Draft Electoral Roll, SIR-2026",
+          "published": "2026-08-24",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Congress leader Randeep Singh Surjewala put Karnataka's removals at 1.43 crore (see congress-13-crore-claim); the CEO's draft-stage figure is 1,07,96,339.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceo.karnataka.gov.in/uploads/PRESS%20NOTE%2024th%20Aug.pdf",
+        "note": "Opened Karnataka CEO note (24.08.2026): 5,54,32,314 as on 16.06.2026; 4,46,35,975 digitised; ASDDO 1,07,96,339 and all five categories; notices 43,81,335 (20,35,835 + 23,45,500); final 27 Oct. Match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-delhi-draft-roll-2026-08-31",
+      "kind": "figure",
+      "date": "2026-08-31",
+      "date_precision": "day",
+      "title": "Delhi draft roll: 47.57 lakh of 1.45 crore electors left out",
+      "summary": "Delhi's CEO reported 1,45,10,299 electors at the start of the SIR and 97,53,577 (67.22%) in the 31 August 2026 draft. The 47,56,722 left out were recorded as 43,32,775 permanently shifted, absent or others, 2,82,412 deceased and 1,41,535 duplicate. The final roll is due on 4 November.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Delhi"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors at start of SIR",
+          "value": 14510299,
+          "unit": "electors",
+          "as_of": "2026-06-30"
+        },
+        {
+          "label": "electors in draft roll",
+          "value": 9753577,
+          "unit": "electors",
+          "as_of": "2026-08-31"
+        },
+        {
+          "label": "left out (ASDD total)",
+          "value": 4756722,
+          "unit": "electors",
+          "as_of": "2026-08-31"
+        },
+        {
+          "label": "left out: shifted/absent/others",
+          "value": 4332775,
+          "unit": "electors",
+          "as_of": "2026-08-31"
+        },
+        {
+          "label": "left out: deceased",
+          "value": 282412,
+          "unit": "electors",
+          "as_of": "2026-08-31"
+        },
+        {
+          "label": "left out: duplicate",
+          "value": 141535,
+          "unit": "electors",
+          "as_of": "2026-08-31"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceodelhi.gov.in/PDFFolders/2026/Draft_PublicationSIR31Aug2026.pdf",
+          "publisher": "Office of the Chief Electoral Officer, Delhi",
+          "title": "Press Note: Delhi SIR: Key Findings of Enumeration Phase (30 June - 17 August 2026)",
+          "published": "2026-08-31",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceodelhi.gov.in/PDFFolders/2026/Draft_PublicationSIR31Aug2026.pdf",
+        "note": "Opened Delhi CEO note (31.08.2026): 1,45,10,299 at start of SIR (began 30.06.2026), 97,53,577 (67.22%), 43,32,775 / 2,82,412 / 1,41,535 = 47,56,722. Final 04.11.2026 confirmed by CEO note of 19.09.2026."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-maharashtra-draft-roll-2026-08-31",
+      "kind": "figure",
+      "date": "2026-08-31",
+      "date_precision": "day",
+      "title": "Maharashtra draft roll leaves out 2.07 crore of 9.79 crore electors",
+      "summary": "Maharashtra's CEO reported 9,78,54,049 electors before the SIR, 7,71,65,562 (78.86%) in the 31 August 2026 draft, and 2,06,88,487 (21.14%) not included because forms were not collected (absent, shifted, dead, duplicate or other). The final roll is due on 4 November 2026.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors before SIR",
+          "value": 97854049,
+          "unit": "electors",
+          "as_of": null
+        },
+        {
+          "label": "electors in draft roll",
+          "value": 77165562,
+          "unit": "electors",
+          "as_of": "2026-08-31"
+        },
+        {
+          "label": "not included in draft (ASDDO)",
+          "value": 20688487,
+          "unit": "electors",
+          "as_of": "2026-08-31"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceoelection.maharashtra.gov.in/Downloads/PDF/Notification/Press%20Note%20English_31.08.2026%20Draft%20Roll.pdf",
+          "publisher": "Office of the Chief Electoral Officer, Maharashtra",
+          "title": "Press Note on Draft Publication of Electoral Roll in SIR - 2026",
+          "published": "2026-08-31",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The state-level press note gives the ASDDO total without a reason-wise split; district-wise figures are in its annexure. The press note gives the pre-SIR total without a reference date, so that figure's as_of is left blank.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://ceoelection.maharashtra.gov.in/Downloads/PDF/Notification/Press%20Note%20English_31.08.2026%20Draft%20Roll.pdf",
+        "note": "Opened Maharashtra CEO note (31.08.2026): 9,78,54,049 before, 7,71,65,562 (78.86%) in draft, 2,06,88,487 (21.14%) not included, final 04.11.2026. Figures match; removed an unsupported as_of date (2026-06-30) on the pre-SIR figure."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-phase3-draft-tally-2026-09-01",
+      "kind": "figure",
+      "date": "2026-09-01",
+      "date_precision": "day",
+      "title": "Phase III drafts: 6.15 crore names left out in 17 States/UTs",
+      "summary": "Deccan Herald tallied the 17 Phase III States/UTs with published drafts: 36,08,07,394 electors before the SIR, 29,93,00,115 in the drafts, 6,15,07,279 (17.04%) left out. Largest: Maharashtra 2,06,88,487, Karnataka 1,07,96,366, Telangana 73,39,235, Delhi 47,56,722, Andhra Pradesh 44,89,512, Jharkhand 43,61,987, Haryana 33,83,302, Punjab 20,66,635, Odisha 20,12,557. By share: Delhi 32.78%, DNH&DD 29.64%, Telangana 21.69%.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Maharashtra",
+        "Karnataka",
+        "Telangana",
+        "Delhi",
+        "Andhra Pradesh",
+        "Jharkhand",
+        "Haryana",
+        "Punjab",
+        "Odisha",
+        "Dadra and Nagar Haveli and Daman and Diu",
+        "Arunachal Pradesh"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors before SIR, 17 States/UTs",
+          "value": 360807394,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        },
+        {
+          "label": "electors in draft rolls, 17 States/UTs",
+          "value": 299300115,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        },
+        {
+          "label": "left out of draft rolls, 17 States/UTs",
+          "value": 61507279,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        },
+        {
+          "label": "left out: Telangana",
+          "value": 7339235,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        },
+        {
+          "label": "left out: Andhra Pradesh",
+          "value": 4489512,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        },
+        {
+          "label": "left out: Jharkhand",
+          "value": 4361987,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        },
+        {
+          "label": "left out: Haryana",
+          "value": 3383302,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        },
+        {
+          "label": "left out: Punjab",
+          "value": 2066635,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        },
+        {
+          "label": "share left out: Dadra and Nagar Haveli and Daman and Diu",
+          "value": 29.64,
+          "unit": "percent",
+          "as_of": "2026-09-01"
+        },
+        {
+          "label": "share left out: Arunachal Pradesh",
+          "value": 19.09,
+          "unit": "percent",
+          "as_of": "2026-09-01"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "publisher": "Deccan Herald",
+          "title": "SIR 3.0: Draft voter lists see over 6.15 crore deletions in 17 States, UTs",
+          "published": "2026-09-01",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Deccan Herald's aggregation, not an ECI total. Nagaland (draft due 20 September) and Tripura (due 21 October) were not yet included. DH's Karnataka figure (1,07,96,366) differs slightly from the CEO's 1,07,96,339. The same article put completed-SIR reductions in 13 States/UTs at about 10.5% or 5.83 crore. CEO primary documents for Telangana, Andhra Pradesh, Jharkhand, Haryana, Punjab, Uttarakhand, Meghalaya, Arunachal, Manipur, Mizoram and DNH&DD were not opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+        "note": "Opened DH (1 Sep 2026): 36,08,07,394 / 29,93,00,115 / 6,15,07,279 (17.04%); state counts and shares (Delhi 32.78, DNH&DD 29.64, Telangana 21.69, Arunachal 19.09) match; Nagaland 20 Sep, Tripura 21 Oct; 13 States/UTs completed, 10.5% or 5.83 crore."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-phase3-final-date-extensions-2026-09-02",
+      "kind": "event",
+      "date": "2026-09-02",
+      "date_precision": "day",
+      "title": "Phase III final-roll dates pushed back in eight States/UTs",
+      "summary": "Final publication was moved back in several Phase III States/UTs: Maharashtra by 28 days to 4 November, Karnataka and Delhi by 20 days to 27 October, Telangana by 18 days to 19 October, Odisha by 15 days to 21 September, and Andhra Pradesh, Haryana and Punjab by 11 days each.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Maharashtra",
+        "Karnataka",
+        "Delhi",
+        "Telangana",
+        "Odisha",
+        "Andhra Pradesh",
+        "Haryana",
+        "Punjab"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanchronicle.com/southern-states/telangana/sir-phase-3-several-states-push-forward-dates-to-publish-final-electoral-rolls-1984304",
+          "publisher": "Deccan Chronicle",
+          "title": "SIR Phase 3: Several States Push Forward Dates to Publish Final Electoral Rolls",
+          "published": "2026-09-02",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Delhi's CEO notes of 19 and 21 September 2026 give Delhi's final date as 4 November 2026, not 27 October; Karnataka's CEO gives 27 October for Karnataka. Deccan Chronicle's Maharashtra line is internally inconsistent: 7 September to 4 November is about 58 days, not 28. The dates, not the day counts, should be relied on.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.deccanchronicle.com/southern-states/telangana/sir-phase-3-several-states-push-forward-dates-to-publish-final-electoral-rolls-1984304",
+        "note": "Opened Deccan Chronicle (2 Sep 2026): figures as summarised. Added a note that DC's Maharashtra day count does not match its own dates; the existing note on Delhi (4 Nov per CEO Delhi, not 27 Oct) is confirmed by the CEO note of 19.09.2026."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-phase3-vs-2024-comparison-2026-09-06",
+      "kind": "figure",
+      "date": "2026-09-06",
+      "date_precision": "day",
+      "title": "Against 2024 Lok Sabha rolls, Phase III drafts are 15.7% smaller",
+      "summary": "A Civilsdaily summary set the 17 Phase III drafts (29,93,00,115) against the same States/UTs' 2024 Lok Sabha electorate (35,50,50,008), a fall of 15.7%. Maharashtra fell by 1,58,96,198 (17.08%); Delhi (35.89%) and Chandigarh (31.84%) fell most in share. Of 6.15 crore left out, it said 1.11 crore were marked dead, 4.52 crore absent, 49.58 lakh duplicate and about 3 lakh other.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "2024 Lok Sabha electorate, 17 States/UTs",
+          "value": 355050008,
+          "unit": "electors",
+          "as_of": "2024-06-01"
+        },
+        {
+          "label": "electors in Phase III draft rolls",
+          "value": 299300115,
+          "unit": "electors",
+          "as_of": "2026-09-06"
+        },
+        {
+          "label": "left out: dead",
+          "value": 11100000,
+          "unit": "electors",
+          "as_of": "2026-09-06"
+        },
+        {
+          "label": "left out: absent",
+          "value": 45200000,
+          "unit": "electors",
+          "as_of": "2026-09-06"
+        },
+        {
+          "label": "left out: duplicate",
+          "value": 4958000,
+          "unit": "electors",
+          "as_of": "2026-09-06"
+        },
+        {
+          "label": "left out: others (approx.)",
+          "value": 300000,
+          "unit": "electors",
+          "as_of": "2026-09-06"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.civilsdaily.com/news/voter-lists-shrink-by-15-7-in-17-states-and-u-t-s-after-sir/",
+          "publisher": "Civilsdaily",
+          "title": "Voter lists shrink by 15.7% in 17 States and U.T.s after SIR",
+          "published": "2026-09-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Civilsdaily is an exam-preparation site and does not name its underlying source; the attribution to The Hindu in the earlier draft could not be confirmed from the opened page. Its baseline is the 2024 Lok Sabha electorate, not the pre-SIR roll, which is why its percentages (e.g. Delhi 35.89%) differ from Deccan Herald's (Delhi 32.78%). The '2024-06-01' as_of date is a placeholder for the 2024 general election; the exact reference date was not given. Replace this source with the original analysis if it can be found.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.civilsdaily.com/news/voter-lists-shrink-by-15-7-in-17-states-and-u-t-s-after-sir/",
+        "note": "Opened Civilsdaily (6 Sep 2026): all figures match, but the page never mentions The Hindu, so the attribution was removed and the source labelled as Civilsdaily. Weak source; consider dropping or replacing."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-sikkim-draft-final-2026-09-06",
+      "kind": "figure",
+      "date": "2026-09-06",
+      "date_precision": "day",
+      "title": "Sikkim final roll: 4,18,467 electors, 3.42% below draft",
+      "summary": "Sikkim's CEO reported 4,71,018 electors before the SIR and 4,33,294 in the 5 July draft; 37,737 forms were not returned. Of draft electors, 72,135 were unmapped and 52,384 flagged as logical discrepancies. After 16,867 Form 7 objections, 16,809 names were deleted and 1,982 added, for a final roll of 4,18,467.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Sikkim"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors before SIR",
+          "value": 471018,
+          "unit": "electors",
+          "as_of": "2026-05-30"
+        },
+        {
+          "label": "electors in draft roll",
+          "value": 433294,
+          "unit": "electors",
+          "as_of": "2026-07-05"
+        },
+        {
+          "label": "forms not returned",
+          "value": 37737,
+          "unit": "electors",
+          "as_of": "2026-07-05"
+        },
+        {
+          "label": "draft electors unmapped",
+          "value": 72135,
+          "unit": "electors",
+          "as_of": "2026-07-05"
+        },
+        {
+          "label": "logical discrepancies flagged",
+          "value": 52384,
+          "unit": "electors",
+          "as_of": "2026-07-05"
+        },
+        {
+          "label": "Form 7 objections received",
+          "value": 16867,
+          "unit": "forms",
+          "as_of": "2026-08-04"
+        },
+        {
+          "label": "deleted after draft",
+          "value": 16809,
+          "unit": "electors",
+          "as_of": "2026-09-06"
+        },
+        {
+          "label": "added after draft",
+          "value": 1982,
+          "unit": "electors",
+          "as_of": "2026-09-06"
+        },
+        {
+          "label": "electors in final roll",
+          "value": 418467,
+          "unit": "electors",
+          "as_of": "2026-09-06"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://northeasttoday.in/northeast/sikkim-publishes-final-electoral-roll-under-sir-2026-electorate-declines-by-3-42/",
+          "publisher": "Northeast Today",
+          "title": "Sikkim Publishes Final Electoral Roll Under SIR 2026; Electorate Declines By 3.42%",
+          "published": "2026-09-07",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260908020043/https://northeasttoday.in/northeast/sikkim-publishes-final-electoral-roll-under-sir-2026-electorate-declines-by-3-42/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "4,71,018 minus 37,737 is 4,33,281, 13 short of the reported draft figure; the source does not explain the gap.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://northeasttoday.in/northeast/sikkim-publishes-final-electoral-roll-under-sir-2026-electorate-declines-by-3-42/",
+        "note": "Opened Northeast Today (7 Sep 2026): CEO Raj Kumar Yadav; 4,71,018 before, 37,737 not received, draft 4,33,294, 72,135 unmapped, 52,384 LD, 16,867 Form 7, 16,809 deleted, 1,982 added, final 4,18,467; final on CEO website from 6 Sep. Match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-wb-affidavit-appeals-2026-09-17",
+      "kind": "figure",
+      "date": "2026-09-17",
+      "date_precision": "day",
+      "title": "ECI tells Supreme Court 37.18 lakh West Bengal appeals still pending",
+      "summary": "In a counter-affidavit on a petition by Congress leader Prasenjit Bose, ECI said 38,20,683 appeals had been filed before the tribunals, 1,02,231 (2.68%) disposed of and 37,18,452 pending. It did not split appeals by inclusion or exclusion. Between the draft and 7 August 2026, 34.13 lakh Form 6 were filed (14,079 accepted, 7.26 lakh rejected, 4.86 lakh unprocessed) and 6.39 lakh Form 7 (3,355 accepted, 14,506 rejected).",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "courts"
+      ],
+      "figures": [
+        {
+          "label": "appeals filed before tribunals",
+          "value": 3820683,
+          "unit": "appeals",
+          "as_of": "2026-09-17"
+        },
+        {
+          "label": "appeals disposed",
+          "value": 102231,
+          "unit": "appeals",
+          "as_of": "2026-09-17"
+        },
+        {
+          "label": "appeals pending",
+          "value": 3718452,
+          "unit": "appeals",
+          "as_of": "2026-09-17"
+        },
+        {
+          "label": "Form 6 filed, 17 Dec 2025 to 7 Aug 2026",
+          "value": 3413000,
+          "unit": "forms",
+          "as_of": "2026-08-07"
+        },
+        {
+          "label": "Form 6 accepted",
+          "value": 14079,
+          "unit": "forms",
+          "as_of": "2026-08-07"
+        },
+        {
+          "label": "Form 6 rejected",
+          "value": 726000,
+          "unit": "forms",
+          "as_of": "2026-08-07"
+        },
+        {
+          "label": "Form 7 filed",
+          "value": 639000,
+          "unit": "forms",
+          "as_of": "2026-08-07"
+        },
+        {
+          "label": "Form 7 accepted",
+          "value": 3355,
+          "unit": "forms",
+          "as_of": "2026-08-07"
+        },
+        {
+          "label": "electors per 100 population (EP ratio)",
+          "value": 62,
+          "unit": "per 100 population",
+          "as_of": "2026-01-01"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+          "publisher": "The Indian Express",
+          "title": "Missing in Election Commission affidavit: Break-up of Bengal SIR appeals for inclusion, exclusion of names",
+          "published": "2026-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.livelaw.in/top-stories/supreme-court-west-bengal-sir-eci-affidavit-over-37-lakh-appeals-pending-before-appellate-tribunals-550768",
+          "publisher": "LiveLaw",
+          "title": "West Bengal SIR | 37 Lakh Appeals Pending; Less Than 3% Disposed By Appellate Tribunals : ECI Tells Supreme Court",
+          "published": "2026-09-18",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.nationalheraldindia.com/national/bengal-sir-97-percent-of-tribunal-appeals-still-pending-election-commission-tells-supreme-court",
+          "publisher": "National Herald",
+          "title": "Bengal SIR: 97 pc of tribunal appeals still pending, ECI tells Supreme Court",
+          "published": "2026-09-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Filing date: IE says the affidavit was submitted Thursday (17 September 2026); LiveLaw and National Herald say 16 September. Case: Mostari Banu v. ECI, W.P.(C) 1089/2025, before CJI Surya Kant, Justices Joymalya Bagchi and V. Mohana. Per LiveLaw, petitioners' RTI data suggested about 80% of appeals challenge inclusions; that is the petitioners' figure. The 7.26 lakh + 4.86 lakh + 14,079 accounting of Form 6 does not sum to 34.13 lakh in the report; the remainder is not explained. The affidavit itself was not opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+        "note": "Opened IE (18 Sep 2026), LiveLaw (18 Sep) and National Herald (21 Sep): 38,20,683 filed, 1,02,231 disposed, 37,18,452 pending; Form 6/7 figures; EP ratio 0.62; case title and bench per LiveLaw. Filing-date conflict (IE Thursday 17 Sep vs LiveLaw/NH 16 Sep) is correctly noted."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-ec-reply-31-seats-2026-09-18",
+      "kind": "statement",
+      "date": "2026-09-18",
+      "date_precision": "day",
+      "title": "ECI: elections can be challenged only by election petition",
+      "summary": "ECI replied that elections can be questioned only through an election petition under the representation of the people law, and that the applicant had mixed draft-stage absent/shifted/dead/duplicate removals with adjudication deletions. It said the TMC had itself won 21 seats where the margin was below adjudication deletions, and defended the judicial officers' work.",
+      "status": "response",
+      "attributed_to": "Election Commission of India (reply in the Supreme Court)",
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "courts",
+        "statements"
+      ],
+      "figures": [
+        {
+          "label": "seats won by TMC where margin was below adjudication deletions (ECI count)",
+          "value": 21,
+          "unit": "constituencies",
+          "as_of": "2026-09-18"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "publisher": "The Indian Express",
+          "title": "Of 27 lakh deleted West Bengal voters, 22 lakh have filed appeals: Election Commission to Supreme Court",
+          "published": "2026-09-19",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260920041032/https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "quote": null
+        }
+      ],
+      "response_to": "numbers-obrien-31-seats-claim-2026-09-18",
+      "notes": "The '21 seats' figure is ECI's own computation as reported. The reply document was not opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+        "note": "Opened IE (19 Sep 2026): ECI said elections can be challenged only by election petition, that the applicant conflated ASDD removals with adjudication deletions, that TMC won 21 such seats, and that judicial officers worked with diligence and fairness. Match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-obrien-31-seats-claim-2026-09-18",
+      "kind": "statement",
+      "date": "2026-09-18",
+      "date_precision": "day",
+      "title": "TMC's O'Brien seeks cancellation of results in 31 seats over SIR deletions",
+      "summary": "In an application before the Supreme Court, TMC MP Derek O'Brien sought cancellation of results in 31 West Bengal Assembly constituencies where, he argued, SIR deletions exceeded the margin of victory or defeat.",
+      "status": "claim",
+      "attributed_to": "Derek O'Brien, TMC MP (application in the Supreme Court)",
+      "people": [
+        "Derek O'Brien"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "courts",
+        "statements"
+      ],
+      "figures": [
+        {
+          "label": "constituencies where applicant says deletions exceeded margin",
+          "value": 31,
+          "unit": "constituencies",
+          "as_of": "2026-09-18"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "publisher": "The Indian Express",
+          "title": "Of 27 lakh deleted West Bengal voters, 22 lakh have filed appeals: Election Commission to Supreme Court",
+          "published": "2026-09-19",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260920041032/https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Dated to the report of ECI's reply; the application's own filing date was not found. The applicant's deletion figures, per ECI, include draft-stage ASDD removals as well as adjudication deletions.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+        "note": "Opened IE (19 Sep 2026): O'Brien's application sought cancellation of results in 31 ACs where deletions exceeded the margin. Attributed as a claim; paired with ECI response entry."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-wb-reply-obrien-appeals-2026-09-18",
+      "kind": "figure",
+      "date": "2026-09-18",
+      "date_precision": "day",
+      "title": "ECI: 22.21 lakh appeals by deleted voters, 16.10 lakh seek more deletions",
+      "summary": "Replying to an application by TMC MP Derek O'Brien, ECI told the Supreme Court that of 38,31,429 appeals, 22,21,118 were by people seeking restoration and 16,10,311 challenged names included by judicial officers. 1,26,194 had been disposed of and 37,05,235 were pending. ECI did not say who filed the appeals against inclusion, and proposed raising the tribunals from 19 to 42.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "courts"
+      ],
+      "figures": [
+        {
+          "label": "appeals filed",
+          "value": 3831429,
+          "unit": "appeals",
+          "as_of": "2026-09-18"
+        },
+        {
+          "label": "appeals seeking restoration of deleted names",
+          "value": 2221118,
+          "unit": "appeals",
+          "as_of": "2026-09-18"
+        },
+        {
+          "label": "appeals against included names",
+          "value": 1610311,
+          "unit": "appeals",
+          "as_of": "2026-09-18"
+        },
+        {
+          "label": "appeals disposed",
+          "value": 126194,
+          "unit": "appeals",
+          "as_of": "2026-09-18"
+        },
+        {
+          "label": "appeals pending",
+          "value": 3705235,
+          "unit": "appeals",
+          "as_of": "2026-09-18"
+        },
+        {
+          "label": "share of 27.16 lakh deleted who appealed (IE computation)",
+          "value": 82,
+          "unit": "percent",
+          "as_of": "2026-09-18"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "publisher": "The Indian Express",
+          "title": "Of 27 lakh deleted West Bengal voters, 22 lakh have filed appeals: Election Commission to Supreme Court",
+          "published": "2026-09-19",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260920041032/https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "quote": null
+        },
+        {
+          "url": "https://indialegallive.com/constitutional-law-news/courts-news/west-bengal-sir-over-22-lakh-appeals-challenge-voter-exclusions-eci-tells-supreme-court/",
+          "publisher": "India Legal",
+          "title": "West Bengal SIR: Over 22 lakh appeals challenge voter exclusions, ECI tells Supreme Court",
+          "published": "2026-09-22",
+          "tier": 2,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+          "publisher": "The Indian Express",
+          "title": "Missing in Election Commission affidavit: Break-up of Bengal SIR appeals for inclusion, exclusion of names",
+          "published": "2026-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "These totals differ from the counter-affidavit reported a day earlier (38,20,683 filed, 1,02,231 disposed); neither report explains the difference, which may reflect different cut-off dates. The '82%' is The Indian Express's division of 22.21 lakh by 27.16 lakh. Election Commissioner Sukhbir Singh Sandhu asked on file in August 2026 who was authorised to file such appeals on ECI's behalf (IE, 23 Sep 2026).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+        "note": "Opened IE (19 Sep 2026) and India Legal (22 Sep): 38,31,429 / 22,21,118 / 16,10,311 / 1,26,194 / 37,05,235; tribunals 19 to 42. Sandhu note checked against IE 23 Sep 2026, which quotes his August questions on who authorised the appeals."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-delhi-notices-2026-09-19",
+      "kind": "figure",
+      "date": "2026-09-19",
+      "date_precision": "day",
+      "title": "Delhi issues 31.64 lakh SIR notices to draft-roll electors",
+      "summary": "Delhi's CEO said 31,63,930 notices had been generated for draft electors who could not be linked to the last intensive revision or had 'logical discrepancies'. It said a notice does not mean deletion, and that no name can be deleted without a hearing and a speaking, appealable order; notices are to be disposed of by 29 October 2026. Reports said Election Commissioner Sukhbir Singh Sandhu was among those flagged, for a name mismatch, and his entry was later validated.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [
+        "Delhi"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "notices generated to draft electors",
+          "value": 3163930,
+          "unit": "notices",
+          "as_of": "2026-09-19"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceodelhi.gov.in/PDFFolders/2026/press_note_notices_to_electors_including_VIP19Sept2026.pdf",
+          "publisher": "Office of the Chief Electoral Officer, Delhi",
+          "title": "Press Note dated 19.09.2026 on notices to electors",
+          "published": "2026-09-19",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://ceodelhi.gov.in/PDFFolders/2026/PRESS_Note_ECI_SIR_2026_on_21_09_2026.pdf",
+          "publisher": "Office of the Chief Electoral Officer, Delhi",
+          "title": "Press Note dated 21.09.2026: list of electors issued notices published",
+          "published": "2026-09-21",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/election-commissioner-s-s-sandhu-other-top-officials-get-notices-under-sir-10886206/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioner S S Sandhu, CBI director, top bureaucrats face SIR notice",
+          "published": "2026-09-20",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260921061236/https://indianexpress.com/article/india/election-commissioner-s-s-sandhu-other-top-officials-get-notices-under-sir-10886206/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Sandhu detail and the ERO Delhi Cantt statement validating his entry come from The Indian Express report, not the CEO notes.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceodelhi.gov.in/PDFFolders/2026/press_note_notices_to_electors_including_VIP19Sept2026.pdf",
+        "note": "Opened Delhi CEO notes of 19.09.2026 (31,63,930 notices; disposal by 29.10.2026; final 04.11.2026) and 21.09.2026 (notice does not mean deletion; speaking, appealable order). Opened IE (20 Sep 2026): Sandhu flagged for \"self name mismatch\"; ERO Delhi Cantt said his entry was validated. Match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-odisha-draft-final-2026-09-21",
+      "kind": "figure",
+      "date": "2026-09-21",
+      "date_precision": "day",
+      "title": "Odisha final roll: 3,16,32,754 electors after 58.36 lakh notices",
+      "summary": "Odisha's CEO said 20,12,557 of 3,33,99,591 electors were excluded from the 5 July draft (3,13,87,034). During the notice phase 58,36,392 notices went out (12,98,779 unmapped, 45,37,613 logical discrepancies). After claims, 2,90,497 were added and 44,777 deleted, giving a final roll of 3,16,32,754 on 21 September.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Odisha"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors before SIR",
+          "value": 33399591,
+          "unit": "electors",
+          "as_of": "2026-05-30"
+        },
+        {
+          "label": "electors in draft roll",
+          "value": 31387034,
+          "unit": "electors",
+          "as_of": "2026-07-05"
+        },
+        {
+          "label": "excluded from draft",
+          "value": 2012557,
+          "unit": "electors",
+          "as_of": "2026-07-05"
+        },
+        {
+          "label": "notices issued",
+          "value": 5836392,
+          "unit": "notices",
+          "as_of": "2026-09-21"
+        },
+        {
+          "label": "notices: unmapped",
+          "value": 1298779,
+          "unit": "notices",
+          "as_of": "2026-09-21"
+        },
+        {
+          "label": "notices: logical discrepancies",
+          "value": 4537613,
+          "unit": "notices",
+          "as_of": "2026-09-21"
+        },
+        {
+          "label": "added after draft",
+          "value": 290497,
+          "unit": "electors",
+          "as_of": "2026-09-21"
+        },
+        {
+          "label": "deleted after draft",
+          "value": 44777,
+          "unit": "electors",
+          "as_of": "2026-09-21"
+        },
+        {
+          "label": "electors in final roll",
+          "value": 31632754,
+          "unit": "electors",
+          "as_of": "2026-09-21"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ommcomnews.com/odisha-news/odisha-publishes-final-electoral-roll-with-3-16-cr-electors/",
+          "publisher": "Ommcom News",
+          "title": "Odisha Publishes Final Electoral Roll With 3.16 Cr Electors",
+          "published": "2026-09-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Odisha's final date was extended from 6 to 21 September (Deccan Chronicle, 2 Sep 2026). Reason-wise break-up of the 20.13 lakh was not in the opened report.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ommcomnews.com/odisha-news/odisha-publishes-final-electoral-roll-with-3-16-cr-electors/",
+        "note": "Opened Ommcom (21 Sep 2026), citing CEO press note: all figures match (3,33,99,591; 3,13,87,034; 20,12,557; 58,36,392; 12,98,779; 45,37,613; 2,90,497; 44,777; 3,16,32,754)."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-chandigarh-draft-final-2026-09-22",
+      "kind": "figure",
+      "date": "2026-09-22",
+      "date_precision": "day",
+      "title": "Chandigarh final roll adds net 9,927 electors to 4,60,209",
+      "summary": "Chandigarh's draft of 21 July listed 4,50,282 electors; 69,461 were unmapped and 68,700 flagged for logical discrepancies. 4,644 were found ineligible at hearings, 15,117 inclusion claims were accepted and 5,190 names deleted on Form 7 objections, giving a final roll of 4,60,209 on 22 September.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Chandigarh"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors in draft roll",
+          "value": 450282,
+          "unit": "electors",
+          "as_of": "2026-07-21"
+        },
+        {
+          "label": "draft electors unmapped",
+          "value": 69461,
+          "unit": "electors",
+          "as_of": "2026-07-21"
+        },
+        {
+          "label": "logical discrepancies flagged",
+          "value": 68700,
+          "unit": "electors",
+          "as_of": "2026-07-21"
+        },
+        {
+          "label": "found ineligible at hearings",
+          "value": 4644,
+          "unit": "electors",
+          "as_of": "2026-09-22"
+        },
+        {
+          "label": "inclusion claims accepted",
+          "value": 15117,
+          "unit": "electors",
+          "as_of": "2026-09-22"
+        },
+        {
+          "label": "deletions on Form 7",
+          "value": 5190,
+          "unit": "electors",
+          "as_of": "2026-09-22"
+        },
+        {
+          "label": "electors in final roll",
+          "value": 460209,
+          "unit": "electors",
+          "as_of": "2026-09-22"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/chandigarh/chandigarhs-special-intensive-revision-adds-9927-voters-no-big-names-deleted-unlike-in-delhi/",
+          "publisher": "The Tribune",
+          "title": "Chandigarh's Special Intensive Revision adds 9,927 voters, no big names deleted unlike in Delhi",
+          "published": "2026-09-22",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Based on an SIR data compilation seen by The Tribune. The 4,644 found ineligible at hearings overlap with the 5,190 Form 7 deletions (4,385 of which were for non-appearance at the notice stage): 4,50,282 + 15,117 - 5,190 = 4,60,209, so the 4,644 should not be subtracted again. Chandigarh's pre-SIR roll size was not in the opened report; a Civilsdaily summary (6 Sep 2026) put Chandigarh's draft 31.84% below its 2024 Lok Sabha electorate.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://www.tribuneindia.com/news/chandigarh/chandigarhs-special-intensive-revision-adds-9927-voters-no-big-names-deleted-unlike-in-delhi/",
+        "note": "Opened Tribune (22 Sep 2026): all figures match. Added an arithmetic note: the 4,644 ineligible overlap with the 5,190 deletions. Replaced an unsupported attribution to The Hindu in the notes; the opened source (Civilsdaily) does not name The Hindu."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-goa-97-voters-left-off-2026-09-23",
+      "kind": "event",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "97 Goa electors found eligible by EROs were left off the final roll",
+      "summary": "The Indian Express reported that Goa's EROs, hearing 'logical discrepancy' cases after the Supreme Court's 29 January 2026 order, found 97 electors eligible, but ECINet had no option to reverse earlier deletions. Between 11 and 17 February the Goa CEO's office wrote eight times to Senior Deputy Election Commissioner Gyanesh Bharti, copying DG (IT) Seema Khanna, asking for a rollback facility; it was not enabled before the 21 February final roll.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Bharti",
+        "Seema Khanna"
+      ],
+      "states": [
+        "Goa"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "it-systems",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "eligible electors left off Goa final roll",
+          "value": 97,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "emails from Goa CEO office seeking rollback",
+          "value": 8,
+          "unit": "emails",
+          "as_of": "2026-02-17"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "IE said the Commission did not respond to its questionnaire. The Goa CEO later responded (see goa-97-voters-ceo-response). Goa's own final-roll note records 35,780 electors marked ineligible after 'unmapped' and 'logical discrepancy' decisions made 'as per the provisions made available in the ECINET by the ECI IT team from time to time'. No response from Gyanesh Bharti or Seema Khanna personally was found; IE said the Commission and both Election Commissioners did not answer its questions sent on 21 September. The web-search budget ran out during checking, so a later ECI statement may exist.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+        "note": "Opened IE (23 Sep 2026): SC order of 29 Jan; 97 found eligible; CEO Goa office wrote eight times, 11-17 Feb, to Senior DEC Gyanesh Bharti, copying DG (IT) Seema Khanna every time; not enabled before the final roll. Match. Charge against named officials: no personal response found (noted)."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "numbers-ie-49-seats-margin-comparison-2026-09-23",
+      "kind": "figure",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "In 49 of 294 Bengal seats, SIR deletions exceeded the victory margin",
+      "summary": "The Indian Express reported that in 49 of West Bengal's 294 seats, SIR deletions exceeded the winning margin, and that these seats were split almost evenly: 26 won by BJP and 21 by TMC. The paper said there was no evidence of the SIR's role in the outcome.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "seats where SIR deletions exceeded victory margin",
+          "value": 49,
+          "unit": "constituencies",
+          "as_of": "2026-09-23"
+        },
+        {
+          "label": "of these, won by BJP",
+          "value": 26,
+          "unit": "constituencies",
+          "as_of": "2026-09-23"
+        },
+        {
+          "label": "of these, won by TMC",
+          "value": 21,
+          "unit": "constituencies",
+          "as_of": "2026-09-23"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Computed by The Indian Express; the method (which deletions were counted, draft-stage or adjudication) is not stated in the article. 26 + 21 = 47, two short of 49; the article does not name the winners of the other two.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+        "note": "Opened IE (23 Sep 2026): \"in 49, the SIR deletions exceeded the victory margin\", 26 BJP, 21 TMC; says there was no evidence of the SIR's role in the outcome. Match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-nationwide-13-crore-draft-exclusions-2026-09-23",
+      "kind": "figure",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Over 13 crore names off SIR draft rolls in 30 States/UTs",
+      "summary": "The Indian Express reported that since June 2025 the SIR had struck more than 13 crore names off draft rolls in 30 States and UTs. Adding the figures in this file (Bihar 65 lakh, Phase II 6.57 crore across 12 States/UTs, Phase III 6.15 crore across 17) gives about 13.37 crore across 30 States/UTs, which is consistent. This counts names left out at the draft stage, before claims, notices and additions; it is not the net fall in the rolls.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "names off draft rolls, 30 States/UTs (Indian Express)",
+          "value": 130000000,
+          "unit": "electors",
+          "as_of": "2026-09-23"
+        },
+        {
+          "label": "our sum of cited draft-stage figures, 30 States/UTs",
+          "value": 133684385,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        },
+        {
+          "label": "of which Bihar (ECI, rounded)",
+          "value": 6500000,
+          "unit": "electors",
+          "as_of": "2025-08-01"
+        },
+        {
+          "label": "of which Phase II, 12 States/UTs (sum of state figures)",
+          "value": 65677106,
+          "unit": "electors",
+          "as_of": "2026-01-06"
+        },
+        {
+          "label": "of which Phase III, 17 States/UTs (Deccan Herald)",
+          "value": 61507279,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260924145417/https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/election-commissioner-s-s-sandhu-other-top-officials-get-notices-under-sir-10886206/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioner S S Sandhu, CBI director, top bureaucrats face SIR notice",
+          "published": "2026-09-20",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260921061236/https://indianexpress.com/article/india/election-commissioner-s-s-sandhu-other-top-officials-get-notices-under-sir-10886206/",
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "publisher": "Deccan Herald",
+          "title": "SIR 2.0: Nearly 6.5 crore electors removed from draft rolls of 12 States, Union Territories",
+          "published": "2026-01-08",
+          "tier": 3,
+          "archive_url": "http://web.archive.org/web/20260117111100/https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "publisher": "Deccan Herald",
+          "title": "SIR 3.0: Draft voter lists see over 6.15 crore deletions in 17 States, UTs",
+          "published": "2026-09-01",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/313/2025",
+          "published": "2025-09-30",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The 13.37 crore figure is our own addition of the state and tally figures cited elsewhere in this file (Gujarat and Andaman & Nicobar rounded; Rajasthan excludes Anta; Bihar rounded to the lakh); the checker recomputed it as 13,36,84,385. It excludes Assam's Special Revision and Nagaland and Tripura, whose Phase III drafts were due 20 September and 21 October. ECI has not published a national total that we could find. Madhyamam/IANS (24 Sep 2026) reports that ECI disputed the reports of an internal split and said its decisions were unanimous; that ECI statement itself was not opened, and whether it addressed the 13 crore figure is not confirmed. Net falls are smaller: Bihar about 47.8 lakh and Phase II about 5.18 crore (PTI), with Phase III finals mostly pending.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+        "note": "Opened IE (23 Sep 2026: \"more than 13 crore names off the draft voter rolls in 30 States and Union Territories\") and IE (20 Sep 2026), DH tallies and PN/313. Sum recomputed and correct. Removed an unverified claim in the notes about the contents of an ECI 23 September press note, which was not opened."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-congress-13-crore-claim-2026-09-24",
+      "kind": "statement",
+      "date": "2026-09-24",
+      "date_precision": "day",
+      "title": "Congress says 13 crore names removed in 19 states, 1.43 crore in Karnataka",
+      "summary": "Congress general secretary Randeep Singh Surjewala said the SIR had removed about 13 crore names across 19 states since June 2025, including 1.43 crore in Karnataka. He demanded a halt to the SIR, the removal of CEC Gyanesh Kumar and an independent IT and forensic audit of roll databases.",
+      "status": "claim",
+      "attributed_to": "Randeep Singh Surjewala, AICC General Secretary (Congress)",
+      "people": [
+        "Randeep Singh Surjewala",
+        "Gyanesh Kumar"
+      ],
+      "states": [
+        "Karnataka"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "statements"
+      ],
+      "figures": [
+        {
+          "label": "names removed nationally (Congress claim)",
+          "value": 130000000,
+          "unit": "electors",
+          "as_of": "2026-09-24"
+        },
+        {
+          "label": "names removed in Karnataka (Congress claim)",
+          "value": 14300000,
+          "unit": "electors",
+          "as_of": "2026-09-24"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://madhyamamonline.com/india/sir-row-cong-alleges-13-crore-voter-names-deleted-across-19-states-1557501",
+          "publisher": "Madhyamam (IANS)",
+          "title": "SIR row: Cong alleges 13 crore voter names deleted across 19 states",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The 'across 19 states' count differs from the Indian Express's '30 States/UTs'. Karnataka's CEO puts draft-stage exclusions at 1,07,96,339 of 5,54,32,314; how Congress reached 1.43 crore was not stated in the report. Surjewala also said the Commission had been 'hijacked' and that the CEC was involved; these are his allegations. No ECI response to this specific claim was found. The report says ECI has disputed the characterisation of an internal split and said the Commission's decisions were unanimous; the report does not give a press-note number, and the ECI statement itself was not opened.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://madhyamamonline.com/india/sir-row-cong-alleges-13-crore-voter-names-deleted-across-19-states-1557501",
+        "note": "Opened Madhyamam/IANS (24 Sep 2026): Surjewala claims (13 crore, 19 states, 1.43 crore Karnataka, halt SIR, remove CEC, IT/forensic audit) match. Removed the press-note number \"ECI/PN/119/2026\" from the notes because the report does not give it and it could not be verified. Charge against CEC Gyanesh Kumar has no specific response on record in the file."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-goa-97-voters-ceo-response-2026-09-25",
+      "kind": "statement",
+      "date": "2026-09-25",
+      "date_precision": "day",
+      "title": "Goa CEO says many of the 97 omitted electors have since been enrolled",
+      "summary": "Goa's CEO office said many of the 97 electors found eligible but left off the February final roll have since been enrolled through Form 6 after BLO house visits, and the rest are being processed. It said 649 flagged electors had come forward, of whom EROs found 97 eligible.",
+      "status": "response",
+      "attributed_to": "Office of the Chief Electoral Officer, Goa (as reported)",
+      "people": [],
+      "states": [
+        "Goa"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "statements"
+      ],
+      "figures": [
+        {
+          "label": "flagged electors who came forward for hearing",
+          "value": 649,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "found eligible by EROs",
+          "value": 97,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://globalgovernancenews.com/goa-ceo-says-many-of-97-omitted-voters-now-enrolled/",
+          "publisher": "Global Governance News",
+          "title": "Goa CEO Says Many of 97 Omitted Voters Now Enrolled",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/goa-97-voters-electoral-roll-sir-row-election-commission-10892902/",
+          "publisher": "The Indian Express",
+          "title": "After Express report, Goa CEO says cases of 97 voters 'processed separately'",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "numbers-goa-97-voters-left-off-2026-09-23",
+      "notes": "The CEO statement itself was not found on ceogoa.nic.in; this relies on the report. The exact number enrolled since was not given. Global Governance News is a low-profile outlet; prefer the CEO Goa statement or a mainstream report if one can be found.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://globalgovernancenews.com/goa-ceo-says-many-of-97-omitted-voters-now-enrolled/",
+        "note": "Opened Global Governance News (25 Sep 2026): CEO office said many of the 97 have been enrolled via Form 6 after BLO visits, the rest being processed; 649 came forward, 97 found eligible. Match; weak source."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "numbers-karnataka-notices-2026-09-25",
+      "kind": "figure",
+      "date": "2026-09-25",
+      "date_precision": "day",
+      "title": "Karnataka: 43.82 lakh notices, 28.81 lakh hearings done by 25 September",
+      "summary": "Karnataka's CEO reported 43,82,296 notices generated, 41,63,368 delivered and 28,80,882 hearings completed. Forms received since 16 June: 7,70,988 Form 6, 4,551 Form 6A, 61,130 Form 7 and 11,11,495 Form 8. The roll stood at 4,48,44,080 electors.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Karnataka"
+      ],
+      "topics": [
+        "sir",
+        "numbers",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "notices generated",
+          "value": 4382296,
+          "unit": "notices",
+          "as_of": "2026-09-25"
+        },
+        {
+          "label": "notices delivered",
+          "value": 4163368,
+          "unit": "notices",
+          "as_of": "2026-09-25"
+        },
+        {
+          "label": "hearings completed",
+          "value": 2880882,
+          "unit": "hearings",
+          "as_of": "2026-09-25"
+        },
+        {
+          "label": "Form 6 received",
+          "value": 770988,
+          "unit": "forms",
+          "as_of": "2026-09-24"
+        },
+        {
+          "label": "Form 7 received",
+          "value": 61130,
+          "unit": "forms",
+          "as_of": "2026-09-24"
+        },
+        {
+          "label": "electors on roll",
+          "value": 44844080,
+          "unit": "electors",
+          "as_of": "2026-09-25"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://ceo.karnataka.gov.in/uploads/PRESS%20NOTE-%2025_1790322207.pdf",
+          "publisher": "Office of the Chief Electoral Officer, Karnataka",
+          "title": "Press Note dated 25.09.2026",
+          "published": "2026-09-25",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://ceo.karnataka.gov.in/uploads/PRESS%20NOTE-%2025_1790322207.pdf",
+        "note": "Opened Karnataka CEO note DPAR 172 (25.09.2026): 4,48,44,080 electors; 43,82,296 generated, 41,63,368 delivered, 28,80,882 hearings; Form 6 7,70,988, 6A 4,551, 7 61,130, 8 11,11,495 (16.06-24.09.2026). Match."
+      },
+      "check": "checked"
+    }
+  ],
+  "gaps": [
+    "No national SIR total from ECI: no press note, affidavit or Parliament answer with an all-India count of names left out, deleted or added was found. Check ECI press notes after 23 Sep 2026, Lok Sabha/Rajya Sabha questions on SIR (sansad.in) and ECI affidavits in the Supreme Court SIR matters.",
+    "West Bengal: who filed the 16.10 lakh appeals against included electors is not public (ECI did not say in court). Look in the Supreme Court record of W.P.(C) 1089/2025 and the Derek O'Brien and Prasenjit Bose applications, and for any RTI replies from CEO West Bengal.",
+    "State CEO primary press notes were not opened for Uttar Pradesh, Tamil Nadu, Kerala, Gujarat, Madhya Pradesh, Rajasthan, Puducherry, Andaman & Nicobar, Lakshadweep, Odisha, Sikkim, Chandigarh, Telangana, Andhra Pradesh, Jharkhand, Haryana, Punjab, Uttarakhand, Meghalaya, Arunachal Pradesh, Manipur, Mizoram, Nagaland, Tripura and DNH&DD; the figures for these rely on news reports or Deccan Herald's tally. Reason-wise (dead/shifted/duplicate) splits are missing for Gujarat, Rajasthan, Chhattisgarh and most Phase III states.",
+    "Final-roll figures for Andaman & Nicobar and Lakshadweep (Phase II), and for Phase III states whose finals fell after 1 September (Andhra Pradesh, Arunachal Pradesh, Haryana, Manipur, Mizoram) were not found.",
+    "West Bengal electorate at the April 2026 poll after supplementary lists (6.45 crore plus about 32.9 lakh cleared by judicial officers) was not confirmed from an ECI document; ECI's 8 May 2026 statistical reports on ECINet should have it.",
+    "Bihar: ECI's own reason-wise breakdown of the final 65 lakh draft exclusions (as opposed to the approximate 25 July figures) and the Supreme Court's August 2025 orders requiring the list to be published were not opened.",
+    "Conflicting figures not resolved: UP 25.47 lakh (dead or duplicate?), Kerala final (2,69,53,644 vs 2,70,52,007), Tamil Nadu final date (17 vs 23 February 2026), West Bengal appeals (38,20,683 vs 38,31,429), tribunal restorations before polling (1,607 vs 136).",
+    "ECI's 14 May 2026 Phase III press note, the 24 June 2025 Bihar SIR press note and the 29 April 2026 West Bengal turnout note were listed on eci.gov.in but returned 'Access denied'; try PIB or the Wayback Machine.",
+    "No independent comparison of final-roll electors against projected adult population by state was found (West Bengal's EP ratio of 0.62 is the only one, from ECI data reported by IE); ECI's projected-population figures per state would allow it.",
+    "Checker: ECI's reported 23 September 2026 statement (said by IANS to dispute an internal split and to call decisions unanimous) was not located on eci.gov.in; the web-search budget ran out. It should be found and added as a response entry to the Indian Express investigation and to the Surjewala claim.",
+    "Checker: no response from Senior Deputy Election Commissioner Gyanesh Bharti or DG (IT) Seema Khanna to the Goa rollback emails reported by the Indian Express was found.",
+    "Checker: the original source of the 2024-vs-draft comparison (Civilsdaily summary, 6 Sep 2026) is unnamed; find the underlying analysis or drop the entry.",
+    "Checker: Andaman & Nicobar and Lakshadweep final-roll figures are still missing, so the Phase II final tally (PTI 45.81 crore) cannot be reconciled from primary documents."
+  ]
+}

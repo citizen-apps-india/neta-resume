@@ -1,0 +1,28 @@
+{
+  "states": [
+    {
+      "state": "Bihar",
+      "phase": 1,
+      "stages": [
+        {
+          "stage": "draft",
+          "electors": 72400000,
+          "as_of": "2025-08-01",
+          "source_entry": "sir-rules-2025-notification",
+          "url": "https://eci.gov.in/sir-order",
+          "tier": 1
+        },
+        {
+          "stage": "before",
+          "electors": 78900000,
+          "as_of": "2025-06-24",
+          "computed": true,
+          "source_entry": "sir-rules-2025-notification",
+          "url": "https://eci.gov.in/sir-order",
+          "tier": 1
+        }
+      ],
+      "notes": "before is computed as draft plus names deleted from the draft roll."
+    }
+  ]
+}

@@ -30,6 +30,7 @@ _RULES: tuple[tuple[str, tuple[int, int]], ...] = (
     ("/parliament", (3600, 86400)),        # parliament aggregates (stats/trends/ministries/…)
     ("/aggregate", (3600, 86400)),         # theme-focus aggregates
     ("/indicators", (3600, 86400)),        # India Dashboard macro series
+    ("/eci-files", (3600, 86400)),         # ECI Files: editorially loaded, changes only on a curated re-run
     ("/search", (300, 3600)),              # person typeahead
     ("/stats", (600, 3600)),               # homepage headline counts
     ("/elections", (600, 3600)),           # election results

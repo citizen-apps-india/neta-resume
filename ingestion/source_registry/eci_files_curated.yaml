@@ -1,0 +1,52 @@
+schema_version: 1
+id: eci_files.curated
+source_code: eci_files_primary
+display_name: 'ECI Files: curated record'
+publisher: neta-resume editorial (from cited public sources)
+lifecycle: active
+authority:
+  role: secondary
+  trust_tier: 2
+  jurisdiction: India
+rights:
+  license: editorial
+  commercial_use: review
+  redistribution: review
+  store_raw: true
+  notes: Each entry cites its own sources with their own tier and license; this manifest governs the
+    curated compilation itself. See data/eci_files/research/BRIEF.md for the sourcing rules.
+ingestion:
+  adapter: document
+  base_url: https://github.com/citizen-apps-india/neta-resume/tree/main/data/eci_files/entries
+  trigger:
+    mode: manual
+    profile: editorial-review
+  change_detection: [content_hash]
+  defaults:
+    enabled: true
+    paused: false
+    frequency_seconds: null
+    concurrency_limit: 1
+    rate_limit_per_minute: 1
+    retry_limit: 1
+  guardrails:
+    min_frequency_seconds: null
+    max_frequency_seconds: null
+    max_concurrency: 1
+    max_rate_limit_per_minute: 1
+    max_retry_limit: 2
+  secret_refs: []
+conversion:
+  converter: neta_ingest.pipelines.curated.eci_files:load
+  contract: eci_file_entry.v1
+  produces: [eci_file_entry, eci_file_selection, eci_file_person_media]
+quality:
+  freshness_slo_seconds: null
+  minimum_records: 1
+  required_fields: [id, date, title, summary, status, sources]
+orchestration:
+  runner: neta_ingest.runners:run_eci_files
+  raw_history: dlt
+verification:
+  corroborate_with: []
+  human_review_required: true

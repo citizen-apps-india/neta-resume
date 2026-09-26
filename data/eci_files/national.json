@@ -1,0 +1,172 @@
+{
+  "figures": [
+    {
+      "group": "all",
+      "measure": "left_off",
+      "label": "More than 13 crore names left off SIR draft rolls",
+      "scope": "30 States/UTs",
+      "electors": 130000000,
+      "as_of": "2026-09-23",
+      "computed": false,
+      "approx": true,
+      "source_entry": "numbers-nationwide-13-crore-draft-exclusions-2026-09-23",
+      "note": "The Indian Express's figure. It leaves out Assam's Special Revision, and Nagaland and Tripura, whose drafts were still due."
+    },
+    {
+      "group": "all",
+      "measure": "left_off",
+      "label": "Our sum of the cited draft-stage figures",
+      "scope": "30 States/UTs",
+      "electors": 133684385,
+      "as_of": "2026-09-01",
+      "computed": true,
+      "approx": false,
+      "source_entry": "numbers-nationwide-13-crore-draft-exclusions-2026-09-23",
+      "note": "Adds Bihar (65 lakh, rounded), the 12 Phase II state figures and Deccan Herald's Phase III tally. ECI has not published a national total that we could find."
+    },
+    {
+      "group": "phase_1",
+      "measure": "before",
+      "label": "Electors before the SIR",
+      "scope": "Bihar",
+      "electors": 78969844,
+      "as_of": "2025-06-24",
+      "computed": false,
+      "approx": false,
+      "source_entry": "numbers-bihar-roll-base-2025-06-24",
+      "note": null
+    },
+    {
+      "group": "phase_1",
+      "measure": "draft",
+      "label": "Electors in the draft roll",
+      "scope": "Bihar",
+      "electors": 72400000,
+      "as_of": "2025-08-01",
+      "computed": false,
+      "approx": true,
+      "source_entry": "numbers-bihar-draft-roll-2025-08-01",
+      "note": "ECI gave the draft as \"more than 7.24 crore\"."
+    },
+    {
+      "group": "phase_1",
+      "measure": "left_off",
+      "label": "Not carried into the draft",
+      "scope": "Bihar",
+      "electors": 6500000,
+      "as_of": "2025-08-01",
+      "computed": false,
+      "approx": true,
+      "source_entry": "numbers-bihar-draft-roll-2025-08-01",
+      "note": "From ECI's outcome table, rounded to the lakh."
+    },
+    {
+      "group": "phase_1",
+      "measure": "final",
+      "label": "Electors in the final roll",
+      "scope": "Bihar",
+      "electors": 74192357,
+      "as_of": "2025-09-30",
+      "computed": false,
+      "approx": false,
+      "source_entry": "numbers-bihar-final-roll-2025-09-30",
+      "note": "Excludes 1,63,619 service voters."
+    },
+    {
+      "group": "phase_2",
+      "measure": "before",
+      "label": "Electors before the SIR",
+      "scope": "12 States/UTs",
+      "electors": 509972687,
+      "as_of": "2025-10-27",
+      "computed": false,
+      "approx": false,
+      "source_entry": "numbers-phase2-roll-base-2025-10-27",
+      "note": "ECI's bulletin total."
+    },
+    {
+      "group": "phase_2",
+      "measure": "left_off",
+      "label": "Left off the draft rolls",
+      "scope": "12 States/UTs",
+      "electors": 65600000,
+      "as_of": "2026-01-08",
+      "computed": false,
+      "approx": false,
+      "source_entry": "numbers-phase2-draft-tally-2026-01-08",
+      "note": "Deccan Herald's tally of state figures, not an ECI total."
+    },
+    {
+      "group": "phase_2",
+      "measure": "draft",
+      "label": "Electors in the draft rolls",
+      "scope": "12 States/UTs",
+      "electors": 444000000,
+      "as_of": "2026-01-08",
+      "computed": false,
+      "approx": true,
+      "source_entry": "numbers-phase2-draft-tally-2026-01-08",
+      "note": "Deccan Herald's tally, not an ECI total."
+    },
+    {
+      "group": "phase_2",
+      "measure": "final",
+      "label": "Electors in the final rolls",
+      "scope": "12 States/UTs",
+      "electors": 458100000,
+      "as_of": "2026-04-11",
+      "computed": false,
+      "approx": false,
+      "source_entry": "numbers-phase2-final-tally-2026-04-11",
+      "note": "PTI's computation from EC and state data, not an ECI total."
+    },
+    {
+      "group": "phase_2",
+      "measure": "net_fall",
+      "label": "Net fall from the pre-SIR rolls",
+      "scope": "12 States/UTs",
+      "electors": 51800000,
+      "as_of": "2026-04-11",
+      "computed": false,
+      "approx": true,
+      "source_entry": "numbers-phase2-final-tally-2026-04-11",
+      "note": "PTI: \"over 5.18 crore\"."
+    },
+    {
+      "group": "phase_3",
+      "measure": "before",
+      "label": "Electors before the SIR",
+      "scope": "17 of 19 States/UTs",
+      "electors": 360807394,
+      "as_of": "2026-09-01",
+      "computed": false,
+      "approx": false,
+      "source_entry": "numbers-phase3-draft-tally-2026-09-01",
+      "note": "Deccan Herald's tally; Nagaland and Tripura drafts not yet included."
+    },
+    {
+      "group": "phase_3",
+      "measure": "draft",
+      "label": "Electors in the draft rolls",
+      "scope": "17 of 19 States/UTs",
+      "electors": 299300115,
+      "as_of": "2026-09-01",
+      "computed": false,
+      "approx": false,
+      "source_entry": "numbers-phase3-draft-tally-2026-09-01",
+      "note": null
+    },
+    {
+      "group": "phase_3",
+      "measure": "left_off",
+      "label": "Left off the draft rolls",
+      "scope": "17 of 19 States/UTs",
+      "electors": 61507279,
+      "as_of": "2026-09-01",
+      "computed": false,
+      "approx": false,
+      "source_entry": "numbers-phase3-draft-tally-2026-09-01",
+      "note": null
+    }
+  ]
+}

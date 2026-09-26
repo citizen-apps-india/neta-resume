@@ -2,6 +2,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { getElections, type Election } from "@/lib/api";
 import { pretty, year } from "@/lib/format";
+import { EciFilesFeature } from "@/components/elections/EciFilesFeature";
 
 // ISR: no dynamic input (reads nothing per-request), so serve static HTML and revalidate every 10 min —
 // matches the getElections() fetch TTL and keeps the election list fresh enough for a slowly-changing set.
@@ -70,6 +71,8 @@ export default async function ElectionsPage() {
         <p style={{ fontSize: 15, color: "var(--ink2)", margin: "0 0 28px", maxWidth: "64ch" }}>
           A celebration of democracy — India&rsquo;s elections across the national, state and municipal levels. Open a past election to browse its winners with the same comparable signals as the directory. Losing candidates and vote margins are coming next.
         </p>
+
+        <EciFilesFeature />
 
         {error ? (
           <div style={{ padding: "48px 24px", textAlign: "center", color: "var(--muted)", fontSize: 14, border: "1px solid var(--rule)", borderRadius: 14 }}>

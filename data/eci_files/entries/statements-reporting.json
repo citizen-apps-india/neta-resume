@@ -1,0 +1,3728 @@
+{
+  "area": "statements-reporting",
+  "entries": [
+    {
+      "id": "statements-reporting-mamata-duplicate-epic-charge",
+      "kind": "statement",
+      "date": "2025-02",
+      "date_precision": "month",
+      "title": "Mamata Banerjee alleges fake voters via duplicate voter ID numbers",
+      "summary": "West Bengal Chief Minister Mamata Banerjee alleged that voters from states such as Haryana and Gujarat shared voter ID (EPIC) numbers with West Bengal voters, and accused the BJP of adding fake voters with the Commission's backing.",
+      "status": "claim",
+      "attributed_to": "Mamata Banerjee, Chief Minister of West Bengal (TMC)",
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/no-fake-voters-duplicate-ids-stem-from-manual-system-ec-refutes-didis-charge",
+          "publisher": "The Tribune",
+          "title": "No fake voters, duplicate IDs stem from manual system: EC refutes Didi's charge",
+          "published": "2025-03-03",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Exact day of the allegation not verified in the source opened; the Commission replied on 2 March 2025.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-rahul-dissent-cec-selection",
+      "kind": "statement",
+      "date": "2025-02-17",
+      "date_precision": "day",
+      "title": "Rahul Gandhi records dissent as panel picks Gyanesh Kumar for CEC",
+      "summary": "At the selection committee meeting with the Prime Minister and Home Minister, Leader of Opposition Rahul Gandhi recorded a dissent note. He argued the panel, which no longer includes the Chief Justice of India, departed from the Supreme Court's March 2023 ruling and that the choice should wait for the Supreme Court hearing due on 19 February. The Law Ministry notified Kumar's appointment the same night.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition, Lok Sabha",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "dissent",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.etvbharat.com/en/!bharat/cec-selection-rahul-gandhi-shares-dissent-note-after-centre-appoints-gyanesh-kumar-enn25021802488",
+          "publisher": "ETV Bharat",
+          "title": "CEC Selection: Rahul Gandhi Calls PM, HM's 'Midnight Decision' Choosing Gyanesh Kumar As 'Disrespectful, Discourteous' In Dissent Note",
+          "published": "2025-02-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.theweek.in/news/india/2025/02/18/disrespectful-discourteous-to-appoint-new-cec-now-rahul-gandhi-says-in-dissent-note-against-appointing-gyanesh-kumar.html",
+          "publisher": "The Week",
+          "title": "'Disrespectful, discourteous to appoint new CEC now': Rahul Gandhi says in dissent note",
+          "published": "2025-02-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No government response to the dissent note itself was found in the sources opened; the appointment was notified regardless. The appointments area should hold the notification.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.etvbharat.com/en/!bharat/cec-selection-rahul-gandhi-shares-dissent-note-after-centre-appoints-gyanesh-kumar-enn25021802488",
+        "note": "ETV Bharat's report matches the entry point for point: the Monday meeting with PM/HM, the dissent citing the March 2023 ruling and the CJI's exclusion, the 19 Feb Supreme Court hearing, and the same-night Law Ministry notification. The Week's source URL returned Access Denied; not essential since ETV Bharat independently confirms all details."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-eci-duplicate-epic-clarification",
+      "kind": "statement",
+      "date": "2025-03-02",
+      "date_precision": "day",
+      "title": "Commission says duplicate EPIC numbers do not mean fake voters",
+      "summary": "The Commission said identical EPIC numbers arose from the old manual, decentralised numbering before the database was digitised, that other details such as constituency and polling booth differ, and that affected voters would get unique numbers.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/no-fake-voters-duplicate-ids-stem-from-manual-system-ec-refutes-didis-charge",
+          "publisher": "The Tribune",
+          "title": "No fake voters, duplicate IDs stem from manual system: EC refutes Didi's charge",
+          "published": "2025-03-03",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-mamata-duplicate-epic-charge",
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-eci-duplicate-epic-three-months",
+      "kind": "statement",
+      "date": "2025-03-07",
+      "date_precision": "day",
+      "title": "Commission promises to fix duplicate EPIC numbers within three months",
+      "summary": "Facing allegations of a cover-up, the Commission said it would give a unique national EPIC number to electors holding duplicate numbers within three months, and that a voter can vote only at the polling station where they are enrolled.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [],
+      "states": [],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/will-resolve-duplicate-voter-ids-issue-in-3-months-election-commission",
+          "publisher": "The Tribune",
+          "title": "Will resolve duplicate voter IDs issue in 3 months: Election Commission",
+          "published": "2025-03-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-mamata-duplicate-epic-charge",
+      "notes": "Whether the three-month target was met is not covered here.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-eci-maharashtra-absurd",
+      "kind": "statement",
+      "date": "2025-06-07",
+      "date_precision": "day",
+      "title": "Commission calls Maharashtra rigging charge absurd, points to December 2024 reply",
+      "summary": "The Commission said the charge was unsubstantiated, that trying to defame it after an unfavourable verdict was absurd, and that it had answered the same points in its reply to the Congress of 24 December 2024, published on its website. Commission functionaries also told reporters that the Congress had cancelled a meeting the Commission offered for 15 May.",
+      "status": "response",
+      "attributed_to": "Election Commission of India (statement and unnamed functionaries)",
+      "people": [],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/eci-slams-rahul-gandhis-allegations-on-maharashtra-polls-as-baseless",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "ECI Slams Rahul Gandhi's Allegations on Maharashtra Polls as Baseless",
+          "published": "2025-06-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/completely-absurd-election-commission-debunks-rahul-gandhis-match-fixing-claim/",
+          "publisher": "The Tribune",
+          "title": "Completely absurd: Election Commission debunks Rahul Gandhi's match fixing claim",
+          "published": "2025-06-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-rahul-match-fixing-maharashtra",
+      "notes": "Media reports say the Commission also wrote to Rahul Gandhi on 12 June 2025; that letter was not opened. The 24 December 2024 reply was not opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-rahul-machine-readable-rolls-demand",
+      "kind": "statement",
+      "date": "2025-06-07",
+      "date_precision": "day",
+      "title": "Rahul Gandhi asks Commission for machine-readable rolls and CCTV footage",
+      "summary": "Replying to the Commission's source-based rebuttal, Rahul Gandhi said a constitutional body should not answer through unsigned notes, and asked it to publish consolidated machine-readable voter rolls and release post-5 pm CCTV footage from Maharashtra polling booths.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition, Lok Sabha",
+      "people": [],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "rolls",
+        "turnout-data",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/completely-absurd-election-commission-debunks-rahul-gandhis-match-fixing-claim/",
+          "publisher": "The Tribune",
+          "title": "Completely absurd: Election Commission debunks Rahul Gandhi's match fixing claim",
+          "published": "2025-06-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The CEC answered the CCTV and machine-readable roll points on 17 Aug 2025; see that entry.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-rahul-match-fixing-maharashtra",
+      "kind": "statement",
+      "date": "2025-06-07",
+      "date_precision": "day",
+      "title": "Rahul Gandhi's op-ed alleges 'match-fixing' in 2024 Maharashtra election",
+      "summary": "In an Indian Express op-ed shared on X, Rahul Gandhi set out five steps he said were used to rig the November 2024 Maharashtra election, from the Election Commission appointment panel to adding voters and inflating turnout, and said Bihar would be next. BJP spokesperson Pradeep Bhandari called the charge an attack on democratic institutions.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition, Lok Sabha",
+      "people": [],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "rolls",
+        "turnout-data",
+        "appointments",
+        "statements"
+      ],
+      "figures": [
+        {
+          "label": "voters added between 2024 Lok Sabha and 2024 Maharashtra Assembly polls, per Rahul Gandhi",
+          "value": 4100000,
+          "unit": "electors",
+          "as_of": "2025-06-07"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/how-to-steal-an-election-maharashtra-elections-were-rigged-so-will-bihar-be-alleges-rahul-gandhi",
+          "publisher": "The Tribune",
+          "title": "How to steal an election: Maharashtra elections were rigged, so will Bihar be, alleges Rahul Gandhi",
+          "published": "2025-06-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/amp/story/india%2Fcan-ec-announce-date-by-which-electoral-roll-data-of-haryana-maharashtra-will-be-handed-over-rahul-gandhi-3577501",
+          "publisher": "Deccan Herald",
+          "title": "Can EC announce date by which electoral-roll data of Haryana, Maharashtra will be handed over: Rahul Gandhi",
+          "published": "2025-06-09",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The 41 lakh figure is the claimant's. The Commission's own figures for the period (48.8 lakh added, 8 lakh deleted) are reported in the Indian Express piece of 23 Sep 2026 on Uddhav Thackeray; see that entry.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-ceo-notices-shakun-rani",
+      "kind": "statement",
+      "date": "2025-08",
+      "date_precision": "month",
+      "title": "Karnataka CEO says voter Rahul cited voted once; Maharashtra, Haryana seek declarations",
+      "summary": "The Karnataka CEO's notice said that on inquiry, Shakun Rani, whom Rahul Gandhi said had voted twice, stated she voted once, and asked for the documents behind the claim. The Maharashtra and Haryana CEOs separately asked him to submit signed declarations and documents within 10 days.",
+      "status": "response",
+      "attributed_to": "Chief Electoral Officers of Karnataka, Maharashtra and Haryana",
+      "people": [],
+      "states": [
+        "Karnataka",
+        "Maharashtra",
+        "Haryana"
+      ],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/ec-issues-notice-to-congress-leader-rahul-gandhi-for-allegations-of-voter-fraud-in-2024-lok-sabha-polls",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "EC Issues Notice To Congress Leader Rahul Gandhi For Allegations Of Voter Fraud In 2024 Lok Sabha Polls",
+          "published": "2025-08-11",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-rahul-mahadevapura-presentation",
+      "notes": "Reported on 11 Aug 2025 early morning, so the notices date from on or before 10 Aug; exact day not verified.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-rahul-atom-bomb",
+      "kind": "statement",
+      "date": "2025-08-01",
+      "date_precision": "day",
+      "title": "Rahul Gandhi says Congress has 'atom bomb' proof of vote theft",
+      "summary": "Speaking at Parliament House, Rahul Gandhi said a six-month Congress investigation had found proof that the Commission was engaged in 'vote chori' for the BJP, and warned officials involved that they would not be spared.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition, Lok Sabha",
+      "people": [],
+      "states": [],
+      "topics": [
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.thehindu.com/news/national/what-we-have-found-is-an-atom-bomb-theres-100-proof-ec-doing-vote-chori-for-bjp-congress-leader-rahul-gandhi/article69882114.ece",
+          "publisher": "The Hindu",
+          "title": "What we have found is an atom bomb; there's 100% proof EC doing vote chori for BJP: Rahul Gandhi",
+          "published": "2025-08-01",
+          "tier": 3,
+          "archive_url": "https://web.archive.org/web/20250801083529/https://www.thehindu.com/news/national/what-we-have-found-is-an-atom-bomb-theres-100-proof-ec-doing-vote-chori-for-bjp-congress-leader-rahul-gandhi/article69882114.ece",
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The evidence was presented on 7 Aug 2025; see that entry and the Commission's responses.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-eci-tejashwi-name-present",
+      "kind": "statement",
+      "date": "2025-08-02",
+      "date_precision": "day",
+      "title": "Commission shows Tejashwi Yadav's name on draft roll; questions second card",
+      "summary": "The Commission shared the draft roll showing Yadav at serial number 416 in Digha constituency. On 3 August the Digha Electoral Registration Officer said the EPIC card Yadav displayed had not been issued officially and asked him to hand it over for investigation.",
+      "status": "response",
+      "attributed_to": "Election Commission of India; Patna District Election Officer; ERO, Digha",
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/election-commission-debunks-tejashwi-yadavs-name-not-in-draft-electoral-roll-claim",
+          "publisher": "The Tribune",
+          "title": "Election Commission debunks Tejashwi Yadav's name not in draft electoral roll claim",
+          "published": "2025-08-02",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.newsonair.gov.in/eci-asks-tejashwi-yadav-to-submit-voter-id-after-dual-identity-card-allegations",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "EC asks Tejashwi Yadav to furnish details of Voter ID shown at press meet; says card not issued by it",
+          "published": "2025-08-03",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-tejashwi-name-missing",
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-tejashwi-name-missing",
+      "kind": "statement",
+      "date": "2025-08-02",
+      "date_precision": "day",
+      "title": "Tejashwi Yadav says his name is missing from Bihar draft roll",
+      "summary": "RJD leader Tejashwi Yadav searched his EPIC number on the Commission's site at a press conference, said it returned 'not found', and accused the Commission of working for the BJP after the Bihar SIR draft roll was published on 1 August.",
+      "status": "claim",
+      "attributed_to": "Tejashwi Yadav, Leader of Opposition, Bihar Assembly (RJD)",
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/election-commission-debunks-tejashwi-yadavs-name-not-in-draft-electoral-roll-claim",
+          "publisher": "The Tribune",
+          "title": "Election Commission debunks Tejashwi Yadav's name not in draft electoral roll claim",
+          "published": "2025-08-02",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-ceo-karnataka-maharashtra-declaration",
+      "kind": "statement",
+      "date": "2025-08-07",
+      "date_precision": "day",
+      "title": "Karnataka and Maharashtra CEOs ask Rahul Gandhi to sign declaration under oath",
+      "summary": "Hours after the press conference, the Chief Electoral Officers of Karnataka and Maharashtra wrote to Rahul Gandhi asking him to sign a declaration under Rule 20(3)(b) of the Registration of Electors Rules, 1960, and to name the specific electors so proceedings could begin.",
+      "status": "response",
+      "attributed_to": "Chief Electoral Officers of Karnataka and Maharashtra",
+      "people": [],
+      "states": [
+        "Karnataka",
+        "Maharashtra"
+      ],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.indiatvnews.com/karnataka/rahul-gandhi-poll-rigging-allegations-karnataka-chief-electoral-officer-challenges-congress-leader-sign-under-oath-mahadevapura-constituency-2025-08-07-1002475",
+          "publisher": "India TV",
+          "title": "'Sign under oath': Karnataka and Maharashtra CEOs challenge Rahul Gandhi's 'poll rigging' allegations",
+          "published": "2025-08-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/karnataka/rahul-vs-ec-on-vote-chori-karnataka-poll-body-chief-asks-for-names-of-electors-wants-declaration-under-oath-3670274",
+          "publisher": "Deccan Herald",
+          "title": "Rahul vs EC on 'vote chori': Karnataka poll body chief asks for names of electors; wants 'declaration under oath'",
+          "published": "2025-08-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-rahul-mahadevapura-presentation",
+      "notes": "Commentators quoted by ADR/The Quint argued Rule 20(3)(b) applies to claims and objections during roll revision, not to general public allegations; that argument was not verified here.",
+      "check": "unchecked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-rahul-mahadevapura-presentation",
+      "kind": "statement",
+      "date": "2025-08-07",
+      "date_precision": "day",
+      "title": "Rahul Gandhi alleges 1,00,250 fake voters in Mahadevapura segment",
+      "summary": "At a press conference, Rahul Gandhi presented Congress's analysis of the Mahadevapura Assembly segment of Bangalore Central, which the BJP won by 32,707 votes in 2024. He alleged 1,00,250 bad entries: duplicate voters, fake or invalid addresses, bulk voters at single addresses, invalid photos and misuse of Form 6. Asked to sign a declaration, he said his public statement could be taken as an oath.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition, Lok Sabha",
+      "people": [],
+      "states": [
+        "Karnataka"
+      ],
+      "topics": [
+        "rolls",
+        "elections-2024",
+        "forms",
+        "statements"
+      ],
+      "figures": [
+        {
+          "label": "alleged fake or invalid voters, Mahadevapura (Congress analysis)",
+          "value": 100250,
+          "unit": "electors",
+          "as_of": "2025-08-07"
+        },
+        {
+          "label": "alleged duplicate voters",
+          "value": 11965,
+          "unit": "electors",
+          "as_of": "2025-08-07"
+        },
+        {
+          "label": "alleged fake or invalid addresses",
+          "value": 40009,
+          "unit": "electors",
+          "as_of": "2025-08-07"
+        },
+        {
+          "label": "alleged bulk voters at single addresses",
+          "value": 10452,
+          "unit": "electors",
+          "as_of": "2025-08-07"
+        },
+        {
+          "label": "alleged invalid photos",
+          "value": 4132,
+          "unit": "electors",
+          "as_of": "2025-08-07"
+        },
+        {
+          "label": "alleged Form 6 misuse",
+          "value": 33692,
+          "unit": "electors",
+          "as_of": "2025-08-07"
+        },
+        {
+          "label": "BJP winning margin, Bangalore Central 2024",
+          "value": 32707,
+          "unit": "votes",
+          "as_of": "2024-06-04"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.deccanherald.com/india/ec-helping-bjp-to-destroy-election-system-in-india-rahul-gandhi-alleges-massive-vote-chori-cites-bangalore-central-seat-as-example-3670143",
+          "publisher": "Deccan Herald",
+          "title": "EC colluding with BJP to steal elections: Rahul Gandhi alleges 'massive' vote chori, cites Bangalore Central seat as example",
+          "published": "2025-08-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.indiatvnews.com/karnataka/rahul-gandhi-poll-rigging-allegations-karnataka-chief-electoral-officer-challenges-congress-leader-sign-under-oath-mahadevapura-constituency-2025-08-07-1002475",
+          "publisher": "India TV",
+          "title": "'Sign under oath': Karnataka and Maharashtra CEOs challenge Rahul Gandhi's 'poll rigging' allegations",
+          "published": "2025-08-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/karnataka/rahul-vs-ec-on-vote-chori-karnataka-poll-body-chief-asks-for-names-of-electors-wants-declaration-under-oath-3670274",
+          "publisher": "Deccan Herald",
+          "title": "Rahul vs EC on 'vote chori': Karnataka poll body chief asks for names of electors; wants 'declaration under oath'",
+          "published": "2025-08-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.thenewsminute.com/news/rahul-gandhi-should-provide-details-of-irregularities-in-voter-list-under-oath-maha-ceo",
+          "publisher": "The News Minute",
+          "title": "Rahul Gandhi should provide details of irregularities in voter list under oath: Maha CEO",
+          "published": "2025-08-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/haryana/submit-declaration-within-10-days-chief-electoral-officer-to-rahul",
+          "publisher": "The Tribune",
+          "title": "Submit declaration within 10 days, Chief Electoral Officer to Rahul",
+          "published": "2025-08-11",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "All breakdown figures are the Congress's claims. No signed declaration or affidavit was filed, per the Commission; see responses.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-eci-sign-or-apologise",
+      "kind": "statement",
+      "date": "2025-08-08",
+      "date_precision": "day",
+      "title": "Commission tells Rahul Gandhi to sign declaration or apologise",
+      "summary": "In a social media post, the Commission said Rahul Gandhi should either sign the declaration or apologise to the nation, and that not signing would mean he did not believe his own analysis. It said the Congress filed hardly any appeals during the 2024 roll preparation and that it had answered his December 2024 Maharashtra points.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [],
+      "states": [
+        "Karnataka"
+      ],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/eci-rejects-rahul-gandhis-vote-theft-allegations-demands-apology-or-signed-declaration",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "ECI Rejects Rahul Gandhi's Vote Theft Allegations, Demands Apology or Signed Declaration",
+          "published": "2025-08-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-rahul-mahadevapura-presentation",
+      "notes": "The Commission's post on X itself was not opened; this is the public broadcaster's report of it.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-rahul-bengaluru-rally",
+      "kind": "statement",
+      "date": "2025-08-08",
+      "date_precision": "day",
+      "title": "At Bengaluru rally, Rahul Gandhi repeats Mahadevapura charge",
+      "summary": "At a 'Vote Adhikar' rally in Bengaluru, Rahul Gandhi repeated the 1,00,250 figure, asked the Commission to hand over electronic voter lists and ten years of videography, and asked the Karnataka government to investigate.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition, Lok Sabha",
+      "people": [],
+      "states": [
+        "Karnataka"
+      ],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/lop-ls-rahul-gandhi-again-accuses-election-commission-of-vote-theft-in-bengaluru",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "LoP LS Rahul Gandhi Again Accuses Election Commission Of Vote Theft In Bengaluru",
+          "published": "2025-08-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No direct response to this statement was found in the sources opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-india-bloc-march-nirvachan-sadan",
+      "kind": "event",
+      "date": "2025-08-11",
+      "date_precision": "day",
+      "title": "Opposition MPs detained while marching to Election Commission",
+      "summary": "About 300 INDIA bloc MPs led by Rahul Gandhi marched from Parliament towards Nirvachan Sadan against the Bihar SIR and alleged vote theft, and were detained and later released by Delhi Police. Police said the Commission had permitted 30 MPs to meet the Commission; the opposition wanted all MPs heard. Rahul Gandhi said of the affidavit demand that it was the Commission's data, not his to sign.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "sir",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://news.webindia123.com/news/Articles/India/20250811/4348480.html",
+          "publisher": "ANI via WebIndia123",
+          "title": "Protest over SIR: INDIA bloc MPs march towards Election Commission's office from Parliament, Delhi Police stop procession enroute",
+          "published": "2025-08-11",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.indiatvnews.com/news/india/vote-chori-row-live-updates-india-bloc-mps-march-from-parliament-to-election-commission-bihar-sir-opposition-protest-monsoon-session-1002955",
+          "publisher": "India TV",
+          "title": "'Vote Chori' row: Rahul Gandhi responds to Election Commission notice",
+          "published": "2025-08-11",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-anurag-thakur-counter-charge",
+      "kind": "statement",
+      "date": "2025-08-13",
+      "date_precision": "day",
+      "title": "BJP's Anurag Thakur alleges doubtful voters in opposition leaders' seats",
+      "summary": "At the BJP headquarters, BJP MP Anurag Thakur alleged irregular entries in seats won by opposition leaders, including Rae Bareli, Wayanad, Diamond Harbour and Kannauj, citing for example 47 voter IDs at one Rae Bareli house number, and asked Rahul Gandhi to explain. The Congress said this confirmed that flawed rolls exist.",
+      "status": "claim",
+      "attributed_to": "Anurag Thakur, BJP MP",
+      "people": [],
+      "states": [
+        "Uttar Pradesh",
+        "Kerala",
+        "West Bengal"
+      ],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.indiatvnews.com/news/india/anurag-thakur-slams-rahul-gandhi-over-vote-theft-allegations-cites-cases-from-rae-bareli-wayanad-and-bengal-2025-08-13-1003362",
+          "publisher": "India TV",
+          "title": "Anurag Thakur slams Rahul Gandhi over 'vote theft' allegations, cites cases from Rae Bareli, Wayanad, Bengal",
+          "published": "2025-08-13",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Whether the Commission asked Thakur for a signed declaration, as it did Rahul Gandhi, was not established in the sources opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-cec-press-conference-affidavit-or-apology",
+      "kind": "statement",
+      "date": "2025-08-17",
+      "date_precision": "day",
+      "title": "CEC Gyanesh Kumar: file affidavit in seven days or apologise",
+      "summary": "At the National Media Centre, CEC Gyanesh Kumar said Rahul Gandhi must give a signed affidavit within seven days or apologise, failing which the allegations would be treated as baseless. He called the bias charge an insult to the Constitution, said sharing CCTV footage of voters would breach their privacy, said Maharashtra's CEO had not received a single named voter with proof, and explained last-hour turnout as an average of about 10% an hour.",
+      "status": "response",
+      "attributed_to": "Gyanesh Kumar, Chief Election Commissioner",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [
+        "Karnataka",
+        "Maharashtra"
+      ],
+      "topics": [
+        "statements",
+        "turnout-data",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://news.webindia123.com/news/Articles/India/20250817/4350866.html",
+          "publisher": "ANI via WebIndia123",
+          "title": "Give affidavit or apologise, no third option: Chief Election Commissioner Gyanesh Kumar on Rahul Gandhi's 'vote theft' allegations",
+          "published": "2025-08-17",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "Teesra koi vikalp nahi (There is no third option.)"
+        },
+        {
+          "url": "https://www.thehindu.com/news/national/india-bloc-considering-motion-to-remove-chief-election-commissioner-gyanesh-kumar-august-18-2025/article69946271.ece",
+          "publisher": "The Hindu",
+          "title": "INDIA bloc considering motion to remove CEC Gyanesh Kumar",
+          "published": "2025-08-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://economictimes.indiatimes.com/news/india/submit-affidavit-or-apologise-to-the-nation-cec-gyanesh-kumar-to-rahul-gandhi-over-his-voter-theft-allegations/articleshow/123345589.cms",
+          "publisher": "The Economic Times",
+          "title": "Submit affidavit or apologise to the nation: CEC Gyanesh Kumar to Rahul Gandhi over his 'voter theft' allegations",
+          "published": "2025-08-17",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-rahul-mahadevapura-presentation",
+      "notes": "No transcript on eci.gov.in or PIB was located. The Commission's later position was that no affidavit was filed. Whether Election Commissioners Sandhu and Joshi attended was not verified.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-india-bloc-considers-removal-motion",
+      "kind": "event",
+      "date": "2025-08-18",
+      "date_precision": "day",
+      "title": "INDIA bloc floor leaders discuss motion to remove the CEC",
+      "summary": "The day after the CEC's press conference, a meeting of opposition floor leaders in Parliament discussed moving a motion to remove Gyanesh Kumar, according to sources quoted by The Hindu.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "statements",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.thehindu.com/news/national/india-bloc-considering-motion-to-remove-chief-election-commissioner-gyanesh-kumar-august-18-2025/article69946271.ece",
+          "publisher": "The Hindu",
+          "title": "INDIA bloc considering motion to remove CEC Gyanesh Kumar",
+          "published": "2025-08-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No notice was filed in 2025; the first notices were filed on 12 March 2026.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.thehindu.com/news/national/india-bloc-considering-motion-to-remove-chief-election-commissioner-gyanesh-kumar-august-18-2025/article69946271.ece",
+        "note": "Free portion of The Hindu's report confirms the Aug 18, 2025 floor-leaders' meeting discussed a removal motion; the article's own photo caption places the CEC's press conference on 17 Aug 2025, supporting the 'day after' framing. Entry's cautionary note about no notice actually being filed in 2025 is accurate."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-eci-aland-rajura-numbers",
+      "kind": "statement",
+      "date": "2025-09",
+      "date_precision": "month",
+      "title": "Commission: only 24 of 6,018 Aland deletion requests were genuine",
+      "summary": "The Commission said Form 7 can be filed online but deletion requires notice and a hearing. In Aland, 6,018 deletion applications were filed online, only 24 were found genuine and accepted, and the ERO filed an FIR. In Rajura, 6,861 of 7,792 new-registration applications were rejected as invalid and an FIR was filed.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [],
+      "states": [
+        "Karnataka",
+        "Maharashtra"
+      ],
+      "topics": [
+        "rolls",
+        "forms",
+        "statements"
+      ],
+      "figures": [
+        {
+          "label": "Aland Form 7 applications found genuine",
+          "value": 24,
+          "unit": "applications",
+          "as_of": "2025-09-20"
+        },
+        {
+          "label": "Aland Form 7 applications found incorrect",
+          "value": 5994,
+          "unit": "applications",
+          "as_of": "2025-09-20"
+        },
+        {
+          "label": "Rajura new-voter applications rejected",
+          "value": 6861,
+          "unit": "applications",
+          "as_of": "2025-09-20"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/no-deletion-of-any-vote-can-be-done-online-by-any-member-of-the-publiceci",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "No deletion of any vote can be done online by any member of the public: ECI",
+          "published": "2025-09-20",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-rahul-aland-rajura-presentation",
+      "notes": "Reported by AIR on 20 Sep 2025 (9:52 am) as a reiteration; the exact day the Commission released these figures was not verified.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-eci-aland-baseless",
+      "kind": "statement",
+      "date": "2025-09-18",
+      "date_precision": "day",
+      "title": "Commission calls Aland charge incorrect, says it filed the FIR itself",
+      "summary": "Within hours, the Commission posted that the allegations were incorrect and baseless, that no member of the public can delete a vote online, and that after unsuccessful deletion attempts in Aland in 2023 an FIR was filed by the Commission's own authority.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [],
+      "states": [
+        "Karnataka"
+      ],
+      "topics": [
+        "rolls",
+        "forms",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/election-commission-rejects-rahul-gandhis-allegations-on-vote-deletion-as-baseless",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "Election Commission rejects Rahul Gandhi's allegations on vote deletion as baseless",
+          "published": "2025-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/cec-shielding-vote-chors-undermining-democracy-rahul-election-panel-rubbishes-claim",
+          "publisher": "The Tribune",
+          "title": "CEC shielding 'vote chors', undermining democracy: Rahul Gandhi; election panel rubbishes claim",
+          "published": "2025-09-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-rahul-aland-rajura-presentation",
+      "notes": null,
+      "check": "unchecked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-rahul-aland-rajura-presentation",
+      "kind": "statement",
+      "date": "2025-09-18",
+      "date_precision": "day",
+      "title": "Rahul Gandhi alleges software-driven deletions in Aland, additions in Rajura",
+      "summary": "Rahul Gandhi alleged that 6,018 deletion applications in Aland, Karnataka, before the 2023 election were filed centrally using other voters' names and phone numbers, and that 6,850 names were added the same way in Rajura, Maharashtra. He said the Karnataka CID had written 18 letters in 18 months seeking IP, device and OTP data that the Commission did not provide, accused the CEC of protecting those responsible, and gave him a week to share the data.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition, Lok Sabha",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [
+        "Karnataka",
+        "Maharashtra"
+      ],
+      "topics": [
+        "rolls",
+        "forms",
+        "it-systems",
+        "statements"
+      ],
+      "figures": [
+        {
+          "label": "Form 7 deletion applications in Aland cited by Rahul Gandhi",
+          "value": 6018,
+          "unit": "applications",
+          "as_of": "2025-09-18"
+        },
+        {
+          "label": "additions alleged in Rajura",
+          "value": 6850,
+          "unit": "electors",
+          "as_of": "2025-09-18"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://inc.in/congress-sandesh/national/rahul-gandhi-presents-fresh-evidence-on-electoral-fraud-vote-chori",
+          "publisher": "Indian National Congress",
+          "title": "Rahul Gandhi Presents Fresh Evidence On Electoral 'Fraud'",
+          "published": "2025-09-18",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/cec-shielding-vote-chors-undermining-democracy-rahul-election-panel-rubbishes-claim",
+          "publisher": "The Tribune",
+          "title": "CEC shielding 'vote chors', undermining democracy: Rahul Gandhi; election panel rubbishes claim",
+          "published": "2025-09-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/rahul-accuses-chief-election-commissioner-of-stonewalling-cids-request-for-info-on-karnatakas-aland-vote-deletion-3734248",
+          "publisher": "Deccan Herald",
+          "title": "Rahul accuses Chief Election Commissioner of stonewalling CID's request for info on Karnataka's Aland vote deletion",
+          "published": "2025-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The inc.in page is the party's own account (primary for the claim, not for its truth). The sources opened do not record a Commission answer on the 18 CID letters specifically.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-bjp-prasad-aland",
+      "kind": "statement",
+      "date": "2025-09-19",
+      "date_precision": "day",
+      "title": "BJP's Ravi Shankar Prasad says Rahul Gandhi distorts facts on Commission",
+      "summary": "In Patna, senior BJP leader Ravi Shankar Prasad said Rahul Gandhi spoke without facts and noted that Gyanesh Kumar did not head the Commission at the time of the 2023 Karnataka election that the Aland charge concerns.",
+      "status": "claim",
+      "attributed_to": "Ravi Shankar Prasad, BJP",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [
+        "Karnataka"
+      ],
+      "topics": [
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/bjps-prasad-rahul-gandhi-distorting-facts-about-election-commission",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "BJP's Prasad: Rahul Gandhi Distorting Facts About Election Commission",
+          "published": "2025-09-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No direct response to this statement was found in the sources opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.newsonair.gov.in/bjps-prasad-rahul-gandhi-distorting-facts-about-election-commission",
+        "note": "AIR's transcript confirms Prasad said Gandhi 'speaks without facts' and pointed out Kumar was not CEC during the 2023 Karnataka polls the Aland charge concerns, matching the entry."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-trc-voter-data-telangana",
+      "kind": "event",
+      "date": "2025-09-19",
+      "date_precision": "day",
+      "title": "Reporters' Collective: Commission shared voter data with Telangana government",
+      "summary": "The Reporters' Collective reported that the Commission shared voter data including photographs with the Telangana government, which used private firms for a 2019 pensioner verification system, contrasting this with the CEC's stated reason for not releasing polling footage: voters' privacy.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [
+        "Telangana"
+      ],
+      "topics": [
+        "it-systems",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.reporters-collective.in/trc/eci-gave-access-to-voter-data-to-state-govt-pvt-companies",
+          "publisher": "The Reporters' Collective",
+          "title": "Election Commission gave access to voter data, including photos, to a state government and private companies",
+          "published": "2025-09-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.reporters-collective.in/trc/telangana-official-confirms-voter-data-illegally-used",
+          "publisher": "The Reporters' Collective",
+          "title": "Telangana Election Official Confirms: Voter Data was Illegally Used by State Government",
+          "published": "2025-10-16",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Commission had not responded to written queries by publication, per the outlet. A further search for any later ECI response or rebuttal to this story found none.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.reporters-collective.in/trc/eci-gave-access-to-voter-data-to-state-govt-pvt-companies",
+        "note": "Both TRC pieces support the summary closely, including the contrast with CEC Kumar's privacy rationale for withholding polling footage and the Commission's non-response to written queries. No later ECI response to this story was found in a further search; the entry's notes already flag the non-response."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-karnataka-sit-aland",
+      "kind": "event",
+      "date": "2025-09-20",
+      "date_precision": "day",
+      "title": "Karnataka government sets up SIT on Aland deletion attempts",
+      "summary": "The Congress-led Karnataka government formed a Special Investigation Team under the CID's Additional Director General to probe the Aland deletion attempts, after a complaint by Aland MLA B R Patil.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Karnataka"
+      ],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/karnataka-govt-forms-sit-to-probe-vote-deletion-allegations-in-aland-assembly-constituency",
+          "publisher": "The Tribune",
+          "title": "Karnataka Govt forms SIT to probe vote deletion allegations in Aland Assembly constituency",
+          "published": "2025-09-20",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-trc-dedup-software-skipped",
+      "kind": "event",
+      "date": "2025-10-12",
+      "date_precision": "day",
+      "title": "Reporters' Collective: deduplication software not used in Bihar SIR",
+      "summary": "The Reporters' Collective reported, citing a senior Commission official and four EROs, that the Commission did not run its duplicate-detection software on the Bihar SIR roll, and that its analysis found 14.35 lakh suspect duplicate entries in the final Bihar roll.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "rolls",
+        "it-systems"
+      ],
+      "figures": [
+        {
+          "label": "suspect duplicate entries in final Bihar roll (TRC analysis)",
+          "value": 1435000,
+          "unit": "entries",
+          "as_of": "2025-10-12"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.reporters-collective.in/trc/eci-skipped-its-fraud-busting-software-lakhs-of-duplicates",
+          "publisher": "The Reporters' Collective",
+          "title": "ECI Skipped its Fraud-Busting Software, Flooding Bihar Voter Roll with Lakhs of Suspect Duplicates",
+          "published": "2025-10-12",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Bihar's CEO had earlier said the draft roll's errors would be fixed before finalisation; the outlet says its questionnaire drew a meeting with the CEO. The Commission's court answer is recorded as its own entry.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-dec-note-statutory-functions",
+      "kind": "event",
+      "date": "2025-11-04",
+      "date_precision": "day",
+      "title": "On Sandhu's direction, deputy tells IT chief statutory roll powers stay with EROs",
+      "summary": "Acting on Election Commissioner Sukhbir Singh Sandhu's directions, Deputy Election Commissioner Sanjay Kumar wrote to DG (IT) Seema Khanna and senior officers that the statutory functions of EROs, DEOs and CEOs must be exercised only by them and that IT systems must strictly comply with the law.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Sanjay Kumar",
+        "Seema Khanna"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "dissent",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "Article quotes the Nov 4, 2025 note verbatim: 'statutory functions of ERO, DEO and CEO (were) to be strictly exercised by them and no one else' and 'IT systems must be in strict compliance with the law' -- matches the entry exactly, including that Sanjay Kumar acted on Sandhu's direction."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-eci-sources-h-files",
+      "kind": "statement",
+      "date": "2025-11-05",
+      "date_precision": "day",
+      "title": "Commission sources: no appeals were filed against Haryana rolls",
+      "summary": "Unnamed Commission sources said there were zero appeals against Haryana's rolls and 22 election petitions pending, asked why Congress polling agents and booth agents did not object, and asked whether Rahul Gandhi supports the SIR, which removes duplicates.",
+      "status": "response",
+      "attributed_to": "Election Commission of India (unnamed sources)",
+      "people": [],
+      "states": [
+        "Haryana"
+      ],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.india.com/news/india/zero-appeals-against-voter-rolls-ec-rebuts-rahul-gandhis-h-files-haryana-voter-fraud-allegations-asks-why-congress-didnt-file-appeals-in-bihar-sir-vote-chori-8168518/",
+          "publisher": "India.com",
+          "title": "'Zero appeals against...': EC rebuts Rahul Gandhi's 'H Files' Haryana voter fraud allegations",
+          "published": "2025-11-05",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-rahul-h-files-haryana",
+      "notes": "Source-based, not an on-record Commission statement. The Haryana CEO's own post was not opened.",
+      "check": "unchecked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-rahul-h-files-haryana",
+      "kind": "statement",
+      "date": "2025-11-05",
+      "date_precision": "day",
+      "title": "Rahul Gandhi's 'H Files' allege 25 lakh fake entries in Haryana",
+      "summary": "Rahul Gandhi alleged that about 25 lakh entries in Haryana's roll for the 2024 Assembly election were fraudulent, including 5.21 lakh duplicates and 19.26 lakh bulk voters, and that one photo of a Brazilian model appeared 22 times under different names. He said the Commission was not removing duplicates to help the BJP.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition, Lok Sabha",
+      "people": [],
+      "states": [
+        "Haryana"
+      ],
+      "topics": [
+        "rolls",
+        "statements"
+      ],
+      "figures": [
+        {
+          "label": "alleged fraudulent entries, Haryana (Congress claim)",
+          "value": 2500000,
+          "unit": "entries",
+          "as_of": "2025-11-05"
+        },
+        {
+          "label": "alleged duplicate voters",
+          "value": 521000,
+          "unit": "entries",
+          "as_of": "2025-11-05"
+        },
+        {
+          "label": "alleged bulk voters",
+          "value": 1926000,
+          "unit": "entries",
+          "as_of": "2025-11-05"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.etvbharat.com/en/bharat/hydrogen-bomb-unleashed-rahul-gandhi-press-conference-on-the-h-files-vote-theft-in-haryana-polls-enn25110501907",
+          "publisher": "ETV Bharat",
+          "title": "'Hydrogen Bomb' Unleashed: Rahul Gandhi Alleges 'Sarkar Chori' In Haryana, Claims One In Eight Voters 'Fake'",
+          "published": "2025-11-05",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "unchecked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-eci-affidavit-dedup-scrapped",
+      "kind": "statement",
+      "date": "2025-11-24",
+      "date_precision": "day",
+      "title": "Commission tells Supreme Court its duplicate-detection software was unreliable",
+      "summary": "In a counter-affidavit in the Supreme Court, responding to the Reporters' Collective finding cited in court, the Commission said the software's results were variable, many flagged entries were not duplicates, and the technology was last used in 2023.",
+      "status": "response",
+      "attributed_to": "Election Commission of India (counter-affidavit, Supreme Court)",
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "sir",
+        "it-systems",
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.reporters-collective.in/trc/eci-to-sc-deduplication-software-ineffective-scraped-it",
+          "publisher": "The Reporters' Collective",
+          "title": "ECI to Supreme Court: Deduplication Software Was Ineffective, We Scrapped It",
+          "published": "2025-12-08",
+          "tier": 2,
+          "archive_url": null,
+          "quote": "The said technology was last used in 2023."
+        }
+      ],
+      "response_to": "statements-reporting-trc-dedup-software-skipped",
+      "notes": "The affidavit itself was not opened; quoted as reproduced by the outlet. The outlet notes the Commission's 2023 roll manual ordered the software's use in 'campaign mode'.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-lok-sabha-electoral-reforms-debate",
+      "kind": "statement",
+      "date": "2025-12-09",
+      "date_precision": "day",
+      "title": "Lok Sabha debates electoral reforms; Rahul Gandhi presses on rolls and CCTV",
+      "summary": "In the Lok Sabha debate on electoral reforms, Rahul Gandhi alleged 1.2 lakh duplicate photos in the Bihar SIR roll, sought machine-readable rolls for parties a month before polls and withdrawal of the rule allowing CCTV footage to be destroyed. Congress's Manish Tewari questioned the SIR's legal basis. Law Minister Arjun Ram Meghwal said SIRs were held several times under Congress governments.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi (Congress), with Manish Tewari; government reply by Arjun Ram Meghwal, Law Minister",
+      "people": [],
+      "states": [
+        "Bihar"
+      ],
+      "topics": [
+        "statements",
+        "rolls",
+        "sir"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.newsonair.gov.in/discussion-in-lok-sabha-on-election-reforms-congress-questions-legal-basis-of-sir/",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "Discussion Underway in Lok Sabha on Election Reforms",
+          "published": "2025-12-09",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Lok Sabha debate transcript on sansad.in was not opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-amit-shah-sir-reply",
+      "kind": "statement",
+      "date": "2025-12-10",
+      "date_precision": "day",
+      "title": "Amit Shah: SIR is the Commission's exclusive domain, not Parliament's",
+      "summary": "Replying to the debate, Home Minister Amit Shah said the SIR falls within the Commission's constitutional powers and cannot be answered by the government in Parliament, cited earlier intensive revisions under Congress governments, and said the exercise removes the dead, the shifted, duplicates and foreigners. When Rahul Gandhi asked him to debate his three press conferences, Shah said Parliament would not run to his wishes.",
+      "status": "response",
+      "attributed_to": "Amit Shah, Union Home Minister",
+      "people": [],
+      "states": [],
+      "topics": [
+        "statements",
+        "sir"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://thefederal.com/category/news/sir-cannot-be-discussed-in-parliament-falls-within-ec-jurisdiction-amit-shah-220116",
+          "publisher": "The Federal",
+          "title": "SIR debate: Amit Shah, Rahul Gandhi face off in Lok Sabha",
+          "published": "2025-12-10",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.babushahi.com/full-news.php?id=214641",
+          "publisher": "ANI via Babushahi",
+          "title": "Rahul Gandhi challenges Shah to debate on his 3 PCs on 'vote chori'; Shah retorts",
+          "published": "2025-12-10",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-lok-sabha-electoral-reforms-debate",
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-rahul-shah-defensive",
+      "kind": "statement",
+      "date": "2025-12-11",
+      "date_precision": "day",
+      "title": "Rahul Gandhi says Shah did not answer his vote-theft points",
+      "summary": "After an opposition walkout, Rahul Gandhi said the Home Minister's reply was defensive and did not address transparent rolls, EVMs or the immunity given to the CEC, and called vote theft the biggest treason.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition, Lok Sabha",
+      "people": [],
+      "states": [],
+      "topics": [
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.tribuneindia.com/news/india/appeared-under-pressure-rahul-gandhi-takes-dig-at-amit-shah-over-lok-sabha-speech",
+          "publisher": "The Tribune",
+          "title": "Appeared under pressure: Rahul Gandhi takes dig at Amit Shah over Lok Sabha speech",
+          "published": "2025-12-11",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No direct response to this statement was found in the sources opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-dec-note-ero-discretion",
+      "kind": "event",
+      "date": "2026-01-02",
+      "date_precision": "day",
+      "title": "Deputy asks IT chief not to restrict ERO discretion in new SIR module",
+      "summary": "With the SIR under way in 12 states and UTs, Deputy Election Commissioner Sanjay Kumar asked DG (IT) Seema Khanna to ensure the IT system did not restrict EROs' discretion as the division moved them onto a new notice-and-hearing module.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sanjay Kumar",
+        "Seema Khanna"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "sir",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "Confirmed: on Jan 2, 2026, with SIR under way in 12 states/UTs, Sanjay Kumar asked Khanna to 'ensure that IT system is made in a manner that ERO's discretion to act in any manner is not restricted', exactly as summarised."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-ecinet-launch-statements",
+      "kind": "statement",
+      "date": "2026-01-22",
+      "date_precision": "day",
+      "title": "CEC and IT chief say ECINet is lawful and builds public trust",
+      "summary": "At the launch of ECINet, which brought more than 40 Commission apps and portals together, CEC Gyanesh Kumar said it was built in strict accordance with the law and DG (IT) Seema Khanna said it would enhance transparency, credibility and public trust.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar",
+        "Seema Khanna"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Launch statements as quoted by The Indian Express; the Commission's launch press note was not opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "Confirmed verbatim: CEC Kumar said ECINet was built 'in strict accordance with the law' and DG(IT) Khanna said it would 'enhance transparency, credibility and public trust' at the Jan 22, 2026 launch."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-trc-eci-misled-sc-bengal",
+      "kind": "event",
+      "date": "2026-01-29",
+      "date_precision": "day",
+      "title": "Reporters' Collective: Commission's court account of notices contradicted",
+      "summary": "The Reporters' Collective reported that over 1.5 crore West Bengal SIR notices were generated by centralised, untested algorithms and signed off by overloaded EROs, contrary to the Commission's statement to the Supreme Court that there was no automated generation of notices.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "it-systems",
+        "courts"
+      ],
+      "figures": [
+        {
+          "label": "SIR notices in West Bengal (TRC)",
+          "value": 15000000,
+          "unit": "notices",
+          "as_of": "2026-01-29"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.reporters-collective.in/trc/eci-misled-the-sc-on-sir-in-west-bengal",
+          "publisher": "The Reporters' Collective",
+          "title": "ECI misled the Supreme Court on SIR in West Bengal",
+          "published": "2026-01-29",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Commission had not responded to questions by publication, per the outlet. The Commission's court position was that EROs applied their minds to each notice.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-trc-bengal-as-it-deemed-fit",
+      "kind": "event",
+      "date": "2026-02-08",
+      "date_precision": "day",
+      "title": "Reporters' Collective: Bengal SIR run through unpublished orders and WhatsApp",
+      "summary": "The Reporters' Collective reported that the Commission changed SIR rules in West Bengal without public notice, issued instructions over WhatsApp and orally, and placed roll observers whose approval EROs needed, turning statutory officers into intermediaries.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "it-systems",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.reporters-collective.in/trc/voter-registration-in-wb-as-it-deemed-fit",
+          "publisher": "The Reporters' Collective",
+          "title": "How ECI Tailored the Voter Registration in West Bengal 'As it Deemed Fit'",
+          "published": "2026-02-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.reporters-collective.in/trc/ecis-top-wb-officer-sent-orders-to-state-officials-on-whatsapp",
+          "publisher": "The Reporters' Collective",
+          "title": "Verified: ECI's top West Bengal officer sent orders to state officials for SIR on WhatsApp",
+          "published": "2026-01-14",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Commission did not answer detailed questions by publication, per the outlet. It told the Supreme Court observers only assisted EROs, a position the court accepted on 9 Feb 2026 (per Scroll, 24 Sep 2026).",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-goa-ceo-eight-emails",
+      "kind": "event",
+      "date": "2026-02-11",
+      "date_precision": "day",
+      "title": "Goa CEO writes eight times in seven days seeking rollback for 97 voters",
+      "summary": "Between 11 and 17 February, the Goa Chief Electoral Officer's office wrote eight times to Senior Deputy Election Commissioner Gyanesh Bharti, copying DG (IT) Seema Khanna, asking for a software rollback so EROs could reverse deletions of 97 electors they had found eligible under the Supreme Court's 29 January procedure. No reply is on record.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Bharti",
+        "Seema Khanna",
+        "Sanjay Goel"
+      ],
+      "states": [
+        "Goa"
+      ],
+      "topics": [
+        "it-systems",
+        "sir",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors found eligible by Goa EROs but left off final roll",
+          "value": 97,
+          "unit": "electors",
+          "as_of": "2026-02-21"
+        },
+        {
+          "label": "electors who came forward after logical-discrepancy lists",
+          "value": 649,
+          "unit": "electors",
+          "as_of": "2026-02-17"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+          "publisher": "The Indian Express",
+          "title": "8 emails in 7 days, but valid Goa voters still left out: EC's flawed system",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026). Seema Khanna did not answer a separate questionnaire on why the rollback was not enabled.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+        "note": "Article gives the full email log (Feb 11, 13, 14x2+letter, 15, 16, 17) confirming 'his eighth time in seven days', addressed to Gyanesh Bharti with Khanna copied, and the exact figures of 97 eligible electors and 649 who came forward. Entry is accurate down to the figures."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-dec-it-cannot-block-sc",
+      "kind": "event",
+      "date": "2026-02-18",
+      "date_precision": "day",
+      "title": "Deputy Election Commissioner: IT system cannot block Supreme Court-directed action",
+      "summary": "Deputy Election Commissioner Sanjay Kumar wrote to DG (IT) Seema Khanna that EROs had powers to correct the roll and the IT system could not block action required by the Supreme Court, asking her to enable the Goa EROs' decisions.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sanjay Kumar",
+        "Seema Khanna"
+      ],
+      "states": [
+        "Goa"
+      ],
+      "topics": [
+        "it-systems",
+        "sir",
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+          "publisher": "The Indian Express",
+          "title": "8 emails in 7 days, but valid Goa voters still left out: EC's flawed system",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026). The final Goa roll was published on 21 February without the 97; all 97 were still missing when the paper checked up to 20 Sep 2026.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+        "note": "Confirmed verbatim: Feb 18 note from Sanjay Kumar to Khanna states EROs/AEROs have powers under s.21/21A and 'IT system cannot block necessary action as per the directions of SC', asking her to facilitate publication -- matches the entry precisely."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-removal-notices-filed",
+      "kind": "statement",
+      "date": "2026-03-12",
+      "date_precision": "day",
+      "title": "Opposition files first-ever notices to remove a CEC in both Houses",
+      "summary": "Led by the TMC, opposition MPs submitted notices of motion to remove Gyanesh Kumar: 130 signatures in the Lok Sabha and 63 in the Rajya Sabha, above the 100 and 50 needed. The notices cited the SIR and alleged partisan and discriminatory conduct and obstruction of investigation into electoral fraud.",
+      "status": "claim",
+      "attributed_to": "Opposition MPs (TMC-led)",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "statements",
+        "sir"
+      ],
+      "figures": [
+        {
+          "label": "Lok Sabha signatories",
+          "value": 130,
+          "unit": "MPs",
+          "as_of": "2026-03-12"
+        },
+        {
+          "label": "Rajya Sabha signatories",
+          "value": 63,
+          "unit": "MPs",
+          "as_of": "2026-03-12"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/rajya-sabha-chairman-cp-radhakrishnan-rejected-opposition-motion-remove-cec-gyanesh-kumar-10622419/",
+          "publisher": "The Indian Express",
+          "title": "Rajya Sabha Chairman, Lok Sabha Speaker reject Opposition move to impeach CEC Gyanesh Kumar",
+          "published": "2026-04-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notice texts were not opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/rajya-sabha-chairman-cp-radhakrishnan-rejected-opposition-motion-remove-cec-gyanesh-kumar-10622419/",
+        "note": "Confirmed: TMC-led notices filed March 12 with 130 LS and 63 RS signatures (above the 100/50 threshold), citing 'partisan and discriminatory conduct' and 'obstruction of investigation into electoral fraud and SIR' -- matches the entry."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-removal-notices-rejected",
+      "kind": "event",
+      "date": "2026-04-06",
+      "date_precision": "day",
+      "title": "Speaker and Chairman refuse to admit CEC removal notices, no reasons given",
+      "summary": "Lok Sabha Speaker Om Birla and Rajya Sabha Chairman C P Radhakrishnan refused to admit the notices under Section 3 of the Judges (Inquiry) Act, 1968, through parliamentary bulletins that gave no reasons. TMC's Derek O'Brien and Congress's Jairam Ramesh criticised the decision.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/rajya-sabha-chairman-cp-radhakrishnan-rejected-opposition-motion-remove-cec-gyanesh-kumar-10622419/",
+          "publisher": "The Indian Express",
+          "title": "Rajya Sabha Chairman, Lok Sabha Speaker reject Opposition move to impeach CEC Gyanesh Kumar",
+          "published": "2026-04-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The bulletins themselves were not opened; wording is as quoted by The Indian Express.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/rajya-sabha-chairman-cp-radhakrishnan-rejected-opposition-motion-remove-cec-gyanesh-kumar-10622419/",
+        "note": "Confirmed: both notices refused under Section 3 of the Judges (Inquiry) Act, 1968, with bulletins giving no substantive reason, and both O'Brien's and Ramesh's reactions are quoted as summarised."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-sandhu-note-communications-approval",
+      "kind": "event",
+      "date": "2026-04-16",
+      "date_precision": "day",
+      "title": "Sandhu: communications issued in ECI's name without Commission's approval",
+      "summary": "Sukhbir Singh Sandhu told senior officers that many communications went out in the Commission's name without its approval and that all must now have it under the 2023 Act. He also recorded that the IT division had built new modules and portals without informing him, and that he learned of them from the media.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Seema Khanna"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "it-systems"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+        "note": "Confirmed against both the 14-objections piece (Apr 16 quote on communications going out without Commission approval) and the Cabinet Secretary piece, which separately confirms Sandhu's line that he learned of new IT modules 'from media only'."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-fresh-rs-removal-notice",
+      "kind": "statement",
+      "date": "2026-04-24",
+      "date_precision": "day",
+      "title": "73 Rajya Sabha MPs file fresh notice with nine charges against CEC",
+      "summary": "Congress's Jairam Ramesh announced a notice signed by 73 Rajya Sabha MPs seeking the CEC's removal for 'proven misbehaviour'. Its nine charges include uneven enforcement of the Model Code, disenfranchisement through the West Bengal SIR, a defective nationwide SIR framework and repeated adverse court observations.",
+      "status": "claim",
+      "attributed_to": "73 opposition Rajya Sabha MPs (announced by Jairam Ramesh, Congress)",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [
+        "West Bengal",
+        "Tamil Nadu",
+        "Kerala"
+      ],
+      "topics": [
+        "appointments",
+        "statements",
+        "sir",
+        "mcc"
+      ],
+      "figures": [
+        {
+          "label": "Rajya Sabha signatories",
+          "value": 73,
+          "unit": "MPs",
+          "as_of": "2026-04-24"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://m.thewire.in/article/politics/with-nine-charges-73-opposition-mps-move-fresh-notice-in-rajya-sabha-to-remove-cec-gyanesh-kumar",
+          "publisher": "The Wire",
+          "title": "With Nine Charges, 73 Opposition MPs Move Fresh Notice in Rajya Sabha to Remove CEC Gyanesh Kumar",
+          "published": "2026-04-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://aninews.in/news/national/politics/why-are-you-troubling-mps-kiren-rijiju-hits-back-at-jairam-ramesh-after-opposition-mps-sign-notice-seeking-removal-of-cec-gyanesh-kumar20260424231925/",
+          "publisher": "ANI",
+          "title": "'Why are you troubling MPs?': Kiren Rijiju hits back at Jairam Ramesh",
+          "published": "2026-04-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Pending before the Chairman as of 24 Sep 2026, per The Indian Express. Outlook (24 Sep 2026) reports seven signatories have since switched sides.",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://m.thewire.in/article/politics/with-nine-charges-73-opposition-mps-move-fresh-notice-in-rajya-sabha-to-remove-cec-gyanesh-kumar",
+        "note": "The Wire and ANI both confirm 73 RS MPs, nine charges, 'proven misbehaviour' wording, and that Jairam Ramesh announced it -- but neither source, nor any other opened, names Sagarika Ghose as a co-mover. Removed that unverified detail from the summary; everything else checks out, including the four cited charges."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-joshi-note-communications-approval",
+      "kind": "event",
+      "date": "2026-04-24",
+      "date_precision": "day",
+      "title": "Joshi: ECI communications going out without 'the Commission's' approval",
+      "summary": "Eight days after Sandhu's note, Vivek Joshi told the same officers that several communications were being sent in the Commission's name without its approval and that future ones must have it, citing Article 324 and the 2023 Act.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+        "note": "Confirmed verbatim: eight days after Sandhu, Joshi wrote that communications were 'disseminated in the name of the ECI without the requisite approval of the Commission', citing Article 324 and the 2023 Act -- matches exactly."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-rijiju-on-removal-notice",
+      "kind": "statement",
+      "date": "2026-04-24",
+      "date_precision": "day",
+      "title": "Kiren Rijiju: constitutional authorities won't be intimidated",
+      "summary": "Parliamentary Affairs Minister Kiren Rijiju replied to Jairam Ramesh on X, asking why the opposition was troubling MPs and saying constitutional authorities would not be allowed to be intimidated.",
+      "status": "response",
+      "attributed_to": "Kiren Rijiju, Union Parliamentary Affairs Minister",
+      "people": [],
+      "states": [],
+      "topics": [
+        "statements",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://aninews.in/news/national/politics/why-are-you-troubling-mps-kiren-rijiju-hits-back-at-jairam-ramesh-after-opposition-mps-sign-notice-seeking-removal-of-cec-gyanesh-kumar20260424231925/",
+          "publisher": "ANI",
+          "title": "'Why are you troubling MPs?': Kiren Rijiju hits back at Jairam Ramesh",
+          "published": "2026-04-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-fresh-rs-removal-notice",
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-joshi-note-form6-rules",
+      "kind": "event",
+      "date": "2026-05-16",
+      "date_precision": "day",
+      "title": "Joshi records that Form 6 cannot change without amending 1960 Rules",
+      "summary": "On a proposal to change Form 6 through the SIR framework, Vivek Joshi recorded that Forms 6 and 8 are statutory, cannot be altered without amending the Registration of Electors Rules, 1960, and that the lawful course was to send the proposal to the government. Sandhu concurred on file on 19 May.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Vivek Joshi",
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [],
+      "topics": [
+        "forms",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/",
+          "publisher": "The Indian Express",
+          "title": "'Illegal, unauthorised': Election Commissioners objected to Form 6 change",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026). Under Section 28 of the RP Act 1950, rules are made by the Centre after consulting the Commission.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/",
+        "note": "Confirmed verbatim: May 16 Joshi note that Forms 6/8 'cannot be altered without making amendments in the Registration of Electors Rules, 1960', and 'On May 19, his colleague...Sandhu concurred with Joshi on file' -- exact match to the entry."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-joshi-note-centralisation-audit",
+      "kind": "event",
+      "date": "2026-05-29",
+      "date_precision": "day",
+      "title": "Joshi warns of 'gradual centralisation' of roll database, proposes audit",
+      "summary": "Vivek Joshi wrote to the CEC, Sandhu and Deputy Election Commissioner Sanjay Kumar about gradual centralisation of the electoral roll database and proposed two committees, including an outside IIT expert, to certify that only statutory authorities can change the database and that ECINet complies with the law. Sandhu endorsed it on 13 July; on 14 August he recorded that no action was known to him.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Vivek Joshi",
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Sanjay Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "dissent",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "Confirmed in detail: May 29 note to CEC/Sandhu/Sanjay Kumar proposing two committees (one with an outside IIT expert), Sandhu's July 13 endorsement, and his Aug 14 line that 'any action taken...is not known to the undersigned' -- all match."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-opposition-letter-to-cji",
+      "kind": "statement",
+      "date": "2026-06-28",
+      "date_precision": "day",
+      "title": "23 opposition parties write to CJI that democracy is in jeopardy",
+      "summary": "Twenty-three opposition parties and independent MP Kapil Sibal wrote jointly to Chief Justice Surya Kant alleging manipulated elections and partisan conduct by the Commission and the CEC, and seeking judicial attention to the SIR. Signatories included Mallikarjun Kharge, Rahul Gandhi, Mamata Banerjee, Tejashwi Yadav and Akhilesh Yadav. Jairam Ramesh made it public on 30 June.",
+      "status": "claim",
+      "attributed_to": "23 opposition parties and Kapil Sibal",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [
+        "Bihar",
+        "West Bengal"
+      ],
+      "topics": [
+        "statements",
+        "sir",
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://peoplesdemocracy.in/2026/0712_pd/joint-letter-opposition-parties-chief-justice-india",
+          "publisher": "People's Democracy",
+          "title": "Joint Letter of Opposition Parties to Chief Justice of India (full text)",
+          "published": "2026-07-12",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "Given the fact that our democracy is in jeopardy"
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/top-headlines/23-opposition-parties-write-to-cji-kant-over-ecs-bias-in-sir/",
+          "publisher": "The Tribune",
+          "title": "23 opposition parties write to CJI Kant over EC's 'bias' in SIR",
+          "published": "2026-07-01",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No response from the Commission or the Supreme Court to the letter was found in the sources opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://peoplesdemocracy.in/2026/0712_pd/joint-letter-opposition-parties-chief-justice-india",
+        "note": "Full letter text confirms the June 28 date and the exact quote 'Given the fact that our democracy is in jeopardy'; The Tribune's July 1 report (published just after midnight) corroborates that the letter became public via Jairam Ramesh around June 30. Signatory names match. No Commission or Court response to the letter was found in either source."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-ie-first-reports-form6-change",
+      "kind": "event",
+      "date": "2026-07-12",
+      "date_precision": "day",
+      "title": "Indian Express reports new SIR declaration in online Form 6",
+      "summary": "The Indian Express reported that the ECINet version of Form 6 now required new applicants to say whether they, or a parent or grandparent, were on the last SIR roll, although the statutory form had not been amended by the Law Ministry. The field was not marked mandatory but the form could not be submitted without it.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [
+        "forms",
+        "sir"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/election-commission-changes-form-6-for-new-voters-inserts-section-asking-them-about-parents-in-sir-10782435/",
+          "publisher": "The Indian Express",
+          "title": "Express Special | EC changes Form 6 for new voters without amendment to rules; seeks SIR details of parents",
+          "published": "2026-07-12",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/explained/election-commission-new-voter-registration-sir-form6-10782904/",
+          "publisher": "The Indian Express",
+          "title": "What the Election Commission's new online registration requirement means for voters",
+          "published": "2026-07-12",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Commission did not respond to a request for comment; Legislative Department Secretary Rajiv Mani could not be reached, per the report. The change did not apply in Bihar or Assam.",
+      "check": "unchecked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-garg-work-allocation-order",
+      "kind": "event",
+      "date": "2026-07-28",
+      "date_precision": "day",
+      "title": "New work allocation removes deputy's oversight of IT division",
+      "summary": "Senior Deputy Election Commissioner Maneesh Garg, given additional charge of administration, changed the work allocation within hours without consulting the Commission, removing Deputy Election Commissioner Sanjay Kumar from oversight of the DG (IT). Joshi recorded that he was not informed and that the file was not provided when he asked.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Maneesh Garg",
+        "Sanjay Kumar",
+        "Seema Khanna",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+          "publisher": "The Indian Express",
+          "title": "'Differing views' part of 'decision-making', says EC, does not address concerns two ECs red-flagged",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+        "note": "Confirmed precisely, including the detail not in the main investigation piece: Joshi wrote the order was issued 'without discussing or informing the revised allocation of work with the Commission or the undersigned' and that when he asked for the file, 'it was not provided'. No response from Garg or the Cabinet Secretary was found in any source opened."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-ecs-write-cabinet-secretary",
+      "kind": "event",
+      "date": "2026-07-29",
+      "date_precision": "day",
+      "title": "Sandhu and Joshi write separately to Cabinet Secretary against order",
+      "summary": "Each Election Commissioner wrote to Cabinet Secretary T V Somanathan reporting the 28 July order as a clear violation of Sections 18(1) and 18(2) of the 2023 Act and seeking action against Maneesh Garg. The Indian Express called the step unprecedented.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "T V Somanathan",
+        "Maneesh Garg"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "it-systems",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+          "publisher": "The Indian Express",
+          "title": "'Differing views' part of 'decision-making', says EC, does not address concerns two ECs red-flagged",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026). Any reply from the Cabinet Secretary is not reported. Section 18 of the 2023 Act says business shall as far as possible be unanimous, otherwise by majority.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+        "note": "The ECI-response article quotes the letters as calling the order a 'clear violation of Section 18(1) and 18(2)' of the 2023 Act, confirming the entry's specific section citation, which the main investigation piece states only in general terms."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-ecs-set-aside-order",
+      "kind": "event",
+      "date": "2026-07-30",
+      "date_precision": "day",
+      "title": "Sandhu and Joshi jointly set aside the work allocation order",
+      "summary": "The two Election Commissioners jointly set aside Garg's order as made without reason or justification and directed the earlier allocation to continue until the Commission agreed on any change. The note was copied to the CEC.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "Maneesh Garg",
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "it-systems"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "Confirmed verbatim: July 30 joint note called Garg's changes 'without any reason and justification', directed the prior allocation to continue until consensus, and was copied to the CEC."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-sandhu-note-bengal-appeals",
+      "kind": "event",
+      "date": "2026-08",
+      "date_precision": "month",
+      "title": "Sandhu asks who authorised ECI appeals against voters restored in Bengal",
+      "summary": "Sukhbir Singh Sandhu asked Commission officials who authorised and who filed appeals on the Commission's behalf against voters that judicial officers had included in West Bengal, recording that neither he, Joshi nor the state's current CEO had been informed.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "dissent",
+        "sir",
+        "courts"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026). In court on 19 Sep 2026 the Commission said 16.10 lakh appeals sought deletion of included voters, without saying who filed them; see that entry.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+        "note": "Confirmed: Sandhu's August note asked 'Who was authorised to file these appeals on behalf of ECI, and by whom?' and recorded that neither he, Joshi, nor the sitting Bengal CEO were informed -- matches the entry; month-only precision is appropriate since no exact day is given."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-sandhu-note-form6-illegal",
+      "kind": "event",
+      "date": "2026-08-13",
+      "date_precision": "day",
+      "title": "Sandhu calls Form 6 change 'unauthorised and illegal', orders removal",
+      "summary": "Citing the Indian Express report, Sukhbir Singh Sandhu wrote to the Deputy Election Commissioner and the DG in charge of IT, copied to the CEC and Joshi, that the Form 6 change had been made despite two Commissioners' written views and must be removed immediately so young eligible voters are not harassed.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Gyanesh Kumar",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "forms",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/",
+          "publisher": "The Indian Express",
+          "title": "'Illegal, unauthorised': Election Commissioners objected to Form 6 change",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "unauthorised/ illegal changes in Form-6 on the portal"
+        },
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026). The declaration was still on the online form on 21-22 Sep 2026, per the paper.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/",
+        "note": "The quoted phrase 'unauthorised/ illegal changes in Form-6 on the portal' is an exact match to the source, well under 15 words, and the rest of the summary (Aug 13, copied to CEC and Joshi) is confirmed."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-sandhu-note-eronet-access",
+      "kind": "event",
+      "date": "2026-08-14",
+      "date_precision": "day",
+      "title": "Sandhu: DG (IT) has no legal authority to restrict EROs' access",
+      "summary": "Sukhbir Singh Sandhu recorded that CEOs, DEOs and EROs told him they lacked proper and complete access to ERONet, that control had been centralised at DG (IT) level without legal authority, directed that full access be given immediately, and asked the DG (IT) to certify it through all CEOs.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Seema Khanna"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "dissent",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+          "publisher": "The Indian Express",
+          "title": "'Differing views' part of 'decision-making', says EC, does not address concerns two ECs red-flagged",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The notes and letters are not public. This entry rests on The Indian Express's account of documents it says it has seen. The Commission and both Election Commissioners did not answer its questions (sent 21 Sep 2026).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "Confirmed verbatim: Aug 14 note that officers lacked 'proper and complete access' to ERONet and that DG(IT) 'doesn't have any legal authority to restrict' that access, with a direction for immediate full access certified by CEOs."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-commission-meets-sept-9",
+      "kind": "event",
+      "date": "2026-09-09",
+      "date_precision": "day",
+      "title": "CEC and both Election Commissioners hold first full meeting in four months",
+      "summary": "After the letters to the Cabinet Secretary, the three members met on 9 September, their first full meeting in four months, according to The Indian Express.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+          "publisher": "The Indian Express",
+          "title": "'Differing views' part of 'decision-making', says EC, does not address concerns two ECs red-flagged",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Agenda and outcome are not public. The paper asked both Election Commissioners whether their concerns were raised at the meeting; they did not reply. The paper says the full Commission did not meet between May and August.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+        "note": "Confirmed: both the main investigation and the ECI-response piece describe the Sept 9 meeting as the first full Commission meeting in four months, and confirm the paper's own note that the full Commission did not meet between May and August."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-eci-affidavit-bengal-appeals",
+      "kind": "event",
+      "date": "2026-09-19",
+      "date_precision": "day",
+      "title": "Commission tells Supreme Court 16.10 lakh Bengal appeals seek more deletions",
+      "summary": "Replying to a TMC MP's application, the Commission said of 38.31 lakh appeals before West Bengal's tribunals, 22.21 lakh were by deleted voters seeking inclusion and 16.10 lakh sought deletion of included voters. It did not say who filed the latter. A day earlier its counter-affidavit on another petition gave no such break-up.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "courts",
+        "numbers"
+      ],
+      "figures": [
+        {
+          "label": "appeals by deleted voters seeking inclusion",
+          "value": 2221000,
+          "unit": "appeals",
+          "as_of": "2026-09-19"
+        },
+        {
+          "label": "appeals seeking deletion of included voters",
+          "value": 1610000,
+          "unit": "appeals",
+          "as_of": "2026-09-19"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
+          "publisher": "The Indian Express",
+          "title": "Of 27 lakh deleted West Bengal voters, 22 lakh have filed appeals: Election Commission to Supreme Court",
+          "published": "2026-09-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
+          "publisher": "The Indian Express",
+          "title": "Missing in Election Commission affidavit: Break-up of Bengal SIR appeals for inclusion, exclusion of names",
+          "published": "2026-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "This is the question Sandhu reportedly raised in August 2026. The affidavit was not opened.",
+      "check": "unchecked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-sandhu-flagged-delhi-sir",
+      "kind": "event",
+      "date": "2026-09-20",
+      "date_precision": "day",
+      "title": "Election Commissioner Sandhu flagged for SIR notice in Delhi, then validated",
+      "summary": "Records showed Election Commissioner Sukhbir Singh Sandhu was among the 31.63 lakh Delhi electors sent SIR notices, flagged for a name mismatch. The Delhi Cantt ERO said his details had been verified and his entry validated for the final roll.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu"
+      ],
+      "states": [
+        "Delhi"
+      ],
+      "topics": [
+        "sir",
+        "it-systems"
+      ],
+      "figures": [
+        {
+          "label": "Delhi electors facing SIR notices",
+          "value": 3163930,
+          "unit": "electors",
+          "as_of": "2026-09-20"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/election-commissioner-s-s-sandhu-other-top-officials-get-notices-under-sir-10886206/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioner S S Sandhu, CBI director, top bureaucrats face SIR notice",
+          "published": "2026-09-20",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://indianexpress.com/article/india/election-commissioner-s-s-sandhu-other-top-officials-get-notices-under-sir-10886206/",
+        "note": "Core claim confirmed (Sandhu flagged for 'self name mismatch', later validated by the Delhi Cantt ERO), but the source gives the Delhi notice count as 31,63,930, not the 3,163,000 in the entry's figure; corrected the figure to 3163930 and tightened the summary's wording so it doesn't read as if all notices were for name mismatches."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-trc-delhi-sir-vip",
+      "kind": "event",
+      "date": "2026-09-21",
+      "date_precision": "day",
+      "title": "Reporters' Collective: Delhi SIR purges or flags over half the electorate",
+      "summary": "The Reporters' Collective reported that 47.6 lakh Delhi electors were removed and 31.6 lakh more served notices, 54.6% of 1.45 crore, and in a second story on 23 September that officers were told informally to mark ministers, judges, officials and others as VIPs and ensure they were not deleted.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [],
+      "states": [
+        "Delhi"
+      ],
+      "topics": [
+        "sir",
+        "rolls",
+        "it-systems"
+      ],
+      "figures": [
+        {
+          "label": "Delhi electors removed or served notices (TRC)",
+          "value": 7920000,
+          "unit": "electors",
+          "as_of": "2026-09-21"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.reporters-collective.in/trc/more-than-half-the-voters-in-delhi-either-purged-or-on-doubtful-list",
+          "publisher": "The Reporters' Collective",
+          "title": "Delhi SIR: With More Than Half the Voters in India's Capital Either Purged or on ECI's Doubtful List",
+          "published": "2026-09-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.reporters-collective.in/trc/no-vip-left-behind-eci",
+          "publisher": "The Reporters' Collective",
+          "title": "No VIP Left Behind: ECI's Drive to Guarantee a Spot For Them on the Final Voter Roll",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The article text opened does not record a Commission response.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-bjp-patra-deliberation",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "BJP's Sambit Patra: Commissioners' notes show deliberation, not autocracy",
+      "summary": "BJP MP Sambit Patra said the Commissioners' 14 recorded communications showed deliberation and transparency within the Commission, and called the opposition's reaction an attack on constitutional institutions after electoral defeats.",
+      "status": "claim",
+      "attributed_to": "Sambit Patra, BJP MP and spokesperson",
+      "people": [],
+      "states": [],
+      "topics": [
+        "statements",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.etvbharat.com/en/bharat/live-blog--election-commission-dissent-report-live-updates-opposition-calls-for-cec-gyanesh-kumar-removal-congress-bjp-sir-vote-chori-enn26092302978",
+          "publisher": "ETV Bharat",
+          "title": "Election Commission Dissent LIVE | ECI Responds To Reported Differences, Oppn Seeks CEC Gyanesh Kumar's Removal",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Wording as summarised from a live blog. No statement by the Law Ministry or the Prime Minister's Office on the report was found in the sources opened.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-eci-press-note-differing-views",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Commission: differing views are normal; all decisions were unanimous",
+      "summary": "A press note signed by Deputy Director P Pawan said written notes and observations by members are standard practice, that operational inputs raised by members during drafting are routine, that all orders carry full legal sanction under the 2023 Act, and that its decisions and about 40 new initiatives over the past year were unanimous decisions of the full Commission. It said highlighting select notes gives only part of the picture.",
+      "status": "response",
+      "attributed_to": "Election Commission of India (press note signed by Deputy Director P Pawan)",
+      "people": [
+        "P Pawan"
+      ],
+      "states": [],
+      "topics": [
+        "dissent",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/decisions-unanimous-election-commission-response-sir-vote-express-investigation-gyanesh-kumar-10890491/",
+          "publisher": "The Indian Express",
+          "title": "'Differing views' part of 'decision-making', says EC, does not address concerns two ECs red-flagged",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "Differing views and observations are a normal part of deliberation in any institution"
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/differing-views-normal-ec-amid-row/",
+          "publisher": "The Tribune",
+          "title": "Differing views normal: EC amid row",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "during the drafting stage are part of standard administrative practice"
+        },
+        {
+          "url": "https://scroll.in/latest/1095976/cec-gyanesh-kumar-should-resign-turn-approver-says-rahul-gandhi",
+          "publisher": "Scroll",
+          "title": "CEC Gyanesh Kumar should resign, turn approver, says Rahul Gandhi",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://thefederal.com/category/news/election-commission-sir-257435",
+          "publisher": "The Federal",
+          "title": "EC denies SIR dissent report; Oppn calls for CEC's removal, arrest, fresh polls",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-ie-investigation-14-objections",
+      "notes": "The note did not say who approved the Form 6 change, who authorised the Bengal appeals, what happened to the audit proposal, why the full Commission did not meet from May to August, or mention the 28 July order and the Cabinet Secretary letters, per The Indian Express. The Tribune notes it did not specifically deny the reports. The original note on eci.gov.in/PIB was not located.",
+      "check": "unchecked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-ie-analysis-cloud-over-conduct",
+      "kind": "event",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Indian Express analysis compares rift with Chawla 2009 and Lavasa 2019",
+      "summary": "An analysis argued this dissent differs from past ones: in 2009 CEC N Gopalaswami recommended removing EC Navin Chawla, which the government rejected; in 2019 EC Ashok Lavasa sought recording of his minority MCC views. Here, it said, the two-member majority recorded that decisions were taken without them.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-gyanesh-kumar-sukhbir-sandhu-vivek-joshi-electoral-roll-control-systems-10889773/",
+          "publisher": "The Indian Express",
+          "title": "What Election Commission rift reveals: Cloud over its conduct",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Analysis piece; historical claims are the paper's. On 21 May 2019 the full Commission decided 2-1 that dissents would be recorded on file but not in orders.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-gyanesh-kumar-sukhbir-sandhu-vivek-joshi-electoral-roll-control-systems-10889773/",
+        "note": "Confirmed: the Chawla 2009 and Lavasa 2019 comparisons, and the May 21, 2019 2-1 Commission decision on recording dissents on file but not in orders, all match the source exactly."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-ie-cabinet-secretary-story",
+      "kind": "event",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Indian Express: ECs wrote to Cabinet Secretary over IT oversight change",
+      "summary": "A companion report by Ritika Chopra and Damini Nath traced the Commissioners' warnings from November 2025 to August 2026 that ECINet's central controls were restricting EROs, and their separate letters to the Cabinet Secretary on 29 July 2026.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "Seema Khanna",
+        "Maneesh Garg",
+        "Sanjay Kumar",
+        "T V Somanathan"
+      ],
+      "states": [],
+      "topics": [
+        "it-systems",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+          "publisher": "The Indian Express",
+          "title": "Election Commissioners knocked on Cabinet Secretary's door over voter software integrity",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The Commission, Sandhu and Joshi did not respond to calls and questionnaires, per the paper.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
+        "note": "Byline confirmed via the article's ld+json author field as Ritika Chopra and Damini Nath, matching the entry; content (Nov 2025-Aug 2026 warnings, 29 July letters) matches the source."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-ie-form6-story",
+      "kind": "event",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Indian Express: Form 6 changed despite two Commissioners' written warning",
+      "summary": "A third report set out the May 2026 notes by Joshi and Sandhu that Form 6 could not be changed without amending the 1960 Rules, the July appearance of the SIR declaration on the portal anyway, and Sandhu's 13 August direction to remove it.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Vivek Joshi",
+        "Sukhbir Singh Sandhu",
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "forms",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/",
+          "publisher": "The Indian Express",
+          "title": "'Illegal, unauthorised': Election Commissioners objected to Form 6 change",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/",
+        "note": "Confirmed: May notes, July appearance of the SIR declaration on the portal, and Sandhu's Aug 13 removal direction all match the source's own account."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-ie-investigation-14-objections",
+      "kind": "event",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Indian Express: two Election Commissioners objected on record 14 times",
+      "summary": "The Indian Express reported that Election Commissioners Sukhbir Singh Sandhu and Vivek Joshi formally objected at least 14 times over 10 months, four times on one day, to decisions and orders they said were taken without their knowledge: the Form 6 change, centralised control of roll software, appeals against restored voters in West Bengal and roll custody. The objections were copied to CEC Gyanesh Kumar.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi",
+        "Gyanesh Kumar",
+        "Seema Khanna",
+        "Gyanesh Bharti"
+      ],
+      "states": [
+        "West Bengal",
+        "Goa"
+      ],
+      "topics": [
+        "dissent",
+        "forms",
+        "it-systems",
+        "sir"
+      ],
+      "figures": [
+        {
+          "label": "recorded objections by two Election Commissioners",
+          "value": 14,
+          "unit": "objections",
+          "as_of": "2026-09-23"
+        },
+        {
+          "label": "names removed from SIR draft rolls, 30 States/UTs (EC data)",
+          "value": 133700000,
+          "unit": "electors",
+          "as_of": "2026-09-01"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+          "publisher": "The Indian Express",
+          "title": "14 times in 10 months, two Election Commissioners objected on record to poll panel steps",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "shall, as far as possible, be transacted unanimously"
+        },
+        {
+          "url": "https://indianexpress.com/article/india/election-commission-sir-draft-rolls-13-crore-deletions-delhi-leads-10857760/",
+          "publisher": "The Indian Express",
+          "title": "SIR draft rolls see over 13 crore deletions so far, Delhi leads with 33% left out",
+          "published": "2026-09-01",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.etvbharat.com/en/bharat/live-blog--election-commission-dissent-report-live-updates-opposition-calls-for-cec-gyanesh-kumar-removal-congress-bjp-sir-vote-chori-enn26092302978",
+          "publisher": "ETV Bharat",
+          "title": "Election Commission Dissent LIVE | ECI Responds To Reported Differences, Oppn Seeks CEC Gyanesh Kumar's Removal",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Author: Ritika Chopra. The paper sent the Commission a questionnaire on 21 Sep and emailed and phoned both Election Commissioners; none replied before publication. The quote is from Section 18 of the 2023 Act as cited. 13 crore figure: over 13.37 crore per the Indian Express of 1 Sep 2026 (EC data).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
+        "note": "Confirmed in full: '14 times...four times on a single day', the four subject areas, copies to the CEC, the quoted Section 18 language, and the 13.37-crore figure (cross-checked against the Sept 1, 2026 IE deletions story, which gives exactly 13.37 crore/14.1%)."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-kejriwal-scrap-sir",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Kejriwal demands CEC's arrest, scrapping of SIR and fresh elections",
+      "summary": "AAP convenor Arvind Kejriwal called the SIR illegal, accused the CEC of running the Commission single-handedly, and demanded his arrest, restoration of rolls from three years earlier and fresh elections in six states and Delhi.",
+      "status": "claim",
+      "attributed_to": "Arvind Kejriwal, AAP",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [
+        "Delhi",
+        "Bihar",
+        "Maharashtra",
+        "West Bengal",
+        "Haryana",
+        "Madhya Pradesh",
+        "Chhattisgarh"
+      ],
+      "topics": [
+        "statements",
+        "sir"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/india-news-live-updates-23-september-2026-tmc-alleges-attack-on-it-wing-chief-by-bjp-goons-slams-assault-on-humayun-kabir-10889976/",
+          "publisher": "The Indian Express",
+          "title": "India news live updates, 23 September 2026",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/political-pulse/election-commission-sir-rift-opposition-targets-cec-gyanesh-kumar-10891368/",
+          "publisher": "The Indian Express",
+          "title": "CEC must go, Supreme Court should act, pause SIR: Opposition after Election Commission divide out in open",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No direct response to this statement was found. The Commission's standing reply to the investigation is its 23 Sep 2026 press note (sir-rules-eci-pn-119-response).",
+      "verification": {
+        "verdict": "corrected",
+        "checked_url": "https://indianexpress.com/article/india/india-news-live-updates-23-september-2026-tmc-alleges-attack-on-it-wing-chief-by-bjp-goons-slams-assault-on-humayun-kabir-10889976/",
+        "note": "The live blog's full Kejriwal item (17:22 IST update) confirms 'illegal', 'single-handedly', the arrest demand, and fresh elections in 'Delhi, Bihar, Maharashtra, West Bengal, Haryana, Madhya Pradesh and Chhattisgarh' -- seven jurisdictions total, of which Delhi is one, not an eighth. Corrected 'seven states and Delhi' to 'six states and Delhi' in the summary."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-maharashtra-opposition-reaction",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Supriya Sule seeks all-party meeting; Sanjay Raut alleges Shah's hand",
+      "summary": "NCP (SP)'s Supriya Sule called the rift dangerous for democracy and sought an all-party meeting. Shiv Sena (UBT)'s Sanjay Raut alleged the CEC acted on Home Minister Amit Shah's directions. Maharashtra Congress asked the Supreme Court to act suo motu.",
+      "status": "claim",
+      "attributed_to": "Supriya Sule, NCP (SP); Sanjay Raut, Shiv Sena (UBT); Gopal Tiwari, Maharashtra Congress",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [
+        "Maharashtra"
+      ],
+      "topics": [
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/cities/pune/objections-election-commissioners-sir-democracy-cec-removal-oppostion-10891390/",
+          "publisher": "The Indian Express",
+          "title": "Objections by two election commissioners on SIR-related decisions: Dangerous for democracy, CEC should be removed, says Opposition",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No direct response to this statement was found. The Commission's standing reply to the investigation is its 23 Sep 2026 press note (sir-rules-eci-pn-119-response).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/cities/pune/objections-election-commissioners-sir-democracy-cec-removal-oppostion-10891390/",
+        "note": "Confirmed: Sule's 'dangerous' framing and all-party meeting call, Raut's claim that Kumar acted on Amit Shah's directions, and Gopal Tiwari's suo motu request are all quoted directly in the source and match the entry's attributions."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-op-rawat-form6-wrong",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Former CEC O P Rawat calls Form 6 change wrong and illegal",
+      "summary": "Former Chief Election Commissioner O P Rawat said the Form 6 change was wrong and illegal, called the internal division very serious and rare, and cautioned against software overriding field officers.",
+      "status": "claim",
+      "attributed_to": "O P Rawat, former Chief Election Commissioner",
+      "people": [
+        "O P Rawat"
+      ],
+      "states": [],
+      "topics": [
+        "statements",
+        "forms"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.etvbharat.com/en/bharat/live-blog--election-commission-dissent-report-live-updates-opposition-calls-for-cec-gyanesh-kumar-removal-congress-bjp-sir-vote-chori-enn26092302978",
+          "publisher": "ETV Bharat",
+          "title": "Election Commission Dissent LIVE | ECI Responds To Reported Differences, Oppn Seeks CEC Gyanesh Kumar's Removal",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Wording as summarised from a live blog; the original interview was not opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.etvbharat.com/en/bharat/live-blog--election-commission-dissent-report-live-updates-opposition-calls-for-cec-gyanesh-kumar-removal-congress-bjp-sir-vote-chori-enn26092302978",
+        "note": "Confirmed verbatim in the live blog: Rawat called the change 'absolutely wrong and illegal', the rift 'very serious' and 'perhaps rarely' seen, and said software 'cannot be allowed to override decisions of field officials'."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-opposition-coordinated-demands",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Opposition seeks CEC's removal, court-monitored probe, halt to SIR",
+      "summary": "In coordinated press conferences, opposition parties made three demands: remove the CEC, a Supreme Court-monitored inquiry, and a pause of the SIR. K C Venugopal, P Chidambaram, Akhilesh Yadav, Abhishek Banerjee, M K Stalin, Mamata Banerjee, Tejashwi Yadav and Kapil Sibal spoke; Sibal said decisions taken without the majority should be void.",
+      "status": "claim",
+      "attributed_to": "Congress, TMC, SP, DMK, RJD, AAP and others",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [
+        "West Bengal",
+        "Bihar",
+        "Tamil Nadu"
+      ],
+      "topics": [
+        "statements",
+        "courts",
+        "sir"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/political-pulse/election-commission-sir-rift-opposition-targets-cec-gyanesh-kumar-10891368/",
+          "publisher": "The Indian Express",
+          "title": "CEC must go, Supreme Court should act, pause SIR: Opposition after Election Commission divide out in open",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://thefederal.com/category/news/election-commission-sir-257435",
+          "publisher": "The Federal",
+          "title": "EC denies SIR dissent report; Oppn calls for CEC's removal, arrest, fresh polls",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No direct response to this statement was found. The Commission's standing reply to the investigation is its 23 Sep 2026 press note (sir-rules-eci-pn-119-response).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/political-pulse/election-commission-sir-rift-opposition-targets-cec-gyanesh-kumar-10891368/",
+        "note": "Full article text confirms the three demands and every named speaker's quote (Venugopal, Chidambaram, Akhilesh Yadav, Abhishek Banerjee, Stalin, Mamata, Tejashwi, Sibal), including Sibal's 'null and void' line -- matches the entry closely."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-priyanka-kharge-reaction",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Priyanka Gandhi seeks independent probe; Kharge says Commission shut its doors",
+      "summary": "Priyanka Gandhi Vadra said that if the CEC knew of and allowed unfair elections it would be treason, and called for a transparent inquiry by an independent body. Mallikarjun Kharge said opposition questions about the Commission's role had been dismissed for years.",
+      "status": "claim",
+      "attributed_to": "Priyanka Gandhi Vadra, Congress MP; Mallikarjun Kharge, Congress President",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/political-pulse/vote-chori-act-of-treason-rahul-gandhi-on-express-investigation-10890323/",
+          "publisher": "The Indian Express",
+          "title": "'Act of treason': Rahul Gandhi renews 'vote chori' charge after Express report",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No direct response to this statement was found. The Commission's standing reply to the investigation is its 23 Sep 2026 press note (sir-rules-eci-pn-119-response).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/political-pulse/vote-chori-act-of-treason-rahul-gandhi-on-express-investigation-10890323/",
+        "note": "Confirmed verbatim: Priyanka Gandhi's 'act of treason' framing and her call for a transparent, independent inquiry; Kharge's X post that questions were 'dismissed as a joke' and 'the doors of the Commission were shut'."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-rahul-treason-post",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Rahul Gandhi: BJP, RSS and EC committed 'an act of treason'",
+      "summary": "Hours after the report, Rahul Gandhi posted on X that vote theft was a crime against Indians and a direct attack on the Constitution, and that the BJP, RSS and Commission who organised it had committed treason. The Congress called the CEC the Prime Minister's puppet.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition, Lok Sabha; Indian National Congress",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "statements",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/political-pulse/vote-chori-act-of-treason-rahul-gandhi-on-express-investigation-10890323/",
+          "publisher": "The Indian Express",
+          "title": "'Act of treason': Rahul Gandhi renews 'vote chori' charge after Express report",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The BJP and the Commission have rejected the vote-theft allegations, per the report.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/political-pulse/vote-chori-act-of-treason-rahul-gandhi-on-express-investigation-10890323/",
+        "note": "Confirmed verbatim, including that it was posted on X, and the Congress's own post calling Kumar 'Modi's puppet' -- matches the entry's paraphrase of 'the Prime Minister's puppet'."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-singhvi-internal-bulldozer",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Singhvi: CEC 'bulldozed' his colleagues, must resign; release dissent notes",
+      "summary": "Congress MP Abhishek Singhvi said the report showed the CEC had sidelined his fellow Commissioners, citing the 1995 Supreme Court ruling that the Commission is a multi-member body, demanded Gyanesh Kumar's resignation and asked that all dissent notes be made public.",
+      "status": "claim",
+      "attributed_to": "Abhishek Manu Singhvi, Congress MP",
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "statements",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/political-pulse/vote-chori-act-of-treason-rahul-gandhi-on-express-investigation-10890323/",
+          "publisher": "The Indian Express",
+          "title": "'Act of treason': Rahul Gandhi renews 'vote chori' charge after Express report",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No direct response to this statement was found. The Commission's standing reply to the investigation is its 23 Sep 2026 press note (sir-rules-eci-pn-119-response).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/political-pulse/vote-chori-act-of-treason-rahul-gandhi-on-express-investigation-10890323/",
+        "note": "Confirmed: Singhvi's 'internal bulldozer' framing, his citation of the 1995 Supreme Court ruling on the Commission being a multi-member body, his statement that Kumar has 'no right to continue', and his demand that dissent notes be shared with the country."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-uddhav-arrest-fresh-polls",
+      "kind": "statement",
+      "date": "2026-09-23",
+      "date_precision": "day",
+      "title": "Uddhav Thackeray demands CEC's sacking and arrest, fresh ballot-paper polls",
+      "summary": "Shiv Sena (UBT) chief Uddhav Thackeray demanded that Gyanesh Kumar be sacked and jailed, thanked Sandhu and Joshi, and sought fresh ballot-paper elections in Maharashtra, West Bengal and Tamil Nadu. He cited the net addition of 40.8 lakh electors in Maharashtra between the 2024 Lok Sabha and Assembly polls, which the Commission has said was not abnormal.",
+      "status": "claim",
+      "attributed_to": "Uddhav Thackeray, Shiv Sena (UBT)",
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [
+        "Maharashtra",
+        "West Bengal",
+        "Tamil Nadu"
+      ],
+      "topics": [
+        "statements",
+        "rolls"
+      ],
+      "figures": [
+        {
+          "label": "electors added in Maharashtra between 2024 LS and Assembly polls (EC data)",
+          "value": 4881620,
+          "unit": "electors",
+          "as_of": "2024-11"
+        },
+        {
+          "label": "electors deleted in same period (EC data)",
+          "value": 800391,
+          "unit": "electors",
+          "as_of": "2024-11"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/cities/mumbai/express-investigation-uddhav-thackeray-cec-gyanesh-kumar-arrest-fresh-polls-maharashtra-bengal-tamil-nadu-10890577/",
+          "publisher": "The Indian Express",
+          "title": "Express investigation: Uddhav Thackeray demands CEC Gyanesh Kumar's arrest, fresh polls",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/cities/pune/objections-election-commissioners-sir-democracy-cec-removal-oppostion-10891390/",
+          "publisher": "The Indian Express",
+          "title": "Objections by two election commissioners on SIR-related decisions: Dangerous for democracy, CEC should be removed, says Opposition",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No direct response to this statement was found. The Commission's standing reply to the investigation is its 23 Sep 2026 press note (sir-rules-eci-pn-119-response).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/cities/mumbai/express-investigation-uddhav-thackeray-cec-gyanesh-kumar-arrest-fresh-polls-maharashtra-bengal-tamil-nadu-10890577/",
+        "note": "Confirmed in full, including the exact EC figures (48,81,620 added, 8,00,391 deleted, net +40,81,229) which match the entry's figures precisely."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-cjp-resignation-ultimatum",
+      "kind": "statement",
+      "date": "2026-09-24",
+      "date_precision": "day",
+      "title": "Cockroach Janta Party gives CEC 48 hours to resign",
+      "summary": "The Cockroach Janta Party demanded Gyanesh Kumar's resignation within 48 hours, an independent inquiry into SIR decisions, a halt to exclusions, repeal of the 2023 appointment law, and publication of the Commissioners' notes. On 25 September it said protests would begin on 2 October.",
+      "status": "claim",
+      "attributed_to": "Abhijeet Dipke and co-conveners, Cockroach Janta Party",
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "statements",
+        "appointments"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/political-pulse/cjp-demands-election-commissioner-gyanesh-kumar-resignation-jantar-mantar-10892653/",
+          "publisher": "The Indian Express",
+          "title": "The 'cockroaches' are back: Why CJP is taking on the Election Commission",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/today-india-news-live-updates-andhra-bengal-weather-25-september-2026-cjp-gyanesh-kumar-goa-sir-opposition-bjp-10893068/",
+          "publisher": "The Indian Express",
+          "title": "Today India news live updates, 25 September 2026",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No direct response to this statement was found. The Commission's standing reply to the investigation is its 23 Sep 2026 press note (sir-rules-eci-pn-119-response).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/political-pulse/cjp-demands-election-commissioner-gyanesh-kumar-resignation-jantar-mantar-10892653/",
+        "note": "Confirmed: 48-hour resignation demand, independent inquiry, halt to exclusions, repeal of the 2023 law, and publication of objection notes all match the Sept 24 source; a fuller capture of the Sept 25 live blog separately confirms the CJP's follow-up announcement of protests from Oct 2 in Mumbai."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-fresh-removal-notice-planned",
+      "kind": "event",
+      "date": "2026-09-24",
+      "date_precision": "day",
+      "title": "Opposition drafts fresh notice in both Houses to remove the CEC",
+      "summary": "Congress sources said INDIA bloc parties were drafting a new removal notice for both Houses, possibly the following week, after the investigation. The 24 April notice remains pending; seven of its signatories are reported to have changed sides.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [],
+      "topics": [
+        "appointments",
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://www.outlookindia.com/national/india-bloc-backs-fresh-impeachment-move-against-cec-gyanesh-kumar-reports",
+          "publisher": "Outlook",
+          "title": "INDIA Bloc Backs Fresh Impeachment Move Against CEC Gyanesh Kumar: Reports",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/opposition-to-submit-fresh-notice-in-ls-rs-for-motion-seeking-cecs-removal/",
+          "publisher": "The Tribune",
+          "title": "Opposition once again to push for Chief Election Commissioner's removal: Sources",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Not yet filed as of 25 Sep 2026 in the sources opened.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://www.outlookindia.com/national/india-bloc-backs-fresh-impeachment-move-against-cec-gyanesh-kumar-reports",
+        "note": "Both Outlook and The Tribune confirm a fresh notice being drafted for submission 'as early as next week'/'most likely by next week', and that seven of the 73 April signatories are reported by NDTV sources to have switched sides."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-ie-goa-97-story",
+      "kind": "event",
+      "date": "2026-09-24",
+      "date_precision": "day",
+      "title": "Indian Express: Goa's 97 eligible voters left off roll by central software",
+      "summary": "The Indian Express reported that Goa's EROs found 97 electors eligible under the Supreme Court's procedure but could not record it because the rollback permission was controlled from Delhi, and that eight requests to the Commission went unanswered. Goa CEO Sanjay Goel said the decision was Delhi's and ECINet needs an ERO-level mechanism.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Sanjay Goel",
+        "Gyanesh Bharti",
+        "Seema Khanna",
+        "Sanjay Kumar"
+      ],
+      "states": [
+        "Goa"
+      ],
+      "topics": [
+        "it-systems",
+        "sir",
+        "rolls"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+          "publisher": "The Indian Express",
+          "title": "8 emails in 7 days, but valid Goa voters still left out: EC's flawed system",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "Sixty-five of the 97 are from Taleigao. DG (IT) Seema Khanna did not answer the paper's questionnaire.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
+        "note": "Confirmed in full, including the Taleigao detail (65 of 97) and that DG(IT) Khanna did not answer the questionnaire. A Sept 25 follow-up live update shows the Goa CEO later said the 97 were being processed separately house-to-house; this is consistent with, not contradictory to, the entry, and is already captured by the paired response entry statements-reporting-goa-ceo-97-processed elsewhere in the file."
+      },
+      "check": "checked",
+      "exclude": true
+    },
+    {
+      "id": "statements-reporting-rahul-press-conference-approver",
+      "kind": "statement",
+      "date": "2026-09-24",
+      "date_precision": "day",
+      "title": "Rahul Gandhi: CEC should resign and 'turn approver'",
+      "summary": "At a press conference, Rahul Gandhi called the Prime Minister, Home Minister and CEC traitors, displayed photos of alleged 'conspirators', said Modi and Shah would one day be investigated, praised Sandhu and Joshi, and said Kumar turning approver would be an act of nationalism.",
+      "status": "claim",
+      "attributed_to": "Rahul Gandhi, Leader of Opposition, Lok Sabha",
+      "people": [
+        "Gyanesh Kumar",
+        "Sukhbir Singh Sandhu",
+        "Vivek Joshi"
+      ],
+      "states": [],
+      "topics": [
+        "statements",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://scroll.in/latest/1095976/cec-gyanesh-kumar-should-resign-turn-approver-says-rahul-gandhi",
+          "publisher": "Scroll",
+          "title": "CEC Gyanesh Kumar should resign, turn approver, says Rahul Gandhi",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/anti-incumbency-disappears-for-bjp-rahul-gandhi-targets-centre-over-elections/",
+          "publisher": "The Tribune",
+          "title": "CEC must quit; Modi, Shah will face probe over 'vote chori': Rahul Gandhi",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No BJP or Commission response to this press conference specifically was found; the Commission's 23 Sep press note is its standing response.",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://scroll.in/latest/1095976/cec-gyanesh-kumar-should-resign-turn-approver-says-rahul-gandhi",
+        "note": "Confirmed via Scroll and a fuller Tribune report: photos of alleged 'conspirators' including Modi, Shah, Doval, Bhagwat, Adani and Kumar; Modi/Shah 'will be investigated'; Sandhu and Joshi praised as 'patriotic'; Kumar urged to 'turn approver', called 'an act of nationalism'."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-scroll-bengal-centralisation",
+      "kind": "event",
+      "date": "2026-09-24",
+      "date_precision": "day",
+      "title": "Scroll: Bengal's roll process was centralised before Joshi's warning",
+      "summary": "Scroll reported that by May 2026, when Joshi warned of centralisation, the West Bengal SIR had already been run with centrally generated notices and observer approvals, and that over 91 lakh names were deleted though about a third of those people attended hearings.",
+      "status": "reported",
+      "attributed_to": null,
+      "people": [
+        "Vivek Joshi"
+      ],
+      "states": [
+        "West Bengal"
+      ],
+      "topics": [
+        "sir",
+        "it-systems",
+        "courts"
+      ],
+      "figures": [
+        {
+          "label": "names deleted from West Bengal rolls in SIR (Scroll)",
+          "value": 9100000,
+          "unit": "electors",
+          "as_of": "2026-09-24"
+        }
+      ],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://scroll.in/article/1095954/before-election-commissioners-flagged-centralisation-of-voter-rolls-it-was-done-in-bengal-sir",
+          "publisher": "Scroll",
+          "title": "Before election commissioners flagged 'centralisation' of voter rolls, it was done in Bengal SIR",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": null,
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://scroll.in/article/1095954/before-election-commissioners-flagged-centralisation-of-voter-rolls-it-was-done-in-bengal-sir",
+        "note": "Confirmed: centrally generated notices, observers given a veto over EROs' decisions, and 'over 91 lakh' Bengal deletions with about a third of those affected having attended hearings -- matches the entry and its figure."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-bjp-bhatia-dissent-not-dysfunction",
+      "kind": "statement",
+      "date": "2026-09-25",
+      "date_precision": "day",
+      "title": "BJP's Gaurav Bhatia: majority decisions are lawful; Congress lacks standing",
+      "summary": "In an op-ed, BJP national spokesperson Gaurav Bhatia argued that Section 18 of the 2023 Act and the 1995 T N Seshan ruling make majority decisions binding, so internal dissent does not undermine the Commission, and cited the Navin Chawla and M S Gill episodes against the Congress.",
+      "status": "claim",
+      "attributed_to": "Gaurav Bhatia, BJP national spokesperson",
+      "people": [],
+      "states": [],
+      "topics": [
+        "statements",
+        "dissent"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/opinion/columns/election-commission-rift-article-324-gyanesh-kumar-10892876/",
+          "publisher": "The Indian Express",
+          "title": "Dissent is not dysfunction, institutions need it",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "The investigation's charge is that decisions were taken without the majority's knowledge, not that the majority overruled the CEC; the op-ed does not address that point directly.",
+      "check": "unchecked"
+    },
+    {
+      "id": "statements-reporting-congress-protests-sept-25",
+      "kind": "statement",
+      "date": "2026-09-25",
+      "date_precision": "day",
+      "title": "Congress protests nationwide for CEC's resignation; Patnaik joins demand",
+      "summary": "Congress workers protested in Lucknow, Kolkata, Chandigarh, Dehradun, Jammu and Guwahati, where state chief Gaurav Gogoi was detained. Priyanka Gandhi called the BJP's attack a stale story, and BJD president Naveen Patnaik sought the CEC's resignation and a review of the SIR.",
+      "status": "claim",
+      "attributed_to": "Indian National Congress; Naveen Patnaik, BJD",
+      "people": [
+        "Gyanesh Kumar"
+      ],
+      "states": [
+        "Uttar Pradesh",
+        "West Bengal",
+        "Chandigarh",
+        "Uttarakhand",
+        "Jammu and Kashmir",
+        "Assam",
+        "Odisha"
+      ],
+      "topics": [
+        "statements"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/today-india-news-live-updates-andhra-bengal-weather-25-september-2026-cjp-gyanesh-kumar-goa-sir-opposition-bjp-10893068/",
+          "publisher": "The Indian Express",
+          "title": "Today India news live updates, 25 September 2026",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": null,
+      "notes": "No direct response to this statement was found. The Commission's standing reply to the investigation is its 23 Sep 2026 press note (sir-rules-eci-pn-119-response).",
+      "verification": {
+        "verdict": "confirmed",
+        "checked_url": "https://indianexpress.com/article/india/today-india-news-live-updates-andhra-bengal-weather-25-september-2026-cjp-gyanesh-kumar-goa-sir-opposition-bjp-10893068/",
+        "note": "Full live-blog text confirms protests in Lucknow, Dehradun, Chandigarh, Kolkata, Guwahati and Jammu, Gaurav Gogoi's detention in Guwahati, Priyanka Gandhi's 'stale and weak story' quote, and Naveen Patnaik's resignation and SIR-review demand -- all match the entry precisely."
+      },
+      "check": "checked"
+    },
+    {
+      "id": "statements-reporting-goa-ceo-97-processed",
+      "kind": "statement",
+      "date": "2026-09-25",
+      "date_precision": "day",
+      "title": "Goa CEO: many of the 97 now enrolled through Form 6",
+      "summary": "The Goa CEO's office said the 97 cases left off the February final roll were processed separately through booth-level officer visits for fresh Form 6 applications, that many had been enrolled and the rest were being processed, and that no eligible elector would be left behind.",
+      "status": "response",
+      "attributed_to": "Office of the Chief Electoral Officer, Goa (Sanjay Goel)",
+      "people": [
+        "Sanjay Goel"
+      ],
+      "states": [
+        "Goa"
+      ],
+      "topics": [
+        "rolls",
+        "sir"
+      ],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {
+          "url": "https://indianexpress.com/article/india/goa-97-voters-electoral-roll-sir-row-election-commission-10892902/",
+          "publisher": "The Indian Express",
+          "title": "After Express report, Goa CEO says cases of 97 voters 'processed separately'",
+          "published": "2026-09-25",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        }
+      ],
+      "response_to": "statements-reporting-ie-goa-97-story",
+      "notes": "The office did not give a number enrolled. The Commission headquarters and DG (IT) have not answered why the rollback was not enabled.",
+      "check": "unchecked",
+      "exclude": true
+    }
+  ],
+  "gaps": [
+    "Primary text of the Commission's 23 Sep 2026 press note (signed by Deputy Director P Pawan) was not located on eci.gov.in or PIB; the entry relies on quotations in The Indian Express, The Tribune and Scroll. Look in ECI press releases for 23 Sep 2026.",
+    "The Sandhu and Joshi notes, the 29 Jul 2026 letters to Cabinet Secretary T V Somanathan and any reply, and the agenda or minutes of the 9 Sep 2026 Commission meeting are not public. Neither Election Commissioner has commented. Candidates: RTI to ECI and Cabinet Secretariat; parliamentary questions.",
+    "Parliamentary bulletins of 6 Apr 2026 rejecting the CEC removal notices, and the texts of the 12 Mar and 24 Apr 2026 notices (nine charges), were not opened. Look on sansad.in (Lok Sabha and Rajya Sabha bulletins Part II).",
+    "The Commission's official posts on X (8 Aug 2025 'sign or apologise'; 18 Sep 2025 Aland rebuttal) and the Karnataka, Maharashtra and Haryana CEO letters to Rahul Gandhi were known only through press reports; archive the originals.",
+    "No official transcript of the CEC's 17 Aug 2025 press conference was found; attendance of the two Election Commissioners there is unverified. Check ECI YouTube and eci.gov.in press notes.",
+    "The Commission's 24 Dec 2024 reply to the Congress on Maharashtra and its 12 Jun 2025 letter to Rahul Gandhi were cited by reports but not opened.",
+    "Lok Sabha debate on electoral reforms, 9-10 Dec 2025, not opened in the official transcript (sansad.in / eparlib.nic.in); Rahul Gandhi's specific questions (CJI's removal from the selection panel, CCTV-retention rule, CEC immunity) should be checked against it.",
+    "Whether the Commission ever answered the Karnataka CID's reported 18 letters on the Aland deletions (IP, device and OTP data), and the status of the Karnataka SIT, is unsourced.",
+    "The Commission's answer to the Haryana 'H Files' exists only as unnamed-source briefings; no on-record statement or Haryana CEO post was opened.",
+    "Whether the SIR declaration was removed from online Form 6 after 23 Sep 2026, and who approved adding it, is not established.",
+    "No response from the Commission or the Supreme Court to the 28 Jun 2026 opposition letter to the CJI was found.",
+    "Not collected because the search budget ran out: The Hindu's and Scroll's own data investigations of 2025-26 rolls; Reporters' Collective pieces of 7-10 Jul 2025 (Bihar roll), 22 Jul 2025 (citizenship burden), 28 Dec 2025 (algorithms mid-SIR) and 23 Jul 2026 (gender disclosures), with any Commission replies; Rahul Gandhi's 18 Sep 2026 'party chori' remark on the TMC symbol freeze (Deccan Herald); and any statement by the Law Ministry or PMO on the Indian Express investigation.",
+    "Mamata Banerjee's duplicate-EPIC allegation is dated to February 2025 only by month; find the exact date and whether the three-month unique-EPIC promise of 7 Mar 2025 was met."
+  ]
+}
