@@ -4,13 +4,30 @@ import { eciEntryHref, eciLaneLabel, formatEciDate } from "@/lib/eci-files";
 import { StatusChip } from "@/components/eci-files/StatusChip";
 import { CitationList } from "@/components/eci-files/CitationList";
 import { PendingFlag } from "@/components/ui";
+// ECI Files phase 5: the context block below (§6.1's "EntryDetail gains a context block").
+import type { EciEntryContext } from "@/types/eci-files";
+import { eciEntryHrefIn, ECI_TEXT_STATUS_SHORT } from "@/lib/eci-files";
+import { RoleChip } from "@/components/eci-files/views/RoleChip";
+
+const ECI_OBJECTION_TOTAL = 14;
 
 /** The drawer's content: title, date, status, attribution, summary, people, responses and citations
  *  (REDESIGN-SPEC §"Drawer"). Server-rendered — only the surrounding `EntryDrawer` shell is a client
  *  component, so this is fetched with the one entry this view actually needs, not the whole record.
  *  `preserve` is the page's current lane/topic/person/window, carried into any "replying to" / "responses"
- *  link so following one doesn't reset the timeline to its defaults. */
-export function EntryDetail({ entry, preserve }: { entry: EciEntry; preserve?: Record<string, string | undefined> }) {
+ *  link so following one doesn't reset the timeline to its defaults. `basePath` (phase 5) is the page the
+ *  drawer is open on — entry links inside the (phase 5) context block stay there instead of always
+ *  jumping to the lane timeline the way the pre-phase-5 links below still do. `entry.context` is optional
+ *  so a plain `EciEntry` (every pre-phase-5 caller) renders nothing new. */
+export function EntryDetail({
+  entry, preserve, basePath,
+}: {
+  entry: EciEntry & { context?: EciEntryContext };
+  preserve?: Record<string, string | undefined>;
+  basePath?: string;
+}) {
+  const ctx = entry.context;
+  const linkBase = basePath ?? "/eci-files/timeline";
   return (
     <article>
       <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
@@ -70,6 +87,88 @@ export function EntryDetail({ entry, preserve }: { entry: EciEntry; preserve?: R
 
       {entry.notes && (
         <p style={{ fontSize: 12.5, color: "var(--muted)", fontStyle: "italic", margin: "0 0 14px" }}>{entry.notes}</p>
+      )}
+
+      {/* --- ECI Files phase 5 (views): charge/answer, case and objection/diff context --- */}
+      {ctx && ctx.pairs.length > 0 && ctx.pairs.map((pair) => (
+        <div
+          key={pair.charge.id}
+          style={{ margin: "0 0 14px", padding: "10px 12px", borderRadius: 8, border: "1px solid var(--rule)", background: "var(--card2)" }}
+        >
+          <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.06em", color: "var(--faint)", marginBottom: 6 }}>CHARGE AND ANSWER</div>
+          <div style={{ fontSize: 12.5, marginBottom: 6 }}>
+            <span style={{ color: "var(--muted)" }}>Charge: </span>
+            {pair.role === "charge" ? (
+              <strong style={{ color: "var(--ink)", fontWeight: 600 }}>This entry</strong>
+            ) : (
+              <Link href={eciEntryHrefIn(linkBase, pair.charge.id, preserve)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
+                {pair.charge.title}
+              </Link>
+            )}
+          </div>
+          <div style={{ fontSize: 12.5, marginBottom: 6 }}>
+            <span style={{ color: "var(--muted)" }}>Responses: </span>
+            {pair.responses.length === 0 ? (
+              <span style={{ color: "var(--muted)" }}>No response on record.</span>
+            ) : (
+              pair.responses.map((r, i) => (
+                <span key={r.id}>
+                  {i > 0 && ", "}
+                  <Link href={eciEntryHrefIn(linkBase, r.id, preserve)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>{r.title}</Link>
+                </span>
+              ))
+            )}
+          </div>
+          {pair.record.length > 0 && (
+            <div style={{ fontSize: 12.5, marginBottom: 6 }}>
+              <span style={{ color: "var(--muted)" }}>What the record shows: </span>
+              {pair.record.map((r, i) => (
+                <span key={r.id}>
+                  {i > 0 && ", "}
+                  <Link href={eciEntryHrefIn(linkBase, r.id, preserve)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>{r.title}</Link>
+                </span>
+              ))}
+            </div>
+          )}
+          {pair.note && <p style={{ fontSize: 12, color: "var(--muted)", fontStyle: "italic", margin: "0 0 8px" }}>{pair.note}</p>}
+          <Link href={`/eci-files/answers#charge-${pair.charge.id}`} className="mono" style={{ fontSize: 11, color: "var(--accent-2)", textDecoration: "none" }}>
+            See all charges and answers →
+          </Link>
+        </div>
+      ))}
+
+      {ctx?.case && (
+        <div style={{ fontSize: 12.5, marginBottom: 14, display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+          <RoleChip role={ctx.case.role} />
+          <Link href={`/eci-files/courts/${ctx.case.slug}`} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
+            Part of the case: {ctx.case.short_name} →
+          </Link>
+        </div>
+      )}
+
+      {ctx && ctx.objections.length > 0 && (
+        <div style={{ fontSize: 12.5, marginBottom: 8 }}>
+          {ctx.objections.map((o) => (
+            <div key={o.n}>
+              <Link href={`/eci-files/objections#objection-${o.n}`} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
+                Objection {o.n} of {ECI_OBJECTION_TOTAL} →
+              </Link>
+            </div>
+          ))}
+        </div>
+      )}
+
+      {ctx && ctx.rule_diffs.length > 0 && (
+        <div style={{ fontSize: 12.5, marginBottom: 14 }}>
+          {ctx.rule_diffs.map((d) => (
+            <div key={d.id}>
+              <Link href={`/eci-files/rules/${d.id}`} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
+                Before and after: {d.title} →
+              </Link>{" "}
+              <span className="mono" style={{ fontSize: 10, color: "var(--faint)" }}>{ECI_TEXT_STATUS_SHORT[d.text_status]}</span>
+            </div>
+          ))}
+        </div>
       )}
 
       <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.06em", color: "var(--faint)", marginBottom: 6 }}>SOURCES</div>

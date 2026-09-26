@@ -182,3 +182,249 @@ export interface EciPersonPage {
   person: { slug: string; name: string; profile: EciEntry | null };
   entries: EciEntry[];
 }
+
+// --- ECI Files phase 5 (views) ---
+// Hand-written against docs/eci-files/PHASE5-SPEC.md §4 (schemas.py isn't written yet — the backend
+// worker owns that file; these are narrowed by hand and should be replaced by the generated equivalents
+// once `npm run codegen` picks them up). `EciEntryRef`, `EciPhoto` and `EciPersonWithPhoto` are phase 4's
+// shapes: phase 4 hadn't landed on this branch when phase 5 started, so they're hand-written here too,
+// under the same names phase 4's spec uses, so a rebase can drop this copy in favour of phase 4's.
+
+/** A photo credited to one of the five reviewer-confirmed Commons portraits (PHASES-3-5-DECISIONS.md).
+ *  Phase 4's shape — redefined here only because phase 4 hasn't landed on this branch yet. */
+export interface EciPhoto {
+  url: string;
+  attribution: string | null;
+}
+
+/** A stub reference to any entry — enough to render a dated, titled link with its status, without
+ *  pulling the full {@link EciEntry}. Phase 4's shape, plus phase 5's `check_status` addition. */
+export interface EciEntryRef {
+  id: string;
+  title: string;
+  date: string | null;
+  date_precision: EciDatePrecision;
+  status: EciEntryStatus;
+  check_status: EciCheckStatus | null;
+}
+
+/** Enough of an entry for a row or a cell — the drawer fetches the full {@link EciEntry} separately. */
+export interface EciEntryCard {
+  id: string;
+  kind: EciEntryKind;
+  date: string | null;
+  date_precision: EciDatePrecision;
+  title: string;
+  summary: string;
+  status: EciEntryStatus;
+  lane: EciFilesLane;
+  attributed_to: string | null;
+  check_status: EciCheckStatus;
+  people: EciEntryPerson[];
+  citation_count: number;
+  lead_citation: EciCitation | null;
+}
+
+/** Phase 4's shape — a person with their photo (or none, when the licence isn't confirmed yet). */
+export interface EciPersonWithPhoto {
+  slug: string;
+  name: string;
+  photo: EciPhoto | null;
+}
+
+// ---- /eci-files/objections ----
+
+export interface EciObjection {
+  n: number;
+  date: string | null;
+  date_precision: EciDatePrecision;
+  by: EciPersonWithPhoto[];
+  concerns: string;
+  followed_by: string | null;
+  followed_by_refs: EciEntryRef[];
+  public: boolean;
+  entries: EciEntryRef[];
+}
+
+export interface EciObjectionPersonCount {
+  slug: string;
+  name: string;
+  photo: EciPhoto | null;
+  count: number;
+  joint: number;
+}
+
+export interface EciObjectionsPage {
+  identified: number;
+  missing: number;
+  reported_total: number;
+  notes: string | null;
+  report: EciEntryRef | null;
+  response: EciEntryCard | null;
+  objections: EciObjection[];
+  by_person: EciObjectionPersonCount[];
+}
+
+// ---- /eci-files/answers ----
+
+export interface EciRelatedRef {
+  entry: EciEntryRef;
+  why: string;
+}
+
+export interface EciAnswerRow {
+  charge: EciEntryCard;
+  also_recorded_as: EciEntryRef[];
+  responses: EciEntryCard[];
+  record: EciEntryCard[];
+  related: EciRelatedRef[];
+  note: string | null;
+  curated: boolean;
+}
+
+export interface EciAnswersCounts {
+  rows: number;
+  with_response: number;
+  without_response: number;
+  with_record: number;
+}
+
+export interface EciUnpairedResponse {
+  response: EciEntryCard;
+  note: string | null;
+}
+
+export interface EciAnswersPage {
+  counts: EciAnswersCounts;
+  rows: EciAnswerRow[];
+  unpaired_responses: EciUnpairedResponse[];
+}
+
+export type EciAnswersView = "all" | "no-response" | "with-record";
+
+// ---- /eci-files/rules ----
+
+export type EciTextStatus = "verbatim" | "quoted in reporting" | "paraphrased from reporting";
+
+export interface EciRuleDiffRef {
+  id: string;
+  title: string;
+  text_status: EciTextStatus;
+}
+
+export interface EciRuleRow {
+  entry: EciEntryCard;
+  diffs: EciRuleDiffRef[];
+}
+
+export interface EciRulesPage {
+  rules: EciRuleRow[];
+  diffs: EciRuleDiffRef[];
+  counts: { rules: number; with_diff: number; diffs: number };
+}
+
+export interface EciRuleDiff {
+  id: string;
+  title: string;
+  document: string;
+  rule_entry: EciEntryCard;
+  before_label: string;
+  after_label: string;
+  before: string[];
+  after: string[];
+  before_status: EciTextStatus;
+  after_status: EciTextStatus;
+  text_status: EciTextStatus;
+  excerpt: boolean;
+  quoted_lines_before: number[];
+  quoted_lines_after: number[];
+  source_urls: string[];
+  note: string | null;
+  related: EciEntryRef[];
+}
+
+// ---- /eci-files/courts ----
+
+export type EciCaseShortStatus = "pending" | "disposed" | "referred";
+export type EciCaseRole = "order" | "judgment" | "hearing" | "filing" | "listing" | "recusal" | "compliance" | "related";
+
+export interface EciCaseSummary {
+  slug: string;
+  short_name: string;
+  title: string;
+  case_number: string | null;
+  court: string;
+  short_status: EciCaseShortStatus;
+  status_note: string | null;
+  item_count: number;
+  order_count: number;
+  first_date: string | null;
+  last_date: string | null;
+  latest: EciEntryRef | null;
+}
+
+export interface EciCourtsPage {
+  cases: EciCaseSummary[];
+  other_court_entries: number;
+}
+
+export interface EciCaseItem {
+  role: EciCaseRole;
+  note: string | null;
+  entry: EciEntryCard;
+}
+
+export interface EciCaseParties {
+  petitioners: string[];
+  respondents: string[];
+}
+
+export interface EciCasePage {
+  slug: string;
+  short_name: string;
+  court: string;
+  short_status: EciCaseShortStatus;
+  status_note: string | null;
+  case: EciEntry;
+  case_name: string;
+  case_number: string | null;
+  bench: string | null;
+  citation: string | null;
+  parties: EciCaseParties;
+  items: EciCaseItem[];
+}
+
+// ---- /eci-files/entries/{id} context (drawer) ----
+
+export interface EciPairContext {
+  charge: EciEntryRef;
+  role: "charge" | "response" | "record" | "related" | "same";
+  responses: EciEntryRef[];
+  record: EciEntryRef[];
+  note: string | null;
+}
+
+export interface EciEntryCaseContext {
+  slug: string;
+  short_name: string;
+  role: EciCaseRole;
+}
+
+export interface EciEntryObjectionContext {
+  n: number;
+  concerns: string;
+}
+
+export interface EciEntryContext {
+  pairs: EciPairContext[];
+  case: EciEntryCaseContext | null;
+  objections: EciEntryObjectionContext[];
+  rule_diffs: EciRuleDiffRef[];
+}
+
+/** `GET /eci-files/entries/{id}` — the same `EciEntry` plus the cross-references phase 5's views need
+ *  (`context`). Every other route still returns plain {@link EciEntry}, so timeline payloads don't grow. */
+export interface EciEntryDetail extends EciEntry {
+  context: EciEntryContext;
+}
+// --- end phase 5 ---

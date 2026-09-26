@@ -5,6 +5,8 @@
 import type {
   EciCareerLine, EciDensityBucket, EciEntry, EciEntryStatus, EciFilesLane, EciTenure,
 } from "@/types/eci-files";
+// ECI Files phase 5 (views): types for the new helpers appended at the end of this file.
+import type { EciEntryRef, EciTextStatus, EciCaseRole, EciCaseShortStatus } from "@/types/eci-files";
 
 /** Format a date honouring its recorded precision: "24 Jun 2025" (day), "Jul 2026" (month), "2019" (year).
  *  Missing or unparsable dates render "—", per house rule. */
@@ -265,3 +267,92 @@ export function dateFraction(date: string, from: string, to: string): number {
   if (b <= a) return 0;
   return Math.min(1, Math.max(0, (t - a) / (b - a)));
 }
+
+// --- ECI Files phase 5 (views) ---
+// Helpers for /eci-files/objections, /answers, /rules(+diff) and /courts(+case). `initials()` is phase
+// 4's helper (redefined here only because phase 4 hasn't landed on this branch yet — see PersonAvatar).
+
+/** "Sukhbir Singh Sandhu" -> "SS" — first letter of the first and last word. Phase 4's shape. */
+export function initials(name: string): string {
+  const parts = name.trim().split(/\s+/).filter(Boolean);
+  if (parts.length === 0) return "?";
+  if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+  return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
+}
+
+/** Builds an entry link that stays on `basePath` (the page you're already reading), instead of always
+ *  sending the reader to `/eci-files/timeline` the way {@link eciEntryHref} does. Phase 4's spec adds a
+ *  `basePath` parameter to `eciEntryHref` itself; until that lands, phase 5's new pages use this instead,
+ *  so a later rebase can fold the two call sites back into one function. */
+export function eciEntryHrefIn(basePath: string, id: string, preserve: Record<string, string | undefined> = {}): string {
+  const p = new URLSearchParams();
+  for (const [k, v] of Object.entries(preserve)) if (v) p.set(k, v);
+  p.set("entry", id);
+  return `${basePath}?${p.toString()}`;
+}
+
+export type EciFollowedBySegment =
+  | { kind: "text"; text: string }
+  | { kind: "entry"; id: string; ref: EciEntryRef | null }
+  | { kind: "objection"; n: number };
+
+/** Splits an objection's `followed_by` prose into plain text plus the two token kinds it can contain:
+ *  `(entry-id)` (an area-prefixed id — becomes a "(see entry)" drawer link) and `(objection N)` (becomes
+ *  a same-page anchor link). Pure, so it's testable without a DOM. */
+export function linkifyFollowedBy(text: string | null, refs: EciEntryRef[]): EciFollowedBySegment[] {
+  if (!text) return [];
+  const byId = new Map(refs.map((r) => [r.id, r]));
+  const pattern = /\((objection\s+(\d+)|[a-z0-9][a-z0-9-]*)\)/gi;
+  const out: EciFollowedBySegment[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  while ((m = pattern.exec(text))) {
+    if (m.index > last) out.push({ kind: "text", text: text.slice(last, m.index) });
+    const objMatch = /^objection\s+(\d+)$/i.exec(m[1]);
+    if (objMatch) {
+      out.push({ kind: "objection", n: Number(objMatch[1]) });
+    } else if (byId.has(m[1])) {
+      out.push({ kind: "entry", id: m[1], ref: byId.get(m[1]) ?? null });
+    } else {
+      out.push({ kind: "text", text: m[0] });
+    }
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) out.push({ kind: "text", text: text.slice(last) });
+  return out;
+}
+
+/** `/eci-files/rules` and `/eci-files/rules/[diff]` — the label a reader sees for each of the three text
+ *  statuses (PHASE5-SPEC §5). */
+export const ECI_TEXT_STATUS_LABEL: Record<EciTextStatus, string> = {
+  verbatim: "Verbatim from the document",
+  "quoted in reporting": "Wording as quoted in news reports",
+  "paraphrased from reporting": "Paraphrased from news reports: not the document's wording",
+};
+
+/** The short form used on list rows and badges, per §6.4: "Verbatim", "Quoted in reports", "Paraphrased". */
+export const ECI_TEXT_STATUS_SHORT: Record<EciTextStatus, string> = {
+  verbatim: "Verbatim",
+  "quoted in reporting": "Quoted in reports",
+  "paraphrased from reporting": "Paraphrased",
+};
+
+/** `/eci-files/courts` — case status chip text (never colour alone). */
+export const ECI_CASE_STATUS_LABEL: Record<EciCaseShortStatus, string> = {
+  pending: "Pending",
+  disposed: "Decided",
+  referred: "Pending · referred to the Chief Justice",
+};
+
+/** `/eci-files/courts/[case]` — the role chip text for one recorded step. */
+export const ECI_CASE_ROLE_LABEL: Record<EciCaseRole, string> = {
+  order: "Order",
+  judgment: "Judgment",
+  hearing: "Hearing",
+  filing: "Filing",
+  listing: "Listing",
+  recusal: "Recusal",
+  compliance: "Commission acts on order",
+  related: "Related",
+};
+// --- end phase 5 ---

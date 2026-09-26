@@ -16,6 +16,11 @@ const QUESTIONS: Question[] = [
   { q: "What has been claimed, and by whom?", hint: "Named claims, attributed — Claims lane", href: "/eci-files/timeline?lane=claims" },
   { q: "How has the Commission answered?", hint: "On-the-record responses — Responses lane", href: "/eci-files/timeline?lane=responses" },
   { q: "Who are the commissioners and officials?", hint: "Profiles, tenure and postings", href: "/eci-files/people" },
+  // ECI Files phase 5 (PHASE5-SPEC §6.1): four more question cards, appended after phase 3's.
+  { q: "What did two Commissioners object to?", hint: "The fourteen objections, dated", href: "/eci-files/objections" },
+  { q: "What was charged, and what was the answer?", hint: "Every charge beside its response", href: "/eci-files/answers" },
+  { q: "Which rules changed, word for word?", hint: "Before-and-after text comparisons", href: "/eci-files/rules" },
+  { q: "Where do the court cases stand?", hint: "Five cases, order by order", href: "/eci-files/courts" },
 ];
 
 function QuestionCard({ item }: { item: Question }) {

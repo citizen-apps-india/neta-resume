@@ -8,9 +8,10 @@ import { DensityStrip } from "@/components/eci-files/DensityStrip";
 import { Filters } from "@/components/eci-files/Filters";
 import { StatusLegend } from "@/components/eci-files/StatusLegend";
 import { LaneTimeline } from "@/components/eci-files/LaneTimeline";
-import { EntryDrawer } from "@/components/eci-files/EntryDrawer";
-import { EntryDetail } from "@/components/eci-files/EntryDetail";
-import { getEciDensity, getEciEntry, getEciTimelineCompact, type EciCompactTimeline, type EciDensity } from "@/lib/api";
+// ECI Files phase 5: the drawer body now lives in DrawerFromParam so /answers, /objections, /rules and
+// /courts can open the same drawer without duplicating this fetch-and-render.
+import { DrawerFromParam } from "@/components/eci-files/views/DrawerFromParam";
+import { getEciDensity, getEciTimelineCompact, type EciCompactTimeline, type EciDensity } from "@/lib/api";
 import { defaultEciWindow, densityByMonth } from "@/lib/eci-files";
 
 export const metadata: Metadata = {
@@ -77,22 +78,10 @@ async function TimelineBody({ lane, topic, person, from, to, entry }: Params) {
 
       {entry && (
         <Suspense fallback={null}>
-          <EntryDrawerBody id={entry} preserve={{ lane, topic, person, from: range.from, to: range.to }} />
+          <DrawerFromParam id={entry} basePath="/eci-files/timeline" preserve={{ lane, topic, person, from: range.from, to: range.to }} />
         </Suspense>
       )}
     </>
-  );
-}
-
-/** Fetches the one full entry the drawer needs, on demand — never the whole record (REDESIGN-SPEC
- *  §"Loading"). A separate async component so it streams independently of the (already-visible) dots. */
-async function EntryDrawerBody({ id, preserve }: { id: string; preserve: Record<string, string | undefined> }) {
-  const full = await getEciEntry(id).catch(() => null);
-  if (!full) return null;
-  return (
-    <EntryDrawer>
-      <EntryDetail entry={full} preserve={preserve} />
-    </EntryDrawer>
   );
 }
 
