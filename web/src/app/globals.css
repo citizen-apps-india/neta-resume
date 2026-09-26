@@ -472,3 +472,133 @@ html { scroll-behavior: smooth; }
   background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%; background-size: 5px 5px; background-repeat: no-repeat;
 }
 .eci-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* --- ECI Files phase 4 (people) --- */
+/* PersonAvatar (docs/eci-files/PHASE4-SPEC.md §"PersonAvatar"): a photo and its initials fallback render
+   at the same size and in the same circular frame, so a row of nine commissioners never reads as a
+   judgment about the four shown as initials. */
+.eci-avatar { border-radius: 50%; object-fit: cover; display: block; border: 1px solid var(--rule); background: var(--card2); }
+.eci-avatar-initials {
+  display: inline-flex; align-items: center; justify-content: center; border-radius: 50%;
+  background: color-mix(in srgb, var(--eci-ink) 13%, var(--card2)); color: var(--eci-ink); font-weight: 600;
+  border: 1px solid var(--rule);
+}
+
+.eci-section-nav { display: flex; flex-wrap: wrap; gap: 8px 10px; }
+.eci-section-nav a {
+  display: inline-flex; align-items: center; gap: 6px; font-size: 12px; padding: 6px 12px; border-radius: 20px;
+  border: 1px solid var(--rule); color: var(--ink2); text-decoration: none; background: var(--card2);
+}
+@media (hover: hover) { .eci-section-nav a:hover { border-color: var(--eci-ink); color: var(--eci-ink); } }
+
+/* TenureBar / CommissionTenureChart segment fills — office is always named in text too (aria-label,
+   legend), so these are never the only carrier of "which office" (§7 "Colour is never the only carrier"). */
+.eci-tenure-ec { fill: color-mix(in srgb, var(--eci-ink) 32%, var(--card)); stroke: var(--eci-ink); stroke-width: 1; }
+.eci-tenure-cec { fill: var(--eci-ink); }
+.eci-tenure-other { fill: color-mix(in srgb, var(--ink2) 28%, var(--card)); }
+.eci-tenure-bar-row a:focus-visible, .eci-diamond-link:focus-visible, .eci-node:focus-visible, .eci-edge-hit:focus-visible {
+  outline: 2px solid var(--eci-ink); outline-offset: 2px;
+}
+
+/* "Members in office" strip: a run's tooltip is CSS-generated content so it appears identically on hover
+   and on keyboard focus (§1.2 "Hovering or focusing a run shows …"). */
+.eci-strip-run { position: relative; }
+.eci-strip-run:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 1px; }
+.eci-strip-run[data-tip]:hover::after, .eci-strip-run[data-tip]:focus-visible::after {
+  content: attr(data-tip); position: absolute; bottom: 100%; left: 0; margin-bottom: 5px; white-space: nowrap;
+  font-size: 11px; background: var(--panel); color: var(--ink); border: 1px solid var(--rule); border-radius: 6px;
+  padding: 4px 9px; z-index: 5; pointer-events: none;
+}
+
+/* CareerTimeline's rail: an "at the Commission" item gets the ink segment + dot, everything else --rule2
+   (§2.4). Each `<li>` draws its own rail segment so consecutive items can differ. */
+.eci-career { list-style: none; margin: 0; padding: 0; }
+.eci-career-item { position: relative; margin-left: 6px; padding: 0 0 16px 20px; border-left: 2px solid var(--rule2); }
+.eci-career-item:last-child { border-left-color: transparent; }
+.eci-career-item::before { content: ""; position: absolute; left: -5px; top: 3px; width: 8px; height: 8px; border-radius: 50%; background: var(--rule2); }
+.eci-career-item[data-commission="true"] { border-left-color: var(--eci-ink); }
+.eci-career-item[data-commission="true"]::before { background: var(--eci-ink); }
+
+.eci-keyfacts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+@media (max-width: 640px) { .eci-keyfacts { grid-template-columns: repeat(2, 1fr); } }
+
+/* The profile's main column + "Selected by" rail (§2.1): one `<section>` per direct grid child, in DOM
+   order Career, Selected-by, Timeline, the three entry sections, Sources. Under 960px that's also the
+   visual order (default grid auto-placement, one column). At ≥960px `.eci-rail` moves into column 2 and
+   spans every row, without rendering the block twice or duplicating its id. */
+.eci-profile-grid { display: grid; grid-template-columns: 1fr; gap: 28px; align-items: start; }
+.eci-rail { grid-column: 1; }
+@media (min-width: 960px) {
+  .eci-profile-grid { grid-template-columns: 1fr 300px; }
+  .eci-rail { grid-column: 2; grid-row: 1 / -1; }
+}
+
+/* SelectionGraph: hidden under 720px per spec — the accessible list below carries everything there. */
+.eci-graph[data-focus] .eci-edge:not([data-on]) { opacity: .25; }
+@media (prefers-reduced-motion: reduce) { .eci-graph .eci-edge { opacity: 1 !important; } }
+@media (max-width: 719px) { .eci-graph { display: none; } }
+
+.eci-state-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.eci-state-table th { text-align: left; font-size: 10.5px; letter-spacing: 0.06em; color: var(--faint); font-weight: 500; padding: 7px 10px; border-bottom: 1px solid var(--rule); }
+.eci-state-table td { padding: 9px 10px; border-bottom: 1px solid var(--rule2); vertical-align: top; }
+@media (max-width: 640px) {
+  .eci-state-table thead { display: none; }
+  .eci-state-table, .eci-state-table tbody, .eci-state-table tr, .eci-state-table td { display: block; width: 100%; }
+  .eci-state-table tr { padding: 10px 0; border-bottom: 1px solid var(--rule2); }
+  .eci-state-table td { border-bottom: none; padding: 2px 0; }
+}
+
+.eci-named-list { columns: 3 200px; column-gap: 20px; }
+@media (max-width: 640px) { .eci-named-list { columns: 2 140px; } }
+.eci-named-list li { break-inside: avoid; padding: 3px 0; }
+
+/* Selection panel / dissent badges — the text always carries the meaning too, colour is a second signal. */
+.eci-badge {
+  display: inline-flex; align-items: center; font-size: 10.5px; font-weight: 600; letter-spacing: 0.03em;
+  padding: 2px 9px; border-radius: 20px; border: 1px solid var(--rule); color: var(--ink2); background: var(--card2); white-space: nowrap;
+}
+.eci-badge[data-part="dissented"] {
+  color: var(--eci-claim); border-color: color-mix(in srgb, var(--eci-claim) 40%, var(--rule));
+  background: color-mix(in srgb, var(--eci-claim) 12%, var(--card2));
+}
+.eci-badge[data-part="chair"], .eci-badge[data-part="proposed"] {
+  color: var(--eci-ink); border-color: color-mix(in srgb, var(--eci-ink) 40%, var(--rule));
+  background: color-mix(in srgb, var(--eci-ink) 10%, var(--card2));
+}
+
+.eci-seat-gov { fill: var(--eci-ink); }
+.eci-seat-hollow { fill: var(--card); stroke: var(--eci-ink); stroke-width: 1.5; }
+
+/* ProfileHeader's avatar: 112px desktop, 72px under 640px (§2.1, §7 "Mobile"). Two sized instances
+   toggled by display, the same pattern `LaneTimeline` uses for its desktop/phone views, rather than
+   fighting the inline pixel sizing `PersonAvatar` sets for its `<img>`/initials box. */
+.eci-avatar-lg { display: block; }
+.eci-avatar-sm { display: none; }
+@media (max-width: 640px) { .eci-avatar-lg { display: none; } .eci-avatar-sm { display: block; } }
+
+/* RegimeCompare (§3): three cards side by side, stacked under 720px. */
+.eci-regime-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+@media (max-width: 720px) { .eci-regime-grid { grid-template-columns: 1fr; } }
+
+/* CareerTimeline's date column (§2.4): 132px desktop, the date sits above the post under 640px. */
+.eci-career-row { display: flex; gap: 12px; }
+.eci-career-date { width: 132px; flex-shrink: 0; }
+@media (max-width: 640px) {
+  .eci-career-row { flex-direction: column; gap: 2px; }
+  .eci-career-date { width: auto; }
+}
+
+/* CommissionTenureChart: the name sits above the bar under 640px instead of in a fixed label column
+   (§1.2, §7 "Mobile"), and year/marker labels shorten so the chart still fits without horizontal scroll. */
+.eci-tchart-row { display: flex; align-items: center; gap: 10px; }
+.eci-tchart-label { width: 148px; flex-shrink: 0; }
+.eci-tick-short, .eci-marker-short { display: none; }
+@media (max-width: 640px) {
+  .eci-tchart-row { flex-direction: column; align-items: stretch; gap: 3px; }
+  .eci-tchart-label { width: auto; }
+  .eci-tick-full, .eci-marker-full { display: none; }
+  .eci-tick-short, .eci-marker-short { display: inline; }
+  /* The marker overlay assumes a fixed label-column offset that only holds once rows stop stacking. */
+  .eci-tchart-markers { display: none; }
+}
+/* --- end phase 4 --- */

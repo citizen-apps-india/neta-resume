@@ -10,7 +10,15 @@ import { PendingFlag } from "@/components/ui";
  *  component, so this is fetched with the one entry this view actually needs, not the whole record.
  *  `preserve` is the page's current lane/topic/person/window, carried into any "replying to" / "responses"
  *  link so following one doesn't reset the timeline to its defaults. */
-export function EntryDetail({ entry, preserve }: { entry: EciEntry; preserve?: Record<string, string | undefined> }) {
+export function EntryDetail({
+  entry, preserve, basePath = "/eci-files/timeline",
+}: {
+  entry: EciEntry;
+  preserve?: Record<string, string | undefined>;
+  /** Where `eciEntryHref` builds its "replying to" / "responses" links — a profile or the selections
+   *  page reads its own `?entry=` on its own URL, not `/eci-files/timeline`'s (PHASE4-SPEC.md §2.6). */
+  basePath?: string;
+}) {
   return (
     <article>
       <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
@@ -25,7 +33,7 @@ export function EntryDetail({ entry, preserve }: { entry: EciEntry; preserve?: R
       {entry.response_to && (
         <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 10 }}>
           Replying to{" "}
-          <Link href={eciEntryHref(entry.response_to, preserve)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
+          <Link href={eciEntryHref(entry.response_to, preserve, basePath)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
             entry {entry.response_to}
           </Link>
         </div>
@@ -61,7 +69,7 @@ export function EntryDetail({ entry, preserve }: { entry: EciEntry; preserve?: R
           </div>
           {entry.responses.map((r) => (
             <div key={r.id} style={{ fontSize: 13 }}>
-              <Link href={eciEntryHref(r.id, preserve)} style={{ color: "var(--ink)", textDecoration: "none" }}>{r.title}</Link>{" "}
+              <Link href={eciEntryHref(r.id, preserve, basePath)} style={{ color: "var(--ink)", textDecoration: "none" }}>{r.title}</Link>{" "}
               <span className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>({r.date ?? "—"})</span>
             </div>
           ))}
