@@ -130,25 +130,10 @@ export function titleOf(entries: EciEntry[], id: string | null): string | null {
   return entries.find((e) => e.id === id)?.title ?? null;
 }
 
-/** "term_start" -> "Term start" — a readable label for a profile-entry detail key. `details` is a free-form
- *  jsonb bag (postings, roles — see BRIEF.md's officials-profile rule), so this is deliberately generic. */
-function humanizeKey(key: string): string {
-  const words = key.replace(/[_-]+/g, " ").trim();
-  return words.charAt(0).toUpperCase() + words.slice(1);
-}
-
-export interface EciDetailLine {
-  label: string;
-  value: string;
-}
-
-/** The scalar entries of a profile's `details` bag, rendered as career lines. Nested objects/arrays are
- *  left out — their shape isn't part of the public contract, only the scalar facts are. */
-export function detailLines(details: Record<string, unknown>): EciDetailLine[] {
-  return Object.entries(details)
-    .filter(([k, v]) => !k.endsWith("url") && v !== null && v !== undefined && (typeof v === "string" || typeof v === "number" || typeof v === "boolean"))
-    .map(([k, v]) => ({ label: humanizeKey(k), value: String(v) }));
-}
+// `detailLines()` (a generic dump of every scalar in a profile's `details` bag) rendered `born` on five
+// profiles — a date of birth, which is a personal detail this record does not carry (PHASE4-SPEC.md §2.4).
+// Deleted rather than fixed: `CareerTimeline`'s `careerTimeline()` (below, phase 4 block) replaces it with
+// an explicit allowlist (`service`, `education`, `tenure_end`) that can never grow a new leak by accident.
 
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
@@ -249,11 +234,11 @@ export function defaultEciWindow(now: Date = new Date()): { from: string; to: st
  *  (`preserve`) so following a "replying to" / "responses" link inside the drawer doesn't reset the page
  *  back to its default filters — the drawer content is server-rendered, so it can't read `useSearchParams`
  *  itself the way the client `EntryDrawer` shell that opens/closes it does. */
-export function eciEntryHref(id: string, preserve: Record<string, string | undefined> = {}): string {
+export function eciEntryHref(id: string, preserve: Record<string, string | undefined> = {}, basePath = "/eci-files/timeline"): string {
   const p = new URLSearchParams();
   for (const [k, v] of Object.entries(preserve)) if (v) p.set(k, v);
   p.set("entry", id);
-  return `/eci-files/timeline?${p.toString()}`;
+  return `${basePath}?${p.toString()}`;
 }
 
 /** Where a date falls between two ISO bounds, as a 0–1 fraction — for positioning a dot along a lane's
@@ -265,3 +250,350 @@ export function dateFraction(date: string, from: string, to: string): number {
   if (b <= a) return 0;
   return Math.min(1, Math.max(0, (t - a) / (b - a)));
 }
+
+// --- ECI Files phase 4 (people) ---
+// `/eci-files/people`, `/eci-files/people/[slug]` and `/eci-files/selections` (PHASE4-SPEC.md §§1-4).
+// A second `import` on the same module is deliberate: it keeps this block a self-contained append that
+// never touches the hotspot's existing top-of-file import line.
+import type { EciPersonGroup, EciPhoto, EciSelectionRegime } from "@/types/eci-files";
+
+/** The shared x-axis for every tenure bar on every ECI Files people page (PHASE4-SPEC.md §1.2): fixed at
+ *  2019-01-01, running to today. Computed once at module load — good enough for a display axis that only
+ *  needs day precision, not per-request freshness. */
+export const ECI_TENURE_AXIS: { from: string; to: string } = {
+  from: "2019-01-01",
+  to: new Date().toISOString().slice(0, 10),
+};
+
+const ECI_CEC_OFFICE_RE = /^Chief Election Commissioner$/;
+const ECI_EC_OFFICE_RE = /^Election Commissioner$/;
+/** A posting counts "at the Commission" for the career rail's ink-coloured segments (§2.4: "post names
+ *  ECI / Election Commission / Chief Electoral Officer"). */
+const ECI_AT_COMMISSION_RE = /\b(ECI|Election Commission|Chief Electoral Officer)\b/i;
+
+export type EciTenureSegmentKind = "ec" | "cec" | "other";
+
+export interface EciTenureSegment {
+  office: string;
+  kind: EciTenureSegmentKind;
+  /** Fraction [0,1] of the axis width — already clamped to the axis bounds. */
+  x0: number;
+  x1: number;
+  /** The segment started before the axis (drawn with a `◂ from …` marker instead of a hard left edge). */
+  clippedStart: boolean;
+  /** `to` is null — the segment runs to today and ends in an open notch, not a rounded corner. */
+  openEnd: boolean;
+  from: string;
+  to: string | null;
+}
+
+/** One tenure's segments as bar geometry, shared by `TenureBar` and `CommissionTenureChart` so both draw
+ *  the exact same shape on the exact same axis (PHASE4-SPEC.md §2.5). A tenure with no `from` (only a
+ *  `to`) draws no bar segment here — `TenureBar` renders that as a 2px tick instead. */
+export function tenureSegments(
+  tenure: EciTenure[] | undefined | null,
+  axis: { from: string; to: string } = ECI_TENURE_AXIS,
+): EciTenureSegment[] {
+  return (tenure ?? [])
+    .filter((t): t is EciTenure & { from: string } => typeof t.from === "string" && t.from.length > 0)
+    .map((t) => {
+      const office = t.office ?? "";
+      const kind: EciTenureSegmentKind = ECI_CEC_OFFICE_RE.test(office) ? "cec" : ECI_EC_OFFICE_RE.test(office) ? "ec" : "other";
+      const to = t.to ?? null;
+      const clippedStart = t.from < axis.from;
+      const openEnd = to === null;
+      const x0 = dateFraction(clippedStart ? axis.from : t.from, axis.from, axis.to);
+      const x1 = dateFraction(to ?? axis.to, axis.from, axis.to);
+      return { office, kind, x0, x1, clippedStart, openEnd, from: t.from, to };
+    });
+}
+
+/** One day-to-day run of how many commissioners were in office at once (PHASE4-SPEC.md §1.2, "Members in
+ *  office" strip) — a sweep over every commission-office interval, clamped to `axis`, collapsed into runs
+ *  of constant count. `intervals` is every commissioner's EC/CEC tenure span; overlapping spans (a
+ *  hand-over day) are expected and are what makes the count go to 2 or back to 1. */
+export function membersInOffice(
+  intervals: { from: string; to: string | null }[],
+  axis: { from: string; to: string } = ECI_TENURE_AXIS,
+): { from: string; to: string; count: number }[] {
+  const addDays = (iso: string, days: number): string => {
+    const d = new Date(`${iso}T00:00:00Z`);
+    d.setUTCDate(d.getUTCDate() + days);
+    return d.toISOString().slice(0, 10);
+  };
+  const clamped = intervals
+    .map((iv) => ({
+      from: iv.from < axis.from ? axis.from : iv.from,
+      to: (iv.to ?? axis.to) > axis.to ? axis.to : (iv.to ?? axis.to),
+    }))
+    .filter((iv) => iv.from <= iv.to);
+
+  const points = new Set<string>([axis.from, axis.to]);
+  for (const iv of clamped) {
+    points.add(iv.from);
+    if (iv.to < axis.to) points.add(addDays(iv.to, 1));
+  }
+  const bounds = Array.from(points).filter((d) => d >= axis.from && d <= axis.to).sort();
+
+  const runs: { from: string; to: string; count: number }[] = [];
+  for (let i = 0; i < bounds.length; i++) {
+    const segFrom = bounds[i];
+    if (segFrom > axis.to) break;
+    const segTo = i + 1 < bounds.length ? addDays(bounds[i + 1], -1) : axis.to;
+    const count = clamped.filter((iv) => iv.from <= segFrom && iv.to >= segFrom).length;
+    const prev = runs[runs.length - 1];
+    if (prev && prev.count === count) prev.to = segTo;
+    else runs.push({ from: segFrom, to: segTo, count });
+  }
+  return runs;
+}
+
+export interface EciCareerSource {
+  url: string;
+  kind: "official" | "court" | "press";
+  host: string;
+}
+
+export interface EciCareerItem {
+  post: string;
+  from: string | null;
+  to: string | null;
+  /** The rendered date label — see the rules in `careerTimeline`'s doc comment. Never "present". */
+  label: string;
+  sources: EciCareerSource[];
+  atCommission: boolean;
+}
+
+export interface EciCareerTimeline {
+  dated: EciCareerItem[];
+  undated: EciCareerItem[];
+}
+
+/** A source URL's trust kind (PHASE4-SPEC.md §2.4, `sourceKind(url)`): official (`gov.in`/`nic.in`), court
+ *  (`indiankanoon.org`, `scobserver.in`, `sci.gov.in`) or press (anything else). */
+export function sourceKind(url: string): { kind: "official" | "court" | "press"; label: string; host: string } {
+  let host = url;
+  try {
+    host = new URL(url).host.replace(/^www\./, "");
+  } catch {
+    // leave host as the raw string — an unparsable URL still needs a label
+  }
+  if (host.endsWith("gov.in") || host.endsWith("nic.in")) return { kind: "official", label: "Official record", host };
+  if (host === "indiankanoon.org" || host === "scobserver.in" || host === "sci.gov.in") return { kind: "court", label: "Court record", host };
+  return { kind: "press", label: "Press report", host };
+}
+
+function careerDateLabel(from: string | null, to: string | null, ongoingOffice: boolean): string {
+  if (from && to) return `${formatLooseDate(from)} – ${formatLooseDate(to)}`;
+  if (!from && to) return `until ${formatLooseDate(to)}`;
+  if (from && !to) return ongoingOffice ? `since ${formatLooseDate(from)}` : `from ${formatLooseDate(from)} · end date not in source`;
+  return "—";
+}
+
+/** True when some still-open tenure (`to` null) names an office that `post` mentions — the rule that
+ *  turns "from 2012 · end date not in source" into "since Feb 2025" for the one posting that is, in fact,
+ *  the current office (PHASE4-SPEC.md §2.4). */
+function postMatchesOpenTenure(post: string, tenure: EciTenure[] | undefined | null): boolean {
+  const lower = post.toLowerCase();
+  return (tenure ?? []).some((t) => t.office && t.to == null && lower.includes(String(t.office).toLowerCase()));
+}
+
+/** `details.career` (source order preserved) split into dated (oldest first) and undated items, each
+ *  carrying its rendered label and its sources in `source_url`, `additional_source_url` order
+ *  (PHASE4-SPEC.md §2.4). Replaces the deleted `detailLines()`/`careerLines()` pairing for this page:
+ *  `career` gets its own structured render instead of a generic scalar dump. */
+export function careerTimeline(details: Record<string, unknown>, tenure: EciTenure[] | undefined | null): EciCareerTimeline {
+  const raw = Array.isArray(details.career) ? details.career : [];
+  const items: EciCareerItem[] = raw
+    .filter((c): c is Record<string, unknown> => typeof c === "object" && c !== null && typeof (c as Record<string, unknown>).post === "string")
+    .map((c) => {
+      const post = c.post as string;
+      const from = typeof c.from === "string" ? c.from : null;
+      const to = typeof c.to === "string" ? c.to : null;
+      const sources: EciCareerSource[] = [];
+      for (const key of ["source_url", "additional_source_url"]) {
+        const url = c[key];
+        if (typeof url === "string" && url) {
+          const sk = sourceKind(url);
+          sources.push({ url, kind: sk.kind, host: sk.host });
+        }
+      }
+      return {
+        post,
+        from,
+        to,
+        label: careerDateLabel(from, to, postMatchesOpenTenure(post, tenure)),
+        sources,
+        atCommission: ECI_AT_COMMISSION_RE.test(post),
+      };
+    });
+  const dated = items
+    .filter((i) => i.from || i.to)
+    .sort((a, b) => {
+      const ak = a.from ?? a.to ?? "";
+      const bk = b.from ?? b.to ?? "";
+      return ak < bk ? -1 : ak > bk ? 1 : 0;
+    });
+  const undated = items.filter((i) => !i.from && !i.to);
+  return { dated, undated };
+}
+
+/** "A. Sreenivas" -> "AS", "Rathan U. Kelkar" -> "RK", "Justice Sanjay Kumar" -> "SK" (PHASE4-SPEC.md
+ *  §"PersonAvatar"). A leading "Justice" is dropped first; a lone middle initial (a length-1 token that
+ *  isn't the first or last word) is dropped next; the initials are the first letter of what's left at
+ *  each end. */
+export function initials(name: string): string {
+  const withoutTitle = name.replace(/^Justice\s+/i, "").trim();
+  const raw = withoutTitle.split(/\s+/).filter(Boolean).map((t) => t.replace(/\.+$/, ""));
+  const tokens = raw.filter((t, i) => i === 0 || i === raw.length - 1 || t.length > 1);
+  if (tokens.length === 0) return "";
+  const first = tokens[0];
+  const last = tokens[tokens.length - 1];
+  return `${(first[0] ?? "").toUpperCase()}${(last[0] ?? "").toUpperCase()}`;
+}
+
+export interface EciGroupMeta {
+  /** The `<h2>` for this group's section on `/eci-files/people`. */
+  heading: string;
+  /** The short chip label used on cards and the profile header. */
+  chip: string;
+  description: string;
+}
+
+/** Group -> the copy in PHASE4-SPEC.md §1.1's table and §2.1's chip row. */
+export const ECI_PERSON_GROUP_META: Record<EciPersonGroup, EciGroupMeta> = {
+  commission: {
+    heading: "The Commission",
+    chip: "The Commission",
+    description: "Chief Election Commissioners and Election Commissioners who served between 2019 and today.",
+  },
+  secretariat: {
+    heading: "Senior officials at the Commission",
+    chip: "Senior official",
+    description: "Deputy and senior deputy election commissioners, the Director General (IT), the Commission's secretaries and its observers.",
+  },
+  state: {
+    heading: "State Chief Electoral Officers",
+    chip: "State election officer",
+    description: "The officers who run the rolls and elections in each state, where the record names them.",
+  },
+  named: {
+    heading: "Also named in the record",
+    chip: "Named in the record",
+    description: "Judges, lawyers, ministers and party leaders who appear in entries. They have no profile here. Each page lists the entries that name them.",
+  },
+};
+
+export function personGroupMeta(group: EciPersonGroup): EciGroupMeta {
+  return ECI_PERSON_GROUP_META[group];
+}
+
+/** The short photo credit for the caption under an avatar (PHASE4-SPEC.md §4.3): "PIB / ECI" when the
+ *  original publisher was PIB, else "ECI". The full `attribution` string still goes in the link's `title`. */
+export function photoCredit(photo: Pick<EciPhoto, "original_publisher">): string {
+  return photo.original_publisher?.startsWith("Press Information Bureau") ? "PIB / ECI" : "ECI";
+}
+
+function monthsBetween(fromIso: string, toIso: string): number {
+  const a = new Date(`${fromIso}T00:00:00Z`);
+  const b = new Date(`${toIso}T00:00:00Z`);
+  let months = (b.getUTCFullYear() - a.getUTCFullYear()) * 12 + (b.getUTCMonth() - a.getUTCMonth());
+  if (b.getUTCDate() < a.getUTCDate()) months -= 1;
+  return Math.max(0, months);
+}
+
+function formatDurationMonths(totalMonths: number): string {
+  const yr = Math.floor(totalMonths / 12);
+  const mo = totalMonths % 12;
+  const parts: string[] = [];
+  if (yr > 0) parts.push(`${yr} yr`);
+  if (mo > 0 || parts.length === 0) parts.push(`${mo} mo`);
+  return parts.join(" ");
+}
+
+export interface EciTenureDuration {
+  total: string;
+  byOffice: { office: string; label: string }[];
+}
+
+/** KeyFacts' "Time at the Commission" tile (PHASE4-SPEC.md §2.3): the sum of tenure spans with `from` set,
+ *  up to `axis.to` (today), as "6 yr 6 mo", plus the same broken down per office for the context line. */
+export function tenureDuration(
+  tenure: EciTenure[] | undefined | null,
+  axis: { from: string; to: string } = ECI_TENURE_AXIS,
+): EciTenureDuration {
+  const byOffice = new Map<string, number>();
+  let totalMonths = 0;
+  for (const t of tenure ?? []) {
+    if (!t.from) continue;
+    const to = t.to ?? axis.to;
+    if (to < t.from) continue;
+    const m = monthsBetween(t.from, to);
+    totalMonths += m;
+    const office = t.office ?? "—";
+    byOffice.set(office, (byOffice.get(office) ?? 0) + m);
+  }
+  return {
+    total: formatDurationMonths(totalMonths),
+    byOffice: Array.from(byOffice.entries()).map(([office, m]) => ({ office, label: formatDurationMonths(m) })),
+  };
+}
+
+/** The latest tenure segment on record (last one carrying a date) — "Office"/"In office" for the
+ *  secretariat/state KeyFacts group and `StateOfficerRow`'s "In office" column. */
+export function latestTenure(tenure: EciTenure[] | undefined | null): EciTenure | null {
+  const dated = (tenure ?? []).filter((t) => t.from || t.to);
+  return dated.length > 0 ? dated[dated.length - 1] : null;
+}
+
+/** One tenure -> "Mar 2025 – May 2026" / "since Jun 2025" / "—". Distinct from `formatTenure` (which joins
+ *  every office into one "office, span" line per office and uses "present" for an open end) because
+ *  `StateOfficerRow` and secretariat/state `KeyFacts` want exactly one span in this house style. */
+export function formatTenureSpan(t: EciTenure | null | undefined): string {
+  if (!t || !t.from) return "—";
+  return t.to ? `${formatLooseDate(t.from)} – ${formatLooseDate(t.to)}` : `since ${formatLooseDate(t.from)}`;
+}
+
+/** The regime whose window contains `date` — used for the "Selected under" KeyFacts fallback when a
+ *  commissioner has no row in `selections` (appointed under the executive convention, before 2019). */
+export function regimeForDate(date: string | null | undefined, regimes: EciSelectionRegime[]): EciSelectionRegime | null {
+  if (!date) return null;
+  return regimes.find((r) => (!r.from_date || date >= r.from_date) && (!r.to_date || date < r.to_date)) ?? null;
+}
+
+const ECI_STATUS_ORDER: EciEntryStatus[] = ["documented", "reported", "claim", "response"];
+const ECI_STATUS_PLURAL: Record<EciEntryStatus, string> = {
+  documented: "documented", reported: "reported", claim: "claims", response: "responses",
+};
+
+const REGIME_SHORT: Record<string, string> = {
+  convention: "Executive convention",
+  baranwal: "Court's interim committee",
+  act_2023: "2023 Act committee",
+};
+
+/** The regime key's short form used on both `KeyFacts`' "Selected under" tile and `SelectedByBlock`'s
+ *  regime chip (PHASE4-SPEC.md §2.3, §2.5.1) — distinct from the fuller `EciSelectionRegime.label`. */
+export function regimeShortLabel(key: string): string {
+  return REGIME_SHORT[key] ?? key;
+}
+
+/** "Election Commissioner" -> "EC", "Chief Election Commissioner" -> "CEC" — the per-office context line
+ *  on the commission `KeyFacts` "Time at the Commission" tile ("EC 11 mo · CEC 7 mo…"). */
+export function officeAbbrev(office: string): string {
+  if (/^Chief Election Commissioner$/.test(office)) return "CEC";
+  if (/^Election Commissioner$/.test(office)) return "EC";
+  return office;
+}
+
+/** "70 entries · 11 documented · 24 reported · 23 claims · 12 responses" — the text a `StatusCountBar`
+ *  only ever echoes (PHASE4-SPEC.md §1.3: "The text is what carries the information; the bar only echoes
+ *  it."). A status with a zero count is left out entirely. */
+export function formatStatusCounts(total: number, counts: { documented: number; reported: number; claim: number; response: number }): string {
+  const parts = [`${total} entr${total === 1 ? "y" : "ies"}`];
+  for (const s of ECI_STATUS_ORDER) {
+    if (counts[s] > 0) parts.push(`${counts[s]} ${ECI_STATUS_PLURAL[s]}`);
+  }
+  return parts.join(" · ");
+}
+// --- end phase 4 ---

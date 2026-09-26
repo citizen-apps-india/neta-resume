@@ -67,12 +67,16 @@ function onDotKeyDown(e: React.KeyboardEvent<HTMLButtonElement>) {
  *  phones instead (same data, same drawer). Fetches `fields=compact` upstream — no citations/summary here,
  *  so the first paint never pulls the whole record (REDESIGN-SPEC §"Loading"). */
 export function LaneTimeline({
-  entries, from, to, activeId,
+  entries, from, to, activeId, hideEmptyLanes = false,
 }: {
   entries: EciCompactEntry[];
   from: string;
   to: string;
   activeId?: string | null;
+  /** Skip a lane row entirely when it has no entries in this window — a profile's timeline is usually
+   *  one or two lanes, and five empty rows would read as five things that didn't happen (PHASE4-SPEC.md
+   *  §2.6). Default `false`, so `/eci-files/timeline` (every lane, always) is unchanged. */
+  hideEmptyLanes?: boolean;
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -103,6 +107,7 @@ export function LaneTimeline({
       <div className="eci-lanes-desktop" style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card)", padding: "6px clamp(10px,2vw,18px)" }}>
         {ECI_LANE_ORDER.map((lane) => {
           const laneEntries = byLane.get(lane) ?? [];
+          if (hideEmptyLanes && laneEntries.length === 0) return null;
           return (
             <div key={lane} data-eci-lane-row className="eci-lane-row" style={{ display: "flex", alignItems: "center" }}>
               <div className="mono" style={{ width: 108, flexShrink: 0, fontSize: 10.5, letterSpacing: "0.04em", color: "var(--faint)", paddingRight: 8 }}>

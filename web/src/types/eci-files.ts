@@ -170,17 +170,46 @@ export interface EciCareerLine {
   source_url?: string | null;
 }
 
+// `EciPersonSummary` and `EciPersonPage` below are the phase 4 (`PHASE4-SPEC.md` §5.4) shapes of
+// `GET /eci-files/people` and `GET /eci-files/people/{slug}` — grouped, ranked and photo-bearing, replacing
+// the phase-2 stubs. Exclusively phase 4's concern (no other phase reads or writes these two types), so
+// they're updated in place rather than appended. See the phase 4 block at the end of this file for the
+// types they reference (`EciPersonGroup`, `EciStatusCounts`, `EciPhoto`, `EciSelection`, `EciEntryRef`).
+
 export interface EciPersonSummary {
   slug: string;
   name: string;
+  group: EciPersonGroup;
+  group_rank: number;
+  current: boolean;
   role: string | null;
+  service: string | null;
   tenure: EciTenure[];
+  first_from: string | null;
+  last_to: string | null;
   entry_count: number;
+  status_counts: EciStatusCounts;
+  photo: EciPhoto | null;
+}
+
+export interface EciPersonDetail {
+  slug: string;
+  name: string;
+  profile: EciEntry | null;
+  group: EciPersonGroup;
+  current: boolean;
+  role: string | null;
+  service: string | null;
+  tenure: EciTenure[];
+  status_counts: EciStatusCounts;
+  photo: EciPhoto | null;
 }
 
 export interface EciPersonPage {
-  person: { slug: string; name: string; profile: EciEntry | null };
+  person: EciPersonDetail;
   entries: EciEntry[];
+  selections: EciSelection[];
+  entries_index: EciEntryRef[];
 }
 
 // --- ECI Files phase 3 (numbers) ---
@@ -285,3 +314,131 @@ export interface EciTimelineOf<E> {
   states: EciStateCount[];
 }
 // --- end phase 3 ---
+
+// --- ECI Files phase 4 (people) ---
+// `/eci-files/people`, `/eci-files/people/[slug]` and `/eci-files/selections` (`PHASE4-SPEC.md` §5.4).
+// Hand-written against the spec's Pydantic models ahead of the backend landing; narrow, never widen, once
+// `npm run codegen` produces the generated equivalents in `src/types/api.ts`.
+
+/** Where a person sits on `/eci-files/people` (`PHASE4-SPEC.md` §1.4) — derived by the loader. */
+export type EciPersonGroup = "commission" | "secretariat" | "state" | "named";
+
+export interface EciPhoto {
+  url: string;
+  source_page: string;
+  attribution: string;
+  licence: string;
+  licence_url: string;
+  licence_review: "reviewed" | "uploader_asserted";
+  original_publisher: string | null;
+  caption: string | null;
+  photo_date: string | null;
+}
+
+export interface EciStatusCounts {
+  documented: number;
+  reported: number;
+  claim: number;
+  response: number;
+}
+
+/** A labelled reference to an entry cited elsewhere (a selection, a departure) without pulling in the
+ *  whole {@link EciEntry} — enough to render "Cited: {title}" and open the drawer by id. */
+export interface EciEntryRef {
+  id: string;
+  title: string;
+  date: string | null;
+  date_precision: EciDatePrecision;
+  status: EciEntryStatus;
+}
+
+export type EciSelectionPart = "recommended" | "proposed" | "voted_with_majority" | "dissented" | "search_chair";
+export type EciSelectionMethod = "executive_appointment" | "elevation_of_senior_ec" | "selection_committee";
+export type EciSelectionRegimeKey = "convention" | "baranwal" | "act_2023";
+
+export interface EciSelectionAppointee {
+  person_slug: string;
+  name: string;
+  office: string;
+  took_charge: string | null;
+  replaced: string | null;
+  photo: EciPhoto | null;
+}
+
+export interface EciSelectionMember {
+  person_slug: string | null;
+  name: string | null;
+  role: string;
+  part: EciSelectionPart;
+  has_profile: boolean;
+  entry_ids: string[];
+}
+
+export interface EciSelectionSearch {
+  by: string;
+  chair_slug: string | null;
+  shortlist_size: number | null;
+  shortlist: string[] | null;
+  shortlist_source: string | null;
+  entry_ids: string[];
+}
+
+export interface EciSelectionDissent {
+  person_slug: string;
+  name: string;
+  summary: string;
+  note_public: boolean;
+  status: EciEntryStatus;
+  entry_ids: string[];
+  response_entry_ids: string[];
+}
+
+export interface EciSelection {
+  id: string;
+  date: string;
+  date_precision: EciDatePrecision;
+  date_meaning: string | null;
+  regime: EciSelectionRegimeKey;
+  method: EciSelectionMethod;
+  appointed: EciSelectionAppointee[];
+  members: EciSelectionMember[];
+  search: EciSelectionSearch | null;
+  dissent: EciSelectionDissent[];
+  entry_ids: string[];
+  notes: string | null;
+}
+
+export interface EciSelectionRegime {
+  key: EciSelectionRegimeKey;
+  label: string;
+  from_date: string | null;
+  to_date: string | null;
+  rule: string;
+  panel: string[];
+  entry_ids: string[];
+  notes: string | null;
+  selection_count: number;
+}
+
+export interface EciDeparture {
+  date: string;
+  person_slug: string;
+  name: string;
+  office: string;
+  how: "resigned" | "tenure_ended";
+  notes: string | null;
+  entry_ids: string[];
+}
+
+/** `GET /eci-files/selections`. `gaps` isn't in PHASE4-SPEC.md §5.4's Pydantic listing, but §3 step 6
+ *  requires rendering "What the record doesn't show" from "the file's `gaps[]`" — `selections.json` carries
+ *  it at the top level, so it's added here as the one field the spec's page requirement needs that its own
+ *  schema section omitted. Flagged for the backend worker to add to `EciSelections` in `schemas.py`. */
+export interface EciSelections {
+  regimes: EciSelectionRegime[];
+  selections: EciSelection[];
+  departures: EciDeparture[];
+  entries_index: EciEntryRef[];
+  gaps: string[];
+}
+// --- end phase 4 ---

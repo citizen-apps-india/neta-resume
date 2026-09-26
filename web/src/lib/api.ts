@@ -306,3 +306,17 @@ export async function getEciState(slug: string): Promise<EciStatePage | null> {
   return res.json();
 }
 // --- end phase 3 ---
+
+// --- ECI Files phase 4 (people) ---
+import type { EciSelections as _EciSelections } from "@/types/eci-files";
+export type {
+  EciPersonGroup, EciPhoto, EciStatusCounts, EciEntryRef, EciSelectionPart, EciSelectionMethod,
+  EciSelectionRegimeKey, EciSelectionAppointee, EciSelectionMember, EciSelectionSearch, EciSelectionDissent,
+  EciSelection, EciSelectionRegime, EciDeparture, EciSelections, EciPersonDetail,
+} from "@/types/eci-files";
+
+/** `/eci-files/selections` — the eight selections, three regimes and six departures behind them. */
+export function getEciSelections(): Promise<_EciSelections> {
+  return getJSON<_EciSelections>("/eci-files/selections", 3600);
+}
+// --- end phase 4 ---
