@@ -1,0 +1,58 @@
+ECI Files commissioner photos — sources and licences
+=====================================================
+
+Every photo in this directory is self-hosted from Wikimedia Commons under the Government Open
+Data License - India (GODL-India), which permits use, adaptation and publication for commercial and
+non-commercial purposes on condition that the provider, source and licence are acknowledged. Each
+file below is cropped from its Commons original to the face; the State Emblem is kept out of frame
+where possible and is never used as a graphic (GODL-India excludes official names, crests and logos
+from the licence grant).
+
+Full records, including original publisher, photo date and per-file licence review status, are in
+data/eci_files/people_media.json. This file is a flat index for a human reading the directory.
+
+ashok-lavasa.jpg
+  Source: https://commons.wikimedia.org/wiki/File:Shri_Ashok_Lavasa_taking_charge_as_the_New_Election_Commissioner_of_India,_in_New_Delhi_on_January_23,_2018.jpg
+  Original: Press Information Bureau (Election Commission), photo 120886, 23 Jan 2018
+  Licence: Government Open Data License - India (GODL-India) — reviewed (Commons bot)
+  Licence text: https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf
+  Attribution: Photo: Press Information Bureau / Election Commission of India, via Wikimedia Commons.
+  Government Open Data License - India (GODL).
+
+rajiv-kumar.jpg
+  Source: https://commons.wikimedia.org/wiki/File:Chief_Election_Commissioner_of_India_Rajiv_Kumar_(cropped).jpg
+  Original: Press Information Bureau (Election Commission), photo 154850, 26 Feb 2024
+  Licence: Government Open Data License - India (GODL-India) — reviewed (Commons reviewer)
+  Licence text: https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf
+  Attribution: Photo: Press Information Bureau / Election Commission of India, via Wikimedia Commons.
+  Government Open Data License - India (GODL).
+
+arun-goel.jpg
+  Source: https://commons.wikimedia.org/wiki/File:Election_Commissioner_Arun_Goel.jpg
+  Original: Press Information Bureau (Election Commission), photo 154852, 26 Feb 2024
+  Licence: Government Open Data License - India (GODL-India) — reviewed (Commons reviewer)
+  Licence text: https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf
+  Attribution: Photo: Press Information Bureau / Election Commission of India, via Wikimedia Commons.
+  Government Open Data License - India (GODL).
+
+gyanesh-kumar.jpg
+  Source: https://commons.wikimedia.org/wiki/File:The_Chief_Election_Commissioner_of_India,_Sh._Gyanesh_Kumar.jpg
+  Original: Press Information Bureau (Election Commission), photo 186266, 25 Jun 2025
+  Licence: Government Open Data License - India (GODL-India) — reviewed (Commons reviewer, 26 Mar 2026)
+  Licence text: https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf
+  Attribution: Photo: Press Information Bureau / Election Commission of India, via Wikimedia Commons.
+  Government Open Data License - India (GODL).
+
+sukhbir-singh-sandhu.jpg
+  Source: https://commons.wikimedia.org/wiki/File:Election_Commissioner_Shri_Sukhbir_Singh_Sandhu.jpg
+  Original: Press Information Bureau (Election Commission), photo 157812, 22 Apr 2024 (crop of a group photo)
+  Licence: Government Open Data License - India (GODL-India) — reviewed (Commons reviewer)
+  Licence text: https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf
+  Attribution: Photo: Press Information Bureau / Election Commission of India, via Wikimedia Commons.
+  Government Open Data License - India (GODL).
+
+Held pending licence confirmation (initials shown instead, per docs/eci-files/PHASES-3-5-DECISIONS.md):
+  Sunil Arora, Sushil Chandra, Anup Chandra Pandey, Vivek Joshi — the Commons uploader tagged these
+  eci.gov.in images GODL-India, but no reviewer has confirmed the tag, and eci.gov.in itself publishes
+  no open licence or reproduction policy. See data/eci_files/people_media.json's
+  `held_pending_licence_confirmation` list and docs/eci-files/PHASE4-SPEC.md section 4, open question 1.

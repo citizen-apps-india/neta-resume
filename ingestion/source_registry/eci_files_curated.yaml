@@ -39,7 +39,7 @@ ingestion:
 conversion:
   converter: neta_ingest.pipelines.curated.eci_files:load
   contract: eci_file_entry.v1
-  produces: [eci_file_entry]
+  produces: [eci_file_entry, eci_file_selection, eci_file_person_media]
 quality:
   freshness_slo_seconds: null
   minimum_records: 1

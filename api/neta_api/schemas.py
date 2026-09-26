@@ -467,6 +467,12 @@ class EciLaneCount(BaseModel):
     count: int
 
 
+class EciStateCount(BaseModel):
+    slug: str
+    name: str
+    count: int
+
+
 class EciCheckCounts(BaseModel):
     checked: int
     unchecked: int
@@ -479,6 +485,7 @@ class EciTimeline(BaseModel):
     topics: list[EciTopicCount]
     people: list[EciPersonCount]
     lanes: list[EciLaneCount]
+    states: list[EciStateCount] = []
     counts: EciCheckCounts
 
 
@@ -489,6 +496,7 @@ class EciTimelineCompact(BaseModel):
     topics: list[EciTopicCount]
     people: list[EciPersonCount]
     lanes: list[EciLaneCount]
+    states: list[EciStateCount] = []
     counts: EciCheckCounts
 
 
@@ -528,20 +536,407 @@ class EciDensity(BaseModel):
     months: list[EciDensityMonth]
 
 
+class EciPhoto(BaseModel):
+    url: str
+    source_page: str
+    attribution: str
+    licence: str
+    licence_url: str
+    licence_review: str             # reviewed | uploader_asserted
+    original_publisher: str | None = None
+    caption: str | None = None
+    photo_date: date | None = None
+
+
+class EciStatusCounts(BaseModel):
+    documented: int = 0
+    reported: int = 0
+    claim: int = 0
+    response: int = 0
+
+
+class EciEntryRef(BaseModel):
+    """A compact, labelled reference to an entry cited by a selection, regime or departure."""
+
+    id: str
+    title: str
+    date: _Date | None = None
+    date_precision: str
+    status: str
+    check_status: str | None = None   # NEW (phase 5), optional so phase 3/4 callers are unaffected
+
+
 class EciPersonSummary(BaseModel):
     slug: str
     name: str
+    group: str                      # commission | secretariat | state | named
+    group_rank: int
+    current: bool
     role: str | None = None         # profile entry's details.role
+    service: str | None = None      # profile entry's details.service
     tenure: list[Any] = Field(default_factory=list)  # profile entry's details.tenure (office/from/to spans)
+    first_from: date | None = None
+    last_to: date | None = None
     entry_count: int
+    status_counts: EciStatusCounts = Field(default_factory=EciStatusCounts)
+    photo: EciPhoto | None = None
+
+
+class EciSelectionAppointee(BaseModel):
+    person_slug: str
+    name: str
+    office: str
+    took_charge: date | None = None
+    replaced: str | None = None
+    photo: EciPhoto | None = None
+
+
+class EciSelectionMember(BaseModel):
+    person_slug: str | None = None
+    name: str | None = None
+    role: str
+    part: str                       # recommended | proposed | voted_with_majority | dissented | search_chair
+    has_profile: bool = False
+    entry_ids: list[str]
+
+
+class EciSelectionSearch(BaseModel):
+    by: str
+    chair_slug: str | None = None
+    shortlist_size: int | None = None
+    shortlist: list[str] | None = None
+    shortlist_source: str | None = None
+    entry_ids: list[str]
+
+
+class EciSelectionDissent(BaseModel):
+    person_slug: str
+    name: str
+    summary: str
+    note_public: bool
+    status: str
+    entry_ids: list[str]
+    response_entry_ids: list[str] = []
+
+
+class EciSelection(BaseModel):
+    id: str
+    date: _Date
+    date_precision: str
+    date_meaning: str | None = None
+    regime: str
+    method: str                     # executive_appointment | elevation_of_senior_ec | selection_committee
+    appointed: list[EciSelectionAppointee]
+    members: list[EciSelectionMember]
+    search: EciSelectionSearch | None = None
+    dissent: list[EciSelectionDissent]
+    entry_ids: list[str]
+    notes: str | None = None
+
+
+class EciSelectionRegime(BaseModel):
+    key: str                        # convention | baranwal | act_2023
+    label: str
+    from_date: date | None = None
+    to_date: date | None = None
+    rule: str
+    panel: list[str]
+    entry_ids: list[str]
+    notes: str | None = None
+    selection_count: int
+
+
+class EciDeparture(BaseModel):
+    date: _Date
+    person_slug: str
+    name: str
+    office: str
+    how: str                        # resigned | tenure_ended
+    notes: str | None = None
+    entry_ids: list[str]
+
+
+class EciSelections(BaseModel):
+    """`/eci-files/selections` — every regime, every selection, every departure and a compact index
+    of every entry any of them cites."""
+
+    regimes: list[EciSelectionRegime]
+    selections: list[EciSelection]
+    departures: list[EciDeparture]
+    entries_index: list[EciEntryRef]
 
 
 class EciPersonDetail(BaseModel):
     slug: str
     name: str
     profile: EciEntry | None = None  # the kind='person' entry, if one was linked
+    group: str
+    current: bool
+    role: str | None = None
+    service: str | None = None
+    tenure: list[Any] = Field(default_factory=list)
+    status_counts: EciStatusCounts = Field(default_factory=EciStatusCounts)
+    photo: EciPhoto | None = None
 
 
 class EciPersonPage(BaseModel):
     person: EciPersonDetail
-    entries: list[EciEntry]
+    entries: list[EciEntry]          # kind='person' excluded
+    selections: list[EciSelection]   # as appointee, member or search chair
+    entries_index: list[EciEntryRef]
+
+
+class EciStageValue(BaseModel):
+    stage: str                  # before | draft | final | appeals_filed | appeals_pending | restored
+    electors: int
+    as_of: date | None = None
+    computed: bool
+    approx: bool
+    note: str | None = None
+    source_entry_id: str
+    source_entry_title: str     # eci_file_entry.title, joined
+    source_status: str          # the source entry's status: documented | reported | claim | response
+    url: str
+    tier: int
+
+
+class EciStateMetric(BaseModel):
+    value: float                # percent, rounded to 2 dp; signed for net_change
+    count: int                  # electors; signed for net_change
+    base: int                   # the denominator, in electors
+    computed: bool               # any contributing stage is computed
+    approx: bool                 # any contributing stage is approx
+    noted: bool                  # any contributing stage carries a note
+
+
+class EciStateMetrics(BaseModel):
+    draft_left_off: EciStateMetric | None = None
+    net_change: EciStateMetric | None = None
+    appeals_filed: EciStateMetric | None = None
+
+
+class EciRegionSummary(BaseModel):
+    slug: str
+    name: str
+    code: str
+    kind: str                   # state | ut
+    phase: int | None = None
+    exercise: str | None = None  # sir | special_revision | None (not in any exercise on record)
+    has_figures: bool           # at least one stage
+    entry_count: int            # entries whose states include this region (kind <> 'person')
+    stages: list[EciStageValue] = []   # canonical order: before, draft, final, appeals_filed, appeals_pending, restored
+    metrics: EciStateMetrics
+
+
+class EciNationalFigure(BaseModel):
+    group: str                  # all | phase_1 | phase_2 | phase_3
+    measure: str                # before | draft | final | left_off | net_fall
+    label: str
+    scope: str
+    electors: int
+    as_of: date | None = None
+    computed: bool
+    approx: bool
+    note: str | None = None
+    source_entry_id: str
+    source_entry_title: str
+    source_status: str
+
+
+class EciStatesOverview(BaseModel):
+    regions: list[EciRegionSummary]
+    national: list[EciNationalFigure]
+    last_as_of: date | None = None   # max(as_of) over every stage
+
+
+class EciStatePage(BaseModel):
+    region: EciRegionSummary
+    notes: str | None = None
+
+
+# --- ECI Files phase 5 ------------------------------------------------------------------------------
+
+
+class EciEntryCard(BaseModel):
+    """Enough for a row or cell on the phase 5 pages; the drawer fetches the full entry."""
+
+    id: str
+    kind: str
+    date: _Date | None = None
+    date_precision: str
+    title: str
+    summary: str
+    status: str
+    lane: str
+    attributed_to: str | None = None
+    check_status: str
+    people: list[EciPersonRef] = []
+    citation_count: int
+    lead_citation: EciCitation | None = None   # position 1
+
+
+class EciPersonWithPhoto(BaseModel):
+    slug: str
+    name: str
+    photo: EciPhoto | None = None
+
+
+class EciObjection(BaseModel):
+    n: int
+    date: _Date | None = None
+    date_precision: str
+    by: list[EciPersonWithPhoto]
+    concerns: str
+    followed_by: str | None = None
+    followed_by_refs: list[EciEntryRef] = []
+    public: bool
+    entries: list[EciEntryRef]
+
+
+class EciObjectionPersonCount(BaseModel):
+    slug: str
+    name: str
+    photo: EciPhoto | None = None
+    count: int
+    joint: int
+
+
+class EciObjectionsPage(BaseModel):
+    identified: int
+    missing: int
+    reported_total: int
+    notes: str | None = None
+    report: EciEntryRef | None = None
+    response: EciEntryCard | None = None
+    objections: list[EciObjection]
+    by_person: list[EciObjectionPersonCount]
+
+
+class EciRelatedRef(BaseModel):
+    entry: EciEntryRef
+    why: str
+
+
+class EciAnswerRow(BaseModel):
+    charge: EciEntryCard
+    also_recorded_as: list[EciEntryRef] = []
+    responses: list[EciEntryCard] = []
+    record: list[EciEntryCard] = []
+    related: list[EciRelatedRef] = []
+    note: str | None = None
+    curated: bool
+
+
+class EciAnswersCounts(BaseModel):
+    rows: int
+    with_response: int
+    without_response: int
+    with_record: int
+
+
+class EciUnpairedResponse(BaseModel):
+    response: EciEntryCard
+    note: str | None = None
+
+
+class EciAnswersPage(BaseModel):
+    counts: EciAnswersCounts
+    rows: list[EciAnswerRow]
+    unpaired_responses: list[EciUnpairedResponse]
+
+
+class EciRuleDiffRef(BaseModel):
+    id: str
+    title: str
+    text_status: str
+
+
+class EciRuleRow(BaseModel):
+    entry: EciEntryCard
+    diffs: list[EciRuleDiffRef] = []
+
+
+class EciRulesPage(BaseModel):
+    rules: list[EciRuleRow]
+    diffs: list[EciRuleDiffRef]
+    counts: dict[str, int]
+
+
+class EciRuleDiff(BaseModel):
+    id: str
+    title: str
+    document: str
+    rule_entry: EciEntryCard
+    before_label: str
+    after_label: str
+    before: list[str]
+    after: list[str]
+    before_status: str
+    after_status: str
+    text_status: str
+    excerpt: bool
+    quoted_lines_before: list[int] = []
+    quoted_lines_after: list[int] = []
+    source_urls: list[str]
+    note: str | None = None
+    related: list[EciEntryRef] = []
+
+
+class EciCaseSummary(BaseModel):
+    slug: str
+    short_name: str
+    title: str
+    case_number: str | None = None
+    court: str
+    short_status: str
+    status_note: str | None = None
+    item_count: int
+    order_count: int
+    first_date: _Date | None = None
+    last_date: _Date | None = None
+    latest: EciEntryRef | None = None
+
+
+class EciCourtsPage(BaseModel):
+    cases: list[EciCaseSummary]
+    other_court_entries: int
+
+
+class EciCaseItem(BaseModel):
+    role: str
+    note: str | None = None
+    entry: EciEntryCard
+
+
+class EciCasePage(BaseModel):
+    slug: str
+    short_name: str
+    court: str
+    short_status: str
+    status_note: str | None = None
+    case: EciEntry
+    case_name: str
+    case_number: str | None = None
+    bench: str | None = None
+    citation: str | None = None
+    parties: dict[str, list[str]]
+    items: list[EciCaseItem]
+
+
+class EciPairContext(BaseModel):
+    charge: EciEntryRef
+    role: str
+    responses: list[EciEntryRef] = []
+    record: list[EciEntryRef] = []
+    note: str | None = None
+
+
+class EciEntryContext(BaseModel):
+    pairs: list[EciPairContext] = []
+    case: dict[str, Any] | None = None
+    objections: list[dict[str, Any]] = []
+    rule_diffs: list[EciRuleDiffRef] = []
+
+
+class EciEntryDetail(EciEntry):
+    context: EciEntryContext = EciEntryContext()

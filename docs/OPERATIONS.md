@@ -52,19 +52,62 @@ FROM pipeline_source_state ORDER BY source_key;
 
 ## ECI Files: loading the curated record
 
-`eci_files.curated` is a source like any other, except its input is reviewed data files in the repo
-(`data/eci_files/entries/*.json`), not a remote site — nothing scrapes at load time. To publish a
-change: edit the data files, open a PR, and after it merges either press Run on `eci_files.curated`
-in the admin console, or run it directly:
+`eci_files.curated` is a source like any other, except its input is reviewed data files in the repo,
+not a remote site — nothing scrapes at load time:
+
+- `data/eci_files/entries/*.json` — the entries themselves.
+- `data/eci_files/regions.json` — the 36 States/UTs and their name aliases; static reference data,
+  loaded on every run, including fixture runs.
+- `data/eci_files/states.json` — per-region SIR phase/exercise/notes and stage figures.
+- `data/eci_files/national.json` — the national totals the record itself carries.
+- `data/eci_files/headline.json` — the front page's four headline stats and key moments.
+- `data/eci_files/selections.json` — who selected whom for the Commission, 2019-2025: the three
+  selection regimes, the eight selections and their panels/dissents, and the six departures.
+- `data/eci_files/people_media.json` — photo credits for the Commission's members. Only rights-clear,
+  reviewer-confirmed photos are listed; everyone else (including anyone only uploader-tagged, not
+  reviewer-confirmed) renders initials. To add a photo self-hosted from Wikimedia Commons, run:
+
+  ```bash
+  uv run --with pillow python scripts/eci_files_fetch_photos.py
+  ```
+
+  It downloads, crops and resizes each `self_host: true` entry's `image_url` into
+  `web/public/eci-files/people/{slug}.jpg` (skipping files that already exist unless `--force`).
+  A new photo needs a GODL or CC licence recorded on its Commons file page and an `attribution` line
+  in `people_media.json`; nothing fetches at request time.
+- `data/eci_files/objections.json` — the fourteen: 11 dated objections by the two Election
+  Commissioners, plus `report_entry_id`/`response_entry_id` (the Indian Express investigation and
+  the Commission's press-note response) -> `eci_file_objection(_person|_entry|_meta)`.
+- `data/eci_files/pairs.json` — charge and answer: what was said or done beside its response, a
+  primary-document column where one bears directly on the point, and 61 curated rows ->
+  `eci_file_pair(_item)` / `eci_file_unpaired_response`. `/eci-files/answers` adds a synthesised,
+  uncurated row for any `status='claim'` entry or response target the file doesn't already cover
+  (`assemble_answer_rows` in `api/neta_api/services/eci_files.py`), so a new claim can't go missing.
+- `data/eci_files/rule_diffs.json` — the seven before-and-after rule/form comparisons, each labelled
+  `verbatim` / `quoted in reporting` / `paraphrased from reporting` on each side ->
+  `eci_file_rule_diff(_entry)`. The diff itself is computed on the web; the API returns lines.
+- `data/eci_files/case_orders.json` — the five court cases' recorded steps (order, judgment, hearing,
+  filing, listing, recusal, compliance, related), each entry belonging to at most one case ->
+  `eci_file_case(_item)`.
+- `data/eci_files/merges.json` — also resolves a `response_to` that points at a merged-away id to
+  the id that replaced it, before the phase 5 cross-checks run (`[eci-files] resolved N response
+  links through merges.json`).
+
+To publish a change: edit the data files, open a PR, and after it merges either press Run on
+`eci_files.curated` in the admin console, or run it directly:
 
 ```bash
 uv run neta eci-files
 ```
 
+After `alembic upgrade head` to `eci_files_views_0008`, re-run `neta eci-files`.
+
 The load is a full replace (idempotent): every `eci_file_*` row is deleted and re-inserted from
 what's currently in the data files, so an entry removed from a file disappears from the site too. A
-bad entry (missing source, unknown status, bad date, duplicate id, an over-length quote) fails the
-whole load with every error reported at once — nothing partial is written.
+bad entry (missing source, unknown status, bad date, duplicate id, an over-length quote, an unknown
+state/UT name, a stage value that doesn't match its cited entry's figures, a selection/departure/photo
+that cites an unknown entry id, person slug or regime) fails the whole load with every error reported
+at once — nothing partial is written.
 
 ## Dagster execution-plane preview (fallback)
 

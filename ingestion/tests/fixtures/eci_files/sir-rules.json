@@ -15,7 +15,9 @@
       "states": ["Bihar"],
       "topics": ["sir", "rolls"],
       "figures": [
-        {"label": "electors covered", "value": 78000000, "unit": "electors", "as_of": "2025-06-24"}
+        {"label": "electors covered", "value": 78000000, "unit": "electors", "as_of": "2025-06-24"},
+        {"label": "electors on roll (draft, states.json fixture)", "value": 72400000, "unit": "electors", "as_of": "2025-08-01"},
+        {"label": "electors on roll (before, states.json fixture)", "value": 78900000, "unit": "electors", "as_of": "2025-06-24"}
       ],
       "details": {},
       "sources": [

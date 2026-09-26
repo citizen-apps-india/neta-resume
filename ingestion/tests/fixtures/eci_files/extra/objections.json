@@ -1,0 +1,18 @@
+{
+  "objections": [
+    {
+      "n": 1,
+      "date": "2026-01-04",
+      "date_precision": "day",
+      "by": ["Test Commissioner"],
+      "concerns": "A test concern.",
+      "entry_ids": ["phase5-documented-1"],
+      "followed_by": null,
+      "public": false
+    }
+  ],
+  "missing": 0,
+  "notes": null,
+  "report_entry_id": "phase5-documented-1",
+  "response_entry_id": "phase5-response-1"
+}

@@ -140,6 +140,7 @@ See `severity-rubric.md`.
   `eci_files_research` (research bodies and filings, tier 2), `eci_files_press` (press reports, tier 3).
 - **Launch is gated:** pages exist but are unlinked, `noindex`, and left out of `sitemap.ts` until the
   owner approves.
+- **ECI Files photos:** Wikimedia Commons, GODL-India, attribution per file.
 
 ---
 
