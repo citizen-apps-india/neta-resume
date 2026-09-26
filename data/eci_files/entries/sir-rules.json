@@ -1425,6 +1425,15 @@
           "tier": 1,
           "archive_url": null,
           "quote": null
+        },
+        {
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAY%2FlNfHhCNmkamD4tYgD1vkZhdXAWTuAWd47JJFkivjUQ%3D%3D",
+          "publisher": "Election Commission of India",
+          "title": "Press Note No. ECI/PN/359/2025: ECI revises schedule for SIR by extending dates by one week",
+          "published": "2025-11-30",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "response_to": null,
@@ -1586,7 +1595,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "IE reports the 02.01.2026 note by Sanjay Kumar to Khanna; quoted wording matches."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "sir-rules-up-draft-roll",
@@ -2988,6 +2998,33 @@
           "tier": 3,
           "archive_url": null,
           "quote": null
+        },
+        {
+          "url": "https://www.nationalheraldindia.com/politics/ecipress-note-silent-on-role-of-dg-itseema-khanna-flagged-by-election-commissioners",
+          "publisher": "National Herald",
+          "title": "ECI 'press note' silent on role of DG (IT) flagged by election commissioners",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/opposition-to-submit-fresh-notice-in-ls-rs-for-motion-seeking-cecs-removal/",
+          "publisher": "The Tribune (PTI)",
+          "title": "Opposition once again to push for Chief Election Commissioner's removal: Sources",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/more-trouble-for-gyanesh-kumar-amid-ec-row-opposition-likely-to-move-new-notice-in-parliament-seeking-removal-4158065",
+          "publisher": "Deccan Herald (PTI)",
+          "title": "More trouble for Gyanesh Kumar amid EC row: Opposition likely to move new notice in Parliament seeking removal",
+          "published": "2026-09-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "response_to": "sir-rules-ie-14-objections-report",
@@ -3035,6 +3072,24 @@
           "url": "https://indianexpress.com/article/express-exclusive/election-commission-gyanesh-kumar-sukhbir-sandhu-vivek-joshi-electoral-roll-control-systems-10889773/",
           "publisher": "The Indian Express",
           "title": "What Election Commission rift reveals: Cloud over its conduct",
+          "published": "2026-09-23",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/election-commission-sir-draft-rolls-13-crore-deletions-delhi-leads-10857760/",
+          "publisher": "The Indian Express",
+          "title": "SIR draft rolls see over 13 crore deletions so far, Delhi leads with 33% left out",
+          "published": "2026-09-01",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.etvbharat.com/en/bharat/live-blog--election-commission-dissent-report-live-updates-opposition-calls-for-cec-gyanesh-kumar-removal-congress-bjp-sir-vote-chori-enn26092302978",
+          "publisher": "ETV Bharat",
+          "title": "Election Commission Dissent LIVE | ECI Responds To Reported Differences, Oppn Seeks CEC Gyanesh Kumar's Removal",
           "published": "2026-09-23",
           "tier": 3,
           "archive_url": null,

@@ -106,7 +106,7 @@
       "members": [],
       "search": null,
       "dissent": [],
-      "entry_ids": ["commissioners-event-2022-05-15-rajiv-kumar-cec", "selection-law-rajiv-kumar-cec-2022"],
+      "entry_ids": ["commissioners-event-2022-05-15-rajiv-kumar-cec"],
       "notes": "His elevation left an Election Commissioner seat vacant from 15 May to 18 Nov 2022."
     },
     {
@@ -184,7 +184,7 @@
       "members": [
         {"person_slug": "narendra-modi", "name": "Narendra Modi", "role": "Prime Minister (chair)", "part": "voted_with_majority", "entry_ids": ["commissioners-person-gyanesh-kumar", "selection-law-rahul-dissent-note"]},
         {"person_slug": "amit-shah", "name": "Amit Shah", "role": "Union Home Minister (nominated Cabinet Minister)", "part": "voted_with_majority", "entry_ids": ["commissioners-person-gyanesh-kumar", "selection-law-rahul-dissent-note"]},
-        {"person_slug": "rahul-gandhi", "name": "Rahul Gandhi", "role": "Leader of Opposition in the Lok Sabha", "part": "dissented", "entry_ids": ["commissioners-event-2025-02-17-selection-rahul-dissent", "statements-reporting-rahul-dissent-cec-selection", "selection-law-rahul-dissent-note"]}
+        {"person_slug": "rahul-gandhi", "name": "Rahul Gandhi", "role": "Leader of Opposition in the Lok Sabha", "part": "dissented", "entry_ids": ["selection-law-rahul-dissent-note"]}
       ],
       "search": {
         "by": "Search committee headed by Law Minister Arjun Ram Meghwal, with the Finance and DoPT Secretaries",
@@ -201,11 +201,11 @@
           "summary": "Asked that the decision wait for the Supreme Court hearing two days later, objected to the Chief Justice's removal from the panel in a dissent note, and did not take part in further proceedings. He published the note the next day.",
           "note_public": true,
           "status": "claim",
-          "entry_ids": ["commissioners-event-2025-02-17-selection-rahul-dissent", "statements-reporting-rahul-dissent-cec-selection", "selection-law-rahul-dissent-note"],
+          "entry_ids": ["selection-law-rahul-dissent-note"],
           "response_entry_ids": ["selection-law-bjp-on-rahul-dissent"]
         }
       ],
-      "entry_ids": ["commissioners-event-2025-02-17-gyanesh-cec-joshi-ec", "commissioners-event-2025-02-17-selection-rahul-dissent", "statements-reporting-rahul-dissent-cec-selection", "selection-law-rahul-dissent-note", "selection-law-bjp-on-rahul-dissent", "selection-law-rahul-two-to-one", "selection-law-search-committee-cec-2025", "selection-law-sc-feb-12-2025"],
+      "entry_ids": ["commissioners-event-2025-02-17-gyanesh-cec-joshi-ec", "selection-law-rahul-dissent-note", "selection-law-bjp-on-rahul-dissent", "selection-law-rahul-two-to-one", "selection-law-search-committee-cec-2025", "selection-law-sc-feb-12-2025"],
       "notes": "The first Chief Election Commissioner chosen under the 2023 Act; until then the senior-most Election Commissioner was usually elevated. Vivek Joshi was Haryana Chief Secretary when chosen. No government response to the dissent note itself was found; the BJP's response is recorded."
     }
   ],

@@ -1259,7 +1259,7 @@ def test_real_data_files_phase5_matches_spec() -> None:
     payload, errors = eci_files.validate_all()
     assert errors == []
     assert payload is not None
-    assert payload.resolved_response_count == 5
+    assert payload.resolved_response_count == 11
 
     assert payload.objections is not None
     assert len(payload.objections.objections) == 11

@@ -990,7 +990,8 @@
         "checked_url": "https://gulfnews.com/world/asia/india/india-former-finance-secretary-rajiv-kumar-appointed-election-commissioner-1.1598032628781",
         "note": "Opened directly. Confirms Rajiv Kumar, described as '1984 batch Jharkhand cadre IAS officer', was appointed in place of Lavasa, and that Lavasa 'had on Tuesday sent his resignation... effective 31st August 2020' to join ADB as Vice-President -- Tuesday before the Friday 21 August report is 18 August 2020, matching the entry's date exactly."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "elections-2019-2024-mamata-campaign-ban",
@@ -2655,7 +2656,8 @@
       ],
       "response_to": null,
       "notes": "The article itself was not opened; its exact date and outlet should be confirmed.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "elections-2019-2024-mh-rahul-stolen-claim",
