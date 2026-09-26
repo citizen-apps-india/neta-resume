@@ -56,6 +56,7 @@ export default async function EciFilesPeoplePage() {
           title="Who runs the Election Commission"
           subtitle="The commissioners, the officials under them and the state officers who run the rolls, 2019 to today. Every line has a source."
           backHref="/eci-files"
+          backLabel="ECI Files"
         />
 
         {failed ? (

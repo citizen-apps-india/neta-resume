@@ -90,11 +90,11 @@ async function SelectionsBody({ entry }: { entry?: string }) {
         </table>
       </section>
 
-      {selections.gaps.length > 0 && (
+      {(selections.gaps ?? []).length > 0 && (
         <section style={{ marginTop: 28 }}>
           <h2 className="serif" style={{ fontSize: 18, fontWeight: 600, margin: "0 0 10px" }}>What the record doesn&apos;t show</h2>
           <ul style={{ margin: 0, paddingLeft: 20, color: "var(--muted)", fontSize: 13, lineHeight: 1.7 }}>
-            {selections.gaps.map((g, i) => <li key={i}>{g}</li>)}
+            {(selections.gaps ?? []).map((g, i) => <li key={i}>{g}</li>)}
           </ul>
         </section>
       )}
