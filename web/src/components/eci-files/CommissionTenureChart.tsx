@@ -5,8 +5,8 @@ import { ECI_TENURE_AXIS, dateFraction, formatEciDate, membersInOffice, tenureSe
 const LABEL_COL = 158; // 148px label + 10px row gap (.eci-tchart-row in globals.css)
 
 const MARKERS = [
-  { date: "2023-03-02", style: "dashed" as const, full: "Court's interim rule", short: "Court rule" },
-  { date: "2024-01-02", style: "solid" as const, full: "2023 Act in force", short: "2023 Act" },
+  { date: "2023-03-02", style: "dashed" as const, full: "Court's interim rule" },
+  { date: "2024-01-02", style: "solid" as const, full: "2023 Act in force" },
 ];
 
 function segmentClass(kind: string): string {
@@ -74,24 +74,17 @@ export function CommissionTenureChart({
         </span>
         <span className="eci-legend-item"><span aria-hidden style={{ fontSize: 13, color: "var(--eci-ink)" }}>◆</span> Selection</span>
         <span className="eci-legend-item"><span aria-hidden style={{ fontSize: 13, color: "var(--eci-ink)" }}>◇</span> Selection with a recorded dissent</span>
+        {/* Marker labels live here, not floated over the chart: at this axis's density (10 months
+            apart), positioned labels collide with each other and with the year ticks. */}
+        {MARKERS.map((m) => (
+          <Link key={m.date} href="/eci-files/selections#regimes" className="eci-legend-item mono" style={{ color: "var(--muted)", textDecoration: "none" }}>
+            <span aria-hidden style={{ width: 14, height: 0, borderTop: m.style === "dashed" ? "1.5px dashed var(--faint)" : "1.5px solid var(--eci-ink)" }} />
+            {m.full} ({formatEciDate(m.date, "day")})
+          </Link>
+        ))}
       </div>
 
       <div style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card)", padding: "10px clamp(10px,2vw,18px) 4px" }}>
-        {/* marker labels */}
-        <div style={{ position: "relative", height: 16, marginLeft: LABEL_COL }}>
-          {MARKERS.map((m) => (
-            <Link
-              key={m.date}
-              href="/eci-files/selections#regimes"
-              className="mono"
-              style={{ position: "absolute", left: `${dateFraction(m.date, axis.from, axis.to) * 100}%`, transform: "translateX(-50%)", fontSize: 10, color: "var(--muted)", textDecoration: "none", whiteSpace: "nowrap" }}
-            >
-              <span className="eci-marker-full">{m.full}</span>
-              <span className="eci-marker-short">{m.short}</span>
-            </Link>
-          ))}
-        </div>
-
         <div style={{ position: "relative" }}>
           <div className="eci-tchart-markers" aria-hidden style={{ position: "absolute", inset: 0, marginLeft: LABEL_COL, pointerEvents: "none" }}>
             {MARKERS.map((m) => (
@@ -220,7 +213,9 @@ export function CommissionTenureChart({
           </thead>
           <tbody>
             {people.flatMap((p) =>
-              tenureSegments(p.tenure, axis).map((s, i) => (
+              tenureSegments(p.tenure, axis)
+                .filter((s) => s.openEnd || !s.to || s.to >= axis.from)
+                .map((s, i) => (
                 <tr key={`${p.slug}-${i}`}>
                   <td style={{ padding: "4px 8px", borderTop: "1px solid var(--rule2)" }}>{p.name}</td>
                   <td style={{ padding: "4px 8px", borderTop: "1px solid var(--rule2)" }}>{s.office}</td>

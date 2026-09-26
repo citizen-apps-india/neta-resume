@@ -491,7 +491,9 @@ These values double as acceptance checks.
 
 - `/eci-files/states`:
   - `regions` has 36 rows;
-  - 22 have `has_figures = true`;
+  - 29 have `has_figures = true` (seven phase III states — Telangana, Andhra Pradesh, Jharkhand, Haryana,
+    Punjab, Arunachal Pradesh, Dadra and Nagar Haveli and Daman and Diu — gained an official `before`
+    figure from ECI/PN/086/2026; they were 22 before that);
   - `last_as_of` is `2026-09-22`.
 - `bihar`: `draft_left_off` = {value 8.32, count 6569844, base 78969844, approx true, because the draft is
   rounded}, and `net_change` = {value −6.05, count −4777487}.
@@ -501,8 +503,8 @@ These values double as acceptance checks.
 - `assam`: `exercise` is `"special_revision"` and all metrics are null. `chandigarh`: all metrics null.
 - `goa`: no `restored` stage.
 - `delhi`: `draft_left_off` value is 32.78.
-- `/eci-files/states/haryana`: `has_figures` is false, `phase` is 3, and `notes` starts "Draft roll
-  published."
+- `/eci-files/states/haryana`: `has_figures` is true (one `before` stage, ECI/PN/086/2026), `phase` is 3,
+  and `notes` starts "Before: electors as on 12 May 2026 from the Commission's phase III press note".
 - `/eci-files/states/narnia` returns 404.
 - `timeline?state=delhi` includes entries originally tagged "Delhi" and "NCT of Delhi".
 - `timeline?state=west-bengal&fields=compact` returns exactly the entries whose `states` contain "West

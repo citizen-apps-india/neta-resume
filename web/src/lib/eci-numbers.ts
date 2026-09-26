@@ -260,12 +260,3 @@ export function countIndianApprox(count: number, approx: boolean): string {
   return `${approx ? "≈" : ""}${countIndian(Math.abs(count))}`;
 }
 
-/** Builds `<basePath>?...&entry=<id>`, carrying over whatever the caller wants preserved — the numbers-page
- *  counterpart of `eciEntryHref` in lib/eci-files.ts, which is fixed to `/eci-files/timeline`. Kept as its
- *  own function rather than widening that one, since three phase workers touch that file in parallel. */
-export function entryHrefFrom(basePath: string, id: string, preserve: Record<string, string | undefined> = {}): string {
-  const p = new URLSearchParams();
-  for (const [k, v] of Object.entries(preserve)) if (v) p.set(k, v);
-  p.set("entry", id);
-  return `${basePath}?${p.toString()}`;
-}

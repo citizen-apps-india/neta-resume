@@ -8,7 +8,7 @@ import { TextStatusBadge } from "@/components/eci-files/views/TextStatusBadge";
 import { DrawerFromParam } from "@/components/eci-files/views/DrawerFromParam";
 import { CrossLinks } from "@/components/eci-files/views/CrossLinks";
 import { getEciRules } from "@/lib/api";
-import { ECI_TEXT_STATUS_SHORT, eciEntryHrefIn, formatEciDate } from "@/lib/eci-files";
+import { ECI_TEXT_STATUS_SHORT, eciEntryHref, formatEciDate } from "@/lib/eci-files";
 import { StatusChip } from "@/components/eci-files/StatusChip";
 
 export const metadata: Metadata = {
@@ -74,7 +74,7 @@ async function RulesBody({ entry }: { entry?: string }) {
                   <span className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>{formatEciDate(row.entry.date, row.entry.date_precision)}</span>
                   <StatusChip status={row.entry.status} />
                 </div>
-                <Link href={eciEntryHrefIn(BASE_PATH, row.entry.id)} className="serif" style={{ display: "block", fontSize: 14.5, fontWeight: 600, color: "var(--ink)", textDecoration: "none", marginBottom: 4 }}>
+                <Link href={eciEntryHref(row.entry.id, {}, BASE_PATH)} className="serif" style={{ display: "block", fontSize: 14.5, fontWeight: 600, color: "var(--ink)", textDecoration: "none", marginBottom: 4 }}>
                   {row.entry.title}
                 </Link>
                 <p style={{ fontSize: 13, color: "var(--ink2)", lineHeight: 1.5, margin: "0 0 6px" }}>{row.entry.summary}</p>

@@ -16,7 +16,7 @@ import { EntryDrawer } from "@/components/eci-files/EntryDrawer";
 import { EntryDetail } from "@/components/eci-files/EntryDetail";
 import { getEciState, getEciStates, getEciEntry, getEciTimelineCompactByState } from "@/lib/api";
 import { isEciRegionSlug, romanPhase } from "@/lib/eci-numbers";
-import { formatLooseDate } from "@/lib/eci-files";
+import { formatLooseDate, loadEciItem, ECI_LOAD_FAILED_MESSAGE } from "@/lib/eci-files";
 import type { EciRegionSummary } from "@/types/eci-files";
 
 type RouteParams = { state: string };
@@ -47,8 +47,9 @@ function subtitleFor(region: EciRegionSummary): string {
   const dated = region.stages.map((s) => s.as_of).filter((d): d is string => Boolean(d)).sort();
   const first = dated[0] ? formatLooseDate(dated[0]) : null;
   const last = dated[dated.length - 1] ? formatLooseDate(dated[dated.length - 1]) : null;
-  const span = first && last ? ` from ${first} to ${last}` : "";
-  return `Special Intensive Revision, Phase ${romanPhase(region.phase)}. ${region.stages.length} figures on record${span}.`;
+  const span = first && last ? (first === last ? ` as of ${first}` : ` from ${first} to ${last}`) : "";
+  const figureCount = region.stages.length === 1 ? "1 figure" : `${region.stages.length} figures`;
+  return `Special Intensive Revision, Phase ${romanPhase(region.phase)}. ${figureCount} on record${span}.`;
 }
 
 async function EntryDrawerBody({ id, basePath }: { id: string; basePath: string }) {
@@ -66,12 +67,23 @@ export default async function EciNumbersStatePage({ params, searchParams }: { pa
   const { entry } = await searchParams;
   if (!isEciRegionSlug(state)) notFound();
 
-  const [page, overview, timeline] = await Promise.all([
-    getEciState(state).catch(() => null),
+  const [result, overview, timeline] = await Promise.all([
+    loadEciItem(() => getEciState(state)),
     getEciStates().catch(() => null),
     getEciTimelineCompactByState({ state }).catch(() => null),
   ]);
-  if (!page) notFound();
+  if (result.status === "not_found") notFound();
+  if (result.status === "error") {
+    return (
+      <>
+        <SiteHeader />
+        <main style={{ maxWidth: 900, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 72px", width: "100%" }}>
+          <p style={{ color: "var(--muted)", padding: "24px 4px" }}>{ECI_LOAD_FAILED_MESSAGE}</p>
+        </main>
+      </>
+    );
+  }
+  const page = result.data;
 
   const region = page.region;
   const basePath = `/eci-files/numbers/${state}`;
@@ -95,7 +107,7 @@ export default async function EciNumbersStatePage({ params, searchParams }: { pa
         />
 
         <div style={{ marginBottom: 24 }}>
-          <StatePicker regions={overview?.regions ?? [{ slug: region.slug, name: region.name, has_figures: region.has_figures }]} current={state} compact />
+          <StatePicker regions={overview?.regions ?? [{ slug: region.slug, name: region.name, has_figures: region.has_figures, exercise: region.exercise, stages: region.stages }]} current={state} compact />
         </div>
 
         <StateMetricTiles region={region} />

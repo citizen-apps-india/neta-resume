@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { countIndian } from "@/lib/format";
-import { formatLooseDate } from "@/lib/eci-files";
-import { entryHrefFrom } from "@/lib/eci-numbers";
+import { eciEntryHref, formatLooseDate } from "@/lib/eci-files";
 import { TIER_LABEL } from "@/components/eci-files/CitationList";
 import type { EciRegionSummary, EciStageValue } from "@/types/eci-files";
 
@@ -91,7 +90,7 @@ export function StageChart({ region, basePath }: { region: EciRegionSummary; bas
             {row.v && (
               <div style={{ fontSize: 11, color: "var(--muted)", margin: "3px 0 0 2px" }}>
                 Source:{" "}
-                <Link href={entryHrefFrom(basePath, row.v.source_entry_id)} style={{ color: "var(--accent-2)", textDecoration: "none" }}>
+                <Link href={eciEntryHref(row.v.source_entry_id, {}, basePath)} style={{ color: "var(--accent-2)", textDecoration: "none" }}>
                   {row.v.source_entry_title}
                 </Link>
                 {" · "}{TIER_LABEL[row.v.tier] ?? `TIER ${row.v.tier}`}
@@ -129,7 +128,7 @@ export function StageChart({ region, basePath }: { region: EciRegionSummary; bas
                   <td className="mono" style={{ textAlign: "right", padding: "6px 8px" }}>{r.v!.electors.toLocaleString("en-IN")}</td>
                   <td className="mono" style={{ padding: "6px 8px" }}>{r.v!.as_of ?? "—"}</td>
                   <td style={{ padding: "6px 8px" }}>
-                    <Link href={entryHrefFrom(basePath, r.v!.source_entry_id)} style={{ color: "var(--accent-2)" }}>{r.v!.source_entry_title}</Link>
+                    <Link href={eciEntryHref(r.v!.source_entry_id, {}, basePath)} style={{ color: "var(--accent-2)" }}>{r.v!.source_entry_title}</Link>
                   </td>
                   <td style={{ padding: "6px 8px" }}>{TIER_LABEL[r.v!.tier] ?? `TIER ${r.v!.tier}`}</td>
                   <td style={{ padding: "6px 8px" }}>{[r.v!.computed && "computed", r.v!.approx && "rounded"].filter(Boolean).join(", ") || "—"}</td>

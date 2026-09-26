@@ -1,9 +1,10 @@
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import type { EciAnswerRow as EciAnswerRowT } from "@/types/eci-files";
-import { eciEntryHrefIn, formatEciDate } from "@/lib/eci-files";
+import { eciEntryHref, formatEciDate } from "@/lib/eci-files";
 import { StatusChip } from "@/components/eci-files/StatusChip";
 import { EntryRefLink } from "@/components/eci-files/views/EntryRefLink";
+import { LinkifiedNote } from "@/components/eci-files/views/LinkifiedNote";
 import { PendingFlag } from "@/components/ui";
 
 const BASE_PATH = "/eci-files/answers";
@@ -33,10 +34,10 @@ export function AnswerRow({ row, preserve }: { row: EciAnswerRowT; preserve?: Re
           <div style={{ fontSize: 12.5, fontWeight: 600, color: "var(--ink)", marginBottom: 2 }}>{charge.attributed_to}</div>
         )}
         <h3 id={`charge-${charge.id}-h`} className="serif" style={{ fontSize: 15.5, fontWeight: 600, lineHeight: 1.35, margin: "0 0 6px" }}>
-          <Link href={eciEntryHrefIn(BASE_PATH, charge.id, preserve)} style={{ color: "inherit", textDecoration: "none" }}>{charge.title}</Link>
+          <Link href={eciEntryHref(charge.id, preserve, BASE_PATH)} style={{ color: "inherit", textDecoration: "none" }}>{charge.title}</Link>
         </h3>
         <p style={{ fontSize: 13, color: "var(--ink2)", lineHeight: 1.55, margin: "0 0 6px", ...clamp(4) }}>{charge.summary}</p>
-        <Link href={eciEntryHrefIn(BASE_PATH, charge.id, preserve)} className="mono" style={{ fontSize: 11, color: "var(--accent-2)", textDecoration: "none" }}>
+        <Link href={eciEntryHref(charge.id, preserve, BASE_PATH)} className="mono" style={{ fontSize: 11, color: "var(--accent-2)", textDecoration: "none" }}>
           Read in full
         </Link>
         {row.also_recorded_as.length > 0 && (
@@ -66,7 +67,7 @@ export function AnswerRow({ row, preserve }: { row: EciAnswerRowT; preserve?: Re
                   <span className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>{formatEciDate(r.date, r.date_precision)}</span>
                   {r.attributed_to && <strong style={{ fontSize: 12.5, color: "var(--ink)", fontWeight: 600 }}>{r.attributed_to}</strong>}
                 </div>
-                <Link href={eciEntryHrefIn(BASE_PATH, r.id, preserve)} className="serif" style={{ display: "block", fontSize: 14, fontWeight: 600, color: "var(--ink)", textDecoration: "none", margin: "2px 0 3px" }}>
+                <Link href={eciEntryHref(r.id, preserve, BASE_PATH)} className="serif" style={{ display: "block", fontSize: 14, fontWeight: 600, color: "var(--ink)", textDecoration: "none", margin: "2px 0 3px" }}>
                   {r.title}
                 </Link>
                 <p style={{ fontSize: 12.5, color: "var(--ink2)", lineHeight: 1.5, margin: 0, ...clamp(3) }}>{r.summary}</p>
@@ -98,7 +99,7 @@ export function AnswerRow({ row, preserve }: { row: EciAnswerRowT; preserve?: Re
                     <StatusChip status={r.status} />
                     <span className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>{formatEciDate(r.date, r.date_precision)}</span>
                   </div>
-                  <Link href={eciEntryHrefIn(BASE_PATH, r.id, preserve)} style={{ fontSize: 12.5, color: "var(--eci-ink)", textDecoration: "none" }}>
+                  <Link href={eciEntryHref(r.id, preserve, BASE_PATH)} style={{ fontSize: 12.5, color: "var(--eci-ink)", textDecoration: "none" }}>
                     {r.title}
                   </Link>
                 </div>
@@ -111,7 +112,7 @@ export function AnswerRow({ row, preserve }: { row: EciAnswerRowT; preserve?: Re
       {row.note && (
         <div style={{ gridColumn: "1 / -1" }}>
           <span className="mono" style={{ fontSize: 10, letterSpacing: "0.05em", color: "var(--ink2)" }}>NOTE </span>
-          <span style={{ fontSize: 12.5, color: "var(--ink2)", fontStyle: "italic" }}>{row.note}</span>
+          <span style={{ fontSize: 12.5, color: "var(--ink2)", fontStyle: "italic" }}><LinkifiedNote text={row.note} basePath={BASE_PATH} /></span>
         </div>
       )}
     </article>

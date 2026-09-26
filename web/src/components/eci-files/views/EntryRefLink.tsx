@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { EciEntryRef } from "@/types/eci-files";
-import { eciEntryHrefIn, formatEciDate } from "@/lib/eci-files";
+import { eciEntryHref, formatEciDate } from "@/lib/eci-files";
 import { StatusChip } from "@/components/eci-files/StatusChip";
 import { PendingFlag } from "@/components/ui";
 
@@ -17,7 +17,7 @@ export function EntryRefLink({
 }) {
   return (
     <Link
-      href={eciEntryHrefIn(basePath, entry.id, preserve)}
+      href={eciEntryHref(entry.id, preserve, basePath)}
       style={{ display: "inline-flex", alignItems: "baseline", gap: 6, flexWrap: "wrap", color: "inherit", textDecoration: "none" }}
     >
       <span className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>

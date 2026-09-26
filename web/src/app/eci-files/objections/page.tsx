@@ -10,7 +10,8 @@ import { ObjectionLedger } from "@/components/eci-files/views/ObjectionLedger";
 import { DrawerFromParam } from "@/components/eci-files/views/DrawerFromParam";
 import { CrossLinks } from "@/components/eci-files/views/CrossLinks";
 import { getEciObjections } from "@/lib/api";
-import { eciEntryHrefIn } from "@/lib/eci-files";
+import { eciEntryHref } from "@/lib/eci-files";
+import { LinkifiedNote } from "@/components/eci-files/views/LinkifiedNote";
 
 export const metadata: Metadata = {
   title: "The fourteen objections · ECI Files",
@@ -32,6 +33,19 @@ async function ObjectionsBody({ entry }: { entry?: string }) {
 
   return (
     <>
+      {page.notes && (
+        <p style={{ fontSize: 13, color: "var(--ink2)", lineHeight: 1.55, margin: "-8px 0 10px", maxWidth: "74ch" }}>
+          <LinkifiedNote text={page.notes} basePath={BASE_PATH} />
+        </p>
+      )}
+      {page.report && (
+        <div style={{ margin: "0 0 14px" }}>
+          <Link href={eciEntryHref(page.report.id, {}, BASE_PATH)} className="mono" style={{ fontSize: 12, color: "var(--accent-2)", textDecoration: "none" }}>
+            Read the report →
+          </Link>
+        </div>
+      )}
+
       <div className="mono" style={{ fontSize: 11, color: "var(--muted)", margin: "-14px 0 26px" }}>
         Numbered by date in this record, not by the newspaper.
       </div>
@@ -45,7 +59,7 @@ async function ObjectionsBody({ entry }: { entry?: string }) {
               Attributed to <strong style={{ color: "var(--ink2)", fontWeight: 500 }}>{page.response.attributed_to}</strong>
             </div>
           )}
-          <Link href={eciEntryHrefIn(BASE_PATH, page.response.id)} className="mono" style={{ fontSize: 12, color: "var(--accent-2)", textDecoration: "none" }}>
+          <Link href={eciEntryHref(page.response.id, {}, BASE_PATH)} className="mono" style={{ fontSize: 12, color: "var(--accent-2)", textDecoration: "none" }}>
             Read the press note →
           </Link>
         </div>

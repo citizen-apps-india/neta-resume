@@ -10,7 +10,7 @@ import { CitationList } from "@/components/eci-files/CitationList";
 import { DrawerFromParam } from "@/components/eci-files/views/DrawerFromParam";
 import { CrossLinks } from "@/components/eci-files/views/CrossLinks";
 import { getEciCase } from "@/lib/api";
-import { ECI_CASE_STATUS_LABEL, eciEntryHrefIn } from "@/lib/eci-files";
+import { ECI_CASE_STATUS_LABEL, ECI_LOAD_FAILED_MESSAGE, eciEntryHref, loadEciItem } from "@/lib/eci-files";
 
 type Params = { case: string };
 
@@ -25,8 +25,12 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
 }
 
 async function CaseBody({ slug, entry }: { slug: string; entry?: string }) {
-  const page = await getEciCase(slug).catch(() => null);
-  if (!page) notFound();
+  const result = await loadEciItem(() => getEciCase(slug));
+  if (result.status === "not_found") notFound();
+  if (result.status === "error") {
+    return <p style={{ color: "var(--muted)", padding: "24px 4px" }}>{ECI_LOAD_FAILED_MESSAGE}</p>;
+  }
+  const page = result.data;
   const basePath = `/eci-files/courts/${slug}`;
 
   return (
@@ -53,7 +57,7 @@ async function CaseBody({ slug, entry }: { slug: string; entry?: string }) {
         <p style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.6, margin: "0 0 12px", maxWidth: "72ch" }}>{page.case.summary}</p>
         <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.06em", color: "var(--faint)", marginBottom: 6 }}>SOURCES</div>
         <CitationList citations={page.case.citations} />
-        <Link href={eciEntryHrefIn(basePath, page.case.id)} className="mono" style={{ display: "inline-block", marginTop: 10, fontSize: 12, color: "var(--accent-2)", textDecoration: "none" }}>
+        <Link href={eciEntryHref(page.case.id, {}, basePath)} className="mono" style={{ display: "inline-block", marginTop: 10, fontSize: 12, color: "var(--accent-2)", textDecoration: "none" }}>
           Open the full entry →
         </Link>
       </section>

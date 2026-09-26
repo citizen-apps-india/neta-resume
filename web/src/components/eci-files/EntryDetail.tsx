@@ -6,8 +6,9 @@ import { CitationList } from "@/components/eci-files/CitationList";
 import { PendingFlag } from "@/components/ui";
 // ECI Files phase 5: the context block below (§6.1's "EntryDetail gains a context block").
 import type { EciEntryContext } from "@/types/eci-files";
-import { eciEntryHrefIn, ECI_TEXT_STATUS_SHORT } from "@/lib/eci-files";
+import { ECI_TEXT_STATUS_SHORT } from "@/lib/eci-files";
 import { RoleChip } from "@/components/eci-files/views/RoleChip";
+import { LinkifiedNote } from "@/components/eci-files/views/LinkifiedNote";
 
 const ECI_OBJECTION_TOTAL = 14;
 
@@ -85,7 +86,9 @@ export function EntryDetail({
       )}
 
       {entry.notes && (
-        <p style={{ fontSize: 12.5, color: "var(--muted)", fontStyle: "italic", margin: "0 0 14px" }}>{entry.notes}</p>
+        <p style={{ fontSize: 12.5, color: "var(--muted)", fontStyle: "italic", margin: "0 0 14px" }}>
+          <LinkifiedNote text={entry.notes} basePath={linkBase} />
+        </p>
       )}
 
       {/* --- ECI Files phase 5 (views): charge/answer, case and objection/diff context --- */}
@@ -100,7 +103,7 @@ export function EntryDetail({
             {pair.role === "charge" ? (
               <strong style={{ color: "var(--ink)", fontWeight: 600 }}>This entry</strong>
             ) : (
-              <Link href={eciEntryHrefIn(linkBase, pair.charge.id, preserve)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
+              <Link href={eciEntryHref(pair.charge.id, preserve, linkBase)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
                 {pair.charge.title}
               </Link>
             )}
@@ -113,7 +116,7 @@ export function EntryDetail({
               pair.responses.map((r, i) => (
                 <span key={r.id}>
                   {i > 0 && ", "}
-                  <Link href={eciEntryHrefIn(linkBase, r.id, preserve)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>{r.title}</Link>
+                  <Link href={eciEntryHref(r.id, preserve, linkBase)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>{r.title}</Link>
                 </span>
               ))
             )}
@@ -124,12 +127,16 @@ export function EntryDetail({
               {pair.record.map((r, i) => (
                 <span key={r.id}>
                   {i > 0 && ", "}
-                  <Link href={eciEntryHrefIn(linkBase, r.id, preserve)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>{r.title}</Link>
+                  <Link href={eciEntryHref(r.id, preserve, linkBase)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>{r.title}</Link>
                 </span>
               ))}
             </div>
           )}
-          {pair.note && <p style={{ fontSize: 12, color: "var(--muted)", fontStyle: "italic", margin: "0 0 8px" }}>{pair.note}</p>}
+          {pair.note && (
+            <p style={{ fontSize: 12, color: "var(--muted)", fontStyle: "italic", margin: "0 0 8px" }}>
+              <LinkifiedNote text={pair.note} basePath={linkBase} />
+            </p>
+          )}
           <Link href={`/eci-files/answers#charge-${pair.charge.id}`} className="mono" style={{ fontSize: 11, color: "var(--accent-2)", textDecoration: "none" }}>
             See all charges and answers →
           </Link>

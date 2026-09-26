@@ -9,6 +9,7 @@ import { EntryRefLink } from "@/components/eci-files/views/EntryRefLink";
 import { DrawerFromParam } from "@/components/eci-files/views/DrawerFromParam";
 import { CrossLinks } from "@/components/eci-files/views/CrossLinks";
 import { getEciRuleDiff } from "@/lib/api";
+import { ECI_LOAD_FAILED_MESSAGE, loadEciItem } from "@/lib/eci-files";
 
 type Params = { diff: string };
 
@@ -31,8 +32,12 @@ function hostOf(url: string): string {
 }
 
 async function DiffBody({ id, entry }: { id: string; entry?: string }) {
-  const d = await getEciRuleDiff(id).catch(() => null);
-  if (!d) notFound();
+  const result = await loadEciItem(() => getEciRuleDiff(id));
+  if (result.status === "not_found") notFound();
+  if (result.status === "error") {
+    return <p style={{ color: "var(--muted)", padding: "24px 4px" }}>{ECI_LOAD_FAILED_MESSAGE}</p>;
+  }
+  const d = result.data;
 
   const basePath = `/eci-files/rules/${id}`;
 

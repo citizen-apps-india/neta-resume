@@ -6,7 +6,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SectionHero } from "@/components/parliament/SectionHero";
 import { EciNumbersSkeleton } from "@/components/skeletons";
 import { StatePicker } from "@/components/eci-files/numbers/StatePicker";
-import { NationalSummary } from "@/components/eci-files/numbers/NationalSummary";
+import { NationalSummary, NationalPhaseBreakdown } from "@/components/eci-files/numbers/NationalSummary";
 import { DraftCaveat } from "@/components/eci-files/numbers/DraftCaveat";
 import { StateTileGrid } from "@/components/eci-files/numbers/StateTileGrid";
 import { StateTileLegend } from "@/components/eci-files/numbers/StateTileLegend";
@@ -125,6 +125,7 @@ async function NumbersBody({ metric: metricParam, view, entry }: Params) {
       </div>
 
       <StateTileLegend metric={metric} />
+      <NationalPhaseBreakdown national={overview.national} />
       <HowWeCounted text={metric.howWeCounted} footnote={ECI_METRIC_FOOTNOTE} />
 
       {entry && (

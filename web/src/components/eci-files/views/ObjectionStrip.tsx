@@ -188,7 +188,7 @@ export function ObjectionStrip({
         </div>
         <span style={{ position: "absolute", width: 1, height: 1, overflow: "hidden", clip: "rect(0 0 0 0)" }}>
           Objections by commissioner, November 2025 to September 2026. The ledger below lists the same
-          fourteen objections as a table, with the ones not yet public marked so.
+          fourteen objections as a table, with the three not itemised in the published reports marked so.
         </span>
       </figcaption>
     </figure>

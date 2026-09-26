@@ -82,19 +82,22 @@ export function SelectionGraph({ selections, regimes }: { selections: EciSelecti
 
   const edges: GraphEdge[] = [];
   asc.forEach((sel) => {
-    const appointeeIds = sel.appointed.map((a) => `${sel.id}:${a.person_slug}`);
+    // Tooltip text, not a link, so an entry id has nowhere to resolve to — name the appointee instead
+    // of citing the id raw (the visible, linked form of the same citation is the selection list below,
+    // via aria-describedby).
+    const appointees = sel.appointed.map((a) => ({ to: `${sel.id}:${a.person_slug}`, name: a.name }));
     if (sel.members.length === 0) {
-      appointeeIds.forEach((to) => {
-        edges.push({ id: `${sel.id}-gov-${to}`, from: "gov-convention", to, part: "convention", entryIds: sel.entry_ids, selectionId: sel.id, label: `appointed · selection of ${formatEciDate(sel.date, sel.date_precision)}` });
+      appointees.forEach(({ to, name }) => {
+        edges.push({ id: `${sel.id}-gov-${to}`, from: "gov-convention", to, part: "convention", entryIds: sel.entry_ids, selectionId: sel.id, label: `appointed ${name} · selection of ${formatEciDate(sel.date, sel.date_precision)}` });
       });
     } else {
       sel.members.forEach((m) => {
         const from = leftNodeIdFor(m);
-        appointeeIds.forEach((to) => {
+        appointees.forEach(({ to, name }) => {
           const verb = PART_VERB[m.part] ?? m.part;
           edges.push({
             id: `${sel.id}-${from}-${to}`, from, to, part: m.part, entryIds: m.entry_ids, selectionId: sel.id,
-            label: `${m.name ?? m.role} ${verb} · selection of ${formatEciDate(sel.date, sel.date_precision)}${m.entry_ids[0] ? ` · cites ${m.entry_ids[0]}` : ""}`,
+            label: `${m.name ?? m.role} ${verb} the selection of ${name} · ${formatEciDate(sel.date, sel.date_precision)}`,
           });
         });
       });

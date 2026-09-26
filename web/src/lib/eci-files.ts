@@ -8,6 +8,27 @@ import type {
 // ECI Files phase 5 (views): types for the new helpers appended at the end of this file.
 import type { EciEntryRef, EciTextStatus, EciCaseRole, EciCaseShortStatus } from "@/types/eci-files";
 
+/** The copy every ECI Files detail page renders when its data failed to load for a reason other than
+ *  a real 404 — a slow/unreachable API, not a missing record. Keep this in one place so a 500 never
+ *  reads as "page not found". */
+export const ECI_LOAD_FAILED_MESSAGE = "The record hasn't loaded — try again in a moment.";
+
+export type EciLoadResult<T> = { status: "ok"; data: T } | { status: "not_found" } | { status: "error" };
+
+/** Awaits a per-item ECI fetcher (one of the `getEci*(slug)` functions in `lib/api.ts`, which resolve
+ *  to `null` on a real 404 and reject on anything else) and tells the two outcomes apart. Callers
+ *  `notFound()` on `"not_found"` and render {@link ECI_LOAD_FAILED_MESSAGE} on `"error"` — collapsing
+ *  both into `.catch(() => null)` then `notFound()` is the bug this replaces: an unreachable API used
+ *  to read as "this record doesn't exist". */
+export async function loadEciItem<T>(fetcher: () => Promise<T | null>): Promise<EciLoadResult<T>> {
+  try {
+    const data = await fetcher();
+    return data === null ? { status: "not_found" } : { status: "ok", data };
+  } catch {
+    return { status: "error" };
+  }
+}
+
 /** Format a date honouring its recorded precision: "24 Jun 2025" (day), "Jul 2026" (month), "2019" (year).
  *  Missing or unparsable dates render "—", per house rule. */
 export function formatEciDate(date: string | null, precision: string): string {
@@ -241,6 +262,28 @@ export function eciEntryHref(id: string, preserve: Record<string, string | undef
   for (const [k, v] of Object.entries(preserve)) if (v) p.set(k, v);
   p.set("entry", id);
   return `${basePath}?${p.toString()}`;
+}
+
+const ENTRY_ID_TOKEN_RE = /\b(numbers|sir-rules|officials|commissioners|courts|elections-2019-2024|selection-law|statements-reporting)-[a-z0-9-]+\b/g;
+
+export type EciTextToken = { kind: "text"; text: string } | { kind: "id"; id: string };
+
+/** Splits prose (a state's notes, an entry's notes, a pair's note, the objections lede) into plain
+ *  text and entry-id-shaped tokens, so a caller can turn each id into a drawer link without rewording
+ *  the underlying data. Pure and JSX-free so it's usable from a plain `.ts` module; a `.tsx` caller
+ *  maps the `"id"` tokens to a `<Link>` (see `numbers/StateNotes.tsx`, the first place this shipped). */
+export function tokenizeEntryIds(text: string): EciTextToken[] {
+  const tokens: EciTextToken[] = [];
+  let last = 0;
+  const re = new RegExp(ENTRY_ID_TOKEN_RE);
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(text))) {
+    if (m.index > last) tokens.push({ kind: "text", text: text.slice(last, m.index) });
+    tokens.push({ kind: "id", id: m[0] });
+    last = m.index + m[0].length;
+  }
+  if (last < text.length) tokens.push({ kind: "text", text: text.slice(last) });
+  return tokens;
 }
 
 /** Where a date falls between two ISO bounds, as a 0–1 fraction — for positioning a dot along a lane's
@@ -564,6 +607,7 @@ export function regimeForDate(date: string | null | undefined, regimes: EciSelec
 }
 
 const ECI_STATUS_ORDER: EciEntryStatus[] = ["documented", "reported", "claim", "response"];
+const ECI_STATUS_SINGULAR: Partial<Record<EciEntryStatus, string>> = { claim: "claim", response: "response" };
 const ECI_STATUS_PLURAL: Record<EciEntryStatus, string> = {
   documented: "documented", reported: "reported", claim: "claims", response: "responses",
 };
@@ -594,7 +638,7 @@ export function officeAbbrev(office: string): string {
 export function formatStatusCounts(total: number, counts: { documented: number; reported: number; claim: number; response: number }): string {
   const parts = [`${total} entr${total === 1 ? "y" : "ies"}`];
   for (const s of ECI_STATUS_ORDER) {
-    if (counts[s] > 0) parts.push(`${counts[s]} ${ECI_STATUS_PLURAL[s]}`);
+    if (counts[s] > 0) parts.push(`${counts[s]} ${counts[s] === 1 ? (ECI_STATUS_SINGULAR[s] ?? ECI_STATUS_PLURAL[s]) : ECI_STATUS_PLURAL[s]}`);
   }
   return parts.join(" · ");
 }
@@ -602,17 +646,6 @@ export function formatStatusCounts(total: number, counts: { documented: number; 
 
 // --- ECI Files phase 5 (views) ---
 // Helpers for /eci-files/objections, /answers, /rules(+diff) and /courts(+case). `initials()` comes from phase 4's block above.
-
-/** Builds an entry link that stays on `basePath` (the page you're already reading), instead of always
- *  sending the reader to `/eci-files/timeline` the way {@link eciEntryHref} does. Phase 4's spec adds a
- *  `basePath` parameter to `eciEntryHref` itself; until that lands, phase 5's new pages use this instead,
- *  so a later rebase can fold the two call sites back into one function. */
-export function eciEntryHrefIn(basePath: string, id: string, preserve: Record<string, string | undefined> = {}): string {
-  const p = new URLSearchParams();
-  for (const [k, v] of Object.entries(preserve)) if (v) p.set(k, v);
-  p.set("entry", id);
-  return `${basePath}?${p.toString()}`;
-}
 
 export type EciFollowedBySegment =
   | { kind: "text"; text: string }

@@ -17,7 +17,7 @@ import { EntryDrawer } from "@/components/eci-files/EntryDrawer";
 import { EntryDetail } from "@/components/eci-files/EntryDetail";
 import { CitationList } from "@/components/eci-files/CitationList";
 import { getEciEntry, getEciPerson, getEciSelections, type EciPersonPage, type EciSelections } from "@/lib/api";
-import { careerTimeline } from "@/lib/eci-files";
+import { careerTimeline, loadEciItem, ECI_LOAD_FAILED_MESSAGE } from "@/lib/eci-files";
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
   const { slug } = await params;
@@ -65,8 +65,19 @@ export default async function EciFilesPersonPage({
 }) {
   const { slug } = await params;
   const { entry } = await searchParams;
-  const page = await getEciPerson(slug).catch(() => null);
-  if (!page) notFound();
+  const result = await loadEciItem(() => getEciPerson(slug));
+  if (result.status === "not_found") notFound();
+  if (result.status === "error") {
+    return (
+      <>
+        <SiteHeader />
+        <main style={{ maxWidth: 1080, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 72px", width: "100%" }}>
+          <p style={{ color: "var(--muted)", padding: "24px 4px" }}>{ECI_LOAD_FAILED_MESSAGE}</p>
+        </main>
+      </>
+    );
+  }
+  const page = result.data;
 
   const selectionsData: EciSelections | null = await getEciSelections().catch(() => null);
   const regimes = selectionsData?.regimes ?? [];
@@ -81,19 +92,25 @@ export default async function EciFilesPersonPage({
   const laneWindow = timelineWindow(entries);
   const sectionCounts = personEntrySectionCounts(entries);
 
-  const navItems = [
-    ...(hasProfile && careerCount > 0 ? [{ id: "career", label: "Career", count: careerCount }] : []),
-    ...(hasProfile || selections.length > 0 ? [{ id: "selected-by", label: hasProfile ? "Selected by" : "Sat on selection panels" }] : []),
-    { id: "timeline", label: "Timeline", count: entries.length },
-    ...sectionCounts.filter((s) => s.count > 0),
-    ...(person.profile && person.profile.citations.length > 0 ? [{ id: "sources", label: "Sources", count: person.profile.citations.length }] : []),
-  ];
-
-  const fallbackSelection = !hasProfile || selections.some((s) => s.appointed.some((a) => a.person_slug === slug))
+  const hasAppointeeSelection = selections.some((s) => s.appointed.some((a) => a.person_slug === slug));
+  const fallbackSelection = !hasProfile || hasAppointeeSelection
     ? undefined
     : (person.profile && typeof person.profile.details.selection === "string"
       ? { selection: person.profile.details.selection, sourceUrl: typeof person.profile.details.selection_source_url === "string" ? person.profile.details.selection_source_url : null }
       : undefined);
+  // SelectedByBlock/PanelSeatsBlock both render nothing when they have no rows and no fallback — the
+  // nav chip must agree, or it links to an empty section.
+  const showSelectedByChip = hasProfile
+    ? hasAppointeeSelection || fallbackSelection !== undefined
+    : selections.length > 0;
+
+  const navItems = [
+    ...(hasProfile && careerCount > 0 ? [{ id: "career", label: "Career", count: careerCount }] : []),
+    ...(showSelectedByChip ? [{ id: "selected-by", label: hasProfile ? "Selected by" : "Sat on selection panels" }] : []),
+    { id: "timeline", label: "Timeline", count: entries.length },
+    ...sectionCounts.filter((s) => s.count > 0),
+    ...(person.profile && person.profile.citations.length > 0 ? [{ id: "sources", label: "Sources", count: person.profile.citations.length }] : []),
+  ];
 
   return (
     <>
@@ -118,13 +135,13 @@ export default async function EciFilesPersonPage({
 
         {!hasProfile && (
           <p style={{ fontSize: 13.5, color: "var(--ink2)", margin: "0 0 16px" }}>
-            No profile: this page lists the {entries.length} entries that name {person.name}.
+            No profile: this page lists the {entries.length} entr{entries.length === 1 ? "y" : "ies"} that name {person.name}.
           </p>
         )}
 
         {hasProfile && entries.length < 5 && careerCount <= 1 && (
           <p style={{ fontSize: 12.5, color: "var(--muted)", margin: "8px 0 16px" }}>
-            The record has little on {person.name} so far: {entries.length} entries and {careerCount} career lines.
+            The record has little on {person.name} so far: {entries.length} entr{entries.length === 1 ? "y" : "ies"} and {careerCount} career line{careerCount === 1 ? "" : "s"}.
           </p>
         )}
 

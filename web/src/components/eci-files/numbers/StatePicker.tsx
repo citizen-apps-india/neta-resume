@@ -6,7 +6,14 @@ const srOnly: CSSProperties = {
   clip: "rect(0,0,0,0)", whiteSpace: "nowrap", border: 0,
 };
 
-type PickerRegion = Pick<EciRegionSummary, "slug" | "name" | "has_figures">;
+type PickerRegion = Pick<EciRegionSummary, "slug" | "name" | "has_figures" | "exercise" | "stages">;
+
+/** A region whose only figure is the pre-SIR `before` baseline — real, but not SIR progress (no draft
+ *  or final roll yet), so it shouldn't sit in "With SIR figures" alongside states with an actual draft
+ *  or final roll on record. */
+function isBeforeOnly(r: PickerRegion): boolean {
+  return r.stages.length === 1 && r.stages[0].stage === "before";
+}
 
 /** The "What happened in my state?" entry point (PHASE3-SPEC.md §3.3/§3.4/§3.5) — a plain GET form, so
  *  it works with no client JS: submitting lands on `/eci-files/numbers?state=<slug>`, which redirects to
@@ -18,8 +25,14 @@ export function StatePicker({
   current?: string;
   compact?: boolean;
 }) {
-  const withFigures = regions.filter((r) => r.has_figures).slice().sort((a, b) => a.name.localeCompare(b.name));
-  const withoutFigures = regions.filter((r) => !r.has_figures).slice().sort((a, b) => a.name.localeCompare(b.name));
+  const byName = (a: PickerRegion, b: PickerRegion) => a.name.localeCompare(b.name);
+  const withFigures = regions
+    .filter((r) => r.has_figures && r.exercise !== "special_revision" && !isBeforeOnly(r))
+    .slice().sort(byName);
+  const baselineOnly = regions
+    .filter((r) => r.has_figures && (r.exercise === "special_revision" || isBeforeOnly(r)))
+    .slice().sort(byName);
+  const withoutFigures = regions.filter((r) => !r.has_figures).slice().sort(byName);
 
   return (
     <form action="/eci-files/numbers" method="get" className="eci-picker">
@@ -31,6 +44,11 @@ export function StatePicker({
         {withFigures.length > 0 && (
           <optgroup label="With SIR figures">
             {withFigures.map((r) => <option key={r.slug} value={r.slug}>{r.name}</option>)}
+          </optgroup>
+        )}
+        {baselineOnly.length > 0 && (
+          <optgroup label="Baseline or Special Revision only">
+            {baselineOnly.map((r) => <option key={r.slug} value={r.slug}>{r.name}</option>)}
           </optgroup>
         )}
         {withoutFigures.length > 0 && (

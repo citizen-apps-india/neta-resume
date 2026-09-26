@@ -61,7 +61,7 @@ export function KeyFacts({
   } else {
     const t = latestTenure(tenure);
     if (t?.office) tiles.push({ eyebrow: "Office", value: t.office });
-    tiles.push({ eyebrow: "In office", value: formatTenureSpan(t) });
+    if (t?.from) tiles.push({ eyebrow: "In office", value: formatTenureSpan(t) });
     if (service) tiles.push({ eyebrow: "Service", value: <span style={{ fontSize: 14 }}>{service}</span> });
   }
 

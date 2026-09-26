@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { countIndian } from "@/lib/format";
-import { formatLooseDate } from "@/lib/eci-files";
-import { entryHrefFrom } from "@/lib/eci-numbers";
+import { eciEntryHref, formatLooseDate } from "@/lib/eci-files";
 import { TIER_LABEL } from "@/components/eci-files/CitationList";
 import type { EciRegionSummary, EciStageValue } from "@/types/eci-files";
 
@@ -30,7 +29,7 @@ export function AfterFinalFigures({ region, basePath }: { region: EciRegionSumma
                 <div style={{ fontSize: 13, color: "var(--ink)" }}>{label}</div>
                 <div style={{ fontSize: 11, color: "var(--muted)" }}>
                   Source:{" "}
-                  <Link href={entryHrefFrom(basePath, stg.source_entry_id)} style={{ color: "var(--accent-2)", textDecoration: "none" }}>
+                  <Link href={eciEntryHref(stg.source_entry_id, {}, basePath)} style={{ color: "var(--accent-2)", textDecoration: "none" }}>
                     {stg.source_entry_title}
                   </Link>
                   {" · "}{TIER_LABEL[stg.tier] ?? `TIER ${stg.tier}`}

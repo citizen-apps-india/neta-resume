@@ -1,5 +1,5 @@
 import type { EciObjection } from "@/types/eci-files";
-import { eciEntryHrefIn, formatEciDate, linkifyFollowedBy } from "@/lib/eci-files";
+import { eciEntryHref, formatEciDate, linkifyFollowedBy } from "@/lib/eci-files";
 import { PersonAvatar } from "@/components/eci-files/views/PersonAvatar";
 import { EntryRefLink } from "@/components/eci-files/views/EntryRefLink";
 
@@ -28,7 +28,7 @@ function FollowedBy({ text, refs }: { text: string | null; refs: EciObjection["f
         if (seg.kind === "text") return <span key={i}>{seg.text}</span>;
         if (seg.kind === "objection") return <a key={i} href={`#objection-${seg.n}`} style={{ color: "var(--eci-ink)" }}>(objection {seg.n})</a>;
         return (
-          <a key={i} href={eciEntryHrefIn("/eci-files/objections", seg.id)} style={{ color: "var(--eci-ink)" }}>
+          <a key={i} href={eciEntryHref(seg.id, {}, "/eci-files/objections")} style={{ color: "var(--eci-ink)" }}>
             (see entry)
           </a>
         );

@@ -658,15 +658,16 @@ html { scroll-behavior: smooth; }
 }
 
 /* CommissionTenureChart: the name sits above the bar under 640px instead of in a fixed label column
-   (§1.2, §7 "Mobile"), and year/marker labels shorten so the chart still fits without horizontal scroll. */
+   (§1.2, §7 "Mobile"), and year ticks shorten so the chart still fits without horizontal scroll. Marker
+   labels live in the legend above the chart (never floated over it — see CommissionTenureChart.tsx). */
 .eci-tchart-row { display: flex; align-items: center; gap: 10px; }
 .eci-tchart-label { width: 148px; flex-shrink: 0; }
-.eci-tick-short, .eci-marker-short { display: none; }
+.eci-tick-short { display: none; }
 @media (max-width: 640px) {
   .eci-tchart-row { flex-direction: column; align-items: stretch; gap: 3px; }
   .eci-tchart-label { width: auto; }
-  .eci-tick-full, .eci-marker-full { display: none; }
-  .eci-tick-short, .eci-marker-short { display: inline; }
+  .eci-tick-full { display: none; }
+  .eci-tick-short { display: inline; }
   /* The marker overlay assumes a fixed label-column offset that only holds once rows stop stacking. */
   .eci-tchart-markers { display: none; }
 }

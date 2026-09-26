@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { EciCaseItem } from "@/types/eci-files";
-import { eciEntryHrefIn, formatEciDate } from "@/lib/eci-files";
+import { eciEntryHref, formatEciDate } from "@/lib/eci-files";
 import { StatusChip } from "@/components/eci-files/StatusChip";
 import { RoleChip } from "@/components/eci-files/views/RoleChip";
 import { PendingFlag } from "@/components/ui";
@@ -54,7 +54,7 @@ export function CaseTimeline({ slug, items }: { slug: string; items: EciCaseItem
                 )}
               </div>
               <h3 className="serif" style={{ fontSize: 14.5, fontWeight: 600, margin: "0 0 4px", color: related ? "var(--muted)" : "var(--ink)" }}>
-                <Link href={eciEntryHrefIn(basePath, item.entry.id)} style={{ color: "inherit", textDecoration: "none" }}>{item.entry.title}</Link>
+                <Link href={eciEntryHref(item.entry.id, {}, basePath)} style={{ color: "inherit", textDecoration: "none" }}>{item.entry.title}</Link>
               </h3>
               <p
                 style={{

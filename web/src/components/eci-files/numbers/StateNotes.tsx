@@ -1,9 +1,7 @@
 import type { ReactNode } from "react";
 import Link from "next/link";
-import { entryHrefFrom } from "@/lib/eci-numbers";
+import { eciEntryHref, tokenizeEntryIds } from "@/lib/eci-files";
 import type { EciRegionSummary } from "@/types/eci-files";
-
-const ENTRY_ID_RE = /\b(numbers|sir-rules|officials|commissioners|courts|elections-2019-2024|selection-law|statements-reporting)-[a-z0-9-]+\b/g;
 
 const STAGE_LABEL: Record<string, string> = {
   before: "Before the SIR", draft: "Draft roll", final: "Final roll",
@@ -13,20 +11,11 @@ const STAGE_LABEL: Record<string, string> = {
 /** Linkifies any entry-id-shaped token to `?entry=<id>` on this page (rendered plainly, verbatim — no
  *  rewording). The drawer renders nothing if the id doesn't exist, same as elsewhere. */
 function linkify(text: string, basePath: string): ReactNode[] {
-  const parts: ReactNode[] = [];
-  let last = 0;
-  let key = 0;
-  const re = new RegExp(ENTRY_ID_RE);
-  let m: RegExpExecArray | null;
-  while ((m = re.exec(text))) {
-    if (m.index > last) parts.push(text.slice(last, m.index));
-    parts.push(
-      <Link key={key++} href={entryHrefFrom(basePath, m[0])} style={{ color: "var(--accent-2)" }}>{m[0]}</Link>,
-    );
-    last = m.index + m[0].length;
-  }
-  parts.push(text.slice(last));
-  return parts;
+  return tokenizeEntryIds(text).map((token, i) =>
+    token.kind === "text"
+      ? token.text
+      : <Link key={i} href={eciEntryHref(token.id, {}, basePath)} style={{ color: "var(--accent-2)" }}>{token.id}</Link>,
+  );
 }
 
 /** The state's own notes paragraph, then one paragraph per stage that carries a note

@@ -169,6 +169,14 @@ class Entry(BaseModel):
 
     _date = field_validator("date", mode="before")(lambda v: _partial_date(v))
 
+    @field_validator("details", mode="before")
+    @classmethod
+    def _drop_born(cls, v: dict[str, Any] | None) -> dict[str, Any] | None:
+        """Officials' profiles are public-service records only; a `born` field is never loaded."""
+        if isinstance(v, dict) and "born" in v:
+            v = {k: val for k, val in v.items() if k != "born"}
+        return v
+
     def figure_values(self) -> set[Any]:
         return {f["value"] for f in self.figures if "value" in f}
 

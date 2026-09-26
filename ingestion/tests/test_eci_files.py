@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import os
+import re
 from pathlib import Path
 
 import pytest
@@ -328,6 +329,34 @@ def test_real_data_files_validate() -> None:
     assert len(payload.selections.departures) == 6
     assert payload.media is not None
     assert len(payload.media.people) == 5
+
+
+_BIRTH_RE = re.compile(r"birth|turned 65|65th birthday", re.I)
+
+
+def test_real_data_files_carry_no_birth_dates() -> None:
+    """Officials' profiles are public-service records only (CLAUDE.md data-handling ethic).
+
+    Rule entries about voters' birth-date tiers (the sir-rules SIR eligibility documents) are
+    exempt: they describe a legal document requirement, not an official's date of birth.
+    """
+    payload, errors = eci_files.validate_all()
+    assert errors == []
+    assert payload is not None
+    checked = 0
+    for area, entry in payload.entries:
+        if area == "sir-rules" and entry.kind == "rule":
+            continue
+        assert "born" not in entry.details, f"{entry.id} still carries a details.born field"
+        for field in ("summary", "notes"):
+            value = getattr(entry, field)
+            if value:
+                assert not _BIRTH_RE.search(value), f"{entry.id}.{field} names a birth date: {value!r}"
+        tenure_end = entry.details.get("tenure_end")
+        if tenure_end:
+            assert not _BIRTH_RE.search(tenure_end), f"{entry.id}.details.tenure_end names a birth date"
+        checked += 1
+    assert checked > 0
 
 
 # --- person grouping: docs/eci-files/PHASE4-SPEC.md section 1.4 ---------------------------------

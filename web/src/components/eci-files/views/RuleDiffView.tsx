@@ -28,7 +28,16 @@ function LineContent({
       )
     : text;
   const body = italic ? <em>{inner}</em> : <>{inner}</>;
-  return quoted ? <span className="eci-diff-quoted">&ldquo;{body}&rdquo;</span> : body;
+  // A visually hidden prefix per line: the quote marks/italics that carry "quoted" vs "paraphrased"
+  // for sighted readers are otherwise silent to a screen reader.
+  const srPrefix = quoted ? "Quoted in reporting: " : italic ? "Paraphrase: " : null;
+  const withPrefix = (
+    <>
+      {srPrefix && <span style={SR_ONLY}>{srPrefix}</span>}
+      {body}
+    </>
+  );
+  return quoted ? <span className="eci-diff-quoted">&ldquo;{withPrefix}&rdquo;</span> : withPrefix;
 }
 
 interface Row {
@@ -96,6 +105,11 @@ export function RuleDiffView({ diff }: { diff: EciRuleDiff }) {
       {!sidesDiffer && (
         <div style={{ marginBottom: 10 }}><TextStatusBadge status={diff.text_status} /></div>
       )}
+      {diff.text_status !== "verbatim" && (
+        <p className="mono" style={{ fontSize: 11, color: "var(--muted)", margin: "0 0 12px" }}>
+          &ldquo;&hellip;&rdquo; quoted in reporting &middot; <em>italic</em> = paraphrase
+        </p>
+      )}
 
       {/* split view, >=640px (globals.css hides it below that) */}
       <div className="eci-diff-split">
@@ -135,6 +149,12 @@ export function RuleDiffView({ diff }: { diff: EciRuleDiff }) {
       <div className="eci-diff-unified">
         <div style={{ padding: "10px 12px", borderBottom: "1px solid var(--rule)", background: "var(--sunken)" }}>
           <span className="mono" style={{ fontSize: 11, fontWeight: 600, color: "var(--ink2)" }}>{diff.before_label} → {diff.after_label}</span>
+          {sidesDiffer && (
+            <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 8 }}>
+              <TextStatusBadge status={diff.before_status} short />
+              <TextStatusBadge status={diff.after_status} short />
+            </div>
+          )}
         </div>
         {rows.map((row) => (
           <Fragment key={row.key}>
