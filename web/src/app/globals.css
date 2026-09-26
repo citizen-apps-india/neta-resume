@@ -779,3 +779,24 @@ html { scroll-behavior: smooth; }
 .eci-obj-mark:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
 @media (hover: hover) { .eci-obj-mark:hover circle, .eci-obj-mark:hover ellipse { opacity: 0.75; } }
 /* --- end phase 5 --- */
+
+/* --- ECI UX timeline --- */
+/* /eci-files/timeline rework: control bar + two-column layout (desktop) vs. month strip + lane chips +
+   stream (phone) — two full render branches in TimelineView, toggled here rather than reflowed, since the
+   phone layout drops the period card / heat map / key-moments list entirely (Mobile.dc.html), it doesn't
+   just restack the desktop one. Breakpoint matches this file's existing .nr-2col split. */
+.eci-tl-desktop { display: flex; flex-direction: column; gap: 18px; }
+.eci-tl-mobile { display: none; }
+.eci-tl-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 320px); gap: 28px; align-items: start; margin-top: 18px; }
+.eci-tl-aside { position: sticky; top: 84px; }
+@media (max-width: 760px) {
+  .eci-tl-desktop { display: none; }
+  .eci-tl-mobile { display: flex; }
+}
+
+/* HeatMap: one <button> per month (keyboard/AT-focusable), stacking one small rect per lane — the same
+   click/drag-to-select interaction as the older DensityStrip (.eci-density-wrap/.eci-density-select,
+   reused as-is), just per-lane instead of one bar. */
+.eci-heat-col { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; border: 0; background: none; padding: 0; cursor: pointer; touch-action: pan-y; }
+.eci-heat-col:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 1px; }
+/* --- end ECI UX timeline --- */

@@ -1,47 +1,46 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SectionHero } from "@/components/parliament/SectionHero";
 import { EciTimelineSkeleton } from "@/components/skeletons";
-import { DensityStrip } from "@/components/eci-files/DensityStrip";
-import { Filters } from "@/components/eci-files/Filters";
-import { StatusLegend } from "@/components/eci-files/StatusLegend";
-import { LaneTimeline } from "@/components/eci-files/LaneTimeline";
-// The drawer body lives in DrawerFromParam so /answers, /objections, /rules and /courts open the same drawer.
-import { DrawerFromParam } from "@/components/eci-files/views/DrawerFromParam";
-import { getEciDensity, getEciTimelineCompactByState, type EciCompactTimeline, type EciDensity } from "@/lib/api";
-import { defaultEciWindow, densityByMonth } from "@/lib/eci-files";
+import { TimelineView } from "@/components/eci-files/timeline/TimelineView";
+import { getEciDensity, getEciSummary, getEciTimelineCompactByState } from "@/lib/api";
+import { defaultEciWindow, densityByMonth, ECI_LANE_ORDER } from "@/lib/eci-files";
+import type { EciFilesLane } from "@/types/eci-files";
 
 export const metadata: Metadata = {
-  title: "Lane timeline · ECI Files",
-  description: "Five lanes — Commission, Inside the Commission, Courts, Claims, Responses — by date.",
+  title: "Timeline · ECI Files",
+  description: "Every sourced ECI Files entry, by date — search it, filter by lane, and open any entry in place.",
   robots: { index: false, follow: false },
 };
 
+const BASE_PATH = "/eci-files/timeline";
+
 type Params = {
-  lane?: string; topic?: string; person?: string; state?: string; from?: string; to?: string; entry?: string;
+  topic?: string; person?: string; lane?: string; checked?: string; q?: string; from?: string; to?: string; entry?: string;
 };
 
-/** The overview strip + lane dots for the current window. Its own async component so the hero paints
- *  immediately (REDESIGN-SPEC §"Loading": fetches `fields=compact` only — the first paint never pulls the
- *  whole record). */
-async function TimelineBody({ lane, topic, person, state, from, to, entry }: Params) {
+/** Fetches the first paint — the whole-record density (for the heat map/month strip), the key moments,
+ *  and the compact timeline for the requested (or default) window — then hands off to `TimelineView`,
+ *  which owns every filter/window/entry change client-side from here on. Its own async component so the
+ *  hero paints immediately (matches the previous `TimelineBody` streaming shape). */
+async function TimelineBody({ topic, person, lane, checked, q, from, to, entry }: Params) {
   const range = { from: from ?? defaultEciWindow().from, to: to ?? defaultEciWindow().to };
 
-  let density: EciDensity | null = null;
-  let timeline: EciCompactTimeline | null = null;
+  let density = null, timeline = null, summary = null;
   try {
-    [density, timeline] = await Promise.all([
+    [density, timeline, summary] = await Promise.all([
       getEciDensity(),
-      getEciTimelineCompactByState({ lane, topic, person, state, from: range.from, to: range.to }),
+      getEciTimelineCompactByState({ topic, person, from: range.from, to: range.to }),
+      getEciSummary(),
     ]);
   } catch {
     density = null;
     timeline = null;
+    summary = null;
   }
 
-  if (!density || !timeline) {
+  if (!density || !timeline || !summary) {
     return (
       <p style={{ color: "var(--muted)", padding: "24px 4px" }}>
         The record hasn&apos;t loaded — try again in a moment.
@@ -49,40 +48,25 @@ async function TimelineBody({ lane, topic, person, state, from, to, entry }: Par
     );
   }
 
-  const months = densityByMonth(density.months);
+  const initialLanes = lane
+    ? (lane.split(",").filter((l): l is EciFilesLane => (ECI_LANE_ORDER as string[]).includes(l)))
+    : undefined;
 
   return (
-    <>
-      <DensityStrip months={months} from={range.from} to={range.to} />
-
-      <Filters
-        basePath="/eci-files/timeline"
-        lanes={timeline.lanes}
-        topics={timeline.topics}
-        people={timeline.people}
-        states={timeline.states}
-        lane={lane}
-        topic={topic}
-        person={person}
-        state={state}
-        preserve={{ from: range.from, to: range.to }}
-      />
-
-      <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10, marginBottom: 12 }}>
-        <StatusLegend />
-        <span className="mono" style={{ fontSize: 11, color: "var(--muted)" }}>
-          {timeline.entries.length} entr{timeline.entries.length === 1 ? "y" : "ies"} in this window
-        </span>
-      </div>
-
-      <LaneTimeline entries={timeline.entries} from={range.from} to={range.to} activeId={entry} />
-
-      {entry && (
-        <Suspense fallback={null}>
-          <DrawerFromParam id={entry} basePath="/eci-files/timeline" preserve={{ lane, topic, person, state, from: range.from, to: range.to }} />
-        </Suspense>
-      )}
-    </>
+    <TimelineView
+      basePath={BASE_PATH}
+      initialWindow={range}
+      initialTopic={topic}
+      initialPerson={person}
+      initialLanes={initialLanes}
+      initialChecked={checked === "1"}
+      initialQuery={q}
+      initialEntry={entry}
+      initialTimeline={timeline}
+      months={densityByMonth(density.months)}
+      keyMoments={summary.key_moments}
+      recordTotal={summary.counts.entries}
+    />
   );
 }
 
@@ -92,22 +76,17 @@ export default async function EciTimelinePage({ searchParams }: { searchParams: 
   return (
     <>
       <SiteHeader />
-      <main style={{ maxWidth: 1080, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 72px", width: "100%" }}>
+      <main style={{ maxWidth: 1180, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 72px", width: "100%" }}>
         <SectionHero
           eyebrow="ECI FILES · TIMELINE"
-          title="The lane timeline"
-          subtitle="Five lanes by date — Commission, Inside the Commission, Courts, Claims, Responses. Pick a window on the strip below, then open any dot for the full, sourced entry."
+          title="What happened, in order"
+          subtitle="Every sourced entry, by date. Search it, filter by lane, and open any entry in place."
           backHref="/eci-files"
           backLabel="ECI Files"
         />
         <Suspense fallback={<EciTimelineSkeleton />}>
           <TimelineBody {...sp} />
         </Suspense>
-        <div style={{ marginTop: 26 }}>
-          <Link href="/eci-files/entries" className="mono" style={{ fontSize: 12, color: "var(--accent-2)", textDecoration: "none" }}>
-            Browse every entry, year by year →
-          </Link>
-        </div>
       </main>
     </>
   );
