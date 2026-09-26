@@ -63,7 +63,7 @@ async function EciFrontBody() {
   // Colour follows the lane a section reads closest to (Objections -> Inside the Commission, Answers ->
   // Claims, Courts -> Courts); Timeline/Rules use the section accent and the document trust colour.
   const tiles: FrontTile[] = [
-    { href: "/eci-files/timeline", count: summary.counts.entries, unit: "entries", title: "The whole record, in order", color: "var(--eci-ink)", icon: <TimelineIcon /> },
+    { href: "/eci-files/timeline", count: summary.counts.dated_entries ?? summary.counts.entries, unit: "entries", title: "The whole record, in order", color: "var(--eci-ink)", icon: <TimelineIcon /> },
     { href: "/eci-files/numbers", count: statesCount, unit: "states & UTs with figures", title: "The rolls, state by state", color: "var(--eci-doc)", icon: <StatesIcon /> },
     { href: "/eci-files/people", count: peopleCount, unit: "people", title: "Commissioners and officials", color: "var(--muted)", icon: <PeopleIcon /> },
     { href: "/eci-files/objections", count: objectionsCount, unit: "objections", title: "Raised inside the Commission", color: "var(--eci-lane-inside)", icon: <ObjectionsIcon /> },

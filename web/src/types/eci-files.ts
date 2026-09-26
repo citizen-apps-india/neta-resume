@@ -687,4 +687,8 @@ export interface EciEntryDetail extends EciEntry {
 export interface EciAnswerRow {
   kind: "charge" | "defence" | "analysis";
 }
+/** Entries that sit on the timeline: the record minus the person profiles. */
+export interface EciSummaryCounts {
+  dated_entries?: number;
+}
 // --- end launch fixdata ---

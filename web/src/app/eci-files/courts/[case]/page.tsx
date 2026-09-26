@@ -41,6 +41,8 @@ async function CaseBody({ slug, entry }: { slug: string; entry?: string }) {
   const page = result.data;
   const basePath = `/eci-files/courts/${slug}`;
 
+  // "Related" items (an earlier judgment, a later separate petition) are context, not steps in this case.
+  const steps = page.items.filter((i) => i.role !== "related");
   return (
     <>
       <div style={{ marginBottom: 14 }}>
@@ -57,10 +59,10 @@ async function CaseBody({ slug, entry }: { slug: string; entry?: string }) {
           {page.status_note && <span style={{ fontSize: 12.5, color: "var(--muted)" }}>{page.status_note}</span>}
         </div>
       </div>
-      {page.items.length > 0 && (
+      {steps.length > 0 && (
         <p style={{ fontSize: 14, color: "var(--ink2)", margin: "-14px 0 20px" }}>
-          {page.items.length} recorded step{page.items.length === 1 ? "" : "s"}, {formatEciDate(page.items[0].entry.date, page.items[0].entry.date_precision)}{" "}
-          to {formatEciDate(page.items[page.items.length - 1].entry.date, page.items[page.items.length - 1].entry.date_precision)} — {STATUS_PROSE[page.short_status]}.
+          {steps.length} recorded step{steps.length === 1 ? "" : "s"}, {formatEciDate(steps[0].entry.date, steps[0].entry.date_precision)}{" "}
+          to {formatEciDate(steps[steps.length - 1].entry.date, steps[steps.length - 1].entry.date_precision)} — {STATUS_PROSE[page.short_status]}.
         </p>
       )}
 

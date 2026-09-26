@@ -20,7 +20,7 @@ export async function EciFilesFeature() {
             The Election Commission, on the record
           </h2>
           <p style={{ margin: 0, fontSize: 14, color: "var(--ink2)" }}>
-            {summary ? `${summary.counts.entries} sourced entries, 2019 to today.` : "Every decision, rule and court order, sourced."}
+            {summary ? `${summary.counts.dated_entries ?? summary.counts.entries} sourced entries, 2019 to today.` : "Every decision, rule and court order, sourced."}
           </p>
         </div>
         <Link href="/eci-files" style={{ display: "inline-flex", alignItems: "center", minHeight: 44, padding: "0 18px", borderRadius: 12, background: "var(--eci-ink)", color: "var(--card)", fontWeight: 600, fontSize: 14, textDecoration: "none" }}>

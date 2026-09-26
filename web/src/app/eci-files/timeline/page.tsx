@@ -65,7 +65,7 @@ async function TimelineBody({ topic, person, lane, checked, q, from, to, entry }
       initialTimeline={timeline}
       months={densityByMonth(density.months)}
       keyMoments={summary.key_moments}
-      recordTotal={summary.counts.entries}
+      recordTotal={summary.counts.dated_entries ?? summary.counts.entries}
     />
   );
 }

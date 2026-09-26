@@ -35,7 +35,11 @@ async function AnswersBody({ view, entry }: { view: EciAnswersView2; entry?: str
     );
   }
 
-  const rows = filterEciAnswerRows(page.rows, view);
+  // Statements defending the Commission, and third-party analysis, are on the record but are not charges:
+  // they stay out of the charge counts, the chart and the filters, and get their own group below.
+  const charges = page.rows.filter((r) => (r.kind ?? "charge") === "charge");
+  const context = page.rows.filter((r) => (r.kind ?? "charge") !== "charge");
+  const rows = filterEciAnswerRows(charges, view);
   const preserve = { view: view === "all" ? undefined : view };
 
   const groups: { year: string; rows: typeof rows }[] = [];
@@ -48,7 +52,7 @@ async function AnswersBody({ view, entry }: { view: EciAnswersView2; entry?: str
 
   return (
     <>
-      <AnswersHero rows={page.rows} counts={page.counts} />
+      <AnswersHero rows={charges} counts={page.counts} />
       <AnswerFilterChips view={view} counts={page.counts} />
 
       <div className="eci2-answer-head">
@@ -64,6 +68,15 @@ async function AnswersBody({ view, entry }: { view: EciAnswersView2; entry?: str
           ))}
         </section>
       ))}
+
+      {context.length > 0 && view === "all" && (
+        <section style={{ marginTop: 28 }}>
+          <h2 className="serif" style={{ fontSize: 16, fontWeight: 600, margin: "0 0 10px" }}>Also on the record: defence and analysis</h2>
+          {context.map((row) => (
+            <ChargeAnswerRow key={row.charge.id} row={row} preserve={preserve} />
+          ))}
+        </section>
+      )}
 
       {page.unpaired_responses.length > 0 && view === "all" && (
         <section style={{ marginTop: 28 }}>

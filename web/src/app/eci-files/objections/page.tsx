@@ -80,7 +80,7 @@ export default async function EciObjectionsPage({ searchParams }: { searchParams
         <SectionHero
           eyebrow="ECI FILES · THE FOURTEEN"
           title="The fourteen objections"
-          subtitle="At least 14 objections by Sandhu and Joshi, November 2025 to September 2026."
+          subtitle="At least 14 objections by Sandhu and Joshi, November 2025 to August 2026."
           backHref="/eci-files"
           backLabel="ECI Files"
         />

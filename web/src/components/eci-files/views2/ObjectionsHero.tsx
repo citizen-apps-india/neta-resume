@@ -33,7 +33,7 @@ function surname(name: string): string {
 }
 
 /** The objections page's one visual answer: a three-lane time axis (a named commissioner's lane above and
- *  below a shared "Both" lane for jointly recorded objections) running Nov 2025–Sep 2026, plus the
+ *  below a shared "Both" lane for jointly recorded objections) running Nov 2025–Aug 2026, plus the
  *  Commission's response as an attributed quote. Faithful to
  *  `docs/eci-files/designs/D-After-Objections.dc.html`. A hand-drawn SVG for the marks (no charting
  *  library, same call as the pre-existing `ObjectionStrip`); the ledger below is this chart's data-table
@@ -106,7 +106,7 @@ export function ObjectionsHero({
     <div className="eci2-hero-grid">
       <div className="eci2-card">
         <div className="mono eci2-eyebrow" style={{ marginBottom: 14 }}>
-          {reportedTotal} objections · Nov 2025 – Sep 2026
+          {reportedTotal} objections · Nov 2025 – Aug 2026
         </div>
         <div style={{ display: "grid", gridTemplateColumns: "168px minmax(0,1fr)", gap: 12, alignItems: "start" }}>
           <div style={{ display: "flex", flexDirection: "column" }}>
@@ -136,7 +136,7 @@ export function ObjectionsHero({
           <div style={{ overflow: "visible" }}>
             <svg
               role="img"
-              aria-label={`Objections by commissioner, November 2025 to September 2026: ${byPerson
+              aria-label={`Objections by commissioner, November 2025 to August 2026: ${byPerson
                 .map((p) => `${surname(p.name)} ${p.count}`)
                 .join(", ")}, ${objections.filter((o) => o.date_precision === "day").length} dated to the day, ${
                 objections.filter((o) => o.date_precision === "month").length
@@ -226,7 +226,7 @@ export function ObjectionsHero({
         </div>
         <p style={{ fontSize: 13, lineHeight: 1.55, color: "var(--ink2)", margin: "10px 0 0" }}>
           The Indian Express&rsquo;s report says <strong>{missing} more objections are reported but not itemised</strong> in
-          its published account &mdash; shown as the dashed circles above, past September 2026.
+          its published account &mdash; shown as the dashed circles above, past August 2026.
         </p>
 
         {/* N9: a table view of the chart above, same convention as CommissionTenureChart's "Show as a table". */}
