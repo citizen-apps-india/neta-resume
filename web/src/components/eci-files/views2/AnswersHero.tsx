@@ -81,6 +81,34 @@ export function AnswersHero({ rows, counts }: { rows: EciAnswerRow[]; counts: Ec
             No response on record
           </span>
         </div>
+
+        {/* N9: a table view of the by-year chart above, same convention as CommissionTenureChart's "Show as a table". */}
+        <details className="eci-more" style={{ marginTop: 6 }}>
+          <summary className="mono" style={{ fontSize: 11.5, color: "var(--accent-2)", cursor: "pointer" }}>Show as a table</summary>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5, marginTop: 8 }}>
+            <caption style={{ textAlign: "left", fontSize: 11.5, color: "var(--muted)", paddingBottom: 6 }}>
+              Charges by year, answered against no response on record.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col" style={{ textAlign: "left", padding: "4px 8px", color: "var(--faint)", fontSize: 10.5 }}>Year</th>
+                <th scope="col" style={{ textAlign: "left", padding: "4px 8px", color: "var(--faint)", fontSize: 10.5 }}>Answered</th>
+                <th scope="col" style={{ textAlign: "left", padding: "4px 8px", color: "var(--faint)", fontSize: 10.5 }}>No response</th>
+                <th scope="col" style={{ textAlign: "left", padding: "4px 8px", color: "var(--faint)", fontSize: 10.5 }}>Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              {years.map((y) => (
+                <tr key={y.year}>
+                  <td className="mono" style={{ padding: "4px 8px", borderTop: "1px solid var(--rule2)" }}>{y.year}</td>
+                  <td className="mono" style={{ padding: "4px 8px", borderTop: "1px solid var(--rule2)" }}>{y.answered}</td>
+                  <td className="mono" style={{ padding: "4px 8px", borderTop: "1px solid var(--rule2)" }}>{y.unanswered}</td>
+                  <td className="mono" style={{ padding: "4px 8px", borderTop: "1px solid var(--rule2)" }}>{y.total}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </details>
       </div>
     </div>
   );

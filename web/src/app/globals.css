@@ -882,7 +882,7 @@ html { scroll-behavior: smooth; }
 /* --- ECI UX front --- */
 /* /eci-files front page: hero card (number + secondary stats beside the density strip) and the
    "Start here" tile grid, both single-column on phone and multi-column from tablet up. */
-.eci-front-hero-grid { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: start; }
+.eci-front-hero-grid { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: stretch; }
 @media (min-width: 860px) { .eci-front-hero-grid { grid-template-columns: minmax(240px, 380px) minmax(0, 1fr); gap: 40px; } }
 
 .eci-front-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
@@ -922,7 +922,7 @@ html { scroll-behavior: smooth; }
    (most of the record) gets the width it needs. */
 .eci-rules-axis { border: 1px solid var(--rule); border-radius: 12px; background: var(--card); padding: 20px clamp(10px,2vw,20px) 8px; }
 .eci-rules-axis-scroll { overflow-x: auto; }
-.eci-rules-axis-inner { position: relative; height: 84px; min-width: 640px; }
+.eci-rules-axis-inner { position: relative; height: 98px; min-width: 640px; }
 .eci-rules-axis-line { position: absolute; top: 46px; height: 2px; background: var(--rule2); }
 .eci-rules-axis-break {
   position: absolute; top: 33px; transform: translateX(-50%); font-family: var(--font-mono), monospace;
@@ -932,7 +932,9 @@ html { scroll-behavior: smooth; }
 .eci-rules-axis-dot:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 3px; border-radius: 50%; }
 @media (hover: hover) { .eci-rules-axis-dot:hover > span:first-child { transform: scale(1.18); } }
 .eci-rules-axis-count { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 9.5px; color: var(--faint); }
-.eci-rules-axis-ticks { position: absolute; left: 0; right: 0; top: 62px; height: 16px; }
+/* V5: two rows of ticks — years close enough to collide (the compressed pre-2025 stretch, worst around
+   the 2023 Act's cluster of changes) stagger onto the second row instead of overlapping the first. */
+.eci-rules-axis-ticks { position: absolute; left: 0; right: 0; top: 62px; height: 30px; }
 .eci-rules-axis-ticks span { position: absolute; transform: translateX(-50%); font-size: 10px; color: var(--faint); white-space: nowrap; }
 
 /* /rules: "Before and after" comparison cards, with a short real preview of the change. */
@@ -967,15 +969,21 @@ html { scroll-behavior: smooth; }
    says whether it's decided, pending or referred. */
 .eci-tracks { border: 1px solid var(--rule); border-radius: 12px; background: var(--card); padding: 18px clamp(10px,2vw,20px) 14px; }
 .eci-tracks-scroll { overflow-x: auto; }
-.eci-tracks-inner { min-width: 720px; }
+.eci-tracks-inner { min-width: 780px; }
 .eci-track-row {
-  display: grid; grid-template-columns: minmax(160px,220px) minmax(0,1fr); gap: 14px; align-items: center;
-  height: 58px; text-decoration: none; color: var(--ink); border-top: 1px solid var(--rule2);
+  /* V4: the label column was capped at 220px, so a long case name truncated and its status pill (part of
+     the wrapping .eci-track-sub line) fell outside the fixed 58px row height, over the next row's track.
+     Widened the column, let the name wrap instead of ellipsising, and let the row grow to fit both. */
+  display: grid; grid-template-columns: minmax(180px,300px) minmax(0,1fr); gap: 14px; align-items: center;
+  min-height: 58px; padding: 6px 0; text-decoration: none; color: var(--ink); border-top: 1px solid var(--rule2);
 }
 .eci-track-row:first-child { border-top: none; }
 .eci-track-row:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: -2px; }
 .eci-track-meta { display: flex; flex-direction: column; gap: 3px; overflow: hidden; min-width: 0; }
-.eci-track-name { font-size: 13.5px; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.eci-track-name {
+  font-size: 13.5px; font-weight: 650; line-height: 1.25;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
 .eci-track-sub { font-size: 10.5px; color: var(--faint); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
 .eci-track-line-wrap { position: relative; height: 22px; }
 .eci-track-base { position: absolute; top: 10px; height: 3px; background: var(--eci-lane-courts); border-radius: 2px; }
@@ -990,7 +998,7 @@ html { scroll-behavior: smooth; }
   position: absolute; top: 5px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%;
   border: 2px solid var(--border2); background: var(--card);
 }
-.eci-tracks-ticks { position: relative; height: 16px; margin: 4px 0 0 234px; }
+.eci-tracks-ticks { position: relative; height: 16px; margin: 4px 0 0 314px; }
 .eci-tracks-ticks span { position: absolute; transform: translateX(-50%); font-size: 10px; color: var(--faint); }
 .eci-track-legend-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--eci-ink); display: inline-block; }
 .eci-track-legend-dash { width: 14px; height: 3px; display: inline-block; background: repeating-linear-gradient(90deg, var(--border2) 0 4px, transparent 4px 8px); }
@@ -1017,7 +1025,10 @@ html { scroll-behavior: smooth; }
 /* /courts/[case]: the metro-line order stepper. Stops space evenly (a metro line spaces stops for
    legibility, not by the calendar days between them); the outcome — the last non-"related" step — is the
    one stop drawn bigger and bold, so the result of the case never gets lost among its procedural steps. */
-.eci-stepper-scroll { overflow-x: auto; padding: 4px 4px 8px; }
+/* V3: each stop is centred on its point with translateX(-50%), so the first and last stops' labels
+   overhang the track by half a stop's width — padding here keeps that overhang inside the scrollable
+   area (both edges reachable, the outcome stop included) instead of clipped by the container. */
+.eci-stepper-scroll { overflow-x: auto; padding: 4px 70px 8px; }
 .eci-stepper-inner { position: relative; height: 132px; }
 .eci-stepper-line { position: absolute; left: 0; right: 0; top: 59px; height: 2px; background: var(--rule2); }
 .eci-stepper-stop {

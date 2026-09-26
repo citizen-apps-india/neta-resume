@@ -156,7 +156,7 @@ export function EntryDetail({
         <div style={{ fontSize: 12.5, marginBottom: 8 }}>
           {ctx.objections.map((o) => (
             <div key={o.n}>
-              <Link href={`/eci-files/objections#objection-${o.n}`} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
+              <Link href={`/eci-files/objections#eci2-objection-${o.n}`} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
                 Objection {o.n} of {ECI_OBJECTION_TOTAL} →
               </Link>
             </div>
