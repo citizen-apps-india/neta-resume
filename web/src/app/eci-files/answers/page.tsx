@@ -15,7 +15,6 @@ import { eciEntryHref, filterEciAnswerRows, formatEciDate, type EciAnswersView2 
 export const metadata: Metadata = {
   title: "Charge and answer · ECI Files",
   description: "What was charged, what was the answer, and what does the record show.",
-  robots: { index: false, follow: false },
 };
 
 const BASE_PATH = "/eci-files/answers";

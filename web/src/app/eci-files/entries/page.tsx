@@ -14,7 +14,6 @@ import { ECI_LOAD_FAILED_MESSAGE } from "@/lib/eci-files";
 export const metadata: Metadata = {
   title: "Every entry · ECI Files",
   description: "The complete sourced ECI Files record, year by year.",
-  robots: { index: false, follow: false },
 };
 
 // The record's fixed span (BRIEF.md: "1 January 2019 to today") — the year nav's bounds.

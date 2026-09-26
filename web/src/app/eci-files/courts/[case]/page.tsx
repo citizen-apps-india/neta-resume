@@ -28,8 +28,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return {
     title: page ? `${page.case_name} · Courts · ECI Files` : "Case not found · ECI Files",
     description: page ? `${page.short_name}: every recorded step, order by order.` : undefined,
-    robots: { index: false, follow: false },
-  };
+    };
 }
 
 async function CaseBody({ slug, entry }: { slug: string; entry?: string }) {

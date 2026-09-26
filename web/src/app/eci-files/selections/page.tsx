@@ -13,7 +13,6 @@ import { formatEciDate, eciEntryHref } from "@/lib/eci-files";
 export const metadata: Metadata = {
   title: "How they were chosen · ECI Files",
   description: "Eight selections from 2019 to 2025, who sat on each panel, and the two recorded dissents.",
-  robots: { index: false, follow: false },
 };
 
 const BASE_PATH = "/eci-files/selections";

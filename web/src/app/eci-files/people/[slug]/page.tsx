@@ -22,8 +22,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return {
     title: `${name} · ECI Files`,
     description: `Sourced ECI Files record for ${name}.`,
-    robots: { index: false, follow: false },
-  };
+    };
 }
 
 async function EntryDrawerBody({ id, page, basePath }: { id: string; page: EciPersonPage; basePath: string }) {

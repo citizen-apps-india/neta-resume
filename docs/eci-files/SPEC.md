@@ -9,8 +9,7 @@ console, it is loaded by a runner, it is stored in Postgres with a `source_ref` 
 by the public API, and it is rendered by the website. The one difference from other sources is that its
 input is reviewed data files in the repo, not a remote site. Nothing scrapes at load time.
 
-Launch is gated. The pages exist, but they are unlinked, `noindex`, and left out of `sitemap.ts` until the
-owner approves.
+Launched 26 Sep 2026. The pages are indexed, listed in `sitemap.ts`, and reached from the Elections page.
 
 ## 1. Input: reviewed data files
 

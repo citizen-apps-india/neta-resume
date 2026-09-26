@@ -14,7 +14,6 @@ import { personGroupMeta } from "@/lib/eci-files";
 export const metadata: Metadata = {
   title: "People · ECI Files",
   description: "The commissioners, the officials under them and the state officers who run the rolls, 2019 to today.",
-  robots: { index: false, follow: false },
 };
 
 const GROUP_ORDER = ["commission", "secretariat", "state", "named"] as const;

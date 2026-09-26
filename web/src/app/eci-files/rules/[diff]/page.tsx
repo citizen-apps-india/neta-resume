@@ -19,8 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<Params> }):
   return {
     title: d ? `${d.title} · Rule changes · ECI Files` : "Rule diff not found · ECI Files",
     description: d ? `Before and after: ${d.title}.` : undefined,
-    robots: { index: false, follow: false },
-  };
+    };
 }
 
 function hostOf(url: string): string {

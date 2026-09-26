@@ -16,7 +16,6 @@ import type { EciRuleDiff } from "@/types/eci-files";
 export const metadata: Metadata = {
   title: "Rule changes · ECI Files",
   description: "Every rule, form and order change in the record, with the wording before and after where it could be sourced.",
-  robots: { index: false, follow: false },
 };
 
 const BASE_PATH = "/eci-files/rules";

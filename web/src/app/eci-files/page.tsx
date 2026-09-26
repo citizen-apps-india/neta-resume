@@ -16,12 +16,9 @@ import {
 } from "@/lib/api";
 import { densityByMonth, ECI_LOAD_FAILED_MESSAGE } from "@/lib/eci-files";
 
-// Hidden until the owner approves: noindex/nofollow, unlinked, kept out of sitemap.ts. See
-// docs/eci-files/SPEC.md — "Launch is gated."
 export const metadata: Metadata = {
   title: "ECI Files",
   description: "A sourced, dated record of the Election Commission of India, 2019 to today.",
-  robots: { index: false, follow: false },
 };
 
 /** Awaits one of the tile fetchers and reduces it to the single count its tile shows — `null` on any

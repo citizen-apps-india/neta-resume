@@ -30,8 +30,7 @@ export async function generateMetadata({ params }: { params: Promise<RouteParams
   return {
     title: `${name} · The numbers · ECI Files`,
     description: `SIR figures for ${name}, taken from the cited entries in the record.`,
-    robots: { index: false, follow: false },
-  };
+    };
 }
 
 function subtitleFor(region: EciRegionSummary): string {

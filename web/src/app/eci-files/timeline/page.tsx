@@ -11,7 +11,6 @@ import type { EciFilesLane } from "@/types/eci-files";
 export const metadata: Metadata = {
   title: "Timeline · ECI Files",
   description: "Every sourced ECI Files entry, by date — search it, filter by lane, and open any entry in place.",
-  robots: { index: false, follow: false },
 };
 
 const BASE_PATH = "/eci-files/timeline";

@@ -14,7 +14,6 @@ import { eciEntryHref } from "@/lib/eci-files";
 export const metadata: Metadata = {
   title: "The fourteen objections · ECI Files",
   description: "What the two Election Commissioners objected to on record, and what happened next.",
-  robots: { index: false, follow: false },
 };
 
 const BASE_PATH = "/eci-files/objections";

@@ -18,11 +18,9 @@ import { EntryDetail } from "@/components/eci-files/EntryDetail";
 import { getEciStates, getEciEntry, type EciStatesOverview } from "@/lib/api";
 import { ECI_METRICS, ECI_METRIC_FOOTNOTE, buildTileViewModels, eciMetricByParam, isEciRegionSlug } from "@/lib/eci-numbers";
 
-// Gated: noindex/nofollow, unlinked from SiteHeader/homepage, out of sitemap.ts (PHASE3-SPEC.md §3.3).
 export const metadata: Metadata = {
   title: "The numbers · ECI Files",
   description: "Special Intensive Revision (SIR) figures for every State and Union Territory, state by state.",
-  robots: { index: false, follow: false },
 };
 
 type Params = { metric?: string; view?: string; entry?: string; state?: string };
