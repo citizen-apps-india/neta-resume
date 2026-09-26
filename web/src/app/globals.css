@@ -20,6 +20,8 @@
   /* ECI Files role tokens (docs/eci-files/REDESIGN-SPEC.md §"Identity") — the section's own accent plus
      the four trust colours (status: documented/reported/claim/response). Used nowhere outside eci-files/. */
   --eci-ink:#6D3FA0;--eci-doc:#2a78d6;--eci-report:#eb6834;--eci-claim:#1baf7a;--eci-response:#eda100;
+  /* ECI Files lane colours (the rework: colour means the lane; status is a word). */
+  --eci-lane-commission:#2a78d6;--eci-lane-inside:#6D3FA0;--eci-lane-courts:#4B4F59;--eci-lane-claims:#d4541f;--eci-lane-responses:#128a60;--eci-check:#1C7A4C;
 }
 
 [data-theme="dark"] {
@@ -34,6 +36,7 @@
   --warn-bg:#1C1E24;--shadow:rgba(0,0,0,0.55);--photo-a:#24262E;--photo-b:#141519;--gridline:#1C2027;
   --glow1:rgba(18,165,148,0.18);--glow2:rgba(18,165,148,0.10);
   --eci-ink:#B38DDE;--eci-doc:#3987e5;--eci-report:#d95926;--eci-claim:#199e70;--eci-response:#c98500;
+  --eci-lane-commission:#5a9cf0;--eci-lane-inside:#B38DDE;--eci-lane-courts:#A9ADB8;--eci-lane-claims:#ef8a5c;--eci-lane-responses:#4cc393;--eci-check:#6FCF9F;
 }
 
 * { box-sizing: border-box; }
