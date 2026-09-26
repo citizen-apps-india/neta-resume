@@ -203,3 +203,68 @@ export function PageSkeleton() {
     </>
   );
 }
+
+// --- ECI Files phase 5 (views) ---
+// Inline fallbacks for /objections, /answers, /rules(+diff), /courts(+case) — streamed in below each
+// page's static SectionHero, same pattern as EciTimelineSkeleton.
+
+export function EciObjectionsSkeleton() {
+  return (
+    <div>
+      <S h={70} r={10} style={{ marginBottom: 20 }} />
+      <S w={220} h={20} style={{ marginBottom: 20 }} />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))", gap: 14 }}>
+        {Array.from({ length: 4 }).map((_, i) => <S key={i} h={150} r={12} />)}
+      </div>
+    </div>
+  );
+}
+
+export function EciAnswersSkeleton() {
+  return (
+    <div>
+      <S h={30} r={20} style={{ marginBottom: 20, maxWidth: 420 }} />
+      {Array.from({ length: 5 }).map((_, i) => <S key={i} h={110} r={10} style={{ marginBottom: 14 }} />)}
+    </div>
+  );
+}
+
+export function EciRulesSkeleton() {
+  return (
+    <div>
+      <S w={260} h={16} style={{ marginBottom: 16 }} />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 12, marginBottom: 20 }}>
+        {Array.from({ length: 4 }).map((_, i) => <S key={i} h={64} r={10} />)}
+      </div>
+      {Array.from({ length: 6 }).map((_, i) => <S key={i} h={44} r={8} style={{ marginBottom: 8 }} />)}
+    </div>
+  );
+}
+
+export function EciRuleDiffSkeleton() {
+  return (
+    <div>
+      <S w={90} h={12} style={{ marginBottom: 16 }} />
+      <S w={320} h={26} style={{ marginBottom: 20 }} />
+      <S h={280} r={12} />
+    </div>
+  );
+}
+
+export function EciCourtsSkeleton() {
+  return (
+    <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))", gap: 14 }}>
+      {Array.from({ length: 5 }).map((_, i) => <S key={i} h={170} r={12} />)}
+    </div>
+  );
+}
+
+export function EciCaseSkeleton() {
+  return (
+    <div>
+      <S h={120} r={12} style={{ marginBottom: 20 }} />
+      <S h={320} r={12} />
+    </div>
+  );
+}
+// --- end phase 5 ---

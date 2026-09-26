@@ -670,3 +670,107 @@ html { scroll-behavior: smooth; }
   .eci-tchart-markers { display: none; }
 }
 /* --- end phase 4 --- */
+
+/* --- ECI Files phase 5 (views) --- */
+/* /objections, /answers, /rules(+diff), /courts(+case). New tokens + classes only; every colour a
+   component needs lives here, per house rule ("nothing outside globals.css names a colour"). */
+
+:root,
+[data-theme="light"] {
+  /* Federal-Register-style redline: blue for added, orange for removed — colour-blind safe, and never
+     the only cue (§6.4 also uses <del>/<ins>, strike/underline and hidden "Removed:"/"Added:"). */
+  --eci-diff-add-bg:#E6F0FB; --eci-diff-add-fg:#1B5FAE;
+  --eci-diff-del-bg:#FCEDE4; --eci-diff-del-fg:#A8471B;
+}
+[data-theme="dark"] {
+  --eci-diff-add-bg:#16263A; --eci-diff-add-fg:#8DBBF0;
+  --eci-diff-del-bg:#33211A; --eci-diff-del-fg:#F0A27A;
+}
+
+/* /objections ledger: a 2-col meta/body grid per slot, meta moving above body on phones. */
+.eci-ledger { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 14px; }
+.eci-slot {
+  display: grid; grid-template-columns: 120px 1fr; gap: 16px; scroll-margin-top: 72px;
+  border: 1px solid var(--rule); border-radius: 12px; background: var(--card2); padding: clamp(14px,3vw,20px);
+}
+.eci-slot-empty {
+  border: 1.5px dashed var(--border2); border-radius: 12px; background: none; padding: clamp(14px,3vw,20px);
+  scroll-margin-top: 72px;
+}
+@media (max-width: 640px) {
+  .eci-slot { grid-template-columns: 1fr; gap: 8px; }
+}
+
+/* /answers rows: 3-col grid (charge / response / record) at >=960px, stacked below. */
+.eci-answer-head {
+  display: none; position: sticky; top: 0; z-index: 2; background: color-mix(in srgb, var(--bg) 92%, transparent);
+  backdrop-filter: blur(6px); border-bottom: 1px solid var(--rule); padding: 10px 4px;
+}
+.eci-answer-row {
+  display: grid; grid-template-columns: 1fr; gap: 14px; padding: 18px 4px; border-bottom: 1px solid var(--rule2);
+  scroll-margin-top: 72px;
+}
+@media (min-width: 960px) {
+  .eci-answer-head { display: grid; grid-template-columns: 1.1fr 1fr 0.9fr; gap: 14px; }
+  .eci-answer-row { grid-template-columns: 1.1fr 1fr 0.9fr; }
+  .eci-answer-row .eci-cell-label { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
+/* An empty "what the record shows" cell: blank (no dash) at >=960px so the 3-col grid still lines up;
+   dropped entirely below that, where a stacked layout would otherwise show a heading over nothing. */
+@media (max-width: 959px) { .eci-cell-empty { display: none; } }
+
+/* /rules/[diff]: split view >=640px, unified (single column, +/- gutter) below. Both render on the
+   server; CSS alone picks which one shows, so the diff needs no client JS. */
+.eci-diff-split {
+  display: grid; grid-template-columns: 1fr 1fr; column-gap: 0; row-gap: 0;
+  border: 1px solid var(--rule); border-radius: 10px; overflow: hidden;
+}
+.eci-diff-split > * { min-width: 0; }
+.eci-diff-col-before { grid-column: 1; }
+.eci-diff-col-after { grid-column: 2; border-left: 1px solid var(--rule); }
+.eci-diff-unified { display: none; border: 1px solid var(--rule); border-radius: 10px; overflow: hidden; }
+.eci-diff-line { display: flex; gap: 10px; padding: 3px 12px; font-size: 12.5px; line-height: 1.6; overflow-wrap: anywhere; }
+.eci-diff-gutter { flex-shrink: 0; width: 2.4em; text-align: right; color: var(--faint); user-select: none; }
+.eci-diff-quoted { font-style: normal; }
+@media (max-width: 639px) {
+  .eci-diff-split { display: none; }
+  .eci-diff-unified { display: block; }
+}
+
+/* /courts index: 2-col case-card grid at >=760px. */
+.eci-case-card { display: flex; flex-direction: column; gap: 6px; border: 1px solid var(--rule); border-radius: 12px; background: var(--card2); padding: clamp(14px,3vw,20px); text-decoration: none; color: inherit; }
+.eci-courts-grid { display: flex; flex-direction: column; gap: 14px; }
+@media (min-width: 760px) {
+  .eci-courts-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+}
+
+/* /courts/[case]: facts panel (2-col >=760px) + the ordered rail timeline. */
+.eci-case-facts { display: grid; grid-template-columns: 1fr; gap: 10px 20px; margin: 0; }
+@media (min-width: 760px) {
+  .eci-case-facts { grid-template-columns: 1fr 1fr; }
+}
+.eci-case-timeline { list-style: none; margin: 0; padding: 0 0 0 18px; border-left: 2px solid var(--rule); display: flex; flex-direction: column; gap: 18px; }
+.eci-case-timeline > li { position: relative; scroll-margin-top: 72px; }
+.eci-case-timeline > li::before {
+  content: ""; position: absolute; left: -23px; top: 5px; width: 9px; height: 9px; border-radius: 50%;
+  background: var(--eci-ink); border: 2px solid var(--card);
+}
+.eci-case-timeline > li.eci-related::before { background: var(--card); border: 2px solid var(--border2); }
+.eci-case-timeline > li.eci-case-year::before { content: none; }
+
+.eci-role-chip {
+  display: inline-flex; align-items: center; font-size: 10px; font-weight: 600; letter-spacing: 0.03em;
+  padding: 3px 9px; border-radius: 999px; border: 1px solid var(--border2); color: var(--ink2); background: var(--sunken);
+  white-space: nowrap;
+}
+
+.eci-status-banner {
+  display: flex; gap: 8px; align-items: flex-start; font-size: 12.5px; line-height: 1.5; color: var(--ink2);
+  background: var(--sunken); border: 1px solid var(--border2); border-radius: 8px; padding: 10px 13px; margin: 0 0 14px;
+}
+
+/* /objections chart: one focusable <a> per hand-drawn SVG mark. */
+.eci-obj-mark { cursor: pointer; }
+.eci-obj-mark:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
+@media (hover: hover) { .eci-obj-mark:hover circle, .eci-obj-mark:hover ellipse { opacity: 0.75; } }
+/* --- end phase 5 --- */

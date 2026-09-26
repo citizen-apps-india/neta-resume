@@ -320,3 +320,65 @@ export function getEciSelections(): Promise<_EciSelections> {
   return getJSON<_EciSelections>("/eci-files/selections", 3600);
 }
 // --- end phase 4 ---
+
+// --- ECI Files phase 5 (views) ---
+// /eci-files/objections, /answers, /rules(+diff) and /courts(+case). Types are hand-written in
+// src/types/eci-files.ts (§4 of PHASE5-SPEC.md) — the backend worker's `schemas.py` isn't written yet.
+import type {
+  EciEntryCard, EciPersonWithPhoto, EciObjection, EciObjectionPersonCount, EciObjectionsPage,
+  EciRelatedRef, EciAnswerRow, EciAnswersCounts, EciUnpairedResponse, EciAnswersPage, EciAnswersView,
+  EciTextStatus, EciRuleDiffRef, EciRuleRow, EciRulesPage, EciRuleDiff,
+  EciCaseShortStatus, EciCaseRole, EciCaseSummary, EciCourtsPage, EciCaseItem, EciCaseParties, EciCasePage,
+  EciEntryContext, EciEntryDetail,
+} from "@/types/eci-files";
+export type {
+  EciEntryCard, EciPersonWithPhoto, EciObjection, EciObjectionPersonCount, EciObjectionsPage,
+  EciRelatedRef, EciAnswerRow, EciAnswersCounts, EciUnpairedResponse, EciAnswersPage, EciAnswersView,
+  EciTextStatus, EciRuleDiffRef, EciRuleRow, EciRulesPage, EciRuleDiff,
+  EciCaseShortStatus, EciCaseRole, EciCaseSummary, EciCourtsPage, EciCaseItem, EciCaseParties, EciCasePage,
+  EciEntryContext, EciEntryDetail,
+};
+
+/** `GET /eci-files/entries/{id}`, typed for the richer phase-5 shape (`context`). Kept alongside the
+ *  existing {@link getEciEntry} rather than changing its return type in place — `api.ts` is a hotspot
+ *  three phases append to, and `getEciEntry` is called by pre-phase-5 code outside this block. Once the
+ *  backend ships `EciEntryDetail` from the same route, {@link getEciEntry}'s return type can just widen to
+ *  match and this can be dropped. */
+export async function getEciEntryDetail(id: string): Promise<EciEntryDetail | null> {
+  const res = await fetch(`${API_BASE}/eci-files/entries/${encodeURIComponent(id)}`, { next: { revalidate: 3600 } });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`API ${res.status} for /eci-files/entries/${id}`);
+  return res.json();
+}
+
+export function getEciObjections(): Promise<EciObjectionsPage> {
+  return getJSON<EciObjectionsPage>("/eci-files/objections", 3600);
+}
+
+export function getEciAnswers(view: EciAnswersView = "all"): Promise<EciAnswersPage> {
+  const qs = view === "all" ? "" : `?view=${view}`;
+  return getJSON<EciAnswersPage>(`/eci-files/answers${qs}`, 3600);
+}
+
+export function getEciRules(): Promise<EciRulesPage> {
+  return getJSON<EciRulesPage>("/eci-files/rules", 3600);
+}
+
+export async function getEciRuleDiff(id: string): Promise<EciRuleDiff | null> {
+  const res = await fetch(`${API_BASE}/eci-files/rules/diffs/${encodeURIComponent(id)}`, { next: { revalidate: 3600 } });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`API ${res.status} for /eci-files/rules/diffs/${id}`);
+  return res.json();
+}
+
+export function getEciCourts(): Promise<EciCourtsPage> {
+  return getJSON<EciCourtsPage>("/eci-files/courts", 3600);
+}
+
+export async function getEciCase(slug: string): Promise<EciCasePage | null> {
+  const res = await fetch(`${API_BASE}/eci-files/courts/${encodeURIComponent(slug)}`, { next: { revalidate: 3600 } });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`API ${res.status} for /eci-files/courts/${slug}`);
+  return res.json();
+}
+// --- end phase 5 ---
