@@ -11,6 +11,7 @@ import { DraftCaveat } from "@/components/eci-files/numbers/DraftCaveat";
 import { StateTileGrid } from "@/components/eci-files/numbers/StateTileGrid";
 import { StateTileLegend } from "@/components/eci-files/numbers/StateTileLegend";
 import { StateTable } from "@/components/eci-files/numbers/StateTable";
+import { RankedBarList } from "@/components/eci-files/numbers/RankedBarList";
 import { HowWeCounted } from "@/components/eci-files/numbers/HowWeCounted";
 import { EntryDrawer } from "@/components/eci-files/EntryDrawer";
 import { EntryDetail } from "@/components/eci-files/EntryDetail";
@@ -107,24 +108,43 @@ async function NumbersBody({ metric: metricParam, view, entry }: Params) {
         <StatePicker regions={overview.regions} />
       </div>
 
-      <NationalSummary national={overview.national} />
+      {/* Hero: the tile grid (the page's one visual answer) beside the headline figure
+          (docs/eci-files/designs/B-After-Numbers.dc.html). */}
+      <div className="eci-hero-row">
+        <div className="eci-hero-tiles" style={{ display: "flex", flexDirection: "column", gap: 14, background: "var(--card)", border: "1px solid var(--rule)", borderRadius: 14, padding: "22px 24px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: 10 }}>
+            <span className="mono" style={{ fontSize: 11.5, letterSpacing: "0.04em", color: "var(--muted)" }}>
+              Every state and UT, sized equally · placed roughly where they sit · not a map
+            </span>
+            <div style={{ display: "flex", flexWrap: "wrap", gap: 14 }}>
+              <MetricSwitch current={metric.param} view={view} />
+              <ViewToggle metric={metric.param} view={view} />
+            </div>
+          </div>
+
+          <div className="eci-numbers" data-view={view ?? "auto"}>
+            <div className="eci-numbers-tiles">
+              <StateTileGrid tiles={buildTileViewModels(overview.regions, metric)} groupLabel={metric.label} />
+            </div>
+            <div className="eci-numbers-table">
+              <StateTable regions={overview.regions} metric={metric} />
+            </div>
+          </div>
+
+          <StateTileLegend metric={metric} />
+        </div>
+
+        <div className="eci-hero-headline">
+          <NationalSummary national={overview.national} />
+        </div>
+      </div>
+
+      <div style={{ marginBottom: 24 }}>
+        <RankedBarList regions={overview.regions} metric={metric} />
+      </div>
+
       <DraftCaveat lastAsOf={overview.last_as_of} />
 
-      <div style={{ display: "flex", flexWrap: "wrap", gap: 14, alignItems: "center", justifyContent: "space-between", margin: "22px 0 16px" }}>
-        <MetricSwitch current={metric.param} view={view} />
-        <ViewToggle metric={metric.param} view={view} />
-      </div>
-
-      <div className="eci-numbers" data-view={view ?? "auto"}>
-        <div className="eci-numbers-tiles">
-          <StateTileGrid tiles={buildTileViewModels(overview.regions, metric)} groupLabel={metric.label} />
-        </div>
-        <div className="eci-numbers-table">
-          <StateTable regions={overview.regions} metric={metric} />
-        </div>
-      </div>
-
-      <StateTileLegend metric={metric} />
       <NationalPhaseBreakdown national={overview.national} />
       <HowWeCounted text={metric.howWeCounted} footnote={ECI_METRIC_FOOTNOTE} />
 

@@ -46,6 +46,17 @@ function StageBar({ id, stage, max }: { id: string; stage: EciStageValue; max: n
   );
 }
 
+/** A challenge is not a further cut to the roll — drawn hollow and dashed, never filled like a real drop
+ *  (docs/eci-files/designs/B-After-State.dc.html: "appeals as a dashed 'challenge, not a cut' bar"). */
+function AppealsBar({ stage, max }: { stage: EciStageValue; max: number }) {
+  const widthPct = Math.max(1.2, (stage.electors / max) * 100);
+  return (
+    <svg viewBox="0 0 100 14" preserveAspectRatio="none" aria-hidden style={{ width: "100%", height: 14, display: "block" }}>
+      <rect x={1} y={1} width={Math.max(0, widthPct - 2)} height={12} rx={2} fill="none" stroke="var(--eci-ink)" strokeWidth={2} strokeDasharray="4 3" />
+    </svg>
+  );
+}
+
 /** The zero-based, hand-built SVG roll chart (PHASE3-SPEC.md §3.6) — three rows (before/draft/final), a
  *  dashed reference line at the pre-SIR figure, and a delta line between each pair of rows. Returns null
  *  when the region has none of the three roll stages (the entirely-missing regions). */
@@ -53,7 +64,11 @@ export function StageChart({ region, basePath }: { region: EciRegionSummary; bas
   const rows = ROLL_STAGES.map((r) => ({ ...r, v: stageOf(region, r.stage) }));
   if (!rows.some((r) => r.v)) return null;
 
-  const max = Math.max(1, ...rows.map((r) => r.v?.electors ?? 0));
+  const appeals = stageOf(region, "appeals_filed");
+  const final = rows[2].v;
+  const appealsPct = appeals && final ? ((appeals.electors / final.electors) * 100).toFixed(1) : null;
+
+  const max = Math.max(1, ...rows.map((r) => r.v?.electors ?? 0), appeals?.electors ?? 0);
   const before = rows[0].v;
   const beforeFrac = before ? (before.electors / max) * 100 : null;
 
@@ -105,6 +120,34 @@ export function StageChart({ region, basePath }: { region: EciRegionSummary; bas
             )}
           </div>
         ))}
+        {appeals && (
+          <div style={{ marginTop: 4 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 8, padding: "0 0 6px 10px" }}>
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+                <path d="M7 2V12M7 12L3.5 8.5M7 12L10.5 8.5" stroke="var(--border2)" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+              <span className="mono" style={{ fontSize: 12, color: "var(--muted)" }}>not a further cut — a challenge to the roll above</span>
+            </div>
+            <div className="eci-stage-row">
+              <div>
+                <div style={{ fontSize: 13, color: "var(--ink)" }}>Appeals filed against the final roll</div>
+                {appeals.as_of && <div className="mono" style={{ fontSize: 11, color: "var(--muted)" }}>{formatLooseDate(appeals.as_of)}</div>}
+              </div>
+              <AppealsBar stage={appeals} max={max} />
+              <div style={{ fontSize: 12.5, textAlign: "right", whiteSpace: "nowrap" }}>
+                <span className="mono">{appeals.approx ? "≈" : ""}{countIndian(appeals.electors)}</span>
+                {appealsPct && <div className="mono" style={{ fontSize: 10, color: "var(--muted)" }}>{appealsPct}% of final</div>}
+              </div>
+            </div>
+            <div style={{ fontSize: 11, color: "var(--muted)", margin: "3px 0 0 2px" }}>
+              Source:{" "}
+              <Link href={eciEntryHref(appeals.source_entry_id, {}, basePath)} style={{ color: "var(--accent-2)", textDecoration: "none" }}>
+                {appeals.source_entry_title}
+              </Link>
+              {" · "}{TIER_LABEL[appeals.tier] ?? `TIER ${appeals.tier}`}
+            </div>
+          </div>
+        )}
       </div>
 
       <details style={{ marginTop: 4 }}>
@@ -122,18 +165,20 @@ export function StageChart({ region, basePath }: { region: EciRegionSummary; bas
               </tr>
             </thead>
             <tbody>
-              {rows.filter((r) => r.v).map((r) => (
-                <tr key={r.stage} style={{ borderBottom: "1px solid var(--rule2)" }}>
-                  <td style={{ padding: "6px 8px" }}>{r.label}</td>
-                  <td className="mono" style={{ textAlign: "right", padding: "6px 8px" }}>{r.v!.electors.toLocaleString("en-IN")}</td>
-                  <td className="mono" style={{ padding: "6px 8px" }}>{r.v!.as_of ?? "—"}</td>
-                  <td style={{ padding: "6px 8px" }}>
-                    <Link href={eciEntryHref(r.v!.source_entry_id, {}, basePath)} style={{ color: "var(--accent-2)" }}>{r.v!.source_entry_title}</Link>
-                  </td>
-                  <td style={{ padding: "6px 8px" }}>{TIER_LABEL[r.v!.tier] ?? `TIER ${r.v!.tier}`}</td>
-                  <td style={{ padding: "6px 8px" }}>{[r.v!.computed && "computed", r.v!.approx && "rounded"].filter(Boolean).join(", ") || "—"}</td>
-                </tr>
-              ))}
+              {[...rows, ...(appeals ? [{ stage: "appeals_filed" as const, label: "Appeals filed (challenge, not a cut)", v: appeals }] : [])]
+                .filter((r) => r.v)
+                .map((r) => (
+                  <tr key={r.stage} style={{ borderBottom: "1px solid var(--rule2)" }}>
+                    <td style={{ padding: "6px 8px" }}>{r.label}</td>
+                    <td className="mono" style={{ textAlign: "right", padding: "6px 8px" }}>{r.v!.electors.toLocaleString("en-IN")}</td>
+                    <td className="mono" style={{ padding: "6px 8px" }}>{r.v!.as_of ?? "—"}</td>
+                    <td style={{ padding: "6px 8px" }}>
+                      <Link href={eciEntryHref(r.v!.source_entry_id, {}, basePath)} style={{ color: "var(--accent-2)" }}>{r.v!.source_entry_title}</Link>
+                    </td>
+                    <td style={{ padding: "6px 8px" }}>{TIER_LABEL[r.v!.tier] ?? `TIER ${r.v!.tier}`}</td>
+                    <td style={{ padding: "6px 8px" }}>{[r.v!.computed && "computed", r.v!.approx && "rounded"].filter(Boolean).join(", ") || "—"}</td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>

@@ -80,6 +80,8 @@ export interface EciMetricDef {
   param: EciMetricParam;
   label: string;
   shortLabel: string;
+  /** Title for the ranked bar list (docs/eci-files/designs/B-After-Numbers.dc.html): "Highest ..."/"Biggest ...". */
+  rankTitle: string;
   /** 4 cut points -> 5 bands, lower-inclusive. */
   bins: number[];
   bandLabels: string[];
@@ -108,6 +110,7 @@ export const ECI_METRICS: EciMetricDef[] = [
     param: "left_off",
     label: "Share of the pre-SIR roll not on the draft roll",
     shortLabel: "Left off the draft",
+    rankTitle: "Highest share left off the draft",
     bins: [5, 10, 15, 20],
     bandLabels: ["under 5%", "5–10%", "10–15%", "15–20%", "20% or more"],
     encode: (m) => m.value,
@@ -123,6 +126,7 @@ export const ECI_METRICS: EciMetricDef[] = [
     param: "net_change",
     label: "Net change from the pre-SIR roll to the final roll",
     shortLabel: "Net change to final",
+    rankTitle: "Biggest net fall to the final roll",
     bins: [3, 6, 9, 12],
     bandLabels: ["under 3% fall, or a rise", "3–6% fall", "6–9% fall", "9–12% fall", "12% fall or more"],
     encode: (m) => -m.value,
