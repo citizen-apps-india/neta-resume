@@ -123,3 +123,30 @@ def test_value_is_rounded_to_two_decimal_places() -> None:
     metrics = derive_metrics(stages, "sir")
     assert metrics["draft_left_off"]["value"] == 8.32
     assert metrics["draft_left_off"]["count"] == 6569844
+
+
+def test_draft_left_off_prefers_a_reported_left_off_stage_over_before_minus_draft() -> None:
+    """Launch fixdata B2: Bihar's ECI outcome table reports 65 lakh left off the draft directly; the
+    before/draft roll totals are separately rounded and do not subtract to that figure. The reported
+    `left_off` stage must win, not the (here, different) before-minus-draft subtraction."""
+    stages = {
+        "before": _stage(78969844),
+        "draft": _stage(72400000),
+        "left_off": _stage(6500000, approx=True),
+    }
+    metrics = derive_metrics(stages, "sir")
+    assert metrics["draft_left_off"]["count"] == 6500000
+    assert metrics["draft_left_off"]["value"] == round(6500000 / 78969844 * 100, 2)
+    assert metrics["draft_left_off"]["approx"] is True
+
+
+def test_draft_left_off_falls_back_to_before_minus_draft_without_a_left_off_stage() -> None:
+    stages = {"before": _stage(100), "draft": _stage(80)}
+    metrics = derive_metrics(stages, "sir")
+    assert metrics["draft_left_off"]["count"] == 20
+
+
+def test_draft_left_off_is_null_with_a_left_off_stage_but_no_before() -> None:
+    stages = {"draft": _stage(80), "left_off": _stage(20)}
+    metrics = derive_metrics(stages, "sir")
+    assert metrics["draft_left_off"] is None

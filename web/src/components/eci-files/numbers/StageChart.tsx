@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { countIndian } from "@/lib/format";
 import { eciEntryHref, formatLooseDate } from "@/lib/eci-files";
+import { countIndianRough } from "@/lib/eci-numbers";
 import { TIER_LABEL } from "@/components/eci-files/CitationList";
 import type { EciRegionSummary, EciStageValue } from "@/types/eci-files";
 
@@ -15,18 +16,41 @@ function stageOf(region: EciRegionSummary, stage: string): EciStageValue | undef
   return region.stages.find((s) => s.stage === stage);
 }
 
-function beforeToDraftLine(before?: EciStageValue, draft?: EciStageValue): string | null {
+/** launch fixdata B2: where the draft entry reports the left-off count directly (a `left_off` stage),
+ *  use it instead of subtracting `before` and `draft` — the two roll totals are each independently
+ *  rounded in some states and don't subtract to the reported count. Falling back to the subtraction,
+ *  an approximate result is shown at rougher precision, not to two decimal places it doesn't have. */
+function beforeToDraftLine(region: EciRegionSummary, before?: EciStageValue, draft?: EciStageValue): string | null {
+  const leftOff = stageOf(region, "left_off");
+  if (leftOff && before) {
+    const pct = ((leftOff.electors / before.electors) * 100).toFixed(1);
+    const count = leftOff.approx ? countIndianRough(leftOff.electors) : countIndian(leftOff.electors);
+    return `${MINUS} ${count} not carried into the draft (${pct}%)`;
+  }
   if (!before || !draft) return null;
   const diff = before.electors - draft.electors;
   const pct = ((diff / before.electors) * 100).toFixed(1);
-  return `${MINUS} ${countIndian(diff)} not carried into the draft (${pct}%)`;
+  const count = before.approx || draft.approx ? countIndianRough(diff) : countIndian(diff);
+  return `${MINUS} ${count} not carried into the draft (${pct}%)`;
 }
 
-function draftToFinalLine(draft?: EciStageValue, final?: EciStageValue): string | null {
+/** launch fixdata S4: West Bengal's "between draft and final" figure also breaks down into the two
+ *  named components (`under_adjudication`, `form7_deletions`) when the record has them, so the
+ *  60.07 lakh held under adjudication are not read as ordinary deletions. */
+function draftToFinalLines(region: EciRegionSummary, draft?: EciStageValue, final?: EciStageValue): string[] | null {
   if (!draft || !final) return null;
   const diff = final.electors - draft.electors;
   const sign = diff >= 0 ? "+" : MINUS;
-  return `${sign} ${countIndian(Math.abs(diff))} between draft and final`;
+  const lines = [`${sign} ${countIndian(Math.abs(diff))} between draft and final`];
+  const underAdjudication = stageOf(region, "under_adjudication");
+  const form7 = stageOf(region, "form7_deletions");
+  if (underAdjudication) {
+    lines.push(`${MINUS} ${countIndian(underAdjudication.electors)} held under adjudication`);
+  }
+  if (form7) {
+    lines.push(`${MINUS} ${countIndian(form7.electors)} Form 7 deletions`);
+  }
+  return lines;
 }
 
 function StageBar({ id, stage, max }: { id: string; stage: EciStageValue; max: number }) {
@@ -112,12 +136,12 @@ export function StageChart({ region, basePath }: { region: EciRegionSummary; bas
                 {row.v.note && " · See the note below ↓"}
               </div>
             )}
-            {i === 0 && beforeToDraftLine(rows[0].v, rows[1].v) && (
-              <div className="mono" style={{ fontSize: 11.5, color: "var(--ink2)", margin: "6px 0 0 2px" }}>{beforeToDraftLine(rows[0].v, rows[1].v)}</div>
+            {i === 0 && beforeToDraftLine(region, rows[0].v, rows[1].v) && (
+              <div className="mono" style={{ fontSize: 11.5, color: "var(--ink2)", margin: "6px 0 0 2px" }}>{beforeToDraftLine(region, rows[0].v, rows[1].v)}</div>
             )}
-            {i === 1 && draftToFinalLine(rows[1].v, rows[2].v) && (
-              <div className="mono" style={{ fontSize: 11.5, color: "var(--ink2)", margin: "6px 0 0 2px" }}>{draftToFinalLine(rows[1].v, rows[2].v)}</div>
-            )}
+            {i === 1 && draftToFinalLines(region, rows[1].v, rows[2].v)?.map((line, idx) => (
+              <div key={idx} className="mono" style={{ fontSize: 11.5, color: "var(--ink2)", margin: "6px 0 0 2px" }}>{line}</div>
+            ))}
           </div>
         ))}
         {appeals && (
@@ -130,7 +154,7 @@ export function StageChart({ region, basePath }: { region: EciRegionSummary; bas
             </div>
             <div className="eci-stage-row">
               <div>
-                <div style={{ fontSize: 13, color: "var(--ink)" }}>Appeals filed against the final roll</div>
+                <div style={{ fontSize: 13, color: "var(--ink)" }}>Appeals against the adjudication orders</div>
                 {appeals.as_of && <div className="mono" style={{ fontSize: 11, color: "var(--muted)" }}>{formatLooseDate(appeals.as_of)}</div>}
               </div>
               <AppealsBar stage={appeals} max={max} />

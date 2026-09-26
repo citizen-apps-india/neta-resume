@@ -2575,7 +2575,8 @@
       ],
       "response_to": null,
       "notes": "This is the question Sandhu reportedly raised in August 2026. The affidavit was not opened.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-sandhu-flagged-delhi-sir",

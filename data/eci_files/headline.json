@@ -8,8 +8,8 @@
       "entry_id": "numbers-nationwide-13-crore-draft-exclusions-2026-09-23"
     },
     {
-      "value": "14",
-      "label": "written objections by two of three commissioners in 10 months",
+      "value": "14+",
+      "label": "formal objections by two of three commissioners in 10 months",
       "source_label": "The Indian Express, 23 Sep 2026",
       "source_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
       "entry_id": "sir-rules-ie-14-objections-report"
@@ -17,7 +17,7 @@
     {
       "value": "38 lakh",
       "label": "appeals before West Bengal's tribunals",
-      "source_label": "ECI, in a Supreme Court affidavit, Sep 2026",
+      "source_label": "The Indian Express, on ECI's affidavit, 18 Sep 2026",
       "source_url": "https://indianexpress.com/article/political-pulse/west-bengal-sir-voter-deletion-supreme-court-appeal-election-commission-affidavit-10882799/",
       "entry_id": "numbers-wb-affidavit-appeals-2026-09-17"
     },
@@ -30,11 +30,11 @@
     }
   ],
   "key_moments": [
+    "selection-law-anoop-baranwal-judgment",
     "selection-law-act-assent",
     "commissioners-event-2024-03-14-gyanesh-sandhu-selected",
     "commissioners-event-2025-02-17-gyanesh-cec-joshi-ec",
     "sir-rules-bihar-sir-order",
-    "selection-law-anoop-baranwal-judgment",
     "sir-rules-sc-sir-judgment",
     "sir-rules-ie-14-objections-report",
     "sir-rules-eci-pn-119-response"

@@ -129,7 +129,7 @@
         "entry_ids": ["commissioners-event-2022-11-18-goel-appointed"]
       },
       "dissent": [],
-      "entry_ids": ["commissioners-event-2022-11-18-goel-appointed", "commissioners-event-2023-03-02-sc-on-goel-appointment", "selection-law-baranwal-on-goel-appointment", "selection-law-court-questions-goel-speed", "selection-law-govt-defends-goel-appointment", "selection-law-adr-goel-plea-dismissed"],
+      "entry_ids": ["commissioners-event-2022-11-18-goel-appointed", "commissioners-event-2023-03-02-sc-on-goel-appointment", "selection-law-court-questions-goel-speed", "selection-law-govt-defends-goel-appointment", "selection-law-adr-goel-plea-dismissed"],
       "notes": "The kept entry says 'the PM recommended Arun Goel' without naming him, so the member is recorded by role. The Supreme Court examined the file and said its remarks were not an assessment of the appointee; a challenge to the appointment was dismissed on 4 Aug 2023."
     },
     {
@@ -213,7 +213,7 @@
     {"date": "2020-08-31", "person_slug": "ashok-lavasa", "office": "Election Commissioner", "how": "resigned", "entry_ids": ["commissioners-event-2020-08-18-lavasa-resigns", "selection-law-lavasa-resignation-2020"]},
     {"date": "2021-04-12", "person_slug": "sunil-arora", "office": "Chief Election Commissioner", "how": "tenure_ended", "entry_ids": ["commissioners-event-2021-04-12-arora-retires"]},
     {"date": "2022-05-14", "person_slug": "sushil-chandra", "office": "Chief Election Commissioner", "how": "tenure_ended", "entry_ids": ["commissioners-event-2022-05-14-sushil-chandra-retires"]},
-    {"date": "2024-02-14", "person_slug": "anup-chandra-pandey", "office": "Election Commissioner", "how": "tenure_ended", "entry_ids": ["commissioners-event-2024-02-14-pandey-retires", "selection-law-anup-pandey-retires"]},
+    {"date": "2024-02-14", "person_slug": "anup-chandra-pandey", "office": "Election Commissioner", "how": "tenure_ended", "entry_ids": ["commissioners-event-2024-02-14-pandey-retires"]},
     {"date": "2024-03-09", "person_slug": "arun-goel", "office": "Election Commissioner", "how": "resigned", "entry_ids": ["commissioners-event-2024-03-09-goel-resigns"], "notes": "Left Chief Election Commissioner Rajiv Kumar as the only member until 15 Mar 2024. No reason was given officially."},
     {"date": "2025-02-18", "person_slug": "rajiv-kumar", "office": "Chief Election Commissioner", "how": "tenure_ended", "entry_ids": ["commissioners-event-2025-02-18-rajiv-kumar-retires"]}
   ],

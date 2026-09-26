@@ -23,7 +23,10 @@ _ENTRY_COLUMNS = """
 
 _COMPACT_COLUMNS = "id, date, date_precision, title, status, lane, check_status"
 
-_STAGE_ORDER = ("before", "draft", "final", "appeals_filed", "appeals_pending", "restored")
+_STAGE_ORDER = (
+    "before", "draft", "left_off", "final", "under_adjudication", "form7_deletions",
+    "appeals_filed", "appeals_pending", "restored",
+)
 
 
 def _load_entries(db: Session, ids: list[str], *, compact: bool = False) -> list[dict]:
@@ -237,6 +240,7 @@ def timeline(
             text(
                 "SELECT p.slug, p.name, count(ep.entry_id) AS n FROM eci_file_person p "
                 "JOIN eci_file_entry_person ep ON ep.person_slug = p.slug "
+                "JOIN eci_file_entry e ON e.id = ep.entry_id AND e.kind <> 'person' "
                 "GROUP BY p.slug, p.name ORDER BY n DESC, p.name"
             )
         )
@@ -244,7 +248,10 @@ def timeline(
     lanes = [
         {"lane": r.lane, "count": r.n}
         for r in db.execute(
-            text("SELECT lane, count(*) AS n FROM eci_file_entry GROUP BY lane ORDER BY n DESC, lane")
+            text(
+                "SELECT lane, count(*) AS n FROM eci_file_entry WHERE kind <> 'person' "
+                "GROUP BY lane ORDER BY n DESC, lane"
+            )
         )
     ]
     states = [
@@ -653,6 +660,7 @@ def summary(db: Session) -> dict:
             """
             SELECT
                 (SELECT count(*) FROM eci_file_entry) AS entries,
+                (SELECT count(*) FROM eci_file_entry WHERE kind <> 'person') AS dated_entries,
                 (SELECT count(*) FROM eci_file_entry WHERE check_status = 'checked') AS checked,
                 (SELECT count(*) FROM eci_file_person) AS people,
                 (SELECT count(*) FROM eci_file_citation) AS citations
@@ -666,6 +674,10 @@ def summary(db: Session) -> dict:
         "key_moments": key_moments,
         "counts": {
             "entries": counts_row.entries,
+            # launch fixdata S9: the timeline lists dated entries only (kind <> 'person'); `entries`
+            # above also counts the 30 `kind='person'` profiles, which is why the front page and the
+            # timeline must read `dated_entries` for "N sourced entries", not `entries`.
+            "dated_entries": counts_row.dated_entries,
             "checked": counts_row.checked,
             "people": counts_row.people,
             "citations": counts_row.citations,
@@ -700,7 +712,13 @@ def derive_metrics(stages: dict[str, dict], exercise: str | None) -> dict:
         }
 
     draft_left_off = None
-    if "before" in stages and "draft" in stages:
+    if "before" in stages and "left_off" in stages:
+        # launch fixdata B2: a draft entry can report the left-off count directly (e.g. Bihar's "65
+        # lakh"), which need not be the same as `before` minus the (often separately rounded) `draft`
+        # figure. Prefer it over the subtraction whenever the record carries one.
+        count = stages["left_off"]["electors"]
+        draft_left_off = build(("before", "left_off"), count, "before")
+    elif "before" in stages and "draft" in stages:
         count = stages["before"]["electors"] - stages["draft"]["electors"]
         draft_left_off = build(("before", "draft"), count, "before")
 
@@ -1119,6 +1137,9 @@ def assemble_answer_rows(
         rows.append(
             {
                 "charge_id": charge_id,
+                # A synthesised row always covers a claim or an answered response target -- never a
+                # curated defence/analysis pair, which only pairs.json can classify (S11 below).
+                "kind": "charge",
                 "also_recorded_as": [],
                 "response_ids": responses,
                 "record_ids": [],
@@ -1133,14 +1154,22 @@ def assemble_answer_rows(
 def finalize_answer_rows(rows: list[dict]) -> tuple[list[dict], dict]:
     """Pure (no DB): sorts assembled answer rows (charge date descending, then id) and computes the
     `view=all` counts, always on the full set regardless of what the caller later filters to. Each
-    row is `{"charge": EciEntryCard-shaped dict, "responses": [...], "record": [...], ...}`."""
+    row is `{"charge": EciEntryCard-shaped dict, "responses": [...], "record": [...], "kind": ..., ...}`.
+
+    launch fixdata S11: a pair's `kind` classifies it as a `charge` against the Commission or a named
+    person (the default), a `defence` (e.g. a party spokesperson defending the Commission) or an
+    `analysis` (e.g. PRS's bill analysis) -- neither of the latter two is a charge, so `counts` (and
+    the `no-response` filter below) are computed over `kind == "charge"` rows only. Both still show up
+    in `rows` for `view=all`, tagged with their `kind`, so the page can group them separately.
+    """
     ordered = sorted(rows, key=lambda r: (_date_key_desc(r["charge"]["date"]), r["charge"]["id"]))
-    with_response = sum(1 for r in ordered if r["responses"])
-    with_record = sum(1 for r in ordered if r["record"])
+    charges = [r for r in ordered if r["kind"] == "charge"]
+    with_response = sum(1 for r in charges if r["responses"])
+    with_record = sum(1 for r in charges if r["record"])
     counts = {
-        "rows": len(ordered),
+        "rows": len(charges),
         "with_response": with_response,
-        "without_response": len(ordered) - with_response,
+        "without_response": len(charges) - with_response,
         "with_record": with_record,
     }
     return ordered, counts
@@ -1149,7 +1178,7 @@ def finalize_answer_rows(rows: list[dict]) -> tuple[list[dict], dict]:
 def filter_answer_rows(rows: list[dict], view: str) -> list[dict]:
     """Pure (no DB): the `?view=` filter over already-sorted rows."""
     if view == "no-response":
-        return [r for r in rows if not r["responses"]]
+        return [r for r in rows if r["kind"] == "charge" and not r["responses"]]
     if view == "with-record":
         return [r for r in rows if r["record"]]
     return rows
@@ -1160,7 +1189,7 @@ def answers(db: Session, *, view: str = "all") -> dict:
     synthesised completeness rows (`assemble_answer_rows`). `counts` is always computed on the full
     (`view=all`) set, whatever `view` is requested."""
     pair_rows = db.execute(
-        text("SELECT charge_id, note FROM eci_file_pair ORDER BY position")
+        text("SELECT charge_id, note, kind FROM eci_file_pair ORDER BY position")
     ).all()
 
     items_by_charge: dict[str, dict[str, list[dict]]] = defaultdict(lambda: defaultdict(list))
@@ -1205,6 +1234,7 @@ def answers(db: Session, *, view: str = "all") -> dict:
             "record_ids": [i["entry_id"] for i in items_by_charge[r.charge_id].get("record", [])],
             "related": items_by_charge[r.charge_id].get("related", []),
             "note": r.note,
+            "kind": r.kind,
             "curated": True,
         }
         for r in pair_rows
@@ -1251,6 +1281,7 @@ def answers(db: Session, *, view: str = "all") -> dict:
                 "related": related,
                 "note": row["note"],
                 "curated": row["curated"],
+                "kind": row["kind"],
             }
         )
 

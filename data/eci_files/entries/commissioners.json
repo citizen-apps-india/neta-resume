@@ -240,15 +240,6 @@
           "quote": null
         },
         {
-          "url": "https://www.deccanherald.com/amp/story/india%2Fashok-lavasa-resigns-as-election-commissioner-to-join-adb-as-vice-president-874810.html",
-          "publisher": "Deccan Herald (PTI)",
-          "title": "Ashok Lavasa resigns as Election Commissioner; to join ADB as vice president",
-          "published": "2020-08-18",
-          "tier": 3,
-          "archive_url": null,
-          "quote": null
-        },
-        {
           "url": "https://www.deccanherald.com/india/election-commissioner-lavasas-wife-under-i-t-scanner-763555",
           "publisher": "Deccan Herald",
           "title": "[Headline withheld: names a family member] Deccan Herald report, 24 Sep 2019, stating Lavasa was appointed EC on 23 Jan 2018",
@@ -262,7 +253,7 @@
       "verification": {
         "verdict": "corrected",
         "checked_url": "https://pib.gov.in/PressReleasePage.aspx?PRID=1517538",
-        "note": "PIB 1517538, PIB 1649260, archived ECI profile and ADB release (Wayback 2024-05-18) support batch, DOB, tenure 23 Jan 2018-31 Aug 2020, posts and education. Fixed first career line: PIB calls him Director (not MD) of HSIDC and MD of the sugar mills federation; the MD of the infrastructure and tourism corporations comes from the ECI profile, so both sources are now cited. Replaced the wildcard ADB archive URL with a concrete snapshot. 'Next in line to head the EC' is PTI via Deccan Herald (18 Aug 2020)."
+        "note": "PIB 1517538, PIB 1649260, archived ECI profile and ADB release (Wayback 2024-05-18) support batch, DOB, tenure 23 Jan 2018-31 Aug 2020, posts and education. Fixed first career line: PIB calls him Director (not MD) of HSIDC and MD of the sugar mills federation; the MD of the infrastructure and tourism corporations comes from the ECI profile, so both sources are now cited. Replaced the wildcard ADB archive URL with a concrete snapshot."
       },
       "check": "checked"
     },
@@ -2009,6 +2000,24 @@
           "title": "PM-chaired panel's meet to appoint 2 ECs advanced to March 14: Sources",
           "published": "2024-03-11",
           "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.scobserver.in/wp-content/uploads/2024/03/Order-denying-stay-on-ECI-Appointments-Act-2023-March-2024-Supreme-Court.pdf",
+          "publisher": "Supreme Court of India (PDF hosted by Supreme Court Observer)",
+          "title": "Dr. Jaya Thakur v. Union of India, W.P. (C) No. 14 of 2024 and connected matters, order on stay applications, 2024 INSC 246",
+          "published": "2024-03-22",
+          "tier": 1,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indiankanoon.org/doc/56882156/",
+          "publisher": "Supreme Court of India (text via Indian Kanoon)",
+          "title": "Anoop Baranwal v. Union of India, W.P. (C) No. 104 of 2015 and connected matters, judgment of 2 March 2023, (2023) 6 SCC 161",
+          "published": "2023-03-02",
+          "tier": 1,
           "archive_url": null,
           "quote": null
         }

@@ -1,24 +1,28 @@
 import { countIndian } from "@/lib/format";
-import { formatPercent } from "@/lib/eci-numbers";
+import { countIndianRough, formatPercent } from "@/lib/eci-numbers";
 import type { EciRegionSummary, EciStateMetric } from "@/types/eci-files";
 
 type MetricKey = "draft_left_off" | "net_change" | "appeals_filed";
 
 /** appeals_filed is a state-page-only tile (PHASES-3-5-DECISIONS.md: "Shown on state pages only, not as a
- *  tile measure") — kept here, out of eci-numbers.ts's ECI_METRICS. */
+ *  tile measure") — kept here, out of eci-numbers.ts's ECI_METRICS. The net_change label reads "Appeals
+ *  against the adjudication orders" for West Bengal, the only region with this stage today (launch
+ *  fixdata S4): its appeals are against judicial officers' adjudication decisions, not the final roll
+ *  itself (IE 10885130). */
 const TILES: { key: MetricKey; label: string; signed: boolean; missing: (r: EciRegionSummary) => string }[] = [
-  { key: "draft_left_off", label: "Left off the draft roll", signed: false, missing: (r) => (r.stages.some((s) => s.stage === "before") ? "no draft figure" : "no pre-SIR figure") },
-  { key: "net_change", label: "Net change to the final roll", signed: true, missing: () => "no final roll yet" },
-  { key: "appeals_filed", label: "Appeals filed against the final roll", signed: false, missing: () => "no appeals figure" },
+  { key: "draft_left_off", label: "Left off the draft roll", signed: false, missing: (r) => (r.stages.some((s) => s.stage === "before") ? "not in the record yet" : "no pre-SIR figure") },
+  { key: "net_change", label: "Net change to the final roll", signed: true, missing: () => "not in the record yet" },
+  { key: "appeals_filed", label: "Appeals against the adjudication orders", signed: false, missing: () => "no appeals figure" },
 ];
 
 function TileValue({ m, signed }: { m: EciStateMetric; signed: boolean }) {
+  const countText = m.approx ? countIndianRough(Math.abs(m.count)) : countIndian(Math.abs(m.count));
   return (
     <>
       <div className="mono eci-hero-value" style={{ fontSize: 22 }}>
-        {formatPercent(m.value, signed)}{(m.approx || m.computed) && "*"}
+        {formatPercent(m.value, signed)}{(m.approx || m.computed || m.noted) && "*"}
       </div>
-      <div style={{ fontSize: 11.5, color: "var(--ink2)" }}>{countIndian(Math.abs(m.count))} of {countIndian(m.base)}</div>
+      <div style={{ fontSize: 11.5, color: "var(--ink2)" }}>{countText} of {countIndian(m.base)}</div>
     </>
   );
 }

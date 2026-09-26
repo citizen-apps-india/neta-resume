@@ -1942,6 +1942,11 @@
      "curated": {
       "type": "boolean",
       "title": "Curated"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind",
+      "default": "charge"
      }
     },
     "type": "object",
@@ -4780,6 +4785,10 @@
       "type": "integer",
       "title": "Entries"
      },
+     "dated_entries": {
+      "type": "integer",
+      "title": "Dated Entries"
+     },
      "checked": {
       "type": "integer",
       "title": "Checked"
@@ -4796,6 +4805,7 @@
     "type": "object",
     "required": [
      "entries",
+     "dated_entries",
      "checked",
      "people",
      "citations"

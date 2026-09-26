@@ -174,7 +174,7 @@ export default async function EciNumbersPage({ searchParams }: { searchParams: P
           title="The SIR, state by state"
           backHref="/eci-files"
           backLabel="ECI Files"
-          subtitle="Special Intensive Revision (SIR) figures for each State and Union Territory, taken from the cited entries in the record. The tiles are equal in size and placed roughly where the states sit; this is not a map. Pick a measure, or open a state to follow its roll from before the SIR to the final roll."
+          subtitle="Special Intensive Revision figures for every State and Union Territory, from the cited record."
         />
         <Suspense fallback={<EciNumbersSkeleton />}>
           <NumbersBody metric={sp.metric} view={sp.view} entry={sp.entry} />

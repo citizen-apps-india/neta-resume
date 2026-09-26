@@ -70,7 +70,11 @@ _TIER_TO_SOURCE_CODE = {1: "eci_files_primary", 2: "eci_files_research", 3: "eci
 _SLUG_RE = re.compile(r"[^a-z0-9]+")
 _PROFILE_AREAS = frozenset({"commissioners", "officials"})
 _LANES = ("responses", "claims", "courts", "inside", "commission")
-_STAGES = ("before", "draft", "final", "appeals_filed", "appeals_pending", "restored")
+_STAGES = (
+    "before", "draft", "final", "appeals_filed", "appeals_pending", "restored",
+    "left_off", "under_adjudication", "form7_deletions",
+)
+_PAIR_KINDS = ("charge", "defence", "analysis")
 _NATIONAL_GROUPS = ("all", "phase_1", "phase_2", "phase_3")
 _NATIONAL_MEASURES = ("before", "draft", "final", "left_off", "net_fall")
 _REGIME_KEYS = ("convention", "baranwal", "act_2023")
@@ -101,6 +105,9 @@ _FOLLOWED_BY_PREFIXES = (
 )
 _OBJECTION_REF_RE = re.compile(r"objection (\d+)$")
 _PAREN_TOKEN_RE = re.compile(r"\(([^)]+)\)")
+_ENTRY_ID_IN_TEXT_RE = re.compile(
+    r"\b(?:" + "|".join(re.escape(p) for p in _FOLLOWED_BY_PREFIXES) + r")[a-z0-9]+(?:-[a-z0-9]+)*"
+)
 
 _COMMISSION_OFFICE_RE = re.compile(r"^(Chief )?Election Commissioner$")
 _STATE_OFFICE_PREFIX = "Chief Electoral Officer"
@@ -209,7 +216,10 @@ class EciStateStage(BaseModel):
 
     model_config = ConfigDict(extra="ignore")
 
-    stage: str = Field(pattern=r"^(before|draft|final|appeals_filed|appeals_pending|restored)$")
+    stage: str = Field(
+        pattern=r"^(before|draft|final|appeals_filed|appeals_pending|restored|left_off"
+        r"|under_adjudication|form7_deletions)$"
+    )
     electors: int = Field(ge=0)
     as_of: date_type | None = None
     computed: bool = False
@@ -440,9 +450,16 @@ class PairRelated(BaseModel):
 
 
 class Pair(BaseModel):
+    """`kind` (redesign spec, launch fixdata S11): `charge` (default) is a charge against the
+    Commission or a named person, paired with its response/record. `defence` is a statement
+    defending the Commission (e.g. a party spokesperson), and `analysis` is a third party's
+    analysis (e.g. PRS on a bill) — neither is a charge, so both are excluded from the
+    charge/no-response counts and from the `no-response` filter."""
+
     model_config = ConfigDict(extra="forbid")
 
     charge_id: str = Field(min_length=1)
+    kind: str = Field(default="charge", pattern="^(" + "|".join(_PAIR_KINDS) + ")$")
     also_recorded_as: list[str] = Field(default_factory=list)
     response_ids: list[str] = Field(default_factory=list)
     record_ids: list[str] = Field(default_factory=list)
@@ -1125,6 +1142,24 @@ def _resolve_response_links(loaded: list[LoadedEntry], drop_to_keep: dict[str, s
     return resolved
 
 
+def _find_dropped_id_references(label: str, text: str | None, drop_to_keep: dict[str, str]) -> list[str]:
+    """A structured field pointing at a merged-away id (`source_entry`, `response_to`, ...) already
+    fails "not a loaded entry id" once merges.json drops it, because dropped entries never enter
+    `entry_ids`. Free text -- a curated file's `notes` -- carries no such check, so a merge can leave
+    prose quietly pointing at an id the record no longer has (launch fixdata S10). This scans `text`
+    for any token shaped like an entry id and flags the ones merges.json has since dropped, naming
+    the id it names in `keep` instead.
+    """
+    if not text:
+        return []
+    errors = []
+    for match in _ENTRY_ID_IN_TEXT_RE.finditer(text):
+        token = match.group(0)
+        if token in drop_to_keep:
+            errors.append(f"{label}: references dropped id {token!r}; merges.json keeps {drop_to_keep[token]!r} instead")
+    return errors
+
+
 def _load_objections(
     path: Path | None, entry_ids: set[str], person_slugs: set[str]
 ) -> tuple[ObjectionsFile | None, list[str]]:
@@ -1457,6 +1492,26 @@ def validate_all(
     rule_diffs, rule_diffs_errors = _load_rule_diffs(resolved_rule_diffs, entry_ids, entry_kind)
     cases, cases_errors = _load_cases(resolved_cases, entry_ids, entry_kind)
 
+    dropped_id_errors: list[str] = []
+    for _, entry in loaded:
+        dropped_id_errors += _find_dropped_id_references(
+            f"{src.name}: {entry.id}.notes", entry.notes, drop_to_keep
+        )
+    if resolved_states is not None:
+        for state in states:
+            dropped_id_errors += _find_dropped_id_references(
+                f"{resolved_states.name}: {state.region_slug}.notes", state.notes, drop_to_keep
+            )
+        for stage in stages:
+            dropped_id_errors += _find_dropped_id_references(
+                f"{resolved_states.name}: {stage.region_slug}.{stage.stage}.note", stage.note, drop_to_keep
+            )
+    if resolved_national is not None:
+        for fig in national:
+            dropped_id_errors += _find_dropped_id_references(
+                f"{resolved_national.name}: {fig.group}.{fig.measure}.note", fig.note, drop_to_keep
+            )
+
     errors = (
         region_errors
         + entry_errors
@@ -1469,6 +1524,7 @@ def validate_all(
         + media_errors
         + objections_errors
         + pairs_errors
+        + dropped_id_errors
         + rule_diffs_errors
         + cases_errors
     )
@@ -1922,10 +1978,15 @@ def _replace_all(payload: LoadedPayload) -> None:
             for position, pair in enumerate(payload.pairs.pairs, start=1):
                 s.execute(
                     text("""
-                        INSERT INTO eci_file_pair (charge_id, position, note)
-                        VALUES (:charge_id, :position, :note)
+                        INSERT INTO eci_file_pair (charge_id, position, note, kind)
+                        VALUES (:charge_id, :position, :note, :kind)
                     """),
-                    {"charge_id": pair.charge_id, "position": position, "note": pair.note},
+                    {
+                        "charge_id": pair.charge_id,
+                        "position": position,
+                        "note": pair.note,
+                        "kind": pair.kind,
+                    },
                 )
                 for item_position, entry_id in enumerate(pair.also_recorded_as, start=1):
                     s.execute(

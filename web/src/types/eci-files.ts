@@ -673,3 +673,18 @@ export interface EciEntryDetail extends EciEntry {
   context: EciEntryContext;
 }
 // --- end phase 5 ---
+
+// --- launch fixdata ---
+// S11: a pair's classification. "charge" (the default a synthesised row always carries) is a charge
+// against the Commission or a named person; "defence" is a statement defending the Commission (e.g. a
+// party spokesperson) and "analysis" is a third party's analysis (e.g. PRS on a bill) — neither is a
+// charge. The API's `counts` (rows/with_response/without_response/with_record) and the `?view=
+// no-response` filter are computed over `kind === "charge"` rows only; `kind !== "charge"` rows still
+// come back in `rows` for `view=all` so the page can render them, but the web fixer must keep them out
+// of the "charges" / "no response" groupings and instead render them in their own small group (e.g.
+// "Also on the record: defence and analysis") or as inline context, so the no-response count reads as
+// it's counted, not inflated by rows that were never charges.
+export interface EciAnswerRow {
+  kind: "charge" | "defence" | "analysis";
+}
+// --- end launch fixdata ---

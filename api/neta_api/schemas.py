@@ -510,6 +510,9 @@ class EciHeadlineStat(BaseModel):
 
 class EciSummaryCounts(BaseModel):
     entries: int
+    # launch fixdata S9: `entries` also counts the `kind='person'` profiles the timeline excludes;
+    # `dated_entries` is the count the front page and the timeline's "N sourced entries" must use.
+    dated_entries: int
     checked: int
     people: int
     citations: int
@@ -687,7 +690,8 @@ class EciPersonPage(BaseModel):
 
 
 class EciStageValue(BaseModel):
-    stage: str                  # before | draft | final | appeals_filed | appeals_pending | restored
+    stage: str                  # before | draft | left_off | final | under_adjudication |
+                                 # form7_deletions | appeals_filed | appeals_pending | restored
     electors: int
     as_of: date | None = None
     computed: bool
@@ -724,7 +728,9 @@ class EciRegionSummary(BaseModel):
     exercise: str | None = None  # sir | special_revision | None (not in any exercise on record)
     has_figures: bool           # at least one stage
     entry_count: int            # entries whose states include this region (kind <> 'person')
-    stages: list[EciStageValue] = []   # canonical order: before, draft, final, appeals_filed, appeals_pending, restored
+    stages: list[EciStageValue] = []   # canonical order: before, draft, left_off, final,
+                                        # under_adjudication, form7_deletions, appeals_filed,
+                                        # appeals_pending, restored
     metrics: EciStateMetrics
 
 
@@ -825,6 +831,10 @@ class EciAnswerRow(BaseModel):
     related: list[EciRelatedRef] = []
     note: str | None = None
     curated: bool
+    # launch fixdata S11: "charge" (against the Commission or a named person, the default), "defence"
+    # (e.g. a party spokesperson defending the Commission) or "analysis" (e.g. PRS's bill analysis).
+    # `counts` and the `no-response` filter only ever count `kind == "charge"` rows.
+    kind: str = "charge"
 
 
 class EciAnswersCounts(BaseModel):

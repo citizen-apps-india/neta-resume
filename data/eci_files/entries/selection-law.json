@@ -689,7 +689,8 @@
         }
       ],
       "notes": "Paras 187-195. The Court noted Goel's 'excellent academic qualifications' and said its remarks were not an individualised assessment.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "selection-law-adr-goel-plea-dismissed",
@@ -1091,7 +1092,7 @@
           "quote": "such matter shall be decided according to the opinion of the majority."
         }
       ],
-      "notes": "These are the provisions two ECs invoked in 2026 (see selection-law-sandhu-invokes-2023-act and selection-law-work-allocation-letters).",
+      "notes": "These are the provisions two ECs invoked in 2026 (see sir-rules-commission-approval-communications and officials-ecs-write-cabinet-secretary).",
       "check": "unchecked"
     },
     {
@@ -1383,7 +1384,8 @@
         }
       ],
       "notes": null,
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "selection-law-goel-resigns",

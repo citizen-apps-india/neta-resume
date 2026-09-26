@@ -99,8 +99,11 @@ function missingReason(r: EciRegionSummary, opts: { needsDraft: boolean; needsFi
   if (r.exercise === "special_revision") return "Special Revision, not SIR";
   if (!r.has_figures) return "no figures yet";
   if (!hasStage(r, "before")) return "no pre-SIR figure";
-  if (opts.needsFinal && !hasStage(r, "final")) return "no final roll yet";
-  if (opts.needsDraft && !hasStage(r, "draft")) return "no draft figure";
+  // launch fixdata S13: a Phase III state can have a published draft, or Lakshadweep/A&N a published
+  // final, that just isn't in this record yet — "no draft figure"/"no final roll yet" read as if none
+  // exists anywhere, which overstates the gap.
+  if (opts.needsFinal && !hasStage(r, "final")) return "not in the record yet";
+  if (opts.needsDraft && !hasStage(r, "draft")) return "not in the record yet";
   return "no appeals figure";
 }
 
@@ -188,10 +191,16 @@ export interface EciTileViewModel {
   readout: string;
 }
 
+/** Sentence-cases a metric label for mid-sentence use in a hover/screen-reader string, without
+ *  lowercasing "SIR" into "sir" (N5). */
+function lowerKeepingSIR(s: string): string {
+  return s.toLowerCase().replace(/\bsir\b/g, "SIR");
+}
+
 function tileAriaLabel(region: EciRegionSummary, metric: EciMetricDef, state: EciTileState): string {
   if (state.kind === "value") {
     const m = region.metrics[metric.id]!;
-    const base = `${region.name}: ${formatPercent(m.value, metric.id === "net_change")} — ${metric.label.toLowerCase()} ` +
+    const base = `${region.name}: ${formatPercent(m.value, metric.id === "net_change")} — ${lowerKeepingSIR(metric.label)} ` +
       `(${countIndianApprox(m.count, false)} of ${countIndian(m.base)}). Phase ${romanPhase(region.phase)}. Open state page.`;
     return m.computed || m.approx ? `${base} Uses a computed or rounded figure.` : base;
   }
@@ -203,7 +212,7 @@ function tileAriaLabel(region: EciRegionSummary, metric: EciMetricDef, state: Ec
 function tileReadout(region: EciRegionSummary, metric: EciMetricDef, state: EciTileState): string {
   if (state.kind === "value") {
     const m = region.metrics[metric.id]!;
-    return `${region.name} · ${metricValueText(metric, m)} ${metric.shortLabel.toLowerCase()} · ${countIndianApprox(m.count, false)} of ${countIndian(m.base)}`;
+    return `${region.name} · ${metricValueText(metric, m)} ${lowerKeepingSIR(metric.shortLabel)} · ${countIndianApprox(m.count, false)} of ${countIndian(m.base)}`;
   }
   if (state.kind === "no_measure") return `${region.name} · ${state.reason}`;
   if (state.kind === "other_exercise") return `${region.name} · Special Revision, not compared`;
@@ -251,7 +260,9 @@ export function formatPercent(value: number, signed = false): string {
 
 export function metricValueText(metric: EciMetricDef, m: EciStateMetric): string {
   const pct = formatPercent(m.value, metric.id === "net_change");
-  return m.approx || m.computed ? `${pct}*` : pct;
+  // launch fixdata S4: a metric resting on a noted caveat (West Bengal's net_change, whose final
+  // stage excludes the 60.07 lakh held under adjudication) gets the same "*" as an approx/computed one.
+  return m.approx || m.computed || m.noted ? `${pct}*` : pct;
 }
 
 export function romanPhase(phase: number | null): string {
@@ -262,5 +273,22 @@ export function romanPhase(phase: number | null): string {
  *  shown as a magnitude — the sign is already carried by the accompanying percent. */
 export function countIndianApprox(count: number, approx: boolean): string {
   return `${approx ? "≈" : ""}${countIndian(Math.abs(count))}`;
+}
+
+/** Trim trailing zeros from a fixed-decimal string ("98.0" -> "98", "24.8" -> "24.8"). */
+function trimZerosRough(s: string): string {
+  return s.includes(".") ? s.replace(/\.?0+$/, "") : s;
+}
+
+/** launch fixdata B2: countIndian's own two-decimal precision ("74.43 lakh") reads as exact even when
+ *  the underlying count is itself approximate or rounded — a computed before-minus-draft difference, for
+ *  instance, built from two independently-rounded figures. For an approximate count, round to at most one
+ *  decimal place instead and lead with "≈", so the display doesn't claim more precision than the record
+ *  has. */
+export function countIndianRough(count: number): string {
+  const abs = Math.abs(count);
+  if (abs >= 1e7) return `≈${trimZerosRough((abs / 1e7).toFixed(1))} crore`;
+  if (abs >= 1e5) return `≈${trimZerosRough((abs / 1e5).toFixed(1))} lakh`;
+  return `≈${Math.round(abs).toLocaleString("en-IN")}`;
 }
 

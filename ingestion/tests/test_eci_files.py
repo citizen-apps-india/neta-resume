@@ -1255,6 +1255,43 @@ def test_response_to_pointing_at_a_dropped_id_is_rewritten_to_the_kept_id() -> N
     assert loaded[0].entry.response_to == "kept-id"
 
 
+def test_find_dropped_id_references_flags_a_prose_mention_of_a_dropped_id() -> None:
+    """Launch fixdata S10: a structured field pointing at a merged-away id already fails "not a loaded
+    entry id" (dropped ids never enter `entry_ids`); free text does not, so this scan is the loader
+    check that catches it."""
+    errors = eci_files._find_dropped_id_references(
+        "states.json: bihar.notes",
+        "See sir-rules-bihar-final-roll's notes for the unverified press note figure.",
+        {"sir-rules-bihar-final-roll": "numbers-bihar-final-roll-2025-09-30"},
+    )
+    assert len(errors) == 1
+    assert "sir-rules-bihar-final-roll" in errors[0]
+    assert "numbers-bihar-final-roll-2025-09-30" in errors[0]
+
+
+def test_find_dropped_id_references_ignores_a_kept_id() -> None:
+    errors = eci_files._find_dropped_id_references(
+        "states.json: x.notes",
+        "See numbers-bihar-final-roll-2025-09-30 for the figure.",
+        {"sir-rules-bihar-final-roll": "numbers-bihar-final-roll-2025-09-30"},
+    )
+    assert errors == []
+
+
+def test_find_dropped_id_references_handles_none_and_empty_text() -> None:
+    assert eci_files._find_dropped_id_references("label", None, {"dropped": "kept"}) == []
+    assert eci_files._find_dropped_id_references("label", "", {"dropped": "kept"}) == []
+
+
+def test_real_data_files_have_no_dropped_id_references_in_notes() -> None:
+    """Every curated file (entries, states.json, national.json) is free of prose mentions of an id
+    merges.json has dropped -- the launch fixdata S10 fixes (Bihar/Tamil Nadu states.json notes, the
+    Section 18 entry's notes) landed, and no new merge has reintroduced the bug."""
+    payload, errors = eci_files.validate_all()
+    assert errors == []
+    assert payload is not None
+
+
 def test_real_data_files_phase5_matches_spec() -> None:
     payload, errors = eci_files.validate_all()
     assert errors == []
@@ -1262,8 +1299,8 @@ def test_real_data_files_phase5_matches_spec() -> None:
     assert payload.resolved_response_count == 11
 
     assert payload.objections is not None
-    assert len(payload.objections.objections) == 11
-    assert payload.objections.missing == 3
+    assert len(payload.objections.objections) == 12
+    assert payload.objections.missing == 2
 
     assert payload.pairs is not None
     assert len(payload.pairs.pairs) == 61
@@ -1276,7 +1313,7 @@ def test_real_data_files_phase5_matches_spec() -> None:
 
     assert payload.cases is not None
     assert len(payload.cases.cases) == 5
-    assert sum(len(c.items) for c in payload.cases.cases) == 51
+    assert sum(len(c.items) for c in payload.cases.cases) == 50
 
 
 # --- Postgres integration: phase 5 full replace across all eleven tables -------------------------

@@ -424,6 +424,34 @@
         "numbers-phase2-draft-dates-2025-12-11"
       ],
       "reason": "same event: SIR Phase II draft dates staggered in six states/UTs (PN/364/2025), 11 Dec 2025; both checked, kept the rule-kind entry, correctly scoped to this order, over the numbers.json duplicate that carried no figures of its own."
+    },
+    {
+      "keep": "numbers-wb-reply-obrien-appeals-2026-09-18",
+      "drop": [
+        "statements-reporting-eci-affidavit-bengal-appeals"
+      ],
+      "reason": "same event: ECI's reply to TMC MP Derek O'Brien's Supreme Court application on West Bengal appeals, both from the same 19 Sep 2026 IE report; kept the numbers.json entry, which carries the fuller figures table (filed/disposed/pending, tribunal count) already used as states.json's source_entry for the appeals_filed/appeals_pending stages."
+    },
+    {
+      "keep": "commissioners-event-2024-02-14-pandey-retires",
+      "drop": [
+        "selection-law-anup-pandey-retires"
+      ],
+      "reason": "same event: EC Anup Chandra Pandey retires on reaching 65, 14 Feb 2024; both checked and documented, kept the commissioners.json profile entry (four sources, two tier 1) over the two-tier-1-source selection-law.json duplicate, consistent with this file's convention of keeping the commissioners.json copy of a person event recorded twice."
+    },
+    {
+      "keep": "commissioners-event-2023-03-02-sc-on-goel-appointment",
+      "drop": [
+        "selection-law-baranwal-on-goel-appointment"
+      ],
+      "reason": "same event: the Anoop Baranwal judgment's account of Arun Goel's one-day appointment, both single-sourced to the same judgment text; kept the commissioners.json event entry, consistent with this file's convention of keeping the commissioners.json copy of a person event recorded twice."
+    },
+    {
+      "keep": "sir-rules-phase3-order",
+      "drop": [
+        "numbers-phase3-announced-2026-05-14"
+      ],
+      "reason": "same event: SIR Phase III ordered in 19 states/UTs, 14 May 2026; both checked, kept the rule-kind entry with the full order text (all 19 states/UTs named, the linking and notice rules, the full schedule, four sources including two tier 1) over the shorter numbers.json duplicate."
     }
   ]
 }

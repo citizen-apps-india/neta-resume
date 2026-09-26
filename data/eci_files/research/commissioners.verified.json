@@ -337,22 +337,13 @@
           "tier": 3,
           "archive_url": null,
           "quote": null
-        },
-        {
-          "url": "https://www.deccanherald.com/amp/story/india%2Fashok-lavasa-resigns-as-election-commissioner-to-join-adb-as-vice-president-874810.html",
-          "publisher": "Deccan Herald (PTI)",
-          "title": "Ashok Lavasa resigns as Election Commissioner; to join ADB as vice president",
-          "published": "2020-08-18",
-          "tier": 3,
-          "archive_url": null,
-          "quote": null
         }
       ],
       "notes": "Dates of individual postings before 2017 are not given in the official bios opened; DoPT executive record sheets could not be retrieved. In May 2019 he dissented on Model Code complaints; see the separate dissent entries.",
       "verification": {
         "verdict": "corrected",
         "checked_url": "https://pib.gov.in/PressReleasePage.aspx?PRID=1517538",
-        "note": "PIB 1517538, PIB 1649260, archived ECI profile and ADB release (Wayback 2024-05-18) support batch, DOB, tenure 23 Jan 2018-31 Aug 2020, posts and education. Fixed first career line: PIB calls him Director (not MD) of HSIDC and MD of the sugar mills federation; the MD of the infrastructure and tourism corporations comes from the ECI profile, so both sources are now cited. Replaced the wildcard ADB archive URL with a concrete snapshot. 'Next in line to head the EC' is PTI via Deccan Herald (18 Aug 2020)."
+        "note": "PIB 1517538, PIB 1649260, archived ECI profile and ADB release (Wayback 2024-05-18) support batch, DOB, tenure 23 Jan 2018-31 Aug 2020, posts and education. Fixed first career line: PIB calls him Director (not MD) of HSIDC and MD of the sugar mills federation; the MD of the infrastructure and tourism corporations comes from the ECI profile, so both sources are now cited. Replaced the wildcard ADB archive URL with a concrete snapshot."
       }
     },
     {

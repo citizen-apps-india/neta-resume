@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { countIndian } from "@/lib/format";
 import { formatLooseDate } from "@/lib/eci-files";
-import { formatPercent, romanPhase, type EciMetricDef } from "@/lib/eci-numbers";
+import { countIndianRough, formatPercent, romanPhase, type EciMetricDef } from "@/lib/eci-numbers";
 import type { EciRegionSummary } from "@/types/eci-files";
 
 function StageCell({ region, stage }: { region: EciRegionSummary; stage: string }) {
@@ -67,7 +67,7 @@ export function StateTable({ regions, metric }: { regions: EciRegionSummary[]; m
                 <StageCell region={r} stage="draft" />
                 <StageCell region={r} stage="final" />
                 <td className="mono" style={{ textAlign: "right", padding: "6px 8px" }}>
-                  {countIndian(Math.abs(m.count))}
+                  {m.approx ? countIndianRough(m.count) : countIndian(Math.abs(m.count))}
                   {m.computed && <span style={{ marginLeft: 5, fontSize: 10, color: "var(--muted)" }}>computed</span>}
                   {m.approx && <span style={{ marginLeft: 5, fontSize: 10, color: "var(--muted)" }}>rounded</span>}
                 </td>

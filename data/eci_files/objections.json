@@ -67,7 +67,7 @@
       "entry_ids": [
         "statements-reporting-joshi-note-form6-rules"
       ],
-      "followed_by": "The Indian Express reported that by July 2026 the online Form 6 on ECINET carried the added SIR-linked declaration without a notified rule change (sir-rules-form6-online-sir-declaration), which drew Sandhu's 13 August objection (objection 10).",
+      "followed_by": "The Indian Express reported that by July 2026 the online Form 6 on ECINET carried the added SIR-linked declaration without a notified rule change (sir-rules-form6-online-sir-declaration), which drew Sandhu's 13 August objection (objection 11).",
       "public": false
     },
     {
@@ -89,18 +89,31 @@
       "date": "2026-07-29",
       "date_precision": "day",
       "by": [
-        "Sukhbir Singh Sandhu",
-        "Vivek Joshi"
+        "Sukhbir Singh Sandhu"
       ],
-      "concerns": "The two Election Commissioners wrote to the Cabinet Secretary seeking action against Senior Deputy Election Commissioner Maneesh Garg, whose 28 July work-allocation order had removed Deputy Election Commissioner Sanjay Kumar's oversight of the IT division without consulting them.",
+      "concerns": "Sandhu wrote separately to the Cabinet Secretary seeking action against Senior Deputy Election Commissioner Maneesh Garg, whose 28 July work-allocation order had removed Deputy Election Commissioner Sanjay Kumar's oversight of the IT division without consulting the Commission, calling it a clear violation of the law governing the Commission.",
       "entry_ids": [
         "officials-ecs-write-cabinet-secretary"
       ],
-      "followed_by": "Sandhu and Joshi jointly set the work-allocation order aside the next day (objection 8).",
+      "followed_by": "Joshi wrote separately to the Cabinet Secretary the same day (objection 8); the two jointly set the work-allocation order aside the next day (objection 9).",
       "public": false
     },
     {
       "n": 8,
+      "date": "2026-07-29",
+      "date_precision": "day",
+      "by": [
+        "Vivek Joshi"
+      ],
+      "concerns": "The same day, Joshi separately wrote to the Cabinet Secretary making the same charge against Garg's order.",
+      "entry_ids": [
+        "officials-ecs-write-cabinet-secretary"
+      ],
+      "followed_by": "Sandhu and Joshi jointly set the work-allocation order aside the next day (objection 9).",
+      "public": false
+    },
+    {
+      "n": 9,
       "date": "2026-07-30",
       "date_precision": "day",
       "by": [
@@ -115,7 +128,7 @@
       "public": false
     },
     {
-      "n": 9,
+      "n": 10,
       "date": "2026-08",
       "date_precision": "month",
       "by": [
@@ -129,7 +142,7 @@
       "public": false
     },
     {
-      "n": 10,
+      "n": 11,
       "date": "2026-08-13",
       "date_precision": "day",
       "by": [
@@ -143,7 +156,7 @@
       "public": false
     },
     {
-      "n": 11,
+      "n": 12,
       "date": "2026-08-14",
       "date_precision": "day",
       "by": [
@@ -157,8 +170,8 @@
       "public": false
     }
   ],
-  "missing": 3,
+  "missing": 2,
   "report_entry_id": "sir-rules-ie-14-objections-report",
   "response_entry_id": "sir-rules-eci-pn-119-response",
-  "notes": "The Indian Express (23 Sep 2026, Ritika Chopra) reported at least 14 formal, on-record objections by Election Commissioners Sukhbir Singh Sandhu and Vivek Joshi between November 2025 and August/September 2026, including four on a single day, grouped around four subjects: the Form 6 change, centralised IT control of the roll software, appeals against restored West Bengal voters, and custody of the roll database. Its own reporting states 'not all 14 objections are itemised in the published reports' (sir-rules-ie-14-objections-report); this file lists only the 11 the entries independently document, each with its own dated note or letter. The record does not say which single day carried four objections, so none is guessed here; 16 April 2026 is the only date on which two distinct, separately-dated objections (entries 2 and 3) are both recorded."
+  "notes": "The Indian Express (23 Sep 2026, Ritika Chopra) reported at least 14 formal, on-record objections by Election Commissioners Sukhbir Singh Sandhu and Vivek Joshi between November 2025 and August 2026, including four on a single day, grouped around four subjects: the Form 6 change, centralised IT control of the roll software, appeals against restored West Bengal voters, and custody of the roll database. The published reports do not itemise all 14 (sir-rules-ie-14-objections-report); this file lists only the 12 the entries independently document, each with its own dated note or letter. The record does not say which single day carried four objections, so none is guessed here; 16 April 2026 is the only date on which two distinct, separately-dated objections (entries 2 and 3) are both recorded, and 29 July 2026 the only date on which two Commissioners separately made the same objection (entries 7 and 8)."
 }

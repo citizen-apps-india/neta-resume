@@ -13,7 +13,14 @@ from neta_api.services.eci_files import (
 )
 
 
-def _row(charge_id: str, d: date | None, *, responses: list | None = None, record: list | None = None) -> dict:
+def _row(
+    charge_id: str,
+    d: date | None,
+    *,
+    responses: list | None = None,
+    record: list | None = None,
+    kind: str = "charge",
+) -> dict:
     return {
         "charge": {"id": charge_id, "date": d},
         "also_recorded_as": [],
@@ -22,6 +29,7 @@ def _row(charge_id: str, d: date | None, *, responses: list | None = None, recor
         "related": [],
         "note": None,
         "curated": True,
+        "kind": kind,
     }
 
 
@@ -172,3 +180,47 @@ def test_filter_answer_rows_all_returns_everything() -> None:
     rows = [_row("a", date(2026, 1, 1)), _row("b", date(2026, 1, 2))]
     ordered, _ = finalize_answer_rows(rows)
     assert filter_answer_rows(ordered, "all") == ordered
+
+
+def test_assemble_answer_rows_synthesised_rows_are_always_kind_charge() -> None:
+    rows = assemble_answer_rows(
+        pair_charge_ids=set(),
+        also_recorded_ids=set(),
+        claim_ids=["claim-1"],
+        response_links={},
+        unpaired_ids=set(),
+    )
+    assert rows[0]["kind"] == "charge"
+
+
+def test_finalize_answer_rows_counts_exclude_defence_and_analysis() -> None:
+    """S11: a BJP defence statement or PRS's bill analysis is not a charge, so it must not inflate
+    "N charges" or "M no response", even though it still sorts into `rows` for view=all."""
+    rows = [
+        _row("charge-1", date(2026, 1, 1)),
+        _row("defence-1", date(2026, 1, 2), kind="defence"),
+        _row("analysis-1", date(2026, 1, 3), kind="analysis"),
+    ]
+    ordered, counts = finalize_answer_rows(rows)
+    assert len(ordered) == 3
+    assert counts == {"rows": 1, "with_response": 0, "without_response": 1, "with_record": 0}
+
+
+def test_filter_answer_rows_no_response_excludes_defence_and_analysis() -> None:
+    rows = [
+        _row("charge-1", date(2026, 1, 1)),
+        _row("defence-1", date(2026, 1, 2), kind="defence"),
+        _row("analysis-1", date(2026, 1, 3), kind="analysis"),
+    ]
+    ordered, _ = finalize_answer_rows(rows)
+    filtered = filter_answer_rows(ordered, "no-response")
+    assert [r["charge"]["id"] for r in filtered] == ["charge-1"]
+
+
+def test_filter_answer_rows_all_still_includes_defence_and_analysis() -> None:
+    rows = [
+        _row("charge-1", date(2026, 1, 1)),
+        _row("defence-1", date(2026, 1, 2), kind="defence"),
+    ]
+    ordered, _ = finalize_answer_rows(rows)
+    assert len(filter_answer_rows(ordered, "all")) == 2

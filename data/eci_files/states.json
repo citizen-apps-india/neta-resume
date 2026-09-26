@@ -28,9 +28,19 @@
           "source_entry": "numbers-bihar-final-roll-2025-09-30",
           "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw4Bx5SvVNRoI9UBA77hlBw0pIBUAIIvl27RVB1LxrL5Mw%3D%3D",
           "tier": 1
+        },
+        {
+          "stage": "left_off",
+          "electors": 6500000,
+          "as_of": "2025-08-01",
+          "source_entry": "numbers-bihar-draft-roll-2025-08-01",
+          "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2Fzznw5Qtyss%2B8ILdni0Z0RBAkwVPAdy67ySd4dS2SdwaNNq0p8WWXDoViUeHPyzG9HgKdCmUSHqA1uyd%2BQgGswdQ%3D%3D",
+          "tier": 1,
+          "approx": true,
+          "note": "ECI's outcome table rounds this to the nearest lakh; the draft-roll figure it also reports rounds separately, so the two do not subtract to exactly this count."
         }
       ],
-      "notes": "Phase 1 pilot SIR, qualifying date 1 July 2025. Final figure of 7,41,92,357 excludes 1,63,619 service voters (total incl. service voters: 7,43,55,976, same entry). ECI's PN of 13 Nov 2025 (ECI/PN/353/2025) reportedly claimed zero appeals and a final count of 7,45,26,858, per sir-rules-bihar-final-roll's notes; that press note returned 'Access denied' on the date checked and has no Wayback copy, so those two figures are unverified and are not used as the stage value here."
+      "notes": "Phase 1 pilot SIR, qualifying date 1 July 2025. Final figure of 7,41,92,357 excludes 1,63,619 service voters (total incl. service voters: 7,43,55,976, same entry). ECI's PN of 13 Nov 2025 (ECI/PN/353/2025) reportedly claimed zero appeals and a final count of 7,45,26,858, per numbers-bihar-final-roll-2025-09-30's notes; that press note returned 'Access denied' on the date checked and has no Wayback copy, so those two figures are unverified and are not used as the stage value here."
     },
     {
       "state": "Andaman & Nicobar",
@@ -147,6 +157,16 @@
           "source_entry": "numbers-gujarat-final-roll-2026-02-17",
           "url": "https://www.deccanherald.com/india/gujarats-voter-count-stands-at-440-crore-in-final-electoral-rolls-published-by-ec-after-sir-3901904",
           "tier": 3
+        },
+        {
+          "stage": "left_off",
+          "electors": 7373000,
+          "as_of": "2025-12-19",
+          "source_entry": "numbers-gujarat-draft-roll-2025-12-19",
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "tier": 3,
+          "approx": true,
+          "note": "Deccan Herald reports 73.73 lakh (14.5%) omitted directly; the roll and omitted figures are each rounded and do not subtract to exactly this count."
         }
       ],
       "notes": null
@@ -233,6 +253,16 @@
           "source_entry": "numbers-py-final-roll-2026-02-14",
           "url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzBiU51zPFZI5qMtjV1qgjFg193XTtp6Zn6FU9qB%2FYxKh2I6Fg%2BNN0%2Fk6VQmFY0pHFCSv%2B1yJkuMeCkTzY9fhBvw%3D%3D",
           "tier": 1
+        },
+        {
+          "stage": "left_off",
+          "electors": 103000,
+          "as_of": "2025-12-16",
+          "source_entry": "numbers-puducherry-lakshadweep-draft-2025-12-16",
+          "url": "https://www.deccanherald.com/india/sir-20-nearly-65-crore-electors-removed-from-draft-rolls-of-12-states-union-territories-3855247",
+          "tier": 3,
+          "approx": true,
+          "note": "Deccan Herald's reason-wise break-up (deceased/shifted/multiple) sums to 1,03,467, 467 above this rounded total."
         }
       ],
       "notes": null
@@ -266,7 +296,7 @@
           "tier": 1
         }
       ],
-      "notes": "officials-tn-final-roll (CEO announcement, 23 Feb 2026) rounds the same final figure to 5.67 crore; kept the ECI's own figure of 5,67,07,380."
+      "notes": "numbers-tn-final-roll-2026-02 (CEO announcement, 23 Feb 2026) rounds the same final figure to 5.67 crore; kept the ECI's own figure of 5,67,07,380."
     },
     {
       "state": "West Bengal",
@@ -321,6 +351,24 @@
           "source_entry": "numbers-wb-tribunal-restorations-before-poll-2026-04",
           "url": "https://indianexpress.com/article/india/west-bengal-electoral-rolls-ec-supreme-court-appeals-deleted-voters-10885130/",
           "tier": 3
+        },
+        {
+          "stage": "under_adjudication",
+          "electors": 6006675,
+          "as_of": "2026-02-28",
+          "source_entry": "numbers-wb-final-roll-2026-02-28",
+          "url": "https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+          "tier": 1,
+          "note": "Flagged by ECI's 'logical discrepancy' checks and excluded from the final roll pending judicial adjudication; judicial officers later disposed of about 27.16 lakh deletions and 32.9 lakh inclusions from this pool (numbers-wb-adjudication-outcome-2026-04)."
+        },
+        {
+          "stage": "form7_deletions",
+          "electors": 546053,
+          "as_of": "2026-02-28",
+          "source_entry": "numbers-wb-final-roll-2026-02-28",
+          "url": "https://ceowestbengal.wb.gov.in/Downloads/News/Final%20Press%20Note%20CEO-PN-05-2026.pdf",
+          "tier": 1,
+          "note": "Deletions on Form 7 objections between the draft and final rolls, distinct from the 60.07 lakh held under adjudication above."
         }
       ],
       "notes": "West Bengal has two distinct post-draft review tracks in the record: pre-final 'adjudication' of unmapped/flagged electors by judicial officers (resolved before the 28 Feb 2026 final roll, see the note on the final stage), and post-final tribunal appeals against the final roll (appeals_filed / appeals_pending / restored above, running Mar-Sep 2026). Do not sum the two."
@@ -448,6 +496,15 @@
           "source_entry": "numbers-odisha-draft-final-2026-09-21",
           "url": "https://ommcomnews.com/odisha-news/odisha-publishes-final-electoral-roll-with-3-16-cr-electors/",
           "tier": 3
+        },
+        {
+          "stage": "left_off",
+          "electors": 2012557,
+          "as_of": "2026-07-05",
+          "source_entry": "numbers-odisha-draft-final-2026-09-21",
+          "url": "https://ommcomnews.com/odisha-news/odisha-publishes-final-electoral-roll-with-3-16-cr-electors/",
+          "tier": 3,
+          "note": "The CEO's own excluded-from-draft count; the pre-SIR base above is the ECI's, one day earlier and about 15,265 higher than the CEO's own base for this figure (see the state notes)."
         }
       ],
       "notes": null
@@ -480,6 +537,15 @@
           "source_entry": "numbers-sikkim-draft-final-2026-09-06",
           "url": "https://northeasttoday.in/northeast/sikkim-publishes-final-electoral-roll-under-sir-2026-electorate-declines-by-3-42/",
           "tier": 3
+        },
+        {
+          "stage": "left_off",
+          "electors": 37737,
+          "as_of": "2026-07-05",
+          "source_entry": "numbers-sikkim-draft-final-2026-09-06",
+          "url": "https://northeasttoday.in/northeast/sikkim-publishes-final-electoral-roll-under-sir-2026-electorate-declines-by-3-42/",
+          "tier": 3,
+          "note": "Forms not returned by the draft stage, per the CEO; the pre-SIR base above is the ECI's, one day earlier and 59 higher than the CEO's own base for this figure (see the state notes)."
         }
       ],
       "notes": null
@@ -643,6 +709,15 @@
           "source_entry": "numbers-phase3-base-2026-05-14",
           "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
           "tier": 1
+        },
+        {
+          "stage": "left_off",
+          "electors": 7339235,
+          "as_of": "2026-09-01",
+          "source_entry": "numbers-phase3-draft-tally-2026-09-01",
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "tier": 3,
+          "note": "Deccan Herald's tally gives this as 21.69% of the pre-SIR roll; against the pre-SIR base above (a different, 12 May snapshot) it is 21.6%. The Indian Express (10857760) separately reports 21.70%, from EC data, without the count."
         }
       ],
       "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total is in the record yet; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 73,39,235 names left off the draft (21.69% of the pre-SIR roll) but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
@@ -723,6 +798,17 @@
           "source_entry": "numbers-phase3-base-2026-05-14",
           "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
           "tier": 1
+        },
+        {
+          "stage": "left_off",
+          "electors": 126814,
+          "as_of": "2026-09-01",
+          "source_entry": "numbers-phase3-draft-tally-2026-09-01",
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "tier": 3,
+          "computed": true,
+          "approx": true,
+          "note": "No count is in the record, only the 29.64% share Deccan Herald reports; this count is 29.64% of the pre-SIR base above. The Indian Express (10857760) separately reports 29.60%, from EC data."
         }
       ],
       "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total is in the record yet; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 29.64% of the pre-SIR roll left off the draft, without the counts (numbers-phase3-draft-tally-2026-09-01)."
@@ -776,21 +862,21 @@
       "phase": null,
       "exercise": null,
       "stages": [],
-      "notes": "Not in the SIR orders in the record. PTI (11 Apr 2026) described a planned Phase III including Himachal Pradesh; the ECI order of 14 May 2026 does not list it (numbers-phase3-announced-2026-05-14)."
+      "notes": "Not in the SIR orders in the record. PTI (11 Apr 2026) described a planned Phase III including Himachal Pradesh; the ECI order of 14 May 2026 does not list it (sir-rules-phase3-order)."
     },
     {
       "state": "Jammu and Kashmir",
       "phase": null,
       "exercise": null,
       "stages": [],
-      "notes": "Not in the SIR orders in the record. PTI (11 Apr 2026) described a planned Phase III including Jammu and Kashmir; the ECI order of 14 May 2026 does not list it (numbers-phase3-announced-2026-05-14)."
+      "notes": "Not in the SIR orders in the record. PTI (11 Apr 2026) described a planned Phase III including Jammu and Kashmir; the ECI order of 14 May 2026 does not list it (sir-rules-phase3-order)."
     },
     {
       "state": "Ladakh",
       "phase": null,
       "exercise": null,
       "stages": [],
-      "notes": "Not in the SIR orders in the record. PTI (11 Apr 2026) described a planned Phase III including Ladakh; the ECI order of 14 May 2026 does not list it (numbers-phase3-announced-2026-05-14)."
+      "notes": "Not in the SIR orders in the record. PTI (11 Apr 2026) described a planned Phase III including Ladakh; the ECI order of 14 May 2026 does not list it (sir-rules-phase3-order)."
     }
   ]
 }

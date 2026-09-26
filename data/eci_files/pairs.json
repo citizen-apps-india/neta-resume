@@ -50,7 +50,7 @@
         "selection-law-govt-defends-goel-appointment"
       ],
       "record_ids": [
-        "selection-law-baranwal-on-goel-appointment"
+        "commissioners-event-2023-03-02-sc-on-goel-appointment"
       ],
       "related": [],
       "note": "The Constitution Bench's judgment of 2 March 2023 records how the Goel file was processed."
@@ -65,7 +65,8 @@
         "selection-law-rule-term-pay-removal"
       ],
       "related": [],
-      "note": "PRS analysed the bill as introduced. In the Act as passed, pay was changed from the Cabinet Secretary's to a Supreme Court judge's (Section 10); the panel (Section 7) and the Secretary-rank eligibility rule (Section 5) were not changed."
+      "note": "PRS analysed the bill as introduced. In the Act as passed, pay was changed from the Cabinet Secretary's to a Supreme Court judge's (Section 10); the panel (Section 7) and the Secretary-rank eligibility rule (Section 5) were not changed.",
+      "kind": "analysis"
     },
     {
       "charge_id": "selection-law-opposition-on-goel-resignation",
@@ -302,7 +303,8 @@
       "response_ids": [],
       "record_ids": [],
       "related": [],
-      "note": null
+      "note": null,
+      "kind": "defence"
     },
     {
       "charge_id": "officials-kharge-aland-counter",
@@ -519,7 +521,8 @@
       "response_ids": [],
       "record_ids": [],
       "related": [],
-      "note": null
+      "note": null,
+      "kind": "defence"
     },
     {
       "charge_id": "statements-reporting-kejriwal-scrap-sir",
@@ -673,7 +676,8 @@
         "selection-law-rule-section-18-business"
       ],
       "related": [],
-      "note": "Section 18 of the 2023 Act: allocation of work only by unanimous decision; other business unanimously as far as possible, otherwise by majority."
+      "note": "Section 18 of the 2023 Act: allocation of work only by unanimous decision; other business unanimously as far as possible, otherwise by majority.",
+      "kind": "defence"
     },
     {
       "charge_id": "statements-reporting-congress-protests-sept-25",
