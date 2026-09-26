@@ -922,3 +922,505 @@ def test_headline_file_missing_is_not_an_error() -> None:
     headline, errors = eci_files._load_headline(Path("/nonexistent/headline.json"))
     assert headline is None
     assert errors == []
+
+
+# --- phase 5: objections.json / pairs.json / rule_diffs.json / case_orders.json / merges.json ----
+
+_P5_ENTRY_IDS = {
+    "p5-claim", "p5-response", "p5-documented", "p5-rule", "p5-case", "p5-case-2", "p5-order",
+}
+_P5_ENTRY_STATUS = {
+    "p5-claim": "claim",
+    "p5-response": "response",
+    "p5-documented": "documented",
+    "p5-rule": "documented",
+    "p5-case": "documented",
+    "p5-case-2": "documented",
+    "p5-order": "documented",
+}
+_P5_ENTRY_KIND = {
+    "p5-claim": "statement",
+    "p5-response": "statement",
+    "p5-documented": "event",
+    "p5-rule": "rule",
+    "p5-case": "case",
+    "p5-case-2": "case",
+    "p5-order": "event",
+}
+_P5_PERSON_SLUGS = {"test-commissioner"}
+
+
+def _objection(**overrides) -> dict:
+    base = {
+        "n": 1,
+        "date": "2026-01-01",
+        "date_precision": "day",
+        "by": ["Test Commissioner"],
+        "concerns": "A concern.",
+        "entry_ids": ["p5-documented"],
+        "followed_by": None,
+        "public": False,
+    }
+    base.update(overrides)
+    return base
+
+
+def _objections_file(**overrides) -> dict:
+    base = {
+        "objections": [_objection()],
+        "missing": 0,
+        "notes": None,
+        "report_entry_id": "p5-documented",
+        "response_entry_id": "p5-response",
+    }
+    base.update(overrides)
+    return base
+
+
+def test_objections_validation_rejects_unknown_entry_id(tmp_path: Path) -> None:
+    path = tmp_path / "objections.json"
+    path.write_text(json.dumps(_objections_file(objections=[_objection(entry_ids=["nope"])])))
+    parsed, errors = eci_files._load_objections(path, _P5_ENTRY_IDS, _P5_PERSON_SLUGS)
+    assert parsed is None
+    assert any("unknown entry id" in e for e in errors)
+
+
+def test_objections_validation_rejects_n_gap(tmp_path: Path) -> None:
+    path = tmp_path / "objections.json"
+    path.write_text(json.dumps(_objections_file(objections=[_objection(n=1), _objection(n=3)])))
+    parsed, errors = eci_files._load_objections(path, _P5_ENTRY_IDS, _P5_PERSON_SLUGS)
+    assert parsed is None
+    assert any("not contiguous" in e for e in errors)
+
+
+def test_objections_validation_rejects_followed_by_token_for_a_missing_entry(tmp_path: Path) -> None:
+    path = tmp_path / "objections.json"
+    path.write_text(
+        json.dumps(_objections_file(objections=[_objection(followed_by="See (sir-rules-nope).")]))
+    )
+    parsed, errors = eci_files._load_objections(path, _P5_ENTRY_IDS, _P5_PERSON_SLUGS)
+    assert parsed is None
+    assert any("followed_by" in e and "unknown entry id" in e for e in errors)
+
+
+def test_objections_validation_rejects_unknown_person(tmp_path: Path) -> None:
+    path = tmp_path / "objections.json"
+    path.write_text(json.dumps(_objections_file(objections=[_objection(by=["Nobody At All"])])))
+    parsed, errors = eci_files._load_objections(path, _P5_ENTRY_IDS, _P5_PERSON_SLUGS)
+    assert parsed is None
+    assert any("unknown person" in e for e in errors)
+
+
+def _pair(**overrides) -> dict:
+    base = {
+        "charge_id": "p5-claim",
+        "also_recorded_as": [],
+        "response_ids": ["p5-response"],
+        "record_ids": ["p5-documented"],
+        "related": [],
+        "note": None,
+    }
+    base.update(overrides)
+    return base
+
+
+def _pairs_file(**overrides) -> dict:
+    base = {"about": "t", "built_on": "2026-01-01", "pairs": [_pair()], "unpaired_responses": []}
+    base.update(overrides)
+    return base
+
+
+def test_pairs_validation_rejects_unknown_entry_id(tmp_path: Path) -> None:
+    path = tmp_path / "pairs.json"
+    path.write_text(json.dumps(_pairs_file(pairs=[_pair(charge_id="nope")])))
+    parsed, errors = eci_files._load_pairs(path, _P5_ENTRY_IDS, _P5_ENTRY_STATUS)
+    assert parsed is None
+    assert any("unknown entry id" in e for e in errors)
+
+
+def test_pairs_validation_rejects_a_record_id_that_isnt_documented(tmp_path: Path) -> None:
+    path = tmp_path / "pairs.json"
+    path.write_text(json.dumps(_pairs_file(pairs=[_pair(record_ids=["p5-claim"])])))
+    parsed, errors = eci_files._load_pairs(path, _P5_ENTRY_IDS, _P5_ENTRY_STATUS)
+    assert parsed is None
+    assert any("is not a documented entry" in e for e in errors)
+
+
+def test_pairs_validation_rejects_a_response_id_that_isnt_a_response(tmp_path: Path) -> None:
+    path = tmp_path / "pairs.json"
+    path.write_text(json.dumps(_pairs_file(pairs=[_pair(response_ids=["p5-documented"])])))
+    parsed, errors = eci_files._load_pairs(path, _P5_ENTRY_IDS, _P5_ENTRY_STATUS)
+    assert parsed is None
+    assert any("is not a response entry" in e for e in errors)
+
+
+def test_pairs_validation_rejects_an_id_that_is_both_a_charge_and_also_recorded_as(
+    tmp_path: Path,
+) -> None:
+    path = tmp_path / "pairs.json"
+    path.write_text(
+        json.dumps(
+            _pairs_file(
+                pairs=[
+                    _pair(charge_id="p5-claim", also_recorded_as=[]),
+                    _pair(charge_id="p5-documented", also_recorded_as=["p5-claim"]),
+                ]
+            )
+        )
+    )
+    parsed, errors = eci_files._load_pairs(path, _P5_ENTRY_IDS, _P5_ENTRY_STATUS)
+    assert parsed is None
+    assert any("both a charge_id and an also_recorded_as" in e for e in errors)
+
+
+def _rule_diff(**overrides) -> dict:
+    base = {
+        "id": "p5-diff",
+        "rule_entry_id": "p5-rule",
+        "title": "Test rule diff",
+        "document": "Test Rules, 2026",
+        "before_label": "Before",
+        "after_label": "After",
+        "before": ["a"],
+        "after": ["a", "b"],
+        "before_status": "verbatim",
+        "after_status": "verbatim",
+        "text_status": "verbatim",
+        "excerpt": False,
+        "quoted_lines_before": [],
+        "quoted_lines_after": [],
+        "source_urls": ["https://example.com/doc"],
+        "note": None,
+        "related_entry_ids": [],
+    }
+    base.update(overrides)
+    return base
+
+
+def _rule_diffs_file(**overrides) -> dict:
+    base = {
+        "about": "t",
+        "built_on": "2026-01-01",
+        "text_statuses": ["verbatim", "quoted in reporting", "paraphrased from reporting"],
+        "diffs": [_rule_diff()],
+        "gaps": [],
+    }
+    base.update(overrides)
+    return base
+
+
+def test_rule_diffs_validation_rejects_unknown_rule_entry_id(tmp_path: Path) -> None:
+    path = tmp_path / "rule_diffs.json"
+    path.write_text(json.dumps(_rule_diffs_file(diffs=[_rule_diff(rule_entry_id="nope")])))
+    parsed, errors = eci_files._load_rule_diffs(path, _P5_ENTRY_IDS, _P5_ENTRY_KIND)
+    assert parsed is None
+    assert any("unknown rule_entry_id" in e for e in errors)
+
+
+def test_rule_diffs_validation_rejects_a_rule_entry_id_not_kind_rule(tmp_path: Path) -> None:
+    path = tmp_path / "rule_diffs.json"
+    path.write_text(json.dumps(_rule_diffs_file(diffs=[_rule_diff(rule_entry_id="p5-documented")])))
+    parsed, errors = eci_files._load_rule_diffs(path, _P5_ENTRY_IDS, _P5_ENTRY_KIND)
+    assert parsed is None
+    assert any("is not kind=rule" in e for e in errors)
+
+
+def test_rule_diffs_validation_rejects_a_text_status_that_doesnt_match_its_sides(
+    tmp_path: Path,
+) -> None:
+    path = tmp_path / "rule_diffs.json"
+    bad = _rule_diff(
+        before_status="paraphrased from reporting", after_status="verbatim", text_status="verbatim"
+    )
+    path.write_text(json.dumps(_rule_diffs_file(diffs=[bad])))
+    parsed, errors = eci_files._load_rule_diffs(path, _P5_ENTRY_IDS, _P5_ENTRY_KIND)
+    assert parsed is None
+    assert any("is not the weaker of" in e for e in errors)
+
+
+def _case_item(**overrides) -> dict:
+    base = {"entry_id": "p5-order", "role": "order", "note": None}
+    base.update(overrides)
+    return base
+
+
+def _case(**overrides) -> dict:
+    base = {
+        "slug": "p5-case-slug",
+        "short_name": "P5 Case",
+        "case_entry_id": "p5-case",
+        "court": "Test Court",
+        "short_status": "pending",
+        "status_note": None,
+        "parties": {"petitioners": [], "respondents": []},
+        "items": [_case_item()],
+    }
+    base.update(overrides)
+    return base
+
+
+def _cases_file(**overrides) -> dict:
+    base = {
+        "about": "t",
+        "built_on": "2026-01-01",
+        "roles": ["order", "judgment", "hearing", "filing", "listing", "recusal", "compliance", "related"],
+        "cases": [_case()],
+        "unmapped": [],
+    }
+    base.update(overrides)
+    return base
+
+
+def test_cases_validation_rejects_unknown_case_entry_id(tmp_path: Path) -> None:
+    path = tmp_path / "case_orders.json"
+    path.write_text(json.dumps(_cases_file(cases=[_case(case_entry_id="nope")])))
+    parsed, errors = eci_files._load_cases(path, _P5_ENTRY_IDS, _P5_ENTRY_KIND)
+    assert parsed is None
+    assert any("unknown case_entry_id" in e for e in errors)
+
+
+def test_cases_validation_rejects_a_duplicate_case_item(tmp_path: Path) -> None:
+    path = tmp_path / "case_orders.json"
+    path.write_text(
+        json.dumps(
+            _cases_file(
+                cases=[
+                    _case(slug="case-a", case_entry_id="p5-case"),
+                    _case(slug="case-b", case_entry_id="p5-case-2"),
+                ]
+            )
+        )
+    )
+    parsed, errors = eci_files._load_cases(path, _P5_ENTRY_IDS, _P5_ENTRY_KIND)
+    assert parsed is None
+    assert any("is an item of two cases" in e for e in errors)
+
+
+def test_cases_validation_rejects_a_case_entry_as_its_own_item(tmp_path: Path) -> None:
+    path = tmp_path / "case_orders.json"
+    path.write_text(json.dumps(_cases_file(cases=[_case(items=[_case_item(entry_id="p5-case")])])))
+    parsed, errors = eci_files._load_cases(path, _P5_ENTRY_IDS, _P5_ENTRY_KIND)
+    assert parsed is None
+    assert any("case entry is its own item" in e for e in errors)
+
+
+def test_load_merges_builds_the_drop_to_keep_map(tmp_path: Path) -> None:
+    path = tmp_path / "merges.json"
+    path.write_text(
+        json.dumps({"merges": [{"keep": "kept-id", "drop": ["dropped-a", "dropped-b"]}]})
+    )
+    mapping, errors = eci_files._load_merges(path)
+    assert errors == []
+    assert mapping == {"dropped-a": "kept-id", "dropped-b": "kept-id"}
+
+
+def test_response_to_pointing_at_a_dropped_id_is_rewritten_to_the_kept_id() -> None:
+    loaded = [
+        eci_files.LoadedEntry(
+            area="area",
+            entry=eci_files.Entry.model_validate(_entry(id="e1", response_to="dropped-id")),
+        )
+    ]
+    resolved = eci_files._resolve_response_links(loaded, {"dropped-id": "kept-id"})
+    assert resolved == 1
+    assert loaded[0].entry.response_to == "kept-id"
+
+
+def test_real_data_files_phase5_matches_spec() -> None:
+    payload, errors = eci_files.validate_all()
+    assert errors == []
+    assert payload is not None
+    assert payload.resolved_response_count == 5
+
+    assert payload.objections is not None
+    assert len(payload.objections.objections) == 11
+    assert payload.objections.missing == 3
+
+    assert payload.pairs is not None
+    assert len(payload.pairs.pairs) == 61
+    assert sum(1 for p in payload.pairs.pairs if not p.response_ids) == 27
+    assert sum(1 for p in payload.pairs.pairs if p.record_ids) == 14
+    assert len(payload.pairs.unpaired_responses) == 1
+
+    assert payload.rule_diffs is not None
+    assert len(payload.rule_diffs.diffs) == 7
+
+    assert payload.cases is not None
+    assert len(payload.cases.cases) == 5
+    assert sum(len(c.items) for c in payload.cases.cases) == 51
+
+
+# --- Postgres integration: phase 5 full replace across all eleven tables -------------------------
+
+
+@pytestmark_pg
+def test_phase5_fixture_loads_all_eleven_tables_idempotently() -> None:
+    from neta_core.db.engine import session_scope
+
+    tables = (
+        "eci_file_objection",
+        "eci_file_objection_person",
+        "eci_file_objection_entry",
+        "eci_file_objection_meta",
+        "eci_file_pair",
+        "eci_file_pair_item",
+        "eci_file_unpaired_response",
+        "eci_file_rule_diff",
+        "eci_file_rule_diff_entry",
+        "eci_file_case",
+        "eci_file_case_item",
+    )
+
+    def counts() -> tuple[int, ...]:
+        with session_scope() as s:
+            return tuple(
+                s.execute(text(f"SELECT count(*) FROM {t}")).scalar_one()  # noqa: S608
+                for t in tables
+            )
+
+    kwargs = dict(
+        path=FIXTURES / "extra" / "phase5_entries",
+        objections_path=FIXTURES / "extra" / "objections.json",
+        pairs_path=FIXTURES / "extra" / "pairs.json",
+        rule_diffs_path=FIXTURES / "extra" / "rule_diffs.json",
+        cases_path=FIXTURES / "extra" / "case_orders.json",
+    )
+
+    eci_files.run(**kwargs)
+    first = counts()
+    assert first == (1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1)
+
+    eci_files.run(**kwargs)
+    assert counts() == first
+
+
+@pytestmark_pg
+def test_deleting_an_entry_removes_its_pair_case_and_diff_rows(tmp_path: Path) -> None:
+    from neta_core.db.engine import session_scope
+
+    entries_dir = tmp_path / "entries"
+    entries_dir.mkdir()
+
+    def write_entries(*, include_shared: bool) -> None:
+        entries = [
+            _entry(id="b-rule-1", kind="rule"),
+            _entry(id="b-case-1", kind="case"),
+            _entry(id="b-charge-1", kind="statement", status="claim"),
+        ]
+        if include_shared:
+            entries.append(_entry(id="b-shared-1", kind="event"))
+        _write(entries_dir, entries)
+
+    def write_phase5(*, include_shared: bool) -> None:
+        related = [{"id": "b-shared-1", "why": "testing"}] if include_shared else []
+        (tmp_path / "pairs.json").write_text(
+            json.dumps(
+                {
+                    "about": "t",
+                    "built_on": "2026-01-01",
+                    "pairs": [
+                        {
+                            "charge_id": "b-charge-1",
+                            "also_recorded_as": [],
+                            "response_ids": [],
+                            "record_ids": [],
+                            "related": related,
+                            "note": None,
+                        }
+                    ],
+                    "unpaired_responses": [],
+                }
+            )
+        )
+        related_entry_ids = ["b-shared-1"] if include_shared else []
+        (tmp_path / "rule_diffs.json").write_text(
+            json.dumps(
+                {
+                    "about": "t",
+                    "built_on": "2026-01-01",
+                    "text_statuses": [
+                        "verbatim", "quoted in reporting", "paraphrased from reporting"
+                    ],
+                    "diffs": [
+                        {
+                            "id": "b-diff-1",
+                            "rule_entry_id": "b-rule-1",
+                            "title": "t",
+                            "document": "d",
+                            "before_label": "Before",
+                            "after_label": "After",
+                            "before": ["a"],
+                            "after": ["a"],
+                            "before_status": "verbatim",
+                            "after_status": "verbatim",
+                            "text_status": "verbatim",
+                            "excerpt": False,
+                            "quoted_lines_before": [],
+                            "quoted_lines_after": [],
+                            "source_urls": ["https://example.com/b"],
+                            "note": None,
+                            "related_entry_ids": related_entry_ids,
+                        }
+                    ],
+                    "gaps": [],
+                }
+            )
+        )
+        items = [{"entry_id": "b-shared-1", "role": "order", "note": None}] if include_shared else []
+        (tmp_path / "case_orders.json").write_text(
+            json.dumps(
+                {
+                    "about": "t",
+                    "built_on": "2026-01-01",
+                    "roles": [
+                        "order", "judgment", "hearing", "filing", "listing", "recusal",
+                        "compliance", "related",
+                    ],
+                    "cases": [
+                        {
+                            "slug": "b-case",
+                            "short_name": "B Case",
+                            "case_entry_id": "b-case-1",
+                            "court": "Test Court",
+                            "short_status": "pending",
+                            "status_note": None,
+                            "parties": {"petitioners": [], "respondents": []},
+                            "items": items,
+                        }
+                    ],
+                    "unmapped": [],
+                }
+            )
+        )
+
+    def counts() -> tuple[int, int, int]:
+        with session_scope() as s:
+            return (
+                s.execute(
+                    text("SELECT count(*) FROM eci_file_pair_item WHERE role = 'related'")
+                ).scalar_one(),
+                s.execute(text("SELECT count(*) FROM eci_file_case_item")).scalar_one(),
+                s.execute(text("SELECT count(*) FROM eci_file_rule_diff_entry")).scalar_one(),
+            )
+
+    kwargs = dict(
+        path=entries_dir,
+        pairs_path=tmp_path / "pairs.json",
+        rule_diffs_path=tmp_path / "rule_diffs.json",
+        cases_path=tmp_path / "case_orders.json",
+    )
+
+    write_entries(include_shared=True)
+    write_phase5(include_shared=True)
+    eci_files.run(**kwargs)
+    assert counts() == (1, 1, 1)
+
+    write_entries(include_shared=False)
+    write_phase5(include_shared=False)
+    eci_files.run(**kwargs)
+    assert counts() == (0, 0, 0)
+
+    with session_scope() as s:
+        assert s.execute(text("SELECT count(*) FROM eci_file_pair")).scalar_one() == 1
+        assert s.execute(text("SELECT count(*) FROM eci_file_case")).scalar_one() == 1
+        assert s.execute(text("SELECT count(*) FROM eci_file_rule_diff")).scalar_one() == 1

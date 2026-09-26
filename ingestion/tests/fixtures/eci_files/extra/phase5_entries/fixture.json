@@ -1,0 +1,154 @@
+{
+  "area": "phase5-fixture",
+  "researched_on": "2026-09-25",
+  "entries": [
+    {
+      "id": "phase5-claim-1",
+      "kind": "statement",
+      "date": "2026-01-01",
+      "date_precision": "day",
+      "title": "A test claim",
+      "summary": "A neutral summary of a test claim.",
+      "status": "claim",
+      "attributed_to": "Test Person",
+      "people": [],
+      "states": [],
+      "topics": [],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {"url": "https://example.com/claim-1", "publisher": "Example", "tier": 3}
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "unchecked"
+    },
+    {
+      "id": "phase5-response-1",
+      "kind": "statement",
+      "date": "2026-01-02",
+      "date_precision": "day",
+      "title": "A test response",
+      "summary": "A neutral summary of the response to the test claim.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [],
+      "states": [],
+      "topics": [],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {"url": "https://example.com/response-1", "publisher": "ECI", "tier": 1}
+      ],
+      "response_to": "phase5-claim-1",
+      "notes": null,
+      "check": "checked"
+    },
+    {
+      "id": "phase5-response-2",
+      "kind": "statement",
+      "date": "2026-01-03",
+      "date_precision": "day",
+      "title": "An unpaired test response",
+      "summary": "A response with no charge on record.",
+      "status": "response",
+      "attributed_to": "Election Commission of India",
+      "people": [],
+      "states": [],
+      "topics": [],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {"url": "https://example.com/response-2", "publisher": "ECI", "tier": 1}
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "checked"
+    },
+    {
+      "id": "phase5-documented-1",
+      "kind": "event",
+      "date": "2026-01-04",
+      "date_precision": "day",
+      "title": "A test documented event",
+      "summary": "A neutral summary of a documented event, and Test Commissioner's objection.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": ["Test Commissioner"],
+      "states": [],
+      "topics": [],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {"url": "https://example.com/documented-1", "publisher": "ECI", "tier": 1}
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "checked"
+    },
+    {
+      "id": "phase5-rule-1",
+      "kind": "rule",
+      "date": "2026-01-05",
+      "date_precision": "day",
+      "title": "A test rule change",
+      "summary": "A neutral summary of a test rule change.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": [],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {"url": "https://example.com/rule-1", "publisher": "ECI", "tier": 1}
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "checked"
+    },
+    {
+      "id": "phase5-case-1",
+      "kind": "case",
+      "date": "2026-01-06",
+      "date_precision": "day",
+      "title": "A test court case",
+      "summary": "A neutral summary of a test court case.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": ["courts"],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {"url": "https://example.com/case-1", "publisher": "Test Court", "tier": 2}
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "checked"
+    },
+    {
+      "id": "phase5-order-1",
+      "kind": "event",
+      "date": "2026-01-07",
+      "date_precision": "day",
+      "title": "A test court order",
+      "summary": "A neutral summary of a test court order.",
+      "status": "documented",
+      "attributed_to": null,
+      "people": [],
+      "states": [],
+      "topics": ["courts"],
+      "figures": [],
+      "details": {},
+      "sources": [
+        {"url": "https://example.com/order-1", "publisher": "Test Court", "tier": 2}
+      ],
+      "response_to": null,
+      "notes": null,
+      "check": "checked"
+    }
+  ],
+  "gaps": []
+}

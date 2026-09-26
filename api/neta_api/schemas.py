@@ -563,6 +563,7 @@ class EciEntryRef(BaseModel):
     date: _Date | None = None
     date_precision: str
     status: str
+    check_status: str | None = None   # NEW (phase 5), optional so phase 3/4 callers are unaffected
 
 
 class EciPersonSummary(BaseModel):
@@ -751,3 +752,191 @@ class EciStatesOverview(BaseModel):
 class EciStatePage(BaseModel):
     region: EciRegionSummary
     notes: str | None = None
+
+
+# --- ECI Files phase 5 ------------------------------------------------------------------------------
+
+
+class EciEntryCard(BaseModel):
+    """Enough for a row or cell on the phase 5 pages; the drawer fetches the full entry."""
+
+    id: str
+    kind: str
+    date: _Date | None = None
+    date_precision: str
+    title: str
+    summary: str
+    status: str
+    lane: str
+    attributed_to: str | None = None
+    check_status: str
+    people: list[EciPersonRef] = []
+    citation_count: int
+    lead_citation: EciCitation | None = None   # position 1
+
+
+class EciPersonWithPhoto(BaseModel):
+    slug: str
+    name: str
+    photo: EciPhoto | None = None
+
+
+class EciObjection(BaseModel):
+    n: int
+    date: _Date | None = None
+    date_precision: str
+    by: list[EciPersonWithPhoto]
+    concerns: str
+    followed_by: str | None = None
+    followed_by_refs: list[EciEntryRef] = []
+    public: bool
+    entries: list[EciEntryRef]
+
+
+class EciObjectionPersonCount(BaseModel):
+    slug: str
+    name: str
+    photo: EciPhoto | None = None
+    count: int
+    joint: int
+
+
+class EciObjectionsPage(BaseModel):
+    identified: int
+    missing: int
+    reported_total: int
+    notes: str | None = None
+    report: EciEntryRef | None = None
+    response: EciEntryCard | None = None
+    objections: list[EciObjection]
+    by_person: list[EciObjectionPersonCount]
+
+
+class EciRelatedRef(BaseModel):
+    entry: EciEntryRef
+    why: str
+
+
+class EciAnswerRow(BaseModel):
+    charge: EciEntryCard
+    also_recorded_as: list[EciEntryRef] = []
+    responses: list[EciEntryCard] = []
+    record: list[EciEntryCard] = []
+    related: list[EciRelatedRef] = []
+    note: str | None = None
+    curated: bool
+
+
+class EciAnswersCounts(BaseModel):
+    rows: int
+    with_response: int
+    without_response: int
+    with_record: int
+
+
+class EciUnpairedResponse(BaseModel):
+    response: EciEntryCard
+    note: str | None = None
+
+
+class EciAnswersPage(BaseModel):
+    counts: EciAnswersCounts
+    rows: list[EciAnswerRow]
+    unpaired_responses: list[EciUnpairedResponse]
+
+
+class EciRuleDiffRef(BaseModel):
+    id: str
+    title: str
+    text_status: str
+
+
+class EciRuleRow(BaseModel):
+    entry: EciEntryCard
+    diffs: list[EciRuleDiffRef] = []
+
+
+class EciRulesPage(BaseModel):
+    rules: list[EciRuleRow]
+    diffs: list[EciRuleDiffRef]
+    counts: dict[str, int]
+
+
+class EciRuleDiff(BaseModel):
+    id: str
+    title: str
+    document: str
+    rule_entry: EciEntryCard
+    before_label: str
+    after_label: str
+    before: list[str]
+    after: list[str]
+    before_status: str
+    after_status: str
+    text_status: str
+    excerpt: bool
+    quoted_lines_before: list[int] = []
+    quoted_lines_after: list[int] = []
+    source_urls: list[str]
+    note: str | None = None
+    related: list[EciEntryRef] = []
+
+
+class EciCaseSummary(BaseModel):
+    slug: str
+    short_name: str
+    title: str
+    case_number: str | None = None
+    court: str
+    short_status: str
+    status_note: str | None = None
+    item_count: int
+    order_count: int
+    first_date: _Date | None = None
+    last_date: _Date | None = None
+    latest: EciEntryRef | None = None
+
+
+class EciCourtsPage(BaseModel):
+    cases: list[EciCaseSummary]
+    other_court_entries: int
+
+
+class EciCaseItem(BaseModel):
+    role: str
+    note: str | None = None
+    entry: EciEntryCard
+
+
+class EciCasePage(BaseModel):
+    slug: str
+    short_name: str
+    court: str
+    short_status: str
+    status_note: str | None = None
+    case: EciEntry
+    case_name: str
+    case_number: str | None = None
+    bench: str | None = None
+    citation: str | None = None
+    parties: dict[str, list[str]]
+    items: list[EciCaseItem]
+
+
+class EciPairContext(BaseModel):
+    charge: EciEntryRef
+    role: str
+    responses: list[EciEntryRef] = []
+    record: list[EciEntryRef] = []
+    note: str | None = None
+
+
+class EciEntryContext(BaseModel):
+    pairs: list[EciPairContext] = []
+    case: dict[str, Any] | None = None
+    objections: list[dict[str, Any]] = []
+    rule_diffs: list[EciRuleDiffRef] = []
+
+
+class EciEntryDetail(EciEntry):
+    context: EciEntryContext = EciEntryContext()

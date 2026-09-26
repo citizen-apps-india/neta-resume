@@ -9,6 +9,7 @@ list/dict; `topics`/`states` are native Postgres arrays and come back as Python 
 
 from __future__ import annotations
 
+import re
 from collections import defaultdict
 from datetime import date
 
@@ -837,6 +838,785 @@ def state_page(db: Session, slug: str) -> dict | None:
     if region is None:
         return None
     return {"region": region, "notes": region["notes"]}
+
+
+def _date_key_asc(d: date | None) -> tuple:
+    return (1, 0) if d is None else (0, d.toordinal())
+
+
+def _date_key_desc(d: date | None) -> tuple:
+    return (1, 0) if d is None else (0, -d.toordinal())
+
+
+def _load_cards(db: Session, ids: list[str]) -> list[dict]:
+    """EciEntryCard payloads for exactly these ids, in the given order (dedup, drops unknown ids).
+    Three queries: base columns, people, and a citation count with a lateral lead citation."""
+    ordered = list(dict.fromkeys(ids))
+    if not ordered:
+        return []
+
+    base_rows = db.execute(
+        text(
+            """
+            SELECT id, kind, date, date_precision, title, summary, status, lane, attributed_to,
+                   check_status
+            FROM eci_file_entry WHERE id = ANY(:ids)
+            """
+        ),
+        {"ids": ordered},
+    ).all()
+    by_id = {r.id: r for r in base_rows}
+
+    people_by_entry: dict[str, list[dict]] = defaultdict(list)
+    for r in db.execute(
+        text(
+            """
+            SELECT ep.entry_id, p.slug, p.name
+            FROM eci_file_entry_person ep JOIN eci_file_person p ON p.slug = ep.person_slug
+            WHERE ep.entry_id = ANY(:ids)
+            ORDER BY p.name
+            """
+        ),
+        {"ids": ordered},
+    ):
+        people_by_entry[r.entry_id].append({"slug": r.slug, "name": r.name})
+
+    counts_by_entry: dict[str, int] = {}
+    lead_by_entry: dict[str, dict | None] = {}
+    for r in db.execute(
+        text(
+            """
+            SELECT e.id AS entry_id, c.n AS citation_count, lead.url, lead.publisher, lead.title,
+                   lead.published, lead.tier, lead.archive_url, lead.quote
+            FROM eci_file_entry e
+            JOIN LATERAL (SELECT count(*) AS n FROM eci_file_citation WHERE entry_id = e.id) c ON true
+            LEFT JOIN LATERAL (
+                SELECT sr.native_url AS url, cit.publisher, cit.title, cit.published, cit.tier,
+                       cit.archive_url, cit.quote
+                FROM eci_file_citation cit JOIN source_ref sr ON sr.id = cit.source_ref_id
+                WHERE cit.entry_id = e.id ORDER BY cit.position LIMIT 1
+            ) lead ON true
+            WHERE e.id = ANY(:ids)
+            """
+        ),
+        {"ids": ordered},
+    ):
+        counts_by_entry[r.entry_id] = r.citation_count
+        lead_by_entry[r.entry_id] = (
+            {
+                "position": 1,
+                "url": r.url,
+                "publisher": r.publisher,
+                "title": r.title,
+                "published": r.published,
+                "tier": r.tier,
+                "archive_url": r.archive_url,
+                "quote": r.quote,
+            }
+            if r.url is not None
+            else None
+        )
+
+    out = []
+    for eid in ordered:
+        r = by_id.get(eid)
+        if r is None:
+            continue
+        out.append(
+            {
+                "id": r.id,
+                "kind": r.kind,
+                "date": r.date,
+                "date_precision": r.date_precision,
+                "title": r.title,
+                "summary": r.summary,
+                "status": r.status,
+                "lane": r.lane,
+                "attributed_to": r.attributed_to,
+                "check_status": r.check_status,
+                "people": people_by_entry.get(eid, []),
+                "citation_count": counts_by_entry.get(eid, 0),
+                "lead_citation": lead_by_entry.get(eid),
+            }
+        )
+    return out
+
+
+def _load_entry_refs(db: Session, ids: list[str]) -> dict[str, dict]:
+    """EciEntryRef payloads (with `check_status`), keyed by id. A phase 5 sibling of `_entry_refs`
+    (phase 3/4), which keeps its own shape so existing callers are unaffected."""
+    ordered = list(dict.fromkeys(ids))
+    if not ordered:
+        return {}
+    rows = db.execute(
+        text(
+            "SELECT id, title, date, date_precision, status, check_status "
+            "FROM eci_file_entry WHERE id = ANY(:ids)"
+        ),
+        {"ids": ordered},
+    ).all()
+    return {
+        r.id: {
+            "id": r.id,
+            "title": r.title,
+            "date": r.date,
+            "date_precision": r.date_precision,
+            "status": r.status,
+            "check_status": r.check_status,
+        }
+        for r in rows
+    }
+
+
+def objections(db: Session) -> dict:
+    """`/eci-files/objections` — the fourteen: 11 identified objections plus the report/response."""
+    meta_row = db.execute(
+        text(
+            "SELECT missing, notes, report_entry_id, response_entry_id "
+            "FROM eci_file_objection_meta WHERE id = 1"
+        )
+    ).first()
+
+    obj_rows = db.execute(
+        text(
+            "SELECT n, date, date_precision, concerns, followed_by, public "
+            "FROM eci_file_objection ORDER BY n"
+        )
+    ).all()
+
+    by_objection: dict[int, list[dict]] = defaultdict(list)
+    for r in db.execute(
+        text(
+            """
+            SELECT op.n, p.slug, p.name
+            FROM eci_file_objection_person op JOIN eci_file_person p ON p.slug = op.person_slug
+            ORDER BY op.n, op.position
+            """
+        )
+    ):
+        by_objection[r.n].append({"slug": r.slug, "name": r.name})
+
+    entries_by_objection: dict[int, list[str]] = defaultdict(list)
+    for r in db.execute(
+        text("SELECT n, entry_id FROM eci_file_objection_entry ORDER BY n, position")
+    ):
+        entries_by_objection[r.n].append(r.entry_id)
+
+    followed_by_ids: dict[int, list[str]] = {}
+    ref_ids: list[str] = [eid for ids in entries_by_objection.values() for eid in ids]
+    for row in obj_rows:
+        if row.followed_by:
+            ids = [
+                tok
+                for tok in re.findall(r"\(([^)]+)\)", row.followed_by)
+                if not re.fullmatch(r"objection \d+", tok)
+            ]
+            followed_by_ids[row.n] = ids
+            ref_ids.extend(ids)
+    if meta_row is not None and meta_row.report_entry_id:
+        ref_ids.append(meta_row.report_entry_id)
+
+    refs = _load_entry_refs(db, ref_ids)
+    all_person_slugs = {p["slug"] for rows in by_objection.values() for p in rows}
+    photos = _photo_map(db, all_person_slugs)
+
+    response_card = None
+    if meta_row is not None and meta_row.response_entry_id:
+        cards = _load_cards(db, [meta_row.response_entry_id])
+        response_card = cards[0] if cards else None
+
+    objections_out = [
+        {
+            "n": row.n,
+            "date": row.date,
+            "date_precision": row.date_precision,
+            "by": [
+                {"slug": p["slug"], "name": p["name"], "photo": photos.get(p["slug"])}
+                for p in by_objection.get(row.n, [])
+            ],
+            "concerns": row.concerns,
+            "followed_by": row.followed_by,
+            "followed_by_refs": [
+                refs[eid] for eid in followed_by_ids.get(row.n, []) if eid in refs
+            ],
+            "public": row.public,
+            "entries": [refs[eid] for eid in entries_by_objection.get(row.n, []) if eid in refs],
+        }
+        for row in obj_rows
+    ]
+
+    person_counts: dict[str, dict[str, int]] = defaultdict(lambda: {"count": 0, "joint": 0})
+    names_by_slug: dict[str, str] = {}
+    for row in obj_rows:
+        people = by_objection.get(row.n, [])
+        joint = len(people) > 1
+        for p in people:
+            names_by_slug[p["slug"]] = p["name"]
+            person_counts[p["slug"]]["count"] += 1
+            if joint:
+                person_counts[p["slug"]]["joint"] += 1
+
+    by_person = sorted(
+        (
+            {
+                "slug": slug,
+                "name": names_by_slug[slug],
+                "photo": photos.get(slug),
+                "count": c["count"],
+                "joint": c["joint"],
+            }
+            for slug, c in person_counts.items()
+        ),
+        key=lambda p: (-p["count"], p["name"]),
+    )
+
+    identified = len(obj_rows)
+    missing = meta_row.missing if meta_row is not None else 0
+    return {
+        "identified": identified,
+        "missing": missing,
+        "reported_total": identified + missing,
+        "notes": meta_row.notes if meta_row is not None else None,
+        "report": (
+            refs.get(meta_row.report_entry_id)
+            if meta_row is not None and meta_row.report_entry_id
+            else None
+        ),
+        "response": response_card,
+        "objections": objections_out,
+        "by_person": by_person,
+    }
+
+
+def assemble_answer_rows(
+    pair_charge_ids: set[str],
+    also_recorded_ids: set[str],
+    claim_ids: list[str],
+    response_links: dict[str, str],
+    unpaired_ids: set[str],
+) -> list[dict]:
+    """Pure (no DB): a synthesised, `curated=False` answer row for every claim or response target
+    the curated `pairs.json` rows don't already cover — PHASE5-SPEC.md section 4.3's completeness
+    rule. A new claim, or a response nobody paired yet, can never go missing from `/eci-files/answers`
+    just because a curated file wasn't updated.
+
+    `pair_charge_ids` / `also_recorded_ids` are every curated pair's `charge_id`s and
+    `also_recorded_as` ids. `claim_ids` is every `status='claim'` entry id. `response_links` maps a
+    `status='response'` entry id to the entry id its `response_to` names. `unpaired_ids` is every id
+    already recorded in `eci_file_unpaired_response`. A row's `responses` come from `response_links`;
+    `record`, `related` and `note` are always empty.
+    """
+    covered = pair_charge_ids | also_recorded_ids | unpaired_ids
+    response_targets = list(dict.fromkeys(response_links.values()))
+
+    seen: set[str] = set()
+    rows: list[dict] = []
+    for charge_id in [*claim_ids, *response_targets]:
+        if charge_id in covered or charge_id in seen:
+            continue
+        seen.add(charge_id)
+        responses = [rid for rid, target in response_links.items() if target == charge_id]
+        rows.append(
+            {
+                "charge_id": charge_id,
+                "also_recorded_as": [],
+                "response_ids": responses,
+                "record_ids": [],
+                "related": [],
+                "note": None,
+                "curated": False,
+            }
+        )
+    return rows
+
+
+def finalize_answer_rows(rows: list[dict]) -> tuple[list[dict], dict]:
+    """Pure (no DB): sorts assembled answer rows (charge date descending, then id) and computes the
+    `view=all` counts, always on the full set regardless of what the caller later filters to. Each
+    row is `{"charge": EciEntryCard-shaped dict, "responses": [...], "record": [...], ...}`."""
+    ordered = sorted(rows, key=lambda r: (_date_key_desc(r["charge"]["date"]), r["charge"]["id"]))
+    with_response = sum(1 for r in ordered if r["responses"])
+    with_record = sum(1 for r in ordered if r["record"])
+    counts = {
+        "rows": len(ordered),
+        "with_response": with_response,
+        "without_response": len(ordered) - with_response,
+        "with_record": with_record,
+    }
+    return ordered, counts
+
+
+def filter_answer_rows(rows: list[dict], view: str) -> list[dict]:
+    """Pure (no DB): the `?view=` filter over already-sorted rows."""
+    if view == "no-response":
+        return [r for r in rows if not r["responses"]]
+    if view == "with-record":
+        return [r for r in rows if r["record"]]
+    return rows
+
+
+def answers(db: Session, *, view: str = "all") -> dict:
+    """`/eci-files/answers` — every charge or Commission action beside its response, plus the
+    synthesised completeness rows (`assemble_answer_rows`). `counts` is always computed on the full
+    (`view=all`) set, whatever `view` is requested."""
+    pair_rows = db.execute(
+        text("SELECT charge_id, note FROM eci_file_pair ORDER BY position")
+    ).all()
+
+    items_by_charge: dict[str, dict[str, list[dict]]] = defaultdict(lambda: defaultdict(list))
+    for r in db.execute(
+        text(
+            "SELECT charge_id, entry_id, role, why FROM eci_file_pair_item "
+            "ORDER BY charge_id, role, position"
+        )
+    ):
+        items_by_charge[r.charge_id][r.role].append({"entry_id": r.entry_id, "why": r.why})
+
+    unpaired_rows = db.execute(
+        text("SELECT response_entry_id, note FROM eci_file_unpaired_response")
+    ).all()
+    unpaired_ids = {r.response_entry_id for r in unpaired_rows}
+
+    claim_ids = [
+        r.id for r in db.execute(text("SELECT id FROM eci_file_entry WHERE status = 'claim'"))
+    ]
+    response_links = {
+        r.id: r.response_to
+        for r in db.execute(
+            text(
+                "SELECT id, response_to FROM eci_file_entry "
+                "WHERE status = 'response' AND response_to IS NOT NULL"
+            )
+        )
+    }
+
+    pair_charge_ids = {r.charge_id for r in pair_rows}
+    also_recorded_ids = {
+        item["entry_id"] for rows in items_by_charge.values() for item in rows.get("same", [])
+    }
+
+    curated_rows = [
+        {
+            "charge_id": r.charge_id,
+            "also_recorded_as": [i["entry_id"] for i in items_by_charge[r.charge_id].get("same", [])],
+            "response_ids": [
+                i["entry_id"] for i in items_by_charge[r.charge_id].get("response", [])
+            ],
+            "record_ids": [i["entry_id"] for i in items_by_charge[r.charge_id].get("record", [])],
+            "related": items_by_charge[r.charge_id].get("related", []),
+            "note": r.note,
+            "curated": True,
+        }
+        for r in pair_rows
+    ]
+
+    synthesised_rows = assemble_answer_rows(
+        pair_charge_ids, also_recorded_ids, claim_ids, response_links, unpaired_ids
+    )
+    all_rows = curated_rows + synthesised_rows
+
+    entry_ids: list[str] = []
+    for row in all_rows:
+        entry_ids.append(row["charge_id"])
+        entry_ids.extend(row["response_ids"])
+        entry_ids.extend(row["record_ids"])
+        entry_ids.extend(row["also_recorded_as"])
+        entry_ids.extend(i["entry_id"] for i in row["related"])
+    entry_ids.extend(unpaired_ids)
+
+    cards = {c["id"]: c for c in _load_cards(db, entry_ids)}
+    refs = _load_entry_refs(db, entry_ids)
+
+    out_rows = []
+    for row in all_rows:
+        charge_card = cards.get(row["charge_id"])
+        if charge_card is None:
+            continue
+        responses = sorted(
+            (cards[r] for r in row["response_ids"] if r in cards),
+            key=lambda c: _date_key_asc(c["date"]),
+        )
+        record = [cards[r] for r in row["record_ids"] if r in cards]
+        related = [
+            {"entry": refs[i["entry_id"]], "why": i["why"]}
+            for i in row["related"]
+            if i["entry_id"] in refs
+        ]
+        out_rows.append(
+            {
+                "charge": charge_card,
+                "also_recorded_as": [refs[eid] for eid in row["also_recorded_as"] if eid in refs],
+                "responses": responses,
+                "record": record,
+                "related": related,
+                "note": row["note"],
+                "curated": row["curated"],
+            }
+        )
+
+    ordered_rows, counts = finalize_answer_rows(out_rows)
+    filtered = filter_answer_rows(ordered_rows, view)
+
+    return {
+        "counts": counts,
+        "rows": filtered,
+        "unpaired_responses": [
+            {"response": cards[r.response_entry_id], "note": r.note}
+            for r in unpaired_rows
+            if r.response_entry_id in cards
+        ],
+    }
+
+
+def rules(db: Session) -> dict:
+    """`/eci-files/rules` — every `kind='rule'` entry, date descending, with the before-and-after
+    diffs available for each."""
+    rule_entry_ids = [
+        r.id
+        for r in db.execute(
+            text(
+                "SELECT id FROM eci_file_entry WHERE kind = 'rule' ORDER BY date DESC NULLS LAST, id"
+            )
+        )
+    ]
+    cards = {c["id"]: c for c in _load_cards(db, rule_entry_ids)}
+
+    diffs_by_rule: dict[str, list[dict]] = defaultdict(list)
+    all_diffs: list[dict] = []
+    for r in db.execute(
+        text(
+            "SELECT id, title, text_status, rule_entry_id FROM eci_file_rule_diff ORDER BY position"
+        )
+    ):
+        ref = {"id": r.id, "title": r.title, "text_status": r.text_status}
+        diffs_by_rule[r.rule_entry_id].append(ref)
+        all_diffs.append(ref)
+
+    rows = [
+        {"entry": cards[eid], "diffs": diffs_by_rule.get(eid, [])}
+        for eid in rule_entry_ids
+        if eid in cards
+    ]
+
+    with_diff = db.execute(
+        text("SELECT count(DISTINCT rule_entry_id) FROM eci_file_rule_diff")
+    ).scalar_one()
+
+    return {
+        "rules": rows,
+        "diffs": all_diffs,
+        "counts": {"rules": len(rule_entry_ids), "with_diff": with_diff, "diffs": len(all_diffs)},
+    }
+
+
+def rule_diff(db: Session, diff_id: str) -> dict | None:
+    """`/eci-files/rules/diffs/{id}` — one before-and-after comparison. The API returns lines; the
+    diff itself is computed on the web, next to its renderer."""
+    row = db.execute(
+        text(
+            """
+            SELECT id, title, document, rule_entry_id, before_label, after_label, before_lines,
+                   after_lines, before_status, after_status, text_status, excerpt,
+                   quoted_lines_before, quoted_lines_after, source_urls, note
+            FROM eci_file_rule_diff WHERE id = :id
+            """
+        ),
+        {"id": diff_id},
+    ).first()
+    if row is None:
+        return None
+
+    rule_cards = _load_cards(db, [row.rule_entry_id])
+    related_ids = [
+        r.entry_id
+        for r in db.execute(
+            text("SELECT entry_id FROM eci_file_rule_diff_entry WHERE diff_id = :id"),
+            {"id": diff_id},
+        )
+    ]
+    refs = _load_entry_refs(db, related_ids)
+
+    return {
+        "id": row.id,
+        "title": row.title,
+        "document": row.document,
+        "rule_entry": rule_cards[0] if rule_cards else None,
+        "before_label": row.before_label,
+        "after_label": row.after_label,
+        "before": list(row.before_lines or []),
+        "after": list(row.after_lines or []),
+        "before_status": row.before_status,
+        "after_status": row.after_status,
+        "text_status": row.text_status,
+        "excerpt": row.excerpt,
+        "quoted_lines_before": list(row.quoted_lines_before or []),
+        "quoted_lines_after": list(row.quoted_lines_after or []),
+        "source_urls": list(row.source_urls or []),
+        "note": row.note,
+        "related": [refs[eid] for eid in related_ids if eid in refs],
+    }
+
+
+def courts(db: Session) -> dict:
+    """`/eci-files/courts` — the five cases, file order, with their step counts and latest item."""
+    case_rows = db.execute(
+        text(
+            "SELECT slug, short_name, case_entry_id, court, short_status, status_note "
+            "FROM eci_file_case ORDER BY position"
+        )
+    ).all()
+
+    items_by_case: dict[str, list[dict]] = defaultdict(list)
+    for r in db.execute(
+        text(
+            """
+            SELECT ci.case_slug, ci.entry_id, ci.role, e.date
+            FROM eci_file_case_item ci JOIN eci_file_entry e ON e.id = ci.entry_id
+            """
+        )
+    ):
+        items_by_case[r.case_slug].append({"entry_id": r.entry_id, "role": r.role, "date": r.date})
+
+    case_entry_ids = [r.case_entry_id for r in case_rows]
+    case_entry_rows = {
+        r.id: r
+        for r in db.execute(
+            text("SELECT id, title, details FROM eci_file_entry WHERE id = ANY(:ids)"),
+            {"ids": case_entry_ids},
+        )
+    }
+
+    latest_ids: list[str] = []
+    per_case: list[dict] = []
+    for r in case_rows:
+        items = sorted(
+            items_by_case.get(r.slug, []),
+            key=lambda i: (_date_key_asc(i["date"]), i["entry_id"]),
+        )
+        non_related = [i for i in items if i["role"] != "related"]
+        latest_item = non_related[-1] if non_related else None
+        if latest_item is not None:
+            latest_ids.append(latest_item["entry_id"])
+        entry_row = case_entry_rows.get(r.case_entry_id)
+        details = (entry_row.details if entry_row is not None else None) or {}
+        per_case.append(
+            {
+                "slug": r.slug,
+                "short_name": r.short_name,
+                "title": entry_row.title if entry_row is not None else "",
+                "case_number": details.get("case_number"),
+                "court": r.court,
+                "short_status": r.short_status,
+                "status_note": r.status_note,
+                "item_count": len(items),
+                "order_count": sum(1 for i in items if i["role"] in ("order", "judgment")),
+                "first_date": items[0]["date"] if items else None,
+                "last_date": items[-1]["date"] if items else None,
+                "_latest_entry_id": latest_item["entry_id"] if latest_item is not None else None,
+            }
+        )
+
+    refs = _load_entry_refs(db, latest_ids)
+    for c in per_case:
+        c["latest"] = refs.get(c.pop("_latest_entry_id"))
+
+    other_court_entries = db.execute(
+        text(
+            """
+            SELECT count(*) FROM eci_file_entry e
+            WHERE e.lane = 'courts' AND e.kind <> 'case'
+              AND e.id NOT IN (SELECT entry_id FROM eci_file_case_item)
+            """
+        )
+    ).scalar_one()
+
+    return {"cases": per_case, "other_court_entries": other_court_entries}
+
+
+def case_page(db: Session, slug: str) -> dict | None:
+    """`/eci-files/courts/{slug}` — one case, order by order (entry date ascending, then id)."""
+    row = db.execute(
+        text(
+            "SELECT slug, short_name, case_entry_id, court, short_status, status_note, parties "
+            "FROM eci_file_case WHERE slug = :slug"
+        ),
+        {"slug": slug},
+    ).first()
+    if row is None:
+        return None
+
+    case_entry = entry(db, row.case_entry_id)
+    details = (case_entry or {}).get("details") or {}
+
+    item_rows = db.execute(
+        text("SELECT entry_id, role, note FROM eci_file_case_item WHERE case_slug = :slug"),
+        {"slug": slug},
+    ).all()
+    cards = {c["id"]: c for c in _load_cards(db, [r.entry_id for r in item_rows])}
+    items = [
+        {"role": r.role, "note": r.note, "entry": cards[r.entry_id]}
+        for r in item_rows
+        if r.entry_id in cards
+    ]
+    items.sort(key=lambda i: (_date_key_asc(i["entry"]["date"]), i["entry"]["id"]))
+
+    parties = row.parties or {}
+    return {
+        "slug": row.slug,
+        "short_name": row.short_name,
+        "court": row.court,
+        "short_status": row.short_status,
+        "status_note": row.status_note,
+        "case": case_entry,
+        "case_name": details.get("case_name") or (case_entry or {}).get("title"),
+        "case_number": details.get("case_number"),
+        "bench": details.get("bench"),
+        "citation": details.get("citation"),
+        "parties": {
+            "petitioners": list(parties.get("petitioners", [])),
+            "respondents": list(parties.get("respondents", [])),
+        },
+        "items": items,
+    }
+
+
+def entry_context(db: Session, entry_id: str) -> dict:
+    """Every curated pair, case membership, objection and rule diff this entry is part of. One query
+    per context kind, each on an indexed `entry_id` column. Synthesised answer rows are not included —
+    the drawer already shows `responses`/`response_to` for those."""
+    charge_ids: list[str] = []
+    role_by_charge: dict[str, str] = {}
+
+    def _add_charge(charge_id: str, role: str) -> None:
+        if charge_id not in role_by_charge:
+            charge_ids.append(charge_id)
+            role_by_charge[charge_id] = role
+
+    if db.execute(
+        text("SELECT 1 FROM eci_file_pair WHERE charge_id = :id"), {"id": entry_id}
+    ).first():
+        _add_charge(entry_id, "charge")
+
+    for r in db.execute(
+        text("SELECT charge_id, role FROM eci_file_pair_item WHERE entry_id = :id"),
+        {"id": entry_id},
+    ):
+        _add_charge(r.charge_id, r.role)
+
+    pairs: list[dict] = []
+    if charge_ids:
+        notes_by_charge = {
+            r.charge_id: r.note
+            for r in db.execute(
+                text("SELECT charge_id, note FROM eci_file_pair WHERE charge_id = ANY(:ids)"),
+                {"ids": charge_ids},
+            )
+        }
+        item_rows = db.execute(
+            text(
+                "SELECT charge_id, entry_id, role FROM eci_file_pair_item "
+                "WHERE charge_id = ANY(:ids)"
+            ),
+            {"ids": charge_ids},
+        ).all()
+        refs = _load_entry_refs(db, [r.entry_id for r in item_rows] + charge_ids)
+
+        responses_by_charge: dict[str, list[dict]] = defaultdict(list)
+        record_by_charge: dict[str, list[dict]] = defaultdict(list)
+        for r in item_rows:
+            if r.role == "response" and r.entry_id in refs:
+                responses_by_charge[r.charge_id].append(refs[r.entry_id])
+            elif r.role == "record" and r.entry_id in refs:
+                record_by_charge[r.charge_id].append(refs[r.entry_id])
+
+        pairs = [
+            {
+                "charge": refs[cid],
+                "role": role_by_charge[cid],
+                "responses": responses_by_charge.get(cid, []),
+                "record": record_by_charge.get(cid, []),
+                "note": notes_by_charge.get(cid),
+            }
+            for cid in charge_ids
+            if cid in refs
+        ]
+
+    case_row = db.execute(
+        text(
+            """
+            SELECT c.slug, c.short_name, ci.role
+            FROM eci_file_case_item ci JOIN eci_file_case c ON c.slug = ci.case_slug
+            WHERE ci.entry_id = :id
+            """
+        ),
+        {"id": entry_id},
+    ).first()
+    if case_row is None:
+        case_row = db.execute(
+            text(
+                "SELECT slug, short_name, 'case' AS role FROM eci_file_case "
+                "WHERE case_entry_id = :id"
+            ),
+            {"id": entry_id},
+        ).first()
+    case_ctx = (
+        {"slug": case_row.slug, "short_name": case_row.short_name, "role": case_row.role}
+        if case_row is not None
+        else None
+    )
+
+    objections_ctx = [
+        {"n": r.n, "concerns": r.concerns}
+        for r in db.execute(
+            text(
+                """
+                SELECT o.n, o.concerns
+                FROM eci_file_objection_entry oe JOIN eci_file_objection o ON o.n = oe.n
+                WHERE oe.entry_id = :id ORDER BY o.n
+                """
+            ),
+            {"id": entry_id},
+        )
+    ]
+
+    # The entry's own diff (its `rule_entry_id`) comes first; a diff that merely names it in
+    # `related_entry_ids` comes after, in position order.
+    own_diffs = [
+        {"id": r.id, "title": r.title, "text_status": r.text_status}
+        for r in db.execute(
+            text(
+                "SELECT id, title, text_status FROM eci_file_rule_diff "
+                "WHERE rule_entry_id = :id ORDER BY position"
+            ),
+            {"id": entry_id},
+        )
+    ]
+    own_diff_ids = {d["id"] for d in own_diffs}
+    related_diffs = [
+        {"id": r.id, "title": r.title, "text_status": r.text_status}
+        for r in db.execute(
+            text(
+                """
+                SELECT rd.id, rd.title, rd.text_status
+                FROM eci_file_rule_diff_entry rde JOIN eci_file_rule_diff rd ON rd.id = rde.diff_id
+                WHERE rde.entry_id = :id ORDER BY rd.position
+                """
+            ),
+            {"id": entry_id},
+        )
+        if r.id not in own_diff_ids
+    ]
+    rule_diffs_ctx = own_diffs + related_diffs
+
+    return {"pairs": pairs, "case": case_ctx, "objections": objections_ctx, "rule_diffs": rule_diffs_ctx}
+
+
+def entry_detail(db: Session, entry_id: str) -> dict | None:
+    """`/eci-files/entries/{id}` — the full entry plus its phase 5 `context`."""
+    base = entry(db, entry_id)
+    if base is None:
+        return None
+    return {**base, "context": entry_context(db, entry_id)}
 
 
 def density(db: Session) -> dict:

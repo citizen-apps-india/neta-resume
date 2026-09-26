@@ -60,6 +60,11 @@ DEFAULT_REGIONS_PATH = REPO_ROOT / "data" / "eci_files" / "regions.json"
 DEFAULT_NATIONAL_PATH = REPO_ROOT / "data" / "eci_files" / "national.json"
 DEFAULT_SELECTIONS_PATH = REPO_ROOT / "data" / "eci_files" / "selections.json"
 DEFAULT_MEDIA_PATH = REPO_ROOT / "data" / "eci_files" / "people_media.json"
+DEFAULT_OBJECTIONS_PATH = REPO_ROOT / "data" / "eci_files" / "objections.json"
+DEFAULT_PAIRS_PATH = REPO_ROOT / "data" / "eci_files" / "pairs.json"
+DEFAULT_RULE_DIFFS_PATH = REPO_ROOT / "data" / "eci_files" / "rule_diffs.json"
+DEFAULT_CASES_PATH = REPO_ROOT / "data" / "eci_files" / "case_orders.json"
+DEFAULT_MERGES_PATH = REPO_ROOT / "data" / "eci_files" / "merges.json"
 
 _TIER_TO_SOURCE_CODE = {1: "eci_files_primary", 2: "eci_files_research", 3: "eci_files_press"}
 _SLUG_RE = re.compile(r"[^a-z0-9]+")
@@ -79,6 +84,23 @@ _SELECTION_MEMBER_PARTS = (
 )
 _DEPARTURE_HOW = ("resigned", "tenure_ended")
 _LICENCE_REVIEW = ("reviewed", "uploader_asserted")
+
+_TEXT_STATUSES = ("verbatim", "quoted in reporting", "paraphrased from reporting")
+_TEXT_STATUS_RANK = {status: rank for rank, status in enumerate(_TEXT_STATUSES)}
+_PAIR_ITEM_ROLES = ("response", "record", "related", "same")
+_CASE_SHORT_STATUSES = ("pending", "disposed", "referred")
+_FOLLOWED_BY_PREFIXES = (
+    "commissioners-",
+    "courts-",
+    "elections-2019-2024-",
+    "numbers-",
+    "officials-",
+    "selection-law-",
+    "sir-rules-",
+    "statements-reporting-",
+)
+_OBJECTION_REF_RE = re.compile(r"objection (\d+)$")
+_PAREN_TOKEN_RE = re.compile(r"\(([^)]+)\)")
 
 _COMMISSION_OFFICE_RE = re.compile(r"^(Chief )?Election Commissioner$")
 _STATE_OFFICE_PREFIX = "Chief Electoral Officer"
@@ -374,6 +396,145 @@ class MediaFile(BaseModel):
     people: list[PersonMedia] = Field(default_factory=list)
 
 
+# --- ECI Files phase 5: objections, charge-and-answer pairs, rule diffs, court cases -----------------
+
+
+class ObjectionEntry(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    n: int = Field(gt=0)
+    date: date_type | None = None
+    date_precision: str = Field(pattern=r"^(day|month|year)$")
+    by: list[str] = Field(min_length=1)
+    concerns: str = Field(min_length=1)
+    entry_ids: list[str] = Field(min_length=1)
+    followed_by: str | None = None
+    public: bool
+
+    _date = field_validator("date", mode="before")(lambda v: _partial_date(v))
+
+
+class ObjectionsFile(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    objections: list[ObjectionEntry] = Field(default_factory=list)
+    missing: int = Field(ge=0)
+    notes: str | None = None
+    report_entry_id: str = Field(min_length=1)
+    response_entry_id: str = Field(min_length=1)
+
+
+class PairRelated(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str = Field(min_length=1)
+    why: str = Field(min_length=1)
+
+
+class Pair(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    charge_id: str = Field(min_length=1)
+    also_recorded_as: list[str] = Field(default_factory=list)
+    response_ids: list[str] = Field(default_factory=list)
+    record_ids: list[str] = Field(default_factory=list)
+    related: list[PairRelated] = Field(default_factory=list)
+    note: str | None = None
+
+
+class UnpairedResponse(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    response_id: str = Field(min_length=1)
+    note: str | None = None
+
+
+class PairsFile(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    about: str | None = None
+    built_on: str | None = None
+    pairs: list[Pair] = Field(default_factory=list)
+    unpaired_responses: list[UnpairedResponse] = Field(default_factory=list)
+
+
+class RuleDiffEntry(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    id: str = Field(pattern=r"^[a-z0-9-]+$")
+    rule_entry_id: str = Field(min_length=1)
+    title: str = Field(min_length=1)
+    document: str = Field(min_length=1)
+    before_label: str = Field(min_length=1)
+    after_label: str = Field(min_length=1)
+    before: list[str] = Field(min_length=1)
+    after: list[str] = Field(min_length=1)
+    before_status: str = Field(pattern="^(" + "|".join(_TEXT_STATUSES) + ")$")
+    after_status: str = Field(pattern="^(" + "|".join(_TEXT_STATUSES) + ")$")
+    text_status: str = Field(pattern="^(" + "|".join(_TEXT_STATUSES) + ")$")
+    excerpt: bool = False
+    quoted_lines_before: list[int] = Field(default_factory=list)
+    quoted_lines_after: list[int] = Field(default_factory=list)
+    source_urls: list[str] = Field(min_length=1)
+    note: str | None = None
+    related_entry_ids: list[str] = Field(default_factory=list)
+
+
+class RuleDiffsFile(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    about: str | None = None
+    built_on: str | None = None
+    text_statuses: list[str] = Field(default_factory=list)
+    diffs: list[RuleDiffEntry] = Field(default_factory=list)
+    gaps: list[dict[str, Any]] = Field(default_factory=list)
+
+
+class CaseParties(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    petitioners: list[str] = Field(default_factory=list)
+    respondents: list[str] = Field(default_factory=list)
+
+
+class CaseItem(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    entry_id: str = Field(min_length=1)
+    role: str = Field(min_length=1)
+    note: str | None = None
+
+
+class CaseEntry(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    slug: str = Field(pattern=r"^[a-z0-9-]+$")
+    short_name: str = Field(min_length=1)
+    case_entry_id: str = Field(min_length=1)
+    court: str = Field(min_length=1)
+    short_status: str = Field(pattern="^(" + "|".join(_CASE_SHORT_STATUSES) + ")$")
+    status_note: str | None = None
+    parties: CaseParties = Field(default_factory=CaseParties)
+    items: list[CaseItem] = Field(default_factory=list)
+
+
+class CaseUnmapped(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+
+    entry_id: str = Field(min_length=1)
+    why: str = Field(min_length=1)
+
+
+class CasesFile(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+
+    about: str | None = None
+    built_on: str | None = None
+    roles: list[str] = Field(default_factory=list)
+    cases: list[CaseEntry] = Field(default_factory=list)
+    unmapped: list[CaseUnmapped] = Field(default_factory=list)
+
+
 class LoadedEntry(NamedTuple):
     area: str
     entry: Entry
@@ -422,6 +583,11 @@ class LoadedPayload(NamedTuple):
     headline: HeadlineFile | None
     selections: SelectionsFile | None
     media: MediaFile | None
+    objections: ObjectionsFile | None = None
+    pairs: PairsFile | None = None
+    rule_diffs: RuleDiffsFile | None = None
+    cases: CasesFile | None = None
+    resolved_response_count: int = 0
 
 
 class PersonGroupInfo(NamedTuple):
@@ -923,6 +1089,282 @@ def _load_media(path: Path | None, person_slugs: set[str]) -> tuple[MediaFile | 
     return parsed, []
 
 
+def _load_merges(path: Path | None) -> tuple[dict[str, str], list[str]]:
+    """merges.json's `drop -> keep` map. Optional, following the states_path rule."""
+    if path is None or not path.exists():
+        return {}, []
+    try:
+        payload = json.loads(path.read_text())
+    except json.JSONDecodeError as e:
+        return {}, [f"{path.name}: invalid JSON: {e}"]
+
+    drop_to_keep: dict[str, str] = {}
+    for merge in payload.get("merges", []):
+        keep = merge.get("keep")
+        for drop in merge.get("drop", []):
+            drop_to_keep[drop] = keep
+    return drop_to_keep, []
+
+
+def _resolve_response_links(loaded: list[LoadedEntry], drop_to_keep: dict[str, str]) -> int:
+    """Rewrites a `response_to` pointing at a merged-away id to the id that replaced it. Returns how
+    many links were rewritten."""
+    resolved = 0
+    for _, entry in loaded:
+        if entry.response_to is not None and entry.response_to in drop_to_keep:
+            entry.response_to = drop_to_keep[entry.response_to]
+            resolved += 1
+    return resolved
+
+
+def _load_objections(
+    path: Path | None, entry_ids: set[str], person_slugs: set[str]
+) -> tuple[ObjectionsFile | None, list[str]]:
+    """objections.json is optional, following the states_path rule."""
+    if path is None or not path.exists():
+        return None, []
+    try:
+        raw = json.loads(path.read_text())
+    except json.JSONDecodeError as e:
+        return None, [f"{path.name}: invalid JSON: {e}"]
+    try:
+        parsed = ObjectionsFile.model_validate(raw)
+    except ValidationError as e:
+        return None, [f"{path.name}: {e}"]
+
+    errors: list[str] = []
+
+    def _check_entry(label: str, eid: str) -> None:
+        if eid not in entry_ids:
+            errors.append(f"{path.name}: {label}: unknown entry id {eid!r}")
+
+    _check_entry("report_entry_id", parsed.report_entry_id)
+    _check_entry("response_entry_id", parsed.response_entry_id)
+
+    seen_n: set[int] = set()
+    max_n = 0
+    for obj in parsed.objections:
+        if obj.n in seen_n:
+            errors.append(f"{path.name}: objection {obj.n}: duplicate n")
+        seen_n.add(obj.n)
+        max_n = max(max_n, obj.n)
+
+        for name in obj.by:
+            if _slugify(name) not in person_slugs:
+                errors.append(f"{path.name}: objection {obj.n}: unknown person {name!r}")
+
+        for eid in obj.entry_ids:
+            _check_entry(f"objection {obj.n}", eid)
+
+    expected = set(range(1, max_n + 1))
+    if seen_n != expected:
+        errors.append(
+            f"{path.name}: n values not contiguous from 1 "
+            f"(missing {sorted(expected - seen_n)}, unexpected {sorted(seen_n - expected)})"
+        )
+
+    for obj in parsed.objections:
+        if not obj.followed_by:
+            continue
+        for token in _PAREN_TOKEN_RE.findall(obj.followed_by):
+            m = _OBJECTION_REF_RE.match(token)
+            if m:
+                if int(m.group(1)) > max_n:
+                    errors.append(
+                        f"{path.name}: objection {obj.n}: followed_by cites objection "
+                        f"{m.group(1)} above the highest n {max_n}"
+                    )
+            elif token.startswith(_FOLLOWED_BY_PREFIXES):
+                _check_entry(f"objection {obj.n} followed_by", token)
+
+    if errors:
+        return None, errors
+    return parsed, []
+
+
+def _load_pairs(
+    path: Path | None, entry_ids: set[str], entry_status: dict[str, str]
+) -> tuple[PairsFile | None, list[str]]:
+    """pairs.json is optional, following the states_path rule."""
+    if path is None or not path.exists():
+        return None, []
+    try:
+        raw = json.loads(path.read_text())
+    except json.JSONDecodeError as e:
+        return None, [f"{path.name}: invalid JSON: {e}"]
+    try:
+        parsed = PairsFile.model_validate(raw)
+    except ValidationError as e:
+        return None, [f"{path.name}: {e}"]
+
+    errors: list[str] = []
+
+    def _check_entry(label: str, eid: str) -> None:
+        if eid not in entry_ids:
+            errors.append(f"{path.name}: {label}: unknown entry id {eid!r}")
+
+    seen_charge_ids: set[str] = set()
+    also_recorded_ids: set[str] = set()
+    all_response_ids: set[str] = set()
+    for pair in parsed.pairs:
+        if pair.charge_id in seen_charge_ids:
+            errors.append(f"{path.name}: duplicate charge_id {pair.charge_id!r}")
+        seen_charge_ids.add(pair.charge_id)
+        _check_entry(pair.charge_id, pair.charge_id)
+
+        for eid in pair.also_recorded_as:
+            _check_entry(f"{pair.charge_id} also_recorded_as", eid)
+            also_recorded_ids.add(eid)
+        for eid in pair.response_ids:
+            _check_entry(f"{pair.charge_id} response_ids", eid)
+            if entry_status.get(eid) != "response":
+                errors.append(
+                    f"{path.name}: {pair.charge_id}: response_ids {eid!r} is not a response entry"
+                )
+            all_response_ids.add(eid)
+        for eid in pair.record_ids:
+            _check_entry(f"{pair.charge_id} record_ids", eid)
+            if entry_status.get(eid) != "documented":
+                errors.append(
+                    f"{path.name}: {pair.charge_id}: record_ids {eid!r} is not a documented entry"
+                )
+        for rel in pair.related:
+            _check_entry(f"{pair.charge_id} related", rel.id)
+
+    overlap = seen_charge_ids & also_recorded_ids
+    if overlap:
+        errors.append(
+            f"{path.name}: ids both a charge_id and an also_recorded_as: {sorted(overlap)}"
+        )
+
+    for unpaired in parsed.unpaired_responses:
+        _check_entry("unpaired_responses", unpaired.response_id)
+        if entry_status.get(unpaired.response_id) != "response":
+            errors.append(
+                f"{path.name}: unpaired_responses {unpaired.response_id!r} is not a response entry"
+            )
+        if unpaired.response_id in all_response_ids or unpaired.response_id in seen_charge_ids:
+            errors.append(
+                f"{path.name}: unpaired_responses {unpaired.response_id!r} also appears in a pair"
+            )
+
+    if errors:
+        return None, errors
+    return parsed, []
+
+
+def _load_rule_diffs(
+    path: Path | None, entry_ids: set[str], entry_kind: dict[str, str]
+) -> tuple[RuleDiffsFile | None, list[str]]:
+    """rule_diffs.json is optional, following the states_path rule."""
+    if path is None or not path.exists():
+        return None, []
+    try:
+        raw = json.loads(path.read_text())
+    except json.JSONDecodeError as e:
+        return None, [f"{path.name}: invalid JSON: {e}"]
+    try:
+        parsed = RuleDiffsFile.model_validate(raw)
+    except ValidationError as e:
+        return None, [f"{path.name}: {e}"]
+
+    errors: list[str] = []
+    seen_ids: set[str] = set()
+    for d in parsed.diffs:
+        if d.id in seen_ids:
+            errors.append(f"{path.name}: duplicate diff id {d.id!r}")
+        seen_ids.add(d.id)
+
+        if d.rule_entry_id not in entry_ids:
+            errors.append(f"{path.name}: {d.id}: unknown rule_entry_id {d.rule_entry_id!r}")
+        elif entry_kind.get(d.rule_entry_id) != "rule":
+            errors.append(
+                f"{path.name}: {d.id}: rule_entry_id {d.rule_entry_id!r} is not kind=rule"
+            )
+
+        expected = max(d.before_status, d.after_status, key=_TEXT_STATUS_RANK.get)
+        if d.text_status != expected:
+            errors.append(
+                f"{path.name}: {d.id}: text_status {d.text_status!r} is not the weaker of "
+                f"before_status {d.before_status!r} and after_status {d.after_status!r} "
+                f"({expected!r})"
+            )
+
+        for idx in d.quoted_lines_before:
+            if not 0 <= idx < len(d.before):
+                errors.append(f"{path.name}: {d.id}: quoted_lines_before index {idx} out of range")
+        for idx in d.quoted_lines_after:
+            if not 0 <= idx < len(d.after):
+                errors.append(f"{path.name}: {d.id}: quoted_lines_after index {idx} out of range")
+
+        for eid in d.related_entry_ids:
+            if eid not in entry_ids:
+                errors.append(f"{path.name}: {d.id}: unknown related_entry_ids id {eid!r}")
+
+    if errors:
+        return None, errors
+    return parsed, []
+
+
+def _load_cases(
+    path: Path | None, entry_ids: set[str], entry_kind: dict[str, str]
+) -> tuple[CasesFile | None, list[str]]:
+    """case_orders.json is optional, following the states_path rule."""
+    if path is None or not path.exists():
+        return None, []
+    try:
+        raw = json.loads(path.read_text())
+    except json.JSONDecodeError as e:
+        return None, [f"{path.name}: invalid JSON: {e}"]
+    try:
+        parsed = CasesFile.model_validate(raw)
+    except ValidationError as e:
+        return None, [f"{path.name}: {e}"]
+
+    errors: list[str] = []
+    seen_slugs: set[str] = set()
+    entry_to_case: dict[str, str] = {}
+    for case in parsed.cases:
+        if case.slug in seen_slugs:
+            errors.append(f"{path.name}: duplicate case slug {case.slug!r}")
+        seen_slugs.add(case.slug)
+
+        if case.case_entry_id not in entry_ids:
+            errors.append(
+                f"{path.name}: {case.slug}: unknown case_entry_id {case.case_entry_id!r}"
+            )
+        elif entry_kind.get(case.case_entry_id) != "case":
+            errors.append(
+                f"{path.name}: {case.slug}: case_entry_id {case.case_entry_id!r} is not kind=case"
+            )
+
+        for item in case.items:
+            if item.entry_id not in entry_ids:
+                errors.append(
+                    f"{path.name}: {case.slug}: unknown item entry id {item.entry_id!r}"
+                )
+            if item.role not in parsed.roles:
+                errors.append(
+                    f"{path.name}: {case.slug}: role {item.role!r} not in {parsed.roles}"
+                )
+            if item.entry_id == case.case_entry_id:
+                errors.append(f"{path.name}: {case.slug}: case entry is its own item")
+            if item.entry_id in entry_to_case:
+                errors.append(
+                    f"{path.name}: {item.entry_id!r} is an item of two cases: "
+                    f"{entry_to_case[item.entry_id]!r} and {case.slug!r}"
+                )
+            entry_to_case[item.entry_id] = case.slug
+
+    for u in parsed.unmapped:
+        if u.entry_id not in entry_ids:
+            errors.append(f"{path.name}: unmapped: unknown entry id {u.entry_id!r}")
+
+    if errors:
+        return None, errors
+    return parsed, []
+
+
 def validate_all(
     path: str | Path | None = None,
     states_path: str | Path | None = None,
@@ -931,6 +1373,11 @@ def validate_all(
     national_path: str | Path | None = None,
     selections_path: str | Path | None = None,
     media_path: str | Path | None = None,
+    objections_path: str | Path | None = None,
+    pairs_path: str | Path | None = None,
+    rule_diffs_path: str | Path | None = None,
+    cases_path: str | Path | None = None,
+    merges_path: str | Path | None = None,
 ) -> tuple[LoadedPayload | None, list[str]]:
     """Parse and cross-validate every ECI Files input, with no database access.
 
@@ -954,13 +1401,40 @@ def validate_all(
     resolved_media = Path(media_path) if media_path is not None else (
         DEFAULT_MEDIA_PATH if using_defaults else None
     )
+    resolved_objections = Path(objections_path) if objections_path is not None else (
+        DEFAULT_OBJECTIONS_PATH if using_defaults else None
+    )
+    resolved_pairs = Path(pairs_path) if pairs_path is not None else (
+        DEFAULT_PAIRS_PATH if using_defaults else None
+    )
+    resolved_rule_diffs = Path(rule_diffs_path) if rule_diffs_path is not None else (
+        DEFAULT_RULE_DIFFS_PATH if using_defaults else None
+    )
+    resolved_cases = Path(cases_path) if cases_path is not None else (
+        DEFAULT_CASES_PATH if using_defaults else None
+    )
+    resolved_merges = Path(merges_path) if merges_path is not None else (
+        DEFAULT_MERGES_PATH if using_defaults else None
+    )
 
     regions, region_errors = _load_regions(resolved_regions)
     region_index = _region_index(regions)
 
     loaded, entry_errors = _load_entries(src, region_index)
+
+    drop_to_keep, merges_errors = _load_merges(resolved_merges)
+    resolved_response_count = _resolve_response_links(loaded, drop_to_keep)
+
     entry_figures = {entry.id: entry.figure_values() for _, entry in loaded}
     entry_ids = set(entry_figures)
+    entry_status = {entry.id: entry.status for _, entry in loaded}
+    entry_kind = {entry.id: entry.kind for _, entry in loaded}
+
+    response_errors = [
+        f"{src.name}: {entry.id}: response_to {entry.response_to!r} is not a loaded entry id"
+        for _, entry in loaded
+        if entry.response_to is not None and entry.response_to not in entry_ids
+    ]
 
     names_by_slug, _, _ = _build_people(loaded)
     person_slugs = set(names_by_slug)
@@ -970,15 +1444,25 @@ def validate_all(
     headline, headline_errors = _load_headline(resolved_headline)
     selections, selections_errors = _load_selections(resolved_selections, entry_ids, person_slugs)
     media, media_errors = _load_media(resolved_media, person_slugs)
+    objections, objections_errors = _load_objections(resolved_objections, entry_ids, person_slugs)
+    pairs, pairs_errors = _load_pairs(resolved_pairs, entry_ids, entry_status)
+    rule_diffs, rule_diffs_errors = _load_rule_diffs(resolved_rule_diffs, entry_ids, entry_kind)
+    cases, cases_errors = _load_cases(resolved_cases, entry_ids, entry_kind)
 
     errors = (
         region_errors
         + entry_errors
+        + merges_errors
+        + response_errors
         + state_errors
         + national_errors
         + headline_errors
         + selections_errors
         + media_errors
+        + objections_errors
+        + pairs_errors
+        + rule_diffs_errors
+        + cases_errors
     )
     if errors:
         return None, errors
@@ -992,12 +1476,29 @@ def validate_all(
         headline=headline,
         selections=selections,
         media=media,
+        objections=objections,
+        pairs=pairs,
+        rule_diffs=rule_diffs,
+        cases=cases,
+        resolved_response_count=resolved_response_count,
     )
     return payload, []
 
 
 def _replace_all(payload: LoadedPayload) -> None:
     with session_scope() as s:
+        s.execute(text("DELETE FROM eci_file_case_item"))
+        s.execute(text("DELETE FROM eci_file_case"))
+        s.execute(text("DELETE FROM eci_file_rule_diff_entry"))
+        s.execute(text("DELETE FROM eci_file_rule_diff"))
+        s.execute(text("DELETE FROM eci_file_unpaired_response"))
+        s.execute(text("DELETE FROM eci_file_pair_item"))
+        s.execute(text("DELETE FROM eci_file_pair"))
+        s.execute(text("DELETE FROM eci_file_objection_meta"))
+        s.execute(text("DELETE FROM eci_file_objection_entry"))
+        s.execute(text("DELETE FROM eci_file_objection_person"))
+        s.execute(text("DELETE FROM eci_file_objection"))
+
         s.execute(text("DELETE FROM eci_file_selection_person"))
         s.execute(text("DELETE FROM eci_file_selection"))
         s.execute(text("DELETE FROM eci_file_selection_regime"))
@@ -1361,6 +1862,208 @@ def _replace_all(payload: LoadedPayload) -> None:
                     },
                 )
 
+        if payload.objections is not None:
+            obj = payload.objections
+            for o in obj.objections:
+                s.execute(
+                    text("""
+                        INSERT INTO eci_file_objection
+                            (n, date, date_precision, concerns, followed_by, public)
+                        VALUES (:n, :date, :date_precision, :concerns, :followed_by, :public)
+                    """),
+                    {
+                        "n": o.n,
+                        "date": o.date,
+                        "date_precision": o.date_precision,
+                        "concerns": o.concerns,
+                        "followed_by": o.followed_by,
+                        "public": o.public,
+                    },
+                )
+                for position, name in enumerate(o.by, start=1):
+                    s.execute(
+                        text("""
+                            INSERT INTO eci_file_objection_person (n, person_slug, position)
+                            VALUES (:n, :person_slug, :position)
+                        """),
+                        {"n": o.n, "person_slug": _slugify(name), "position": position},
+                    )
+                for position, entry_id in enumerate(o.entry_ids, start=1):
+                    s.execute(
+                        text("""
+                            INSERT INTO eci_file_objection_entry (n, entry_id, position)
+                            VALUES (:n, :entry_id, :position)
+                        """),
+                        {"n": o.n, "entry_id": entry_id, "position": position},
+                    )
+            s.execute(
+                text("""
+                    INSERT INTO eci_file_objection_meta
+                        (id, missing, notes, report_entry_id, response_entry_id)
+                    VALUES (1, :missing, :notes, :report_entry_id, :response_entry_id)
+                """),
+                {
+                    "missing": obj.missing,
+                    "notes": obj.notes,
+                    "report_entry_id": obj.report_entry_id,
+                    "response_entry_id": obj.response_entry_id,
+                },
+            )
+
+        if payload.pairs is not None:
+            for position, pair in enumerate(payload.pairs.pairs, start=1):
+                s.execute(
+                    text("""
+                        INSERT INTO eci_file_pair (charge_id, position, note)
+                        VALUES (:charge_id, :position, :note)
+                    """),
+                    {"charge_id": pair.charge_id, "position": position, "note": pair.note},
+                )
+                for item_position, entry_id in enumerate(pair.also_recorded_as, start=1):
+                    s.execute(
+                        text("""
+                            INSERT INTO eci_file_pair_item
+                                (charge_id, entry_id, role, position, why)
+                            VALUES (:charge_id, :entry_id, 'same', :position, NULL)
+                        """),
+                        {
+                            "charge_id": pair.charge_id,
+                            "entry_id": entry_id,
+                            "position": item_position,
+                        },
+                    )
+                for item_position, entry_id in enumerate(pair.response_ids, start=1):
+                    s.execute(
+                        text("""
+                            INSERT INTO eci_file_pair_item
+                                (charge_id, entry_id, role, position, why)
+                            VALUES (:charge_id, :entry_id, 'response', :position, NULL)
+                        """),
+                        {
+                            "charge_id": pair.charge_id,
+                            "entry_id": entry_id,
+                            "position": item_position,
+                        },
+                    )
+                for item_position, entry_id in enumerate(pair.record_ids, start=1):
+                    s.execute(
+                        text("""
+                            INSERT INTO eci_file_pair_item
+                                (charge_id, entry_id, role, position, why)
+                            VALUES (:charge_id, :entry_id, 'record', :position, NULL)
+                        """),
+                        {
+                            "charge_id": pair.charge_id,
+                            "entry_id": entry_id,
+                            "position": item_position,
+                        },
+                    )
+                for item_position, rel in enumerate(pair.related, start=1):
+                    s.execute(
+                        text("""
+                            INSERT INTO eci_file_pair_item
+                                (charge_id, entry_id, role, position, why)
+                            VALUES (:charge_id, :entry_id, 'related', :position, :why)
+                        """),
+                        {
+                            "charge_id": pair.charge_id,
+                            "entry_id": rel.id,
+                            "position": item_position,
+                            "why": rel.why,
+                        },
+                    )
+
+            for unpaired in payload.pairs.unpaired_responses:
+                s.execute(
+                    text("""
+                        INSERT INTO eci_file_unpaired_response (response_entry_id, note)
+                        VALUES (:response_entry_id, :note)
+                    """),
+                    {"response_entry_id": unpaired.response_id, "note": unpaired.note},
+                )
+
+        if payload.rule_diffs is not None:
+            for position, d in enumerate(payload.rule_diffs.diffs, start=1):
+                s.execute(
+                    text("""
+                        INSERT INTO eci_file_rule_diff
+                            (id, position, rule_entry_id, title, document, before_label,
+                             after_label, before_lines, after_lines, before_status, after_status,
+                             text_status, excerpt, quoted_lines_before, quoted_lines_after,
+                             source_urls, note)
+                        VALUES
+                            (:id, :position, :rule_entry_id, :title, :document, :before_label,
+                             :after_label, CAST(:before_lines AS text[]), CAST(:after_lines AS text[]),
+                             :before_status, :after_status, :text_status, :excerpt,
+                             CAST(:quoted_lines_before AS smallint[]),
+                             CAST(:quoted_lines_after AS smallint[]),
+                             CAST(:source_urls AS text[]), :note)
+                    """),
+                    {
+                        "id": d.id,
+                        "position": position,
+                        "rule_entry_id": d.rule_entry_id,
+                        "title": d.title,
+                        "document": d.document,
+                        "before_label": d.before_label,
+                        "after_label": d.after_label,
+                        "before_lines": d.before,
+                        "after_lines": d.after,
+                        "before_status": d.before_status,
+                        "after_status": d.after_status,
+                        "text_status": d.text_status,
+                        "excerpt": d.excerpt,
+                        "quoted_lines_before": d.quoted_lines_before,
+                        "quoted_lines_after": d.quoted_lines_after,
+                        "source_urls": d.source_urls,
+                        "note": d.note,
+                    },
+                )
+                for entry_id in d.related_entry_ids:
+                    s.execute(
+                        text("""
+                            INSERT INTO eci_file_rule_diff_entry (diff_id, entry_id)
+                            VALUES (:diff_id, :entry_id)
+                        """),
+                        {"diff_id": d.id, "entry_id": entry_id},
+                    )
+
+        if payload.cases is not None:
+            for position, case in enumerate(payload.cases.cases, start=1):
+                s.execute(
+                    text("""
+                        INSERT INTO eci_file_case
+                            (slug, position, short_name, case_entry_id, court, short_status,
+                             status_note, parties)
+                        VALUES
+                            (:slug, :position, :short_name, :case_entry_id, :court, :short_status,
+                             :status_note, CAST(:parties AS jsonb))
+                    """),
+                    {
+                        "slug": case.slug,
+                        "position": position,
+                        "short_name": case.short_name,
+                        "case_entry_id": case.case_entry_id,
+                        "court": case.court,
+                        "short_status": case.short_status,
+                        "status_note": case.status_note,
+                        "parties": json.dumps(case.parties.model_dump(mode="json")),
+                    },
+                )
+                for item in case.items:
+                    s.execute(
+                        text("""
+                            INSERT INTO eci_file_case_item (case_slug, entry_id, role, note)
+                            VALUES (:case_slug, :entry_id, :role, :note)
+                        """),
+                        {
+                            "case_slug": case.slug,
+                            "entry_id": item.entry_id,
+                            "role": item.role,
+                            "note": item.note,
+                        },
+                    )
+
 
 def run(
     path: str | Path | None = None,
@@ -1370,6 +2073,11 @@ def run(
     national_path: str | Path | None = None,
     selections_path: str | Path | None = None,
     media_path: str | Path | None = None,
+    objections_path: str | Path | None = None,
+    pairs_path: str | Path | None = None,
+    rule_diffs_path: str | Path | None = None,
+    cases_path: str | Path | None = None,
+    merges_path: str | Path | None = None,
 ) -> None:
     payload, errors = validate_all(
         path=path,
@@ -1379,6 +2087,11 @@ def run(
         national_path=national_path,
         selections_path=selections_path,
         media_path=media_path,
+        objections_path=objections_path,
+        pairs_path=pairs_path,
+        rule_diffs_path=rule_diffs_path,
+        cases_path=cases_path,
+        merges_path=merges_path,
     )
     if errors:
         raise EciFilesValidationError(errors)
@@ -1410,4 +2123,20 @@ def run(
             f"{len(payload.selections.selections)} selections, "
             f"{len(payload.selections.departures)} departures, "
             f"{len(payload.media.people) if payload.media is not None else 0} photos"
+        )
+    print(f"[eci-files] resolved {payload.resolved_response_count} response links through merges.json")
+    if (
+        payload.objections is not None
+        and payload.pairs is not None
+        and payload.rule_diffs is not None
+        and payload.cases is not None
+    ):
+        without_response = sum(1 for p in payload.pairs.pairs if not p.response_ids)
+        total_case_items = sum(len(c.items) for c in payload.cases.cases)
+        print(
+            f"[eci-files] loaded {len(payload.objections.objections)} objections "
+            f"({payload.objections.missing} missing), "
+            f"{len(payload.pairs.pairs)} pairs ({without_response} without a response), "
+            f"{len(payload.rule_diffs.diffs)} rule diffs, "
+            f"{len(payload.cases.cases)} cases ({total_case_items} items)"
         )
