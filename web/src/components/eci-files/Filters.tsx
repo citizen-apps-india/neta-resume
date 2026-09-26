@@ -29,7 +29,7 @@ function Pill({ label, active, href }: { label: string; active: boolean; href: s
   );
 }
 
-const TOPIC_LABELS: Record<string, string> = {
+export const TOPIC_LABELS: Record<string, string> = {
   sir: "SIR", rolls: "Voter rolls", appointments: "Appointments", statements: "Statements", courts: "Courts",
   numbers: "Numbers", "it-systems": "IT systems", dissent: "Dissent", "elections-2024": "2024 election",
   "elections-2019": "2019 election", forms: "Forms", mcc: "Model Code", "turnout-data": "Turnout data",
