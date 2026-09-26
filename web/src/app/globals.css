@@ -779,3 +779,15 @@ html { scroll-behavior: smooth; }
 .eci-obj-mark:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
 @media (hover: hover) { .eci-obj-mark:hover circle, .eci-obj-mark:hover ellipse { opacity: 0.75; } }
 /* --- end phase 5 --- */
+
+/* --- ECI UX numbers --- */
+/* /eci-files/numbers hero row (docs/eci-files/designs/B-After-Numbers.dc.html): the tile-grid card and
+   the headline card side by side on desktop; below ~900px the headline card moves above the tile grid,
+   matching B-Phone-Numbers.dc.html's stacked order, via `order` rather than a DOM reorder. */
+.eci-hero-row { display: flex; gap: 28px; align-items: stretch; flex-wrap: wrap; margin-bottom: 24px; }
+.eci-hero-tiles { flex: 3 1 560px; min-width: 0; }
+.eci-hero-headline { flex: 1 1 320px; min-width: 0; }
+@media (max-width: 900px) {
+  .eci-hero-headline { order: -1; }
+}
+/* --- end ECI UX numbers --- */

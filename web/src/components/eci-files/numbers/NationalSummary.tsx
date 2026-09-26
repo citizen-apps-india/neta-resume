@@ -34,20 +34,6 @@ function SourceTag({ f, basePath }: { f: EciNationalFigure; basePath: string }) 
   );
 }
 
-/** One headline tile: value, short label and source link — no note, no big/small split, so a row of
- *  these stays a single compact band instead of the old text wall (orchestrator visual-pass fix A). */
-function HeadlineTile({ f, basePath }: { f: EciNationalFigure; basePath: string }) {
-  return (
-    <div style={{ minWidth: 200, flex: "1 1 200px" }}>
-      <div className="mono" style={{ fontSize: "clamp(19px,2.6vw,23px)", fontWeight: 700, color: "var(--eci-ink)", lineHeight: 1.15 }}>
-        {f.approx ? "≈" : ""}{countIndian(f.electors)}
-      </div>
-      <div style={{ fontSize: 12, color: "var(--ink2)", margin: "2px 0 5px" }}>{f.label}</div>
-      <SourceTag f={f} basePath={basePath} />
-    </div>
-  );
-}
-
 function FigureRow({ f, basePath }: { f: EciNationalFigure; basePath: string }) {
   return (
     <div style={{ marginBottom: 10 }}>
@@ -61,23 +47,45 @@ function FigureRow({ f, basePath }: { f: EciNationalFigure; basePath: string }) 
   );
 }
 
-/** The record's own national totals, compact: one row of headline figures (the "all" group — never a
- *  sum made from the tiles, except the one row marked "computed"). The phase-by-phase breakdown lives
- *  in {@link NationalPhaseBreakdown}, collapsed behind a disclosure below the tile grid, so this section
- *  never pushes the grid below the fold (PHASE3-SPEC.md §1.3/§3.7). */
+/** The hero's headline card (docs/eci-files/designs/B-After-Numbers.dc.html): ONE cited national figure
+ *  ("all" group, not computed), big — a computed alternative (our own sum, where ECI has published none)
+ *  is demoted to a small labelled line below a rule, never given the same visual weight as a cited figure.
+ *  Never a sum made from the tiles. */
 export function NationalSummary({ national, basePath = "/eci-files/numbers" }: { national: EciNationalFigure[]; basePath?: string }) {
   const all = national.filter((f) => f.group === "all");
-  if (all.length === 0) return null;
+  const primary = all.find((f) => !f.computed) ?? all[0];
+  if (!primary) return null;
+  const computed = all.filter((f) => f !== primary && f.computed);
 
   return (
-    <section style={{ marginBottom: 20 }}>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "14px 28px" }}>
-        {all.map((f) => <HeadlineTile key={f.label} f={f} basePath={basePath} />)}
-      </div>
-      <p style={{ fontSize: 11, color: "var(--muted)", marginTop: 10, maxWidth: "70ch" }}>
-        These totals are the ones the record itself carries — an ECI bulletin, or a newspaper&apos;s own
-        tally — not sums we made from the tiles, except the one marked &ldquo;our sum&rdquo;.
-      </p>
+    <section style={{ display: "flex", flexDirection: "column", gap: 14, background: "var(--card)", border: "1px solid var(--rule)", borderRadius: 14, padding: "22px 24px", height: "100%" }}>
+      <span className="mono" style={{ fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>Nationwide</span>
+      <span className="mono" style={{ fontSize: "clamp(34px,4vw,44px)", fontWeight: 700, color: "var(--eci-ink)", lineHeight: 1 }}>
+        {primary.approx ? "≈" : ""}{countIndian(primary.electors)}
+      </span>
+      <span style={{ fontSize: 16, color: "var(--ink)", lineHeight: 1.4 }}>{primary.label}, {primary.scope}</span>
+      <SourceTag f={primary} basePath={basePath} />
+      {computed.length > 0 && (
+        <>
+          <div style={{ height: 1, background: "var(--rule)", margin: "4px 0" }} />
+          {computed.map((f) => (
+            <p key={f.measure + f.label} style={{ margin: 0, fontSize: 12.5, color: "var(--ink2)", lineHeight: 1.6 }}>
+              {f.label}
+              {f.as_of ? `, as of ${formatLooseDate(f.as_of)}` : ""}: <b className="mono" style={{ color: "var(--ink)" }}>{f.approx ? "≈" : ""}{countIndian(f.electors)}</b>, {f.scope}.{" "}
+              <span
+                className="mono"
+                style={{
+                  display: "inline-flex", alignItems: "center", fontSize: 10.5, fontWeight: 600,
+                  letterSpacing: "0.02em", padding: "3px 9px", borderRadius: 999,
+                  border: "1px solid var(--border2)", color: "var(--ink2)", background: "var(--sunken)",
+                }}
+              >
+                Our computation
+              </span>
+            </p>
+          ))}
+        </>
+      )}
     </section>
   );
 }

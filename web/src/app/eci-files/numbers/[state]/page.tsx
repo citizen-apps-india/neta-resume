@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import Link from "next/link";
 import { notFound } from "next/navigation";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SectionHero } from "@/components/parliament/SectionHero";
@@ -10,8 +9,7 @@ import { StageChart } from "@/components/eci-files/numbers/StageChart";
 import { AfterFinalFigures } from "@/components/eci-files/numbers/AfterFinalFigures";
 import { DraftCaveat } from "@/components/eci-files/numbers/DraftCaveat";
 import { StateNotes } from "@/components/eci-files/numbers/StateNotes";
-import { StatusLegend } from "@/components/eci-files/StatusLegend";
-import { LaneTimeline } from "@/components/eci-files/LaneTimeline";
+import { StateEventRows } from "@/components/eci-files/numbers/StateEventRows";
 import { EntryDrawer } from "@/components/eci-files/EntryDrawer";
 import { EntryDetail } from "@/components/eci-files/EntryDetail";
 import { getEciState, getEciStates, getEciEntry, getEciTimelineCompactByState } from "@/lib/api";
@@ -89,11 +87,6 @@ export default async function EciNumbersStatePage({ params, searchParams }: { pa
   const basePath = `/eci-files/numbers/${state}`;
   const entries = timeline?.entries ?? [];
 
-  const dated = entries.map((e) => e.date).filter((d): d is string => Boolean(d)).sort();
-  const todayIso = new Date().toISOString().slice(0, 10);
-  const from = dated[0] ? `${dated[0].slice(0, 7)}-01` : `${todayIso.slice(0, 7)}-01`;
-  const to = dated.length > 0 && dated[dated.length - 1] > todayIso ? dated[dated.length - 1] : todayIso;
-
   return (
     <>
       <SiteHeader />
@@ -117,24 +110,10 @@ export default async function EciNumbersStatePage({ params, searchParams }: { pa
         <StateNotes region={region} notes={page.notes} basePath={basePath} />
 
         <section style={{ marginTop: 30 }}>
-          <h2 className="serif" style={{ fontSize: 17, fontWeight: 600, margin: "0 0 12px" }}>Entries about {region.name}</h2>
-          {entries.length > 0 ? (
-            <>
-              <div style={{ marginBottom: 10 }}><StatusLegend /></div>
-              <LaneTimeline entries={entries} from={from} to={to} activeId={entry} />
-              <div style={{ marginTop: 14 }}>
-                <Link
-                  href={`/eci-files/timeline?state=${state}&from=${from}&to=${to}`}
-                  className="mono"
-                  style={{ fontSize: 12, color: "var(--accent-2)", textDecoration: "none" }}
-                >
-                  Open in the lane timeline →
-                </Link>
-              </div>
-            </>
-          ) : (
-            <p style={{ fontSize: 13.5, color: "var(--muted)" }}>No entries name {region.name} yet.</p>
-          )}
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 10, marginBottom: 4 }}>
+            <h2 className="serif" style={{ fontSize: 17, fontWeight: 600, margin: 0 }}>Events behind these numbers</h2>
+          </div>
+          <StateEventRows entries={entries} regionName={region.name} basePath={basePath} state={state} />
         </section>
 
         {entry && (

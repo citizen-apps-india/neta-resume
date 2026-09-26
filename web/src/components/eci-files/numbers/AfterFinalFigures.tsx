@@ -5,14 +5,15 @@ import { TIER_LABEL } from "@/components/eci-files/CitationList";
 import type { EciRegionSummary, EciStageValue } from "@/types/eci-files";
 
 const AFTER_STAGES: { stage: EciStageValue["stage"]; label: string }[] = [
-  { stage: "appeals_filed", label: "Appeals filed" },
   { stage: "appeals_pending", label: "Appeals still pending" },
   { stage: "restored", label: "Restored after appeal" },
 ];
 
-/** Counts of applications, not roll sizes — no bar, plain figure rows (PHASE3-SPEC.md §3.6). Shown only
- *  when the region has at least one of the three stages; today that's West Bengal alone
- *  (PHASES-3-5-DECISIONS.md). */
+/** Counts of applications, not roll sizes — no bar, plain figure rows (PHASE3-SPEC.md §3.6).
+ *  `appeals_filed` moved into {@link StageChart}'s waterfall hero as the dashed "challenge, not a cut"
+ *  bar (docs/eci-files/designs/B-After-State.dc.html); this section carries only what's left: appeals
+ *  still pending and electors restored after appeal. Shown only when the region has one of the two;
+ *  today that's West Bengal alone (PHASES-3-5-DECISIONS.md). */
 export function AfterFinalFigures({ region, basePath }: { region: EciRegionSummary; basePath: string }) {
   const rows = AFTER_STAGES.map((a) => ({ ...a, v: region.stages.find((s) => s.stage === a.stage) })).filter((r) => r.v);
   if (rows.length === 0) return null;
