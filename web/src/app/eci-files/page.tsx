@@ -1,14 +1,20 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SectionHero } from "@/components/parliament/SectionHero";
 import { EciFrontSkeleton } from "@/components/skeletons";
-import { HeroStats } from "@/components/eci-files/HeroStats";
-import { QuestionCards } from "@/components/eci-files/QuestionCards";
-import { KeyMomentsStrip } from "@/components/eci-files/KeyMomentsStrip";
-import { getEciSummary, type EciSummary } from "@/lib/api";
-import { formatLooseDate } from "@/lib/eci-files";
+import { FrontHeroPanel } from "@/components/eci-files/front/FrontHeroPanel";
+import { FrontSectionTiles, type FrontTile } from "@/components/eci-files/front/FrontSectionTiles";
+import {
+  TimelineIcon, StatesIcon, PeopleIcon, ObjectionsIcon, AnswersIcon, RulesIcon, CourtsIcon,
+} from "@/components/eci-files/front/FrontIcons";
+import { FrontKeyMoments } from "@/components/eci-files/front/FrontKeyMoments";
+import { FrontAbout } from "@/components/eci-files/front/FrontAbout";
+import {
+  getEciSummary, getEciDensity, getEciStates, getEciPeople, getEciObjections, getEciAnswers, getEciRules, getEciCourts,
+  type EciSummary, type EciDensity,
+} from "@/lib/api";
+import { densityByMonth, ECI_LOAD_FAILED_MESSAGE } from "@/lib/eci-files";
 
 // Hidden until the owner approves: noindex/nofollow, unlinked, kept out of sitemap.ts. See
 // docs/eci-files/SPEC.md — "Launch is gated."
@@ -18,84 +24,61 @@ export const metadata: Metadata = {
   robots: { index: false, follow: false },
 };
 
-/** The summary payload (headline stats, key moments, counts) and everything built from it. Its own async
- *  component so the static SectionHero paints immediately and this streams in beneath it — same pattern as
- *  the India Dashboard (`IndiaBody`). */
+/** Awaits one of the tile fetchers and reduces it to the single count its tile shows — `null` on any
+ *  failure, so one flaky endpoint dims its own tile ("—") instead of blanking the whole page. */
+async function safeCount<T>(promise: Promise<T>, pick: (v: T) => number): Promise<number | null> {
+  try {
+    return pick(await promise);
+  } catch {
+    return null;
+  }
+}
+
+/** The summary and density payloads drive the hero, the key moments and the footer counts; the tile
+ *  counts are fetched alongside, independently. Its own async component so the static `SectionHero`
+ *  paints immediately and this streams in beneath it — same pattern as the India Dashboard (`IndiaBody`). */
 async function EciFrontBody() {
   let summary: EciSummary | null = null;
+  let density: EciDensity | null = null;
   try {
-    summary = await getEciSummary();
+    [summary, density] = await Promise.all([getEciSummary(), getEciDensity()]);
   } catch {
     summary = null;
+    density = null;
   }
 
-  if (!summary) {
-    return (
-      <p style={{ color: "var(--muted)", padding: "24px 4px" }}>
-        The record hasn&apos;t loaded — try again in a moment.
-      </p>
-    );
+  if (!summary || !density) {
+    return <p style={{ color: "var(--muted)", padding: "24px 4px" }}>{ECI_LOAD_FAILED_MESSAGE}</p>;
   }
+
+  const [statesCount, peopleCount, objectionsCount, answersCount, rulesCount, courtsCount] = await Promise.all([
+    safeCount(getEciStates(), (s) => s.regions.filter((r) => r.has_figures).length),
+    safeCount(getEciPeople(), (p) => p.length),
+    safeCount(getEciObjections(), (o) => o.reported_total),
+    safeCount(getEciAnswers(), (a) => a.counts.rows),
+    safeCount(getEciRules(), (r) => r.counts.rules),
+    safeCount(getEciCourts(), (c) => c.cases.length),
+  ]);
+
+  // Colour follows the lane a section reads closest to (Objections -> Inside the Commission, Answers ->
+  // Claims, Courts -> Courts); Timeline/Rules use the section accent and the document trust colour.
+  const tiles: FrontTile[] = [
+    { href: "/eci-files/timeline", count: summary.counts.entries, unit: "entries", title: "The whole record, in order", color: "var(--eci-ink)", icon: <TimelineIcon /> },
+    { href: "/eci-files/numbers", count: statesCount, unit: "states & UTs with figures", title: "The rolls, state by state", color: "var(--eci-doc)", icon: <StatesIcon /> },
+    { href: "/eci-files/people", count: peopleCount, unit: "people", title: "Commissioners and officials", color: "var(--muted)", icon: <PeopleIcon /> },
+    { href: "/eci-files/objections", count: objectionsCount, unit: "objections", title: "Raised inside the Commission", color: "var(--eci-lane-inside)", icon: <ObjectionsIcon /> },
+    { href: "/eci-files/answers", count: answersCount, unit: "charges", title: "Claims and their answers", color: "var(--eci-lane-claims)", icon: <AnswersIcon /> },
+    { href: "/eci-files/rules", count: rulesCount, unit: "rules", title: "What changed, and when", color: "var(--eci-doc)", icon: <RulesIcon /> },
+    { href: "/eci-files/courts", count: courtsCount, unit: "cases", title: "Orders and case law", color: "var(--eci-lane-courts)", icon: <CourtsIcon /> },
+  ];
 
   return (
-    <>
-      <HeroStats headline={summary.headline} />
-
-      <div className="mono" style={{ fontSize: 11, color: "var(--muted)", margin: "-14px 0 26px" }}>
-        {summary.counts.entries.toLocaleString("en-IN")} entries · {summary.counts.checked.toLocaleString("en-IN")} checked ·{" "}
-        {summary.counts.people.toLocaleString("en-IN")} people named · {summary.counts.citations.toLocaleString("en-IN")} citations
-        {summary.last_loaded && <> · updated {formatLooseDate(summary.last_loaded)}</>}
-      </div>
-
-      <QuestionCards />
-
-      <KeyMomentsStrip moments={summary.key_moments} />
-
-      <section style={{ display: "flex", flexWrap: "wrap", gap: 12, marginTop: 8 }}>
-        <Link
-          href="/eci-files/timeline"
-          className="btnDark tap"
-          style={{
-            display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none",
-            fontFamily: "var(--font-serif)", fontSize: 14, fontWeight: 600, padding: "12px 20px",
-            borderRadius: 10, background: "var(--eci-ink)", color: "#fff",
-          }}
-        >
-          Open the lane timeline →
-        </Link>
-        <Link
-          href="/eci-files/entries"
-          className="btnGhost tap"
-          style={{
-            display: "inline-flex", alignItems: "center", gap: 8, textDecoration: "none",
-            fontFamily: "var(--font-serif)", fontSize: 14, fontWeight: 600, padding: "12px 20px",
-            borderRadius: 10, border: "1px solid var(--border)", color: "var(--ink)",
-          }}
-        >
-          Browse every entry
-        </Link>
-        <Link
-          href="/eci-files/people"
-          className="tap"
-          style={{
-            display: "inline-flex", alignItems: "center", fontSize: 13, color: "var(--accent-2)",
-            textDecoration: "none", padding: "12px 8px",
-          }}
-        >
-          People named in the record →
-        </Link>
-        <Link
-          href="/eci-files/numbers"
-          className="tap"
-          style={{
-            display: "inline-flex", alignItems: "center", fontSize: 13, color: "var(--accent-2)",
-            textDecoration: "none", padding: "12px 8px",
-          }}
-        >
-          The numbers, state by state →
-        </Link>
-      </section>
-    </>
+    <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+      <FrontHeroPanel headline={summary.headline} months={densityByMonth(density.months)} />
+      <FrontSectionTiles tiles={tiles} />
+      <FrontKeyMoments moments={summary.key_moments} />
+      <FrontAbout counts={summary.counts} lastLoaded={summary.last_loaded} />
+    </div>
   );
 }
 
@@ -103,18 +86,11 @@ export default function EciFilesPage() {
   return (
     <>
       <SiteHeader />
-      <main style={{ maxWidth: 1000, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 72px", width: "100%" }}>
+      <main style={{ maxWidth: 1100, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 72px", width: "100%" }}>
         <SectionHero
-          eyebrow="ECI FILES · SOURCED RECORD"
-          title="What happened at the Election Commission, on the record"
-          subtitle={
-            <>
-              A dated record of the Election Commission of India, 2019 to today — documents, reports and
-              named claims, kept apart and each one linked to where it comes from. Every entry is labelled
-              by how well it is sourced, and anything a fact-checker hasn&apos;t opened yet is marked
-              &ldquo;not yet checked&rdquo; rather than presented as settled.
-            </>
-          }
+          eyebrow="ECI Files · Sourced record"
+          title="What happened at the Election Commission"
+          subtitle="The sourced record, 2019 to today. Start with the numbers, the timeline, or the people."
         />
         <Suspense fallback={<EciFrontSkeleton />}>
           <EciFrontBody />

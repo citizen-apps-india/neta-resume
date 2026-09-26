@@ -149,17 +149,28 @@ export function DashboardBodySkeleton() {
 export function EciFrontSkeleton() {
   return (
     <div>
-      <div className="nr-statgrid" style={{ marginBottom: 28 }}>
-        {Array.from({ length: 4 }).map((_, i) => <S key={i} h={118} r={14} />)}
+      <S h={220} r={14} style={{ marginBottom: 28 }} />
+      <S w={140} h={11} r={4} style={{ marginBottom: 12 }} />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))", gap: 12, marginBottom: 28 }}>
+        {Array.from({ length: 7 }).map((_, i) => <S key={i} h={158} r={14} />)}
       </div>
       <S w={140} h={11} r={4} style={{ marginBottom: 12 }} />
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: 12, marginBottom: 28 }}>
-        {Array.from({ length: 6 }).map((_, i) => <S key={i} h={80} r={12} />)}
+      <div style={{ display: "flex", gap: 10 }}>
+        {Array.from({ length: 6 }).map((_, i) => <S key={i} w={150} h={74} r={8} />)}
       </div>
-      <S w={140} h={11} r={4} style={{ marginBottom: 12 }} />
-      <div style={{ display: "flex", gap: 12 }}>
-        {Array.from({ length: 4 }).map((_, i) => <S key={i} w={220} h={96} r={12} />)}
+    </div>
+  );
+}
+
+/** Inline fallback for the ECI Files "every entry" body (streamed in below the static SectionHero). */
+export function EciEntriesSkeleton() {
+  return (
+    <div>
+      <S h={70} r={14} style={{ marginBottom: 18 }} />
+      <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
+        {Array.from({ length: 8 }).map((_, i) => <S key={i} w={64} h={40} r={10} />)}
       </div>
+      {Array.from({ length: 6 }).map((_, i) => <S key={i} h={58} r={0} style={{ marginBottom: 2 }} />)}
     </div>
   );
 }
