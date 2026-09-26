@@ -696,7 +696,8 @@
         "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIv7%2FZQ09etPKoyJV5h%2FcTpSBy2rLSWcB8ZqM9aI5KyrxL4EAnNdah6vWMkIUyW8NsXQUwCbGU493NshNTgs7UQ%3D%3D",
         "note": "Rendered the scanned PDF: No.23/2025-ERS (Vol.II), 24 June 2025, to CEO Bihar; schedule shows draft 01.08.2025 and final 30.09.2025; para 8 bars transfers without Commission approval; signed Pawan Diwan, Secretary."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-pawan-diwan",
@@ -1027,7 +1028,8 @@
         "checked_url": "https://www.deccanherald.com/india/karnataka/rahul-vs-ec-on-vote-chori-karnataka-poll-body-chief-asks-for-names-of-electors-wants-declaration-under-oath-3670274",
         "note": "DH, TNM and Tribune confirm the 7 Aug 2025 press conference. The note said Gandhi 'would not sign the declaration'; the Tribune only reports he said he had taken an oath in Parliament. Softened to what the source says."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-haryana-ceo-oath-letter",
@@ -1304,6 +1306,24 @@
           "tier": 3,
           "archive_url": null,
           "quote": null
+        },
+        {
+          "url": "https://www.newsonair.gov.in/election-commission-rejects-rahul-gandhis-allegations-on-vote-deletion-as-baseless",
+          "publisher": "Akashvani News (All India Radio)",
+          "title": "Election Commission rejects Rahul Gandhi's allegations on vote deletion as baseless",
+          "published": "2025-09-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/india/cec-shielding-vote-chors-undermining-democracy-rahul-election-panel-rubbishes-claim",
+          "publisher": "The Tribune",
+          "title": "CEC shielding 'vote chors', undermining democracy: Rahul Gandhi; election panel rubbishes claim",
+          "published": "2025-09-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "response_to": "officials-rahul-aland-charge",
@@ -1354,7 +1374,8 @@
         "checked_url": "https://www.deccanherald.com/india/rahul-accuses-chief-election-commissioner-of-stonewalling-cids-request-for-info-on-karnatakas-aland-vote-deletion-3734248",
         "note": "Deccan Herald: 6,018 deletions, centralised operation, destination IPs/ports/OTP trails, one-week demand."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-kharge-aland-counter",
@@ -2126,7 +2147,8 @@
         "checked_url": "https://www.deccanherald.com/india/tamil-nadu/sir-in-tamil-nadu-final-electoral-roll-for-poll-bound-state-out-over-74-lakh-names-deleted-3908556",
         "note": "Deccan Herald confirms 6,41,14,587 before SIR, 5.67 crore final, 74 lakh deleted, 7.40 lakh added. The precise 56,707,380 figure had no opened source; replaced with the rounded 5.67 crore."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-agarwal-form6-presser",
@@ -3117,7 +3139,8 @@
         "checked_url": "https://indianexpress.com/article/india/election-commission-changes-form-6-for-new-voters-inserts-section-asking-them-about-parents-in-sir-10782435/",
         "note": "IE 12 Jul 2026 confirms the un-lettered declaration part, the three options, and no gazette amendment; EC did not respond. Added archive URL."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-garg-work-allocation",
@@ -3946,7 +3969,8 @@
         "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzIC5IR1A3V88Anuk8RlyPGe5wAx9KElz%2FMrntZbUSdw5X96rA5UeVutBBjNjpWsQKkksp0Ehw44uIKynkR1%2BLxQ%3D%3D",
         "note": "PN-119/2026 (23 Sep 2026) matches; names no officers."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "officials-goel-response-97",

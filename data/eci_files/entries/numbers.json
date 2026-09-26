@@ -677,7 +677,8 @@
         "checked_url": "https://www.eci.gov.in/eci-backend/public/api/download?url=LMAhAK6sOPBp%2FNFF0iRfXbEB1EVSLT41NNLRjYNJJP1KivrUxbfqkDatmHy12e%2FzOS%2BIOmr%2FtOeSK8w38bI0zVpeBXSsnQZZ9%2F7T4x79iAY%2FlNfHhCNmkamD4tYgD1vkZhdXAWTuAWd47JJFkivjUQ%3D%3D",
         "note": "Opened PN/359 (30.11.2025: draft 16.12.2025, final 14.02.2026) and PN/364 (11.12.2025: TN/Gujarat 19 Dec; MP/CG/A&N 23 Dec; UP 31 Dec; Kerala 23 Dec; Goa, PY, Lakshadweep, Rajasthan, WB 16 Dec). All match. UP 6 Jan draft confirmed by Akashvani 6 Jan 2026."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "numbers-goa-draft-roll-2025-12-16",
@@ -1994,6 +1995,15 @@
           "published": "2026-02-23",
           "tier": 3,
           "archive_url": "http://web.archive.org/web/20260723104031/https://www.tribuneindia.com/news/india/tamil-nadu-ceo-releases-final-electoral-roll-97-37-lakh-names-of-voters-deleted/",
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/tamil-nadu/sir-in-tamil-nadu-final-electoral-roll-for-poll-bound-state-out-over-74-lakh-names-deleted-3908556",
+          "publisher": "Deccan Herald",
+          "title": "SIR in Tamil Nadu: Final voter list for poll-bound state out, over 74 lakh names deleted",
+          "published": "2026-02-23",
+          "tier": 3,
+          "archive_url": null,
           "quote": null
         }
       ],
@@ -4124,7 +4134,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
         "note": "Opened IE (23 Sep 2026): SC order of 29 Jan; 97 found eligible; CEO Goa office wrote eight times, 11-17 Feb, to Senior DEC Gyanesh Bharti, copying DG (IT) Seema Khanna every time; not enabled before the final roll. Match. Charge against named officials: no personal response found (noted)."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "numbers-ie-49-seats-margin-comparison-2026-09-23",

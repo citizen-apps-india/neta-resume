@@ -50,9 +50,11 @@
       "keep": "sir-rules-eci-pn-119-response",
       "drop": [
         "statements-reporting-eci-press-note-differing-views",
-        "selection-law-eci-response-sep-2026"
+        "selection-law-eci-response-sep-2026",
+        "officials-eci-press-note-response",
+        "commissioners-event-2026-09-23-eci-response-dissent"
       ],
-      "reason": "same event: the Commission's 23 Sep 2026 press note (PN 119) saying differing views are normal and its orders have full legal sanction; kept the only tier-1 (primary ECI) source over two unconfirmed, tier-3-only versions."
+      "reason": "same event: the Commission's 23 Sep 2026 press note (PN 119) saying differing views are normal and its orders have full legal sanction; kept the only tier-1 (primary ECI) source over four tier-3-only versions, two unconfirmed and two (from officials.json and commissioners.json) reporting the same statement via PTI wire copy."
     },
     {
       "keep": "commissioners-event-2025-02-17-gyanesh-cec-joshi-ec",
@@ -310,6 +312,118 @@
         "selection-law-adhir-dissent"
       ],
       "reason": "same event: Adhir Ranjan Chowdhury's dissent note on the CEC/EC selection procedure, 14 Mar 2024; both checked, kept the two-source version over the one-source version."
+    },
+    {
+      "keep": "officials-sanjay-kumar-note-jan-2026",
+      "drop": [
+        "sir-rules-it-discretion-note",
+        "statements-reporting-dec-note-ero-discretion"
+      ],
+      "reason": "same event: Deputy Election Commissioner Sanjay Kumar asks DG (IT) Seema Khanna not to let the new SIR notices module restrict ERO discretion, 2 Jan 2026; all three checked from the same single IE source, kept the officials.json record (as with the Nov 2025 note)."
+    },
+    {
+      "keep": "selection-law-removal-notice-rejected",
+      "drop": [
+        "commissioners-event-2026-04-06-removal-notices-refused",
+        "statements-reporting-removal-notices-rejected"
+      ],
+      "reason": "same event: Lok Sabha Speaker Om Birla and Rajya Sabha Chairman C.P. Radhakrishnan refuse to admit the notices to remove the CEC, 6 Apr 2026; all three checked, kept the three-source version over the two-source and one-source versions."
+    },
+    {
+      "keep": "numbers-tn-final-roll-2026-02",
+      "drop": [
+        "officials-tn-final-roll"
+      ],
+      "reason": "same event: Tamil Nadu CEO Archana Patnaik announces the SIR final roll of 5.67 crore, 23 Feb 2026; both checked (corrected), kept the entry with the tier-1 ECI press note and precise figures over the tier-3-only, rounded version."
+    },
+    {
+      "keep": "selection-law-rahul-dissent-note",
+      "drop": [
+        "commissioners-event-2025-02-17-selection-rahul-dissent",
+        "statements-reporting-rahul-dissent-cec-selection"
+      ],
+      "reason": "same event/claim: Rahul Gandhi's dissent note at the 17-18 Feb 2025 CEC selection committee meeting; all three checked, from three non-overlapping sets of sources; kept the three-source version already used as the pairs.json charge."
+    },
+    {
+      "keep": "statements-reporting-rahul-match-fixing-maharashtra",
+      "drop": [
+        "elections-2019-2024-mh-rahul-match-fixing"
+      ],
+      "reason": "same claim: Rahul Gandhi's June 2025 op-ed alleging 'match-fixing' in the 2024 Maharashtra election; neither checked, kept the fuller version with figures."
+    },
+    {
+      "keep": "statements-reporting-rahul-mahadevapura-presentation",
+      "drop": [
+        "officials-rahul-vote-chori-2025-08-07",
+        "statements-reporting-ceo-karnataka-maharashtra-declaration"
+      ],
+      "reason": "same event: Rahul Gandhi's 7 Aug 2025 Mahadevapura press conference; kept the fuller version with the full figures breakdown over the officials.json anchor entry, whose only purpose was linking the state CEOs' responses (response_to links resolve to the kept id automatically). Also dropped a duplicate covering the same two CEOs' oath-letters already recorded individually and more precisely as officials-karnataka-ceo-oath-letter and officials-maharashtra-ceo-oath-letter."
+    },
+    {
+      "keep": "statements-reporting-rahul-aland-rajura-presentation",
+      "drop": [
+        "officials-rahul-aland-charge"
+      ],
+      "reason": "same claim: Rahul Gandhi's 18 Sep 2025 Aland/Rajura allegations; kept the tier-1-sourced (Congress) version covering both Aland and Rajura over the officials.json anchor entry."
+    },
+    {
+      "keep": "sir-rules-goa-final-roll-97",
+      "drop": [
+        "numbers-goa-97-voters-left-off-2026-09-23",
+        "statements-reporting-ie-goa-97-story"
+      ],
+      "reason": "same event: 97 Goa electors EROs found eligible were left off the final roll; all three checked, kept the four-source version with the fullest account (the CEO office's eight emails, Sanjay Kumar's 18 Feb note, the net-deletion figure)."
+    },
+    {
+      "keep": "sir-rules-form6-online-sir-declaration",
+      "drop": [
+        "officials-form6-change-reported",
+        "statements-reporting-ie-form6-story"
+      ],
+      "reason": "same rule change: the online Form 6 SIR declaration added without a notified rule amendment; all checked, kept the fullest version (statutory position, Joshi's and Sandhu's objections, four sources); officials-form6-change-reported's own earlier merge (statements-reporting-ie-first-reports-form6-change) carries over into this one."
+    },
+    {
+      "keep": "sir-rules-ie-14-objections-report",
+      "drop": [
+        "commissioners-event-2026-09-23-ie-two-ecs-objected",
+        "statements-reporting-ie-investigation-14-objections"
+      ],
+      "reason": "same event: The Indian Express's 23 Sep 2026 report that Election Commissioners Sandhu and Joshi objected on record 14 times in 10 months; all three checked, kept the version already paired with the Commission's PN 119 response."
+    },
+    {
+      "keep": "officials-eci-aland-response",
+      "drop": [
+        "statements-reporting-eci-aland-baseless"
+      ],
+      "reason": "same statement: the ECI calls the Aland deletion charge incorrect and baseless and says it filed the 2023 FIR itself, 18 Sep 2025; kept the checked, more detailed version (names the Kalaburagi SP, the 19 Sep letter) over the unchecked version."
+    },
+    {
+      "keep": "commissioners-event-2022-05-15-rajiv-kumar-cec",
+      "drop": [
+        "selection-law-rajiv-kumar-cec-2022"
+      ],
+      "reason": "same event: Rajiv Kumar becomes the 25th CEC, 15 May 2022; kept the checked, two-tier-1-source version (PIB, Anoop Baranwal judgment) over the unconfirmed one-source version."
+    },
+    {
+      "keep": "commissioners-event-2020-08-18-lavasa-resigns",
+      "drop": [
+        "elections-2019-2024-lavasa-resigns"
+      ],
+      "reason": "same event: Ashok Lavasa resigns as Election Commissioner effective 31 Aug 2020; both checked, kept the four-source version (including two tier-1 PIB/ECI sources) over the two-source version."
+    },
+    {
+      "keep": "sir-rules-bihar-sir-order",
+      "drop": [
+        "officials-diwan-signs-bihar-sir-order"
+      ],
+      "reason": "same event: the Bihar SIR order signed by ECI Secretary Pawan Diwan, 24 Jun 2025; both checked, kept the fuller rule-kind entry (full order text, schedule, legal basis) over the shorter event-kind duplicate."
+    },
+    {
+      "keep": "sir-rules-phase2-schedule-six-states",
+      "drop": [
+        "numbers-phase2-draft-dates-2025-12-11"
+      ],
+      "reason": "same event: SIR Phase II draft dates staggered in six states/UTs (PN/364/2025), 11 Dec 2025; both checked, kept the rule-kind entry, correctly scoped to this order, over the numbers.json duplicate that carried no figures of its own."
     }
   ]
 }

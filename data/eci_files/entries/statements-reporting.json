@@ -82,7 +82,8 @@
         "checked_url": "https://www.etvbharat.com/en/!bharat/cec-selection-rahul-gandhi-shares-dissent-note-after-centre-appoints-gyanesh-kumar-enn25021802488",
         "note": "ETV Bharat's report matches the entry point for point: the Monday meeting with PM/HM, the dissent citing the March 2023 ruling and the CJI's exclusion, the 19 Feb Supreme Court hearing, and the same-night Law Ministry notification. The Week's source URL returned Access Denied; not essential since ETV Bharat independently confirms all details."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-eci-duplicate-epic-clarification",
@@ -261,6 +262,15 @@
           "publisher": "The Tribune",
           "title": "How to steal an election: Maharashtra elections were rigged, so will Bihar be, alleges Rahul Gandhi",
           "published": "2025-06-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/amp/story/india%2Fcan-ec-announce-date-by-which-electoral-roll-data-of-haryana-maharashtra-will-be-handed-over-rahul-gandhi-3577501",
+          "publisher": "Deccan Herald",
+          "title": "Can EC announce date by which electoral-roll data of Haryana, Maharashtra will be handed over: Rahul Gandhi",
+          "published": "2025-06-09",
           "tier": 3,
           "archive_url": null,
           "quote": null
@@ -458,7 +468,8 @@
       ],
       "response_to": "statements-reporting-rahul-mahadevapura-presentation",
       "notes": "Commentators quoted by ADR/The Quint argued Rule 20(3)(b) applies to claims and objections during roll revision, not to general public allegations; that argument was not verified here.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-rahul-mahadevapura-presentation",
@@ -539,6 +550,33 @@
           "publisher": "India TV",
           "title": "'Sign under oath': Karnataka and Maharashtra CEOs challenge Rahul Gandhi's 'poll rigging' allegations",
           "published": "2025-08-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/karnataka/rahul-vs-ec-on-vote-chori-karnataka-poll-body-chief-asks-for-names-of-electors-wants-declaration-under-oath-3670274",
+          "publisher": "Deccan Herald",
+          "title": "Rahul vs EC on 'vote chori': Karnataka poll body chief asks for names of electors; wants 'declaration under oath'",
+          "published": "2025-08-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.thenewsminute.com/news/rahul-gandhi-should-provide-details-of-irregularities-in-voter-list-under-oath-maha-ceo",
+          "publisher": "The News Minute",
+          "title": "Rahul Gandhi should provide details of irregularities in voter list under oath: Maha CEO",
+          "published": "2025-08-08",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.tribuneindia.com/news/haryana/submit-declaration-within-10-days-chief-electoral-officer-to-rahul",
+          "publisher": "The Tribune",
+          "title": "Submit declaration within 10 days, Chief Electoral Officer to Rahul",
+          "published": "2025-08-11",
           "tier": 3,
           "archive_url": null,
           "quote": null
@@ -885,7 +923,8 @@
       ],
       "response_to": "statements-reporting-rahul-aland-rajura-presentation",
       "notes": null,
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-rahul-aland-rajura-presentation",
@@ -939,6 +978,15 @@
           "publisher": "The Tribune",
           "title": "CEC shielding 'vote chors', undermining democracy: Rahul Gandhi; election panel rubbishes claim",
           "published": "2025-09-19",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.deccanherald.com/india/rahul-accuses-chief-election-commissioner-of-stonewalling-cids-request-for-info-on-karnatakas-aland-vote-deletion-3734248",
+          "publisher": "Deccan Herald",
+          "title": "Rahul accuses Chief Election Commissioner of stonewalling CID's request for info on Karnataka's Aland vote deletion",
+          "published": "2025-09-18",
           "tier": 3,
           "archive_url": null,
           "quote": null
@@ -1427,7 +1475,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-special-intensive-revision-sir-electoral-roll-centralisation-eci-ecinet-10889738/",
         "note": "Confirmed: on Jan 2, 2026, with SIR under way in 12 states/UTs, Sanjay Kumar asked Khanna to 'ensure that IT system is made in a manner that ERO's discretion to act in any manner is not restricted', exactly as summarised."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-ecinet-launch-statements",
@@ -1748,7 +1797,8 @@
         "checked_url": "https://indianexpress.com/article/india/rajya-sabha-chairman-cp-radhakrishnan-rejected-opposition-motion-remove-cec-gyanesh-kumar-10622419/",
         "note": "Confirmed: both notices refused under Section 3 of the Judges (Inquiry) Act, 1968, with bulletins giving no substantive reason, and both O'Brien's and Ramesh's reactions are quoted as summarised."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-sandhu-note-communications-approval",
@@ -2843,7 +2893,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-illegal-changes-form-6-gyanesh-kumar-10889714/",
         "note": "Confirmed: May notes, July appearance of the SIR declaration on the portal, and Sandhu's Aug 13 removal direction all match the source's own account."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-ie-investigation-14-objections",
@@ -2922,7 +2973,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
         "note": "Confirmed in full: '14 times...four times on a single day', the four subject areas, copies to the CEC, the quoted Section 18 language, and the 13.37-crore figure (cross-checked against the Sept 1, 2026 IE deletions story, which gives exactly 13.37 crore/14.1%)."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-kejriwal-scrap-sir",
@@ -3439,7 +3491,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-goa-sir-voter-deletion-ecinet-10891422/",
         "note": "Confirmed in full, including the Taleigao detail (65 of 97) and that DG(IT) Khanna did not answer the questionnaire. A Sept 25 follow-up live update shows the Goa CEO later said the 97 were being processed separately house-to-house; this is consistent with, not contradictory to, the entry, and is already captured by the paired response entry statements-reporting-goa-ceo-97-processed elsewhere in the file."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "statements-reporting-rahul-press-conference-approver",

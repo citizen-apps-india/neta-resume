@@ -179,10 +179,7 @@
     },
     {
       "charge_id": "selection-law-rahul-dissent-note",
-      "also_recorded_as": [
-        "commissioners-event-2025-02-17-selection-rahul-dissent",
-        "statements-reporting-rahul-dissent-cec-selection"
-      ],
+      "also_recorded_as": [],
       "response_ids": [
         "selection-law-bjp-on-rahul-dissent"
       ],
@@ -207,9 +204,7 @@
     },
     {
       "charge_id": "statements-reporting-rahul-match-fixing-maharashtra",
-      "also_recorded_as": [
-        "elections-2019-2024-mh-rahul-match-fixing"
-      ],
+      "also_recorded_as": [],
       "response_ids": [
         "elections-2019-2024-mh-ceo-rolls-statement",
         "officials-maharashtra-ceo-june-2025",
@@ -260,14 +255,11 @@
     },
     {
       "charge_id": "statements-reporting-rahul-mahadevapura-presentation",
-      "also_recorded_as": [
-        "officials-rahul-vote-chori-2025-08-07"
-      ],
+      "also_recorded_as": [],
       "response_ids": [
         "statements-reporting-ceo-notices-shakun-rani",
         "officials-karnataka-ceo-oath-letter",
         "officials-maharashtra-ceo-oath-letter",
-        "statements-reporting-ceo-karnataka-maharashtra-declaration",
         "statements-reporting-eci-sign-or-apologise",
         "officials-haryana-ceo-oath-letter",
         "officials-karnataka-ceo-shakun-rani",
@@ -295,13 +287,10 @@
     },
     {
       "charge_id": "statements-reporting-rahul-aland-rajura-presentation",
-      "also_recorded_as": [
-        "officials-rahul-aland-charge"
-      ],
+      "also_recorded_as": [],
       "response_ids": [
         "statements-reporting-eci-aland-rajura-numbers",
-        "officials-eci-aland-response",
-        "statements-reporting-eci-aland-baseless"
+        "officials-eci-aland-response"
       ],
       "record_ids": [],
       "related": [],
@@ -365,10 +354,7 @@
     },
     {
       "charge_id": "sir-rules-goa-final-roll-97",
-      "also_recorded_as": [
-        "numbers-goa-97-voters-left-off-2026-09-23",
-        "statements-reporting-ie-goa-97-story"
-      ],
+      "also_recorded_as": [],
       "response_ids": [
         "officials-goel-response-97",
         "numbers-goa-97-voters-ceo-response-2026-09-25"
@@ -386,14 +372,6 @@
         {
           "id": "selection-law-removal-notice-rejected",
           "why": "What followed: the presiding officers refused to admit the notices"
-        },
-        {
-          "id": "commissioners-event-2026-04-06-removal-notices-refused",
-          "why": "The same refusal, recorded in the commissioners area"
-        },
-        {
-          "id": "statements-reporting-removal-notices-rejected",
-          "why": "The same refusal, recorded in the statements area"
         }
       ],
       "note": "The refusal to admit the notices is recorded, but it is a decision by the presiding officers, not an answer from the CEC."
@@ -464,10 +442,7 @@
     },
     {
       "charge_id": "sir-rules-form6-online-sir-declaration",
-      "also_recorded_as": [
-        "officials-form6-change-reported",
-        "statements-reporting-ie-form6-story"
-      ],
+      "also_recorded_as": [],
       "response_ids": [
         "sir-rules-eci-annexure-d-response"
       ],
@@ -491,7 +466,7 @@
       "charge_id": "officials-sandhu-dgit-access-charge",
       "also_recorded_as": [],
       "response_ids": [
-        "officials-eci-press-note-response",
+        "sir-rules-eci-pn-119-response",
         "sir-rules-eci-ecinet-access-response"
       ],
       "record_ids": [],
@@ -528,12 +503,8 @@
     },
     {
       "charge_id": "sir-rules-ie-14-objections-report",
-      "also_recorded_as": [
-        "commissioners-event-2026-09-23-ie-two-ecs-objected",
-        "statements-reporting-ie-investigation-14-objections"
-      ],
+      "also_recorded_as": [],
       "response_ids": [
-        "commissioners-event-2026-09-23-eci-response-dissent",
         "sir-rules-eci-pn-119-response"
       ],
       "record_ids": [

@@ -813,6 +813,24 @@
           "tier": 1,
           "archive_url": null,
           "quote": null
+        },
+        {
+          "url": "https://gulfnews.com/world/asia/india/india-former-finance-secretary-rajiv-kumar-appointed-election-commissioner-1.1598032628781",
+          "publisher": "Gulf News",
+          "title": "India: Former Finance Secretary Rajiv Kumar appointed Election Commissioner",
+          "published": "2020-08-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.indiatvnews.com/news/india/who-is-rajiv-kumar-new-election-commissioner-former-finance-secretary-election-commission-643882",
+          "publisher": "India TV",
+          "title": "Former Finance Secretary Rajiv Kumar appointed new Election Commissioner, to replace Ashok Lavasa",
+          "published": "2020-08-21",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "notes": "The resignation date of 18 Aug 2020 is reported by PTI via 'sources in the poll panel'; the effective date of 31 Aug 2020 is in the Law Ministry notification quoted by Scroll and in ECI's own former-EC list. ECI's farewell release (28 Aug 2020) says he found the choice to leave difficult.",
@@ -2582,7 +2600,8 @@
         "checked_url": "https://aninews.in/news/national/general-news/disrespectful-discourteous-says-rahul-gandhis-dissent-note-on-chief-election-commissioner-appointment20250218134301/",
         "note": "ANI quotes the note ('disrespectful and discourteous', 'midnight decision', CJI removal, SC hearing in under 48 hours) shared on X on 18 Feb 2025; DH/PTI confirms postponement demand, note treated as dissent, no participation in further proceedings. Government/BJP response not found in sources opened; fresh web search was unavailable in this check."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "commissioners-event-2025-02-18-rajiv-kumar-retires",
@@ -3151,7 +3170,8 @@
         "checked_url": "https://www.newsonair.gov.in/rs-chairman-cp-radhakrishnan-and-ls-speaker-om-bilra-reject-impeachment-notice-of-motion-against-cec-gyanesh-kumar",
         "note": "AIR (posted 7 Apr 2026, 7:14 AM) confirms both presiding officers refused admission after 'a careful and objective assessment'; The Quint dates it 6 Apr and cites Section 3 of the Judges (Inquiry) Act. Note: this is the presiding officers' decision, not a response by the CEC or ECI to the charges; 'response_to' here only links it to the notice."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "commissioners-event-2026-04-24-fresh-removal-notice",
@@ -3258,7 +3278,8 @@
         "checked_url": "https://www.tribuneindia.com/news/india/opposition-to-submit-fresh-notice-in-ls-rs-for-motion-seeking-cecs-removal/",
         "note": "PTI (Tribune and DH, 24 Sep 2026) reports the Wednesday statement: differing views normal, orders carry full legal sanction and follow statutory procedure, all three commissioners and every officer may give suggestions. Summary matches; ECI's own text not located."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "commissioners-event-2026-09-23-ie-two-ecs-objected",
@@ -3308,7 +3329,8 @@
         "checked_url": "https://indianexpress.com/article/express-exclusive/election-commission-sir-14-objections-gyanesh-kumar-sukhbir-singh-sandhu-vivek-joshi-10889737/",
         "note": "Article body (ld+json) confirms at least 14 objections over ten months 'from November to August', topics (Form 6, additions/deletions, West Bengal appeals, ERONet/ECINet access), separate letters to the Cabinet Secretary on work allocation, questionnaire and emails of 21 Sep with no response. Quote 'unauthorised and illegal' is exact (Sandhu, 13 Aug). Label 'reported' is right: notes not public."
       },
-      "check": "checked"
+      "check": "checked",
+      "exclude": true
     },
     {
       "id": "commissioners-event-2026-09-24-third-removal-notice-planned",

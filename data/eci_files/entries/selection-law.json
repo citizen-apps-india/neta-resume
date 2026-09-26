@@ -245,7 +245,8 @@
         }
       ],
       "notes": "Dates are from the tenure table in the Supreme Court's Anoop Baranwal judgment (paragraph 52), which records the executive-only convention in force until 2 March 2023: the President appointed on the Prime Minister's advice, usually a serving or retired Secretary-rank civil servant, and the senior-most EC was elevated to CEC. The table's columns are garbled in the Indian Kanoon text; individual gazette notifications were not opened. The judgment (para 187) states the EC vacancy arose on 15 May 2022.",
-      "check": "unchecked"
+      "check": "unchecked",
+      "exclude": true
     },
     {
       "id": "selection-law-baranwal-hearing-begins",
@@ -2255,6 +2256,42 @@
           "tier": 3,
           "archive_url": null,
           "quote": null
+        },
+        {
+          "url": "https://aninews.in/news/national/general-news/disrespectful-discourteous-says-rahul-gandhis-dissent-note-on-chief-election-commissioner-appointment20250218134301/",
+          "publisher": "ANI",
+          "title": "'Disrespectful, discourteous', says Rahul Gandhi's dissent note on Chief Election Commissioner appointment",
+          "published": "2025-02-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": "disrespectful and discourteous"
+        },
+        {
+          "url": "https://www.deccanherald.com/amp/story/india%2Fpanel-to-elect-new-chief-election-commissioner-meets-congress-demands-postponing-until-sc-hearing-pm-modi-amit-shah-rahul-rajiv-kumar-3409503",
+          "publisher": "Deccan Herald (PTI)",
+          "title": "Meeting to select new Chief Election Commissioner held, Congress demands postponing until SC hearing",
+          "published": "2025-02-17",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.etvbharat.com/en/!bharat/cec-selection-rahul-gandhi-shares-dissent-note-after-centre-appoints-gyanesh-kumar-enn25021802488",
+          "publisher": "ETV Bharat",
+          "title": "CEC Selection: Rahul Gandhi Calls PM, HM's 'Midnight Decision' Choosing Gyanesh Kumar As 'Disrespectful, Discourteous' In Dissent Note",
+          "published": "2025-02-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.theweek.in/news/india/2025/02/18/disrespectful-discourteous-to-appoint-new-cec-now-rahul-gandhi-says-in-dissent-note-against-appointing-gyanesh-kumar.html",
+          "publisher": "The Week",
+          "title": "'Disrespectful, discourteous to appoint new CEC now': Rahul Gandhi says in dissent note",
+          "published": "2025-02-18",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
         }
       ],
       "notes": "The note cites Ambedkar's June 1949 Constituent Assembly speech and surveys of declining voter trust (TOI). The X post itself was not opened. See selection-law-bjp-on-rahul-dissent.",
@@ -2683,6 +2720,33 @@
           "publisher": "The Indian Express",
           "title": "9 charges of 'proven misbehaviour': Opposition files fresh notice to remove CEC Gyanesh Kumar",
           "published": "2026-04-24",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.newsonair.gov.in/rs-chairman-cp-radhakrishnan-and-ls-speaker-om-bilra-reject-impeachment-notice-of-motion-against-cec-gyanesh-kumar",
+          "publisher": "All India Radio News (Akashvani)",
+          "title": "RS Chairman CP Radhakrishnan and LS Speaker Om Birla reject notice of motion against CEC Gyanesh Kumar",
+          "published": "2026-04-06",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://www.thequint.com/news/breaking-news/rajya-sabha-chairman-rejects-opposition-motion-cec",
+          "publisher": "The Quint",
+          "title": "Lok Sabha Speaker, Rajya Sabha Chairman Reject Opposition Motion To Remove CEC",
+          "published": "2026-04-07",
+          "tier": 3,
+          "archive_url": null,
+          "quote": null
+        },
+        {
+          "url": "https://indianexpress.com/article/india/rajya-sabha-chairman-cp-radhakrishnan-rejected-opposition-motion-remove-cec-gyanesh-kumar-10622419/",
+          "publisher": "The Indian Express",
+          "title": "Rajya Sabha Chairman, Lok Sabha Speaker reject Opposition move to impeach CEC Gyanesh Kumar",
+          "published": "2026-04-06",
           "tier": 3,
           "archive_url": null,
           "quote": null
