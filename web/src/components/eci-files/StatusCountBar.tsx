@@ -17,8 +17,7 @@ export function StatusCountBar({ counts, width = 120 }: { counts: EciStatusCount
   );
 }
 
-/** `StatusCountBar` plus the count text it echoes, laid out as PHASE4-SPEC.md §1.3 describes a
- *  `PersonCard`'s "Entries" line — reused by `KeyFacts` for the "Entries on record" tile too. */
+/** `StatusCountBar` plus the count text it echoes — `KeyFacts`'s "Entries on record" tile. */
 export function EntryCountLine({ counts, total }: { counts: EciStatusCounts; total: number }) {
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>

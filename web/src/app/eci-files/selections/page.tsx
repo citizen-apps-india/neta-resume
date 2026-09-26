@@ -4,8 +4,7 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SectionHero } from "@/components/parliament/SectionHero";
 import { RegimeCompare } from "@/components/eci-files/RegimeCompare";
-import { SelectionGraph } from "@/components/eci-files/SelectionGraph";
-import { SelectionCard } from "@/components/eci-files/SelectionCard";
+import { SelectionTimeline } from "@/components/eci-files/people/SelectionTimeline";
 import { EntryDrawer } from "@/components/eci-files/EntryDrawer";
 import { EntryDetail } from "@/components/eci-files/EntryDetail";
 import { getEciEntry, getEciSelections, type EciSelections } from "@/lib/api";
@@ -35,22 +34,32 @@ async function SelectionsBody({ entry }: { entry?: string }) {
     );
   }
   const selections: EciSelections = data;
+  const dissentCount = selections.selections.filter((s) => s.dissent.length > 0).length;
 
   return (
     <>
-      <RegimeCompare regimes={selections.regimes} entriesIndex={selections.entries_index} />
+      <section id="regimes" style={{ marginBottom: 28 }}>
+        <h2 style={{ fontSize: 18, fontWeight: 650, margin: "0 0 14px" }}>Three rules, three panels</h2>
+        <RegimeCompare regimes={selections.regimes} entriesIndex={selections.entries_index} />
+      </section>
 
-      <SelectionGraph selections={selections.selections} regimes={selections.regimes} />
-
-      <section id="selection-list" style={{ marginTop: 28 }}>
-        <h2 className="serif" style={{ fontSize: 20, fontWeight: 600, margin: "0 0 12px" }}>Every selection</h2>
-        {selections.selections.map((sel) => (
-          <SelectionCard key={sel.id} sel={sel} entriesIndex={selections.entries_index} basePath={BASE_PATH} />
-        ))}
+      <section id="selection-list">
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 4 }}>
+          <h2 style={{ fontSize: 18, fontWeight: 650, margin: 0 }}>{selections.selections.length} selections, 2019 to today</h2>
+          <span className="mono" style={{ fontSize: 11.5, color: "var(--muted)" }}>panel → appointee</span>
+        </div>
+        <div style={{ border: "1px solid var(--rule)", borderRadius: 14, background: "var(--card)", padding: "6px 22px" }}>
+          <SelectionTimeline selections={selections.selections} entriesIndex={selections.entries_index} basePath={BASE_PATH} />
+        </div>
+        {dissentCount > 0 && (
+          <p style={{ fontSize: 12, color: "var(--muted)", marginTop: 8 }}>
+            {dissentCount} of {selections.selections.length} selections carry a recorded dissent.
+          </p>
+        )}
       </section>
 
       <section id="departures" style={{ marginTop: 28 }}>
-        <h2 className="serif" style={{ fontSize: 20, fontWeight: 600, margin: "0 0 12px" }}>Departures</h2>
+        <h2 style={{ fontSize: 18, fontWeight: 650, margin: "0 0 12px" }}>Departures</h2>
         <table className="eci-state-table">
           <caption style={{ textAlign: "left", fontSize: 12.5, color: "var(--muted)", padding: "0 0 10px" }}>
             How each commissioner&apos;s tenure ended, where it ended before a full term.
@@ -127,7 +136,7 @@ export default async function EciSelectionsPage({ searchParams }: { searchParams
         <SectionHero
           eyebrow="ECI FILES · SELECTIONS"
           title="How the commissioners were chosen"
-          subtitle="Eight selections from 2019 to 2025, who sat on each panel, and the two recorded dissents. Every line cites an entry."
+          subtitle="Eight selections since 2019, under three rules, with two recorded dissents."
           backHref="/eci-files/people"
           backLabel="People"
         />

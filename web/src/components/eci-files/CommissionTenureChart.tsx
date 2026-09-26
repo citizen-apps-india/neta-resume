@@ -1,13 +1,11 @@
 import Link from "next/link";
-import type { EciPersonSummary, EciSelections } from "@/types/eci-files";
+import type { EciPersonSummary } from "@/types/eci-files";
 import { ECI_TENURE_AXIS, dateFraction, formatEciDate, membersInOffice, tenureSegments } from "@/lib/eci-files";
+import { PersonAvatar } from "@/components/eci-files/PersonAvatar";
 
 const LABEL_COL = 158; // 148px label + 10px row gap (.eci-tchart-row in globals.css)
 
-const MARKERS = [
-  { date: "2023-03-02", style: "dashed" as const, full: "Court's interim rule" },
-  { date: "2024-01-02", style: "solid" as const, full: "2023 Act in force" },
-];
+const ACT_MARKER = { date: "2024-01-02", full: "2023 Act in force" };
 
 function segmentClass(kind: string): string {
   return kind === "cec" ? "eci-tenure-cec" : kind === "ec" ? "eci-tenure-ec" : "eci-tenure-other";
@@ -31,84 +29,76 @@ function stripTip(from: string, to: string, count: number): string {
 
 const SHADE_BY_COUNT: Record<number, number> = { 3: 12, 2: 24, 1: 45, 0: 0 };
 
-/** "Who ran the Commission" (PHASE4-SPEC.md §1.2): hand-built HTML/SVG rows on the shared
- *  `ECI_TENURE_AXIS`, one per commissioner, plus a "members in office" strip and the two rule-change
- *  markers. Modelled on `DensityStrip`/`LaneTimeline`'s hybrid of HTML rows and small SVG marks, not a
- *  chart library. Markers and diamonds line up under the bar column via a fixed `LABEL_COL` offset,
- *  which only holds at ≥640px — the marker overlay hides on phones, where rows stack (name above bar). */
+/** "Who ran the Commission" (C-After-People.dc.html): hand-built HTML rows on the shared
+ *  `ECI_TENURE_AXIS`, one per commissioner — avatar at the row start, EC/CEC shading, one dashed line for
+ *  the 2023 Act (the interim court rule that produced no selections gets no marker of its own), and a
+ *  small ringed dot at the end of a serving commissioner's bar. Modelled on `DensityStrip`/`LaneTimeline`'s
+ *  hybrid of HTML rows and small marks, not a chart library. The "members in office" strip and the table
+ *  disclosure stay: they're supporting detail behind the one hero chart, not a second hero. */
 export function CommissionTenureChart({
-  people, selectionsData, axis = ECI_TENURE_AXIS,
+  people, axis = ECI_TENURE_AXIS,
 }: {
   people: EciPersonSummary[];
-  selectionsData: EciSelections | null;
   axis?: { from: string; to: string };
 }) {
-  const regimeLabel = new Map(selectionsData?.regimes.map((r) => [r.key, r.label]) ?? []);
   const ticks = yearTicks(axis);
 
   const commissionIntervals = people.flatMap((p) =>
     tenureSegments(p.tenure, axis).filter((s) => s.kind !== "other").map((s) => ({ from: s.from, to: s.to })),
   );
   const strip = membersInOffice(commissionIntervals, axis);
-
-  const diamondsBySlug = new Map<string, { x: number; selection: EciSelections["selections"][number] }[]>();
-  for (const sel of selectionsData?.selections ?? []) {
-    const x = dateFraction(sel.date, axis.from, axis.to);
-    for (const a of sel.appointed) {
-      const list = diamondsBySlug.get(a.person_slug) ?? [];
-      list.push({ x, selection: sel });
-      diamondsBySlug.set(a.person_slug, list);
-    }
-  }
+  const markerX = dateFraction(ACT_MARKER.date, axis.from, axis.to) * 100;
+  const servingCount = people.filter((p) => p.current).length;
 
   return (
     <figure style={{ margin: "0 0 28px" }}>
-      <div className="eci-legend" style={{ marginBottom: 12 }}>
-        <span className="eci-legend-item">
-          <span aria-hidden style={{ width: 14, height: 8, borderRadius: 2, background: "color-mix(in srgb, var(--eci-ink) 32%, var(--card))", border: "1px solid var(--eci-ink)" }} />
-          Election Commissioner
-        </span>
-        <span className="eci-legend-item">
-          <span aria-hidden style={{ width: 14, height: 8, borderRadius: 2, background: "var(--eci-ink)" }} />
-          Chief Election Commissioner
-        </span>
-        <span className="eci-legend-item"><span aria-hidden style={{ fontSize: 13, color: "var(--eci-ink)" }}>◆</span> Selection</span>
-        <span className="eci-legend-item"><span aria-hidden style={{ fontSize: 13, color: "var(--eci-ink)" }}>◇</span> Selection with a recorded dissent</span>
-        {/* Marker labels live here, not floated over the chart: at this axis's density (10 months
-            apart), positioned labels collide with each other and with the year ticks. */}
-        {MARKERS.map((m) => (
-          <Link key={m.date} href="/eci-files/selections#regimes" className="eci-legend-item mono" style={{ color: "var(--muted)", textDecoration: "none" }}>
-            <span aria-hidden style={{ width: 14, height: 0, borderTop: m.style === "dashed" ? "1.5px dashed var(--faint)" : "1.5px solid var(--eci-ink)" }} />
-            {m.full} ({formatEciDate(m.date, "day")})
-          </Link>
-        ))}
-      </div>
+      <div style={{ border: "1px solid var(--rule)", borderRadius: 14, background: "var(--card)", padding: "20px clamp(14px,2vw,24px) 6px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", flexWrap: "wrap", gap: 10, marginBottom: 10 }}>
+          <h2 style={{ margin: 0, fontSize: 18, fontWeight: 650 }}>Who ran the Commission, 2019–today</h2>
+          <span className="mono" style={{ fontSize: 11.5, color: "var(--muted)" }}>
+            {people.length} commissioner{people.length === 1 ? "" : "s"} · {servingCount} serving now
+          </span>
+        </div>
 
-      <div style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card)", padding: "10px clamp(10px,2vw,18px) 4px" }}>
+        <div className="eci-legend" style={{ marginBottom: 12 }}>
+          <span className="eci-legend-item">
+            <span aria-hidden style={{ width: 14, height: 8, borderRadius: 2, background: "color-mix(in srgb, var(--eci-ink) 32%, var(--card))", border: "1px solid var(--eci-ink)" }} />
+            Election Commissioner
+          </span>
+          <span className="eci-legend-item">
+            <span aria-hidden style={{ width: 14, height: 8, borderRadius: 2, background: "var(--eci-ink)" }} />
+            Chief Election Commissioner
+          </span>
+          <span className="eci-legend-item">
+            <span aria-hidden style={{ width: 8, height: 8, borderRadius: "50%", background: "var(--eci-ink)", boxShadow: "0 0 0 2px var(--card)" }} />
+            Serving today
+          </span>
+          <Link href="/eci-files/selections#regimes" className="eci-legend-item mono" style={{ color: "var(--muted)", textDecoration: "none" }}>
+            <span aria-hidden style={{ width: 14, height: 0, borderTop: "1.5px dashed var(--ink)" }} />
+            {ACT_MARKER.full} ({formatEciDate(ACT_MARKER.date, "day")})
+          </Link>
+        </div>
+
         <div style={{ position: "relative" }}>
           <div className="eci-tchart-markers" aria-hidden style={{ position: "absolute", inset: 0, marginLeft: LABEL_COL, pointerEvents: "none" }}>
-            {MARKERS.map((m) => (
-              <div
-                key={m.date}
-                style={{
-                  position: "absolute", top: 0, bottom: 0, left: `${dateFraction(m.date, axis.from, axis.to) * 100}%`,
-                  borderLeft: m.style === "dashed" ? "1.5px dashed var(--faint)" : "1.5px solid var(--eci-ink)",
-                }}
-              />
-            ))}
+            <div style={{ position: "absolute", top: 0, bottom: 0, left: `${markerX}%`, borderLeft: "1.5px dashed var(--ink)" }} />
           </div>
 
           {people.map((p) => {
             const segments = tenureSegments(p.tenure, axis);
-            const diamonds = diamondsBySlug.get(p.slug) ?? [];
             const rowLabel = `${p.name}, ${
               segments.length > 0
                 ? segments.map((s) => `${s.office}, ${s.clippedStart ? "from before 2019" : formatEciDate(s.from, "day")} to ${s.openEnd ? "today" : formatEciDate(s.to, "day")}`).join("; ")
                 : "no tenure dates on record"
-            }`;
+            }${p.current ? ", serving today" : ""}`;
             return (
               <div key={p.slug} className="eci-tchart-row" style={{ minHeight: 26 }}>
-                <span className="eci-tchart-label serif" style={{ fontSize: 13, fontWeight: 600 }}>{p.name}</span>
+                <span className="eci-tchart-label" style={{ display: "flex", alignItems: "center", gap: 8, minWidth: 0 }}>
+                  <PersonAvatar name={p.name} photo={p.photo} size={24} decorative />
+                  <span className="serif" title={p.name} style={{ fontSize: 13, fontWeight: 600, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                    {p.name}
+                  </span>
+                </span>
                 <div style={{ position: "relative", flex: 1, height: 26 }}>
                   <Link href={`/eci-files/people/${p.slug}`} aria-label={rowLabel} style={{ position: "absolute", inset: 0, display: "block" }}>
                     {segments.map((s, i) => (
@@ -125,30 +115,10 @@ export function CommissionTenureChart({
                     {segments.some((s) => s.clippedStart) && (
                       <span aria-hidden className="mono" style={{ position: "absolute", left: 0, top: -1, fontSize: 9.5, color: "var(--faint)" }}>◂ from Sep 2017</span>
                     )}
+                    {p.current && (
+                      <span aria-hidden style={{ position: "absolute", left: "100%", top: "50%", transform: "translate(-50%, -50%)", width: 8, height: 8, borderRadius: "50%", background: "var(--eci-ink)", boxShadow: "0 0 0 2px var(--card)" }} />
+                    )}
                   </Link>
-                  {diamonds.map(({ x, selection }, i) => {
-                    const dissented = selection.dissent.length > 0;
-                    const label = `Selected ${formatEciDate(selection.date, "day")} under ${regimeLabel.get(selection.regime) ?? selection.regime}${
-                      dissented ? `, ${selection.dissent.length === 1 ? "one dissent" : `${selection.dissent.length} dissents`} recorded` : ""
-                    }`;
-                    return (
-                      <a
-                        key={i}
-                        href={`/eci-files/selections#${selection.id}`}
-                        aria-label={label}
-                        className="eci-diamond-link"
-                        style={{ position: "absolute", left: `${x * 100}%`, top: "50%", transform: "translate(-50%, -50%)", zIndex: 2, lineHeight: 0 }}
-                      >
-                        <svg width={14} height={14} viewBox="0 0 14 14">
-                          <rect
-                            x={2} y={2} width={10} height={10} transform="rotate(45 7 7)"
-                            fill={dissented ? "var(--card)" : "var(--eci-ink)"}
-                            stroke="var(--eci-ink)" strokeWidth={dissented ? 2 : 0}
-                          />
-                        </svg>
-                      </a>
-                    );
-                  })}
                 </div>
               </div>
             );

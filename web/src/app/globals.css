@@ -779,3 +779,36 @@ html { scroll-behavior: smooth; }
 .eci-obj-mark:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
 @media (hover: hover) { .eci-obj-mark:hover circle, .eci-obj-mark:hover ellipse { opacity: 0.75; } }
 /* --- end phase 5 --- */
+
+/* --- ECI UX people --- */
+/* The redesigned /eci-files/people, /eci-files/people/[slug] and /eci-files/selections
+   (docs/eci-files/designs/DESIGN-BRIEF.md, C-After-People/Profile/Selections.dc.html). */
+
+/* Compact avatar-grid tiles for the people groups (PersonTile) — responsive auto-fill, never a fixed
+   column count, so a group of 5 or 55 both wrap cleanly down to 400px. */
+.eci-ptile-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 10px; }
+.eci-ptile-grid--dense { grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 8px; }
+
+/* CareerLine (profile hero): a proportional desktop axis vs. a plain stacked list on the phone board
+   (C-Phone-Profile.dc.html) — the same CSS-toggle pattern as `.eci-avatar-lg`/`.eci-avatar-sm`. */
+.eci-careerline-desktop { display: block; }
+.eci-careerline-mobile { display: none; }
+@media (max-width: 680px) {
+  .eci-careerline-desktop { display: none; }
+  .eci-careerline-mobile { display: block; }
+}
+
+/* Selections: the eight-selection connected vertical timeline (SelectionTimeline) — a dot + rail per row,
+   a second colour only on the dot for a dissent, matching the named "Dissent · <name>" badge beside it. */
+.eci-sel-timeline { list-style: none; margin: 0; padding: 0; }
+.eci-sel-timeline > li { position: relative; padding: 16px 0 16px 26px; border-top: 1px solid var(--rule2); }
+.eci-sel-timeline > li:first-child { border-top: none; }
+.eci-sel-timeline > li::before {
+  content: ""; position: absolute; left: 0; top: 20px; width: 11px; height: 11px; border-radius: 50%; background: var(--eci-ink);
+}
+.eci-sel-timeline > li[data-dissent="true"]::before { background: var(--eci-claim); }
+
+/* Panel seats shared by the profile's "Selected by" and the selections timeline (SelectionSeatsRow). */
+.eci-seat-row { display: flex; align-items: flex-start; gap: 14px; flex-wrap: wrap; }
+.eci-seat { display: flex; flex-direction: column; align-items: center; gap: 6px; width: 128px; text-align: center; }
+/* --- end ECI UX people --- */

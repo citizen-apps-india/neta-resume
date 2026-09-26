@@ -4,11 +4,11 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SectionHero } from "@/components/parliament/SectionHero";
 import { SectionNav } from "@/components/eci-files/SectionNav";
 import { CommissionTenureChart } from "@/components/eci-files/CommissionTenureChart";
-import { PersonCard } from "@/components/eci-files/PersonCard";
+import { PersonTile } from "@/components/eci-files/people/PersonTile";
 import { StateOfficerTable } from "@/components/eci-files/StateOfficerTable";
-import { NamedPeopleList } from "@/components/eci-files/NamedPeopleList";
+import { AlsoNamedPanel } from "@/components/eci-files/people/AlsoNamedPanel";
 import { PhotoCredits } from "@/components/eci-files/PhotoCredits";
-import { getEciPeople, getEciSelections, type EciPersonSummary, type EciSelections } from "@/lib/api";
+import { getEciPeople, type EciPersonSummary } from "@/lib/api";
 import { personGroupMeta } from "@/lib/eci-files";
 
 export const metadata: Metadata = {
@@ -21,11 +21,9 @@ const GROUP_ORDER = ["commission", "secretariat", "state", "named"] as const;
 
 export default async function EciFilesPeoplePage() {
   let people: EciPersonSummary[] = [];
-  let selectionsData: EciSelections | null = null;
   let failed = false;
   try {
     people = await getEciPeople();
-    selectionsData = await getEciSelections().catch(() => null);
   } catch {
     failed = true;
   }
@@ -36,6 +34,7 @@ export default async function EciFilesPeoplePage() {
     state: people.filter((p) => p.group === "state"),
     named: people.filter((p) => p.group === "named"),
   };
+  const servingCount = byGroup.commission.filter((p) => p.current).length;
 
   const navItems = GROUP_ORDER.filter((g) => byGroup[g].length > 0).map((g) => ({
     id: g === "commission" ? "commission" : g === "secretariat" ? "secretariat" : g === "state" ? "state" : "named",
@@ -53,8 +52,8 @@ export default async function EciFilesPeoplePage() {
       <main style={{ maxWidth: 1080, margin: "0 auto", padding: "28px clamp(14px,4vw,28px) 72px", width: "100%" }}>
         <SectionHero
           eyebrow="ECI FILES · PEOPLE"
-          title="Who runs the Election Commission"
-          subtitle="The commissioners, the officials under them and the state officers who run the rolls, 2019 to today. Every line has a source."
+          title="Who has run the Commission, who runs it now"
+          subtitle={`${byGroup.commission.length} commissioners since 2019, ${servingCount} serving today, one law that changed how they're chosen.`}
           backHref="/eci-files"
           backLabel="ECI Files"
         />
@@ -69,48 +68,57 @@ export default async function EciFilesPeoplePage() {
           <>
             <SectionNav items={navItems} ariaLabel="Groups on this page" />
 
-            {byGroup.commission.length > 0 && (
-              <>
-                <h2 className="serif" style={{ fontSize: 18, fontWeight: 600, margin: "0 0 6px" }}>Who ran the Commission</h2>
-                <CommissionTenureChart people={byGroup.commission} selectionsData={selectionsData} />
-              </>
-            )}
+            {byGroup.commission.length > 0 && <CommissionTenureChart people={byGroup.commission} />}
 
-            {byGroup.commission.length > 0 && (
-              <section id="commission" style={{ marginBottom: 34 }}>
-                <h2 className="serif" style={{ fontSize: 20, fontWeight: 600, margin: "0 0 4px" }}>{personGroupMeta("commission").heading}</h2>
-                <p style={{ fontSize: 12.5, color: "var(--muted)", margin: "0 0 14px" }}>{personGroupMeta("commission").description}</p>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(260px, 100%), 1fr))", gap: 14 }}>
-                  {byGroup.commission.map((p) => <PersonCard key={p.slug} p={p} variant="commission" />)}
-                </div>
-              </section>
-            )}
+            <div style={{ display: "flex", flexDirection: "column", gap: 32 }}>
+              {byGroup.commission.length > 0 && (
+                <section id="commission">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
+                    <h2 style={{ fontSize: 17, fontWeight: 650, margin: 0 }}>{personGroupMeta("commission").heading}</h2>
+                    <span className="mono" style={{ fontSize: 11.5, color: "var(--muted)" }}>{byGroup.commission.length}</span>
+                  </div>
+                  <div className="eci-ptile-grid">
+                    {byGroup.commission.map((p) => <PersonTile key={p.slug} p={p} size="commission" />)}
+                  </div>
+                </section>
+              )}
 
-            {byGroup.secretariat.length > 0 && (
-              <section id="secretariat" style={{ marginBottom: 34 }}>
-                <h2 className="serif" style={{ fontSize: 20, fontWeight: 600, margin: "0 0 4px" }}>{personGroupMeta("secretariat").heading}</h2>
-                <p style={{ fontSize: 12.5, color: "var(--muted)", margin: "0 0 14px" }}>{personGroupMeta("secretariat").description}</p>
-                <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(230px, 100%), 1fr))", gap: 12 }}>
-                  {byGroup.secretariat.map((p) => <PersonCard key={p.slug} p={p} variant="secretariat" />)}
-                </div>
-              </section>
-            )}
+              {byGroup.secretariat.length > 0 && (
+                <section id="secretariat">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
+                    <h2 style={{ fontSize: 17, fontWeight: 650, margin: 0 }}>{personGroupMeta("secretariat").heading}</h2>
+                    <span className="mono" style={{ fontSize: 11.5, color: "var(--muted)" }}>{byGroup.secretariat.length}</span>
+                  </div>
+                  <div className="eci-ptile-grid eci-ptile-grid--dense">
+                    {byGroup.secretariat.map((p) => <PersonTile key={p.slug} p={p} size="compact" />)}
+                  </div>
+                </section>
+              )}
 
-            {byGroup.state.length > 0 && (
-              <section id="state" style={{ marginBottom: 34 }}>
-                <h2 className="serif" style={{ fontSize: 20, fontWeight: 600, margin: "0 0 4px" }}>{personGroupMeta("state").heading}</h2>
-                <p style={{ fontSize: 12.5, color: "var(--muted)", margin: "0 0 14px" }}>{personGroupMeta("state").description}</p>
-                <StateOfficerTable people={byGroup.state} />
-              </section>
-            )}
+              {byGroup.state.length > 0 && (
+                <section id="state">
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", marginBottom: 12 }}>
+                    <h2 style={{ fontSize: 17, fontWeight: 650, margin: 0 }}>{personGroupMeta("state").heading}</h2>
+                    <span className="mono" style={{ fontSize: 11.5, color: "var(--muted)" }}>{byGroup.state.length}</span>
+                  </div>
+                  <div className="eci-ptile-grid eci-ptile-grid--dense">
+                    {byGroup.state.map((p) => (
+                      <PersonTile key={p.slug} p={p} size="compact" roleOverride={`CEO, ${(p.role ?? "").replace(/^Chief Electoral Officer,\s*/, "") || "—"}`} />
+                    ))}
+                  </div>
+                  <details className="eci-more" style={{ marginTop: 10 }}>
+                    <summary className="mono" style={{ fontSize: 11.5, color: "var(--accent-2)", cursor: "pointer" }}>Show as a table</summary>
+                    <div style={{ marginTop: 10 }}>
+                      <StateOfficerTable people={byGroup.state} />
+                    </div>
+                  </details>
+                </section>
+              )}
 
-            {byGroup.named.length > 0 && (
-              <section id="named" style={{ marginBottom: 20 }}>
-                <h2 className="serif" style={{ fontSize: 20, fontWeight: 600, margin: "0 0 4px" }}>{personGroupMeta("named").heading}</h2>
-                <p style={{ fontSize: 12.5, color: "var(--muted)", margin: "0 0 14px" }}>{personGroupMeta("named").description}</p>
-                <NamedPeopleList people={byGroup.named} />
-              </section>
-            )}
+              {byGroup.named.length > 0 && (
+                <AlsoNamedPanel people={byGroup.named} />
+              )}
+            </div>
 
             <PhotoCredits photos={photoCredits} />
           </>
