@@ -712,3 +712,28 @@ export const ECI_CASE_ROLE_LABEL: Record<EciCaseRole, string> = {
   related: "Related",
 };
 // --- end phase 5 ---
+
+// --- ECI UX views ---
+// /eci-files/objections and /eci-files/answers rework (docs/eci-files/designs/D-After-*.dc.html).
+import type { EciAnswerRow as _EciAnswerRow, EciAnswersView as _EciAnswersView } from "@/types/eci-files";
+
+/** The answers page's filter chips need a fourth state, "with a response", beyond the three
+ *  {@link EciAnswersView} the API filters server-side. Kept local to this rework rather than adding a
+ *  fifth API-backed view: the page always fetches `"all"` and filters with {@link filterEciAnswerRows}. */
+export type EciAnswersView2 = _EciAnswersView | "with-response";
+
+/** Filters an already-fetched, unfiltered row set the way the four answers-page chips read. `"all"` is a
+ *  no-op; the other three each test the one field the API's own views test server-side, so counts match. */
+export function filterEciAnswerRows(rows: _EciAnswerRow[], view: EciAnswersView2): _EciAnswerRow[] {
+  switch (view) {
+    case "with-response":
+      return rows.filter((r) => r.responses.length > 0);
+    case "no-response":
+      return rows.filter((r) => r.responses.length === 0);
+    case "with-record":
+      return rows.filter((r) => r.record.length > 0);
+    default:
+      return rows;
+  }
+}
+// --- end ECI UX views ---
