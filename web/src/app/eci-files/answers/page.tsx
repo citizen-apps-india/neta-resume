@@ -104,7 +104,7 @@ export default async function EciAnswersPage({ searchParams }: { searchParams: P
         <SectionHero
           eyebrow="ECI FILES · CHARGE AND ANSWER"
           title="Charge and answer"
-          subtitle="Each row sets what was said or done beside the reply to it, at equal weight. A thin marker below names a document that bears directly on the point — never a blank column when there is none."
+          subtitle="Every charge set beside its reply, at equal weight, with what the record shows."
           backHref="/eci-files"
           backLabel="ECI Files"
         />

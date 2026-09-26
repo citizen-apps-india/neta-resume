@@ -12,7 +12,7 @@ import { ECI_CASE_STATUS_LABEL, formatEciDate } from "@/lib/eci-files";
 
 export const metadata: Metadata = {
   title: "The court cases · ECI Files",
-  description: "Five cases against the Commission, filed to judgment or pending, on one clock.",
+  description: "Five cases touching the Commission, filed to judgment or pending, on one clock.",
   robots: { index: false, follow: false },
 };
 
@@ -99,7 +99,7 @@ export default async function EciCourtsPage({ searchParams }: { searchParams: Pr
         <SectionHero
           eyebrow="ECI FILES · COURTS"
           title="The court cases"
-          subtitle="Five cases against the Commission, filed to judgment or pending, on one clock."
+          subtitle="Five cases touching the Commission, filed to judgment or pending, on one clock."
           backHref="/eci-files"
           backLabel="ECI Files"
         />

@@ -71,7 +71,7 @@ export function ChargeAnswerRow({ row, preserve }: { row: EciAnswerRowT; preserv
           <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 6 }}>
             {row.related.map((rel) => (
               <div key={rel.entry.id} style={{ fontSize: 12, color: "var(--muted)" }}>
-                {rel.why}: <EntryRefLink entry={rel.entry} basePath={BASE_PATH} preserve={preserve} />
+                {rel.why.replace(/[.:\s]+$/, "")}: <EntryRefLink entry={rel.entry} basePath={BASE_PATH} preserve={preserve} />
               </div>
             ))}
           </div>

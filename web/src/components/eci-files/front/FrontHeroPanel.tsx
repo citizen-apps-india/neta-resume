@@ -12,33 +12,64 @@ function barOpacity(total: number, max: number): number {
   return 0.32;
 }
 
+/** Every month a new year starts, for the strip's own year row (V6: the strip was the only thing in a
+ *  tall right-hand column, so it earns real height and its own year ticks rather than sitting in mostly
+ *  empty space). */
+function yearTicks(months: EciMonthTotal[]): { i: number; year: string }[] {
+  const out: { i: number; year: string }[] = [];
+  let last = "";
+  months.forEach((m, i) => {
+    const year = m.month.slice(0, 4);
+    if (year !== last) {
+      out.push({ i, year });
+      last = year;
+    }
+  });
+  return out;
+}
+
 /** The front page's density strip: one hand-drawn bar per month, 2019 to today, no interaction — the
  *  lane timeline's `DensityStrip` is the click/drag-to-window version used there; this is the slim,
  *  static read of the same `/eci-files/density` shape. */
 function MonthStrip({ months }: { months: EciMonthTotal[] }) {
   const max = Math.max(1, ...months.map((m) => m.total));
   const nowKey = toMonthKey(new Date());
+  const ticks = yearTicks(months);
+  const STEP = 8;
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 10, minWidth: 0 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 14, minWidth: 0, height: "100%", justifyContent: "center" }}>
       <span style={{ fontSize: 14, color: "var(--ink2)" }}>The record, month by month, {ECI_RECORD_START_MONTH.slice(0, 4)}–{ECI_RECORD_END_MONTH.slice(0, 4)}</span>
       <div style={{ overflowX: "auto", paddingBottom: 2 }}>
-        <div style={{ display: "flex", alignItems: "flex-end", gap: 2, minWidth: months.length * 7, height: 30 }}>
-          {months.map((m) => {
-            const isNow = m.month === nowKey;
-            const op = barOpacity(m.total, max);
-            return (
+        <div style={{ position: "relative", minWidth: months.length * STEP, paddingBottom: 16 }}>
+          <div style={{ display: "flex", alignItems: "flex-end", gap: 2, height: 48 }}>
+            {months.map((m) => {
+              const isNow = m.month === nowKey;
+              const op = barOpacity(m.total, max);
+              return (
+                <span
+                  key={m.month}
+                  title={`${m.month} · ${m.total} ${m.total === 1 ? "entry" : "entries"}`}
+                  style={{
+                    width: 6, height: 44, borderRadius: 1, flexShrink: 0,
+                    background: op > 0 ? "var(--eci-ink)" : "var(--rule)",
+                    opacity: op > 0 ? op : 1,
+                    boxShadow: isNow ? "0 0 0 2px var(--ink)" : "none",
+                  }}
+                />
+              );
+            })}
+          </div>
+          <div aria-hidden style={{ position: "relative", height: 14 }}>
+            {ticks.map((t) => (
               <span
-                key={m.month}
-                title={`${m.month} · ${m.total} ${m.total === 1 ? "entry" : "entries"}`}
-                style={{
-                  width: 5, height: 26, borderRadius: 1, flexShrink: 0,
-                  background: op > 0 ? "var(--eci-ink)" : "var(--rule)",
-                  opacity: op > 0 ? op : 1,
-                  boxShadow: isNow ? "0 0 0 2px var(--ink)" : "none",
-                }}
-              />
-            );
-          })}
+                key={t.year}
+                className="mono"
+                style={{ position: "absolute", left: t.i * STEP, top: 2, fontSize: 10, color: "var(--muted)" }}
+              >
+                {t.year}
+              </span>
+            ))}
+          </div>
         </div>
       </div>
       <div className="mono" style={{ display: "flex", gap: 10, alignItems: "center", fontSize: 10.5, color: "var(--muted)", flexWrap: "wrap" }}>
@@ -77,6 +108,12 @@ export function FrontHeroPanel({ headline, months }: { headline: EciHeadlineStat
                 <div key={s.entry_id + s.label} style={{ display: "flex", flexDirection: "column", gap: 3, minWidth: 0, maxWidth: 180 }}>
                   <span className="mono" style={{ fontSize: 24, fontWeight: 500, color: "var(--ink)" }}>{s.value}</span>
                   <span style={{ fontSize: 11.5, color: "var(--muted)", lineHeight: 1.3 }}>{s.label}</span>
+                  <a
+                    href={s.source_url} target="_blank" rel="noopener noreferrer" className="mono"
+                    style={{ fontSize: 10, color: "var(--muted)", textDecoration: "none" }}
+                  >
+                    → {s.source_label}
+                  </a>
                 </div>
               ))}
             </div>

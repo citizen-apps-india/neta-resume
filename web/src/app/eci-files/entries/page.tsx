@@ -4,7 +4,7 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { SectionHero } from "@/components/parliament/SectionHero";
 import { EciEntriesSkeleton } from "@/components/skeletons";
 import { EntriesFilterBar } from "@/components/eci-files/front/EntriesFilterBar";
-import { EntriesYearNav, type EciYearCount } from "@/components/eci-files/front/EntriesYearNav";
+import { EntriesYearNav, EARLIER_YEAR, type EciYearCount } from "@/components/eci-files/front/EntriesYearNav";
 import { EntriesMonthSection } from "@/components/eci-files/front/EntriesMonthSection";
 import { buildEntryMonths, keepReadingLabel, splitKeepReading, yearOf } from "@/components/eci-files/front/entriesGrouping";
 import { DrawerFromParam } from "@/components/eci-files/views/DrawerFromParam";
@@ -30,7 +30,7 @@ type Params = {
  *  rows come from a single request — `q` and "checked only" then filter that in memory, since the API
  *  has no full-text search of its own. */
 async function EntriesBody({ year, currentYear, lane, status, topic, person, q, checkedOnly, entryId }: {
-  year: number;
+  year: number | typeof EARLIER_YEAR;
   currentYear: number;
   lane?: string;
   status?: string;
@@ -52,16 +52,23 @@ async function EntriesBody({ year, currentYear, lane, status, topic, person, q, 
   }
 
   const yearCounts = new Map<number, number>();
+  let earlierCount = 0;
   for (const e of timeline.entries) {
     const y = yearOf(e.date);
-    if (y !== null) yearCounts.set(y, (yearCounts.get(y) ?? 0) + 1);
+    if (y === null) continue;
+    if (y < RECORD_START_YEAR) earlierCount += 1;
+    else yearCounts.set(y, (yearCounts.get(y) ?? 0) + 1);
   }
   const years: EciYearCount[] = [];
+  // N8: entries dated before the record's fixed start year had no tab to reach them — fold them into
+  // one "Earlier" stop instead of a tab per pre-2019 year, most of which would show a count of one.
+  if (earlierCount > 0) years.push({ year: EARLIER_YEAR, count: earlierCount });
   for (let y = RECORD_START_YEAR; y <= currentYear; y++) years.push({ year: y, count: yearCounts.get(y) ?? 0 });
 
   const qLower = q?.toLowerCase();
   const filtered = timeline.entries.filter((e) => {
-    if (yearOf(e.date) !== year) return false;
+    const y = yearOf(e.date);
+    if (year === EARLIER_YEAR ? y === null || y >= RECORD_START_YEAR : y !== year) return false;
     if (checkedOnly && e.check_status !== "checked") return false;
     if (qLower && !(e.title.toLowerCase().includes(qLower) || e.people.some((p) => p.name.toLowerCase().includes(qLower)))) return false;
     return true;
@@ -74,6 +81,7 @@ async function EntriesBody({ year, currentYear, lane, status, topic, person, q, 
   const preserve = {
     year: String(year), lane, status, topic, person, q, checked: checkedOnly ? "1" : undefined,
   };
+  const yearLabel = year === EARLIER_YEAR ? `before ${RECORD_START_YEAR}` : year;
 
   return (
     <>
@@ -84,7 +92,7 @@ async function EntriesBody({ year, currentYear, lane, status, topic, person, q, 
       <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 8 }}>
         <EntriesYearNav years={years} activeYear={year} preserve={{ lane, status, topic, person, q, checked: checkedOnly ? "1" : undefined }} />
         <span className="mono" style={{ fontSize: 12.5, color: "var(--muted)" }}>
-          {filtered.length} entr{filtered.length === 1 ? "y" : "ies"} in {year}
+          {filtered.length} entr{filtered.length === 1 ? "y" : "ies"} {year === EARLIER_YEAR ? yearLabel : `in ${yearLabel}`}
           {unchecked > 0 && <> · {unchecked} not yet checked</>}
         </span>
       </div>
@@ -96,7 +104,7 @@ async function EntriesBody({ year, currentYear, lane, status, topic, person, q, 
           {visible.map((m) => <EntriesMonthSection key={m.key} month={m} preserve={preserve} />)}
           {hidden.length > 0 && (
             <details className="eci-keep-reading">
-              <summary>{keepReadingLabel(hidden, year)}</summary>
+              <summary>{keepReadingLabel(hidden, yearLabel)}</summary>
               <div>{hidden.map((m) => <EntriesMonthSection key={m.key} month={m} preserve={preserve} />)}</div>
             </details>
           )}
@@ -124,7 +132,12 @@ export default async function EciEntriesPage({ searchParams }: { searchParams: P
 
   const currentYear = new Date().getUTCFullYear();
   const requested = Number(sp.year);
-  const year = Number.isInteger(requested) && requested >= RECORD_START_YEAR && requested <= currentYear ? requested : currentYear;
+  const year: number | typeof EARLIER_YEAR =
+    sp.year === EARLIER_YEAR
+      ? EARLIER_YEAR
+      : Number.isInteger(requested) && requested >= RECORD_START_YEAR && requested <= currentYear
+        ? requested
+        : currentYear;
 
   return (
     <>

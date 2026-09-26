@@ -10,10 +10,36 @@ const BREAK_DATE = "2025-01-01";
 const BREAK_FRAC = 0.16;
 /** Two dots closer together than this (as a fraction of the axis width) render as one cluster. */
 const CLUSTER_GAP = 0.014;
+/** Two year ticks closer than this overlap as text (V5: the compressed pre-2025 stretch crams three
+ *  decades into 16% of the axis, so the years around a busy cluster — 2023's Act, say — land close
+ *  enough to overlap). Ticks that would collide alternate onto a second row; one that still collides
+ *  with both rows' last placed tick is dropped rather than drawn on top of its neighbour. */
+const TICK_GAP = 0.032;
 
 interface Dot {
   frac: number;
   rows: EciRuleRow[];
+}
+
+interface Tick {
+  year: string;
+  x: number;
+  row: 0 | 1;
+}
+
+function layoutTicks(years: string[], xFrac: (date: string) => number): Tick[] {
+  const lastX: [number, number] = [-Infinity, -Infinity];
+  const out: Tick[] = [];
+  for (const year of years) {
+    const x = xFrac(`${year}-01-01`);
+    let row: 0 | 1 | null = null;
+    if (x - lastX[0] >= TICK_GAP) row = 0;
+    else if (x - lastX[1] >= TICK_GAP) row = 1;
+    if (row === null) continue;
+    lastX[row] = x;
+    out.push({ year, x, row });
+  }
+  return out;
 }
 
 function clusterDots(rows: EciRuleRow[], xFrac: (date: string) => number): Dot[] {
@@ -113,8 +139,8 @@ export function RulesTimeAxis({ rows }: { rows: EciRuleRow[] }) {
             })}
 
             <div className="eci-rules-axis-ticks">
-              {years.map((y) => (
-                <span key={y} className="mono" style={{ left: `${xFrac(`${y}-01-01`) * 100}%` }}>{y}</span>
+              {layoutTicks(years, xFrac).map((t) => (
+                <span key={t.year} className="mono" style={{ left: `${t.x * 100}%`, top: t.row === 1 ? 13 : 0 }}>{t.year}</span>
               ))}
             </div>
           </div>

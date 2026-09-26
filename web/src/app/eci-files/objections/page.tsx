@@ -33,10 +33,15 @@ async function ObjectionsBody({ entry }: { entry?: string }) {
 
   return (
     <>
+      {/* V1: the page had two paragraphs above the chart (this hero subtitle plus the notes below); the
+          notes now collapse behind their own disclosure so a one-line lede is all that sits above it. */}
       {page.notes && (
-        <p style={{ fontSize: 13, color: "var(--ink2)", lineHeight: 1.55, margin: "0 0 16px", maxWidth: "74ch" }}>
-          <LinkifiedNote text={page.notes} basePath={BASE_PATH} />
-        </p>
+        <details className="eci-more" style={{ margin: "0 0 16px" }}>
+          <summary className="mono" style={{ fontSize: 11.5, color: "var(--accent-2)", cursor: "pointer" }}>About these objections</summary>
+          <p style={{ fontSize: 13, color: "var(--ink2)", lineHeight: 1.55, margin: "8px 0 0", maxWidth: "74ch" }}>
+            <LinkifiedNote text={page.notes} basePath={BASE_PATH} />
+          </p>
+        </details>
       )}
 
       <ObjectionsHero
@@ -75,7 +80,7 @@ export default async function EciObjectionsPage({ searchParams }: { searchParams
         <SectionHero
           eyebrow="ECI FILES · THE FOURTEEN"
           title="The fourteen objections"
-          subtitle="On 23 September 2026 The Indian Express reported that two of the three Election Commissioners, Sukhbir Singh Sandhu and Vivek Joshi, objected on record 14 times in ten months. This record can match 11 of those objections to a dated note or letter. The published reports do not itemise the other three."
+          subtitle="At least 14 objections by Sandhu and Joshi, November 2025 to September 2026."
           backHref="/eci-files"
           backLabel="ECI Files"
         />

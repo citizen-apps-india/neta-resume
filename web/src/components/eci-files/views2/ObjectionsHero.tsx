@@ -228,6 +228,41 @@ export function ObjectionsHero({
           The Indian Express&rsquo;s report says <strong>{missing} more objections are reported but not itemised</strong> in
           its published account &mdash; shown as the dashed circles above, past September 2026.
         </p>
+
+        {/* N9: a table view of the chart above, same convention as CommissionTenureChart's "Show as a table". */}
+        <details className="eci-more" style={{ marginTop: 10 }}>
+          <summary className="mono" style={{ fontSize: 11.5, color: "var(--accent-2)", cursor: "pointer" }}>Show as a table</summary>
+          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12.5, marginTop: 8 }}>
+            <caption style={{ textAlign: "left", fontSize: 11.5, color: "var(--muted)", paddingBottom: 6 }}>
+              Every objection on the chart above, by date.
+            </caption>
+            <thead>
+              <tr>
+                <th scope="col" style={{ textAlign: "left", padding: "4px 8px", color: "var(--faint)", fontSize: 10.5 }}>No.</th>
+                <th scope="col" style={{ textAlign: "left", padding: "4px 8px", color: "var(--faint)", fontSize: 10.5 }}>Date</th>
+                <th scope="col" style={{ textAlign: "left", padding: "4px 8px", color: "var(--faint)", fontSize: 10.5 }}>By</th>
+                <th scope="col" style={{ textAlign: "left", padding: "4px 8px", color: "var(--faint)", fontSize: 10.5 }}>Concerns</th>
+              </tr>
+            </thead>
+            <tbody>
+              {objections.map((o) => (
+                <tr key={o.n}>
+                  <td className="mono" style={{ padding: "4px 8px", borderTop: "1px solid var(--rule2)" }}>{o.n}</td>
+                  <td className="mono" style={{ padding: "4px 8px", borderTop: "1px solid var(--rule2)" }}>{formatEciDate(o.date, o.date_precision)}</td>
+                  <td style={{ padding: "4px 8px", borderTop: "1px solid var(--rule2)" }}>{o.by.map((p) => p.name).join(" and ")}</td>
+                  <td style={{ padding: "4px 8px", borderTop: "1px solid var(--rule2)" }}>{o.concerns}</td>
+                </tr>
+              ))}
+              {missing > 0 && (
+                <tr>
+                  <td className="mono" style={{ padding: "4px 8px", borderTop: "1px solid var(--rule2)" }} colSpan={4}>
+                    {missing} more not itemised in the published reports.
+                  </td>
+                </tr>
+              )}
+            </tbody>
+          </table>
+        </details>
       </div>
 
       <div className="eci2-card eci2-response-card">

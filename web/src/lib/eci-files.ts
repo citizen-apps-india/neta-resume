@@ -30,16 +30,18 @@ export async function loadEciItem<T>(fetcher: () => Promise<T | null>): Promise<
 }
 
 /** Format a date honouring its recorded precision: "24 Jun 2025" (day), "Jul 2026" (month), "2019" (year).
- *  Missing or unparsable dates render "—", per house rule. */
+ *  Missing or unparsable dates render "—", per house rule. One date format everywhere (N4): `en-IN`'s
+ *  ICU data abbreviates September as "Sept", the only month that isn't three letters, so it's swapped for
+ *  "Sep" after formatting rather than leaving one month spelled differently from the other eleven. */
 export function formatEciDate(date: string | null, precision: string): string {
   if (!date) return "—";
   const d = new Date(`${date}T00:00:00Z`);
   if (isNaN(d.getTime())) return "—";
   if (precision === "year") return String(d.getUTCFullYear());
   if (precision === "month") {
-    return d.toLocaleDateString("en-IN", { year: "numeric", month: "short", timeZone: "UTC" });
+    return d.toLocaleDateString("en-IN", { year: "numeric", month: "short", timeZone: "UTC" }).replace("Sept", "Sep");
   }
-  return d.toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" });
+  return d.toLocaleDateString("en-IN", { year: "numeric", month: "short", day: "numeric", timeZone: "UTC" }).replace("Sept", "Sep");
 }
 
 export interface EciStatusMeta {

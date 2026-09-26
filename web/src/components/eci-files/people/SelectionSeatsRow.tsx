@@ -83,7 +83,8 @@ export function SelectionSeatsRow({
       </div>
 
       {sel.dissent.map((d, i) => {
-        const sourceId = d.response_entry_ids[0] ?? d.entry_ids[0];
+        const sourceId = d.entry_ids[0];
+        const responseId = d.response_entry_ids[0];
         return (
           <p key={i} style={{ fontSize: 11, color: "var(--muted)", margin: 0 }}>
             {d.name} dissented: {d.summary}
@@ -92,6 +93,14 @@ export function SelectionSeatsRow({
                 {" "}
                 <Link href={eciEntryHref(sourceId, {}, basePath)} className="mono" style={{ color: "var(--accent-2)" }}>
                   source ↗
+                </Link>
+              </>
+            )}
+            {responseId && (
+              <>
+                {" "}
+                <Link href={eciEntryHref(responseId, {}, basePath)} className="mono" style={{ color: "var(--accent-2)" }}>
+                  response ↗
                 </Link>
               </>
             )}

@@ -108,7 +108,7 @@ export function splitKeepReading(months: EciMonthBucket[], threshold = 24): { vi
 }
 
 /** "Keep reading: March – September 2026 · 113 entries" — the folded months' span and total. */
-export function keepReadingLabel(hidden: EciMonthBucket[], year: number): string {
+export function keepReadingLabel(hidden: EciMonthBucket[], year: number | string): string {
   const total = hidden.reduce((a, b) => a + b.count, 0);
   const first = hidden[0]?.label?.split(" ")[0] ?? "Undated";
   const last = hidden[hidden.length - 1]?.label?.split(" ")[0] ?? "Undated";

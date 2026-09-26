@@ -112,8 +112,10 @@ export function CommissionTenureChart({
                         }}
                       />
                     ))}
-                    {segments.some((s) => s.clippedStart) && (
-                      <span aria-hidden className="mono" style={{ position: "absolute", left: 0, top: -1, fontSize: 9.5, color: "var(--faint)" }}>◂ from Sep 2017</span>
+                    {segments.some((s) => s.clippedStart) && p.first_from && (
+                      <span aria-hidden className="mono" style={{ position: "absolute", left: 0, top: -1, fontSize: 9.5, color: "var(--faint)" }}>
+                        ◂ from {formatEciDate(p.first_from, "month")}
+                      </span>
                     )}
                     {p.current && (
                       <span aria-hidden style={{ position: "absolute", left: "100%", top: "50%", transform: "translate(-50%, -50%)", width: 8, height: 8, borderRadius: "50%", background: "var(--eci-ink)", boxShadow: "0 0 0 2px var(--card)" }} />
