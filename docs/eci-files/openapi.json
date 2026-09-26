@@ -981,7 +981,7 @@
      "eci-files"
     ],
     "summary": "Timeline",
-    "description": "Entries matching the filter (date ascending, then id), plus topic/people/lane facets and\nchecked/unchecked counts scoped to that same filtered set. `fields=compact` returns just enough\nper entry to draw the lane timeline's dots (no citations).",
+    "description": "Entries matching the filter (date ascending, then id), plus topic/people/lane/state facets and\nchecked/unchecked counts scoped to that same filtered set. `fields=compact` returns just enough\nper entry to draw the lane timeline's dots (no citations). An unknown `state` slug returns an empty\n`entries` list, the same as an unknown `person`.",
     "operationId": "timeline_eci_files_timeline_get",
     "parameters": [
      {
@@ -1083,6 +1083,22 @@
       }
      },
      {
+      "name": "state",
+      "in": "query",
+      "required": false,
+      "schema": {
+       "anyOf": [
+        {
+         "type": "string"
+        },
+        {
+         "type": "null"
+        }
+       ],
+       "title": "State"
+      }
+     },
+     {
       "name": "fields",
       "in": "query",
       "required": false,
@@ -1114,6 +1130,71 @@
           }
          ],
          "title": "Response Timeline Eci Files Timeline Get"
+        }
+       }
+      }
+     },
+     "422": {
+      "description": "Validation Error",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/HTTPValidationError"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/states": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "States Overview",
+    "description": "All 36 States/UTs, sorted by name, with the national SIR figures.",
+    "operationId": "states_overview_eci_files_states_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciStatesOverview"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
+  "/eci-files/states/{slug}": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "State Page",
+    "description": "One State/UT's summary and notes. The web fetches its entries separately, through the\ntimeline's `state=` filter.",
+    "operationId": "state_page_eci_files_states__slug__get",
+    "parameters": [
+     {
+      "name": "slug",
+      "in": "path",
+      "required": true,
+      "schema": {
+       "type": "string",
+       "title": "Slug"
+      }
+     }
+    ],
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciStatePage"
         }
        }
       }
@@ -1993,6 +2074,87 @@
     ],
     "title": "EciLaneCount"
    },
+   "EciNationalFigure": {
+    "properties": {
+     "group": {
+      "type": "string",
+      "title": "Group"
+     },
+     "measure": {
+      "type": "string",
+      "title": "Measure"
+     },
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "scope": {
+      "type": "string",
+      "title": "Scope"
+     },
+     "electors": {
+      "type": "integer",
+      "title": "Electors"
+     },
+     "as_of": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "As Of"
+     },
+     "computed": {
+      "type": "boolean",
+      "title": "Computed"
+     },
+     "approx": {
+      "type": "boolean",
+      "title": "Approx"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "source_entry_id": {
+      "type": "string",
+      "title": "Source Entry Id"
+     },
+     "source_entry_title": {
+      "type": "string",
+      "title": "Source Entry Title"
+     },
+     "source_status": {
+      "type": "string",
+      "title": "Source Status"
+     }
+    },
+    "type": "object",
+    "required": [
+     "group",
+     "measure",
+     "label",
+     "scope",
+     "electors",
+     "computed",
+     "approx",
+     "source_entry_id",
+     "source_entry_title",
+     "source_status"
+    ],
+    "title": "EciNationalFigure"
+   },
    "EciPersonCount": {
     "properties": {
      "slug": {
@@ -2121,6 +2283,78 @@
     ],
     "title": "EciPersonSummary"
    },
+   "EciRegionSummary": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "code": {
+      "type": "string",
+      "title": "Code"
+     },
+     "kind": {
+      "type": "string",
+      "title": "Kind"
+     },
+     "phase": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Phase"
+     },
+     "exercise": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Exercise"
+     },
+     "has_figures": {
+      "type": "boolean",
+      "title": "Has Figures"
+     },
+     "entry_count": {
+      "type": "integer",
+      "title": "Entry Count"
+     },
+     "stages": {
+      "items": {
+       "$ref": "#/components/schemas/EciStageValue"
+      },
+      "type": "array",
+      "title": "Stages",
+      "default": []
+     },
+     "metrics": {
+      "$ref": "#/components/schemas/EciStateMetrics"
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name",
+     "code",
+     "kind",
+     "has_figures",
+     "entry_count",
+     "metrics"
+    ],
+    "title": "EciRegionSummary"
+   },
    "EciResponseRef": {
     "properties": {
      "id": {
@@ -2151,6 +2385,238 @@
     ],
     "title": "EciResponseRef",
     "description": "One entry that answers another (`response_to` points back at the charge it responds to)."
+   },
+   "EciStageValue": {
+    "properties": {
+     "stage": {
+      "type": "string",
+      "title": "Stage"
+     },
+     "electors": {
+      "type": "integer",
+      "title": "Electors"
+     },
+     "as_of": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "As Of"
+     },
+     "computed": {
+      "type": "boolean",
+      "title": "Computed"
+     },
+     "approx": {
+      "type": "boolean",
+      "title": "Approx"
+     },
+     "note": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Note"
+     },
+     "source_entry_id": {
+      "type": "string",
+      "title": "Source Entry Id"
+     },
+     "source_entry_title": {
+      "type": "string",
+      "title": "Source Entry Title"
+     },
+     "source_status": {
+      "type": "string",
+      "title": "Source Status"
+     },
+     "url": {
+      "type": "string",
+      "title": "Url"
+     },
+     "tier": {
+      "type": "integer",
+      "title": "Tier"
+     }
+    },
+    "type": "object",
+    "required": [
+     "stage",
+     "electors",
+     "computed",
+     "approx",
+     "source_entry_id",
+     "source_entry_title",
+     "source_status",
+     "url",
+     "tier"
+    ],
+    "title": "EciStageValue"
+   },
+   "EciStateCount": {
+    "properties": {
+     "slug": {
+      "type": "string",
+      "title": "Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "slug",
+     "name",
+     "count"
+    ],
+    "title": "EciStateCount"
+   },
+   "EciStateMetric": {
+    "properties": {
+     "value": {
+      "type": "number",
+      "title": "Value"
+     },
+     "count": {
+      "type": "integer",
+      "title": "Count"
+     },
+     "base": {
+      "type": "integer",
+      "title": "Base"
+     },
+     "computed": {
+      "type": "boolean",
+      "title": "Computed"
+     },
+     "approx": {
+      "type": "boolean",
+      "title": "Approx"
+     },
+     "noted": {
+      "type": "boolean",
+      "title": "Noted"
+     }
+    },
+    "type": "object",
+    "required": [
+     "value",
+     "count",
+     "base",
+     "computed",
+     "approx",
+     "noted"
+    ],
+    "title": "EciStateMetric"
+   },
+   "EciStateMetrics": {
+    "properties": {
+     "draft_left_off": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciStateMetric"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "net_change": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciStateMetric"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "appeals_filed": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciStateMetric"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "title": "EciStateMetrics"
+   },
+   "EciStatePage": {
+    "properties": {
+     "region": {
+      "$ref": "#/components/schemas/EciRegionSummary"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "region"
+    ],
+    "title": "EciStatePage"
+   },
+   "EciStatesOverview": {
+    "properties": {
+     "regions": {
+      "items": {
+       "$ref": "#/components/schemas/EciRegionSummary"
+      },
+      "type": "array",
+      "title": "Regions"
+     },
+     "national": {
+      "items": {
+       "$ref": "#/components/schemas/EciNationalFigure"
+      },
+      "type": "array",
+      "title": "National"
+     },
+     "last_as_of": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last As Of"
+     }
+    },
+    "type": "object",
+    "required": [
+     "regions",
+     "national"
+    ],
+    "title": "EciStatesOverview"
    },
    "EciSummary": {
     "properties": {
@@ -2251,6 +2717,14 @@
       "type": "array",
       "title": "Lanes"
      },
+     "states": {
+      "items": {
+       "$ref": "#/components/schemas/EciStateCount"
+      },
+      "type": "array",
+      "title": "States",
+      "default": []
+     },
      "counts": {
       "$ref": "#/components/schemas/EciCheckCounts"
      }
@@ -2295,6 +2769,14 @@
       },
       "type": "array",
       "title": "Lanes"
+     },
+     "states": {
+      "items": {
+       "$ref": "#/components/schemas/EciStateCount"
+      },
+      "type": "array",
+      "title": "States",
+      "default": []
      },
      "counts": {
       "$ref": "#/components/schemas/EciCheckCounts"

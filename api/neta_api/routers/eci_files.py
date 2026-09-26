@@ -17,6 +17,8 @@ from neta_api.schemas import (
     EciEntry,
     EciPersonPage,
     EciPersonSummary,
+    EciStatePage,
+    EciStatesOverview,
     EciSummary,
     EciTimeline,
     EciTimelineCompact,
@@ -40,18 +42,44 @@ def timeline(
     lane: str | None = None,
     from_: date | None = Query(None, alias="from"),
     to: date | None = None,
+    state: str | None = None,
     fields: str | None = None,
     db: Session = Depends(get_db),
 ) -> EciTimeline | EciTimelineCompact:
-    """Entries matching the filter (date ascending, then id), plus topic/people/lane facets and
+    """Entries matching the filter (date ascending, then id), plus topic/people/lane/state facets and
     checked/unchecked counts scoped to that same filtered set. `fields=compact` returns just enough
-    per entry to draw the lane timeline's dots (no citations)."""
+    per entry to draw the lane timeline's dots (no citations). An unknown `state` slug returns an empty
+    `entries` list, the same as an unknown `person`."""
     result = eci_files_service.timeline(
-        db, topic=topic, person=person, status=status, lane=lane, date_from=from_, date_to=to, fields=fields
+        db,
+        topic=topic,
+        person=person,
+        status=status,
+        lane=lane,
+        date_from=from_,
+        date_to=to,
+        state=state,
+        fields=fields,
     )
     if fields == "compact":
         return EciTimelineCompact(**result)
     return EciTimeline(**result)
+
+
+@router.get("/states", response_model=EciStatesOverview)
+def states_overview(db: Session = Depends(get_db)) -> EciStatesOverview:
+    """All 36 States/UTs, sorted by name, with the national SIR figures."""
+    return EciStatesOverview(**eci_files_service.states_overview(db))
+
+
+@router.get("/states/{slug}", response_model=EciStatePage)
+def state_page(slug: str, db: Session = Depends(get_db)) -> EciStatePage:
+    """One State/UT's summary and notes. The web fetches its entries separately, through the
+    timeline's `state=` filter."""
+    result = eci_files_service.state_page(db, slug)
+    if result is None:
+        raise HTTPException(status_code=404, detail="state not found")
+    return EciStatePage(**result)
 
 
 @router.get("/density", response_model=EciDensity)

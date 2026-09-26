@@ -41,6 +41,33 @@ def _entry(**overrides) -> dict:
     return entry
 
 
+def _real_regions() -> list:
+    regions, errors = eci_files._load_regions(eci_files.DEFAULT_REGIONS_PATH)
+    assert errors == []
+    return regions
+
+
+def _real_region_index() -> dict:
+    return eci_files._region_index(_real_regions())
+
+
+def _region_row(**overrides) -> dict:
+    row = {"slug": "test-state", "name": "Test State", "code": "TS", "kind": "state", "aliases": []}
+    row.update(overrides)
+    return row
+
+
+def _code_for(i: int) -> str:
+    return f"{chr(65 + i // 26)}{chr(65 + i % 26)}"
+
+
+def _fake_regions(count: int = 36) -> list[dict]:
+    return [
+        _region_row(slug=f"region-{i}", name=f"Region {i}", code=_code_for(i))
+        for i in range(count)
+    ]
+
+
 # --- validation: each bad case is rejected, and every error is collected at once ----------------
 
 
@@ -94,7 +121,7 @@ def test_validation_collects_every_error_at_once(tmp_path: Path) -> None:
 def test_excluded_entries_are_skipped_without_validation(tmp_path: Path) -> None:
     # An excluded, incomplete draft (no sources) must not block a load or raise.
     entries, errors = eci_files._load_entries(
-        _write(tmp_path, [_entry(exclude=True, sources=[]), _entry(id="area-two")])
+        _write(tmp_path, [_entry(exclude=True, sources=[]), _entry(id="area-two")]), {}
     )
     assert errors == []
     assert [loaded.entry.id for loaded in entries] == ["area-two"]
@@ -102,8 +129,199 @@ def test_excluded_entries_are_skipped_without_validation(tmp_path: Path) -> None
 
 def test_missing_area_is_rejected(tmp_path: Path) -> None:
     (tmp_path / "file.json").write_text(json.dumps({"entries": [_entry()]}))
-    _, errors = eci_files._load_entries(tmp_path)
+    _, errors = eci_files._load_entries(tmp_path, {})
     assert any("area" in e for e in errors)
+
+
+# --- regions.json: reference data validated on every run, even a fixture run --------------------
+
+
+def test_regions_file_validation_rejects_duplicate_code(tmp_path: Path) -> None:
+    rows = _fake_regions()
+    rows[1]["code"] = rows[0]["code"]
+    regions_file = tmp_path / "regions.json"
+    regions_file.write_text(json.dumps({"regions": rows}))
+    regions, errors = eci_files._load_regions(regions_file)
+    assert any("duplicate code" in e for e in errors)
+
+
+def test_regions_file_validation_rejects_bad_slug(tmp_path: Path) -> None:
+    rows = _fake_regions()
+    rows[0]["slug"] = "not-the-right-slug"
+    regions_file = tmp_path / "regions.json"
+    regions_file.write_text(json.dumps({"regions": rows}))
+    regions, errors = eci_files._load_regions(regions_file)
+    assert any("_slugify(name)" in e for e in errors)
+
+
+def test_regions_file_validation_rejects_wrong_count(tmp_path: Path) -> None:
+    regions_file = tmp_path / "regions.json"
+    regions_file.write_text(json.dumps({"regions": _fake_regions(5)}))
+    regions, errors = eci_files._load_regions(regions_file)
+    assert any("expected 36 regions" in e for e in errors)
+
+
+def test_real_regions_file_is_valid() -> None:
+    regions, errors = eci_files._load_regions(eci_files.DEFAULT_REGIONS_PATH)
+    assert errors == []
+    assert len(regions) == 36
+
+
+# --- state/UT name canonicalisation: entries and states.json resolve through regions.json --------
+
+
+def test_validation_rejects_unknown_state_in_entry(tmp_path: Path) -> None:
+    with pytest.raises(eci_files.EciFilesValidationError) as exc:
+        eci_files.run(path=_write(tmp_path, [_entry(states=["Wakanda"])]))
+    assert "unknown state/UT" in str(exc.value)
+
+
+def test_alias_canonicalisation_dedupes_to_the_canonical_name(tmp_path: Path) -> None:
+    loaded, errors = eci_files._load_entries(
+        _write(tmp_path, [_entry(states=["NCT of Delhi", "Delhi"])]), _real_region_index()
+    )
+    assert errors == []
+    assert loaded[0].entry.states == ["Delhi"]
+
+
+def test_states_file_validation_rejects_unknown_state(tmp_path: Path) -> None:
+    states_file = tmp_path / "states.json"
+    states_file.write_text(json.dumps({"states": [{"state": "Wakanda", "stages": []}]}))
+    states, stages, errors = eci_files._load_states(states_file, _real_region_index(), {})
+    assert states == []
+    assert stages == []
+    assert errors and "unknown state/UT" in errors[0]
+
+
+def test_states_file_validation_rejects_a_region_appearing_twice(tmp_path: Path) -> None:
+    states_file = tmp_path / "states.json"
+    states_file.write_text(json.dumps({"states": [
+        {"state": "Bihar", "stages": []},
+        {"state": "Bihar", "stages": []},
+    ]}))
+    states, _, errors = eci_files._load_states(states_file, _real_region_index(), {})
+    assert len(states) == 1
+    assert any("appears twice" in e for e in errors)
+
+
+def _stage(**overrides) -> dict:
+    stage = {
+        "stage": "before",
+        "electors": 1,
+        "as_of": "2025-01-01",
+        "source_entry": "x",
+        "url": "https://example.com",
+        "tier": 1,
+    }
+    stage.update(overrides)
+    return stage
+
+
+def test_states_file_validation_rejects_duplicate_stage(tmp_path: Path) -> None:
+    states_file = tmp_path / "states.json"
+    states_file.write_text(json.dumps({"states": [
+        {"state": "Bihar", "stages": [_stage(), _stage(stage="before", electors=2)]}
+    ]}))
+    _, stages, errors = eci_files._load_states(states_file, _real_region_index(), {"x": {1, 2}})
+    assert len(stages) == 1
+    assert any("duplicate stage" in e for e in errors)
+
+
+def test_states_file_validation_rejects_a_source_entry_not_loaded(tmp_path: Path) -> None:
+    states_file = tmp_path / "states.json"
+    states_file.write_text(json.dumps({"states": [{"state": "Bihar", "stages": [_stage()]}]}))
+    _, _, errors = eci_files._load_states(states_file, _real_region_index(), {})
+    assert any("not a loaded entry id" in e for e in errors)
+
+
+def test_states_file_validation_rejects_a_stage_value_missing_from_its_figures(
+    tmp_path: Path,
+) -> None:
+    states_file = tmp_path / "states.json"
+    states_file.write_text(json.dumps({"states": [
+        {"state": "Bihar", "stages": [_stage(electors=999, source_entry="x")]}
+    ]}))
+    _, _, errors = eci_files._load_states(states_file, _real_region_index(), {"x": {1, 2, 3}})
+    assert any("figures[].value" in e for e in errors)
+
+
+def test_states_file_computed_stage_is_exempt_from_the_figures_check(tmp_path: Path) -> None:
+    states_file = tmp_path / "states.json"
+    states_file.write_text(json.dumps({"states": [
+        {"state": "Bihar", "stages": [_stage(electors=999, source_entry="x", computed=True)]}
+    ]}))
+    _, stages, errors = eci_files._load_states(states_file, _real_region_index(), {"x": {1, 2, 3}})
+    assert errors == []
+    assert len(stages) == 1
+
+
+def test_states_file_validation_rejects_phase_out_of_range(tmp_path: Path) -> None:
+    states_file = tmp_path / "states.json"
+    states_file.write_text(json.dumps({"states": [{"state": "Bihar", "phase": 7, "stages": []}]}))
+    _, _, errors = eci_files._load_states(states_file, _real_region_index(), {})
+    assert any("phase" in e for e in errors)
+
+
+# --- national.json --------------------------------------------------------------------------
+
+
+def _national_row(**overrides) -> dict:
+    row = {
+        "group": "phase_1",
+        "measure": "before",
+        "label": "Electors before the SIR",
+        "scope": "Bihar",
+        "electors": 1,
+        "source_entry": "x",
+    }
+    row.update(overrides)
+    return row
+
+
+def test_national_file_validation_rejects_unknown_group(tmp_path: Path) -> None:
+    national_file = tmp_path / "national.json"
+    national_file.write_text(json.dumps({"figures": [_national_row(group="phase_9")]}))
+    figures, errors = eci_files._load_national(national_file, {})
+    assert figures == []
+    assert errors and "group" in errors[0]
+
+
+def test_national_file_validation_rejects_a_source_entry_not_loaded(tmp_path: Path) -> None:
+    national_file = tmp_path / "national.json"
+    national_file.write_text(json.dumps({"figures": [_national_row()]}))
+    _, errors = eci_files._load_national(national_file, {})
+    assert any("not a loaded entry id" in e for e in errors)
+
+
+def test_national_file_validation_rejects_electors_not_in_figures(tmp_path: Path) -> None:
+    national_file = tmp_path / "national.json"
+    national_file.write_text(json.dumps({"figures": [_national_row(electors=999)]}))
+    _, errors = eci_files._load_national(national_file, {"x": {1, 2, 3}})
+    assert any("figures[].value" in e for e in errors)
+
+
+def test_national_file_computed_row_must_still_match_a_figure(tmp_path: Path) -> None:
+    national_file = tmp_path / "national.json"
+    national_file.write_text(json.dumps({"figures": [_national_row(electors=999, computed=True)]}))
+    _, errors = eci_files._load_national(national_file, {"x": {1, 2, 3}})
+    assert any("figures[].value" in e for e in errors)
+
+
+def test_national_file_missing_is_not_an_error() -> None:
+    figures, errors = eci_files._load_national(None, {})
+    assert figures == []
+    assert errors == []
+
+
+# --- validate_all: the real data/ files, checked with no database -------------------------------
+
+
+def test_real_data_files_validate() -> None:
+    payload, errors = eci_files.validate_all()
+    assert errors == []
+    assert payload is not None
+    assert len(payload.regions) == 36
+    assert len(payload.national) == 14
 
 
 # --- Postgres integration: full replace, tier-based source codes, person linking ----------------
@@ -177,7 +395,7 @@ def test_month_and_year_dates_load_as_the_first_day_of_the_period(tmp_path: Path
     loaded, errors = eci_files._load_entries(_write(tmp_path, [
         _entry(id="a-month", date="2026-07", date_precision="month"),
         _entry(id="a-year", date="2019", date_precision="year"),
-    ]))
+    ]), {})
     assert errors == []
     dates = {e.id: e.date.isoformat() for _, e in loaded}
     assert dates == {"a-month": "2026-07-01", "a-year": "2019-01-01"}
@@ -280,19 +498,21 @@ def test_state_stage_validation_rejects_unknown_stage(tmp_path: Path) -> None:
         "stage": "not-a-stage", "electors": 1, "as_of": "2025-01-01",
         "source_entry": "x", "url": "https://example.com", "tier": 1,
     }]}]}))
-    stages, errors = eci_files._load_state_stages(states_file)
+    _, stages, errors = eci_files._load_states(states_file, _real_region_index(), {"x": {1}})
     assert stages == []
     assert errors and "stage" in errors[0]
 
 
 def test_states_file_missing_is_not_an_error() -> None:
-    stages, errors = eci_files._load_state_stages(Path("/nonexistent/states.json"))
+    states, stages, errors = eci_files._load_states(Path("/nonexistent/states.json"), {}, {})
+    assert states == []
     assert stages == []
     assert errors == []
 
 
 def test_states_file_none_is_not_an_error() -> None:
-    stages, errors = eci_files._load_state_stages(None)
+    states, stages, errors = eci_files._load_states(None, {}, {})
+    assert states == []
     assert stages == []
     assert errors == []
 
@@ -304,7 +524,9 @@ def test_running_with_an_explicit_entries_path_does_not_touch_states_or_headline
 
     eci_files.run(path=FIXTURES)
     with session_scope() as s:
+        assert s.execute(text("SELECT count(*) FROM eci_file_region")).scalar_one() == 36
         assert s.execute(text("SELECT count(*) FROM eci_file_state_stage")).scalar_one() == 0
+        assert s.execute(text("SELECT count(*) FROM eci_file_national_figure")).scalar_one() == 0
         assert s.execute(text("SELECT count(*) FROM eci_file_headline")).scalar_one() == 0
         assert s.execute(text("SELECT count(*) FROM eci_file_key_moment")).scalar_one() == 0
 
@@ -317,14 +539,22 @@ def test_states_and_headline_load_when_explicitly_pointed_at_fixtures() -> None:
         path=FIXTURES,
         states_path=FIXTURES / "extra" / "states.json",
         headline_path=FIXTURES / "extra" / "headline.json",
+        national_path=FIXTURES / "extra" / "national.json",
     )
     with session_scope() as s:
+        assert s.execute(text("SELECT count(*) FROM eci_file_region")).scalar_one() == 36
+
         stage = s.execute(
-            text("SELECT state, stage, electors, computed, source_entry_id, tier "
+            text("SELECT region_slug, stage, electors, computed, source_entry_id, tier "
                  "FROM eci_file_state_stage WHERE stage = 'draft'")
         ).one()
-        assert (stage.state, stage.electors, stage.computed) == ("Bihar", 72400000, False)
+        assert (stage.region_slug, stage.electors, stage.computed) == ("bihar", 72400000, False)
         assert stage.source_entry_id == "sir-rules-2025-notification"
+
+        national = s.execute(
+            text("SELECT grp, measure, electors FROM eci_file_national_figure")
+        ).one()
+        assert (national.grp, national.measure, national.electors) == ("phase_1", "draft", 72400000)
 
         headline_rows = s.execute(
             text("SELECT position, value, entry_id FROM eci_file_headline ORDER BY position")
@@ -342,9 +572,12 @@ def test_states_and_headline_load_when_explicitly_pointed_at_fixtures() -> None:
         path=FIXTURES,
         states_path=FIXTURES / "extra" / "states.json",
         headline_path=FIXTURES / "extra" / "headline.json",
+        national_path=FIXTURES / "extra" / "national.json",
     )
     with session_scope() as s:
+        assert s.execute(text("SELECT count(*) FROM eci_file_region")).scalar_one() == 36
         assert s.execute(text("SELECT count(*) FROM eci_file_state_stage")).scalar_one() == 2
+        assert s.execute(text("SELECT count(*) FROM eci_file_national_figure")).scalar_one() == 1
         assert s.execute(text("SELECT count(*) FROM eci_file_headline")).scalar_one() == 2
 
 

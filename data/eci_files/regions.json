@@ -1,0 +1,271 @@
+{
+  "regions": [
+    {
+      "slug": "jammu-and-kashmir",
+      "name": "Jammu and Kashmir",
+      "code": "JK",
+      "kind": "ut",
+      "aliases": [
+        "Jammu & Kashmir"
+      ]
+    },
+    {
+      "slug": "ladakh",
+      "name": "Ladakh",
+      "code": "LA",
+      "kind": "ut",
+      "aliases": []
+    },
+    {
+      "slug": "chandigarh",
+      "name": "Chandigarh",
+      "code": "CH",
+      "kind": "ut",
+      "aliases": []
+    },
+    {
+      "slug": "punjab",
+      "name": "Punjab",
+      "code": "PB",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "himachal-pradesh",
+      "name": "Himachal Pradesh",
+      "code": "HP",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "uttarakhand",
+      "name": "Uttarakhand",
+      "code": "UK",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "arunachal-pradesh",
+      "name": "Arunachal Pradesh",
+      "code": "AR",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "rajasthan",
+      "name": "Rajasthan",
+      "code": "RJ",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "haryana",
+      "name": "Haryana",
+      "code": "HR",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "delhi",
+      "name": "Delhi",
+      "code": "DL",
+      "kind": "ut",
+      "aliases": [
+        "NCT of Delhi",
+        "National Capital Territory of Delhi"
+      ]
+    },
+    {
+      "slug": "uttar-pradesh",
+      "name": "Uttar Pradesh",
+      "code": "UP",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "bihar",
+      "name": "Bihar",
+      "code": "BR",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "sikkim",
+      "name": "Sikkim",
+      "code": "SK",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "assam",
+      "name": "Assam",
+      "code": "AS",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "nagaland",
+      "name": "Nagaland",
+      "code": "NL",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "gujarat",
+      "name": "Gujarat",
+      "code": "GJ",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "madhya-pradesh",
+      "name": "Madhya Pradesh",
+      "code": "MP",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "chhattisgarh",
+      "name": "Chhattisgarh",
+      "code": "CG",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "jharkhand",
+      "name": "Jharkhand",
+      "code": "JH",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "west-bengal",
+      "name": "West Bengal",
+      "code": "WB",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "meghalaya",
+      "name": "Meghalaya",
+      "code": "ML",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "manipur",
+      "name": "Manipur",
+      "code": "MN",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "dadra-and-nagar-haveli-and-daman-and-diu",
+      "name": "Dadra and Nagar Haveli and Daman and Diu",
+      "code": "DD",
+      "kind": "ut",
+      "aliases": [
+        "Dadra & Nagar Haveli and Daman & Diu",
+        "DNH&DD"
+      ]
+    },
+    {
+      "slug": "maharashtra",
+      "name": "Maharashtra",
+      "code": "MH",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "telangana",
+      "name": "Telangana",
+      "code": "TG",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "odisha",
+      "name": "Odisha",
+      "code": "OD",
+      "kind": "state",
+      "aliases": [
+        "Orissa"
+      ]
+    },
+    {
+      "slug": "tripura",
+      "name": "Tripura",
+      "code": "TR",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "mizoram",
+      "name": "Mizoram",
+      "code": "MZ",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "goa",
+      "name": "Goa",
+      "code": "GA",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "karnataka",
+      "name": "Karnataka",
+      "code": "KA",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "andhra-pradesh",
+      "name": "Andhra Pradesh",
+      "code": "AP",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "lakshadweep",
+      "name": "Lakshadweep",
+      "code": "LD",
+      "kind": "ut",
+      "aliases": []
+    },
+    {
+      "slug": "kerala",
+      "name": "Kerala",
+      "code": "KL",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "tamil-nadu",
+      "name": "Tamil Nadu",
+      "code": "TN",
+      "kind": "state",
+      "aliases": []
+    },
+    {
+      "slug": "puducherry",
+      "name": "Puducherry",
+      "code": "PY",
+      "kind": "ut",
+      "aliases": [
+        "Pondicherry"
+      ]
+    },
+    {
+      "slug": "andaman-and-nicobar-islands",
+      "name": "Andaman and Nicobar Islands",
+      "code": "AN",
+      "kind": "ut",
+      "aliases": [
+        "Andaman & Nicobar",
+        "Andaman and Nicobar"
+      ]
+    }
+  ]
+}

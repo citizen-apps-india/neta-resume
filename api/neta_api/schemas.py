@@ -467,6 +467,12 @@ class EciLaneCount(BaseModel):
     count: int
 
 
+class EciStateCount(BaseModel):
+    slug: str
+    name: str
+    count: int
+
+
 class EciCheckCounts(BaseModel):
     checked: int
     unchecked: int
@@ -479,6 +485,7 @@ class EciTimeline(BaseModel):
     topics: list[EciTopicCount]
     people: list[EciPersonCount]
     lanes: list[EciLaneCount]
+    states: list[EciStateCount] = []
     counts: EciCheckCounts
 
 
@@ -489,6 +496,7 @@ class EciTimelineCompact(BaseModel):
     topics: list[EciTopicCount]
     people: list[EciPersonCount]
     lanes: list[EciLaneCount]
+    states: list[EciStateCount] = []
     counts: EciCheckCounts
 
 
@@ -545,3 +553,71 @@ class EciPersonDetail(BaseModel):
 class EciPersonPage(BaseModel):
     person: EciPersonDetail
     entries: list[EciEntry]
+
+
+class EciStageValue(BaseModel):
+    stage: str                  # before | draft | final | appeals_filed | appeals_pending | restored
+    electors: int
+    as_of: date | None = None
+    computed: bool
+    approx: bool
+    note: str | None = None
+    source_entry_id: str
+    source_entry_title: str     # eci_file_entry.title, joined
+    source_status: str          # the source entry's status: documented | reported | claim | response
+    url: str
+    tier: int
+
+
+class EciStateMetric(BaseModel):
+    value: float                # percent, rounded to 2 dp; signed for net_change
+    count: int                  # electors; signed for net_change
+    base: int                   # the denominator, in electors
+    computed: bool               # any contributing stage is computed
+    approx: bool                 # any contributing stage is approx
+    noted: bool                  # any contributing stage carries a note
+
+
+class EciStateMetrics(BaseModel):
+    draft_left_off: EciStateMetric | None = None
+    net_change: EciStateMetric | None = None
+    appeals_filed: EciStateMetric | None = None
+
+
+class EciRegionSummary(BaseModel):
+    slug: str
+    name: str
+    code: str
+    kind: str                   # state | ut
+    phase: int | None = None
+    exercise: str | None = None  # sir | special_revision | None (not in any exercise on record)
+    has_figures: bool           # at least one stage
+    entry_count: int            # entries whose states include this region (kind <> 'person')
+    stages: list[EciStageValue] = []   # canonical order: before, draft, final, appeals_filed, appeals_pending, restored
+    metrics: EciStateMetrics
+
+
+class EciNationalFigure(BaseModel):
+    group: str                  # all | phase_1 | phase_2 | phase_3
+    measure: str                # before | draft | final | left_off | net_fall
+    label: str
+    scope: str
+    electors: int
+    as_of: date | None = None
+    computed: bool
+    approx: bool
+    note: str | None = None
+    source_entry_id: str
+    source_entry_title: str
+    source_status: str
+
+
+class EciStatesOverview(BaseModel):
+    regions: list[EciRegionSummary]
+    national: list[EciNationalFigure]
+    last_as_of: date | None = None   # max(as_of) over every stage
+
+
+class EciStatePage(BaseModel):
+    region: EciRegionSummary
+    notes: str | None = None
