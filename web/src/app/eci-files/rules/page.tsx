@@ -4,12 +4,14 @@ import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SectionHero } from "@/components/parliament/SectionHero";
 import { EciRulesSkeleton } from "@/components/skeletons";
-import { TextStatusBadge } from "@/components/eci-files/views/TextStatusBadge";
 import { DrawerFromParam } from "@/components/eci-files/views/DrawerFromParam";
 import { CrossLinks } from "@/components/eci-files/views/CrossLinks";
-import { getEciRules } from "@/lib/api";
+import { RulesTimeAxis } from "@/components/eci-files/rules/RulesTimeAxis";
+import { RuleComparisonCard } from "@/components/eci-files/rules/RuleComparisonCard";
+import { getEciRuleDiff, getEciRules } from "@/lib/api";
 import { ECI_TEXT_STATUS_SHORT, eciEntryHref, formatEciDate } from "@/lib/eci-files";
 import { StatusChip } from "@/components/eci-files/StatusChip";
+import type { EciRuleDiff } from "@/types/eci-files";
 
 export const metadata: Metadata = {
   title: "Rule changes · ECI Files",
@@ -29,6 +31,12 @@ async function RulesBody({ entry }: { entry?: string }) {
     );
   }
 
+  const comparisons = (await Promise.all(page.diffs.map((d) => getEciRuleDiff(d.id).catch(() => null))))
+    .filter((d): d is EciRuleDiff => d !== null);
+
+  const years = page.rules.map((r) => r.entry.date?.slice(0, 4)).filter((y): y is string => !!y);
+  const yearRange = years.length > 0 ? `${years[years.length - 1]}–${years[0]}` : null;
+
   const groups: { year: string; rows: typeof page.rules }[] = [];
   for (const row of page.rules) {
     const year = row.entry.date ? row.entry.date.slice(0, 4) : "Undated";
@@ -39,27 +47,21 @@ async function RulesBody({ entry }: { entry?: string }) {
 
   return (
     <>
-      <div className="mono" style={{ fontSize: 12, color: "var(--muted)", margin: "-14px 0 26px" }}>
-        {page.counts.rules} rule changes · {page.counts.diffs} before-and-after comparisons
+      {/* the one visual answer: every rule change on a single time axis, above the fold */}
+      <div style={{ display: "flex", flexDirection: "column", gap: 14, background: "var(--card)", border: "1px solid var(--rule)", borderRadius: 14, padding: "20px 22px", marginBottom: 30 }}>
+        <div className="mono" style={{ fontSize: 11.5, color: "var(--muted)" }}>
+          {page.counts.rules} rule changes · {page.counts.diffs} with a before-and-after{yearRange ? ` · ${yearRange}` : ""}
+        </div>
+        <RulesTimeAxis rows={page.rules} />
       </div>
 
-      {page.diffs.length > 0 && (
+      {comparisons.length > 0 && (
         <section style={{ marginBottom: 30 }}>
           <h2 className="mono" style={{ fontSize: 11, letterSpacing: "0.1em", textTransform: "uppercase", color: "var(--faint)", margin: "0 0 12px" }}>
             Before and after
           </h2>
-          <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(260px, 1fr))", gap: 12 }}>
-            {page.diffs.map((d) => (
-              <Link
-                key={d.id}
-                href={`${BASE_PATH}/${d.id}`}
-                className="lift tap"
-                style={{ display: "block", textDecoration: "none", color: "var(--ink)", border: "1px solid var(--rule)", borderRadius: 10, background: "var(--card2)", padding: "13px 15px" }}
-              >
-                <div className="serif" style={{ fontSize: 14, fontWeight: 600, marginBottom: 8 }}>{d.title}</div>
-                <TextStatusBadge status={d.text_status} short />
-              </Link>
-            ))}
+          <div className="eci-rule-cards">
+            {comparisons.map((d) => <RuleComparisonCard key={d.id} diff={d} />)}
           </div>
         </section>
       )}
@@ -69,7 +71,12 @@ async function RulesBody({ entry }: { entry?: string }) {
           <h2 className="mono" style={{ fontSize: 13, color: "var(--muted)", margin: "18px 4px 8px" }}>{g.year}</h2>
           <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
             {g.rows.map((row) => (
-              <div key={row.entry.id} style={{ border: "1px solid var(--rule)", borderRadius: 10, background: "var(--card2)", padding: "12px 15px" }}>
+              <div
+                key={row.entry.id}
+                id={`rule-${row.entry.id}`}
+                className={row.diffs.length > 0 ? "eci-rule-row--diffed" : undefined}
+                style={{ border: "1px solid var(--rule)", borderRadius: 10, background: "var(--card2)", padding: "12px 15px", scrollMarginTop: 72 }}
+              >
                 <div style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap", marginBottom: 4 }}>
                   <span className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>{formatEciDate(row.entry.date, row.entry.date_precision)}</span>
                   <StatusChip status={row.entry.status} />
@@ -111,7 +118,7 @@ export default async function EciRulesPage({ searchParams }: { searchParams: Pro
         <SectionHero
           eyebrow="ECI FILES · RULE CHANGES"
           title="Rule changes"
-          subtitle="Every rule, form and order change in the record. Where the wording before and after could be sourced, it is set out line by line, with a label saying whether it comes from the document itself or from news reports."
+          subtitle="Every rule, form and order change in the record, sourced line by line."
           backHref="/eci-files"
           backLabel="ECI Files"
         />

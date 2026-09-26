@@ -779,3 +779,133 @@ html { scroll-behavior: smooth; }
 .eci-obj-mark:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
 @media (hover: hover) { .eci-obj-mark:hover circle, .eci-obj-mark:hover ellipse { opacity: 0.75; } }
 /* --- end phase 5 --- */
+
+/* --- ECI UX rules --- */
+/* Approved-design rework of /eci-files/rules(+diff) and /eci-files/courts(+case): a single time axis with
+   a scale break (RulesTimeAxis), real before/after preview cards (RuleComparisonCard), horizontal case
+   tracks with status end-caps (CourtsTracks) and a metro-line order stepper (CaseStepper). New tokens and
+   classes only, added at the end per the house rule that nothing outside globals.css names a colour. */
+
+/* /rules: the one-time-axis hero. Dots cluster when two dates sit closer than the axis can resolve, and
+   the pre-2025 stretch (a handful of changes since 1993) compresses behind a scale break so 2025–2026
+   (most of the record) gets the width it needs. */
+.eci-rules-axis { border: 1px solid var(--rule); border-radius: 12px; background: var(--card); padding: 20px clamp(10px,2vw,20px) 8px; }
+.eci-rules-axis-scroll { overflow-x: auto; }
+.eci-rules-axis-inner { position: relative; height: 84px; min-width: 640px; }
+.eci-rules-axis-line { position: absolute; top: 46px; height: 2px; background: var(--rule2); }
+.eci-rules-axis-break {
+  position: absolute; top: 33px; transform: translateX(-50%); font-family: var(--font-mono), monospace;
+  font-size: 13px; color: var(--faint); background: var(--card); padding: 0 2px;
+}
+.eci-rules-axis-dot { position: absolute; top: 46px; transform: translate(-50%, -50%); text-decoration: none; line-height: 0; }
+.eci-rules-axis-dot:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 3px; border-radius: 50%; }
+@media (hover: hover) { .eci-rules-axis-dot:hover > span:first-child { transform: scale(1.18); } }
+.eci-rules-axis-count { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); font-size: 9.5px; color: var(--faint); }
+.eci-rules-axis-ticks { position: absolute; left: 0; right: 0; top: 62px; height: 16px; }
+.eci-rules-axis-ticks span { position: absolute; transform: translateX(-50%); font-size: 10px; color: var(--faint); white-space: nowrap; }
+
+/* /rules: "Before and after" comparison cards, with a short real preview of the change. */
+.eci-rule-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+.eci-rule-card {
+  display: flex; flex-direction: column; gap: 8px; min-height: 150px;
+  border: 1px solid var(--rule); border-radius: 12px; background: var(--card2); padding: 14px 16px;
+  text-decoration: none; color: var(--ink);
+}
+.eci-rule-card-preview {
+  display: flex; flex-direction: column; gap: 3px; margin-top: auto; padding-top: 8px;
+  border-top: 1px solid var(--rule2); font-size: 12.5px; line-height: 1.5;
+}
+.eci-rule-card-before, .eci-rule-card-after {
+  overflow-wrap: anywhere; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.eci-rule-card-before { color: var(--faint); text-decoration: line-through; }
+.eci-rule-card-after { color: var(--ink2); }
+.eci-rule-card-mark { background: color-mix(in srgb, var(--eci-ink) 18%, transparent); color: var(--ink); border-radius: 2px; padding: 0 2px; }
+
+/* /rules list: the rows the axis's diffed dots point at get a quiet accent, not a new colour. */
+.eci-rule-row--diffed { border-color: color-mix(in srgb, var(--eci-ink) 45%, var(--rule)); background: color-mix(in srgb, var(--eci-ink) 5%, var(--card2)); }
+
+/* /rules/[diff]: one prominent badge when the comparison isn't the document's own wording. */
+.eci-diff-callout {
+  display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-radius: 10px;
+  border: 1.5px solid var(--eci-report); background: color-mix(in srgb, var(--eci-report) 12%, var(--card2));
+  color: var(--eci-report); font-weight: 650; font-size: 14px; margin: 0 0 14px;
+}
+
+/* /courts: every case as a horizontal track on one shared axis; the end-cap shape (never colour alone)
+   says whether it's decided, pending or referred. */
+.eci-tracks { border: 1px solid var(--rule); border-radius: 12px; background: var(--card); padding: 18px clamp(10px,2vw,20px) 14px; }
+.eci-tracks-scroll { overflow-x: auto; }
+.eci-tracks-inner { min-width: 720px; }
+.eci-track-row {
+  display: grid; grid-template-columns: minmax(160px,220px) minmax(0,1fr); gap: 14px; align-items: center;
+  height: 58px; text-decoration: none; color: var(--ink); border-top: 1px solid var(--rule2);
+}
+.eci-track-row:first-child { border-top: none; }
+.eci-track-row:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: -2px; }
+.eci-track-meta { display: flex; flex-direction: column; gap: 3px; overflow: hidden; min-width: 0; }
+.eci-track-name { font-size: 13.5px; font-weight: 650; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.eci-track-sub { font-size: 10.5px; color: var(--faint); display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.eci-track-line-wrap { position: relative; height: 22px; }
+.eci-track-base { position: absolute; top: 10px; height: 3px; background: var(--eci-lane-courts); border-radius: 2px; }
+.eci-track-start { position: absolute; top: 6px; width: 11px; height: 11px; margin-left: -5.5px; border-radius: 50%; background: var(--eci-lane-courts); }
+.eci-track-end-decided {
+  position: absolute; top: 3px; width: 16px; height: 16px; margin-left: -8px; border-radius: 50%;
+  background: var(--eci-ink); box-shadow: 0 0 0 3px var(--card);
+}
+.eci-track-end-referred { position: absolute; top: 4px; width: 12px; height: 12px; margin-left: -6px; background: var(--ink); transform: rotate(45deg); }
+.eci-track-dash { position: absolute; top: 10px; height: 3px; background: repeating-linear-gradient(90deg, var(--border2) 0 4px, transparent 4px 8px); }
+.eci-track-end-pending {
+  position: absolute; top: 5px; width: 12px; height: 12px; margin-left: -6px; border-radius: 50%;
+  border: 2px solid var(--border2); background: var(--card);
+}
+.eci-tracks-ticks { position: relative; height: 16px; margin: 4px 0 0 234px; }
+.eci-tracks-ticks span { position: absolute; transform: translateX(-50%); font-size: 10px; color: var(--faint); }
+.eci-track-legend-dot { width: 12px; height: 12px; border-radius: 50%; background: var(--eci-ink); display: inline-block; }
+.eci-track-legend-dash { width: 14px; height: 3px; display: inline-block; background: repeating-linear-gradient(90deg, var(--border2) 0 4px, transparent 4px 8px); }
+.eci-track-legend-diamond { width: 10px; height: 10px; display: inline-block; background: var(--ink); transform: rotate(45deg); }
+
+/* /courts: "Latest in each case" list. */
+.eci-latest-list { display: flex; flex-direction: column; gap: 8px; }
+.eci-latest-row {
+  display: grid; grid-template-columns: minmax(160px,230px) minmax(0,1fr) auto; gap: 14px; align-items: center;
+  text-decoration: none; color: var(--ink); padding: 12px 16px; border: 1px solid var(--rule); border-radius: 10px; background: var(--card2);
+}
+@media (max-width: 640px) { .eci-latest-row { grid-template-columns: 1fr; } }
+
+/* /courts/[case]: a wider facts strip once there's room, and the desktop/phone toggle between
+   CaseStepper (metro line) and the existing CaseTimeline (vertical rail) — both server-rendered. */
+@media (min-width: 1100px) { .eci-case-facts { grid-template-columns: repeat(4, 1fr); } }
+.eci-case-desktop-only { display: block; }
+.eci-case-mobile-only { display: none; }
+@media (max-width: 759px) {
+  .eci-case-desktop-only { display: none; }
+  .eci-case-mobile-only { display: block; }
+}
+
+/* /courts/[case]: the metro-line order stepper. Stops space evenly (a metro line spaces stops for
+   legibility, not by the calendar days between them); the outcome — the last non-"related" step — is the
+   one stop drawn bigger and bold, so the result of the case never gets lost among its procedural steps. */
+.eci-stepper-scroll { overflow-x: auto; padding: 4px 4px 8px; }
+.eci-stepper-inner { position: relative; height: 132px; }
+.eci-stepper-line { position: absolute; left: 0; right: 0; top: 59px; height: 2px; background: var(--rule2); }
+.eci-stepper-stop {
+  position: absolute; top: 59px; transform: translateX(-50%); width: 132px;
+  display: flex; flex-direction: column; align-items: center; gap: 4px; text-decoration: none; color: inherit;
+}
+.eci-stepper-stop--above { transform: translateX(-50%) translateY(-100%); flex-direction: column-reverse; }
+.eci-stepper-node { width: 12px; height: 12px; border-radius: 50%; box-shadow: 0 0 0 3px var(--card); flex-shrink: 0; background: var(--eci-lane-courts); }
+.eci-stepper-stop--outcome .eci-stepper-node { width: 18px; height: 18px; background: var(--eci-ink); box-shadow: 0 0 0 3px color-mix(in srgb, var(--eci-ink) 16%, var(--card)); }
+.eci-stepper-stop--related .eci-stepper-node { opacity: 0.55; }
+.eci-stepper-label { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 2px; }
+.eci-stepper-stop--above .eci-stepper-label { flex-direction: column-reverse; }
+.eci-stepper-title {
+  font-size: 11.5px; font-weight: 600; color: var(--ink2); line-height: 1.25;
+  display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden;
+}
+.eci-stepper-date { font-size: 9.5px; color: var(--faint); text-transform: uppercase; letter-spacing: 0.04em; white-space: nowrap; }
+.eci-stepper-stop--outcome .eci-stepper-title { font-weight: 700; color: var(--ink); font-size: 12.5px; -webkit-line-clamp: 3; }
+.eci-stepper-stop--related .eci-stepper-title { color: var(--muted); }
+.eci-stepper-stop:focus-visible .eci-stepper-node { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
+@media (hover: hover) { .eci-stepper-stop:hover .eci-stepper-node { transform: scale(1.15); } }
+/* --- end ECI UX rules --- */
