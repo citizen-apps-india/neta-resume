@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { Suspense } from "react";
-import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import { SectionHero } from "@/components/parliament/SectionHero";
 import { EciAnswersSkeleton } from "@/components/skeletons";
-import { AnswerRow } from "@/components/eci-files/views/AnswerRow";
-import { EntryRefLink } from "@/components/eci-files/views/EntryRefLink";
+import { AnswersHero } from "@/components/eci-files/views2/AnswersHero";
+import { AnswerFilterChips } from "@/components/eci-files/views2/AnswerFilterChips";
+import { ChargeAnswerRow } from "@/components/eci-files/views2/ChargeAnswerRow";
+import { EntryRow } from "@/components/eci-files/ui/EntryRow";
 import { DrawerFromParam } from "@/components/eci-files/views/DrawerFromParam";
 import { CrossLinks } from "@/components/eci-files/views/CrossLinks";
 import { getEciAnswers } from "@/lib/api";
-import type { EciAnswersView } from "@/types/eci-files";
+import { eciEntryHref, filterEciAnswerRows, formatEciDate, type EciAnswersView2 } from "@/lib/eci-files";
 
 export const metadata: Metadata = {
   title: "Charge and answer · ECI Files",
@@ -20,12 +21,12 @@ export const metadata: Metadata = {
 const BASE_PATH = "/eci-files/answers";
 type Params = { view?: string; entry?: string };
 
-function isView(v?: string): v is EciAnswersView {
-  return v === "all" || v === "no-response" || v === "with-record";
+function isView(v?: string): v is EciAnswersView2 {
+  return v === "all" || v === "no-response" || v === "with-record" || v === "with-response";
 }
 
-async function AnswersBody({ view, entry }: { view: EciAnswersView; entry?: string }) {
-  const page = await getEciAnswers(view).catch(() => null);
+async function AnswersBody({ view, entry }: { view: EciAnswersView2; entry?: string }) {
+  const page = await getEciAnswers("all").catch(() => null);
   if (!page) {
     return (
       <p style={{ color: "var(--muted)", padding: "24px 4px" }}>
@@ -34,14 +35,11 @@ async function AnswersBody({ view, entry }: { view: EciAnswersView; entry?: stri
     );
   }
 
-  const chips: { view: EciAnswersView; label: string; count: number }[] = [
-    { view: "all", label: "All", count: page.counts.rows },
-    { view: "no-response", label: "No response on record", count: page.counts.without_response },
-    { view: "with-record", label: "With a document", count: page.counts.with_record },
-  ];
+  const rows = filterEciAnswerRows(page.rows, view);
+  const preserve = { view: view === "all" ? undefined : view };
 
-  const groups: { year: string; rows: typeof page.rows }[] = [];
-  for (const row of page.rows) {
+  const groups: { year: string; rows: typeof rows }[] = [];
+  for (const row of rows) {
     const year = row.charge.date ? row.charge.date.slice(0, 4) : "Undated";
     const last = groups[groups.length - 1];
     if (last && last.year === year) last.rows.push(row);
@@ -50,49 +48,38 @@ async function AnswersBody({ view, entry }: { view: EciAnswersView; entry?: stri
 
   return (
     <>
-      <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginBottom: 20 }}>
-        {chips.map((c) => (
-          <Link
-            key={c.view}
-            href={c.view === "all" ? BASE_PATH : `${BASE_PATH}?view=${c.view}`}
-            aria-current={view === c.view ? "page" : undefined}
-            className="tap"
-            style={{
-              fontSize: 12.5, padding: "6px 13px", borderRadius: 20, textDecoration: "none",
-              border: `1px solid ${view === c.view ? "var(--accent)" : "var(--rule)"}`,
-              background: view === c.view ? "var(--accent-soft)" : "var(--card2)",
-              color: view === c.view ? "var(--accent-soft-fg)" : "var(--ink2)",
-            }}
-          >
-            {c.label} {c.count}
-          </Link>
-        ))}
-      </div>
+      <AnswersHero rows={page.rows} counts={page.counts} />
+      <AnswerFilterChips view={view} counts={page.counts} />
 
-      <div className="eci-answer-head">
-        <div className="mono" style={{ fontSize: 10, letterSpacing: "0.05em", color: "var(--faint)" }}>WHAT WAS SAID OR DONE</div>
-        <div className="mono" style={{ fontSize: 10, letterSpacing: "0.05em", color: "var(--faint)" }}>THE RESPONSE</div>
-        <div className="mono" style={{ fontSize: 10, letterSpacing: "0.05em", color: "var(--faint)" }}>WHAT THE RECORD SHOWS</div>
+      <div className="eci2-answer-head">
+        <span className="mono eci2-eyebrow">What was said or done</span>
+        <span className="mono eci2-eyebrow">The reply</span>
       </div>
 
       {groups.map((g) => (
         <section key={g.year}>
-          <h2 className="mono" style={{ fontSize: 13, color: "var(--muted)", margin: "18px 4px 4px" }}>{g.year}</h2>
+          <h2 className="mono" style={{ fontSize: 13, color: "var(--muted)", margin: "18px 4px 4px" }}>{g.year} · {g.rows.length} charges</h2>
           {g.rows.map((row) => (
-            <AnswerRow key={row.charge.id} row={row} preserve={{ view: view === "all" ? undefined : view }} />
+            <ChargeAnswerRow key={row.charge.id} row={row} preserve={preserve} />
           ))}
         </section>
       ))}
 
-      {page.unpaired_responses.length > 0 && (
+      {page.unpaired_responses.length > 0 && view === "all" && (
         <section style={{ marginTop: 28 }}>
           <h2 className="serif" style={{ fontSize: 16, fontWeight: 600, margin: "0 0 10px" }}>Responses whose charge is not in the record</h2>
-          <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+          <div>
             {page.unpaired_responses.map((u) => (
-              <div key={u.response.id} style={{ fontSize: 13 }}>
-                <EntryRefLink entry={u.response} basePath={BASE_PATH} showStatus />
-                {u.note && <div style={{ fontSize: 12, color: "var(--muted)", marginTop: 2 }}>{u.note}</div>}
-              </div>
+              <EntryRow
+                key={u.response.id}
+                date={formatEciDate(u.response.date, u.response.date_precision)}
+                lane={u.response.lane}
+                title={u.response.title}
+                href={eciEntryHref(u.response.id, preserve, BASE_PATH)}
+                status={u.response.status}
+                checked={u.response.check_status === "checked"}
+                extra={u.note ? <span style={{ fontSize: 12, color: "var(--muted)" }}>{u.note}</span> : undefined}
+              />
             ))}
           </div>
         </section>
@@ -100,7 +87,7 @@ async function AnswersBody({ view, entry }: { view: EciAnswersView; entry?: stri
 
       {entry && (
         <Suspense fallback={null}>
-          <DrawerFromParam id={entry} basePath={BASE_PATH} preserve={{ view: view === "all" ? undefined : view }} />
+          <DrawerFromParam id={entry} basePath={BASE_PATH} preserve={preserve} />
         </Suspense>
       )}
     </>
@@ -117,7 +104,7 @@ export default async function EciAnswersPage({ searchParams }: { searchParams: P
         <SectionHero
           eyebrow="ECI FILES · CHARGE AND ANSWER"
           title="Charge and answer"
-          subtitle="Each row sets what was said or done beside the response to it. A third column appears only where a primary document in the record bears directly on the point. Where no response is recorded, the row says so."
+          subtitle="Each row sets what was said or done beside the reply to it, at equal weight. A thin marker below names a document that bears directly on the point — never a blank column when there is none."
           backHref="/eci-files"
           backLabel="ECI Files"
         />
