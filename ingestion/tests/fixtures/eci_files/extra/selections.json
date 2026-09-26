@@ -1,0 +1,62 @@
+{
+  "regimes": [
+    {
+      "key": "act_2023",
+      "label": "2023 Act",
+      "from": "2024-01-02",
+      "to": null,
+      "rule": "A selection committee of the Prime Minister, a minister he nominates and the Leader of Opposition.",
+      "panel": ["Prime Minister (chair)"],
+      "entry_ids": ["commissioners-kumar-appointment"]
+    }
+  ],
+  "selections": [
+    {
+      "id": "sel-test-kumar-cec",
+      "date": "2025-02-17",
+      "date_precision": "day",
+      "date_meaning": "committee met",
+      "regime": "act_2023",
+      "method": "selection_committee",
+      "appointed": [
+        {
+          "person_slug": "gyanesh-kumar",
+          "name": "Gyanesh Kumar",
+          "office": "Chief Election Commissioner",
+          "took_charge": "2025-02-19"
+        }
+      ],
+      "members": [
+        {
+          "person_slug": null,
+          "name": null,
+          "role": "Prime Minister",
+          "part": "voted_with_majority",
+          "entry_ids": ["commissioners-kumar-appointment"]
+        }
+      ],
+      "search": {
+        "by": "Search committee",
+        "chair_slug": null,
+        "shortlist_size": null,
+        "shortlist": null,
+        "shortlist_source": null,
+        "entry_ids": ["commissioners-kumar-appointment"]
+      },
+      "dissent": [],
+      "entry_ids": ["commissioners-kumar-appointment", "commissioners-kumar-cec"],
+      "notes": null
+    }
+  ],
+  "departures": [
+    {
+      "date": "2025-02-18",
+      "person_slug": "gyanesh-kumar",
+      "office": "Election Commissioner",
+      "how": "tenure_ended",
+      "notes": null,
+      "entry_ids": ["commissioners-opposition-claim"]
+    }
+  ],
+  "gaps": []
+}

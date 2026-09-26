@@ -17,6 +17,7 @@ from neta_api.schemas import (
     EciEntry,
     EciPersonPage,
     EciPersonSummary,
+    EciSelections,
     EciStatePage,
     EciStatesOverview,
     EciSummary,
@@ -101,6 +102,13 @@ def person_page(slug: str, db: Session = Depends(get_db)) -> EciPersonPage:
     if result is None:
         raise HTTPException(status_code=404, detail="person not found")
     return EciPersonPage(**result)
+
+
+@router.get("/selections", response_model=EciSelections)
+def selections(db: Session = Depends(get_db)) -> EciSelections:
+    """Every selection regime, every selection (newest first), every departure, and a compact index
+    of every entry any of them cites."""
+    return EciSelections(**eci_files_service.selections(db))
 
 
 @router.get("/entries/{entry_id}", response_model=EciEntry)

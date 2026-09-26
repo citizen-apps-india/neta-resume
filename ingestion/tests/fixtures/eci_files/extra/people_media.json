@@ -1,0 +1,20 @@
+{
+  "people": [
+    {
+      "slug": "gyanesh-kumar",
+      "name": "Gyanesh Kumar",
+      "image_url": "https://upload.wikimedia.org/wikipedia/commons/x/gyanesh-kumar.jpg",
+      "source_page": "https://commons.wikimedia.org/wiki/File:Gyanesh_Kumar.jpg",
+      "original_source": "https://static.pib.gov.in/example.jpg",
+      "original_publisher": "Press Information Bureau (Election Commission)",
+      "caption": "Test fixture photo",
+      "photo_date": "2025-06-25",
+      "licence": "GODL-India",
+      "licence_url": "https://data.gov.in/sites/default/files/Gazette_Notification_OGDL.pdf",
+      "licence_review": "reviewed",
+      "attribution": "Photo: Press Information Bureau / Election Commission of India, via Wikimedia Commons. Government Open Data License – India (GODL).",
+      "self_host": true,
+      "local_path": "/eci-files/people/gyanesh-kumar.jpg"
+    }
+  ]
+}

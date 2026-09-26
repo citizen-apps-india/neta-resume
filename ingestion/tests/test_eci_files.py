@@ -322,6 +322,218 @@ def test_real_data_files_validate() -> None:
     assert payload is not None
     assert len(payload.regions) == 36
     assert len(payload.national) == 14
+    assert payload.selections is not None
+    assert len(payload.selections.regimes) == 3
+    assert len(payload.selections.selections) == 8
+    assert len(payload.selections.departures) == 6
+    assert payload.media is not None
+    assert len(payload.media.people) == 5
+
+
+# --- person grouping: docs/eci-files/PHASE4-SPEC.md section 1.4 ---------------------------------
+
+
+def _tenure(office: str, frm: str | None = None, to: str | None = None) -> dict:
+    return {"office": office, "from": frm, "to": to}
+
+
+def test_role_group_commission_matches_exact_office() -> None:
+    assert (
+        eci_files._role_group({"tenure": [_tenure("Election Commissioner", "2020-01")]})
+        == "commission"
+    )
+    assert (
+        eci_files._role_group({"tenure": [_tenure("Chief Election Commissioner", "2020-01")]})
+        == "commission"
+    )
+
+
+def test_role_group_state_matches_chief_electoral_officer_prefix() -> None:
+    assert (
+        eci_files._role_group({"tenure": [_tenure("Chief Electoral Officer, Bihar", "2020-01")]})
+        == "state"
+    )
+
+
+def test_role_group_secretariat_is_the_fallback() -> None:
+    assert eci_files._role_group({"tenure": [_tenure("Secretary, ECI", "2020-01")]}) == "secretariat"
+    assert eci_files._role_group({"tenure": [_tenure("Some Other Role", "2020-01")]}) == "secretariat"
+
+
+def test_role_group_commission_beats_state_when_a_profile_has_both() -> None:
+    details = {
+        "tenure": [
+            _tenure("Chief Electoral Officer, Bihar", "2018-01", "2020-01"),
+            _tenure("Election Commissioner", "2020-01"),
+        ]
+    }
+    assert eci_files._role_group(details) == "commission"
+
+
+def test_is_current_true_when_a_tenure_has_from_and_no_to() -> None:
+    rows = eci_files._tenure_rows({"tenure": [_tenure("Election Commissioner", "2020-01")]})
+    assert eci_files._is_current(rows) is True
+
+
+def test_is_current_false_when_from_is_null() -> None:
+    rows = eci_files._tenure_rows({"tenure": [_tenure("Secretary, ECI")]})
+    assert eci_files._is_current(rows) is False
+
+
+def test_is_current_false_when_the_tenure_has_ended() -> None:
+    rows = eci_files._tenure_rows(
+        {"tenure": [_tenure("Election Commissioner", "2019-01", "2020-01")]}
+    )
+    assert eci_files._is_current(rows) is False
+
+
+def test_build_person_groups_commission_order_is_chronological_by_first_from() -> None:
+    names = {"a": "Alice", "b": "Bob"}
+    profile_by_slug = {"a": "entry-a", "b": "entry-b"}
+    details = {
+        "a": {"tenure": [_tenure("Election Commissioner", "2021-01")]},
+        "b": {"tenure": [_tenure("Election Commissioner", "2019-01")]},
+    }
+    groups = eci_files._build_person_groups(names, profile_by_slug, details)
+    assert (groups["b"].role_group, groups["b"].group_rank) == ("commission", 0)
+    assert (groups["a"].role_group, groups["a"].group_rank) == ("commission", 1)
+
+
+def test_build_person_groups_named_people_are_ranked_alphabetically() -> None:
+    names = {"z-slug": "Zed", "a-slug": "Aaron"}
+    groups = eci_files._build_person_groups(names, {}, {})
+    assert groups["a-slug"].role_group == "named"
+    assert groups["a-slug"].group_rank == 0
+    assert groups["z-slug"].role_group == "named"
+    assert groups["z-slug"].group_rank == 1
+
+
+# --- selections.json / people_media.json: cross-validated against the loaded entries and people --
+
+
+_ENTRY_IDS = {"commissioners-kumar-cec"}
+_PERSON_SLUGS = {"gyanesh-kumar"}
+
+
+def _selection(**overrides) -> dict:
+    base = {
+        "id": "sel-1",
+        "date": "2024-03-14",
+        "date_precision": "day",
+        "regime": "act_2023",
+        "method": "selection_committee",
+        "appointed": [
+            {"person_slug": "gyanesh-kumar", "name": "Gyanesh Kumar", "office": "Election Commissioner"}
+        ],
+        "members": [],
+        "search": None,
+        "dissent": [],
+        "entry_ids": ["commissioners-kumar-cec"],
+    }
+    base.update(overrides)
+    return base
+
+
+def _selections_file(**overrides) -> dict:
+    base = {
+        "regimes": [
+            {
+                "key": "act_2023",
+                "label": "2023 Act",
+                "from": None,
+                "to": None,
+                "rule": "A selection committee.",
+                "panel": [],
+                "entry_ids": ["commissioners-kumar-cec"],
+            }
+        ],
+        "selections": [_selection()],
+        "departures": [],
+    }
+    base.update(overrides)
+    return base
+
+
+def test_selections_validation_rejects_unknown_entry_id(tmp_path: Path) -> None:
+    path = tmp_path / "selections.json"
+    path.write_text(json.dumps(_selections_file(selections=[_selection(entry_ids=["nope"])])))
+    parsed, errors = eci_files._load_selections(path, _ENTRY_IDS, _PERSON_SLUGS)
+    assert parsed is None
+    assert any("unknown entry id" in e for e in errors)
+
+
+def test_selections_validation_rejects_unknown_person_slug(tmp_path: Path) -> None:
+    path = tmp_path / "selections.json"
+    bad = _selection(
+        appointed=[{"person_slug": "nobody", "name": "Nobody", "office": "Election Commissioner"}]
+    )
+    path.write_text(json.dumps(_selections_file(selections=[bad])))
+    parsed, errors = eci_files._load_selections(path, _ENTRY_IDS, _PERSON_SLUGS)
+    assert parsed is None
+    assert any("unknown person slug" in e for e in errors)
+
+
+def test_selections_validation_rejects_unknown_regime(tmp_path: Path) -> None:
+    path = tmp_path / "selections.json"
+    path.write_text(json.dumps(_selections_file(selections=[_selection(regime="not-a-regime")])))
+    parsed, errors = eci_files._load_selections(path, _ENTRY_IDS, _PERSON_SLUGS)
+    assert parsed is None
+    assert any("unknown regime" in e for e in errors)
+
+
+def test_selections_validation_rejects_duplicate_selection_id(tmp_path: Path) -> None:
+    path = tmp_path / "selections.json"
+    path.write_text(json.dumps(_selections_file(selections=[_selection(), _selection()])))
+    parsed, errors = eci_files._load_selections(path, _ENTRY_IDS, _PERSON_SLUGS)
+    assert parsed is None
+    assert any("duplicate selection id" in e for e in errors)
+
+
+def test_selections_validation_rejects_a_member_with_empty_entry_ids(tmp_path: Path) -> None:
+    path = tmp_path / "selections.json"
+    bad_member = {
+        "person_slug": None,
+        "name": None,
+        "role": "Prime Minister",
+        "part": "voted_with_majority",
+        "entry_ids": [],
+    }
+    path.write_text(json.dumps(_selections_file(selections=[_selection(members=[bad_member])])))
+    parsed, errors = eci_files._load_selections(path, _ENTRY_IDS, _PERSON_SLUGS)
+    assert parsed is None
+    assert any("entry_ids" in e for e in errors)
+
+
+def _media_person(**overrides) -> dict:
+    base = {
+        "slug": "gyanesh-kumar",
+        "name": "Gyanesh Kumar",
+        "image_url": "https://example.com/x.jpg",
+        "source_page": "https://example.com/file",
+        "licence": "GODL-India",
+        "licence_url": "https://example.com/licence",
+        "licence_review": "reviewed",
+        "attribution": "Photo credit",
+        "self_host": False,
+    }
+    base.update(overrides)
+    return base
+
+
+def test_media_validation_rejects_unknown_slug(tmp_path: Path) -> None:
+    path = tmp_path / "people_media.json"
+    path.write_text(json.dumps({"people": [_media_person(slug="nobody")]}))
+    parsed, errors = eci_files._load_media(path, _PERSON_SLUGS)
+    assert parsed is None
+    assert any("unknown person slug" in e for e in errors)
+
+
+def test_media_validation_rejects_a_bad_licence_review(tmp_path: Path) -> None:
+    path = tmp_path / "people_media.json"
+    path.write_text(json.dumps({"people": [_media_person(licence_review="made-up")]}))
+    parsed, errors = eci_files._load_media(path, _PERSON_SLUGS)
+    assert parsed is None
+    assert errors
 
 
 # --- Postgres integration: full replace, tier-based source codes, person linking ----------------
@@ -331,6 +543,123 @@ DATABASE_URL = os.getenv("NETA_TEST_DATABASE_URL")
 pytestmark_pg = pytest.mark.skipif(
     DATABASE_URL is None, reason="NETA_TEST_DATABASE_URL is required for PostgreSQL integration tests"
 )
+
+
+@pytestmark_pg
+def test_selections_and_media_load_when_explicitly_pointed_at_fixtures() -> None:
+    from neta_core.db.engine import session_scope
+
+    def counts() -> tuple[int, int, int, int, int]:
+        with session_scope() as s:
+            return (
+                s.execute(text("SELECT count(*) FROM eci_file_selection_regime")).scalar_one(),
+                s.execute(text("SELECT count(*) FROM eci_file_selection")).scalar_one(),
+                s.execute(text("SELECT count(*) FROM eci_file_selection_person")).scalar_one(),
+                s.execute(text("SELECT count(*) FROM eci_file_departure")).scalar_one(),
+                s.execute(text("SELECT count(*) FROM eci_file_person_media")).scalar_one(),
+            )
+
+    eci_files.run(
+        path=FIXTURES,
+        selections_path=FIXTURES / "extra" / "selections.json",
+        media_path=FIXTURES / "extra" / "people_media.json",
+    )
+    first = counts()
+    assert first == (1, 1, 1, 1, 1)
+
+    with session_scope() as s:
+        url = s.execute(
+            text("SELECT url FROM eci_file_person_media WHERE person_slug = 'gyanesh-kumar'")
+        ).scalar_one()
+    assert url == "/eci-files/people/gyanesh-kumar.jpg"
+
+    # Idempotent: running again leaves the same rows, not doubled.
+    eci_files.run(
+        path=FIXTURES,
+        selections_path=FIXTURES / "extra" / "selections.json",
+        media_path=FIXTURES / "extra" / "people_media.json",
+    )
+    assert counts() == first
+
+
+@pytestmark_pg
+def test_selection_person_records_appointed_dissented_and_search_chair(tmp_path: Path) -> None:
+    from neta_core.db.engine import session_scope
+
+    entries_dir = tmp_path / "entries"
+    entries_dir.mkdir()
+    _write(
+        entries_dir,
+        [_entry(id="t-event", people=["Test Appointee", "Test Dissenter", "Test Chair"])],
+    )
+    selections_file = tmp_path / "selections.json"
+    selections_file.write_text(
+        json.dumps(
+            {
+                "regimes": [
+                    {
+                        "key": "act_2023",
+                        "label": "2023 Act",
+                        "from": None,
+                        "to": None,
+                        "rule": "A selection committee.",
+                        "panel": [],
+                        "entry_ids": ["t-event"],
+                    }
+                ],
+                "selections": [
+                    {
+                        "id": "sel-test",
+                        "date": "2024-03-14",
+                        "date_precision": "day",
+                        "regime": "act_2023",
+                        "method": "selection_committee",
+                        "appointed": [
+                            {
+                                "person_slug": "test-appointee",
+                                "name": "Test Appointee",
+                                "office": "Election Commissioner",
+                                "took_charge": "2024-03-15",
+                            }
+                        ],
+                        "members": [
+                            {
+                                "person_slug": "test-dissenter",
+                                "name": "Test Dissenter",
+                                "role": "Leader of Opposition",
+                                "part": "dissented",
+                                "entry_ids": ["t-event"],
+                            }
+                        ],
+                        "search": {
+                            "by": "Search committee",
+                            "chair_slug": "test-chair",
+                            "shortlist_size": None,
+                            "shortlist": None,
+                            "shortlist_source": None,
+                            "entry_ids": ["t-event"],
+                        },
+                        "dissent": [],
+                        "entry_ids": ["t-event"],
+                    }
+                ],
+                "departures": [],
+            }
+        )
+    )
+
+    eci_files.run(path=entries_dir, selections_path=selections_file)
+    with session_scope() as s:
+        parts = dict(
+            s.execute(
+                text("SELECT person_slug, part FROM eci_file_selection_person ORDER BY person_slug")
+            ).all()
+        )
+    assert parts == {
+        "test-appointee": "appointed",
+        "test-chair": "search_chair",
+        "test-dissenter": "dissented",
+    }
 
 
 @pytestmark_pg

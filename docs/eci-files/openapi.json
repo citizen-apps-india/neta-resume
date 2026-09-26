@@ -1303,6 +1303,28 @@
     }
    }
   },
+  "/eci-files/selections": {
+   "get": {
+    "tags": [
+     "eci-files"
+    ],
+    "summary": "Selections",
+    "description": "Every selection regime, every selection (newest first), every departure, and a compact index\nof every entry any of them cites.",
+    "operationId": "selections_eci_files_selections_get",
+    "responses": {
+     "200": {
+      "description": "Successful Response",
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/EciSelections"
+        }
+       }
+      }
+     }
+    }
+   }
+  },
   "/eci-files/entries/{entry_id}": {
    "get": {
     "tags": [
@@ -1816,6 +1838,59 @@
     ],
     "title": "EciDensityMonth"
    },
+   "EciDeparture": {
+    "properties": {
+     "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+     },
+     "person_slug": {
+      "type": "string",
+      "title": "Person Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "office": {
+      "type": "string",
+      "title": "Office"
+     },
+     "how": {
+      "type": "string",
+      "title": "How"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     }
+    },
+    "type": "object",
+    "required": [
+     "date",
+     "person_slug",
+     "name",
+     "office",
+     "how",
+     "entry_ids"
+    ],
+    "title": "EciDeparture"
+   },
    "EciEntry": {
     "properties": {
      "id": {
@@ -2023,6 +2098,47 @@
     "title": "EciEntryCompact",
     "description": "`fields=compact` on `/eci-files/timeline` \u2014 just enough to draw a dot, no citations."
    },
+   "EciEntryRef": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "title": {
+      "type": "string",
+      "title": "Title"
+     },
+     "date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date"
+     },
+     "date_precision": {
+      "type": "string",
+      "title": "Date Precision"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "title",
+     "date_precision",
+     "status"
+    ],
+    "title": "EciEntryRef",
+    "description": "A compact, labelled reference to an entry cited by a selection, regime or departure."
+   },
    "EciHeadlineStat": {
     "properties": {
      "value": {
@@ -2197,12 +2313,62 @@
         "type": "null"
        }
       ]
+     },
+     "group": {
+      "type": "string",
+      "title": "Group"
+     },
+     "current": {
+      "type": "boolean",
+      "title": "Current"
+     },
+     "role": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Role"
+     },
+     "service": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Service"
+     },
+     "tenure": {
+      "items": {},
+      "type": "array",
+      "title": "Tenure"
+     },
+     "status_counts": {
+      "$ref": "#/components/schemas/EciStatusCounts"
+     },
+     "photo": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciPhoto"
+       },
+       {
+        "type": "null"
+       }
+      ]
      }
     },
     "type": "object",
     "required": [
      "slug",
-     "name"
+     "name",
+     "group",
+     "current"
     ],
     "title": "EciPersonDetail"
    },
@@ -2217,12 +2383,28 @@
       },
       "type": "array",
       "title": "Entries"
+     },
+     "selections": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelection"
+      },
+      "type": "array",
+      "title": "Selections"
+     },
+     "entries_index": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryRef"
+      },
+      "type": "array",
+      "title": "Entries Index"
      }
     },
     "type": "object",
     "required": [
      "person",
-     "entries"
+     "entries",
+     "selections",
+     "entries_index"
     ],
     "title": "EciPersonPage"
    },
@@ -2254,6 +2436,18 @@
       "type": "string",
       "title": "Name"
      },
+     "group": {
+      "type": "string",
+      "title": "Group"
+     },
+     "group_rank": {
+      "type": "integer",
+      "title": "Group Rank"
+     },
+     "current": {
+      "type": "boolean",
+      "title": "Current"
+     },
      "role": {
       "anyOf": [
        {
@@ -2265,23 +2459,146 @@
       ],
       "title": "Role"
      },
+     "service": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Service"
+     },
      "tenure": {
       "items": {},
       "type": "array",
       "title": "Tenure"
      },
+     "first_from": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "First From"
+     },
+     "last_to": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Last To"
+     },
      "entry_count": {
       "type": "integer",
       "title": "Entry Count"
+     },
+     "status_counts": {
+      "$ref": "#/components/schemas/EciStatusCounts"
+     },
+     "photo": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciPhoto"
+       },
+       {
+        "type": "null"
+       }
+      ]
      }
     },
     "type": "object",
     "required": [
      "slug",
      "name",
+     "group",
+     "group_rank",
+     "current",
      "entry_count"
     ],
     "title": "EciPersonSummary"
+   },
+   "EciPhoto": {
+    "properties": {
+     "url": {
+      "type": "string",
+      "title": "Url"
+     },
+     "source_page": {
+      "type": "string",
+      "title": "Source Page"
+     },
+     "attribution": {
+      "type": "string",
+      "title": "Attribution"
+     },
+     "licence": {
+      "type": "string",
+      "title": "Licence"
+     },
+     "licence_url": {
+      "type": "string",
+      "title": "Licence Url"
+     },
+     "licence_review": {
+      "type": "string",
+      "title": "Licence Review"
+     },
+     "original_publisher": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Original Publisher"
+     },
+     "caption": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Caption"
+     },
+     "photo_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Photo Date"
+     }
+    },
+    "type": "object",
+    "required": [
+     "url",
+     "source_page",
+     "attribution",
+     "licence",
+     "licence_url",
+     "licence_review"
+    ],
+    "title": "EciPhoto"
    },
    "EciRegionSummary": {
     "properties": {
@@ -2385,6 +2702,450 @@
     ],
     "title": "EciResponseRef",
     "description": "One entry that answers another (`response_to` points back at the charge it responds to)."
+   },
+   "EciSelection": {
+    "properties": {
+     "id": {
+      "type": "string",
+      "title": "Id"
+     },
+     "date": {
+      "type": "string",
+      "format": "date",
+      "title": "Date"
+     },
+     "date_precision": {
+      "type": "string",
+      "title": "Date Precision"
+     },
+     "date_meaning": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Date Meaning"
+     },
+     "regime": {
+      "type": "string",
+      "title": "Regime"
+     },
+     "method": {
+      "type": "string",
+      "title": "Method"
+     },
+     "appointed": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelectionAppointee"
+      },
+      "type": "array",
+      "title": "Appointed"
+     },
+     "members": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelectionMember"
+      },
+      "type": "array",
+      "title": "Members"
+     },
+     "search": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciSelectionSearch"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "dissent": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelectionDissent"
+      },
+      "type": "array",
+      "title": "Dissent"
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     }
+    },
+    "type": "object",
+    "required": [
+     "id",
+     "date",
+     "date_precision",
+     "regime",
+     "method",
+     "appointed",
+     "members",
+     "dissent",
+     "entry_ids"
+    ],
+    "title": "EciSelection"
+   },
+   "EciSelectionAppointee": {
+    "properties": {
+     "person_slug": {
+      "type": "string",
+      "title": "Person Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "office": {
+      "type": "string",
+      "title": "Office"
+     },
+     "took_charge": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Took Charge"
+     },
+     "replaced": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Replaced"
+     },
+     "photo": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/EciPhoto"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "type": "object",
+    "required": [
+     "person_slug",
+     "name",
+     "office"
+    ],
+    "title": "EciSelectionAppointee"
+   },
+   "EciSelectionDissent": {
+    "properties": {
+     "person_slug": {
+      "type": "string",
+      "title": "Person Slug"
+     },
+     "name": {
+      "type": "string",
+      "title": "Name"
+     },
+     "summary": {
+      "type": "string",
+      "title": "Summary"
+     },
+     "note_public": {
+      "type": "boolean",
+      "title": "Note Public"
+     },
+     "status": {
+      "type": "string",
+      "title": "Status"
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     },
+     "response_entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Response Entry Ids",
+      "default": []
+     }
+    },
+    "type": "object",
+    "required": [
+     "person_slug",
+     "name",
+     "summary",
+     "note_public",
+     "status",
+     "entry_ids"
+    ],
+    "title": "EciSelectionDissent"
+   },
+   "EciSelectionMember": {
+    "properties": {
+     "person_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Person Slug"
+     },
+     "name": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Name"
+     },
+     "role": {
+      "type": "string",
+      "title": "Role"
+     },
+     "part": {
+      "type": "string",
+      "title": "Part"
+     },
+     "has_profile": {
+      "type": "boolean",
+      "title": "Has Profile",
+      "default": false
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     }
+    },
+    "type": "object",
+    "required": [
+     "role",
+     "part",
+     "entry_ids"
+    ],
+    "title": "EciSelectionMember"
+   },
+   "EciSelectionRegime": {
+    "properties": {
+     "key": {
+      "type": "string",
+      "title": "Key"
+     },
+     "label": {
+      "type": "string",
+      "title": "Label"
+     },
+     "from_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "From Date"
+     },
+     "to_date": {
+      "anyOf": [
+       {
+        "type": "string",
+        "format": "date"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "To Date"
+     },
+     "rule": {
+      "type": "string",
+      "title": "Rule"
+     },
+     "panel": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Panel"
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     },
+     "notes": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Notes"
+     },
+     "selection_count": {
+      "type": "integer",
+      "title": "Selection Count"
+     }
+    },
+    "type": "object",
+    "required": [
+     "key",
+     "label",
+     "rule",
+     "panel",
+     "entry_ids",
+     "selection_count"
+    ],
+    "title": "EciSelectionRegime"
+   },
+   "EciSelectionSearch": {
+    "properties": {
+     "by": {
+      "type": "string",
+      "title": "By"
+     },
+     "chair_slug": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Chair Slug"
+     },
+     "shortlist_size": {
+      "anyOf": [
+       {
+        "type": "integer"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Shortlist Size"
+     },
+     "shortlist": {
+      "anyOf": [
+       {
+        "items": {
+         "type": "string"
+        },
+        "type": "array"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Shortlist"
+     },
+     "shortlist_source": {
+      "anyOf": [
+       {
+        "type": "string"
+       },
+       {
+        "type": "null"
+       }
+      ],
+      "title": "Shortlist Source"
+     },
+     "entry_ids": {
+      "items": {
+       "type": "string"
+      },
+      "type": "array",
+      "title": "Entry Ids"
+     }
+    },
+    "type": "object",
+    "required": [
+     "by",
+     "entry_ids"
+    ],
+    "title": "EciSelectionSearch"
+   },
+   "EciSelections": {
+    "properties": {
+     "regimes": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelectionRegime"
+      },
+      "type": "array",
+      "title": "Regimes"
+     },
+     "selections": {
+      "items": {
+       "$ref": "#/components/schemas/EciSelection"
+      },
+      "type": "array",
+      "title": "Selections"
+     },
+     "departures": {
+      "items": {
+       "$ref": "#/components/schemas/EciDeparture"
+      },
+      "type": "array",
+      "title": "Departures"
+     },
+     "entries_index": {
+      "items": {
+       "$ref": "#/components/schemas/EciEntryRef"
+      },
+      "type": "array",
+      "title": "Entries Index"
+     }
+    },
+    "type": "object",
+    "required": [
+     "regimes",
+     "selections",
+     "departures",
+     "entries_index"
+    ],
+    "title": "EciSelections",
+    "description": "`/eci-files/selections` \u2014 every regime, every selection, every departure and a compact index\nof every entry any of them cites."
    },
    "EciStageValue": {
     "properties": {
@@ -2617,6 +3378,32 @@
      "national"
     ],
     "title": "EciStatesOverview"
+   },
+   "EciStatusCounts": {
+    "properties": {
+     "documented": {
+      "type": "integer",
+      "title": "Documented",
+      "default": 0
+     },
+     "reported": {
+      "type": "integer",
+      "title": "Reported",
+      "default": 0
+     },
+     "claim": {
+      "type": "integer",
+      "title": "Claim",
+      "default": 0
+     },
+     "response": {
+      "type": "integer",
+      "title": "Response",
+      "default": 0
+     }
+    },
+    "type": "object",
+    "title": "EciStatusCounts"
    },
    "EciSummary": {
     "properties": {

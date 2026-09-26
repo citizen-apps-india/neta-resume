@@ -270,19 +270,179 @@ def timeline(
     }
 
 
-def people(db: Session) -> list[dict]:
-    """One row per person: role + tenure from their profile entry's details, plus a linked-entry count."""
+_PHOTO_COLUMNS = """
+    m.url AS photo_url, m.source_page, m.original_publisher, m.caption, m.photo_date,
+    m.licence, m.licence_url, m.licence_review, m.attribution
+"""
+
+
+def _photo_payload(row) -> dict | None:
+    if row.photo_url is None:
+        return None
+    return {
+        "url": row.photo_url,
+        "source_page": row.source_page,
+        "attribution": row.attribution,
+        "licence": row.licence,
+        "licence_url": row.licence_url,
+        "licence_review": row.licence_review,
+        "original_publisher": row.original_publisher,
+        "caption": row.caption,
+        "photo_date": row.photo_date,
+    }
+
+
+def _photo_map(db: Session, slugs: set[str]) -> dict[str, dict]:
+    if not slugs:
+        return {}
     rows = db.execute(
         text(
-            """
-            SELECT p.slug, p.name, prof.details,
-                   (SELECT count(*) FROM eci_file_entry_person ep WHERE ep.person_slug = p.slug) AS entry_count
+            f"""
+            SELECT person_slug, {_PHOTO_COLUMNS.replace("m.", "")}
+            FROM eci_file_person_media WHERE person_slug = ANY(:slugs)
+            """  # noqa: S608
+        ),
+        {"slugs": list(slugs)},
+    ).all()
+    return {r.person_slug: _photo_payload(r) for r in rows}
+
+
+def _entry_refs(db: Session, ids: list[str]) -> list[dict]:
+    """Compact `id, title, date, date_precision, status` refs for exactly these ids (dedup, drops
+    unknown ids) — used to label every entry a selection/regime/departure cites."""
+    ordered = list(dict.fromkeys(ids))
+    if not ordered:
+        return []
+    rows = db.execute(
+        text(
+            "SELECT id, title, date, date_precision, status FROM eci_file_entry WHERE id = ANY(:ids)"
+        ),
+        {"ids": ordered},
+    ).all()
+    by_id = {r.id: r for r in rows}
+    out = []
+    for eid in ordered:
+        r = by_id.get(eid)
+        if r is None:
+            continue
+        out.append(
+            {
+                "id": r.id,
+                "title": r.title,
+                "date": r.date,
+                "date_precision": r.date_precision,
+                "status": r.status,
+            }
+        )
+    return out
+
+
+def _selection_rows(db: Session, ids: list[str] | None = None) -> list[dict]:
+    """Every `eci_file_selection` row (or just `ids`), newest first, with `has_profile` added to
+    each member and `photo` added to each appointee."""
+    where = "WHERE id = ANY(:ids)" if ids is not None else ""
+    rows = db.execute(
+        text(
+            f"""
+            SELECT id, date, date_precision, date_meaning, regime, method,
+                   appointed, members, search, dissent, entry_ids, notes
+            FROM eci_file_selection
+            {where}
+            ORDER BY date DESC, id DESC
+            """  # noqa: S608
+        ),
+        {"ids": ids} if ids is not None else {},
+    ).all()
+    if not rows:
+        return []
+
+    slugs: set[str] = set()
+    for r in rows:
+        for a in r.appointed:
+            slugs.add(a["person_slug"])
+        for m in r.members:
+            if m.get("person_slug"):
+                slugs.add(m["person_slug"])
+
+    profile_flags = (
+        {
+            r.slug: r.has_profile
+            for r in db.execute(
+                text(
+                    "SELECT slug, (profile_entry_id IS NOT NULL) AS has_profile "
+                    "FROM eci_file_person WHERE slug = ANY(:slugs)"
+                ),
+                {"slugs": list(slugs)},
+            )
+        }
+        if slugs
+        else {}
+    )
+    photos = _photo_map(db, slugs)
+
+    out = []
+    for r in rows:
+        appointed = [{**a, "photo": photos.get(a["person_slug"])} for a in r.appointed]
+        members = [
+            {**m, "has_profile": profile_flags.get(m.get("person_slug"), False)} for m in r.members
+        ]
+        out.append(
+            {
+                "id": r.id,
+                "date": r.date,
+                "date_precision": r.date_precision,
+                "date_meaning": r.date_meaning,
+                "regime": r.regime,
+                "method": r.method,
+                "appointed": appointed,
+                "members": members,
+                "search": r.search,
+                "dissent": r.dissent,
+                "entry_ids": list(r.entry_ids or []),
+                "notes": r.notes,
+            }
+        )
+    return out
+
+
+def people(db: Session) -> list[dict]:
+    """Every person, grouped and ordered per docs/eci-files/PHASE4-SPEC.md section 1.4: the
+    Commission, then senior officials, then state Chief Electoral Officers, then everyone else named
+    only in passing. Status counts and the entry count both exclude the person's own profile entry."""
+    rows = db.execute(
+        text(
+            f"""
+            SELECT p.slug, p.name, p.role_group, p.group_rank, p.is_current AS is_current,
+                   p.first_from, p.last_to, prof.details,
+                   {_PHOTO_COLUMNS},
+                   (SELECT count(*) FROM eci_file_entry_person ep
+                    JOIN eci_file_entry e ON e.id = ep.entry_id
+                    WHERE ep.person_slug = p.slug AND e.kind <> 'person') AS entry_count
             FROM eci_file_person p
             LEFT JOIN eci_file_entry prof ON prof.id = p.profile_entry_id
-            ORDER BY p.name
+            LEFT JOIN eci_file_person_media m ON m.person_slug = p.slug
+            ORDER BY
+                CASE p.role_group
+                    WHEN 'commission' THEN 0 WHEN 'secretariat' THEN 1 WHEN 'state' THEN 2 ELSE 3
+                END,
+                p.group_rank, p.name
             """
         )
     ).all()
+
+    status_counts: dict[str, dict[str, int]] = defaultdict(dict)
+    for r in db.execute(
+        text(
+            """
+            SELECT ep.person_slug, e.status, count(*) AS n
+            FROM eci_file_entry_person ep JOIN eci_file_entry e ON e.id = ep.entry_id
+            WHERE e.kind <> 'person'
+            GROUP BY 1, 2
+            """
+        )
+    ):
+        status_counts[r.person_slug][r.status] = r.n
+
     out = []
     for r in rows:
         details = r.details or {}
@@ -290,27 +450,47 @@ def people(db: Session) -> list[dict]:
             {
                 "slug": r.slug,
                 "name": r.name,
+                "group": r.role_group,
+                "group_rank": r.group_rank,
+                "current": r.is_current,
                 "role": details.get("role"),
+                "service": details.get("service"),
                 "tenure": details.get("tenure") or [],
+                "first_from": r.first_from,
+                "last_to": r.last_to,
                 "entry_count": r.entry_count,
+                "status_counts": status_counts.get(r.slug, {}),
+                "photo": _photo_payload(r),
             }
         )
     return out
 
 
 def person_page(db: Session, slug: str) -> dict | None:
-    """One person's profile entry (if any) + every entry that names them, timeline-ordered."""
+    """One person's profile entry (if any), every non-profile entry that names them (timeline-
+    ordered), every selection they took part in (newest first), and a compact index of every entry
+    those selections cite."""
     row = db.execute(
-        text("SELECT slug, name, profile_entry_id FROM eci_file_person WHERE slug = :slug"),
+        text(
+            f"""
+            SELECT p.slug, p.name, p.profile_entry_id, p.role_group, p.is_current AS is_current,
+                   {_PHOTO_COLUMNS}
+            FROM eci_file_person p
+            LEFT JOIN eci_file_person_media m ON m.person_slug = p.slug
+            WHERE p.slug = :slug
+            """
+        ),
         {"slug": slug},
     ).first()
     if row is None:
         return None
 
     profile = None
+    details: dict = {}
     if row.profile_entry_id:
         loaded = _load_entries(db, [row.profile_entry_id])
         profile = loaded[0] if loaded else None
+        details = (profile or {}).get("details") or {}
 
     entry_ids = [
         r.entry_id
@@ -319,7 +499,7 @@ def person_page(db: Session, slug: str) -> dict | None:
                 """
                 SELECT ep.entry_id
                 FROM eci_file_entry_person ep JOIN eci_file_entry e ON e.id = ep.entry_id
-                WHERE ep.person_slug = :slug
+                WHERE ep.person_slug = :slug AND e.kind <> 'person'
                 ORDER BY e.date ASC NULLS LAST, e.id ASC
                 """
             ),
@@ -328,9 +508,112 @@ def person_page(db: Session, slug: str) -> dict | None:
     ]
     entries = _load_entries(db, entry_ids)
 
+    status_counts: dict[str, int] = defaultdict(int)
+    for r in db.execute(
+        text(
+            """
+            SELECT e.status, count(*) AS n
+            FROM eci_file_entry_person ep JOIN eci_file_entry e ON e.id = ep.entry_id
+            WHERE ep.person_slug = :slug AND e.kind <> 'person'
+            GROUP BY e.status
+            """
+        ),
+        {"slug": slug},
+    ):
+        status_counts[r.status] = r.n
+
+    selection_ids = [
+        r.selection_id
+        for r in db.execute(
+            text(
+                "SELECT DISTINCT selection_id FROM eci_file_selection_person WHERE person_slug = :slug"
+            ),
+            {"slug": slug},
+        )
+    ]
+    person_selections = _selection_rows(db, selection_ids) if selection_ids else []
+    entries_index = _entry_refs(db, [eid for s in person_selections for eid in s["entry_ids"]])
+
     return {
-        "person": {"slug": row.slug, "name": row.name, "profile": profile},
+        "person": {
+            "slug": row.slug,
+            "name": row.name,
+            "profile": profile,
+            "group": row.role_group,
+            "current": row.is_current,
+            "role": details.get("role"),
+            "service": details.get("service"),
+            "tenure": details.get("tenure") or [],
+            "status_counts": dict(status_counts),
+            "photo": _photo_payload(row),
+        },
         "entries": entries,
+        "selections": person_selections,
+        "entries_index": entries_index,
+    }
+
+
+def selections(db: Session) -> dict:
+    """`/eci-files/selections` — every regime, every selection (newest first), every departure, and
+    a compact index of every entry any of them cites."""
+    regime_rows = db.execute(
+        text(
+            """
+            SELECT r.key, r.label, r.from_date, r.to_date, r.rule, r.panel, r.entry_ids, r.notes,
+                   (SELECT count(*) FROM eci_file_selection s WHERE s.regime = r.key) AS selection_count
+            FROM eci_file_selection_regime r
+            ORDER BY r.position
+            """
+        )
+    ).all()
+
+    selections_out = _selection_rows(db)
+
+    departure_rows = db.execute(
+        text(
+            """
+            SELECT d.date, d.person_slug, p.name, d.office, d.how, d.notes, d.entry_ids
+            FROM eci_file_departure d JOIN eci_file_person p ON p.slug = d.person_slug
+            ORDER BY d.date ASC, d.id ASC
+            """
+        )
+    ).all()
+
+    cited_ids = (
+        [eid for s in selections_out for eid in s["entry_ids"]]
+        + [eid for r in regime_rows for eid in (r.entry_ids or [])]
+        + [eid for d in departure_rows for eid in (d.entry_ids or [])]
+    )
+
+    return {
+        "regimes": [
+            {
+                "key": r.key,
+                "label": r.label,
+                "from_date": r.from_date,
+                "to_date": r.to_date,
+                "rule": r.rule,
+                "panel": list(r.panel or []),
+                "entry_ids": list(r.entry_ids or []),
+                "notes": r.notes,
+                "selection_count": r.selection_count,
+            }
+            for r in regime_rows
+        ],
+        "selections": selections_out,
+        "departures": [
+            {
+                "date": d.date,
+                "person_slug": d.person_slug,
+                "name": d.name,
+                "office": d.office,
+                "how": d.how,
+                "notes": d.notes,
+                "entry_ids": list(d.entry_ids or []),
+            }
+            for d in departure_rows
+        ],
+        "entries_index": _entry_refs(db, cited_ids),
     }
 
 

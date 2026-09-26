@@ -536,23 +536,153 @@ class EciDensity(BaseModel):
     months: list[EciDensityMonth]
 
 
+class EciPhoto(BaseModel):
+    url: str
+    source_page: str
+    attribution: str
+    licence: str
+    licence_url: str
+    licence_review: str             # reviewed | uploader_asserted
+    original_publisher: str | None = None
+    caption: str | None = None
+    photo_date: date | None = None
+
+
+class EciStatusCounts(BaseModel):
+    documented: int = 0
+    reported: int = 0
+    claim: int = 0
+    response: int = 0
+
+
+class EciEntryRef(BaseModel):
+    """A compact, labelled reference to an entry cited by a selection, regime or departure."""
+
+    id: str
+    title: str
+    date: _Date | None = None
+    date_precision: str
+    status: str
+
+
 class EciPersonSummary(BaseModel):
     slug: str
     name: str
+    group: str                      # commission | secretariat | state | named
+    group_rank: int
+    current: bool
     role: str | None = None         # profile entry's details.role
+    service: str | None = None      # profile entry's details.service
     tenure: list[Any] = Field(default_factory=list)  # profile entry's details.tenure (office/from/to spans)
+    first_from: date | None = None
+    last_to: date | None = None
     entry_count: int
+    status_counts: EciStatusCounts = Field(default_factory=EciStatusCounts)
+    photo: EciPhoto | None = None
+
+
+class EciSelectionAppointee(BaseModel):
+    person_slug: str
+    name: str
+    office: str
+    took_charge: date | None = None
+    replaced: str | None = None
+    photo: EciPhoto | None = None
+
+
+class EciSelectionMember(BaseModel):
+    person_slug: str | None = None
+    name: str | None = None
+    role: str
+    part: str                       # recommended | proposed | voted_with_majority | dissented | search_chair
+    has_profile: bool = False
+    entry_ids: list[str]
+
+
+class EciSelectionSearch(BaseModel):
+    by: str
+    chair_slug: str | None = None
+    shortlist_size: int | None = None
+    shortlist: list[str] | None = None
+    shortlist_source: str | None = None
+    entry_ids: list[str]
+
+
+class EciSelectionDissent(BaseModel):
+    person_slug: str
+    name: str
+    summary: str
+    note_public: bool
+    status: str
+    entry_ids: list[str]
+    response_entry_ids: list[str] = []
+
+
+class EciSelection(BaseModel):
+    id: str
+    date: _Date
+    date_precision: str
+    date_meaning: str | None = None
+    regime: str
+    method: str                     # executive_appointment | elevation_of_senior_ec | selection_committee
+    appointed: list[EciSelectionAppointee]
+    members: list[EciSelectionMember]
+    search: EciSelectionSearch | None = None
+    dissent: list[EciSelectionDissent]
+    entry_ids: list[str]
+    notes: str | None = None
+
+
+class EciSelectionRegime(BaseModel):
+    key: str                        # convention | baranwal | act_2023
+    label: str
+    from_date: date | None = None
+    to_date: date | None = None
+    rule: str
+    panel: list[str]
+    entry_ids: list[str]
+    notes: str | None = None
+    selection_count: int
+
+
+class EciDeparture(BaseModel):
+    date: _Date
+    person_slug: str
+    name: str
+    office: str
+    how: str                        # resigned | tenure_ended
+    notes: str | None = None
+    entry_ids: list[str]
+
+
+class EciSelections(BaseModel):
+    """`/eci-files/selections` — every regime, every selection, every departure and a compact index
+    of every entry any of them cites."""
+
+    regimes: list[EciSelectionRegime]
+    selections: list[EciSelection]
+    departures: list[EciDeparture]
+    entries_index: list[EciEntryRef]
 
 
 class EciPersonDetail(BaseModel):
     slug: str
     name: str
     profile: EciEntry | None = None  # the kind='person' entry, if one was linked
+    group: str
+    current: bool
+    role: str | None = None
+    service: str | None = None
+    tenure: list[Any] = Field(default_factory=list)
+    status_counts: EciStatusCounts = Field(default_factory=EciStatusCounts)
+    photo: EciPhoto | None = None
 
 
 class EciPersonPage(BaseModel):
     person: EciPersonDetail
-    entries: list[EciEntry]
+    entries: list[EciEntry]          # kind='person' excluded
+    selections: list[EciSelection]   # as appointee, member or search chair
+    entries_index: list[EciEntryRef]
 
 
 class EciStageValue(BaseModel):
