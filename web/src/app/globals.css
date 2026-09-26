@@ -779,3 +779,36 @@ html { scroll-behavior: smooth; }
 .eci-obj-mark:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
 @media (hover: hover) { .eci-obj-mark:hover circle, .eci-obj-mark:hover ellipse { opacity: 0.75; } }
 /* --- end phase 5 --- */
+
+/* --- ECI UX front --- */
+/* /eci-files front page: hero card (number + secondary stats beside the density strip) and the
+   "Start here" tile grid, both single-column on phone and multi-column from tablet up. */
+.eci-front-hero-grid { display: grid; grid-template-columns: 1fr; gap: 24px; align-items: start; }
+@media (min-width: 860px) { .eci-front-hero-grid { grid-template-columns: minmax(240px, 380px) minmax(0, 1fr); gap: 40px; } }
+
+.eci-front-tiles { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+@media (min-width: 560px) { .eci-front-tiles { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+@media (min-width: 900px) { .eci-front-tiles { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+@media (min-width: 1180px) { .eci-front-tiles { grid-template-columns: repeat(7, minmax(0, 1fr)); } }
+
+/* the key-moments strip: slimmer cards than .nr-xscroll's 340px minimum, so more of the row is visible. */
+.eci-front-moments { display: flex; gap: 10px; overflow-x: auto; padding-bottom: 4px; }
+.eci-front-moments > a { flex: 0 0 auto; width: 150px; }
+
+.eci-front-about summary { display: inline-flex; align-items: center; gap: 8px; cursor: pointer; list-style: none; font-size: 13.5px; color: var(--ink2); }
+.eci-front-about summary::-webkit-details-marker { display: none; }
+.eci-front-about[open] summary svg { transform: rotate(180deg); }
+
+/* /eci-files/entries: the "+N more records on this day" fold and the "keep reading" continuation —
+   both plain <details>, no client JS. */
+.eci-fold-more summary { cursor: pointer; list-style: none; color: var(--eci-ink); font-size: 12.5px; }
+.eci-fold-more summary::-webkit-details-marker { display: none; }
+.eci-keep-reading { margin-top: 18px; }
+.eci-keep-reading > summary {
+  display: block; min-height: 48px; line-height: 48px; text-align: center; cursor: pointer; list-style: none;
+  border: 1px dashed var(--border2); border-radius: 12px; font-size: 14px; color: var(--ink2);
+}
+.eci-keep-reading > summary::-webkit-details-marker { display: none; }
+.eci-keep-reading > summary::after { content: " ↓"; }
+.eci-keep-reading[open] > summary::after { content: " ↑"; }
+/* --- end ECI UX front --- */
