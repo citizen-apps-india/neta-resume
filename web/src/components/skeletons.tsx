@@ -175,6 +175,20 @@ export function EciTimelineSkeleton() {
   );
 }
 
+/** Inline fallback for the /eci-files/numbers body (streamed in below the static SectionHero). */
+export function EciNumbersSkeleton() {
+  return (
+    <div>
+      <S h={40} r={20} style={{ marginBottom: 22, maxWidth: 420 }} />
+      <S h={90} r={12} style={{ marginBottom: 22 }} />
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(9, minmax(0, 1fr))", gap: 4, maxWidth: 720, margin: "0 auto 18px" }}>
+        {Array.from({ length: 63 }).map((_, i) => <S key={i} h="100%" r={8} style={{ aspectRatio: "1" }} />)}
+      </div>
+      <S w={280} h={14} r={5} />
+    </div>
+  );
+}
+
 /** Generic placeholder for other pages (home / elections). */
 export function PageSkeleton() {
   return (

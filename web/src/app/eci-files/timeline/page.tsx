@@ -10,7 +10,7 @@ import { StatusLegend } from "@/components/eci-files/StatusLegend";
 import { LaneTimeline } from "@/components/eci-files/LaneTimeline";
 import { EntryDrawer } from "@/components/eci-files/EntryDrawer";
 import { EntryDetail } from "@/components/eci-files/EntryDetail";
-import { getEciDensity, getEciEntry, getEciTimelineCompact, type EciCompactTimeline, type EciDensity } from "@/lib/api";
+import { getEciDensity, getEciEntry, getEciTimelineCompactByState, type EciCompactTimeline, type EciDensity } from "@/lib/api";
 import { defaultEciWindow, densityByMonth } from "@/lib/eci-files";
 
 export const metadata: Metadata = {
@@ -20,13 +20,13 @@ export const metadata: Metadata = {
 };
 
 type Params = {
-  lane?: string; topic?: string; person?: string; from?: string; to?: string; entry?: string;
+  lane?: string; topic?: string; person?: string; state?: string; from?: string; to?: string; entry?: string;
 };
 
 /** The overview strip + lane dots for the current window. Its own async component so the hero paints
  *  immediately (REDESIGN-SPEC §"Loading": fetches `fields=compact` only — the first paint never pulls the
  *  whole record). */
-async function TimelineBody({ lane, topic, person, from, to, entry }: Params) {
+async function TimelineBody({ lane, topic, person, state, from, to, entry }: Params) {
   const range = { from: from ?? defaultEciWindow().from, to: to ?? defaultEciWindow().to };
 
   let density: EciDensity | null = null;
@@ -34,7 +34,7 @@ async function TimelineBody({ lane, topic, person, from, to, entry }: Params) {
   try {
     [density, timeline] = await Promise.all([
       getEciDensity(),
-      getEciTimelineCompact({ lane, topic, person, from: range.from, to: range.to }),
+      getEciTimelineCompactByState({ lane, topic, person, state, from: range.from, to: range.to }),
     ]);
   } catch {
     density = null;
@@ -60,9 +60,11 @@ async function TimelineBody({ lane, topic, person, from, to, entry }: Params) {
         lanes={timeline.lanes}
         topics={timeline.topics}
         people={timeline.people}
+        states={timeline.states}
         lane={lane}
         topic={topic}
         person={person}
+        state={state}
         preserve={{ from: range.from, to: range.to }}
       />
 
@@ -77,7 +79,7 @@ async function TimelineBody({ lane, topic, person, from, to, entry }: Params) {
 
       {entry && (
         <Suspense fallback={null}>
-          <EntryDrawerBody id={entry} preserve={{ lane, topic, person, from: range.from, to: range.to }} />
+          <EntryDrawerBody id={entry} preserve={{ lane, topic, person, state, from: range.from, to: range.to }} />
         </Suspense>
       )}
     </>

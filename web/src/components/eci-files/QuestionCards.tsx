@@ -1,4 +1,6 @@
 import Link from "next/link";
+import { getEciStates } from "@/lib/api";
+import { StatePicker } from "@/components/eci-files/numbers/StatePicker";
 
 interface Question {
   q: string;
@@ -16,6 +18,7 @@ const QUESTIONS: Question[] = [
   { q: "What has been claimed, and by whom?", hint: "Named claims, attributed — Claims lane", href: "/eci-files/timeline?lane=claims" },
   { q: "How has the Commission answered?", hint: "On-the-record responses — Responses lane", href: "/eci-files/timeline?lane=responses" },
   { q: "Who are the commissioners and officials?", hint: "Profiles, tenure and postings", href: "/eci-files/people" },
+  { q: "How many names left the rolls?", hint: "Every State and UT, side by side", href: "/eci-files/numbers" },
 ];
 
 function QuestionCard({ item }: { item: Question }) {
@@ -34,13 +37,32 @@ function QuestionCard({ item }: { item: Question }) {
   );
 }
 
-export function QuestionCards() {
+/** "What happened in my state?" (PHASE3-SPEC.md §3.5) — its own async card so a slow/failed
+ *  `/eci-files/states` fetch degrades to a plain link rather than blocking the rest of "Start here". */
+async function StateQuestionCard() {
+  const overview = await getEciStates().catch(() => null);
+  if (!overview) {
+    return (
+      <QuestionCard item={{ q: "What happened in my state?", hint: "Roll figures before, during and after the SIR", href: "/eci-files/numbers" }} />
+    );
+  }
+  return (
+    <div className="lift" style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "15px 17px" }}>
+      <div className="serif" style={{ fontSize: 14.5, fontWeight: 600, lineHeight: 1.3, marginBottom: 5 }}>What happened in my state?</div>
+      <div style={{ fontSize: 11.5, color: "var(--muted)", marginBottom: 10 }}>Roll figures before, during and after the SIR</div>
+      <StatePicker regions={overview.regions} compact />
+    </div>
+  );
+}
+
+export async function QuestionCards() {
   return (
     <section style={{ marginBottom: 32 }}>
       <h2 className="mono" style={{ fontSize: 11, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--faint)", margin: "0 0 12px" }}>
         Start here
       </h2>
       <div className="nr-navgrid" style={{ gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))" }}>
+        <StateQuestionCard />
         {QUESTIONS.map((item) => (
           <QuestionCard key={item.href} item={item} />
         ))}

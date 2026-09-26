@@ -1,6 +1,7 @@
 import type { EciCitation } from "@/types/eci-files";
 
-const TIER_LABEL: Record<number, string> = { 1: "TIER 1 · PRIMARY", 2: "TIER 2 · RESEARCH/FILING", 3: "TIER 3 · PRESS" };
+/** Exported for the numbers pages' source lines (PHASE3-SPEC.md §3.6: "reuses the TIER_LABEL wording"). */
+export const TIER_LABEL: Record<number, string> = { 1: "TIER 1 · PRIMARY", 2: "TIER 2 · RESEARCH/FILING", 3: "TIER 3 · PRESS" };
 
 /** One citation row: publisher, tier, and the link — the "sourced" half of a sourced record. */
 function Citation({ c }: { c: EciCitation }) {

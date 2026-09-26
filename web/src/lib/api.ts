@@ -263,3 +263,46 @@ export async function getEciEntry(id: string): Promise<EciEntry | null> {
   if (!res.ok) throw new Error(`API ${res.status} for /eci-files/entries/${id}`);
   return res.json();
 }
+
+// --- ECI Files phase 3 (numbers) ---
+import type { EciStatesOverview, EciStatePage } from "@/types/eci-files";
+
+export type {
+  EciStage, EciRegionKind, EciExercise, EciNationalGroup, EciNationalMeasure, EciStageValue,
+  EciStateMetric, EciStateMetrics, EciRegionSummary, EciNationalFigure, EciStatesOverview,
+  EciStatePage, EciStateCount,
+} from "@/types/eci-files";
+
+export type EciTimelineOptsWithState = EciTimelineOpts & { state?: string };
+
+/** Same as `eciTimelineQuery`, with an added `state=<slug>` term — kept separate rather than editing
+ *  `EciTimelineOpts`/`eciTimelineQuery` in place, since phase 4 and 5 web workers touch this file in
+ *  parallel (docs/eci-files/PHASE3-SPEC.md §3.8/§4). */
+function eciTimelineQueryWithState(opts: EciTimelineOptsWithState): string {
+  const base = eciTimelineQuery(opts);
+  if (!opts.state) return base;
+  return base ? `${base}&state=${encodeURIComponent(opts.state)}` : `?state=${encodeURIComponent(opts.state)}`;
+}
+
+/** The `fields=compact` timeline, optionally filtered to one region — state pages, and the lane
+ *  timeline's own `state=` filter (PHASE3-SPEC.md §2.3, §3.6). */
+export function getEciTimelineCompactByState(opts: EciTimelineOptsWithState = {}): Promise<EciCompactTimeline> {
+  const qs = eciTimelineQueryWithState(opts);
+  const sep = qs ? "&" : "?";
+  return getJSON<EciCompactTimeline>(`/eci-files/timeline${qs}${sep}fields=compact`, opts.revalidate ?? 900);
+}
+
+/** All 36 regions with SIR/Special Revision stage figures, plus the cited national totals
+ *  (`/eci-files/numbers`). */
+export function getEciStates(): Promise<EciStatesOverview> {
+  return getJSON<EciStatesOverview>("/eci-files/states", 3600);
+}
+
+/** One region's summary + notes, or null on 404 — same shape as {@link getEciPerson}. */
+export async function getEciState(slug: string): Promise<EciStatePage | null> {
+  const res = await fetch(`${API_BASE}/eci-files/states/${encodeURIComponent(slug)}`, { next: { revalidate: 3600 } });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error(`API ${res.status} for /eci-files/states/${slug}`);
+  return res.json();
+}
+// --- end phase 3 ---

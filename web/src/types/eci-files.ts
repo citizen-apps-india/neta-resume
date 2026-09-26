@@ -182,3 +182,106 @@ export interface EciPersonPage {
   person: { slug: string; name: string; profile: EciEntry | null };
   entries: EciEntry[];
 }
+
+// --- ECI Files phase 3 (numbers) ---
+// Hand-written against docs/eci-files/PHASE3-SPEC.md §2.4 — the backend worker is building
+// `/eci-files/states` and the `timeline?state=` facet in parallel, so these aren't in src/types/api.ts
+// yet. Re-run `npm run codegen` and drop the hand-written versions once it lands.
+
+export type EciStage = "before" | "draft" | "final" | "appeals_filed" | "appeals_pending" | "restored";
+export type EciRegionKind = "state" | "ut";
+export type EciExercise = "sir" | "special_revision";
+export type EciNationalGroup = "all" | "phase_1" | "phase_2" | "phase_3";
+export type EciNationalMeasure = "before" | "draft" | "final" | "left_off" | "net_fall";
+
+export interface EciStageValue {
+  stage: EciStage;
+  electors: number;
+  as_of: string | null;
+  computed: boolean;
+  approx: boolean;
+  note: string | null;
+  source_entry_id: string;
+  source_entry_title: string;
+  source_status: EciEntryStatus;
+  url: string;
+  tier: number;
+}
+
+export interface EciStateMetric {
+  /** Percent, rounded to 2dp; signed for `net_change`. */
+  value: number;
+  /** Electors; signed for `net_change`. */
+  count: number;
+  /** The denominator, in electors. */
+  base: number;
+  /** OR of the contributing stages' `computed`. */
+  computed: boolean;
+  /** OR of the contributing stages' `approx`. */
+  approx: boolean;
+  /** True if any contributing stage carries a note. */
+  noted: boolean;
+}
+
+export interface EciStateMetrics {
+  draft_left_off?: EciStateMetric | null;
+  net_change?: EciStateMetric | null;
+  /** Kept in the schema and shown on state pages; PHASES-3-5-DECISIONS.md drops it as a
+   *  /eci-files/numbers tile measure, so nothing in eci-numbers.ts's ECI_METRICS reads this key. */
+  appeals_filed?: EciStateMetric | null;
+}
+
+export interface EciRegionSummary {
+  slug: string;
+  name: string;
+  code: string;
+  kind: EciRegionKind;
+  phase: number | null;
+  exercise: EciExercise | null;
+  has_figures: boolean;
+  entry_count: number;
+  /** Canonical order: before, draft, final, appeals_filed, appeals_pending, restored. */
+  stages: EciStageValue[];
+  metrics: EciStateMetrics;
+}
+
+export interface EciNationalFigure {
+  group: EciNationalGroup;
+  measure: EciNationalMeasure;
+  label: string;
+  scope: string;
+  electors: number;
+  as_of: string | null;
+  computed: boolean;
+  approx: boolean;
+  note: string | null;
+  source_entry_id: string;
+  source_entry_title: string;
+  source_status: EciEntryStatus;
+}
+
+export interface EciStatesOverview {
+  regions: EciRegionSummary[];
+  national: EciNationalFigure[];
+  last_as_of: string | null;
+}
+
+export interface EciStatePage {
+  region: EciRegionSummary;
+  notes: string | null;
+}
+
+export interface EciStateCount {
+  slug: string;
+  name: string;
+  count: number;
+}
+
+// Declaration merging (not an edit to the `EciTimelineOf<E>` declared above) — adds the phase 3 `states`
+// facet (PHASE3-SPEC.md §2.3) to both EciTimeline and EciCompactTimeline without touching the phase 2
+// text, since phase 4 and 5 web workers edit this same file in parallel.
+// eslint-disable-next-line @typescript-eslint/no-unused-vars -- <E> must match the merged declaration above
+export interface EciTimelineOf<E> {
+  states: EciStateCount[];
+}
+// --- end phase 3 ---

@@ -472,3 +472,71 @@ html { scroll-behavior: smooth; }
   background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%; background-size: 5px 5px; background-repeat: no-repeat;
 }
 .eci-select:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* --- ECI Files phase 3 (numbers) --- */
+:root,
+[data-theme="light"] {
+  /* single-hue sequential violet ramp, 5 steps (PHASE3-SPEC.md §3.2) — order alone (lightness) carries
+     the signal, readable under protanopia/deuteranopia/tritanopia and in greyscale. */
+  --eci-seq-1:#F1ECF8; --eci-seq-fg-1:#121317;
+  --eci-seq-2:#D6C8EB; --eci-seq-fg-2:#121317;
+  --eci-seq-3:#B39BD8; --eci-seq-fg-3:#121317;
+  --eci-seq-4:#7A51B0; --eci-seq-fg-4:#FFFFFF;
+  --eci-seq-5:#4F2677; --eci-seq-fg-5:#FFFFFF;
+}
+[data-theme="dark"] {
+  /* higher values read brighter in dark mode (the dark-theme convention) */
+  --eci-seq-1:#2A2238; --eci-seq-fg-1:#F3F4F6;
+  --eci-seq-2:#46356A; --eci-seq-fg-2:#F3F4F6;
+  --eci-seq-3:#6B4F9E; --eci-seq-fg-3:#F3F4F6;
+  --eci-seq-4:#9674CC; --eci-seq-fg-4:#0C0D10;
+  --eci-seq-5:#C7A9EE; --eci-seq-fg-5:#0C0D10;
+}
+
+/* state tile grid: 9 cols, equal-size tiles placed roughly where the states sit — never a map
+   (PHASE3-SPEC.md §"Decisions": "That rules out any boundary drawing, shape file or projection"). */
+.eci-tiles { display: grid; grid-template-columns: repeat(9, minmax(0, 1fr)); gap: 4px; max-width: 720px; margin: 0 auto; }
+.eci-tile {
+  position: relative; display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 1px; aspect-ratio: 1; border-radius: 8px; border: 1px solid var(--rule); text-decoration: none;
+  padding: 2px; overflow: hidden; color: var(--ink); text-align: center;
+}
+.eci-tile:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 2px; }
+.eci-tile[data-band="1"] { background: var(--eci-seq-1); color: var(--eci-seq-fg-1); }
+.eci-tile[data-band="2"] { background: var(--eci-seq-2); color: var(--eci-seq-fg-2); }
+.eci-tile[data-band="3"] { background: var(--eci-seq-3); color: var(--eci-seq-fg-3); }
+.eci-tile[data-band="4"] { background: var(--eci-seq-4); color: var(--eci-seq-fg-4); }
+.eci-tile[data-band="5"] { background: var(--eci-seq-5); color: var(--eci-seq-fg-5); }
+.eci-tile--empty { background: var(--eci-tile-empty-bg, var(--sunken)); border-style: dashed; border-color: var(--border2); color: var(--ink2); }
+.eci-tile--nomeasure { background: var(--card); border-color: var(--rule); color: var(--muted); }
+.eci-tile--other { background: repeating-linear-gradient(45deg, var(--card) 0 5px, var(--rule) 5px 6px); color: var(--ink2); }
+.eci-tile-code { font-family: var(--font-mono), monospace; font-size: 10.5px; line-height: 1.1; }
+.eci-tile-value { font-family: var(--font-mono), monospace; font-size: 10px; line-height: 1.15; display: none; }
+.eci-tile-sub { font-size: 8.5px; line-height: 1.15; padding: 0 2px; display: none; }
+@media (min-width: 480px) { .eci-tile-value { display: block; } }
+@media (min-width: 640px) { .eci-tile-sub { display: block; } }
+@media (hover: hover) { .eci-tile:hover { transform: translateY(-1px); border-color: var(--eci-ink); } }
+@media (prefers-reduced-motion: no-preference) { .eci-tile { transition: transform .12s ease, border-color .12s ease; } }
+
+/* tiles/table toggle — `data-view` is set server-side from the `view` search param, so there's no
+   hydration flash (PHASE3-SPEC.md §3.3). Phone default is the table (PHASES-3-5-DECISIONS.md). */
+.eci-numbers-tiles, .eci-numbers-table { display: none; }
+.eci-numbers[data-view="tiles"] .eci-numbers-tiles { display: block; }
+.eci-numbers[data-view="table"] .eci-numbers-table { display: block; }
+.eci-numbers[data-view="auto"] .eci-numbers-tiles { display: block; }
+@media (max-width: 479px) {
+  .eci-numbers[data-view="auto"] .eci-numbers-tiles { display: none; }
+  .eci-numbers[data-view="auto"] .eci-numbers-table { display: block; }
+}
+
+/* state table: Before/Draft/Final columns hide under 480px (the state page carries them instead). */
+@media (max-width: 479px) { .eci-col-stage { display: none; } }
+
+/* state-page stage chart row: label / bar / value, stacking under 560px. */
+.eci-stage-row { display: grid; grid-template-columns: minmax(120px, 180px) 1fr minmax(90px, auto); align-items: center; gap: 10px; }
+@media (max-width: 560px) { .eci-stage-row { grid-template-columns: 1fr; gap: 4px; } }
+
+.eci-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; }
+
+.eci-caveat { border: 1px solid var(--rule); border-left: 3px solid var(--eci-ink); border-radius: 10px; background: var(--card2); padding: 14px 16px; }
+/* --- end phase 3 --- */

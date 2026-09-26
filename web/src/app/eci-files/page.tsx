@@ -84,6 +84,16 @@ async function EciFrontBody() {
         >
           People named in the record →
         </Link>
+        <Link
+          href="/eci-files/numbers"
+          className="tap"
+          style={{
+            display: "inline-flex", alignItems: "center", fontSize: 13, color: "var(--accent-2)",
+            textDecoration: "none", padding: "12px 8px",
+          }}
+        >
+          The numbers, state by state →
+        </Link>
       </section>
     </>
   );

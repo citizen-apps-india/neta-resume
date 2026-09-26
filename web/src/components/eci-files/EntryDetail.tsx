@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { EciEntry } from "@/types/eci-files";
 import { eciEntryHref, eciLaneLabel, formatEciDate } from "@/lib/eci-files";
+import { entryHrefFrom } from "@/lib/eci-numbers";
 import { StatusChip } from "@/components/eci-files/StatusChip";
 import { CitationList } from "@/components/eci-files/CitationList";
 import { PendingFlag } from "@/components/ui";
@@ -9,8 +10,10 @@ import { PendingFlag } from "@/components/ui";
  *  (REDESIGN-SPEC §"Drawer"). Server-rendered — only the surrounding `EntryDrawer` shell is a client
  *  component, so this is fetched with the one entry this view actually needs, not the whole record.
  *  `preserve` is the page's current lane/topic/person/window, carried into any "replying to" / "responses"
- *  link so following one doesn't reset the timeline to its defaults. */
-export function EntryDetail({ entry, preserve }: { entry: EciEntry; preserve?: Record<string, string | undefined> }) {
+ *  link so following one doesn't reset the timeline to its defaults. `basePath` points the drawer's own
+ *  links at the page it's rendered on (the numbers pages default to `/eci-files/timeline`). */
+export function EntryDetail({ entry, preserve, basePath }: { entry: EciEntry; preserve?: Record<string, string | undefined>; basePath?: string }) {
+  const hrefFor = (id: string) => (basePath ? entryHrefFrom(basePath, id, preserve) : eciEntryHref(id, preserve));
   return (
     <article>
       <div style={{ display: "flex", alignItems: "center", gap: 10, flexWrap: "wrap", marginBottom: 10 }}>
@@ -25,7 +28,7 @@ export function EntryDetail({ entry, preserve }: { entry: EciEntry; preserve?: R
       {entry.response_to && (
         <div style={{ fontSize: 12, color: "var(--muted)", marginBottom: 10 }}>
           Replying to{" "}
-          <Link href={eciEntryHref(entry.response_to, preserve)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
+          <Link href={hrefFor(entry.response_to)} style={{ color: "var(--eci-ink)", textDecoration: "none" }}>
             entry {entry.response_to}
           </Link>
         </div>
@@ -61,7 +64,7 @@ export function EntryDetail({ entry, preserve }: { entry: EciEntry; preserve?: R
           </div>
           {entry.responses.map((r) => (
             <div key={r.id} style={{ fontSize: 13 }}>
-              <Link href={eciEntryHref(r.id, preserve)} style={{ color: "var(--ink)", textDecoration: "none" }}>{r.title}</Link>{" "}
+              <Link href={hrefFor(r.id)} style={{ color: "var(--ink)", textDecoration: "none" }}>{r.title}</Link>{" "}
               <span className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>({r.date ?? "—"})</span>
             </div>
           ))}

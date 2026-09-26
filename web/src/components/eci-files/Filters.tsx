@@ -1,5 +1,5 @@
 import Link from "next/link";
-import type { EciTopicCount, EciPersonCount, EciLaneCount } from "@/types/eci-files";
+import type { EciTopicCount, EciPersonCount, EciLaneCount, EciStateCount } from "@/types/eci-files";
 import { eciLaneLabel } from "@/lib/eci-files";
 import { FilterSelect } from "@/components/eci-files/FilterSelect";
 
@@ -66,18 +66,20 @@ function PillRow({ all, items, visible }: { all: PillItem; items: PillItem[]; vi
 /** Lane, topic and person filters. Plain links: the selection is server-rendered from `searchParams`.
  *  `preserve` carries params a filter change must not drop (the timeline's `from`/`to` window). */
 export function Filters({
-  basePath, lanes, topics, people, lane, topic, person, preserve,
+  basePath, lanes, topics, people, states, lane, topic, person, state, preserve,
 }: {
   basePath: string;
   lanes?: EciLaneCount[];
   topics: EciTopicCount[];
   people: EciPersonCount[];
+  states?: EciStateCount[];
   lane?: string;
   topic?: string;
   person?: string;
+  state?: string;
   preserve?: Record<string, string | undefined>;
 }) {
-  const cur = { ...preserve, lane, topic, person };
+  const cur = { ...preserve, lane, topic, person, state };
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: 8, marginBottom: 20 }}>
       {lanes && lanes.length > 0 && (
@@ -87,7 +89,7 @@ export function Filters({
           visible={lanes.length}
         />
       )}
-      {(topics.length > 0 || people.length > 0) && (
+      {(topics.length > 0 || people.length > 0 || (states && states.length > 0)) && (
         <div style={{ display: "flex", gap: "10px 20px", flexWrap: "wrap", alignItems: "center" }}>
           {topics.length > 0 && (
             <FilterSelect
@@ -107,6 +109,16 @@ export function Filters({
               value={person}
               allLabel="All people"
               options={people.map((p) => ({ value: p.slug, label: `${p.name} (${p.count})` }))}
+            />
+          )}
+          {states && states.length > 0 && (
+            <FilterSelect
+              id="eci-filter-state"
+              label="State/UT"
+              param="state"
+              value={state}
+              allLabel="All States/UTs"
+              options={states.map((s) => ({ value: s.slug, label: `${s.name} (${s.count})` }))}
             />
           )}
         </div>
