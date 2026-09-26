@@ -1092,3 +1092,6 @@ html { scroll-behavior: smooth; }
 .eci-heat-col { display: flex; flex-direction: column; gap: 2px; flex-shrink: 0; border: 0; background: none; padding: 0; cursor: pointer; touch-action: pan-y; }
 .eci-heat-col:focus-visible { outline: 2px solid var(--eci-ink); outline-offset: 1px; }
 /* --- end ECI UX timeline --- */
+
+/* Career bar: a visual for wide screens; the numbered list below it carries the text everywhere. */
+@media (max-width: 640px) { .eci-careerline-bar { display: none; } }

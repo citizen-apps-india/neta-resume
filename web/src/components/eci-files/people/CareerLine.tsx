@@ -1,10 +1,7 @@
 import type { EciCareerItem } from "@/lib/eci-files";
 import { dateFraction } from "@/lib/eci-files";
 
-const TIER_HEIGHT = 34;
-const BAR_TOP = 0;
 const BAR_HEIGHT = 8;
-const TIER_COUNT = 3;
 
 function axisFromItems(dated: EciCareerItem[]): { from: string; to: string } {
   const first = dated[0];
@@ -36,62 +33,61 @@ function UndatedTags({ undated }: { undated: EciCareerItem[] }) {
   );
 }
 
-/** Identity's "one horizontal career line on a time axis" (C-After-Profile.dc.html, C-Phone-Profile.dc.html):
- *  postings proportional to their real dates, ECI roles highlighted in the section accent, undated
- *  postings folded into tags below rather than dated arbitrarily. Renders both a desktop (proportional
- *  axis, labels staggered across three tiers so consecutive short postings don't collide) and a phone
- *  variant (a plain stacked list, same order) — CSS toggles which one shows, the pattern
- *  `ProfileHeader`'s `.eci-avatar-lg`/`.eci-avatar-sm` already uses. */
+function yearTicks(axis: { from: string; to: string }): number[] {
+  const y0 = Number(axis.from.slice(0, 4)) + 1;
+  const y1 = Number(axis.to.slice(0, 4));
+  const span = y1 - y0;
+  const step = span > 24 ? 5 : span > 12 ? 3 : span > 6 ? 2 : 1;
+  const out: number[] = [];
+  for (let y = y0; y <= y1; y += step) out.push(y);
+  return out;
+}
+
+/** The career as one proportional bar (ECI roles in the section accent) with a numbered marker per posting,
+ *  and the postings as a numbered list beneath it. The bar carries no text of its own, so long posting
+ *  names can never collide; the list is the readable part and the bar's legend. Phones get the list alone. */
 export function CareerLine({ dated, undated }: { dated: EciCareerItem[]; undated: EciCareerItem[] }) {
   if (dated.length === 0 && undated.length === 0) return null;
-
   const axis = dated.length > 0 ? axisFromItems(dated) : null;
-  const maxTier = dated.length > 0 ? Math.min(dated.length, TIER_COUNT) - 1 : 0;
-  const chartHeight = BAR_TOP + BAR_HEIGHT + 14 + (maxTier + 1) * TIER_HEIGHT;
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", gap: 12 }}>
+    <div style={{ display: "flex", flexDirection: "column", gap: 14 }}>
       {axis && (
-        <div className="eci-careerline-desktop" style={{ overflowX: "auto" }}>
-          <div style={{ position: "relative", minWidth: 560, height: chartHeight }}>
-            <div aria-hidden style={{ position: "absolute", left: 0, right: 0, top: BAR_TOP + BAR_HEIGHT / 2, borderTop: "1px solid var(--rule2)" }} />
-            {dated.map((item, i) => {
-              const isLast = i === dated.length - 1;
-              const { x0, width } = geometry(item, isLast, axis);
-              const tier = i % TIER_COUNT;
-              const labelTop = BAR_TOP + BAR_HEIGHT + 8 + tier * TIER_HEIGHT;
-              return (
-                <div key={i}>
-                  <span
-                    aria-hidden
-                    style={{
-                      position: "absolute", left: `${x0 * 100}%`, top: BAR_TOP, width: `${width * 100}%`, height: BAR_HEIGHT,
-                      borderRadius: 4, background: item.atCommission ? "var(--eci-ink)" : "var(--border2)",
-                    }}
-                  />
-                  <span
-                    aria-hidden
-                    style={{ position: "absolute", left: `${x0 * 100}%`, top: BAR_TOP + BAR_HEIGHT, width: 0, height: labelTop - (BAR_TOP + BAR_HEIGHT), borderLeft: "1px solid var(--rule2)" }}
-                  />
-                  <div style={{ position: "absolute", left: `${x0 * 100}%`, top: labelTop, width: 190, display: "flex", flexDirection: "column", gap: 0 }}>
-                    <span className="mono" style={{ fontSize: 10, color: "var(--muted)" }}>{item.label}</span>
-                    <span style={{ fontSize: 12, fontWeight: 600, color: item.atCommission ? "var(--eci-ink)" : "var(--ink)", lineHeight: 1.25 }}>
-                      {item.post}
-                    </span>
-                  </div>
-                </div>
-              );
-            })}
-          </div>
+        <div className="eci-careerline-bar" aria-hidden style={{ position: "relative", height: 52 }}>
+          <div style={{ position: "absolute", left: 0, right: 0, top: 22, borderTop: "1px solid var(--rule2)" }} />
+          {dated.map((item, i) => {
+            const { x0, width } = geometry(item, i === dated.length - 1, axis);
+            const accent = item.atCommission ? "var(--eci-ink)" : "var(--border2)";
+            return (
+              <div key={i}>
+                <span style={{ position: "absolute", left: `${x0 * 100}%`, top: 18, width: `calc(${width * 100}% - 2px)`, height: BAR_HEIGHT, borderRadius: 4, background: accent }} />
+                <span
+                  className="mono"
+                  style={{
+                    position: "absolute", left: `${x0 * 100}%`, top: 0, transform: "translateX(-2px)", fontSize: 10, fontWeight: 600,
+                    color: item.atCommission ? "var(--eci-ink)" : "var(--muted)",
+                  }}
+                >
+                  {i + 1}
+                </span>
+              </div>
+            );
+          })}
+          {yearTicks(axis).map((y) => (
+            <span key={y} className="mono" style={{ position: "absolute", left: `${dateFraction(`${y}-01-01`, axis.from, axis.to) * 100}%`, top: 34, fontSize: 10, color: "var(--faint)", transform: "translateX(-50%)" }}>
+              {y}
+            </span>
+          ))}
         </div>
       )}
 
       {dated.length > 0 && (
-        <ol className="eci-careerline-mobile" style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 6 }}>
+        <ol style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 8 }}>
           {dated.map((item, i) => (
-            <li key={i} style={{ display: "flex", gap: 8, alignItems: "baseline" }}>
-              <span className="mono" style={{ fontSize: 9.5, color: "var(--muted)", width: 70, flexShrink: 0 }}>{item.label}</span>
-              <span style={{ fontSize: 12, fontWeight: item.atCommission ? 700 : 500, color: item.atCommission ? "var(--eci-ink)" : "var(--ink)" }}>
+            <li key={i} style={{ display: "grid", gridTemplateColumns: "22px 108px minmax(0, 1fr)", gap: 10, alignItems: "baseline" }}>
+              <span className="mono" style={{ fontSize: 10.5, fontWeight: 600, color: item.atCommission ? "var(--eci-ink)" : "var(--muted)" }}>{i + 1}</span>
+              <span className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>{item.label}</span>
+              <span style={{ fontSize: 13.5, lineHeight: 1.4, fontWeight: item.atCommission ? 650 : 500, color: item.atCommission ? "var(--eci-ink)" : "var(--ink)" }}>
                 {item.post}
               </span>
             </li>

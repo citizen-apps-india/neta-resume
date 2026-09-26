@@ -314,7 +314,7 @@ const ECI_CEC_OFFICE_RE = /^Chief Election Commissioner$/;
 const ECI_EC_OFFICE_RE = /^Election Commissioner$/;
 /** A posting counts "at the Commission" for the career rail's ink-coloured segments (§2.4: "post names
  *  ECI / Election Commission / Chief Electoral Officer"). */
-const ECI_AT_COMMISSION_RE = /\b(ECI|Election Commission|Chief Electoral Officer)\b/i;
+const ECI_AT_COMMISSION_RE = /\b(ECI|Election Commission(er)?|Chief Electoral Officer)\b/i;
 
 export type EciTenureSegmentKind = "ec" | "cec" | "other";
 
