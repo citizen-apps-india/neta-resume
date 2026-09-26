@@ -91,11 +91,14 @@ export function RuleDiffView({ diff }: { diff: EciRuleDiff }) {
   return (
     <div>
       {diff.text_status !== "verbatim" && (
-        <p className="eci-status-banner">
-          {diff.text_status === "paraphrased from reporting"
-            ? "This comparison is built from news reports, not from the documents. The lines describe the change; they do not reproduce it."
-            : "The wording is as quoted in news reports. The document itself could not be opened."}
-        </p>
+        <div role="note" className="eci-diff-callout">
+          <svg width="18" height="18" viewBox="0 0 20 20" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
+            <circle cx="10" cy="10" r="8.5" stroke="currentColor" strokeWidth="1.6" />
+            <path d="M10 6v5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" />
+            <circle cx="10" cy="13.6" r="1" fill="currentColor" />
+          </svg>
+          Built from news reports — not the document&apos;s wording
+        </div>
       )}
       {diff.excerpt && (
         <p style={{ fontSize: 12, color: "var(--muted)", margin: "0 0 12px" }}>

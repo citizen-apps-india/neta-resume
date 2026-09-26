@@ -6,11 +6,19 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { EciCaseSkeleton } from "@/components/skeletons";
 import { CaseFacts } from "@/components/eci-files/views/CaseFacts";
 import { CaseTimeline } from "@/components/eci-files/views/CaseTimeline";
+import { CaseStepper } from "@/components/eci-files/rules/CaseStepper";
 import { CitationList } from "@/components/eci-files/CitationList";
 import { DrawerFromParam } from "@/components/eci-files/views/DrawerFromParam";
 import { CrossLinks } from "@/components/eci-files/views/CrossLinks";
 import { getEciCase } from "@/lib/api";
-import { ECI_CASE_STATUS_LABEL, ECI_LOAD_FAILED_MESSAGE, eciEntryHref, loadEciItem } from "@/lib/eci-files";
+import { ECI_CASE_STATUS_LABEL, ECI_LOAD_FAILED_MESSAGE, eciEntryHref, formatEciDate, loadEciItem } from "@/lib/eci-files";
+import type { EciCaseShortStatus } from "@/types/eci-files";
+
+const STATUS_PROSE: Record<EciCaseShortStatus, string> = {
+  disposed: "decided, not pending",
+  pending: "still pending",
+  referred: "referred to the Chief Justice",
+};
 
 type Params = { case: string };
 
@@ -49,22 +57,39 @@ async function CaseBody({ slug, entry }: { slug: string; entry?: string }) {
           {page.status_note && <span style={{ fontSize: 12.5, color: "var(--muted)" }}>{page.status_note}</span>}
         </div>
       </div>
+      {page.items.length > 0 && (
+        <p style={{ fontSize: 14, color: "var(--ink2)", margin: "-14px 0 20px" }}>
+          {page.items.length} recorded step{page.items.length === 1 ? "" : "s"}, {formatEciDate(page.items[0].entry.date, page.items[0].entry.date_precision)}{" "}
+          to {formatEciDate(page.items[page.items.length - 1].entry.date, page.items[page.items.length - 1].entry.date_precision)} — {STATUS_PROSE[page.short_status]}.
+        </p>
+      )}
+
+      <section style={{ marginBottom: 26 }}>
+        <h2 className="serif" style={{ fontSize: 17, fontWeight: 600, margin: "0 0 14px" }}>Every recorded step</h2>
+        <div className="eci-case-desktop-only">
+          <CaseStepper slug={slug} items={page.items} />
+        </div>
+        <div className="eci-case-mobile-only">
+          <CaseTimeline slug={slug} items={page.items} />
+        </div>
+      </section>
 
       <CaseFacts page={page} />
 
       <section style={{ margin: "26px 0" }}>
         <h2 className="serif" style={{ fontSize: 17, fontWeight: 600, margin: "0 0 8px" }}>In brief</h2>
-        <p style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.6, margin: "0 0 12px", maxWidth: "72ch" }}>{page.case.summary}</p>
+        <p style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.6, margin: "0 0 4px", maxWidth: "72ch", display: "-webkit-box", WebkitBoxOrient: "vertical", WebkitLineClamp: 2, overflow: "hidden" }}>
+          {page.case.summary}
+        </p>
+        <details className="eci-more" style={{ marginBottom: 12 }}>
+          <summary className="mono" style={{ fontSize: 12.5, color: "var(--accent-2)", fontWeight: 600, cursor: "pointer" }}>Read more</summary>
+          <p style={{ fontSize: 13.5, color: "var(--ink2)", lineHeight: 1.6, margin: "8px 0 0", maxWidth: "72ch" }}>{page.case.summary}</p>
+        </details>
         <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.06em", color: "var(--faint)", marginBottom: 6 }}>SOURCES</div>
         <CitationList citations={page.case.citations} />
         <Link href={eciEntryHref(page.case.id, {}, basePath)} className="mono" style={{ display: "inline-block", marginTop: 10, fontSize: 12, color: "var(--accent-2)", textDecoration: "none" }}>
           Open the full entry →
         </Link>
-      </section>
-
-      <section>
-        <h2 className="serif" style={{ fontSize: 17, fontWeight: 600, margin: "0 0 14px" }}>Every recorded step</h2>
-        <CaseTimeline slug={slug} items={page.items} />
       </section>
 
       {entry && (

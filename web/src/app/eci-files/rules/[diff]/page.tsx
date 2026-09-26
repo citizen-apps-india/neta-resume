@@ -59,12 +59,6 @@ async function DiffBody({ id, entry }: { id: string; entry?: string }) {
       <RuleDiffView diff={d} />
 
       <section style={{ marginTop: 26 }}>
-        {d.note && (
-          <div style={{ marginBottom: 14 }}>
-            <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.06em", color: "var(--faint)", marginBottom: 4 }}>ABOUT THIS TEXT</div>
-            <p style={{ fontSize: 13, color: "var(--ink2)", lineHeight: 1.55, margin: 0 }}>{d.note}</p>
-          </div>
-        )}
         <div style={{ marginBottom: 14 }}>
           <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.06em", color: "var(--faint)", marginBottom: 6 }}>SOURCES</div>
           <ul style={{ listStyle: "none", margin: 0, padding: 0, display: "flex", flexDirection: "column", gap: 6 }}>
@@ -77,7 +71,22 @@ async function DiffBody({ id, entry }: { id: string; entry?: string }) {
             ))}
           </ul>
         </div>
-        {d.related.length > 0 && (
+        {d.note ? (
+          <details style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "12px 16px" }}>
+            <summary className="mono" style={{ cursor: "pointer", fontSize: 12.5, fontWeight: 650, color: "var(--ink)" }}>About this text</summary>
+            <p style={{ fontSize: 13, color: "var(--ink2)", lineHeight: 1.6, margin: "10px 0 0" }}>{d.note}</p>
+            {d.related.length > 0 && (
+              <div style={{ marginTop: 10 }}>
+                <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.06em", color: "var(--faint)", marginBottom: 6 }}>RELATED</div>
+                <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
+                  {d.related.map((r) => (
+                    <EntryRefLink key={r.id} entry={r} basePath={basePath} />
+                  ))}
+                </div>
+              </div>
+            )}
+          </details>
+        ) : d.related.length > 0 && (
           <div>
             <div className="mono" style={{ fontSize: 9.5, letterSpacing: "0.06em", color: "var(--faint)", marginBottom: 6 }}>RELATED ENTRIES</div>
             <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
