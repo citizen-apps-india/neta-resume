@@ -28,25 +28,31 @@ function SeatDiagram({ regimeKey }: { regimeKey: string }) {
   );
 }
 
-/** The three regime cards on `/eci-files/selections` (PHASE4-SPEC.md §3, step 2): rule, panel, a 3-seat
- *  diagram (filled = chosen by the government, stated in text as well as fill), and the selections cited
- *  to it. */
+/** "Three rules, three panels" on `/eci-files/selections` (C-After-Selections.dc.html): rule, a 3-seat
+ *  diagram (filled = chosen by the government, stated in text as well as fill), then the rule itself, with
+ *  a count pill pinned to the bottom of every card so equal-height cards line up regardless of how long
+ *  the rule text runs. */
 export function RegimeCompare({ regimes, entriesIndex }: { regimes: EciSelectionRegime[]; entriesIndex: EciEntryRef[] }) {
   const byId = new Map(entriesIndex.map((e) => [e.id, e]));
   return (
     <div className="eci-regime-grid" style={{ marginBottom: 26 }}>
       {regimes.map((r) => (
-        <div key={r.key} id={`regime-${r.key}`} style={{ border: "1px solid var(--rule)", borderRadius: 12, background: "var(--card2)", padding: "16px 18px" }}>
-          <div className="serif" style={{ fontSize: 15.5, fontWeight: 600, marginBottom: 2 }}>{r.label}</div>
-          <div className="mono" style={{ fontSize: 11, color: "var(--muted)", marginBottom: 10 }}>
-            {r.from_date ? formatLooseDate(r.from_date) : "before 2019"} – {r.to_date ? formatLooseDate(r.to_date) : "present"}
+        <div key={r.key} id={`regime-${r.key}`} style={{ display: "flex", flexDirection: "column", gap: 14, border: "1px solid var(--rule)", borderRadius: 14, background: "var(--card)", padding: "20px 22px" }}>
+          <div>
+            <div className="serif" style={{ fontSize: 16.5, fontWeight: 650, marginBottom: 2 }}>{r.label}</div>
+            <div className="mono" style={{ fontSize: 10.5, color: "var(--muted)" }}>
+              {r.from_date ? formatLooseDate(r.from_date) : "before 2019"} – {r.to_date ? formatLooseDate(r.to_date) : "present"}
+            </div>
           </div>
-          <p style={{ fontSize: 12.5, color: "var(--ink2)", lineHeight: 1.5, margin: "0 0 12px" }}>{r.rule}</p>
           <SeatDiagram regimeKey={r.key} />
-          <p className="mono" style={{ fontSize: 11.5, color: "var(--ink2)", margin: "10px 0 0" }}>
-            {r.selection_count} selection{r.selection_count === 1 ? "" : "s"} made under this rule
-          </p>
-          {r.notes && <p style={{ fontSize: 12, color: "var(--muted)", fontStyle: "italic", margin: "8px 0 0" }}>{r.notes}</p>}
+          <p style={{ fontSize: 13, color: "var(--ink2)", lineHeight: 1.5, margin: 0 }}>{r.rule}</p>
+          <span
+            className="mono"
+            style={{ marginTop: "auto", alignSelf: "flex-start", fontSize: 11, color: "var(--muted)", background: "var(--bg)", borderRadius: 999, padding: "4px 10px" }}
+          >
+            {r.selection_count} selection{r.selection_count === 1 ? "" : "s"} under this rule
+          </span>
+          {r.notes && <p style={{ fontSize: 12, color: "var(--muted)", fontStyle: "italic", margin: 0 }}>{r.notes}</p>}
           {r.entry_ids.length > 0 && (
             <div className="mono" style={{ fontSize: 10.5, color: "var(--faint)", marginTop: 10 }}>
               Cited:{" "}
