@@ -1,0 +1,251 @@
+{
+  "states": [
+    {
+      "state": "Telangana",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 33920705,
+          "as_of": "2026-05-12",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "publisher": "Election Commission of India",
+          "tier": 1,
+          "verbatim_label": "Electors (as on 12.05.2026), Annexure-II to Press Note No. ECI/PN/086/2026 (14.05.2026), row 'Telangana'"
+        },
+        {
+          "stage": "draft",
+          "electors": 26581470,
+          "as_of": "2026-09-01",
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "publisher": "Deccan Herald (computed from ECI figures)",
+          "tier": 3,
+          "computed": true,
+          "verbatim_label": "not verbatim: computed as the ECI's before-SIR figure (33,920,705, 12.05.2026) minus Deccan Herald's reported Telangana deletions ('left out') of 73,39,235",
+          "note": "No CEO Telangana or ECI primary document giving the draft-roll total for Telangana was found. Deccan Herald (1 Sep 2026) reported only the deletions count (73,39,235, 21.69% of roll), not an absolute draft total."
+        }
+      ],
+      "notes": "Qualifying date and schedule for Telangana are given inconsistently across two copies of the same ECI Annexure (both read: Jharkhand's and Punjab's mirrors of PN/086/2026) - the table shows '01.10.2026' in both the 'Qualifying date' and 'Final Electoral Roll' columns for the Telangana/Punjab block, which may be a table-extraction artifact rather than a real duplicate date; treat the Telangana qualifying date as unconfirmed. Draft roll was due 31.07.2026 per the same Annexure-I. Final roll, originally due 01.10.2026, was reported (Deccan Chronicle, 2 Sep 2026, tier 3) pushed back 18 days to 19 Oct 2026 - not yet published as of the research date (26 Sep 2026); no CEO Telangana press note with the final aggregate was found. ceotelangana.nic.in's homepage confirms SIR-2026 is live and references a 'Draft Electoral Rolls - 2026' banner but exposes no aggregate press note; only per-constituency downloads via voters.eci.gov.in (stateCode S29)."
+    },
+    {
+      "state": "Andhra Pradesh",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 41616061,
+          "as_of": "2026-05-12",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "publisher": "Election Commission of India",
+          "tier": 1,
+          "verbatim_label": "Electors (as on 12.05.2026), Annexure-II to Press Note No. ECI/PN/086/2026 (14.05.2026), row 'Andhra Pradesh'"
+        },
+        {
+          "stage": "draft",
+          "electors": 37126549,
+          "as_of": "2026-09-01",
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "publisher": "Deccan Herald (computed from ECI figures)",
+          "tier": 3,
+          "computed": true,
+          "verbatim_label": "not verbatim: computed as the ECI's before-SIR figure (41,616,061, 12.05.2026) minus Deccan Herald's reported Andhra Pradesh deletions ('left out') of 44,89,512",
+          "note": "CEO Andhra Pradesh's own draft-roll press note (linked from its homepage as 'Current Issues/904_draft roll press note.pdf') returned a 404 on the CEO site (checked live and is not a working link); the CEO's press-releases tab has no 2026 SIR entries. No other CEO AP or ECI document with the draft total was found."
+        }
+      ],
+      "notes": "Qualifying date 01.07.2026, draft roll due 21.07.2026, final roll originally due 22.09.2026 per ECI Annexure-I/VI (grouped with Arunachal Pradesh, Haryana, Chandigarh); Deccan Chronicle (2 Sep 2026, tier 3) reported this pushed back 11 days. Not yet published as of 26 Sep 2026. CEO AP's SIR district dashboard (ceoaperolls.ap.gov.in/SIR2002/DistrictDashboard) and ASDD search tool (ceoaperolls.ap.gov.in/PublishASDD) are per-district/per-elector lookup tools, not aggregate publications."
+    },
+    {
+      "state": "Jharkhand",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 26489777,
+          "as_of": "2026-05-12",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "publisher": "Election Commission of India",
+          "tier": 1,
+          "verbatim_label": "Electors (as on 12.05.2026), Annexure-II to Press Note No. ECI/PN/086/2026 (14.05.2026), row 'Jharkhand'"
+        },
+        {
+          "stage": "draft",
+          "electors": 22127790,
+          "as_of": "2026-09-01",
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "publisher": "Deccan Herald (computed from ECI figures)",
+          "tier": 3,
+          "computed": true,
+          "verbatim_label": "not verbatim: computed as the ECI's before-SIR figure (26,489,777, 12.05.2026) minus Deccan Herald's reported Jharkhand deletions ('left out') of 43,61,987",
+          "note": "CEO Jharkhand's ASDD notice (ceo.jharkhand.gov.in/SIRASD2026/Draftandasdd2026.aspx) confirms the roll as of 15.06.2026 is the comparison base and that claims/objections ran 06.08.2026 to 30.09.2026 (implying the draft was published on/about 05.08.2026), but gives no aggregate elector count. The CEO's separate press-note portal (103.107.59.65/Pressnoteapp) lists daily SIR bulletins only through 29 July 2026 (enumeration phase), before the draft was published, so it has no draft-roll total either."
+        }
+      ],
+      "notes": "Qualifying date 15.06.2026 per CEO Jharkhand's own ASDD notice (differs from the 01.10.2026 shown for the Karnataka/Meghalaya/Maharashtra/Jharkhand/Delhi block in the ECI Annexure-I/VI schedule table, which is very likely a table-extraction artifact - Jharkhand's own site is treated as authoritative on this point). Final roll due 07.10.2026 per the same Annexure - not yet published as of 26 Sep 2026."
+    },
+    {
+      "state": "Haryana",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 20663155,
+          "as_of": "2026-05-12",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "publisher": "Election Commission of India",
+          "tier": 1,
+          "verbatim_label": "Electors (as on 12.05.2026), Annexure-II to Press Note No. ECI/PN/086/2026 (14.05.2026), row 'Haryana'"
+        },
+        {
+          "stage": "draft",
+          "electors": 17279853,
+          "as_of": "2026-09-01",
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "publisher": "Deccan Herald (computed from ECI figures)",
+          "tier": 3,
+          "computed": true,
+          "verbatim_label": "not verbatim: computed as the ECI's before-SIR figure (20,663,155, 12.05.2026) minus Deccan Herald's reported Haryana deletions ('left out') of 33,83,302",
+          "note": "CEO Haryana's SIR page (ceoharyana.gov.in/WebCMS/Start/1985) links only to per-constituency draft-roll downloads via voters.eci.gov.in (stateCode S07) and to per-district ASDD/unmapped-elector search tools; no state-level aggregate draft press note was found on the CEO site."
+        }
+      ],
+      "notes": "Confirmed directly from ECI order No.23/2026-ERS(Vol.II) dated 14.07.2026, addressed to CEO Haryana (scanned/image PDF, read visually - https://www.ceoharyana.gov.in/Website/ELECTIONCOMMISSION/Images/9fd4a6d0-9ffe-4da0-84c6-4d7533c8daed.pdf): qualifying date 01.07.2026, draft publication 31.07.2026, revised final publication 03.10.2026 (moved from an unstated original date). Not yet published as of 26 Sep 2026."
+    },
+    {
+      "state": "Punjab",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 21456297,
+          "as_of": "2026-05-12",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "publisher": "Election Commission of India",
+          "tier": 1,
+          "verbatim_label": "Electors (as on 12.05.2026), Annexure-II to Press Note No. ECI/PN/086/2026 (14.05.2026), row 'Punjab'"
+        },
+        {
+          "stage": "draft",
+          "electors": 19389662,
+          "as_of": "2026-09-01",
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "publisher": "Deccan Herald (computed from ECI figures)",
+          "tier": 3,
+          "computed": true,
+          "verbatim_label": "not verbatim: computed as the ECI's before-SIR figure (21,456,297, 12.05.2026) minus Deccan Herald's reported Punjab deletions ('left out') of 20,66,635",
+          "note": "CEO Punjab's dedicated SIR page (ceopunjab.gov.in/page?url=pbsir) hosts the schedule notice ('SIR House to House Enumeration Begin 25-Jun-26 to 24-Jul-26'), an ASDD search tool and a copy of national Press Note ECI/PN/086/2026, but no state-level aggregate draft-roll or final-roll press note."
+        }
+      ],
+      "notes": "Qualifying date and draft-roll date are ambiguous in the ECI Annexure-I/VI table (shared block with Telangana; see Telangana's notes for the same caveat). Final roll reported (Deccan Chronicle, 2 Sep 2026, tier 3) pushed back 11 days; not yet published as of 26 Sep 2026."
+    },
+    {
+      "state": "Arunachal Pradesh",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 887607,
+          "as_of": "2026-05-12",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "publisher": "Election Commission of India",
+          "tier": 1,
+          "verbatim_label": "Electors (as on 12.05.2026), Annexure-II to Press Note No. ECI/PN/086/2026 (14.05.2026), row 'Arunachal Pradesh'"
+        },
+        {
+          "stage": "draft",
+          "electors": 718138,
+          "as_of": "2026-09-01",
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "publisher": "Deccan Herald (computed from ECI figures)",
+          "tier": 3,
+          "computed": true,
+          "verbatim_label": "not verbatim: computed as the ECI's before-SIR figure (887,607, 12.05.2026) reduced by Deccan Herald's reported deletion SHARE for Arunachal Pradesh (19.09%, no absolute figure given)",
+          "note": "Deccan Herald gave only a percentage ('share left out') for Arunachal Pradesh, not an absolute draft total, so this figure is a rougher estimate than the four states above. CEO Arunachal Pradesh's own SIR page (ceoarunachal.nic.in/sir-2026) links a 'Draft Eroll 2026' and an ASDD list but no aggregate press note with a state total."
+        }
+      ],
+      "notes": "Final roll for Arunachal Pradesh was due 22.09.2026 per ECI Annexure-I/VI (Andhra Pradesh/Arunachal Pradesh/Haryana/Chandigarh block). It IS confirmed published: CEO Arunachal Pradesh's homepage ticker links a \"SIR Final Roll 2026 (without photo)\" and ECI's download-eroll portal (voters.eci.gov.in, stateCode S02) offers 'SIR FinalRoll - 2026' as a roll-type option. No state-level aggregate elector count was found for it, however - the portal only serves one PDF per Assembly Constituency (60 ACs), which were not downloaded and summed, and no CEO press note gives a state total. Both draft and final rolls are live on the ECI portal but expose no aggregate figure anywhere found."
+    },
+    {
+      "state": "Dadra and Nagar Haveli and Daman and Diu",
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 427849,
+          "as_of": "2026-05-12",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "publisher": "Election Commission of India",
+          "tier": 1,
+          "verbatim_label": "Electors (as on 12.05.2026), Annexure-II to Press Note No. ECI/PN/086/2026 (14.05.2026), row 'DNH & DD'"
+        },
+        {
+          "stage": "draft",
+          "electors": 301035,
+          "as_of": "2026-09-01",
+          "url": "https://www.deccanherald.com/india/sir-30-draft-voter-lists-see-over-615-crore-deletions-in-17-states-uts-4130859",
+          "publisher": "Deccan Herald (computed from ECI figures)",
+          "tier": 3,
+          "computed": true,
+          "verbatim_label": "not verbatim: computed as the ECI's before-SIR figure (427,849, 12.05.2026) reduced by Deccan Herald's reported deletion SHARE for DNH & DD (29.64%, no absolute figure given)",
+          "note": "Deccan Herald gave only a percentage for DNH & DD, not an absolute draft total, so this figure is a rougher estimate. CEO's site (ceodaman.nic.in) links 'SIR DRAFT ROLL-2026' and 'SIR Final ROLL-2026' straight to the ECI per-AC download portal (stateCode U03) and hosts no aggregate press note."
+        }
+      ],
+      "notes": "Final roll for DNH & DD was due 11.09.2026 per ECI Annexure-I/VI, the earliest of any Phase III State/UT. It IS confirmed published: ceodaman.nic.in's navigation menu links a \"SIR Final ROLL-2026\" item straight to the ECI per-AC download portal (voters.eci.gov.in, stateCode U03). No aggregate elector count was found for it, however - no press note on ceodaman.nic.in (whose 'News and Events' page has no 2026 SIR entries) gives a state total, and the ECI portal only serves per-AC PDFs. CEO domain is ceodaman.nic.in (titled 'CEO DAMAN | UT Administration of Dadra & Nagar Haveli and Daman & Diu'); several guessed domains (ceodnhdd.nic.in, ceodnhdd.gov.in etc.) do not resolve."
+    }
+  ],
+  "not_found": [
+    {
+      "state": "Telangana",
+      "tried": [
+        "https://ceotelangana.nic.in/",
+        "https://ceotelangana.nic.in/SIR2026.html",
+        "https://ceotserms2.telangana.gov.in/ts_erolls/rolls.aspx",
+        "https://voters.eci.gov.in/download-eroll?stateCode=S29"
+      ]
+    },
+    {
+      "state": "Andhra Pradesh",
+      "tried": [
+        "https://ceoandhra.nic.in/",
+        "https://ceoandhra.nic.in/Current%20Issues/904_draft%20roll%20press%20note.pdf (404)",
+        "https://ceoaperolls.ap.gov.in/SIR2002/DistrictDashboard",
+        "https://ceoaperolls.ap.gov.in/PublishASDD",
+        "https://ceoaperolls.ap.gov.in/mediacorner/media/StateFactSheet.aspx (503)"
+      ]
+    },
+    {
+      "state": "Jharkhand",
+      "tried": [
+        "https://ceo.jharkhand.gov.in/",
+        "https://ceo.jharkhand.gov.in/SIRASD2026/SIRJharkhand.aspx",
+        "https://ceo.jharkhand.gov.in/SIRASD2026/Draftandasdd2026.aspx",
+        "http://103.107.59.65/Pressnoteapp//Default.aspx"
+      ]
+    },
+    {
+      "state": "Haryana",
+      "tried": [
+        "https://ceoharyana.gov.in/WebCMS/Start/1985",
+        "https://ceoharyana.gov.in/WebCMS/Start/1987",
+        "https://ceoharyana.gov.in/WebCMS/Start/1488",
+        "https://voters.eci.gov.in/download-eroll?stateCode=S07"
+      ]
+    },
+    {
+      "state": "Punjab",
+      "tried": [
+        "https://ceopunjab.gov.in/page?url=pbsir",
+        "https://ceopunjab.gov.in/DownLoadDocument?t=1077&l=En&q=link",
+        "https://ceopunjab.gov.in/draftRollSearch"
+      ]
+    },
+    {
+      "state": "Arunachal Pradesh",
+      "tried": [
+        "https://ceoarunachal.nic.in/sir-2026",
+        "https://ceoarunachal.nic.in/ASDD_SIR",
+        "https://voters.eci.gov.in/download-eroll?stateCode=S02",
+        "https://ceoarunachal.nic.in/press-release (404)",
+        "https://ceoarunachal.nic.in/press-releases (404)"
+      ]
+    },
+    {
+      "state": "Dadra and Nagar Haveli and Daman and Diu",
+      "tried": [
+        "https://ceodaman.nic.in/",
+        "https://ceodaman.nic.in/news-and-events.aspx",
+        "https://voters.eci.gov.in/download-eroll?stateCode=U03"
+      ]
+    }
+  ]
+}

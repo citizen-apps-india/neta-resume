@@ -635,50 +635,113 @@
       "state": "Telangana",
       "phase": 3,
       "exercise": "sir",
-      "stages": [],
-      "notes": "Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 73,39,235 names left off the draft (21.69% of the pre-SIR roll) but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 33920705,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total has been published; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 73,39,235 names left off the draft (21.69% of the pre-SIR roll) but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
     },
     {
       "state": "Andhra Pradesh",
       "phase": 3,
       "exercise": "sir",
-      "stages": [],
-      "notes": "Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 44,89,512 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 41616061,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total has been published; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 44,89,512 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
     },
     {
       "state": "Jharkhand",
       "phase": 3,
       "exercise": "sir",
-      "stages": [],
-      "notes": "Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 43,61,987 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 26489777,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total has been published; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 43,61,987 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
     },
     {
       "state": "Haryana",
       "phase": 3,
       "exercise": "sir",
-      "stages": [],
-      "notes": "Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 33,83,302 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 20663155,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total has been published; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 33,83,302 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
     },
     {
       "state": "Punjab",
       "phase": 3,
       "exercise": "sir",
-      "stages": [],
-      "notes": "Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 20,66,635 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 21456297,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total has been published; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 20,66,635 names left off the draft but not the roll totals; the CEO's own press note was not opened (numbers-phase3-draft-tally-2026-09-01)."
     },
     {
       "state": "Dadra and Nagar Haveli and Daman and Diu",
       "phase": 3,
       "exercise": "sir",
-      "stages": [],
-      "notes": "Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 29.64% of the pre-SIR roll left off the draft, without the counts (numbers-phase3-draft-tally-2026-09-01)."
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 427849,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total has been published; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 29.64% of the pre-SIR roll left off the draft, without the counts (numbers-phase3-draft-tally-2026-09-01)."
     },
     {
       "state": "Arunachal Pradesh",
       "phase": 3,
       "exercise": "sir",
-      "stages": [],
-      "notes": "Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 19.09% of the pre-SIR roll left off the draft, without the counts (numbers-phase3-draft-tally-2026-09-01)."
+      "stages": [
+        {
+          "stage": "before",
+          "electors": 887607,
+          "as_of": "2026-05-12",
+          "source_entry": "numbers-phase3-base-2026-05-14",
+          "url": "https://ceo.jharkhand.gov.in/2026/PRESS_NOTE_Special_Intensive_Revision_Phase_III.pdf",
+          "tier": 1
+        }
+      ],
+      "notes": "Before: electors as on 12 May 2026 from the Commission's phase III press note (a planning snapshot). No official draft or final total has been published; a draft estimate from press-reported deletions is not shown as a stage. Draft roll published. Deccan Herald's Phase III tally (1 Sep 2026) gives 19.09% of the pre-SIR roll left off the draft, without the counts (numbers-phase3-draft-tally-2026-09-01)."
     },
     {
       "state": "Meghalaya",
