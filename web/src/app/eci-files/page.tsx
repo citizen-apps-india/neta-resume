@@ -91,6 +91,8 @@ export default function EciFilesPage() {
           eyebrow="ECI Files · Sourced record"
           title="What happened at the Election Commission"
           subtitle="The sourced record, 2019 to today. Start with the numbers, the timeline, or the people."
+          backHref="/elections"
+          backLabel="Elections"
         />
         <Suspense fallback={<EciFrontSkeleton />}>
           <EciFrontBody />

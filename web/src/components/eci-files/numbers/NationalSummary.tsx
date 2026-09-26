@@ -51,6 +51,11 @@ function FigureRow({ f, basePath }: { f: EciNationalFigure; basePath: string }) 
  *  ("all" group, not computed), big — a computed alternative (our own sum, where ECI has published none)
  *  is demoted to a small labelled line below a rule, never given the same visual weight as a cited figure.
  *  Never a sum made from the tiles. */
+/** A figure its source states as a floor ("More than 13 crore") reads "13 crore+", not "≈13 crore". */
+function atLeast(label: string): boolean {
+  return /^(more than|over)\b/i.test(label.trim());
+}
+
 export function NationalSummary({ national, basePath = "/eci-files/numbers" }: { national: EciNationalFigure[]; basePath?: string }) {
   const all = national.filter((f) => f.group === "all");
   const primary = all.find((f) => !f.computed) ?? all[0];
@@ -61,7 +66,7 @@ export function NationalSummary({ national, basePath = "/eci-files/numbers" }: {
     <section style={{ display: "flex", flexDirection: "column", gap: 14, background: "var(--card)", border: "1px solid var(--rule)", borderRadius: 14, padding: "22px 24px", height: "100%" }}>
       <span className="mono" style={{ fontSize: 11, letterSpacing: "0.06em", textTransform: "uppercase", color: "var(--muted)" }}>Nationwide</span>
       <span className="mono" style={{ fontSize: "clamp(34px,4vw,44px)", fontWeight: 700, color: "var(--eci-ink)", lineHeight: 1 }}>
-        {primary.approx ? "≈" : ""}{countIndian(primary.electors)}
+        {atLeast(primary.label) ? `${countIndian(primary.electors)}+` : `${primary.approx ? "≈" : ""}${countIndian(primary.electors)}`}
       </span>
       <span style={{ fontSize: 16, color: "var(--ink)", lineHeight: 1.4 }}>{primary.label}, {primary.scope}</span>
       <SourceTag f={primary} basePath={basePath} />
