@@ -61,9 +61,12 @@
     "editor.tabSize": 4,
     "editor.insertSpaces": true
   },
-  "python-envs.defaultEnvManager": "ms-python.python:venv",
+  "python-envs.defaultEnvManager": "ms-python.python:system",
   "python-envs.pythonProjects": [
-    { "path": "pipelines", "envManager": "ms-python.python:venv" }
+    {
+      "path": "pipelines",
+      "envManager": "ms-python.python:venv"
+    }
   ],
   "python.defaultInterpreterPath": "${workspaceFolder}/pipelines/.venv/bin/python",
   "python.analysis.extraPaths": ["pipelines"]
