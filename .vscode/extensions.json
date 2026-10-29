@@ -1,0 +1,9 @@
+{
+  "recommendations": [
+    "golang.go",
+    "astro-build.astro-vscode",
+    "esbenp.prettier-vscode",
+    "editorconfig.editorconfig",
+    "dbaeumer.vscode-eslint"
+  ]
+}

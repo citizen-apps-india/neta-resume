@@ -1,0 +1,74 @@
+@layer tokens {
+  :root {
+    /* Color primitives */
+    --white: #ffffff;
+    --grey-50: #f5f6f7;
+    --grey-100: #eef0f2;
+    --grey-200: #e2e4e8;
+    --grey-300: #dadde2;
+    --grey-400: #c7cbd2;
+    --grey-500: #a9adb8;
+    --grey-600: #8a8f9a;
+    --grey-700: #5f646e;
+    --grey-800: #4b4f59;
+    --grey-850: #3a3e48;
+    --grey-900: #2c2f37;
+    --grey-925: #1c1e24;
+    --grey-950: #141519;
+    --grey-975: #121317;
+    --grey-990: #0c0d10;
+
+    --teal-100: #e3f4f1;
+    --teal-200: #b5e2db;
+    --teal-300: #5fded0;
+    --teal-400: #2fb6a5;
+    --teal-500: #12a594;
+    --teal-700: #0b6e62;
+    --teal-950: #0e2a27;
+
+    --red-50: #fbebeb;
+    --red-200: #f1cdcd;
+    --red-700: #c0353a;
+
+    --orange-50: #fbeee4;
+    --orange-200: #f1d7c5;
+    --orange-700: #a84a17;
+
+    --blue-50: #e6f0fb;
+    --blue-200: #c6dbf4;
+    --blue-700: #1f5fae;
+
+    --green-50: #e4f3eb;
+    --green-200: #c3e3d1;
+    --green-700: #1c7a4c;
+
+    /* Color Semantics light */
+
+    /* Surfaces and borders */
+    --color-background: var(--grey-50);
+    --color-panel: var(--grey-100);
+    --color-card: var(--white);
+    --color-rule: var(--grey-200);
+    --color-border: var(--grey-300);
+    --color-border-dashed: var(--grey-400);
+
+    /* Text colors */
+    --color-ink: var(--grey-975);
+    --color-ink-2: var(--grey-800);
+    --color-muted: var(--grey-700);
+
+    /* Accent Colors */
+    --color-accent: var(--teal-500);
+    --color-accent-link: var(--teal-700);
+    --color-accent-soft: var(--teal-100);
+    --color-accent-soft-border: var(--teal-200);
+    --color-focus: var(--teal-500);
+
+    /* Status Colors */
+    --color-status-broken: var(--red-700);
+    --color-status-pending: var(--orange-700);
+    --color-status-progress: var(--blue-700);
+    --color-status-fulfilled: var(--green-700);
+    --color-status-neutral: var(--grey-800);
+  }
+}

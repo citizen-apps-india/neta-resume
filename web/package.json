@@ -1,35 +1,17 @@
 {
-  "name": "neta-resume-web",
-  "version": "0.1.0",
-  "private": true,
+  "name": "web",
+  "type": "module",
+  "version": "0.0.1",
+  "engines": {
+    "node": ">=22.23.4"
+  },
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "eslint .",
-    "typecheck": "tsc --noEmit",
-    "codegen": "openapi-typescript http://localhost:8000/openapi.json -o src/types/api.ts"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "next": "16.3.5",
-    "react": "19.2.8",
-    "react-dom": "19.2.8",
-    "recharts": "3.10.1"
-  },
-  "devDependencies": {
-    "@types/node": "24.13.3",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.4",
-    "eslint": "9.39.5",
-    "eslint-config-next": "16.3.5",
-    "openapi-typescript": "7.13.0",
-    "playwright-core": "1.62.1",
-    "typescript": "5.9.3"
-  },
-  "overrides": {
-    "brace-expansion": "5.0.9",
-    "js-yaml": "4.3.2",
-    "minimatch": "10.2.6",
-    "postcss": "8.5.25"
+    "astro": "^7.4.2"
   }
 }
