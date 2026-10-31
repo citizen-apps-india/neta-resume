@@ -1,0 +1,75 @@
+name: Build and push the pipelines to google
+
+# Limit to run only on pushes on feat/v2
+on:
+  push:
+    branches:
+      - feat/v2
+    paths:
+      - 'pipelines/**'
+      - '!pipelines/**/*.md'
+      - '.github/workflows/deploy-job.yaml'
+
+concurrency:
+  group: deploy-pipelines
+  cancel-in-progress: false
+
+jobs:
+  build-and-push:
+    timeout-minutes: 20
+    env:
+      IMAGE: 'asia-south1-docker.pkg.dev/neta-resume/neta-resume-repository/neta-resume-pipelines'
+
+    runs-on: ubuntu-26.04
+    permissions:
+        contents: 'read'
+        id-token: 'write'
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Authenticate to Google Cloud
+        id: auth
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          project_id: 'neta-resume'
+          workload_identity_provider: 'projects/674787958197/locations/global/workloadIdentityPools/github/providers/neta-resume'
+          service_account: 'neta-resume-service-account@neta-resume.iam.gserviceaccount.com'
+          token_format: 'access_token'
+
+      - name: Login to artifact registry
+        uses: docker/login-action@81c6f93d4bc991e510b342a00b419b3bb4efc5c6 # v4.7.0
+        with:
+          registry: asia-south1-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+
+      - name: Setup docker buildx
+        uses: docker/setup-buildx-action@f87e5991a6d7451dcb8d9637bfbc97413f497069 # v4.4.1
+
+      - name: Build and push
+        id: build
+        uses: docker/build-push-action@c3c9e263c25d99ce0380d002d59b67737d91b0dc # v7.4.0
+        with:
+          context: ./pipelines
+          platforms: linux/amd64
+          push: true
+          tags: ${{ env.IMAGE }}:${{ github.sha }}
+          labels: |
+            org.opencontainers.image.source=${{ github.server_url }}/${{ github.repository }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          cache-from: type=gha,scope=pipelines
+          cache-to: type=gha,scope=pipelines,mode=max
+          provenance: false
+
+      - name: Setup UV
+        uses: astral-sh/setup-uv@68559e99cc807c1eb7e9238fd43a15bba460eec2 # v10.3.3
+        with:
+          working-directory: pipelines
+
+      - name: Setup Data Pipeline Tasks
+        working-directory: pipelines
+        env:
+          GCLOUD_JOB_IMAGE: ${{ env.IMAGE }}@${{ steps.build.outputs.digest }}
+        run: uv run --frozen python main.py add-scrape-task-jobs
