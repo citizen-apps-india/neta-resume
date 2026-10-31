@@ -10,10 +10,12 @@ dependencies = [
   "asyncpg>=0.32.0",
   "boto3>=1.43.120",
   "google-cloud-run>=0.16.2",
+  "google-cloud-secret-manager>=2.31.0",
   "httpx>=0.28.1",
   "pydantic>=2.14.1",
-  "pydantic-settings>=2.16.1",
+  "pydantic-settings[gcp-secret-manager]>=2.16.1",
   "sqlalchemy[asyncio]>=2.1.6",
+  "structlog>=26.1.0",
   "typer>=0.27.3",
 ]
 

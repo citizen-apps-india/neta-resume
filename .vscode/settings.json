@@ -46,16 +46,19 @@
     "**/.astro": true
   },
   "cSpell.words": [
+    "ainfo",
     "chunksize",
     "Datas",
     "Faddr",
+    "gtask",
     "Laddr",
     "loksabha",
     "mpsno",
     "neta",
     "sabha",
     "Sansad",
-    "Sname"
+    "Sname",
+    "upserted"
   ],
   "[python]": {
     "editor.tabSize": 4,
