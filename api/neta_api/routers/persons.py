@@ -15,6 +15,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from neta_api.deps import get_db
+from neta_api.diskcache import write_atomic
 from neta_api.schemas import Facets, PersonResume, PersonSummary
 from neta_api.services import resume as resume_service
 
@@ -63,7 +64,7 @@ def person_photo(person_id: int, db: Session = Depends(get_db)) -> Response:
                 data = r.read(_MAX_PHOTO_BYTES + 1)
             if len(data) > _MAX_PHOTO_BYTES:
                 raise HTTPException(status_code=502, detail="photo too large")
-            cached.write_bytes(data)
+            write_atomic(cached, data)
         except HTTPException:
             raise
         except Exception as exc:  # noqa: BLE001
