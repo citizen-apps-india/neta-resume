@@ -35,7 +35,12 @@ on:
   # (The Dagster sensor under orchestration/ was never deployed; the real overlap risk is the cron
   # workflows, which call `neta` directly and are invisible to the control plane's advisory lock.)
   schedule:
-    - cron: "17 * * * *"   # hourly, off the hour (GitHub's :00 is the busiest, most-delayed slot)
+    # Every 6 hours, off the hour (GitHub's :00 is the busiest, most-delayed slot). Each tick opens
+    # database connections (register-manifests + two dispatch calls) and so wakes Neon compute; the
+    # shortest schedule any source declares is weekly, so hourly ticks were almost all no-ops that
+    # still burned free-tier compute-hours. A tick asks what is *overdue*, so a coarser heartbeat only
+    # delays a due source by up to 6h. Retries back off in-process (seconds), not across ticks.
+    - cron: "17 */6 * * *"
 
 concurrency:
   # Never let two ticks overlap: claim_dispatches is advisory-locked, but two concurrent ticks

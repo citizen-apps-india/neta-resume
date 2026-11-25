@@ -45,14 +45,16 @@ def _is_allowed_photo_url(url: str) -> bool:
 
 @router.get("/{person_id}/photo")
 def person_photo(person_id: int, db: Session = Depends(get_db)) -> Response:
-    url = db.execute(text("SELECT photo_url FROM person WHERE id = :id"), {"id": person_id}).scalar()
-    if not url:
-        raise HTTPException(status_code=404, detail="no photo")
-    if not _is_allowed_photo_url(url):
-        raise HTTPException(status_code=400, detail="unsupported photo source")
-    _PHOTO_CACHE.mkdir(exist_ok=True)
+    # Disk cache first: a hit must not touch `db`. The Session connects lazily (NullPool), so merely
+    # holding it opens nothing; only the miss path below executes a query and wakes the database.
     cached = _PHOTO_CACHE / f"{person_id}.jpg"
     if not cached.exists():
+        url = db.execute(text("SELECT photo_url FROM person WHERE id = :id"), {"id": person_id}).scalar()
+        if not url:
+            raise HTTPException(status_code=404, detail="no photo")
+        if not _is_allowed_photo_url(url):
+            raise HTTPException(status_code=400, detail="unsupported photo source")
+        _PHOTO_CACHE.mkdir(exist_ok=True)
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "neta-resume/0.1"})
             with urllib.request.urlopen(req, timeout=20) as r:  # noqa: S310 (scheme validated above)

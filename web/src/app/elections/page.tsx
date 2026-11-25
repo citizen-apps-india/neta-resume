@@ -4,9 +4,9 @@ import { getElections, type Election } from "@/lib/api";
 import { pretty, year } from "@/lib/format";
 import { EciFilesFeature } from "@/components/elections/EciFilesFeature";
 
-// ISR: no dynamic input (reads nothing per-request), so serve static HTML and revalidate every 10 min —
-// matches the getElections() fetch TTL and keeps the election list fresh enough for a slowly-changing set.
-export const revalidate = 600;
+// ISR: no dynamic input (reads nothing per-request), so serve static HTML and revalidate hourly —
+// matches the getElections() fetch TTL; the election list changes slowly and each revalidation wakes the database.
+export const revalidate = 3600;
 export const metadata = { title: "Elections", description: "Indian elections and their winners — Lok Sabha, Rajya Sabha and state assemblies — with sourced candidate records and results." };
 
 const LEVEL_LABEL: Record<string, string> = { national: "National", state: "State", municipal: "Municipal" };

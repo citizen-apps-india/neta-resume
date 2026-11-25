@@ -173,7 +173,7 @@ export function getIndiaDashboard(): Promise<IndiaDashboard> {
 /** Lifetime unique-visitor counter (homepage). */
 export type Visits = { count: number };
 export function getVisits(): Promise<Visits> {
-  return getJSON<Visits>("/visits", 0);
+  return getJSON<Visits>("/visits", 3600);
 }
 export async function bumpVisits(): Promise<Visits> {
   const res = await fetch(`${API_BASE}/visits/hit`, { method: "POST", cache: "no-store" });
@@ -184,7 +184,7 @@ export async function bumpVisits(): Promise<Visits> {
 /** The election registry (past with results + upcoming) for the Elections module. */
 export type Election = Schemas["Election"];
 export function getElections(): Promise<Election[]> {
-  return getJSON<Election[]>("/elections", 600);
+  return getJSON<Election[]>("/elections", 3600);
 }
 
 /** Photos are served via the API proxy (upstream blocks cross-origin embedding). */
