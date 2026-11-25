@@ -7,11 +7,13 @@ OpenAPI at /docs. The frontend codegens its TS types from /openapi.json.
 
 from __future__ import annotations
 
-from fastapi import FastAPI
+from fastapi import Depends, FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
+from sqlalchemy import text
+from sqlalchemy.orm import Session
 
 from neta_api.cachecontrol import CacheControlMiddleware
-from neta_api.deps import settings
+from neta_api.deps import get_db, settings
 from neta_api.ratelimit import RateLimitMiddleware
 from neta_api.routers import (
     aggregate,
@@ -63,4 +65,15 @@ app.include_router(eci_files.router)
 
 @app.get("/health")
 def health() -> dict[str, str]:
+    """Constant liveness: never touches the database, safe for any monitor at any frequency."""
+    return {"status": "ok"}
+
+
+@app.get("/health/db")
+def health_db(db: Session = Depends(get_db)) -> dict[str, str]:
+    """Readiness: runs `SELECT 1`, so it WAKES the database. Call it by hand; never from a monitor."""
+    try:
+        db.execute(text("SELECT 1"))
+    except Exception as exc:  # noqa: BLE001
+        raise HTTPException(status_code=503, detail="database unavailable") from exc
     return {"status": "ok"}
