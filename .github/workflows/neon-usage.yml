@@ -1,0 +1,49 @@
+name: neon-usage
+
+# Daily check of the Neon project's compute use against the free plan's monthly quota. It reads the
+# Neon control API only, which never wakes the database. Fails at WARN_AT of the quota, so the quota
+# becomes a warning days ahead instead of an outage (the quota ran out in July and again on 22 Nov).
+#
+# Secrets: NEON_API_KEY (a Neon API key) and NEON_PROJECT_ID. compute_time_seconds is in CU-seconds,
+# so /3600 gives the CU-hours the plan counts.
+
+on:
+  schedule:
+    - cron: "41 2 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  usage:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      NEON_API_KEY: ${{ secrets.NEON_API_KEY }}
+      NEON_PROJECT_ID: ${{ secrets.NEON_PROJECT_ID }}
+      QUOTA_CU_HOURS: "100"
+      WARN_AT: "0.8"
+    steps:
+      - name: Compare compute use with the quota
+        run: |
+          if [ -z "$NEON_API_KEY" ] || [ -z "$NEON_PROJECT_ID" ]; then
+            echo "::error::NEON_API_KEY and NEON_PROJECT_ID must both be set"; exit 1
+          fi
+          curl --fail-with-body -sS -H "Authorization: Bearer $NEON_API_KEY" -H "Accept: application/json" \
+            "https://console.neon.tech/api/v2/projects/$NEON_PROJECT_ID" > project.json
+          python3 - <<'PY'
+          import json, os
+          p = json.load(open("project.json"))["project"]
+          used = p["compute_time_seconds"] / 3600
+          quota = float(os.environ["QUOTA_CU_HOURS"])
+          share = used / quota
+          line = (f"Neon compute: {used:.1f} of {quota:.0f} CU-hours ({share:.0%}) since "
+                  f"{p.get('consumption_period_start')}; quota resets {p.get('quota_reset_at') or p.get('consumption_period_end')}")
+          print(line)
+          with open(os.environ["GITHUB_STEP_SUMMARY"], "a") as f:
+              f.write(line + "\n")
+          if share >= float(os.environ["WARN_AT"]):
+              print(f"::error::{line}")
+              raise SystemExit(1)
+          PY
