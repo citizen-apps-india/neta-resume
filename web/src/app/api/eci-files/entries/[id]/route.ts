@@ -1,4 +1,5 @@
 import { NextResponse, type NextRequest } from "next/server";
+import { API_FETCH_CACHE } from "@/lib/api";
 
 const API_BASE = process.env.NETA_API_BASE ?? "http://localhost:8000";
 
@@ -10,7 +11,7 @@ export async function GET(_req: NextRequest, ctx: { params: Promise<{ id: string
 
   let res: Response;
   try {
-    res = await fetch(`${API_BASE}/eci-files/entries/${encodeURIComponent(id)}`, { cache: "no-store" });
+    res = await fetch(`${API_BASE}/eci-files/entries/${encodeURIComponent(id)}`, API_FETCH_CACHE);
   } catch {
     return NextResponse.json({ error: "unreachable" }, { status: 502 });
   }

@@ -8,7 +8,7 @@ import { SectionCard } from "@/components/parliament/SectionCard";
 import { THEME_COLORS, themeColor } from "@/lib/themes";
 import { searchRecords, docSrc, type House, type RecordHit } from "@/lib/api";
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Search the record · Parliament functioning · Neta·Resume",
   description: "Search Parliament's questions and debates by topic — railways, MSP, health, and more.",

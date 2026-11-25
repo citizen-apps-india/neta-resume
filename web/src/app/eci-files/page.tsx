@@ -14,7 +14,8 @@ import {
   getEciSummary, getEciDensity, getEciStates, getEciPeople, getEciObjections, getEciAnswers, getEciRules, getEciCourts,
   type EciSummary, type EciDensity,
 } from "@/lib/api";
-import { densityByMonth, ECI_LOAD_FAILED_MESSAGE } from "@/lib/eci-files";
+import { densityByMonth } from "@/lib/eci-files";
+import { failIsrPage } from "@/lib/isr";
 
 export const metadata: Metadata = {
   title: "ECI Files",
@@ -35,18 +36,7 @@ async function safeCount<T>(promise: Promise<T>, pick: (v: T) => number): Promis
  *  counts are fetched alongside, independently. Its own async component so the static `SectionHero`
  *  paints immediately and this streams in beneath it — same pattern as the India Dashboard (`IndiaBody`). */
 async function EciFrontBody() {
-  let summary: EciSummary | null = null;
-  let density: EciDensity | null = null;
-  try {
-    [summary, density] = await Promise.all([getEciSummary(), getEciDensity()]);
-  } catch {
-    summary = null;
-    density = null;
-  }
-
-  if (!summary || !density) {
-    return <p style={{ color: "var(--muted)", padding: "24px 4px" }}>{ECI_LOAD_FAILED_MESSAGE}</p>;
-  }
+  const [summary, density]: [EciSummary, EciDensity] = await Promise.all([getEciSummary(), getEciDensity()]).catch(failIsrPage);
 
   const [statesCount, peopleCount, objectionsCount, answersCount, rulesCount, courtsCount] = await Promise.all([
     safeCount(getEciStates(), (s) => s.regions.filter((r) => r.has_figures).length),

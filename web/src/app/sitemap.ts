@@ -1,20 +1,19 @@
 import type { MetadataRoute } from "next";
+import { connection } from "next/server";
 import { getEciCourts, getEciPeople, getEciRules, listPersons, type PersonSummary } from "@/lib/api";
 import { ECI_TILE_LAYOUT } from "@/lib/eci-numbers";
 
 const SITE = "https://neta-resume.app";
 
-// Refresh hourly so new legislators (the ongoing rollout) enter the sitemap without a redeploy.
-export const revalidate = 3600;
 
 const ECI_SECTIONS = ["", "/timeline", "/entries", "/numbers", "/people", "/selections", "/objections", "/answers", "/rules", "/courts"];
 
-/** ECI Files people, court cases and rule diffs; empty if the API is unreachable, so the sitemap still serves. */
+/** ECI Files people, court cases and rule diffs. */
 async function eciDetailRoutes(now: Date): Promise<MetadataRoute.Sitemap> {
   const [people, courts, rules] = await Promise.all([
-    getEciPeople().catch(() => []),
-    getEciCourts().then((c) => c.cases).catch(() => []),
-    getEciRules().then((r) => r.diffs).catch(() => []),
+    getEciPeople(),
+    getEciCourts().then((c) => c.cases),
+    getEciRules().then((r) => r.diffs),
   ]);
   const paths = [
     ...people.map((p) => `/eci-files/people/${p.slug}`),
@@ -24,10 +23,27 @@ async function eciDetailRoutes(now: Date): Promise<MetadataRoute.Sitemap> {
   return paths.map((path) => ({ url: `${SITE}${path}`, lastModified: now, changeFrequency: "monthly", priority: 0.5 }));
 }
 
-/** Served at /sitemap.xml — the section pages plus one entry per legislator, so Google can discover and
- *  index every profile (the key to name-searchability). Falls back to just the section pages if the API
- *  is briefly unreachable, rather than 500-ing the whole sitemap. */
+/** The API returns at most this many rows per page. */
+const PERSONS_PAGE = 200;
+
+/** Every legislator, read page by page. */
+async function allPersons(): Promise<PersonSummary[]> {
+  const first = await listPersons({ limit: PERSONS_PAGE, offset: 0 });
+  const people = [...first.items];
+  while (people.length < first.total) {
+    const next = await listPersons({ limit: PERSONS_PAGE, offset: people.length });
+    if (next.items.length === 0) throw new Error(`sitemap: /persons stopped at ${people.length} of ${first.total}`);
+    people.push(...next.items);
+  }
+  return people;
+}
+
+/** Served at /sitemap.xml: the section pages plus one entry per legislator, so Google can discover and
+ *  index every profile. Built per request from the day-long API cache (never at build time, when the API
+ *  may be unreachable). If the API fails and nothing is cached, this answers 500 rather than a shorter
+ *  sitemap. */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  await connection();
   const now = new Date();
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${SITE}/`, lastModified: now, changeFrequency: "daily", priority: 1 },
@@ -45,14 +61,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   ];
 
-  const eciRoutes = await eciDetailRoutes(now);
-
-  let people: PersonSummary[] = [];
-  try {
-    people = (await listPersons({ limit: 6000 })).items;
-  } catch {
-    return [...staticRoutes, ...eciRoutes];
-  }
+  const [eciRoutes, people] = await Promise.all([eciDetailRoutes(now), allPersons()]);
   const personRoutes: MetadataRoute.Sitemap = people.map((p) => ({
     url: `${SITE}/person/${p.id}`,
     lastModified: now,

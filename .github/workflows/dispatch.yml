@@ -98,7 +98,27 @@ jobs:
           LIMIT: ${{ inputs.limit || '100' }}
 
       - name: Run the tick
+        id: tick
         if: github.event_name == 'schedule' || inputs.dry_run == false
-        run: uv run neta dispatch --limit "$LIMIT"
+        run: |
+          set -o pipefail
+          status=0
+          uv run neta dispatch --limit "$LIMIT" | tee tick.log || status=$?
+          succeeded=$(sed -n 's/^dispatch tick finished: \([0-9]*\) succeeded.*/\1/p' tick.log)
+          echo "succeeded=${succeeded:-0}" >> "$GITHUB_OUTPUT"
+          exit $status
         env:
           LIMIT: ${{ inputs.limit || '100' }}
+
+      # The site caches every API read for a day. When a tick ran anything, tell it the data changed so
+      # pages rebuild from fresh data on their next visit, instead of up to a day later.
+      - name: Refresh the site's cache
+        if: always() && steps.tick.outputs.succeeded != '' && steps.tick.outputs.succeeded != '0'
+        env:
+          NETA_REVALIDATE_SECRET: ${{ secrets.NETA_REVALIDATE_SECRET }}
+        run: |
+          if [ -z "$NETA_REVALIDATE_SECRET" ]; then
+            echo "::warning::NETA_REVALIDATE_SECRET is not set; the site picks up new data within a day"; exit 0
+          fi
+          curl --fail-with-body -sS --max-time 60 -X POST \
+            -H "Authorization: Bearer $NETA_REVALIDATE_SECRET" https://neta-resume.app/api/revalidate

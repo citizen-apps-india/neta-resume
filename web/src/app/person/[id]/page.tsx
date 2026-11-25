@@ -8,11 +8,15 @@ import { Frame, PhotoBox, PartyPill } from "@/components/ui";
 import { ProfileTabs } from "@/components/resume/ProfileTabs";
 import { ReportDiscrepancyButton } from "@/components/ReportDiscrepancy";
 
-// ISR: the resume is a mostly-static public record, so serve cached HTML from the edge and revalidate
-// hourly rather than re-rendering per request. Reads `params` only (no searchParams/headers), so the page
-// is genuinely static-able; a freshly-ingested change appears within the revalidate window. `dynamicParams`
-// defaults to true, so an id we never pre-rendered still renders on-demand and caches on first visit.
-export const revalidate = 3600;
+// ISR: each profile renders on its first visit, then serves cached HTML for a day (sooner when the ingest
+// job calls /api/revalidate). The empty generateStaticParams is what makes this route static; without it,
+// `revalidate` alone leaves it rendered per request. If a rebuild fails because the API is down, the last
+// good copy keeps serving.
+export const revalidate = 86400;
+
+export function generateStaticParams(): { id: string }[] {
+  return [];
+}
 
 const SITE = "https://neta-resume.app";
 
@@ -25,7 +29,8 @@ function currentPartyOf(r: PersonResume): string | null {
 // template renders it as "<name> — <party>, <house> · Neta·Resume", name first).
 export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
   const { id } = await params;
-  const r = await getPersonResume(Number(id)).catch(() => null);
+  // A failed API call throws (a 5xx for crawlers); only a real 404 is marked noindex.
+  const r = await getPersonResume(Number(id));
   if (!r) return { title: "Legislator not found", robots: { index: false, follow: true } };
   const lead = r.office_terms[0];
   const party = currentPartyOf(r);

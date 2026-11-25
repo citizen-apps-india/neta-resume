@@ -10,6 +10,7 @@ import { AlsoNamedPanel } from "@/components/eci-files/people/AlsoNamedPanel";
 import { PhotoCredits } from "@/components/eci-files/PhotoCredits";
 import { getEciPeople, type EciPersonSummary } from "@/lib/api";
 import { personGroupMeta } from "@/lib/eci-files";
+import { failIsrPage } from "@/lib/isr";
 
 export const metadata: Metadata = {
   title: "People · ECI Files",
@@ -19,13 +20,7 @@ export const metadata: Metadata = {
 const GROUP_ORDER = ["commission", "secretariat", "state", "named"] as const;
 
 export default async function EciFilesPeoplePage() {
-  let people: EciPersonSummary[] = [];
-  let failed = false;
-  try {
-    people = await getEciPeople();
-  } catch {
-    failed = true;
-  }
+  const people: EciPersonSummary[] = await getEciPeople().catch(failIsrPage);
 
   const byGroup = {
     commission: people.filter((p) => p.group === "commission"),
@@ -57,11 +52,7 @@ export default async function EciFilesPeoplePage() {
           backLabel="ECI Files"
         />
 
-        {failed ? (
-          <p style={{ color: "var(--muted)", padding: "24px 4px" }}>
-            The record hasn&apos;t loaded — try again in a moment.
-          </p>
-        ) : people.length === 0 ? (
+        {people.length === 0 ? (
           <p style={{ color: "var(--muted)", padding: "24px 4px" }}>No one on record yet.</p>
         ) : (
           <>

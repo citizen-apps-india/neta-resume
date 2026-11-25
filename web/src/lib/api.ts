@@ -16,6 +16,13 @@ import type {
 
 const API_BASE = process.env.NETA_API_BASE ?? "http://localhost:8000";
 
+/** Every API read carries this tag. The ingest job calls `/api/revalidate` after it changes data, which
+ *  marks them all stale at once; until then a response is reused for a day, so readers do not wake the
+ *  database. */
+export const API_CACHE_TAG = "neta-api";
+/** Fetch options for every API read: cached for a day under {@link API_CACHE_TAG}. */
+export const API_FETCH_CACHE = { next: { revalidate: 86400, tags: [API_CACHE_TAG] } };
+
 type Schemas = components["schemas"];
 export type Source = Schemas["Source"];
 export type OfficeTerm = Schemas["OfficeTerm"];
@@ -30,14 +37,14 @@ export type ParliamentaryRecord = Schemas["ParliamentaryRecord"];
 export type ParliamentaryQuestion = Schemas["ParliamentaryQuestion"];
 export type ThemeFocus = Schemas["ThemeFocus"];
 
-async function getJSON<T>(path: string, revalidate = 3600): Promise<T> {
-  const res = await fetch(`${API_BASE}${path}`, { next: { revalidate } });
+async function getJSON<T>(path: string): Promise<T> {
+  const res = await fetch(`${API_BASE}${path}`, API_FETCH_CACHE);
   if (!res.ok) throw new Error(`API ${res.status} for ${path}`);
   return res.json();
 }
 
 export async function getPersonResume(id: number): Promise<PersonResume | null> {
-  const res = await fetch(`${API_BASE}/persons/${id}`, { next: { revalidate: 3600 } });
+  const res = await fetch(`${API_BASE}/persons/${id}`, API_FETCH_CACHE);
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`API ${res.status}`);
   return res.json();
@@ -45,7 +52,7 @@ export async function getPersonResume(id: number): Promise<PersonResume | null> 
 
 export type ListPersonsOpts = {
   limit?: number; offset?: number; house?: string; state?: string; constituency?: string;
-  jurisdiction?: string; party?: string; cases?: string; q?: string; theme?: string; cycle?: number; sort?: string; revalidate?: number;
+  jurisdiction?: string; party?: string; cases?: string; q?: string; theme?: string; cycle?: number; sort?: string;
 };
 
 /** A page of legislators plus the total count of matches (from the X-Total-Count header) for paging. */
@@ -63,7 +70,7 @@ export async function listPersons(opts: ListPersonsOpts = {}): Promise<{ items: 
   if (opts.theme) q.set("theme", opts.theme);
   if (opts.cycle) q.set("cycle", String(opts.cycle));
   if (opts.sort) q.set("sort", opts.sort);
-  const res = await fetch(`${API_BASE}/persons?${q.toString()}`, { next: { revalidate: opts.revalidate ?? 3600 } });
+  const res = await fetch(`${API_BASE}/persons?${q.toString()}`, API_FETCH_CACHE);
   if (!res.ok) throw new Error(`API ${res.status} for /persons`);
   const items = (await res.json()) as PersonSummary[];
   const total = Number(res.headers.get("x-total-count") ?? items.length);
@@ -81,13 +88,11 @@ export function getFacets(
   if (opts.state) q.set("state", opts.state);
   if (opts.jurisdiction) q.set("jurisdiction", opts.jurisdiction);
   if (opts.cycle) q.set("cycle", String(opts.cycle));
-  return getJSON<Facets>(`/persons/facets?${q.toString()}`, 3600);
+  return getJSON<Facets>(`/persons/facets?${q.toString()}`);
 }
 
 export function searchPersons(q: string): Promise<PersonSummary[]> {
-  // Short ISR (5 min): repeated queries collapse onto one cached API response; new ingests still surface
-  // within minutes. Was always-live (0), which meant every keystroke-driven search hit Render cold.
-  return getJSON<PersonSummary[]>(`/search?q=${encodeURIComponent(q)}`, 300);
+  return getJSON<PersonSummary[]>(`/search?q=${encodeURIComponent(q)}`);
 }
 
 /** Headline counts for the homepage (real totals, not capped by a list limit). */
@@ -99,7 +104,7 @@ export type Stats = {
   crorepatis: number;
 };
 export function getStats(): Promise<Stats> {
-  return getJSON<Stats>("/stats", 600);
+  return getJSON<Stats>("/stats");
 }
 
 // "Parliament functioning" section aggregates.
@@ -112,10 +117,10 @@ export type ParliamentStats = {
 };
 export type House = "ls" | "rs";
 export function getParliamentStats(house: House = "ls"): Promise<ParliamentStats> {
-  return getJSON<ParliamentStats>(`/parliament/stats?house=${house}`, 3600);
+  return getJSON<ParliamentStats>(`/parliament/stats?house=${house}`);
 }
 export function getParliamentMinistries(house: House = "ls"): Promise<MinistryCount[]> {
-  return getJSON<MinistryCount[]>(`/parliament/ministries?house=${house}`, 3600);
+  return getJSON<MinistryCount[]>(`/parliament/ministries?house=${house}`);
 }
 
 // Topic search over question subjects + debate titles (18th Lok Sabha).
@@ -139,7 +144,7 @@ export async function searchRecords(opts: SearchRecordsOpts): Promise<{ items: R
   if (opts.house) p.set("house", opts.house);
   p.set("limit", String(opts.limit ?? 30));
   p.set("offset", String(opts.offset ?? 0));
-  const res = await fetch(`${API_BASE}/parliament/search?${p.toString()}`, { next: { revalidate: 3600 } });
+  const res = await fetch(`${API_BASE}/parliament/search?${p.toString()}`, API_FETCH_CACHE);
   if (!res.ok) throw new Error(`API ${res.status} for /parliament/search`);
   const items = (await res.json()) as RecordHit[];
   const total = Number(res.headers.get("x-total-count") ?? items.length);
@@ -150,7 +155,7 @@ export async function searchRecords(opts: SearchRecordsOpts): Promise<{ items: R
 export type ThemeSeries = { theme: string; points: number[] };
 export type Trends = { house: string; months: string[]; totals: number[]; series: ThemeSeries[] };
 export function getParliamentTrends(house: House = "ls"): Promise<Trends> {
-  return getJSON<Trends>(`/parliament/trends?house=${house}`, 3600);
+  return getJSON<Trends>(`/parliament/trends?house=${house}`);
 }
 
 // Collective theme-emphasis breakdown by party / state (descriptive, share-based).
@@ -158,7 +163,7 @@ export type ThemeShare = { theme: string; count: number; share: number };
 export type AggregateGroup = { key: string; total: number; mps: number; themes: ThemeShare[] };
 export type ThemeFocusBreakdown = { by: "party" | "state"; house: string; groups: AggregateGroup[] };
 export function getThemeFocus(by: "party" | "state", house: House = "ls"): Promise<ThemeFocusBreakdown> {
-  return getJSON<ThemeFocusBreakdown>(`/aggregate/theme-focus?by=${by}&house=${house}`, 3600);
+  return getJSON<ThemeFocusBreakdown>(`/aggregate/theme-focus?by=${by}&house=${house}`);
 }
 
 // India Dashboard: country-level macro indicators (World Bank v1), grouped by curated category.
@@ -167,13 +172,13 @@ export type IndicatorSeries = Schemas["IndicatorSeries"];
 export type IndicatorCategory = Schemas["IndicatorCategory"];
 export type IndiaDashboard = Schemas["IndiaDashboard"];
 export function getIndiaDashboard(): Promise<IndiaDashboard> {
-  return getJSON<IndiaDashboard>("/indicators/india", 3600);
+  return getJSON<IndiaDashboard>("/indicators/india");
 }
 
 /** Lifetime unique-visitor counter (homepage). */
 export type Visits = { count: number };
 export function getVisits(): Promise<Visits> {
-  return getJSON<Visits>("/visits", 3600);
+  return getJSON<Visits>("/visits");
 }
 export async function bumpVisits(): Promise<Visits> {
   const res = await fetch(`${API_BASE}/visits/hit`, { method: "POST", cache: "no-store" });
@@ -184,7 +189,7 @@ export async function bumpVisits(): Promise<Visits> {
 /** The election registry (past with results + upcoming) for the Elections module. */
 export type Election = Schemas["Election"];
 export function getElections(): Promise<Election[]> {
-  return getJSON<Election[]>("/elections", 3600);
+  return getJSON<Election[]>("/elections");
 }
 
 /** Photos are served via the API proxy (upstream blocks cross-origin embedding). */
@@ -208,11 +213,11 @@ export type {
 } from "@/types/eci-files";
 
 export type EciTimelineOpts = {
-  topic?: string; person?: string; status?: string; lane?: string; from?: string; to?: string; revalidate?: number;
+  topic?: string; person?: string; status?: string; lane?: string; from?: string; to?: string;
 };
 /** The full-detail timeline (`/eci-files/entries`, a person's profile) — every field, including citations. */
 export function getEciTimeline(opts: EciTimelineOpts = {}): Promise<EciTimeline> {
-  return getJSON<EciTimeline>(`/eci-files/timeline${eciTimelineQuery(opts)}`, opts.revalidate ?? 3600);
+  return getJSON<EciTimeline>(`/eci-files/timeline${eciTimelineQuery(opts)}`);
 }
 
 /** The `fields=compact` timeline (the lane view's dots) — small enough that the first paint never pulls
@@ -220,7 +225,7 @@ export function getEciTimeline(opts: EciTimelineOpts = {}): Promise<EciTimeline>
 export function getEciTimelineCompact(opts: EciTimelineOpts = {}): Promise<EciCompactTimeline> {
   const qs = eciTimelineQuery(opts);
   const sep = qs ? "&" : "?";
-  return getJSON<EciCompactTimeline>(`/eci-files/timeline${qs}${sep}fields=compact`, opts.revalidate ?? 900);
+  return getJSON<EciCompactTimeline>(`/eci-files/timeline${qs}${sep}fields=compact`);
 }
 
 function eciTimelineQuery(opts: EciTimelineOpts): string {
@@ -237,28 +242,28 @@ function eciTimelineQuery(opts: EciTimelineOpts): string {
 
 /** The `/eci-files` front page's payload: headline stats, key moments, record-wide counts, freshness. */
 export function getEciSummary(): Promise<EciSummary> {
-  return getJSON<EciSummary>("/eci-files/summary", 900);
+  return getJSON<EciSummary>("/eci-files/summary");
 }
 
 /** Monthly entry counts by lane, 2019 to today — the timeline's overview strip. Changes only when the
  *  record reloads, so it's cached longer than the (filterable) timeline itself. */
 export function getEciDensity(): Promise<EciDensity> {
-  return getJSON<EciDensity>("/eci-files/density", 3600);
+  return getJSON<EciDensity>("/eci-files/density");
 }
 
 export function getEciPeople(): Promise<EciPersonSummary[]> {
-  return getJSON<EciPersonSummary[]>("/eci-files/people", 3600);
+  return getJSON<EciPersonSummary[]>("/eci-files/people");
 }
 
 export async function getEciPerson(slug: string): Promise<EciPersonPage | null> {
-  const res = await fetch(`${API_BASE}/eci-files/people/${encodeURIComponent(slug)}`, { next: { revalidate: 3600 } });
+  const res = await fetch(`${API_BASE}/eci-files/people/${encodeURIComponent(slug)}`, API_FETCH_CACHE);
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`API ${res.status} for /eci-files/people/${slug}`);
   return res.json();
 }
 
 export async function getEciEntry(id: string): Promise<EciEntry | null> {
-  const res = await fetch(`${API_BASE}/eci-files/entries/${encodeURIComponent(id)}`, { next: { revalidate: 3600 } });
+  const res = await fetch(`${API_BASE}/eci-files/entries/${encodeURIComponent(id)}`, API_FETCH_CACHE);
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`API ${res.status} for /eci-files/entries/${id}`);
   return res.json();
@@ -289,18 +294,18 @@ function eciTimelineQueryWithState(opts: EciTimelineOptsWithState): string {
 export function getEciTimelineCompactByState(opts: EciTimelineOptsWithState = {}): Promise<EciCompactTimeline> {
   const qs = eciTimelineQueryWithState(opts);
   const sep = qs ? "&" : "?";
-  return getJSON<EciCompactTimeline>(`/eci-files/timeline${qs}${sep}fields=compact`, opts.revalidate ?? 900);
+  return getJSON<EciCompactTimeline>(`/eci-files/timeline${qs}${sep}fields=compact`);
 }
 
 /** All 36 regions with SIR/Special Revision stage figures, plus the cited national totals
  *  (`/eci-files/numbers`). */
 export function getEciStates(): Promise<EciStatesOverview> {
-  return getJSON<EciStatesOverview>("/eci-files/states", 3600);
+  return getJSON<EciStatesOverview>("/eci-files/states");
 }
 
 /** One region's summary + notes, or null on 404 — same shape as {@link getEciPerson}. */
 export async function getEciState(slug: string): Promise<EciStatePage | null> {
-  const res = await fetch(`${API_BASE}/eci-files/states/${encodeURIComponent(slug)}`, { next: { revalidate: 3600 } });
+  const res = await fetch(`${API_BASE}/eci-files/states/${encodeURIComponent(slug)}`, API_FETCH_CACHE);
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`API ${res.status} for /eci-files/states/${slug}`);
   return res.json();
@@ -317,7 +322,7 @@ export type {
 
 /** `/eci-files/selections` — the eight selections, three regimes and six departures behind them. */
 export function getEciSelections(): Promise<_EciSelections> {
-  return getJSON<_EciSelections>("/eci-files/selections", 3600);
+  return getJSON<_EciSelections>("/eci-files/selections");
 }
 // --- end phase 4 ---
 
@@ -345,38 +350,38 @@ export type {
  *  backend ships `EciEntryDetail` from the same route, {@link getEciEntry}'s return type can just widen to
  *  match and this can be dropped. */
 export async function getEciEntryDetail(id: string): Promise<EciEntryDetail | null> {
-  const res = await fetch(`${API_BASE}/eci-files/entries/${encodeURIComponent(id)}`, { next: { revalidate: 3600 } });
+  const res = await fetch(`${API_BASE}/eci-files/entries/${encodeURIComponent(id)}`, API_FETCH_CACHE);
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`API ${res.status} for /eci-files/entries/${id}`);
   return res.json();
 }
 
 export function getEciObjections(): Promise<EciObjectionsPage> {
-  return getJSON<EciObjectionsPage>("/eci-files/objections", 3600);
+  return getJSON<EciObjectionsPage>("/eci-files/objections");
 }
 
 export function getEciAnswers(view: EciAnswersView = "all"): Promise<EciAnswersPage> {
   const qs = view === "all" ? "" : `?view=${view}`;
-  return getJSON<EciAnswersPage>(`/eci-files/answers${qs}`, 3600);
+  return getJSON<EciAnswersPage>(`/eci-files/answers${qs}`);
 }
 
 export function getEciRules(): Promise<EciRulesPage> {
-  return getJSON<EciRulesPage>("/eci-files/rules", 3600);
+  return getJSON<EciRulesPage>("/eci-files/rules");
 }
 
 export async function getEciRuleDiff(id: string): Promise<EciRuleDiff | null> {
-  const res = await fetch(`${API_BASE}/eci-files/rules/diffs/${encodeURIComponent(id)}`, { next: { revalidate: 3600 } });
+  const res = await fetch(`${API_BASE}/eci-files/rules/diffs/${encodeURIComponent(id)}`, API_FETCH_CACHE);
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`API ${res.status} for /eci-files/rules/diffs/${id}`);
   return res.json();
 }
 
 export function getEciCourts(): Promise<EciCourtsPage> {
-  return getJSON<EciCourtsPage>("/eci-files/courts", 3600);
+  return getJSON<EciCourtsPage>("/eci-files/courts");
 }
 
 export async function getEciCase(slug: string): Promise<EciCasePage | null> {
-  const res = await fetch(`${API_BASE}/eci-files/courts/${encodeURIComponent(slug)}`, { next: { revalidate: 3600 } });
+  const res = await fetch(`${API_BASE}/eci-files/courts/${encodeURIComponent(slug)}`, API_FETCH_CACHE);
   if (res.status === 404) return null;
   if (!res.ok) throw new Error(`API ${res.status} for /eci-files/courts/${slug}`);
   return res.json();
