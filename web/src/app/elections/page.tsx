@@ -3,10 +3,11 @@ import { SiteHeader } from "@/components/SiteHeader";
 import { getElections, type Election } from "@/lib/api";
 import { pretty, year } from "@/lib/format";
 import { EciFilesFeature } from "@/components/elections/EciFilesFeature";
+import { failIsrPage } from "@/lib/isr";
 
-// ISR: no dynamic input (reads nothing per-request), so serve static HTML and revalidate every 10 min —
-// matches the getElections() fetch TTL and keeps the election list fresh enough for a slowly-changing set.
-export const revalidate = 600;
+// ISR: no dynamic input, so serve static HTML for a day. The ingest job refreshes it sooner via
+// /api/revalidate; each revalidation wakes the database.
+export const revalidate = 86400;
 export const metadata = { title: "Elections", description: "Indian elections and their winners — Lok Sabha, Rajya Sabha and state assemblies — with sourced candidate records and results." };
 
 const LEVEL_LABEL: Record<string, string> = { national: "National", state: "State", municipal: "Municipal" };
@@ -50,13 +51,7 @@ function UpcomingCard({ e }: { e: Election }) {
 }
 
 export default async function ElectionsPage() {
-  let elections: Election[] = [];
-  let error = false;
-  try {
-    elections = await getElections();
-  } catch {
-    error = true;
-  }
+  const elections: Election[] = await getElections().catch(failIsrPage);
   const upcoming = elections.filter((e) => e.status === "upcoming");
   const past = elections.filter((e) => e.status === "past");
   const grid: React.CSSProperties = { display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(min(100%, 300px), 1fr))", gap: 16, alignItems: "stretch" };
@@ -74,28 +69,20 @@ export default async function ElectionsPage() {
 
         <EciFilesFeature />
 
-        {error ? (
-          <div style={{ padding: "48px 24px", textAlign: "center", color: "var(--muted)", fontSize: 14, border: "1px solid var(--rule)", borderRadius: 14 }}>
-            The API isn&rsquo;t reachable right now. Please try again shortly.
-          </div>
-        ) : (
-          <>
-            {upcoming.length > 0 && (
-              <section style={{ marginBottom: 36 }}>
-                <h2 className="mono" style={{ fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--faint)", margin: "0 0 14px" }}>Upcoming</h2>
-                <div style={grid}>
-                  {upcoming.map((e) => <UpcomingCard key={e.eci_election_id ?? e.name} e={e} />)}
-                </div>
-              </section>
-            )}
-            <section>
-              <h2 className="mono" style={{ fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--faint)", margin: "0 0 14px" }}>Results · Past elections</h2>
-              <div style={grid}>
-                {past.map((e) => <PastCard key={e.eci_election_id} e={e} />)}
-              </div>
-            </section>
-          </>
+        {upcoming.length > 0 && (
+          <section style={{ marginBottom: 36 }}>
+            <h2 className="mono" style={{ fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--faint)", margin: "0 0 14px" }}>Upcoming</h2>
+            <div style={grid}>
+              {upcoming.map((e) => <UpcomingCard key={e.eci_election_id ?? e.name} e={e} />)}
+            </div>
+          </section>
         )}
+        <section>
+          <h2 className="mono" style={{ fontSize: 12, letterSpacing: "0.12em", textTransform: "uppercase", color: "var(--faint)", margin: "0 0 14px" }}>Results · Past elections</h2>
+          <div style={grid}>
+            {past.map((e) => <PastCard key={e.eci_election_id} e={e} />)}
+          </div>
+        </section>
       </main>
     </>
   );

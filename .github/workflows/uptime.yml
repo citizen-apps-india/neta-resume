@@ -1,0 +1,37 @@
+name: uptime
+
+# Every few hours, load three cached pages and check each for text that only a real render contains.
+# Cached pages answer without waking the database, so this check costs no Neon compute. Never point a
+# frequent check at the API's /health/db: that wakes the database on every run.
+
+on:
+  schedule:
+    - cron: "23 */3 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  pages:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    env:
+      SITE: https://neta-resume.app
+    steps:
+      - name: Check pages by keyword
+        run: |
+          failed=0
+          check() {
+            local path="$1" keyword="$2" code
+            code=$(curl -sS -o page.html -w '%{http_code}' --max-time 60 "$SITE$path") || code=000
+            if [ "$code" = 200 ] && grep -qF "$keyword" page.html; then
+              echo "ok    $path"
+            else
+              echo "::error::$path answered $code or lacks \"$keyword\""; failed=1
+            fi
+          }
+          check /elections "Past elections"
+          check /india "GDP growth"
+          check /person/376 'href="https://neta-resume.app/person/376"'
+          exit $failed

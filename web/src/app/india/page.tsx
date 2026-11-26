@@ -9,8 +9,9 @@ import { IndicatorLine } from "@/components/resume/charts";
 import { CategoryRail } from "@/components/india/CategoryRail";
 import { getIndiaDashboard, type IndiaDashboard, type IndicatorSeries } from "@/lib/api";
 import { indicatorValue, indicatorChange } from "@/lib/format";
+import { failIsrPage } from "@/lib/isr";
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "India Dashboard · Neta·Resume",
   description:
@@ -75,12 +76,7 @@ function IndicatorTile({ ind, prominent = false, hero = false, label }: {
  *  component so the static SectionHero paints immediately and this streams in below it once the (ISR-cached)
  *  dashboard resolves — a cold render no longer blanks the whole page. */
 async function IndiaBody() {
-  let dash: IndiaDashboard | null = null;
-  try {
-    dash = await getIndiaDashboard();
-  } catch {
-    dash = null;
-  }
+  const dash: IndiaDashboard = await getIndiaDashboard().catch(failIsrPage);
   const empty = !dash || dash.categories.length === 0;
   const hero = empty ? [] : HERO.map(([code, label]) => ({ label, ind: findSeries(dash!, code) }));
   const railItems = empty ? [] : dash!.categories.map((c) => ({ name: c.name, slug: slug(c.name) }));

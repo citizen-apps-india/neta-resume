@@ -15,6 +15,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from neta_api.deps import get_db
+from neta_api.diskcache import write_atomic
 from neta_api.schemas import Facets, PersonResume, PersonSummary
 from neta_api.services import resume as resume_service
 
@@ -45,14 +46,16 @@ def _is_allowed_photo_url(url: str) -> bool:
 
 @router.get("/{person_id}/photo")
 def person_photo(person_id: int, db: Session = Depends(get_db)) -> Response:
-    url = db.execute(text("SELECT photo_url FROM person WHERE id = :id"), {"id": person_id}).scalar()
-    if not url:
-        raise HTTPException(status_code=404, detail="no photo")
-    if not _is_allowed_photo_url(url):
-        raise HTTPException(status_code=400, detail="unsupported photo source")
-    _PHOTO_CACHE.mkdir(exist_ok=True)
+    # Disk cache first: a hit must not touch `db`. The Session connects lazily (NullPool), so merely
+    # holding it opens nothing; only the miss path below executes a query and wakes the database.
     cached = _PHOTO_CACHE / f"{person_id}.jpg"
     if not cached.exists():
+        url = db.execute(text("SELECT photo_url FROM person WHERE id = :id"), {"id": person_id}).scalar()
+        if not url:
+            raise HTTPException(status_code=404, detail="no photo")
+        if not _is_allowed_photo_url(url):
+            raise HTTPException(status_code=400, detail="unsupported photo source")
+        _PHOTO_CACHE.mkdir(exist_ok=True)
         try:
             req = urllib.request.Request(url, headers={"User-Agent": "neta-resume/0.1"})
             with urllib.request.urlopen(req, timeout=20) as r:  # noqa: S310 (scheme validated above)
@@ -61,7 +64,7 @@ def person_photo(person_id: int, db: Session = Depends(get_db)) -> Response:
                 data = r.read(_MAX_PHOTO_BYTES + 1)
             if len(data) > _MAX_PHOTO_BYTES:
                 raise HTTPException(status_code=502, detail="photo too large")
-            cached.write_bytes(data)
+            write_atomic(cached, data)
         except HTTPException:
             raise
         except Exception as exc:  # noqa: BLE001

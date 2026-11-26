@@ -18,6 +18,7 @@ from sqlalchemy import text
 from sqlalchemy.orm import Session
 
 from neta_api.deps import get_db
+from neta_api.diskcache import write_atomic
 
 router = APIRouter(tags=["documents"])
 
@@ -61,17 +62,18 @@ def _unavailable(link: str | None) -> Response:
 
 
 def _serve_document(kind: str, row_id: int, db: Session) -> Response:
-    url = db.execute(
-        text(f"SELECT document_url FROM {_TABLE[kind]} WHERE id = :id"),  # noqa: S608 (table from fixed map)
-        {"id": row_id},
-    ).scalar()
-    if not url:
-        raise HTTPException(status_code=404, detail="no document")
-    if not _is_allowed_doc_url(url):
-        return _unavailable(None)
+    # Disk cache first: a hit must not touch `db` (the Session connects lazily, so a hit wakes nothing).
     _DOC_CACHE.mkdir(exist_ok=True)
     cached = _DOC_CACHE / f"{kind}-{row_id}.pdf"
     if not cached.exists():
+        url = db.execute(
+            text(f"SELECT document_url FROM {_TABLE[kind]} WHERE id = :id"),  # noqa: S608 (table from fixed map)
+            {"id": row_id},
+        ).scalar()
+        if not url:
+            raise HTTPException(status_code=404, detail="no document")
+        if not _is_allowed_doc_url(url):
+            return _unavailable(None)
         try:
             req = urllib.request.Request(url, headers={
                 "User-Agent": "neta-resume/0.1 (non-commercial; contact sahil@magicweave.xyz)",
@@ -83,7 +85,7 @@ def _serve_document(kind: str, row_id: int, db: Session) -> Response:
             # A real PDF starts with "%PDF"; a 308-loop/HTML error page does not -> treat as unavailable.
             if not data.startswith(b"%PDF") or len(data) > _MAX_DOC_BYTES:
                 return _unavailable(url)
-            cached.write_bytes(data)
+            write_atomic(cached, data)
         except Exception:  # noqa: BLE001 — upstream flaky/looping: degrade gracefully, never error/loop
             return _unavailable(url)
     return Response(

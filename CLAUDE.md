@@ -138,7 +138,7 @@ CI (`.github/workflows/ci.yml`) runs all of the above per push/PR.
 
 ## Gotchas
 
-- **Web fetch cache:** `web/src/lib/api.ts` calls the API with `next: { revalidate: 3600 }` (1-hour ISR).
+- **Web fetch cache:** every API read in `web/src/lib/api.ts` uses `API_FETCH_CACHE`: cached for a day under the `neta-api` tag. `dispatch.yml` calls `POST /api/revalidate` (secret `NETA_REVALIDATE_SECRET`) after a tick that ran something, so new data shows on the next visit. Cached (ISR) pages must throw on an API error (`failIsrPage` in `web/src/lib/isr.ts`), never render an error state, or the error is cached for a day.
   Data you just ingested won't appear instantly in the running web app.
 - **Photo proxy (CORP):** sansad.in photos set `Cross-Origin-Resource-Policy: same-site`, so a browser
   refuses to embed them. The API proxies them at `GET /persons/{id}/photo`, fetching server-side and

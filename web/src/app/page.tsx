@@ -10,7 +10,8 @@ import { getStats, type Stats } from "@/lib/api";
 // The page reads the visitor's IP-geo headers (HomePreview) + the new-visitor flag (VisitorCount), so it's
 // dynamically rendered — but both are wrapped in <Suspense> below, so the static hero/stats/features shell
 // streams to the browser immediately and those two regions stream in when their data resolves. No
-// force-dynamic: nothing outside those boundaries needs per-request rendering.
+// No force-dynamic: nothing outside those boundaries needs per-request rendering. It cannot be ISR either,
+// because both regions read per-request headers; their API fetches are cached for 1h instead.
 
 const FEATURES = [
   { icon: "₹", title: "Wealth declared", body: "Assets, liabilities and income from the candidate's own ECI affidavits — every cycle, side by side." },

@@ -8,7 +8,7 @@ import {
   type House, type MinistryCount,
 } from "@/lib/api";
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 export const metadata: Metadata = {
   title: "Parliament functioning · Neta·Resume",
   description: "What the House is asking — questions by policy theme and ministry, trends, and party/state focus.",

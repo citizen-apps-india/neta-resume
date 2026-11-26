@@ -6,7 +6,7 @@ import { PhotoBox, PartyPill } from "@/components/ui";
 import { SegmentedBar } from "@/components/resume/policy-focus";
 import { themeColor } from "@/lib/themes";
 
-export const revalidate = 3600;
+export const revalidate = 86400;
 export const metadata: Metadata = { title: "Compare legislators · Neta·Resume" };
 
 async function load(id: string | undefined): Promise<PersonResume | null> {
